@@ -34,12 +34,11 @@ const Social = ({
         showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.error(error);
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
-  }
+  };
 
   const config = {
     rpcUrl: 'https://mainnet.optimism.io',
@@ -75,7 +74,7 @@ const Social = ({
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-        Add Social Badge to secure your foundation account.
+        Adding social media accounts helps verify that you're a real human contributing to the Foundation platform.
       </h1>
       <AuthKitProvider config={config}>
         <div className="hidden">
@@ -135,7 +134,7 @@ const Social = ({
                   }
                   if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
                     triggerFarcaster();
-                    return
+                    return;
                   }
                   if (checkSocial(item.accountName)) {
                     handleRemoveBadgePopup({

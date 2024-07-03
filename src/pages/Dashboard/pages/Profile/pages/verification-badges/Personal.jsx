@@ -271,7 +271,7 @@ export default function Personal({
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-        Add Personal Badge and get rewarded.
+        The more personal information you add, the stronger your data profile and the more FDX you earn.
       </h1>
       {renderPersonalBadgesPopup()}
       {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">

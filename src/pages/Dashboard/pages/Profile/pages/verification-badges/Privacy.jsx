@@ -23,7 +23,7 @@ const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
         setIsPersonalPopup={setIsPersonalPopup}
       />
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-        Add Privacy Badge to secure your foundation account.
+        Add an extra layer of protection to your personal data so only you can access it.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">

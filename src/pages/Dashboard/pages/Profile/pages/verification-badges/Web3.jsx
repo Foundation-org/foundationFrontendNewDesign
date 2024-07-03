@@ -152,7 +152,7 @@ export default function Web3({
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-        Add Web3 Badge to secure your foundation account.
+        Linking your wallet gives you more FDX transaction options.
       </h1>
       <AuthKitProvider config={config}>
         <div className="hidden">

@@ -196,7 +196,7 @@ export default function Contact({
         setIsPersonalPopup={setIsPersonalPopup}
       />
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-        Add Contact Badge to secure your foundation account.
+      Contact badges increase your verification status and give you more options for account recovery. 
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         {renderContactBadgesPopup()}
