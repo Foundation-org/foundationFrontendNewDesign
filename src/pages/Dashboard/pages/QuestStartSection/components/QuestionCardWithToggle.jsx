@@ -312,9 +312,11 @@ const QuestionCardWithToggle = (props) => {
         queryClient.invalidateQueries(['userInfo', 'postsByCategory']);
 
         queryClient.setQueryData(['questByShareLink'], (oldData) => {
+          if (!oldData) return;
+
           return {
             ...oldData,
-            ...oldData.map((item) => (item?._id === resp.data.data._id ? resp.data.data : item)),
+            ...oldData.data.data.map((item) => (item?._id === resp.data.data._id ? resp.data.data : item)),
           };
         });
       }
