@@ -29,7 +29,7 @@ export default function SwiperMainCarousel({ images }) {
         >
           {images.map((image, index) => (
             <swiper-slide key={index}>
-              <div className="relative mx-auto w-fit p-4" onClick={() => setImageDialogue(true)}>
+              <div className="relative mx-auto h-full w-fit p-4" onClick={() => setImageDialogue(true)}>
                 <img src={image} />
                 <p className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
                   {index + 1}
@@ -61,12 +61,14 @@ export default function SwiperMainCarousel({ images }) {
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>
-            <div className="p-2">
-              <img src={image} />
+            <div className="flex h-full w-full items-center">
+              <div className="p-2">
+                <img src={image} />
+              </div>
+              <p className="absolute left-0 top-0 flex size-6 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
+                {index + 1}
+              </p>
             </div>
-            <p className="absolute left-0 top-0 flex size-6 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
-              {index + 1}
-            </p>
           </swiper-slide>
         ))}
       </swiper-container>

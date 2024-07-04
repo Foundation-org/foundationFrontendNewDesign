@@ -3,8 +3,9 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 export default function SwiperFullScreen({ images }) {
   return (
     <div>
-      <main className="slider-main-container-fullscreen">
+      <main className="slider-main-container">
         <swiper-container
+          id="fullscreen-swiper-container"
           class="mySwiper"
           thumbs-swiper=".mySwiper2"
           navigation="true"

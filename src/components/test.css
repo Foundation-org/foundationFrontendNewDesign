@@ -1,12 +1,23 @@
+#fullscreen-swiper-container {
+  max-width: 100%;
+  height: fit-content;
+  width: fit-content;
+}
+
 swiper-container {
   max-width: 100%;
+  height: 200px;
   width: fit-content;
-  height: fit-content;
+}
+
+@media screen and (min-width: 768px) {
+  swiper-container {
+    height: fit-content;
+  }
 }
 
 .slider-main-container {
   position: relative;
-  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -37,13 +48,13 @@ swiper-slide img {
 }
 
 .nav-btn.custom-prev-button {
-  top: 50%;
+  top: calc(50% - 10px);
   left: 0em;
 }
 
 .nav-btn.custom-next-button {
   right: 0em;
-  top: 50%;
+  top: calc(50% - 10px);
 }
 
 /* THUMBNAILS */
