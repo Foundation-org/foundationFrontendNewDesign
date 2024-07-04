@@ -28,9 +28,6 @@ const SingleAnswerRankedChoice = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
   const [isTyping, setIsTyping] = useState(true);
-  const dragControls = useDragControls();
-  const y = useMotionValue(0);
-  const boxShadow = useRaisedShadow(y);
 
   const reset = {
     name: 'Ok',

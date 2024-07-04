@@ -10,7 +10,7 @@ const ImagePopUp = ({ images, selectedImg, imageDialogue, closeDialogue }) => {
 
   return (
     <dialog id="my_modal_1" className="modal">
-      <div className="modal-box h-dvh max-h-dvh w-dvw max-w-full rounded-none bg-black px-0">
+      <div className="modal-box h-dvh max-h-dvh w-dvw max-w-full overflow-y-hidden rounded-none bg-black px-0">
         <div className="modal-action">
           <form method="dialog">
             <button className="absolute right-[10px] top-[10px] z-[100000] cursor-pointer" onClick={closeDialogue}>
