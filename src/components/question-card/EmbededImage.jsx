@@ -3,7 +3,7 @@ import FullScreenPictureViewer from '../dialogue-boxes/FullScreenPictureViewer';
 import Carousel from '../ui/Carousel';
 import SwiperMainCarousel from '../swiper/SwiperMainCarousel';
 
-export const EmbededImage = ({ description, url }) => {
+export const EmbededImage = ({ description, url, id }) => {
   const [imageDialogue, setImageDialogue] = useState(false);
 
   const openDialogue = () => setImageDialogue(true);
@@ -22,7 +22,7 @@ export const EmbededImage = ({ description, url }) => {
       ) : (
         <>
           {/* <Carousel data={url} /> */}
-          <SwiperMainCarousel images={url} />
+          <SwiperMainCarousel images={url} id={id} />
         </>
       )}
     </div>

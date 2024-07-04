@@ -277,7 +277,7 @@ const QuestCardLayout = ({
         questStartData.url.length !== 0 &&
         questStartData.url[0] !== '' &&
         (isImageUrl(questStartData.url) ? (
-          <EmbededImage description={questStartData.description} url={questStartData.url} />
+          <EmbededImage description={questStartData.description} url={questStartData.url} id={questStartData._id} />
         ) : (
           <EmbededVideo
             description={questStartData.description}
