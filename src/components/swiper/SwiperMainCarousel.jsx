@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import ImagePopUp from '../ui/ImagePopUp';
 import '../test.css';
@@ -10,6 +10,18 @@ export default function SwiperMainCarousel({ images, id }) {
   const closeDialogue = () => setImageDialogue(false);
 
   const [activeSlideIndex1, setActiveSlideIndex1] = useState(0);
+
+  const swiperRef = useRef(null);
+
+  useEffect(() => {
+    const swiperEl = swiperRef.current;
+    if (swiperEl) {
+      swiperEl.initialize();
+      swiperEl.swiper.on('slideChange', () => {
+        setActiveSlideIndex1(swiperEl.swiper.activeIndex);
+      });
+    }
+  }, []);
 
   return (
     <div className="">
@@ -23,12 +35,12 @@ export default function SwiperMainCarousel({ images, id }) {
       )}
       <main className="slider-main-container">
         <swiper-container
+          ref={swiperRef}
           class={`mySwiper${id}`}
           thumbs-swiper={`.mySwiperThumbs${id}`}
           navigation="true"
           navigation-next-el={`.custom-next-button${id}`}
           navigation-prev-el={`.custom-prev-button${id}`}
-          onSlideChange={(swiper) => setActiveSlideIndex1(swiper.activeIndex)}
         >
           {images.map((image, index) => (
             <swiper-slide key={index}>
@@ -40,7 +52,7 @@ export default function SwiperMainCarousel({ images, id }) {
                     setSelectedImg(image);
                   }}
                 >
-                  <img src={image} />
+                  <img src={image} alt={`Slide ${index + 1}`} />
                   <p className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
                     {index + 1}
                   </p>
@@ -74,7 +86,7 @@ export default function SwiperMainCarousel({ images, id }) {
           <swiper-slide key={index}>
             <div className="flex h-full w-full items-center justify-center">
               <div className="relative px-2 tablet:px-3 tablet:py-0">
-                <img src={image} className="max-h-[80px] tablet:max-h-[90px]" />{' '}
+                <img src={image} className="max-h-[80px] tablet:max-h-[90px]" alt={`Thumbnail ${index + 1}`} />
                 <p className="absolute -left-1 -top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)] tablet:-top-1 tablet:left-1">
                   {index + 1}
                 </p>
