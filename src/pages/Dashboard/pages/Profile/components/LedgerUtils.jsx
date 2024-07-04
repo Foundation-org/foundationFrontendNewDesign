@@ -18,7 +18,7 @@ export const Columns = [
     header: 'txAuth',
     cell: (props) => <p>{props.getValue()}</p>,
     size: window.innerWidth <= 500 ? 0 : 240,
-    minSize: 40,
+    minSize: 20,
   },
   {
     accessorKey: 'txFrom',
@@ -39,7 +39,7 @@ export const Columns = [
     header: 'txAmt',
     cell: (props) => <p>{props.getValue()}</p>,
     size: window.innerWidth <= 500 ? 0 : 240,
-    minSize: 40,
+    minSize: 20,
   },
   {
     accessorKey: 'txDate',

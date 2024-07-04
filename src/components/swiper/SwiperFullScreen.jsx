@@ -3,7 +3,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 export default function SwiperFullScreen({ images, selectedImg }) {
   return (
     <div>
-      <main className="slider-main-container">
+      <main className="slider-main-container slider-main-fullscreen">
         <swiper-container
           id="fullscreen-swiper-container"
           class="mySwiper"
@@ -50,12 +50,14 @@ export default function SwiperFullScreen({ images, selectedImg }) {
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>
-            <div className="p-2">
-              <img src={image} />
+            <div className="flex h-full items-center">
+              <div className="relative px-2 tablet:px-3 tablet:py-0">
+                <img src={image} className="max-h-[80px] tablet:max-h-[90px]" />{' '}
+                <p className="absolute -left-1 -top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)] tablet:-top-1 tablet:left-1">
+                  {index + 1}
+                </p>
+              </div>
             </div>
-            <p className="absolute left-0 top-0 flex size-6 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
-              {index + 1}
-            </p>
           </swiper-slide>
         ))}
       </swiper-container>
