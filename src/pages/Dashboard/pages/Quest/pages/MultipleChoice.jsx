@@ -7,6 +7,7 @@ import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   addAdultFilterPopup,
+  addPlayerId,
   resetPlayingIds,
   setIsShowPlayer,
   setPlayingPlayerId,
@@ -64,6 +65,7 @@ const MultipleChoice = () => {
       if (resp.status === 201) {
         if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
           dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          dispatch(addPlayerId(resp.data.questID));
         }
         navigate('/');
         queryClient.invalidateQueries(['userInfo']);
