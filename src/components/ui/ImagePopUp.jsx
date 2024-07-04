@@ -34,7 +34,7 @@ const ImagePopUp = ({ images, selectedImg, imageDialogue, closeDialogue }) => {
             </button>
           </form>
         </div>
-        <SwiperFullScreen images={images} />
+        <SwiperFullScreen images={images} selectedImg={selectedImg} />
       </div>
     </dialog>
   );

@@ -29,7 +29,13 @@ export default function SwiperMainCarousel({ images }) {
         >
           {images.map((image, index) => (
             <swiper-slide key={index}>
-              <div className="relative mx-auto h-full w-fit p-4" onClick={() => setImageDialogue(true)}>
+              <div
+                className="relative mx-auto h-full w-fit p-4"
+                onClick={() => {
+                  setImageDialogue(true);
+                  setSelectedImg(image);
+                }}
+              >
                 <img src={image} />
                 <p className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
                   {index + 1}

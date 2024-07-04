@@ -21,7 +21,7 @@ export const EmbededImage = ({ description, url }) => {
         />
       ) : (
         <>
-          <Carousel data={url} />
+          {/* <Carousel data={url} /> */}
           <SwiperMainCarousel images={url} />
         </>
       )}
