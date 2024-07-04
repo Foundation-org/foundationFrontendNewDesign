@@ -1,25 +1,9 @@
-import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import ImagePopUp from '../ui/ImagePopUp';
-import '../test.css';
 
-export default function SwiperMainCarousel({ images }) {
-  const [imageDialogue, setImageDialogue] = useState(false);
-  const [selectedImg, setSelectedImg] = useState('');
-
-  const closeDialogue = () => setImageDialogue(false);
-
+export default function SwiperFullScreen({ images }) {
   return (
-    <div className="">
-      {imageDialogue && (
-        <ImagePopUp
-          images={images}
-          selectedImg={selectedImg}
-          imageDialogue={imageDialogue}
-          closeDialogue={closeDialogue}
-        />
-      )}
-      <main className="slider-main-container">
+    <div>
+      <main className="slider-main-container-fullscreen">
         <swiper-container
           class="mySwiper"
           thumbs-swiper=".mySwiper2"
@@ -28,12 +12,14 @@ export default function SwiperMainCarousel({ images }) {
           navigation-prev-el=".custom-prev-button"
         >
           {images.map((image, index) => (
-            <swiper-slide key={index}>
-              <div className="relative mx-auto w-fit p-4" onClick={() => setImageDialogue(true)}>
-                <img src={image} />
-                <p className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
-                  {index + 1}
-                </p>
+            <swiper-slide key={index} id="swiper-slide">
+              <div className=" mx-auto flex h-[80dvh] w-fit items-center">
+                <div className="relative h-fit w-fit p-4">
+                  <img src={image} className="h-fit max-h-full w-full object-contain tablet:h-full" />
+                  <p className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
+                    {index + 1}
+                  </p>
+                </div>
               </div>
             </swiper-slide>
           ))}

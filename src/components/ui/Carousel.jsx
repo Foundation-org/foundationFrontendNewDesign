@@ -86,12 +86,12 @@ export default ({ data }) => {
 
   return (
     <div className="carouselContainer">
-      <FullScreenPicturePopup
+      {/* <FullScreenPicturePopup
         handleClose={closeDialogue}
         modalVisible={imageDialogue}
         content={selectedImg}
         imgArr={data}
-      />
+      /> */}
       <Carousel
         // autoPlay
         swipeable={shouldEmulateTouch}

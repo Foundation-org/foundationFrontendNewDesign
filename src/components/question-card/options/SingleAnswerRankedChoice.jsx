@@ -376,16 +376,14 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
       )}
 
-          {/* =============== Objection PopUp */}
-          <ObjectionPopUp
-            modalVisible={modalVisible}
-            handleClose={handlePopUpClose}
-            handleContendChange={handleContendChange}
-            option={props.answer}
-          />
-        </div>
-      </Reorder.Item>
-    </ReorderWrapper>
+      {/* =============== Objection PopUp */}
+      <ObjectionPopUp
+        modalVisible={modalVisible}
+        handleClose={handlePopUpClose}
+        handleContendChange={handleContendChange}
+        option={props.answer}
+      />
+    </div>
   );
 };
 

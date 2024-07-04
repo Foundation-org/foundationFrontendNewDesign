@@ -53,22 +53,14 @@ swiper-slide {
 }
 
 .mySwiper2 {
-  height: 20%;
-  box-sizing: border-box;
-  padding: 10px 0;
+  height: 80px;
 }
 
 .mySwiper2 swiper-slide {
-  width: 50px;
+  max-width: 90px;
+  width: 100%;
   height: 100%;
   opacity: 0.4;
-}
-
-@media screen and (max-width: 768px) {
-  .mySwiper2 swiper-slide {
-    max-height: 72px;
-    min-height: 72px;
-  }
 }
 
 .mySwiper2 .swiper-slide-thumb-active {
