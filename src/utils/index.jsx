@@ -5,6 +5,7 @@ import { isEqual } from 'lodash';
 import { setFilterStates } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
+import { resetPlayingIds, setIsShowPlayer, setPlayingPlayerId } from '../features/quest/utilsSlice';
 
 const filtersInitialState = {
   filterByStatus: 'All',
@@ -246,6 +247,9 @@ export const printNoRecordsMessage = (
                   dispatch(filtersActions.resetOtherFilters());
                   setFilters(resetOtherStates);
                 }
+                dispatch(setIsShowPlayer(false));
+                dispatch(setPlayingPlayerId(''));
+                dispatch(resetPlayingIds());
               }}
             >
               Clear Filters
@@ -271,6 +275,9 @@ export const printNoRecordsMessage = (
                   dispatch(filtersActions.resetOtherFilters());
                   setFilters(resetOtherStates);
                 }
+                dispatch(setIsShowPlayer(false));
+                dispatch(setPlayingPlayerId(''));
+                dispatch(resetPlayingIds());
               }}
             >
               Clear Filters
@@ -361,6 +368,9 @@ export const printEndMessage = (
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
                     }
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                    dispatch(resetPlayingIds());
                   }}
                 >
                   Clear Filters
@@ -396,6 +406,9 @@ export const printEndMessage = (
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
                     }
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                    dispatch(resetPlayingIds());
                   }}
                 >
                   Clear Filters
@@ -435,6 +448,9 @@ export const printEndMessage = (
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
                     }
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                    dispatch(resetPlayingIds());
                   }}
                 >
                   Clear Filters
@@ -462,6 +478,9 @@ export const printEndMessage = (
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
                     }
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                    dispatch(resetPlayingIds());
                   }}
                 >
                   Clear Filters
@@ -491,6 +510,9 @@ export const printEndMessage = (
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
                     }
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                    dispatch(resetPlayingIds());
                   }}
                 >
                   Clear Filters

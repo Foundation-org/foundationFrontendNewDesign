@@ -16,7 +16,12 @@ import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
 import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT } from '../../../../../constants/Values/constants';
-import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import {
+  addAdultFilterPopup,
+  resetPlayingIds,
+  setIsShowPlayer,
+  setPlayingPlayerId,
+} from '../../../../../features/quest/utilsSlice';
 import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
@@ -84,6 +89,9 @@ const OpenChoice = () => {
   });
 
   const handleSubmit = async () => {
+    dispatch(setIsShowPlayer(false));
+    dispatch(setPlayingPlayerId(''));
+    dispatch(resetPlayingIds());
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>

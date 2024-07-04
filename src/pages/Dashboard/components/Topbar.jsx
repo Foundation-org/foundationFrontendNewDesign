@@ -2,7 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { TopbarItems } from '../../../constants/topbar';
-import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
+import {
+  addSharedLinkPost,
+  resetPlayingIds,
+  setIsShowPlayer,
+  setPlayingPlayerId,
+} from '../../../features/quest/utilsSlice';
 import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../features/createQuest/pictureMediaSlice';
 
@@ -23,6 +28,9 @@ const Topbar = () => {
                 to={'/'}
                 className="relative flex justify-center"
                 onClick={() => {
+                  dispatch(setIsShowPlayer(false));
+                  dispatch(setPlayingPlayerId(''));
+                  dispatch(resetPlayingIds());
                   dispatch(createQuestActions.resetCreateQuest());
                 }}
               >
@@ -45,7 +53,7 @@ const Topbar = () => {
                   className="h-[10px] w-auto tablet:h-auto"
                 />
                 <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[13px] tablet:leading-[13px]">
-                  v 1.14.57
+                  v 1.14.59
                 </span>
               </Link>
             </div>

@@ -5,7 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import {
+  addAdultFilterPopup,
+  resetPlayingIds,
+  setIsShowPlayer,
+  setPlayingPlayerId,
+} from '../../../../../features/quest/utilsSlice';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';
 import { updateMultipleChoice } from '../../../../../features/createQuest/createQuestSlice';
@@ -86,6 +91,9 @@ const MultipleChoice = () => {
   });
 
   const handleSubmit = async () => {
+    dispatch(setIsShowPlayer(false));
+    dispatch(setPlayingPlayerId(''));
+    dispatch(resetPlayingIds());
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>

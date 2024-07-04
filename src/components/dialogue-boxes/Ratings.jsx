@@ -9,7 +9,6 @@ import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSl
 import { useLocation } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { setIsShowPlayer, setPlayingPlayerId, resetPlayingIds } from '../../features/quest/utilsSlice';
-import { toast } from 'sonner';
 
 export const StatusFiltersList = [
   {
@@ -512,6 +511,9 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           <Button
             variant={'danger'}
             onClick={() => {
+              dispatch(setIsShowPlayer(false));
+              dispatch(setPlayingPlayerId(''));
+              dispatch(resetPlayingIds());
               setFilterValues({
                 type: 'All',
                 media: 'All',
