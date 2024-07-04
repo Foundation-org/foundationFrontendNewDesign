@@ -50,6 +50,7 @@
     "reactjs-social-login": "^2.6.3",
     "redux-persist": "^6.0.0",
     "sonner": "^1.2.0",
+    "swiper": "^11.1.4",
     "typescript": "^5.4.5"
   },
   "devDependencies": {

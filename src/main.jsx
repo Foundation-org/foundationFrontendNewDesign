@@ -20,6 +20,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // React Helmet for SEO
 import { HelmetProvider } from 'react-helmet-async';
 
+import { register } from 'swiper/element/bundle';
+// register Swiper custom elements
+register();
+
 const queryClient = new QueryClient();
 
 let persistor = persistStore(store);

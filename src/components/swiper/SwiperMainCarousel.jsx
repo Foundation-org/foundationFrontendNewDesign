@@ -1,27 +1,13 @@
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import './test.css';
+import '../test.css';
 
-const images = [
-  'https://swiperjs.com/demos/images/nature-1.jpg',
-  'https://swiperjs.com/demos/images/nature-2.jpg',
-  'https://swiperjs.com/demos/images/nature-3.jpg',
-  'https://swiperjs.com/demos/images/nature-4.jpg',
-  'https://swiperjs.com/demos/images/nature-5.jpg',
-  'https://swiperjs.com/demos/images/nature-6.jpg',
-  'https://swiperjs.com/demos/images/nature-7.jpg',
-  'https://swiperjs.com/demos/images/nature-8.jpg',
-  'https://swiperjs.com/demos/images/nature-9.jpg',
-  'https://swiperjs.com/demos/images/nature-10.jpg',
-];
-
-const Test = () => {
+export default function SwiperMainCarousel({ images }) {
   return (
-    <div className="p-4">
+    <div className="">
       <main className="slider-main-container">
         <swiper-container
           class="mySwiper"
           thumbs-swiper=".mySwiper2"
-          space-between="10"
           navigation="true"
           navigation-next-el=".custom-next-button"
           navigation-prev-el=".custom-prev-button"
@@ -53,8 +39,8 @@ const Test = () => {
 
       <swiper-container
         class="mySwiper2"
-        space-between="10"
-        slides-per-view="4"
+        // space-between="10"
+        slides-per-view="auto"
         free-mode="true"
         watch-slides-progress="true"
       >
@@ -63,7 +49,7 @@ const Test = () => {
             <div className="p-2">
               <img src={image} />
             </div>
-            <p className="absolute left-1 top-1 flex size-4 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
+            <p className="absolute left-0 top-0 flex size-6 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
               {index + 1}
             </p>
           </swiper-slide>
@@ -71,6 +57,4 @@ const Test = () => {
       </swiper-container>
     </div>
   );
-};
-
-export default Test;
+}

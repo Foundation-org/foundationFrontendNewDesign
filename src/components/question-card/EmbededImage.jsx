@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import FullScreenPictureViewer from '../dialogue-boxes/FullScreenPictureViewer';
 import Carousel from '../ui/Carousel';
+import SwiperMainCarousel from '../swiper/SwiperMainCarousel';
 
 export const EmbededImage = ({ description, url }) => {
   const [imageDialogue, setImageDialogue] = useState(false);
@@ -19,7 +20,10 @@ export const EmbededImage = ({ description, url }) => {
           onClick={openDialogue}
         />
       ) : (
-        <Carousel data={url} />
+        <>
+          <Carousel data={url} />
+          <SwiperMainCarousel images={url} />
+        </>
       )}
     </div>
   );
