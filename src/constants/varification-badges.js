@@ -38,7 +38,6 @@ export const contacts = [
 ];
 
 export const socials = [
-
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
     title: 'Twitter',
@@ -74,7 +73,7 @@ export const socials = [
   //   ButtonColor: 'gray',
   //   ButtonText: 'Add',
   //   NoOfButton: 1,
-  //   // link: '/auth/instagram',
+  //   link: '/auth/instagram',
   //   accountName: 'instagram',
   //   disabled: false,
   // },

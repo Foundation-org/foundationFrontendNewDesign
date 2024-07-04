@@ -73,7 +73,7 @@ const About = () => {
             />
             <div className="space-y-[0.6rem] tablet:space-y-1">
               <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-                Strengthen your profile (change to badge icon)
+                Strengthen your profile
               </h5>
               <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 Add badges to increase your verification score and add to the quality of information shared.

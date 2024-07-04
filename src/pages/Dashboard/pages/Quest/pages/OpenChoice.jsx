@@ -18,6 +18,7 @@ import showToast from '../../../../../components/ui/Toast';
 import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT } from '../../../../../constants/Values/constants';
 import {
   addAdultFilterPopup,
+  addPlayerId,
   resetPlayingIds,
   setIsShowPlayer,
   setPlayingPlayerId,
@@ -63,6 +64,7 @@ const OpenChoice = () => {
         // setTimeout(() => {
         if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
           dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          dispatch(addPlayerId(resp.data.questID));
         }
         navigate('/');
         queryClient.invalidateQueries(['userInfo']);

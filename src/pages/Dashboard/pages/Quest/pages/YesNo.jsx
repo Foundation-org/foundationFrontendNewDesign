@@ -18,6 +18,7 @@ import { getConstantsValues } from '../../../../../features/constants/constantsS
 import showToast from '../../../../../components/ui/Toast';
 import {
   addAdultFilterPopup,
+  addPlayerId,
   resetPlayingIds,
   setIsShowPlayer,
   setPlayingPlayerId,
@@ -55,6 +56,7 @@ const YesNo = () => {
         setChangeState(false);
         dispatch(createQuestAction.resetCreateQuest());
         dispatch(pictureMediaAction.resetToInitialState());
+        dispatch(addPlayerId(resp.data.questID));
         // }, 500);
       }
       setLoading(false);

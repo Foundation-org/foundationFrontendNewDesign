@@ -19,6 +19,7 @@ import * as pictureMediaAction from '../../../../../features/createQuest/picture
 import showToast from '../../../../../components/ui/Toast';
 import {
   addAdultFilterPopup,
+  addPlayerId,
   resetPlayingIds,
   setIsShowPlayer,
   setPlayingPlayerId,
@@ -49,6 +50,7 @@ const LikeDislike = () => {
         // setTimeout(() => {
         if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
           dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          dispatch(addPlayerId(resp.data.questID));
         }
         navigate('/');
         queryClient.invalidateQueries(['userInfo']);

@@ -22,6 +22,7 @@ import {
 } from '../../../../../constants/Values/constants';
 import {
   addAdultFilterPopup,
+  addPlayerId,
   resetPlayingIds,
   setIsShowPlayer,
   setPlayingPlayerId,
@@ -66,6 +67,7 @@ const RankChoice = () => {
         // setTimeout(() => {
         if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
           dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          dispatch(addPlayerId(resp.data.questID));
         }
         navigate('/');
         queryClient.invalidateQueries(['userInfo']);
