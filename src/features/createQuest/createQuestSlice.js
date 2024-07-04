@@ -134,7 +134,7 @@ const initialState = {
     changedOption: 'Anytime',
     changeState: true,
     multipleOption: false,
-    addOption: true,
+    addOption: false,
     optionsCount: 2,
     options: [],
   },

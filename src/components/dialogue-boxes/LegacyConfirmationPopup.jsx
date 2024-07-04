@@ -3,14 +3,22 @@ import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import api from '../../services/api/Axios';
-import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import showToast from '../ui/Toast';
 
 const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromiseRef, login, uuid }) => {
+  const navigate = useNavigate();
+
   const handleClose = () => {
+    if (!localStorage.getItem('legacyHash')) {
+      if (localStorage.getItem('target-url').toString().includes('/signin')) {
+        window.location.href = localStorage.getItem('target-url');
+      } else {
+        navigate('/profile/verification-badges');
+      }
+    }
     setIsPopup(false);
   };
 
@@ -19,7 +27,6 @@ const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromi
   const [isLoading, setIsLoading] = useState(false);
   const inputType = showPassword ? 'text' : 'password';
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

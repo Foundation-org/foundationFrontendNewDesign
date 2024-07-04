@@ -16,7 +16,12 @@ import * as createQuestAction from '../../../../../features/createQuest/createQu
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
-import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import {
+  addAdultFilterPopup,
+  resetPlayingIds,
+  setIsShowPlayer,
+  setPlayingPlayerId,
+} from '../../../../../features/quest/utilsSlice';
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -80,6 +85,9 @@ const YesNo = () => {
   };
 
   const handleSubmit = async () => {
+    dispatch(setIsShowPlayer(false));
+    dispatch(setPlayingPlayerId(''));
+    dispatch(resetPlayingIds());
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>

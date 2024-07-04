@@ -11,9 +11,9 @@ const SideNavbar = () => {
       className={`${persistedUserInfo.role === 'user' ? 'hidden flex-col laptop:flex' : 'hidden'} ml-[31px] w-full max-w-[18.75rem] items-center justify-center gap-[15px] rounded-[15px] bg-white px-[38px] py-[22px]`}
     >
       <Button
-        variant={location.pathname === '/quest' ? 'submit2' : 'hollow-submit2'}
+        variant={location.pathname === '/post' ? 'submit2' : 'hollow-submit2'}
         className="w-full max-w-[212px] bg-white"
-        onClick={() => navigate('/quest')}
+        onClick={() => navigate('/post')}
       >
         Create Post
       </Button>

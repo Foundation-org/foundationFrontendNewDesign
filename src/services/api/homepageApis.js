@@ -48,15 +48,14 @@ export const getQuestById = async (id, qId, sharedLinkRes, link) => {
 //   return await api.get(`/infoquestions/getQuest/${uniqueShareLink}`);
 // };
 export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
-  try {
-    return await api.get(`/infoquestions/getQuest/${uniqueShareLink}/`, {
-      params: { uuid: localStorage.getItem('uuid') },
-    });
-    // return response.data.data;
-  } catch (error) {
-    const errorMessage = error.response?.data?.message || 'An error occurred while fetching the quest.';
-    return errorMessage;
-  }
+  // try {
+  return await api.get(`/infoquestions/getQuest/${uniqueShareLink}/`, {
+    params: { uuid: localStorage.getItem('uuid') },
+  });
+  // return response.data.data;
+  // } catch (error) {
+  //   return error.response?.data?.message || 'An error occurred while fetching the quest.';
+  // }
 };
 
 // For Unanswered

@@ -112,6 +112,7 @@ const VerifyCode = () => {
         dispatch(setAskPassword(false));
         const data = await response.json();
         dispatch(addUser(data));
+        localStorage.setItem('userData', JSON.stringify(data));
         localStorage.setItem('uuid', data.uuid);
         navigate('/');
       }

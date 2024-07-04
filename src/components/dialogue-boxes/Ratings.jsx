@@ -158,6 +158,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   const dispatch = useDispatch();
   const filterStates = useSelector(filtersActions.getFilters);
   const [filterValues, setFilterValues] = useState({});
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     setFilterValues({
@@ -435,7 +436,24 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 type="checkbox"
                 className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
                 checked={selectedOptions.includes('adult')}
-                onChange={() => handleCheckboxChange('adult')}
+                onChange={() => {
+                  if (persistedUserInfo?.role === 'guest') {
+                    toast.warning(
+                      <p>
+                        Please{' '}
+                        <span
+                          className="cursor-pointer text-[#389CE3] underline"
+                          onClick={() => navigate('/guest-signup')}
+                        >
+                          Create an Account
+                        </span>{' '}
+                        to unlock this feature
+                      </p>,
+                    );
+                    return;
+                  }
+                  handleCheckboxChange('adult');
+                }}
                 readOnly
               />
             </div>
@@ -493,6 +511,9 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           <Button
             variant={'danger'}
             onClick={() => {
+              dispatch(setIsShowPlayer(false));
+              dispatch(setPlayingPlayerId(''));
+              dispatch(resetPlayingIds());
               setFilterValues({
                 type: 'All',
                 media: 'All',

@@ -5,6 +5,7 @@ import { Button } from '../../../../../../components/ui/Button';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { getAskPassword } from '../../../../../../features/profile/userSettingSlice';
 import { FaSpinner } from 'react-icons/fa';
+import { AuthKitProvider, SignInButton } from '@farcaster/auth-kit';
 
 const Social = ({
   handleRemoveBadgePopup,
@@ -17,6 +18,45 @@ const Social = ({
   const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [loading, setLoading] = useState({ state: false, badge: '' });
+
+  const handleFarcaster = async (title, type, value) => {
+    try {
+      addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, {
+        uuid: persistedUserInfo.uuid,
+        accountId: value.fid,
+        accountName: title,
+        isVerified: true,
+        type: type,
+        data: value,
+      });
+      setIsButtonClicked(false);
+      if (addBadge?.status === 200) {
+        showToast('success', 'badgeAdded');
+        queryClient.invalidateQueries(['userInfo']);
+      }
+    } catch (err) {
+      console.error(error);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+    }
+  };
+
+  const config = {
+    rpcUrl: 'https://mainnet.optimism.io',
+    domain: 'on.foundation',
+    siweUri: 'https://example.com/login',
+  };
+
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+  const triggerFarcaster = () => {
+    setIsButtonClicked(true);
+    const a = document.querySelector('._1n3pr301');
+    a.click();
+  };
+
+  const checkPassKeyBadge = (accountName, type) => {
+    return persistedUserInfo?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
+  };
 
   const handleGuestBadgeAdd = () => {
     toast.warning(
@@ -33,10 +73,28 @@ const Social = ({
 
   return (
     <>
-      <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
-        Social
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+        Adding social media accounts helps verify that you're a real human contributing to the Foundation platform.
       </h1>
-      <div className="flex flex-col items-center justify-between rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:border-[3px] tablet:py-[22px]">
+      <AuthKitProvider config={config}>
+        <div className="hidden">
+          <SignInButton
+            onClick={() => console.log('testing clicking....')}
+            // onStatusResponse={(res) => console.log("status callback:", res)}
+            onSuccess={
+              (data) => {
+                // alert("testing...")
+                // console.log("testing...");
+                isButtonClicked && handleFarcaster('Farcaster', 'farcaster', data);
+              }
+              // console.log(`Hello, ${username}! Your fid is ${fid} ${data}.`)
+              // console.log(data)
+            }
+          />
+        </div>
+        <div className="hidden"></div>
+      </AuthKitProvider>
+      <div className="flex flex-col items-center justify-between rounded-[16.068px] pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
           {socials.map((item, index) => (
             <div
@@ -74,10 +132,16 @@ const Social = ({
                     handleGuestBadgeAdd();
                     return;
                   }
+                  if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
+                    triggerFarcaster();
+                    return;
+                  }
                   if (checkSocial(item.accountName)) {
                     handleRemoveBadgePopup({
                       title: item.title,
                       image: item.image,
+                      type: item.type,
+                      badgeType: item.badgeType,
                       accountName: item.accountName,
                     });
                   } else {

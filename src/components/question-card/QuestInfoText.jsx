@@ -5,7 +5,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
         <>
           {questStartData.whichTypeQuestion === 'ranked choise' ? (
             <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-[#85898C] tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
-              Drag and drop options in your order of preference
+              Press and hold options to drag them into your preferred order
             </h4>
           ) : questStartData.whichTypeQuestion === 'multiple choise' ||
             questStartData.whichTypeQuestion === 'open choice' ? (

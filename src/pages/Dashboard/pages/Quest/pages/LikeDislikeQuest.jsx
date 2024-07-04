@@ -17,7 +17,12 @@ import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import showToast from '../../../../../components/ui/Toast';
-import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import {
+  addAdultFilterPopup,
+  resetPlayingIds,
+  setIsShowPlayer,
+  setPlayingPlayerId,
+} from '../../../../../features/quest/utilsSlice';
 
 const LikeDislike = () => {
   const navigate = useNavigate();
@@ -82,6 +87,9 @@ const LikeDislike = () => {
   };
 
   const handleSubmit = async () => {
+    dispatch(setIsShowPlayer(false));
+    dispatch(setPlayingPlayerId(''));
+    dispatch(resetPlayingIds());
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>

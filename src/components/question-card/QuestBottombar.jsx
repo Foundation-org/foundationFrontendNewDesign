@@ -392,13 +392,13 @@ const QuestBottombar = ({
           postProperties !== 'actual-results' &&
           !window.location.href.includes('/p/') &&
           !location.pathname.includes('/l/') &&
-          location.pathname !== '/quest/isfullscreen' ? (
+          location.pathname !== '/post/isfullscreen' ? (
             <div className="flex justify-center ">
               {isFullScreen === undefined ? (
                 <div
                   className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
                   onClick={() => {
-                    navigate('/quest/isfullscreen', {
+                    navigate('/post/isfullscreen', {
                       state: { questId: questStartData._id },
                     });
                   }}

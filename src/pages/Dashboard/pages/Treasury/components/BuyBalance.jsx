@@ -6,6 +6,7 @@ import BuyBalancePopup from '../../../../../components/dialogue-boxes/BuyBalance
 import showToast from '../../../../../components/ui/Toast';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import { FaSpinner } from 'react-icons/fa';
+import { toast } from 'sonner';
 
 const BuyBalance = ({ triggerPulse }) => {
   const location = useLocation();
@@ -43,7 +44,20 @@ const BuyBalance = ({ triggerPulse }) => {
   };
 
   const handleCreate = () => {
-    if (dollar < persistedContants?.FDX_CONVERSION_RATE_WRT_USD) return showToast('warning', 'minAmount');
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    }
+    if (dollar < persistedContants?.FDX_CONVERSION_RATE_WRT_USD)
+      return toast.warning(`Minimum amount is ${conversionRate}`);
     setModalVisible(true);
   };
 
@@ -124,12 +138,11 @@ const BuyBalance = ({ triggerPulse }) => {
               />
             </div>
           </div>
-          {console.log('dollar', dollar)}
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
             {/* <Button variant={'submit'} onClick={handleCreate}>
               Buy More FDX
             </Button> */}
-            {dollar * 1 < 2.5 ? (
+            {dollar * 1 < persistedContants?.FDX_CONVERSION_RATE_WRT_USD ? (
               <Button variant="submit-hollow" onClick={handleCreate}>
                 Buy More FDX
               </Button>

@@ -301,7 +301,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/profile/verification-badges' &&
             location.pathname !== '/profile/lists' &&
             location.pathname !== '/profile/feedback' &&
-            !location.pathname.startsWith('/quest') &&
+            !location.pathname.startsWith('/post') &&
             location.pathname !== '/treasury' &&
             location.pathname !== '/treasury/reward-schedule' &&
             location.pathname !== '/treasury/buy-fdx' &&
@@ -313,7 +313,7 @@ export default function DashboardLayout({ children }) {
                     <Button
                       variant="hollow-submit2"
                       className="bg-white tablet:w-full"
-                      onClick={() => navigate('/quest')}
+                      onClick={() => navigate('/post')}
                     >
                       Create Post
                     </Button>
@@ -380,7 +380,7 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
 
-          {!location.pathname.startsWith('/quest') &&
+          {!location.pathname.startsWith('/post') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/hidden-posts' &&
@@ -393,7 +393,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/treasury/buy-fdx' &&
             location.pathname !== '/treasury/redemption-center' &&
             location.pathname !== '/treasury/ledger' &&
-            location.pathname !== '/quest/isfullscreen' &&
+            location.pathname !== '/post/isfullscreen' &&
             location.pathname !== '/shared-links/result' &&
             !location.pathname.startsWith('/help/') &&
             location.pathname !== '/help/about' &&
@@ -412,8 +412,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/treasury/redemption-center' &&
             location.pathname !== '/treasury/ledger' &&
             !location.pathname.startsWith('/help/') &&
-            // location.pathname !== '/quest' &&
-            !location.pathname.startsWith('/quest') &&
+            !location.pathname.startsWith('/post') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/hidden-posts' &&
@@ -620,7 +619,7 @@ export default function DashboardLayout({ children }) {
             )}
           </div>
 
-          {!location.pathname.startsWith('/quest') &&
+          {!location.pathname.startsWith('/post') &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/post-activity' &&
             location.pathname !== '/treasury' &&

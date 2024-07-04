@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Reorder } from 'framer-motion';
-
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
-
 import Loader from '../../../../../components/ui/Loader';
 import SingleAnswer from '../../../../../components/question-card/options/SingleAnswer';
 import SingleAnswerRankedChoice from '../../../../../components/question-card/options/SingleAnswerRankedChoice';
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
+import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const StartTest = ({
   questStartData,
@@ -25,7 +25,14 @@ const StartTest = ({
   postProperties,
 }) => {
   const { isFullScreen } = useParams();
-  const [dragId, setDragId] = useState(null);
+  const mouseSensor = useSensor(MouseSensor);
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 500,
+      tolerance: 0,
+    },
+  });
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
@@ -66,6 +73,18 @@ const StartTest = ({
     const labelFound = array.filter((item) => item.label === labelToFind);
     return labelFound[0]?.contend === true;
   }
+
+  const handleOnDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setRankedAnswers((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  };
 
   const renderOptionsByTitle = () => {
     const listContainerRef = useRef(null);
@@ -208,41 +227,42 @@ const StartTest = ({
       }
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
         return (
-          <Reorder.Group
-            axis="y"
-            onReorder={setRankedAnswers}
-            values={rankedAnswers}
-            className="flex flex-col gap-[5.7px] tablet:gap-[10px]"
+          <DndContext
+            sensors={[touchSensor, mouseSensor, keyboardSensor]}
+            modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+            collisionDetection={closestCorners}
+            onDragEnd={handleOnDragEnd}
           >
-            {rankedAnswers?.map((item, index) => (
-              <SingleAnswerRankedChoice
-                key={item.id}
-                setDragId={setDragId}
-                isDragging={dragId === item.id ? true : false}
-                questStartData={questStartData}
-                id={index}
-                item={item}
-                number={index + 1}
-                editable={item.edit}
-                deleteable={item.delete}
-                answer={item.label}
-                addedAnswerUuid={item.uuid}
-                answersSelection={answersSelection}
-                setAnswerSelection={setAnswerSelection}
-                rankedAnswers={rankedAnswers}
-                title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                checkInfo={false}
-                check={findLabelChecked(rankedAnswers, item.label)}
-                contend={findLabelContend(rankedAnswers, item.label)}
-                handleCheckChange={(check) => handleCheckChange(index, check)}
-                handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-                setAddOptionField={setAddOptionField}
-                checkOptionStatus={checkOptionStatus}
-                setCheckOptionStatus={setCheckOptionStatus}
-                postProperties={postProperties}
-              />
-            ))}
-          </Reorder.Group>
+            <SortableContext items={rankedAnswers}>
+              {rankedAnswers?.map((item, index) => (
+                <SingleAnswerRankedChoice
+                  key={item.id}
+                  dragId={item.id}
+                  questStartData={questStartData}
+                  id={index}
+                  item={item}
+                  number={index + 1}
+                  editable={item.edit}
+                  deleteable={item.delete}
+                  answer={item.label}
+                  addedAnswerUuid={item.uuid}
+                  answersSelection={answersSelection}
+                  setAnswerSelection={setAnswerSelection}
+                  rankedAnswers={rankedAnswers}
+                  title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                  checkInfo={false}
+                  check={findLabelChecked(rankedAnswers, item.label)}
+                  contend={findLabelContend(rankedAnswers, item.label)}
+                  handleCheckChange={(check) => handleCheckChange(index, check)}
+                  handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
+                  setAddOptionField={setAddOptionField}
+                  checkOptionStatus={checkOptionStatus}
+                  setCheckOptionStatus={setCheckOptionStatus}
+                  postProperties={postProperties}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
         );
       }
     } else {

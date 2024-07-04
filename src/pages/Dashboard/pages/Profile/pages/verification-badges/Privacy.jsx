@@ -22,10 +22,10 @@ const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
         fetchUser={persistedUserInfo}
         setIsPersonalPopup={setIsPersonalPopup}
       />
-      <h1 className="font-Inter mb-2 text-[9.74px] font-medium text-black tablet:mb-4 tablet:text-[22px] tablet:leading-[18px] dark:text-white">
-        Privacy
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+        Add an extra layer of protection to your personal data so only you can access it.
       </h1>
-      <div className="flex flex-col items-center justify-between rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:border-[3px] tablet:py-[22px]">
+      <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
           {legacy.map((item, index) => (
             <div

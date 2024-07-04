@@ -15,16 +15,14 @@ const About = () => {
           Unlock the potential of your personal data.
         </p> */}
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
-          Unlock the potential of your personal data. Every aspect of your life-from your hobbies and habits to your
-          opinions and achievements-is valuable. With Foundation, you control access to your information and its uses,
-          turning what you already do every day into opportunities for earnings.
+          We generate data all the time. Most of it is not worth much on its own. But combining the right pieces at the
+          right time can make it very valuable.
         </p>
       </div>
       <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:px-16 tablet:py-6">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
-          Foundation is a revolutionary data exchange and sentiment analysis platform that introduces a marketplace
-          where users can monetize their personal data, achievements and insights in a secure, anonymous, and ad-free
-          environment.
+          Foundation is a revolutionary data exchange platform where users can monetize their personal data, insights
+          and achievements in a secure and anonymous environment. Imagine brands paying you to show you an ad!
         </p>
       </div>
       <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] tablet:px-16 tablet:py-5">
@@ -43,7 +41,7 @@ const About = () => {
                 Create an account
               </h5>
               <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-                Build your profile, and start earning FDX
+                Build your profile, and start earning.
               </p>
             </div>
           </div>

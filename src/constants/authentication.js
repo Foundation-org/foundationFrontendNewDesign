@@ -7,9 +7,9 @@ export const authMethods = [
   },
   {
     id: 2,
-    title: 'Github',
-    img: 'assets/profile/Github-2x.png',
-    provider: 'github',
+    title: 'Twitter',
+    img: 'assets/profile/Twitter-2x.png',
+    provider: 'twitter',
   },
   {
     id: 3,
@@ -19,8 +19,8 @@ export const authMethods = [
   },
   {
     id: 4,
-    title: 'Twitter',
-    img: 'assets/profile/Twitter-2x.png',
-    provider: 'twitter',
-  }
+    title: 'Github',
+    img: 'assets/profile/Github-2x.png',
+    provider: 'github',
+  },
 ];

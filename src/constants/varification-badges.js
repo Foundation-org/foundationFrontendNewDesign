@@ -38,6 +38,17 @@ export const contacts = [
 ];
 
 export const socials = [
+
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
+    title: 'Twitter',
+    ButtonColor: 'blue',
+    ButtonText: 'Add',
+    NoOfButton: 1,
+    link: '/auth/twitter',
+    accountName: 'twitter',
+    disabled: true,
+  },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
     title: 'LinkedIn',
@@ -57,16 +68,6 @@ export const socials = [
   //   link: '/auth/facebook',
   //   accountName: 'facebook',
   // },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
-    title: 'Twitter',
-    ButtonColor: 'blue',
-    ButtonText: 'Add',
-    NoOfButton: 1,
-    link: '/auth/twitter',
-    accountName: 'twitter',
-    disabled: true,
-  },
   // {
   //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
   //   title: 'Instagram',
@@ -87,6 +88,17 @@ export const socials = [
     link: '/auth/github',
     accountName: 'github',
     disabled: false,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+    title: 'Farcaster',
+    ButtonColor: 'submit',
+    ButtonText: 'Add',
+    disabled: false,
+    NoOfButton: 1,
+    type: 'farcaster',
+    accountName: 'Farcaster',
+    badgeType: 'farcaster',
   },
 ];
 
@@ -124,17 +136,17 @@ export const web3 = [
   //   accountName: 'Passkey',
   //   badgeType: 'passkey',
   // },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
-    title: 'Farcaster',
-    ButtonColor: 'submit',
-    ButtonText: 'Add',
-    disabled: false,
-    NoOfButton: 1,
-    type: 'farcaster',
-    accountName: 'Farcaster',
-    badgeType: 'farcaster',
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+  //   title: 'Farcaster',
+  //   ButtonColor: 'submit',
+  //   ButtonText: 'Add',
+  //   disabled: false,
+  //   NoOfButton: 1,
+  //   type: 'farcaster',
+  //   accountName: 'Farcaster',
+  //   badgeType: 'farcaster',
+  // },
 ];
 
 export const legacy = [
