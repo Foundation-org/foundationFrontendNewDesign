@@ -9,6 +9,8 @@ export default function SwiperMainCarousel({ images }) {
 
   const closeDialogue = () => setImageDialogue(false);
 
+  const [activeSlideIndex1, setActiveSlideIndex1] = useState(0);
+
   return (
     <div className="">
       {imageDialogue && (
@@ -26,6 +28,7 @@ export default function SwiperMainCarousel({ images }) {
           navigation="true"
           navigation-next-el=".custom-next-button"
           navigation-prev-el=".custom-prev-button"
+          onSlideChange={(swiper) => setActiveSlideIndex1(swiper.activeIndex)} // Update activeSlideIndex1 on slide change
         >
           {images.map((image, index) => (
             <swiper-slide key={index}>
@@ -62,10 +65,10 @@ export default function SwiperMainCarousel({ images }) {
 
       <swiper-container
         class="mySwiper2"
-        // space-between="10"
         slides-per-view="auto"
         free-mode="true"
         watch-slides-progress="true"
+        initialSlide={activeSlideIndex1}
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>
