@@ -91,7 +91,7 @@ const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromi
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
         <form
           onSubmit={(e) => {
-            e.preventDefault(); // Prevent the default form submission
+            e.preventDefault();
             validatePassword();
           }}
           className="flex flex-col gap-[14px] tablet:gap-[25px]"

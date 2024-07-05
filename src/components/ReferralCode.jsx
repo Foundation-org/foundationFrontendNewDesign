@@ -110,7 +110,15 @@ const ReferralCode = ({
           />
         </div>
       </div>
-      <div className="px-5 py-[14px] tablet:px-[50px] tablet:py-[25px]">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setRefLoading(true);
+          const data = { code: referralCode.trim() };
+          handleReferral(data);
+        }}
+        className="px-5 py-[14px] tablet:px-[50px] tablet:py-[25px]"
+      >
         <h2 className="text-[9px] font-normal leading-none tracking-[0.15px] text-[#828282] tablet:text-[20px] tablet:leading-6">
           Enter your registration code for completing registration process.
         </h2>
@@ -125,18 +133,11 @@ const ReferralCode = ({
           className="hide_number_input_arrows hide_number_input_arrows2 autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-transparent pr-8 text-[10px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none tablet:text-[22.9px] short:py-0 dark:border-white dark:bg-dark dark:focus:border-white"
         />
         <div className="mt-2 flex w-full justify-end tablet:mt-[25px]">
-          <Button
-            variant="submit"
-            onClick={() => {
-              setRefLoading(true);
-              const data = { code: referralCode.trim() };
-              handleReferral(data);
-            }}
-          >
+          <Button variant="submit" type="submit">
             {refLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Continue'}
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
