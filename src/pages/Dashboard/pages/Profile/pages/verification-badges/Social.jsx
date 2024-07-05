@@ -8,6 +8,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { AuthKitProvider, SignInButton } from '@farcaster/auth-kit';
 import api from '../../../../../../services/api/Axios';
 import showToast from '../../../../../../components/ui/Toast';
+import { QueryClient } from '@tanstack/react-query';
 
 const Social = ({
   handleRemoveBadgePopup,
@@ -20,6 +21,8 @@ const Social = ({
   const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [loading, setLoading] = useState({ state: false, badge: '' });
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const queryClient = new QueryClient();
 
   const handleFarcaster = async (title, type, value) => {
     try {
@@ -47,8 +50,6 @@ const Social = ({
     domain: 'on.foundation',
     siweUri: 'https://example.com/login',
   };
-
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const triggerFarcaster = () => {
     setIsButtonClicked(true);
