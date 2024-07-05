@@ -42,6 +42,7 @@ export default function SwiperMainCarousel({ images, id }) {
           navigation="true"
           navigation-next-el={`.custom-next-button${id}`}
           navigation-prev-el={`.custom-prev-button${id}`}
+          loop="true"
         >
           {images.map((image, index) => (
             <swiper-slide key={index}>
