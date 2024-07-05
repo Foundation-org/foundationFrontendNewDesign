@@ -21,7 +21,7 @@ const Social = ({
 
   const handleFarcaster = async (title, type, value) => {
     try {
-      addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, {
+      const addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, {
         uuid: persistedUserInfo.uuid,
         accountId: value.fid,
         accountName: title,
@@ -34,7 +34,7 @@ const Social = ({
         showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
       }
-    } catch (err) {
+    } catch (error) {
       console.error(error);
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
