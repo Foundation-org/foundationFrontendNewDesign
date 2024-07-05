@@ -131,7 +131,7 @@ const BuyBalance = ({ triggerPulse }) => {
               </h1>
               <input
                 type="number"
-                placeholder="e.g 2"
+                placeholder="e.g 1"
                 value={dollar}
                 onChange={handleDollarChange}
                 className="w-full max-w-[217px] rounded-[3.204px] border-[1.358px] border-[#DEE6F7] bg-[#F9F9F9] px-2 py-[4.5px] text-[9.053px] font-semibold leading-normal focus:outline-none tablet:max-w-[480px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-4 tablet:py-[10px] tablet:text-[20px]"
