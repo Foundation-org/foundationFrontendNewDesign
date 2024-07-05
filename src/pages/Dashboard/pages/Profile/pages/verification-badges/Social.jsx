@@ -6,6 +6,8 @@ import { getConstantsValues } from '../../../../../../features/constants/constan
 import { getAskPassword } from '../../../../../../features/profile/userSettingSlice';
 import { FaSpinner } from 'react-icons/fa';
 import { AuthKitProvider, SignInButton } from '@farcaster/auth-kit';
+import api from '../../../../../../services/api/Axios';
+import showToast from '../../../../../../components/ui/Toast';
 
 const Social = ({
   handleRemoveBadgePopup,
