@@ -1,6 +1,16 @@
+import { useEffect, useRef } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 export default function SwiperFullScreen({ images, selectedImg, id }) {
+  const thumbSwiperRef = useRef(null);
+  const index = images.indexOf(selectedImg);
+
+  useEffect(() => {
+    if (thumbSwiperRef.current && thumbSwiperRef.current.swiper) {
+      thumbSwiperRef.current.swiper.slideTo(index);
+    }
+  }, [index]);
+
   return (
     <div>
       <main className="slider-main-container slider-main-fullscreen">
@@ -43,14 +53,12 @@ export default function SwiperFullScreen({ images, selectedImg, id }) {
       </main>
 
       <swiper-container
+        ref={thumbSwiperRef}
         class={`mySwiperThumbs${id} mySwiper2 swiperFull`}
-        // space-between="10"
         slides-per-view="auto"
         free-mode="true"
         watch-slides-progress="true"
         initial-slide={`${images.indexOf(selectedImg)}`}
-        loop="true"
-        centeredSlides="true"
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>

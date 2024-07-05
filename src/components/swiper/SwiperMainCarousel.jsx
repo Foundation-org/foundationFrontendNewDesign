@@ -12,6 +12,7 @@ export default function SwiperMainCarousel({ images, id }) {
   const [activeSlideIndex1, setActiveSlideIndex1] = useState(0);
 
   const swiperRef = useRef(null);
+  const thumbSwiperRef = useRef(null);
 
   useEffect(() => {
     const swiperEl = swiperRef.current;
@@ -22,6 +23,12 @@ export default function SwiperMainCarousel({ images, id }) {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (thumbSwiperRef.current && thumbSwiperRef.current.swiper) {
+      thumbSwiperRef.current.swiper.slideTo(activeSlideIndex1);
+    }
+  }, [activeSlideIndex1]);
 
   return (
     <div className="">
@@ -79,13 +86,12 @@ export default function SwiperMainCarousel({ images, id }) {
       </main>
 
       <swiper-container
+        ref={thumbSwiperRef}
         class={`mySwiperThumbs${id} mySwiper2 swipperNormal`}
         slides-per-view="auto"
         free-mode="true"
         watch-slides-progress="true"
         initialSlide={activeSlideIndex1}
-        loop="true"
-        centeredSlides="true"
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>
