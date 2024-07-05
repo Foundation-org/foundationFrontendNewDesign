@@ -31,6 +31,7 @@ export default function SwiperMainCarousel({ images, id }) {
           selectedImg={selectedImg}
           imageDialogue={imageDialogue}
           closeDialogue={closeDialogue}
+          id={id}
         />
       )}
       <main className="slider-main-container">

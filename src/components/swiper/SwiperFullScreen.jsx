@@ -1,13 +1,13 @@
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-export default function SwiperFullScreen({ images, selectedImg }) {
+export default function SwiperFullScreen({ images, selectedImg, id }) {
   return (
     <div>
       <main className="slider-main-container slider-main-fullscreen">
         <swiper-container
           id="fullscreen-swiper-container"
           class="mySwiper"
-          thumbs-swiper=".mySwiper2"
+          thumbs-swiper={`.mySwiperThumbs${id}`}
           navigation="true"
           navigation-next-el=".custom-next-button"
           navigation-prev-el=".custom-prev-button"
@@ -41,7 +41,7 @@ export default function SwiperFullScreen({ images, selectedImg }) {
       </main>
 
       <swiper-container
-        class="mySwiper2"
+        class={`mySwiperThumbs${id} mySwiper2`}
         // space-between="10"
         slides-per-view="auto"
         free-mode="true"
