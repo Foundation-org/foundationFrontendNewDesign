@@ -45,6 +45,10 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   const { mutateAsync: addPostInList, isPending: isLoading } = useMutation({
     mutationFn: addPostinAList,
     onSuccess: (resp) => {
+      console.log(resp);
+      if (resp.response?.status === 409) {
+        toast.warning(resp.response.data.message);
+      }
       if (resp.status === 200) {
         showToast('success', 'postAddedtoList');
         queryClient.invalidateQueries(['lists']);
@@ -131,8 +135,8 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
             className={'bg-[#7C7C7C]'}
             onClick={() => {
               if (!listName) {
-                showToast('warning', 'emptyList')
-                return
+                showToast('warning', 'emptyList');
+                return;
               }
               createNewList({
                 userUuid: persistedUserInfo.uuid,
