@@ -3,17 +3,38 @@ import SwiperFullScreen from '../swiper/SwiperFullScreen';
 
 const ImagePopUp = ({ images, selectedImg, imageDialogue, closeDialogue }) => {
   useEffect(() => {
+    const modal = document.getElementById('my_modal_1');
+
     if (imageDialogue) {
-      document.getElementById('my_modal_1').showModal();
+      modal.showModal();
     }
-  }, [imageDialogue]);
+
+    const handlePopState = () => {
+      if (modal.open) {
+        modal.close();
+        closeDialogue();
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [imageDialogue, closeDialogue]);
 
   return (
     <dialog id="my_modal_1" className="modal">
       <div className="modal-box h-dvh max-h-dvh w-dvw max-w-full overflow-y-hidden rounded-none bg-black px-0">
         <div className="modal-action">
           <form method="dialog">
-            <button className="absolute right-[10px] top-[10px] z-[100000] cursor-pointer" onClick={closeDialogue}>
+            <button
+              className="absolute right-[10px] top-[10px] z-[100000] cursor-pointer"
+              onClick={() => {
+                document.getElementById('my_modal_1').close();
+                closeDialogue();
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="51"
