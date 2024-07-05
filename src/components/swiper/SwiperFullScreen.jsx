@@ -14,7 +14,7 @@ export default function SwiperFullScreen({ images, selectedImg, id }) {
           initial-slide={`${images.indexOf(selectedImg)}`}
         >
           {images.map((image, index) => (
-            <swiper-slide key={index} id="swiper-slide">
+            <swiper-slide key={index} id="swiper-slide" className="swiperFullscreen">
               <div className=" mx-auto flex h-[80dvh] w-fit items-center">
                 <div className="relative h-fit w-fit p-4">
                   <img src={image} className="h-fit max-h-full w-full object-contain tablet:h-full" />
@@ -41,12 +41,14 @@ export default function SwiperFullScreen({ images, selectedImg, id }) {
       </main>
 
       <swiper-container
-        class={`mySwiperThumbs${id} mySwiper2`}
+        class={`mySwiperThumbs${id} mySwiper2 swiperFull`}
         // space-between="10"
         slides-per-view="auto"
         free-mode="true"
         watch-slides-progress="true"
         initial-slide={`${images.indexOf(selectedImg)}`}
+        loop="true"
+        centeredSlides="true"
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>

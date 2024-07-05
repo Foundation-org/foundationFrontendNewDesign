@@ -78,11 +78,13 @@ export default function SwiperMainCarousel({ images, id }) {
       </main>
 
       <swiper-container
-        class={`mySwiperThumbs${id} mySwiper2`}
+        class={`mySwiperThumbs${id} mySwiper2 swipperNormal`}
         slides-per-view="auto"
         free-mode="true"
         watch-slides-progress="true"
         initialSlide={activeSlideIndex1}
+        loop="true"
+        centeredSlides="true"
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>
