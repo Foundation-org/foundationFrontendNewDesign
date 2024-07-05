@@ -127,18 +127,20 @@ export function Router() {
                 <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
               </Route>
-              <Route path="profile/" element={<Profile />}>
-                <Route path="" element={<Summary />} />
-                <Route path="verification-badges" element={<VerificationBadges />} />
-                <Route path="post-activity" element={<Contributions />} />
-                <Route path="lists" element={<Lists />} />
-                <Route path="postsbylist/:categoryId" element={<PostsByList />} />
-                <Route path="ledger" element={<BasicTable />} />
-                <Route path="hidden-posts" element={<HiddenPosts />} />
-                <Route path="shared-links" element={<SharedLinks />} />
-                <Route path="user-settings" element={<UserSettings />} />
-                <Route path="feedback" element={<Feedback />} />
-                <Route path="change-password" element={<ChangePassword />} />
+              <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+                <Route path="profile/" element={<Profile />}>
+                  <Route path="" element={<Summary />} />
+                  <Route path="verification-badges" element={<VerificationBadges />} />
+                  <Route path="post-activity" element={<Contributions />} />
+                  <Route path="lists" element={<Lists />} />
+                  <Route path="postsbylist/:categoryId" element={<PostsByList />} />
+                  <Route path="ledger" element={<BasicTable />} />
+                  <Route path="hidden-posts" element={<HiddenPosts />} />
+                  <Route path="shared-links" element={<SharedLinks />} />
+                  <Route path="user-settings" element={<UserSettings />} />
+                  <Route path="feedback" element={<Feedback />} />
+                  <Route path="change-password" element={<ChangePassword />} />
+                </Route>
               </Route>
             </Route>
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
