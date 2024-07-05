@@ -27,7 +27,7 @@ export default function SwiperFullScreen({ images, selectedImg, id }) {
         >
           {images.map((image, index) => (
             <swiper-slide key={index} id="swiper-slide" className="swiperFullscreen">
-              <div className=" mx-auto flex h-[80dvh] w-fit items-center">
+              <div className=" mx-auto my-4 flex h-[70dvh] w-fit items-center tablet:h-[80dvh] ">
                 <div className="relative h-fit w-fit p-4">
                   <img src={image} className="h-fit max-h-full w-full object-contain tablet:h-full" />
                   <p className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
