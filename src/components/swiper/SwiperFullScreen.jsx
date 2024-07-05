@@ -12,6 +12,8 @@ export default function SwiperFullScreen({ images, selectedImg, id }) {
           navigation-next-el=".custom-next-button"
           navigation-prev-el=".custom-prev-button"
           initial-slide={`${images.indexOf(selectedImg)}`}
+          loop="true"
+          centeredSlides="true"
         >
           {images.map((image, index) => (
             <swiper-slide key={index} id="swiper-slide" className="swiperFullscreen">
