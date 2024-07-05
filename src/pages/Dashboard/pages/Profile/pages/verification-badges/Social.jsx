@@ -22,7 +22,7 @@ const Social = ({
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [loading, setLoading] = useState({ state: false, badge: '' });
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const queryClient = new useQueryClient();
+  const queryClient = useQueryClient();
 
   const handleFarcaster = async (title, type, value) => {
     try {
