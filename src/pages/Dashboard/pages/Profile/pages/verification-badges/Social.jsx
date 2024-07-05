@@ -22,7 +22,7 @@ const Social = ({
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [loading, setLoading] = useState({ state: false, badge: '' });
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  // const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
   const handleFarcaster = async (title, type, value) => {
     try {
@@ -37,7 +37,7 @@ const Social = ({
       setIsButtonClicked(false);
       if (addBadge?.status === 200) {
         showToast('success', 'badgeAdded');
-        // queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       console.error(error);
