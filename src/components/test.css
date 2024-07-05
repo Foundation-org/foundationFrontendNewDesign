@@ -76,16 +76,14 @@ swiper-slide {
   align-items: center;
 }
 
-
 .mySwiper2 .swiper-slide-thumb-active {
   opacity: 1;
 }
 
-.swipperNormal .swiper-slide-thumb-active img{
-  border: 3px solid #647785
+.swipperNormal .swiper-slide-thumb-active img {
+  border: 3px solid #647785;
 }
 
 .swiperFull .swiper-slide-thumb-active img {
-  border: 3px solid #647785
+  border: 3px solid #647785;
 }
-
