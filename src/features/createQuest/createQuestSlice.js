@@ -326,7 +326,14 @@ export const createQuestSlice = createSlice({
       state.optionsValue = updatedTypedValues;
     },
     drapAddDrop: (state, action) => {
-      state.optionsValue = action.payload.newTypedValues;
+      const updatedValues = action.payload.newTypedValues.map((item, index) => {
+        return {
+          ...item,
+          id: `index-${index}`,
+        };
+      });
+
+      state.optionsValue = updatedValues;
     },
     handleChangeOption: (state, action) => {
       state.optionsValue = action.payload.newTypedValues;
