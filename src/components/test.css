@@ -5,9 +5,9 @@
 }
 
 swiper-container {
-  max-width: 100%;
+  max-width: max-content;
   height: 260px;
-  width: fit-content;
+  width: 100%;
 }
 
 @media screen and (min-width: 768px) {
@@ -23,7 +23,7 @@ swiper-container {
 }
 
 swiper-slide {
-  width: 100%;
+  width: 100% !important;
   height: 100%;
   position: relative;
 }
