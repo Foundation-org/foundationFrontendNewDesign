@@ -127,7 +127,9 @@ export const Settings = () => {
             <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
               <div className="">
                 <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Default Sort</h1>
-                <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Enable Default Sort.</p>
+                <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
+                  Automatically sort results from highest to lowest
+                </p>
               </div>
               <Switch
                 checked={defaultSort}

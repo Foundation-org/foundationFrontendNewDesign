@@ -342,12 +342,11 @@ const QuestBottombar = ({
           {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null} {timeAgo}
         </h4>
       </div>
-
       {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
         <div className="flex items-center justify-center gap-[8px] tablet:gap-[25px]">
           {postProperties !== 'HiddenPosts' &&
             postProperties !== 'SharedLinks' &&
-            questStartData.startStatus === '' &&
+            !questStartData?.result?.length >= 1 &&
             createdBy === localStorage.getItem('uuid') && (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/deletePost.png`}
