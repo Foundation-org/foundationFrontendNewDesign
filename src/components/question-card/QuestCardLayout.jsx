@@ -273,10 +273,8 @@ const QuestCardLayout = ({
         </div>
       )}
 
-      {questStartData.url &&
-        questStartData.url.length !== 0 &&
-        questStartData.url[0] !== '' &&
-        (isImageUrl(questStartData.url) ? (
+      {questStartData.url && questStartData.url.length !== 0 && questStartData.url[0] !== '' ? (
+        isImageUrl(questStartData.url) ? (
           <EmbededImage description={questStartData.description} url={questStartData.url} id={questStartData._id} />
         ) : (
           <EmbededVideo
@@ -284,13 +282,17 @@ const QuestCardLayout = ({
             url={questStartData.url}
             questId={questStartData._id}
             playing={playing}
-
             // setPlayingPlayerId={setPlayingPlayerId}
             // setIsPlaying={setIsPlaying}
             // setIsShowPlayer={setIsShowPlayer}
             // isPlaying={isPlaying}
           />
-        ))}
+        )
+      ) : (
+        <div className="absolute bottom-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-hidden text-center">
+          <span className="loading loading-ring loading-lg text-black"></span>
+        </div>
+      )}
       <CardTopbar
         questStartData={questStartData}
         QuestTopic={questStartData.QuestTopic}
