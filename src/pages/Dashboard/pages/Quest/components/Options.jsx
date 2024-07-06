@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { useRef } from 'react';
+import { TextareaAutosize } from '@mui/material';
 
 const Options = ({
   id,
@@ -31,13 +31,6 @@ const Options = ({
     transform: CSS.Transform.toString(transform),
   };
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const textareaRef = useRef(null);
-
-  const autoGrow = () => {
-    const element = textareaRef.current;
-    element.style.height = '5px';
-    element.style.height = `${element.scrollHeight}px`;
-  };
 
   return (
     <div
@@ -122,26 +115,7 @@ const Options = ({
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } w-5 min-w-5 border-y tablet:border-y-[3px]`}
               ></div>
-              <textarea
-                ref={textareaRef}
-                onInput={autoGrow}
-                id={`input-${number}`}
-                onChange={(e) => handleChange(e.target.value)}
-                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value)}
-                value={typedValue}
-                placeholder="Add your own option"
-                tabIndex={number + 2}
-                autoFocus={number >= 5 ? true : false}
-                onKeyDown={(e) =>
-                  (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
-                }
-                className={`${
-                  isDragging
-                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } box-border flex h-[27px] min-h-[27px] w-full resize-none items-center overflow-hidden border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:min-h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:text-[18px] dark:text-[#7C7C7C]`}
-              />
-              {/* <TextareaAutosize
+              <TextareaAutosize
                 id={`input-${number}`}
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value)}
@@ -157,7 +131,7 @@ const Options = ({
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px] dark:text-[#7C7C7C]`}
-              /> */}
+              />
               <div
                 id={`test${number}`}
                 className={`${

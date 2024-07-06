@@ -16,7 +16,7 @@ const TermsOfService = () => {
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
           Foundation Internet Organization, Inc., a Delaware-registered company located at 651 N. Broad Street Suite
           201, Middletown, DE 19709, United States, operates the website on.foundation and other related services.
-          Contact us at 7409738056, justin@foundation-io.com, or by mail at our address.
+          Contact us at justin@foundation-io.com, or by mail at our address.
         </p>
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
           Your access and use of our services indicate your agreement to these Terms. If you do not agree, discontinue

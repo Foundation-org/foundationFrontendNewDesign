@@ -96,25 +96,35 @@ const TermOfService = () => {
         {termsAndConditionsArray.map((section, index) => (
           <li key={index}>
             <h3 className="term_policy_subheading">{section.section}</h3>
-            <ul className={section.section === "Code of Conduct" ? "list-decimal pl-2" : section.section === "Contact Us"?" pl-2": "list-disc pl-2"}>
+            <ul
+              className={
+                section.section === 'Code of Conduct'
+                  ? 'list-decimal pl-2'
+                  : section.section === 'Contact Us'
+                    ? ' pl-2'
+                    : 'list-disc pl-2'
+              }
+            >
               {section.content.map((content, contentIndex) => (
                 <li key={contentIndex} className="term_policy_paragraph">
                   <h3 className="term_policy_subheading">{content.heading}</h3>
                   {content.subHeading && <h3 className="term_policy_subheading">{content.subHeading}</h3>}
                   <p>{content.text}</p>
-                  { section.section === "Contact Us" && <br/>}
-                  <ul className={ section.section !== "Contact Us" && "list-disc pl-6"}>{content.list && content.list.map((list) => <li>{list}</li>)}</ul>
+                  {section.section === 'Contact Us' && <br />}
+                  <ul className={section.section !== 'Contact Us' && 'list-disc pl-6'}>
+                    {content.list && content.list.map((list) => <li>{list}</li>)}
+                  </ul>
                   <ol className="list-decimal pl-6">{content.list2 && content.list2.map((list) => <li>{list}</li>)}</ol>
                   <p>{content.text2}</p>
                 </li>
               ))}
             </ul>
-           <br />
+            <br />
             {section.endText && <p className="term_policy_paragraph">{section.endText}</p>}
             {section.endText2 && <p className="term_policy_paragraph">{section.endText2}</p>}
           </li>
         ))}
-      <h3 className="term_policy_subheading">End of Terms of Use</h3>
+        <h3 className="term_policy_subheading">End of Terms of Use</h3>
       </ul>
     </TermsPrivacyLayout>
   );

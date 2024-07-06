@@ -266,6 +266,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
             {props.editable ? (
               <TextareaAutosize
+                inputMode="text"
                 id={`addedOption-${answer}`}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
@@ -346,7 +347,9 @@ const SingleAnswerMultipleChoice = (props) => {
         ) : props.btnText !== 'Results' ? (
           <div
             className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px] dark:bg-[#000]"
-            onClick={handleContendPopup}
+            onClick={() => {
+              !props.deleteable && handleContendPopup();
+            }}
           >
             {props.deleteable ? (
               <img
