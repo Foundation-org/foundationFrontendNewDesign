@@ -90,7 +90,7 @@ export const EmbededVideo = ({
   return (
     // <div className="mx-[22px] mb-2 mt-[12px] flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[0px] tablet:mt-[23px] tablet:border-[2.755px] tablet:px-2">
     <div className="relative ">
-      {!loading && (
+      {loading && (
         <div className="absolute bottom-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-hidden text-center">
           <span className="loading loading-ring loading-lg text-black"></span>
         </div>
