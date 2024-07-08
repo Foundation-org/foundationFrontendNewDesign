@@ -225,26 +225,56 @@ export default function SharedLinks() {
 
       <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
-          {content}
           {!isFetching ? (
-            <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
-              {getSharedLinksFilters.searchData && data?.pages[0].length == 0 ? (
-                <div className="my-[15vh] flex  flex-col items-center justify-center">
-                  {persistedTheme === 'dark' ? (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
-                      alt="noposts image"
-                    />
-                  ) : (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
-                      alt="noposts image"
-                      className="h-[173px] w-[160px]"
-                    />
-                  )}
+            <>
+              {content}
+              <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
+                {getSharedLinksFilters.searchData && data?.pages[0].length == 0 ? (
+                  <div className="my-[15vh] flex  flex-col items-center justify-center">
+                    {persistedTheme === 'dark' ? (
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
+                        alt="noposts image"
+                      />
+                    ) : (
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
+                        alt="noposts image"
+                        className="h-[173px] w-[160px]"
+                      />
+                    )}
+                    <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+                      <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
+                        No matching posts found!
+                      </p>
+                      <button
+                        className={`${
+                          persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                        }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                        onClick={() => {
+                          dispatch(updateSharedLinkSearch(''));
+                        }}
+                      >
+                        Clear Search
+                      </button>
+                    </div>
+                  </div>
+                ) : !getSharedLinksFilters.searchData && data?.pages[0].length === 0 ? (
+                  dispatch(setAreShareLinks(false)) && (
+                    <p className="text-center text-[4vw] laptop:text-[2vw]">
+                      <b>No shared posts!</b>
+                    </p>
+                  )
+                ) : !getSharedLinksFilters.searchData && data?.pages[0].length !== 0 ? (
+                  dispatch(setAreShareLinks(true)) && <></>
+                ) : !getSharedLinksFilters.searchData ? (
+                  <p className="text-center text-[4vw] laptop:text-[2vw]">
+                    <b>No more shared posts!</b>
+                  </p>
+                ) : (
                   <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
                     <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
-                      No matching posts found!
+                      You are all caught up!
                     </p>
                     <button
                       className={`${
@@ -257,38 +287,10 @@ export default function SharedLinks() {
                       Clear Search
                     </button>
                   </div>
-                </div>
-              ) : !getSharedLinksFilters.searchData && data?.pages[0].length === 0 ? (
-                dispatch(setAreShareLinks(false)) && (
-                  <p className="text-center text-[4vw] laptop:text-[2vw]">
-                    <b>No shared posts!</b>
-                  </p>
-                )
-              ) : !getSharedLinksFilters.searchData && data?.pages[0].length !== 0 ? (
-                dispatch(setAreShareLinks(true)) && <></>
-              ) : !getSharedLinksFilters.searchData ? (
-                <p className="text-center text-[4vw] laptop:text-[2vw]">
-                  <b>No more shared posts!</b>
-                </p>
-              ) : (
-                <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                  <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
-                    You are all caught up!
-                  </p>
-                  <button
-                    className={`${
-                      persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                    }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
-                    onClick={() => {
-                      dispatch(updateSharedLinkSearch(''));
-                    }}
-                  >
-                    Clear Search
-                  </button>
-                </div>
-              )}
-              <div></div>
-            </div>
+                )}
+                <div></div>
+              </div>
+            </>
           ) : (
             <div className="flex items-center justify-center">
               <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />

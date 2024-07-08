@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
 import { changeTheme } from '../../../../../../features/utils/utilsSlice';
 import { signOut, updateUserSettings } from '../../../../../../services/api/userAuth';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { resetFilters } from '../../../../../../features/sidebar/filtersSlice';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ import { getAskPassword, setAskPassword } from '../../../../../../features/profi
 export const Settings = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);

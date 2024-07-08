@@ -298,7 +298,7 @@ const QuestionCard = (props) => {
       setLoading(false);
     },
     onError: (err) => {
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       setLoading(false);
     },
   });
@@ -309,11 +309,11 @@ const QuestionCard = (props) => {
       queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
-        showToast('warning', 'selectedSameOptions')
+        showToast('warning', 'selectedSameOptions');
       }
       if (resp.data.message === 'You can change your answer once every 1 hour') {
         setLoading(false);
-        showToast('warning', 'changeOptionTimePeriod')
+        showToast('warning', 'changeOptionTimePeriod');
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
         setLoading(false);
@@ -324,7 +324,7 @@ const QuestionCard = (props) => {
       dispatch(questUtilsActions.resetaddOptionLimit());
     },
     onError: (err) => {
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       setLoading(false);
 
       dispatch(questUtilsActions.resetaddOptionLimit());
@@ -383,7 +383,7 @@ const QuestionCard = (props) => {
       };
 
       if (!params.answer.selected) {
-        showToast('warning', 'emptySelection')
+        showToast('warning', 'emptySelection');
         setLoading(false);
         return;
       }
@@ -467,7 +467,7 @@ const QuestionCard = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            showToast('warning', 'optionBlank')
+            showToast('warning', 'optionBlank');
             setLoading(false);
             return;
           }
@@ -494,7 +494,7 @@ const QuestionCard = (props) => {
 
             setAnswerSelection(updatedArray);
           } else {
-            showToast('warning', 'emptySelection')
+            showToast('warning', 'emptySelection');
             setLoading(false);
           }
         }
@@ -511,7 +511,7 @@ const QuestionCard = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          showToast('warning', 'optionBlank')
+          showToast('warning', 'optionBlank');
           setLoading(false);
           return;
         }
@@ -538,7 +538,7 @@ const QuestionCard = (props) => {
 
           setAnswerSelection(updatedArray);
         } else {
-          showToast('warning', 'emptySelection')
+          showToast('warning', 'emptySelection');
           setLoading(false);
         }
       }
@@ -595,7 +595,7 @@ const QuestionCard = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            showToast('warning', 'optionBlank')
+            showToast('warning', 'optionBlank');
             setLoading(false);
             return;
           }
@@ -614,7 +614,7 @@ const QuestionCard = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          showToast('warning', 'optionBlank')
+          showToast('warning', 'optionBlank');
           setLoading(false);
           return;
         }

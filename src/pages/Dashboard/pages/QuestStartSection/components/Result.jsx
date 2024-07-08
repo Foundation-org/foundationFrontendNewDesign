@@ -141,24 +141,36 @@ const Result = (props) => {
   const sortAnswersByAscDesc = (data, order) => {
     const questAnswersCopy = [...data.questStartData.QuestAnswers];
     return questAnswersCopy.sort((a, b) => {
-      const percentageA = parseFloat(
-        data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
-          a.question
-        ]?.replace('%', '')
-          ? data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
-              a.question
-            ]?.replace('%', '')
-          : 0,
-      );
-      const percentageB = parseFloat(
-        data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
-          b.question
-        ]?.replace('%', '')
-          ? data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
-              b.question
-            ]?.replace('%', '')
-          : 0,
-      );
+      // const percentageA = parseFloat(
+      //   data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
+      //     a.question
+      //   ]?.replace('%', '')
+      //     ? data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
+      //         a.question
+      //       ]?.replace('%', '')
+      //     : 0,
+      // );
+      // const percentageB = parseFloat(
+      //   data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
+      //     b.question
+      //   ]?.replace('%', '')
+      //     ? data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
+      //         b.question
+      //       ]?.replace('%', '')
+      //     : 0,
+      // );
+      const lastSelectedPercentage =
+        data.questStartData?.selectedPercentage?.[data.questStartData.selectedPercentage.length - 1];
+
+      const percentageA =
+        lastSelectedPercentage && a.question in lastSelectedPercentage
+          ? parseFloat(lastSelectedPercentage[a.question]?.replace('%', '') || 0)
+          : 0;
+
+      const percentageB =
+        lastSelectedPercentage && b.question in lastSelectedPercentage
+          ? parseFloat(lastSelectedPercentage[b.question]?.replace('%', '') || 0)
+          : 0;
 
       if (order === 'ascending') {
         return percentageA - percentageB;
