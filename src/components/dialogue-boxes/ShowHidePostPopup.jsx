@@ -44,7 +44,7 @@ export default function ShowHidePostPopup({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-      showToast('success', 'postHidden')
+      showToast('success', 'postHidden');
       queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
@@ -66,7 +66,7 @@ export default function ShowHidePostPopup({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-      showToast('success', 'postHidden')
+      showToast('success', 'postHidden');
       queryClient.invalidateQueries(['userInfo']);
 
       queryClient.setQueriesData(['posts'], (oldData) => {
@@ -104,7 +104,7 @@ export default function ShowHidePostPopup({
       return;
     } else {
       if (selectedTitle === '') {
-        showToast('warning', 'hiddenReason')
+        showToast('warning', 'hiddenReason');
         setIsLoading(false);
         return;
       } else {
@@ -139,26 +139,28 @@ export default function ShowHidePostPopup({
     >
       <div className="px-[25px] py-[13px] tablet:px-[50px] tablet:py-[27px]">
         <div className="flex flex-col gap-[5px] tablet:gap-3">
-          {data.map((item, index) => (
-            <div
-              key={index + 1}
-              id={item.id}
-              className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-[#DEE6F7] px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
-              onClick={() => handleCheckboxChange(index)}
-            >
-              <div id="custom-checkbox-popup" className="flex h-full items-center">
-                <input
-                  type="checkbox"
-                  className="checkbox h-[12.63px] w-[12.63px] rounded-full after:mt-[-2px] tablet:h-[25px] tablet:w-[25px] tablet:after:mt-[1px]"
-                  checked={checkboxStates[index]}
-                  onChange={() => handleCheckboxChange(index)}
-                />
+          {data
+            .filter((filterItem) => (questStartData.usersAddTheirAns ? ![4].includes(filterItem.id) : true))
+            .map((item, index) => (
+              <div
+                key={index + 1}
+                id={item.id}
+                className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-[#DEE6F7] px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
+                onClick={() => handleCheckboxChange(index)}
+              >
+                <div id="custom-checkbox-popup" className="flex h-full items-center">
+                  <input
+                    type="checkbox"
+                    className="checkbox h-[12.63px] w-[12.63px] rounded-full after:mt-[-2px] tablet:h-[25px] tablet:w-[25px] tablet:after:mt-[1px]"
+                    checked={checkboxStates[index]}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                </div>
+                <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] tablet:text-[19px] tablet:leading-[23px]">
+                  {item.title}
+                </p>
               </div>
-              <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] tablet:text-[19px] tablet:leading-[23px]">
-                {item.title}
-              </p>
-            </div>
-          ))}
+            ))}
         </div>
         <div className="mt-[10px] flex justify-center gap-4 tablet:mt-[27px]">
           <Button

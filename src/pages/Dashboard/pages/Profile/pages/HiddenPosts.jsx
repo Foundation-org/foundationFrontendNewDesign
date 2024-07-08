@@ -11,8 +11,6 @@ import api from '../../../../../services/api/Axios';
 import { setAreHiddenPosts } from '../../../../../features/quest/utilsSlice';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 
-
-
 export default function HiddenPosts() {
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const dispatch = useDispatch();
@@ -161,9 +159,8 @@ export default function HiddenPosts() {
         </div>
       </div>
 
-      {/* Main Content */}{questUtils.areHiddenPosts &&
-
-
+      {/* Main Content */}
+      {questUtils.areHiddenPosts && (
         <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
           {/* <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Hidden Posts
@@ -203,7 +200,8 @@ export default function HiddenPosts() {
               )}
             </div>
           </div>
-        </div>}
+        </div>
+      )}
 
       <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
@@ -229,34 +227,36 @@ export default function HiddenPosts() {
                       No matching posts found!
                     </p>
                     <button
-                      className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                        }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                      className={`${
+                        persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                       onClick={() => dispatch(updateSearch(''))}
                     >
                       Clear Search
                     </button>
                   </div>
                 </div>
-              ) : !getHiddenPostFilters.searchData && data?.pages[0].length === 0 ? dispatch(setAreHiddenPosts(false)) &&
-                (
+              ) : !getHiddenPostFilters.searchData && data?.pages[0].length === 0 ? (
+                dispatch(setAreHiddenPosts(false)) && (
                   <p className="text-center text-[4vw] laptop:text-[2vw]">
                     <b>No hidden posts!</b>
                   </p>
-                ) : !getHiddenPostFilters.searchData && data?.pages[0].length !== 0 ? dispatch(setAreHiddenPosts(true)) &&
-                  (
-                    <></>
-                  ) : !getHiddenPostFilters.searchData ? (
-                    <p className="text-center text-[4vw] laptop:text-[2vw]">
-                      <b>No more hidden posts!</b>
-                    </p>
-                  ) : (
+                )
+              ) : !getHiddenPostFilters.searchData && data?.pages[0].length !== 0 ? (
+                dispatch(setAreHiddenPosts(true)) && <></>
+              ) : !getHiddenPostFilters.searchData ? (
+                <p className="text-center text-[4vw] laptop:text-[2vw]">
+                  <b>No more hidden posts!</b>
+                </p>
+              ) : (
                 <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
                   <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
                     You are all caught up!
                   </p>
                   <button
-                    className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                    }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                     onClick={() => dispatch(updateSearch(''))}
                   >
                     Clear Search
