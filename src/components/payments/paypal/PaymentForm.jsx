@@ -126,7 +126,7 @@ export const PaymentForm = ({ dollar, handleClose, triggerPulse }) => {
     };
 
     return (
-      <div className="flex w-full justify-end">
+      <div className="mt-[10px] flex w-full justify-end tablet:mt-5">
         <Button variant={'submit'} onClick={submitHandler} disabled={isLoading}>
           {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Pay'}
         </Button>
