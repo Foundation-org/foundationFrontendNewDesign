@@ -62,6 +62,8 @@
     <div id="root"></div>
     <!-- Add script for checking and reloading page -->
     <script>
+      console.log('mainElement ouside all', document.querySelector('#root'));
+      console.log('mainElement ouside all2', document.querySelector('#root')?.innerHTML.trim());
       document.addEventListener('DOMContentLoaded', function () {
         // Check if the browser is Safari
         const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -73,9 +75,14 @@
             // Check if the main element is empty or has unexpected content
             const mainElement = document.querySelector('#root'); // Change '#root' to your main container selector
 
+            console.log('maiElement', mainElement);
+            console.log('maiElement inner html', mainElement.innerHTML.trim());
+
             if (!mainElement || mainElement.innerHTML.trim() === '') {
+              console.log('inside first if');
               // Reload the page if main content is missing or empty, and ensure it's not already reloading
               if (!isReloading) {
+                console.log('inside 2nd if');
                 isReloading = true;
                 window.location.reload();
               }
@@ -84,6 +91,7 @@
 
           // Use the `load` event to ensure all resources have been loaded
           window.addEventListener('load', function () {
+            console.log('i got called');
             setTimeout(checkContent, 100); // Adjust the delay as needed
           });
         }
