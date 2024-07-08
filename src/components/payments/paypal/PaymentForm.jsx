@@ -6,6 +6,7 @@ import { paypalPay } from '../../../services/api/payments';
 import { PayPalHostedFieldsProvider, PayPalHostedField, usePayPalHostedFields } from '@paypal/react-paypal-js';
 import { FaSpinner } from 'react-icons/fa6';
 import showToast from '../../ui/Toast';
+import { toast } from 'sonner';
 
 export const url = import.meta.env.VITE_API_URL;
 
@@ -122,6 +123,8 @@ export const PaymentForm = ({ dollar, handleClose, triggerPulse }) => {
         .then(async (data) => onHandleMessage(await onApproveCallback({ data, uuid: persistedUserInfo.uuid })))
         .catch((orderData) => {
           onHandleMessage(`Sorry, your transaction could not be processed...${JSON.stringify(orderData)}`);
+          toast.warning(`Sorry, your transaction could not be processed...`);
+          setIsLoading(false);
         });
     };
 
