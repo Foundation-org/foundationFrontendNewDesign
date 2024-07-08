@@ -1,6 +1,6 @@
 // import { toast } from 'sonner';
 import { useState, useEffect, useRef } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { useDispatch, useSelector } from 'react-redux';
 
 // // import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { useSelector } from 'react-redux';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
+import { FaSpinner } from 'react-icons/fa';
 
 // import { suppressPost } from '../../services/api/questsApi';
 // import YouTubePlayer from './YoutubePlayer';
@@ -75,7 +76,7 @@ export const EmbededVideo = ({
 
   function identifyMediaUrl(url) {
     const youtubeRegex =
-      /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      /(?:youtube\.com\/(?:[^\/\n\s]+\/(?:shorts\/)?|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const soundcloudRegex = /soundcloud\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/;
 
     if (youtubeRegex.test(url)) {
@@ -88,98 +89,98 @@ export const EmbededVideo = ({
   }
 
   return (
-    // <div className="mx-[22px] mb-2 mt-[12px] flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[0px] tablet:mt-[23px] tablet:border-[2.755px] tablet:px-2">
-    <div className="relative ">
+    <div className={`relative flex flex-col justify-start pb-2 pt-1 tablet:py-2`}>
+      <h2 className="mb-1 ml-2 text-[8px] font-medium text-[#7C7C7C] tablet:mb-2 tablet:ml-3 tablet:text-[14.692px]">
+        {description}
+      </h2>
       {loading && (
-        <div className="absolute bottom-0 top-0 z-50 flex h-full w-full items-center justify-center overflow-hidden text-center">
-          <span className="loading loading-ring loading-lg text-black"></span>
+        <div
+          className={`flex h-full w-full flex-col items-center justify-center ${identifyMediaUrl(url[0]) === 'YouTube' ? 'max-h-[180px] min-h-[180px] tablet:max-h-[371px] tablet:min-h-[371px]' : 'max-h-[126px] min-h-[126px] tablet:max-h-[180px] tablet:min-h-[180px]'}`}
+        >
+          <FaSpinner className="size-5 animate-spin tablet:size-6" />
+          <h1>{identifyMediaUrl(url[0]) === 'YouTube' ? 'Loading video...' : 'Loading audio...'}</h1>
         </div>
       )}
-      <div className="flex flex-col justify-start pb-2 pt-1 tablet:py-2">
-        <h2 className="mb-1 ml-2 text-[8px] font-medium text-[#7C7C7C] tablet:mb-2 tablet:ml-3 tablet:text-[14.692px]">
-          {description}
-        </h2>
-        <div className=" relative">
-          <ReactPlayer
-            ref={playerRef}
-            url={mediaURL}
-            onReady={() => setLoading(false)}
-            className={`react-player `}
-            onError={(e) => {
-              console.log('hamza', e);
-              // toast.error('Invalid URL');
-              console.log('Invalid URl', questId);
-              // suppressPost(questId);
-            }}
-            onStart={() => {
-              dispatch(setPlayingPlayerId(questId));
-              // setPlayingPlayerId(questId);
-              if (!playing) {
-                dispatch(toggleMedia(true));
-                // setIsPlaying(true);
-              }
-              dispatch(setIsShowPlayer(true));
-              // setIsShowPlayer(true);
-            }}
-            onPlay={() => {
-              dispatch(setPlayingPlayerId(questId));
-              // setPlayingPlayerId(questId);
-              if (!playing) {
-                // setIsPlaying(true);
-                dispatch(toggleMedia(true));
-              }
-              dispatch(setIsShowPlayer(true));
-              // setIsShowPlayer(true);
-            }}
-            width="100%"
-            height="100%"
-            onPause={() => {
-              if (playing) {
-                // setIsPlaying(false);
-                dispatch(toggleMedia(false));
-              }
-            }}
-            // single_active={true}
-            controls={true} // Hide player controls
-            muted={false} // Unmute audio
-            playing={playing} // Do not autoplay
-            // loop={true} // Enable looping
-            // loop={!url.includes(soundcloudUnique)}
-            config={{
-              soundcloud: {
-                options: {
-                  auto_play: false, // Disable auto play
-                  hide_related: true, // Hide related tracks
-                  show_comments: false, // Hide comments
-                  show_user: false, // Hide user information
-                  show_reposts: false, // Hide reposts
-                  show_teaser: false, // Hide track teasers
-                  visual: false, // Disable visual mode
-                  show_playcount: false, // Hide play count
-                  sharing: false, // Disable sharing
-                  buying: false, // Disable buying options
-                  download: false, // Disable download option
-                },
+      <div className={`relative ${loading ? 'invisible h-0' : ''}`}>
+        <ReactPlayer
+          ref={playerRef}
+          url={mediaURL}
+          onReady={() => setLoading(false)}
+          className={`react-player `}
+          onError={(e) => {
+            console.log('hamza', e);
+            // toast.error('Invalid URL');
+            console.log('Invalid URl', questId);
+            // suppressPost(questId);
+          }}
+          onStart={() => {
+            dispatch(setPlayingPlayerId(questId));
+            // setPlayingPlayerId(questId);
+            if (!playing) {
+              dispatch(toggleMedia(true));
+              // setIsPlaying(true);
+            }
+            dispatch(setIsShowPlayer(true));
+            // setIsShowPlayer(true);
+          }}
+          onPlay={() => {
+            dispatch(setPlayingPlayerId(questId));
+            // setPlayingPlayerId(questId);
+            if (!playing) {
+              // setIsPlaying(true);
+              dispatch(toggleMedia(true));
+            }
+            dispatch(setIsShowPlayer(true));
+            // setIsShowPlayer(true);
+          }}
+          width="100%"
+          height="100%"
+          onPause={() => {
+            if (playing) {
+              // setIsPlaying(false);
+              dispatch(toggleMedia(false));
+            }
+          }}
+          // single_active={true}
+          controls={true} // Hide player controls
+          muted={false} // Unmute audio
+          playing={playing} // Do not autoplay
+          // loop={true} // Enable looping
+          // loop={!url.includes(soundcloudUnique)}
+          config={{
+            soundcloud: {
+              options: {
+                auto_play: false, // Disable auto play
+                hide_related: true, // Hide related tracks
+                show_comments: false, // Hide comments
+                show_user: false, // Hide user information
+                show_reposts: false, // Hide reposts
+                show_teaser: false, // Hide track teasers
+                visual: false, // Disable visual mode
+                show_playcount: false, // Hide play count
+                sharing: false, // Disable sharing
+                buying: false, // Disable buying options
+                download: false, // Disable download option
               },
-              youtube: {
-                playerVars: {
-                  modestbranding: 1, // Hide YouTube logo
-                  showinfo: 0, // Hide video title and uploader info
-                  autoplay: 0, // Disable autoplay
-                  // loop: 1, // Enable looping
-                },
+            },
+            youtube: {
+              playerVars: {
+                modestbranding: 1, // Hide YouTube logo
+                showinfo: 0, // Hide video title and uploader info
+                autoplay: 0, // Disable autoplay
+                // loop: 1, // Enable looping
               },
-            }}
-            onEnded={() => handleVideoEnded()} // handleVideoEnded={handleVideoEnded}
-          />
-        </div>
-        {/* {identifyMediaUrl(url[0]) === 'YouTube' && (
+            },
+          }}
+          onEnded={() => handleVideoEnded()} // handleVideoEnded={handleVideoEnded}
+        />
+      </div>
+      {/* {identifyMediaUrl(url[0]) === 'YouTube' && (
         <YouTubePlayer YTid={getYouTubeId(url[0])} playing={playing} questId={questId} />
         )}
         {identifyMediaUrl(url[0]) === 'SoundCloud' && (
           <SoundcloudWidget SCurl={mediaURL} playing={playing} questId={questId} />
           )} */}
-      </div>
     </div>
   );
 };

@@ -284,10 +284,6 @@ const QuestCardLayout = ({
             url={questStartData.url}
             questId={questStartData._id}
             playing={playing}
-            // setPlayingPlayerId={setPlayingPlayerId}
-            // setIsPlaying={setIsPlaying}
-            // setIsShowPlayer={setIsShowPlayer}
-            // isPlaying={isPlaying}
           />
         ))}
       <CardTopbar
