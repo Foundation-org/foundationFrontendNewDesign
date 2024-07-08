@@ -11,7 +11,7 @@
       name="description"
       content="Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights"
     />
- 
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <!-- <meta property="og:url" content="https://on.foundation" /> -->
@@ -69,9 +69,10 @@
         if (!isSafari) {
           let isReloading = false;
 
-          setTimeout(function () {
+          const checkContent = function () {
             // Check if the main element is empty or has unexpected content
             const mainElement = document.querySelector('#root'); // Change '#root' to your main container selector
+
             if (!mainElement || mainElement.innerHTML.trim() === '') {
               // Reload the page if main content is missing or empty, and ensure it's not already reloading
               if (!isReloading) {
@@ -79,7 +80,12 @@
                 window.location.reload();
               }
             }
-          }, 1); // Adjust the delay as needed
+          };
+
+          // Use the `load` event to ensure all resources have been loaded
+          window.addEventListener('load', function () {
+            setTimeout(checkContent, 100); // Adjust the delay as needed
+          });
         }
       });
     </script>
