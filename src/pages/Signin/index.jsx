@@ -36,6 +36,10 @@ export default function Signin() {
       setIsLoadingSocial(true);
       window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
     }
+    if (value === 'instagram') {
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/instagram`;
+    }
     if (value === 'twitter') {
       setIsLoadingSocial(true);
       window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;

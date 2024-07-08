@@ -39,7 +39,6 @@ const ReferralCode = ({
     try {
       if (password === reTypePassword) {
         const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
-        console.log(resp);
         if (resp.status === 200) {
           showToast('success', 'verificationEmailSent');
 
