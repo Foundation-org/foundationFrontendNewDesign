@@ -135,10 +135,7 @@ const Social = ({
                     handleGuestBadgeAdd();
                     return;
                   }
-                  if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
-                    triggerFarcaster();
-                    return;
-                  }
+
                   if (checkSocial(item.accountName)) {
                     handleRemoveBadgePopup({
                       title: item.title,
@@ -153,6 +150,10 @@ const Social = ({
                       (checkLegacyBadge() && getAskPasswordFromRedux)
                     ) {
                       await handleOpenPasswordConfirmation();
+                    }
+                    if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
+                      triggerFarcaster();
+                      return;
                     }
                     setLoading({ state: true, badge: item.accountName });
                     localStorage.setItem('target-url', `${window.location.href}`);
