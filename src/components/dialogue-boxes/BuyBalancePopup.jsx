@@ -18,7 +18,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
     const createPaymentIntent = async () => {
       setIsLoading(true);
       try {
-        if (paymentMethod === 'stripe' && dollar >= 2.5) {
+        if (paymentMethod === 'stripe' && dollar >= 0.1) {
           const response = await axios.post(`${BASE_URL}/finance/getStripePaymentIntent`, {
             amount: dollar,
             currency: 'usd',
@@ -26,7 +26,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
           localStorage.setItem('scs', response.data.clientSecret);
           setStripeClientSecret(response.data.clientSecret);
         }
-        if (paymentMethod === 'paypal' && dollar >= 2.5) {
+        if (paymentMethod === 'paypal' && dollar >= 0.1) {
           const token = await paypalTokenGenerate();
           setClientToken(token);
         }

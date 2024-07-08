@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
-import { toast } from 'sonner';
 import showToast from '../ui/Toast';
 
 export default function CheckoutForm({ handleClose, triggerPulse }) {
@@ -18,6 +17,7 @@ export default function CheckoutForm({ handleClose, triggerPulse }) {
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState(false);
 
   const clearQueryParams = () => {
     navigate(
@@ -79,6 +79,20 @@ export default function CheckoutForm({ handleClose, triggerPulse }) {
     handlePaymentIntent();
   }, [stripe]);
 
+  // New effect to track form completion
+  useEffect(() => {
+    const checkFormComplete = (event) => {
+      setIsFormComplete(event.complete);
+    };
+
+    const paymentElement = elements?.getElement(PaymentElement);
+    paymentElement?.on('change', checkFormComplete);
+
+    return () => {
+      paymentElement?.off('change', checkFormComplete);
+    };
+  }, [elements]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -120,7 +134,7 @@ export default function CheckoutForm({ handleClose, triggerPulse }) {
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[34px]">
-        <Button variant={'submit'} disabled={isLoading || !stripe || !elements}>
+        <Button variant={'submit'} disabled={!stripe || !elements || isLoading || !isFormComplete}>
           {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Pay now'}
         </Button>
       </div>
