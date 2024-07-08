@@ -129,7 +129,6 @@ const QuestStartSection = () => {
           />
         )}
       <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
-        <h1>TEST</h1>
         <div className="block tablet:hidden">
           <SidebarLeft />
         </div>
