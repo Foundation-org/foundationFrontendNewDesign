@@ -122,8 +122,9 @@ export const PaymentForm = ({ dollar, handleClose, triggerPulse }) => {
         })
         .then(async (data) => onHandleMessage(await onApproveCallback({ data, uuid: persistedUserInfo.uuid })))
         .catch((orderData) => {
+          console.log(orderData);
           onHandleMessage(`Sorry, your transaction could not be processed...${JSON.stringify(orderData)}`);
-          toast.warning(`Sorry, your transaction could not be processed...`);
+          toast.error(`Invalid or test card details entered. Please try again.`);
           setIsLoading(false);
         });
     };

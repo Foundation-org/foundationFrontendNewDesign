@@ -56,8 +56,7 @@ const BuyBalance = ({ triggerPulse }) => {
       );
       return;
     }
-    if (dollar < persistedContants?.FDX_CONVERSION_RATE_WRT_USD)
-      return toast.warning(`Minimum amount is ${conversionRate}`);
+    if (dollar < 0.5) return toast.warning(`Minimum amount is 0.5$`);
     setModalVisible(true);
   };
 
@@ -142,7 +141,7 @@ const BuyBalance = ({ triggerPulse }) => {
             {/* <Button variant={'submit'} onClick={handleCreate}>
               Buy More FDX
             </Button> */}
-            {dollar * 1 < persistedContants?.FDX_CONVERSION_RATE_WRT_USD ? (
+            {dollar * 1 < 0.5 ? (
               <Button variant="submit-hollow" onClick={handleCreate}>
                 Buy More FDX
               </Button>
