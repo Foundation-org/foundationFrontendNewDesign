@@ -20,6 +20,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
 import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 import showToast from '../../../../../components/ui/Toast';
+
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -309,7 +310,9 @@ const QuestionCardWithToggle = (props) => {
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
-        queryClient.invalidateQueries(['userInfo', 'postsByCategory']);
+
+        queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+        queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
 
         queryClient.setQueryData(['questByShareLink'], (oldData) => {
           if (!oldData) return;
