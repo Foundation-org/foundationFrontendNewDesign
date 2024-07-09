@@ -84,6 +84,24 @@
   @apply text-[10px] font-semibold tablet:text-[20px] tablet:font-bold;
 }
 
+input[type='text'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  font-family: Arial, sans-serif;
+}
+
+@supports (-webkit-touch-callout: none) {
+  input {
+    font-family: Arial, sans-serif;
+    text-align: left;
+    box-sizing: border-box;
+  }
+}
+
 input::placeholder {
   color: #b6b4b4;
 }
