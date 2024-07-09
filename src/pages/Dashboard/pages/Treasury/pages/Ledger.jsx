@@ -182,9 +182,9 @@ export default function Ledger() {
                 </tr>
               ))}
             </thead>
-            <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
+            <tbody className="relative text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
-                <div>
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                   <h4 className="mt-4 text-[0.4rem] md:text-[.88rem] tablet:mt-20 laptop:text-[1.2rem]">&#x200B;</h4>
                   <h4 className="mt-3 text-center text-[0.4rem] md:text-[.88rem] tablet:mt-10 laptop:text-[1.2rem] ">
                     No results found
