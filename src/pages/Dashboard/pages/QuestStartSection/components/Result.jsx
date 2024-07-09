@@ -255,7 +255,7 @@ const Result = (props) => {
       const rankedNewData = sortAnswersByAscDesc(props, 'ascending');
       setSortedAnswers(rankedNewData);
     }
-  }, [selectedOption, props.questStartData, answersData]);
+  }, [selectedOption, props.questStartData]);
 
   useEffect(() => {
     if (contendedOption === 1) {

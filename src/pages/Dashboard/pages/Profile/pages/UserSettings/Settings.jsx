@@ -60,7 +60,6 @@ export const Settings = () => {
     mutationFn: updateUserSettings,
     onSuccess: () => {
       queryClient.invalidateQueries(['userInfo']);
-      console.log('updateUserSettings', resp);
     },
     onError: (error) => {
       console.log(error);
