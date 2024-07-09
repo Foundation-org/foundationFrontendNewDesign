@@ -26,7 +26,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
           localStorage.setItem('scs', response.data.clientSecret);
           setStripeClientSecret(response.data.clientSecret);
         }
-        if (paymentMethod === 'paypal' && dollar >= 0.1) {
+        if (paymentMethod === 'paypal' && dollar >= 0.5) {
           const token = await paypalTokenGenerate();
           setClientToken(token);
         }
