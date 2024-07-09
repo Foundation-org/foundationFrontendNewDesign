@@ -1,5 +1,6 @@
 import showToast from '../../components/ui/Toast';
 import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
+import { FIXED_RESPONSES_OPTIONS, FIXED_RESPONSES_QUESTIONS } from '../../constants/Values/constants';
 import { extractPartFromUrl } from '../../utils/embeddedutils';
 import api from './Axios';
 import { toast } from 'sonner';
@@ -106,7 +107,15 @@ export const getTopicOfValidatedQuestion = async ({ validatedQuestion }) => {
     return { validatedQuestion: null, errorMessage: 'ERROR' };
   }
 };
+const clean = (question) => {
+  const regexPeriod = /\.*$/;
+  const newQuestion = question.replace(regexPeriod, '');
 
+  const regexQuestionMark = /\?*$/;
+  const newQuestion2 = newQuestion.replace(regexQuestionMark, '');
+
+  return newQuestion2.toLowerCase();
+};
 // Question Validation by GPT-Server
 export const questionValidation = async ({ question, queryType }) => {
   try {
@@ -114,6 +123,11 @@ export const questionValidation = async ({ question, queryType }) => {
     const constraintResponses = await checkUniqueQuestion(question);
     if (!constraintResponses.data.isUnique) {
       return { validatedQuestion: question, errorMessage: 'DUPLICATION' };
+    }
+    const toCheck = clean(question);
+    const responseObj = FIXED_RESPONSES_QUESTIONS.find((item) => item.word === toCheck);
+    if (responseObj) {
+      return { validatedQuestion: responseObj.response, errorMessage: null };
     }
     var response = await api.get(`/ai-validation/1?userMessage=${question}&queryType=${queryType}`);
     if (response.data.status === 'VIOLATION') {
@@ -142,6 +156,11 @@ export const questionValidation = async ({ question, queryType }) => {
 
 export const answerValidation = async ({ answer }) => {
   try {
+    const toCheck = clean(answer);
+    const responseObj = FIXED_RESPONSES_OPTIONS.find((item) => item.word === toCheck);
+    if (responseObj) {
+      return { validatedAnswer: responseObj.response };
+    }
     const response = await api.get(`/ai-validation/2?userMessage=${answer}`);
     if (response.data.status === 'VIOLATION') {
       await updateViolationCounterAPI();
