@@ -311,17 +311,21 @@ const QuestionCardWithToggle = (props) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
 
-        queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
-        queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
-
         queryClient.setQueryData(['questByShareLink'], (oldData) => {
-          if (!oldData) return;
+          if (!oldData) return resp.data.data;
 
           return {
             ...oldData,
-            ...oldData.data.data.map((item) => (item?._id === resp.data.data._id ? resp.data.data : item)),
+            data: {
+              ...oldData.data,
+              ...resp.data.data,
+              data: oldData.data.data.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+            },
           };
         });
+
+        queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+        queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
       }
 
       // if (persistedUserInfo.role === 'guest') {
