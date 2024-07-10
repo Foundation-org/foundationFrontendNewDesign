@@ -101,5 +101,5 @@ export const toastMessages = {
   emptyPostList: 'You cannot save without selecting a list!',
   recaptaFailed: 'Google recaptcha failed',
   emptyList: 'List name can not be empty',
-  webView: 'Please open Google login in Safari or Chrome for better experience.',
+  webView: 'This webview is not compatible. Please open Google login in Safari or Chrome for better experience.',
 } as const;
