@@ -26,14 +26,18 @@ const Social = ({
 
   const handleFarcaster = async (title, type, value) => {
     try {
-      const addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, {
+      const payload = {
         uuid: persistedUserInfo.uuid,
         accountId: value.fid,
         accountName: title,
         isVerified: true,
         type: type,
         data: value,
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.eyk = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, payload);
       setIsButtonClicked(false);
       if (addBadge?.status === 200) {
         showToast('success', 'badgeAdded');
