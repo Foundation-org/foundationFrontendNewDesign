@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import CreateSlider from './components/CreateSlider';
+import Breadcrumb from '../../../../components/Breadcrumb';
 
 const Quest = () => {
   const location = useLocation();
@@ -14,6 +15,7 @@ const Quest = () => {
 
   return (
     <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] pb-8 md:pb-12 tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] desktop:mx-auto dark:bg-[#242424]">
+      <Breadcrumb />
       <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
         <CreateSlider />
       </div>
