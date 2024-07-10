@@ -9,7 +9,6 @@ import { AuthKitProvider, SignInButton } from '@farcaster/auth-kit';
 import api from '../../../../../../services/api/Axios';
 import showToast from '../../../../../../components/ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
 
 const Social = ({
   handleRemoveBadgePopup,
@@ -24,6 +23,25 @@ const Social = ({
   const [loading, setLoading] = useState({ state: false, badge: '' });
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const queryClient = useQueryClient();
+  const [tabVisible, setTabVisible] = useState(true); // State to track tab visibility
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        // Tab became visible
+        if (loading.state) {
+          // If loading state was true, clear it
+          setLoading({ state: false, badge: '' });
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [loading.state]);
 
   const handleFarcaster = async (title, type, value) => {
     try {
@@ -46,7 +64,7 @@ const Social = ({
       }
     } catch (error) {
       console.error(error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response?.data.message.split(':')[1]);
     }
   };
 
@@ -126,62 +144,57 @@ const Social = ({
                   {item.title}
                 </h1>
               </div>
-              <Link to={`${import.meta.env.VITE_API_URL}${item.link}`}>
-                {' '}
-                ;
-                <Button
-                  disabled={(loading.state === true && item.accountName) || checkPrimary(item.accountName)}
-                  variant={
-                    checkSocial(item.accountName)
-                      ? checkPrimary(item.accountName)
-                        ? 'verification-badge-edit'
-                        : 'verification-badge-remove'
-                      : 'submit'
+              <Button
+                disabled={(loading.state === true && item.accountName) || checkPrimary(item.accountName)}
+                variant={
+                  checkSocial(item.accountName)
+                    ? checkPrimary(item.accountName)
+                      ? 'verification-badge-edit'
+                      : 'verification-badge-remove'
+                    : 'submit'
+                }
+                onClick={async () => {
+                  if (persistedUserInfo?.role === 'guest') {
+                    handleGuestBadgeAdd();
+                    return;
                   }
-                  onClick={async () => {
-                    if (persistedUserInfo?.role === 'guest') {
-                      handleGuestBadgeAdd();
+
+                  if (checkSocial(item.accountName)) {
+                    handleRemoveBadgePopup({
+                      title: item.title,
+                      image: item.image,
+                      type: item.type,
+                      badgeType: item.badgeType,
+                      accountName: item.accountName,
+                    });
+                  } else {
+                    if (
+                      (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
+                      (checkLegacyBadge() && getAskPasswordFromRedux)
+                    ) {
+                      await handleOpenPasswordConfirmation();
+                    }
+                    if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
+                      triggerFarcaster();
                       return;
                     }
-
-                    if (checkSocial(item.accountName)) {
-                      handleRemoveBadgePopup({
-                        title: item.title,
-                        image: item.image,
-                        type: item.type,
-                        badgeType: item.badgeType,
-                        accountName: item.accountName,
-                      });
-                    } else {
-                      if (
-                        (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
-                        (checkLegacyBadge() && getAskPasswordFromRedux)
-                      ) {
-                        await handleOpenPasswordConfirmation();
-                      }
-                      if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
-                        triggerFarcaster();
-                        return;
-                      }
-                      setLoading({ state: true, badge: item.accountName });
-                      localStorage.setItem('target-url', `${window.location.href}`);
-
-                      // window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
-                    }
-                  }}
-                >
-                  {loading.state === true && loading.badge === item.accountName ? (
-                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                  ) : (
-                    <>
-                      {checkSocial(item.accountName) ? (checkPrimary(item.accountName) ? 'Added' : 'Remove') : 'Add'}
-                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                        {checkSocial(item.accountName) ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
-                      </span>
-                    </>
-                  )}
-                </Button>
-              </Link>
+                    setLoading({ state: true, badge: item.accountName });
+                    localStorage.setItem('target-url', `${window.location.href}`);
+                    window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
+                  }
+                }}
+              >
+                {loading.state === true && loading.badge === item.accountName ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : (
+                  <>
+                    {checkSocial(item.accountName) ? (checkPrimary(item.accountName) ? 'Added' : 'Remove') : 'Add'}
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                      {checkSocial(item.accountName) ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                    </span>
+                  </>
+                )}
+              </Button>
             </div>
           ))}
         </div>
