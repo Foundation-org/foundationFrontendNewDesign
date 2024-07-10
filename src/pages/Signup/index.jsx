@@ -10,6 +10,22 @@ import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 import Loader from './components/Loader';
 
+const isWebview = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+
+  // Common webview identifiers or patterns
+  const webviewIdentifiers = [
+    'wv',                // Common abbreviation for webview
+    'webview',           // Webview identifier
+    'fbav',              // Facebook App WebView
+    'instagram',         // Instagram WebView
+    'twitter',           // Twitter WebView
+  ];
+
+  // Check if any of the webview identifiers exist in the userAgent string
+  return webviewIdentifiers.some(identifier => userAgent.includes(identifier));
+};
+
 export default function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,25 +55,51 @@ export default function Signup() {
   };
 
   const triggerLogin = async () => {
+    setIsLoadingSocial(true);
+  
     if (clickedButtonName === 'google') {
-      setIsLoadingSocial(true);
-      window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+      if (isWebview(window.navigator.userAgent)) {
+        showToast("info", "webView");
+        setIsLoadingSocial(false);
+      } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+      }
     }
+  
     if (clickedButtonName === 'linkedin') {
-      setIsLoadingSocial(true);
-      window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
+      if (isWebview(window.navigator.userAgent)) {
+        showToast("info", "webView");
+        setIsLoadingSocial(false);
+      } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
+      }
     }
+  
     if (clickedButtonName === 'github') {
-      setIsLoadingSocial(true);
-      window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
+      if (isWebview(window.navigator.userAgent)) {
+        showToast("info", "webView");
+        setIsLoadingSocial(false);
+      } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
+      }
     }
+  
     if (clickedButtonName === 'facebook') {
-      setIsLoadingSocial(true);
-      window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+      if (isWebview(window.navigator.userAgent)) {
+        showToast("info", "webView");
+        setIsLoadingSocial(false);
+      } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+      }
     }
+  
     if (clickedButtonName === 'twitter') {
-      setIsLoadingSocial(true);
-      window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
+      if (isWebview(window.navigator.userAgent)) {
+        showToast("info", "webView");
+        setIsLoadingSocial(false);
+      } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
+      }
     }
   };
 
