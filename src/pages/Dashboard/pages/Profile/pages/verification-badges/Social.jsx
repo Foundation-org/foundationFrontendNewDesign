@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { socials } from '../../../../../../constants/varification-badges';
 import { useSelector } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
@@ -77,6 +77,18 @@ const Social = ({
     );
     return;
   };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      window.location.reload();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   return (
     <>
@@ -161,8 +173,7 @@ const Social = ({
                     }
                     setLoading({ state: true, badge: item.accountName });
                     localStorage.setItem('target-url', `${window.location.href}`);
-                    // window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
-                    window.location.assign(`${import.meta.env.VITE_API_URL}${item.link}`);
+                    window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
                   }
                 }}
               >
