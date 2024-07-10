@@ -9,6 +9,7 @@ import { AuthKitProvider, SignInButton } from '@farcaster/auth-kit';
 import api from '../../../../../../services/api/Axios';
 import showToast from '../../../../../../components/ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 const Social = ({
   handleRemoveBadgePopup,
@@ -78,18 +79,6 @@ const Social = ({
     return;
   };
 
-  useEffect(() => {
-    const handlePopState = () => {
-      window.location.reload();
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, []);
-
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -137,57 +126,62 @@ const Social = ({
                   {item.title}
                 </h1>
               </div>
-              <Button
-                disabled={(loading.state === true && item.accountName) || checkPrimary(item.accountName)}
-                variant={
-                  checkSocial(item.accountName)
-                    ? checkPrimary(item.accountName)
-                      ? 'verification-badge-edit'
-                      : 'verification-badge-remove'
-                    : 'submit'
-                }
-                onClick={async () => {
-                  if (persistedUserInfo?.role === 'guest') {
-                    handleGuestBadgeAdd();
-                    return;
+              <Link to={`${import.meta.env.VITE_API_URL}${item.link}`}>
+                {' '}
+                ;
+                <Button
+                  disabled={(loading.state === true && item.accountName) || checkPrimary(item.accountName)}
+                  variant={
+                    checkSocial(item.accountName)
+                      ? checkPrimary(item.accountName)
+                        ? 'verification-badge-edit'
+                        : 'verification-badge-remove'
+                      : 'submit'
                   }
-
-                  if (checkSocial(item.accountName)) {
-                    handleRemoveBadgePopup({
-                      title: item.title,
-                      image: item.image,
-                      type: item.type,
-                      badgeType: item.badgeType,
-                      accountName: item.accountName,
-                    });
-                  } else {
-                    if (
-                      (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
-                      (checkLegacyBadge() && getAskPasswordFromRedux)
-                    ) {
-                      await handleOpenPasswordConfirmation();
-                    }
-                    if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
-                      triggerFarcaster();
+                  onClick={async () => {
+                    if (persistedUserInfo?.role === 'guest') {
+                      handleGuestBadgeAdd();
                       return;
                     }
-                    setLoading({ state: true, badge: item.accountName });
-                    localStorage.setItem('target-url', `${window.location.href}`);
-                    window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
-                  }
-                }}
-              >
-                {loading.state === true && loading.badge === item.accountName ? (
-                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                ) : (
-                  <>
-                    {checkSocial(item.accountName) ? (checkPrimary(item.accountName) ? 'Added' : 'Remove') : 'Add'}
-                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                      {checkSocial(item.accountName) ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
-                    </span>
-                  </>
-                )}
-              </Button>
+
+                    if (checkSocial(item.accountName)) {
+                      handleRemoveBadgePopup({
+                        title: item.title,
+                        image: item.image,
+                        type: item.type,
+                        badgeType: item.badgeType,
+                        accountName: item.accountName,
+                      });
+                    } else {
+                      if (
+                        (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
+                        (checkLegacyBadge() && getAskPasswordFromRedux)
+                      ) {
+                        await handleOpenPasswordConfirmation();
+                      }
+                      if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
+                        triggerFarcaster();
+                        return;
+                      }
+                      setLoading({ state: true, badge: item.accountName });
+                      localStorage.setItem('target-url', `${window.location.href}`);
+
+                      // window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
+                    }
+                  }}
+                >
+                  {loading.state === true && loading.badge === item.accountName ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : (
+                    <>
+                      {checkSocial(item.accountName) ? (checkPrimary(item.accountName) ? 'Added' : 'Remove') : 'Add'}
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                        {checkSocial(item.accountName) ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                      </span>
+                    </>
+                  )}
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
