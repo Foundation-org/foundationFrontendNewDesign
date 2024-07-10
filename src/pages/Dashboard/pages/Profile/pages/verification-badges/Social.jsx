@@ -35,7 +35,7 @@ const Social = ({
         data: value,
       };
       if (localStorage.getItem('legacyHash')) {
-        payload.infoc = localStorage.getItem('legacyHash');
+        payload.eyk = localStorage.getItem('legacyHash');
       }
       const addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, payload);
       setIsButtonClicked(false);
