@@ -161,7 +161,8 @@ const Social = ({
                     }
                     setLoading({ state: true, badge: item.accountName });
                     localStorage.setItem('target-url', `${window.location.href}`);
-                    window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
+                    // window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
+                    window.location.assign(`${import.meta.env.VITE_API_URL}${item.link}`);
                   }
                 }}
               >
