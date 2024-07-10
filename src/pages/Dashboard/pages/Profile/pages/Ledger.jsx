@@ -134,21 +134,26 @@ export default function BasicTable() {
   const rangeStart = Math.max(1, currentPage - Math.floor(visibleButtons / 2));
   const rangeEnd = Math.min(totalPages, rangeStart + visibleButtons - 1);
 
+  // useEffect(() => {
+  //   return () => {
+  //     table.getHeaderGroups()[0].headers.forEach((header) => {
+  //       const columnId = header.id;
+  //       const size = header.getSize();
+  //       dispatch(updateColumnSize({ columnId, size: size }));
+  //     });
+  //   };
+  // }, [columnSizes, table]);
+
   useEffect(() => {
-    return () => {
-      table.getHeaderGroups()[0].headers.forEach((header) => {
-        const columnId = header.id;
-        const size = header.getSize();
-        dispatch(updateColumnSize({ columnId, size: size }));
-      });
-    };
-  }, [columnSizes, table]);
+    table.getHeaderGroups()[0].headers.forEach((header) => {
+      const columnId = header.id;
+      const size = header.getSize();
+      dispatch(updateColumnSize({ columnId, size: size }));
+    });
+  }, [columnSizes, table, table.getState().columnSizingInfo.isResizingColumn]);
 
   return (
     <div className="mb-6 overflow-y-auto">
-      {/* <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px]  tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
-        Ledger
-      </h1> */}
       <div
         className={`${
           persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
@@ -164,29 +169,29 @@ export default function BasicTable() {
         />
         <div className="no-scrollbar w-full overflow-auto tablet:h-[600px]">
           <table
-            className="w-full"
-            // style={{ width: table.getCenterTotalSize() }}
-            // style={{
-            //   minWidth:
-            //     window.innerWidth <= 1700 && window.innerWidth >= 744
-            //       ? '600px'
-            //       : window.innerWidth <= 744 && window.innerWidth >= 0
-            //         ? '350px'
-            //         : 'auto',
-            //   width:
-            //     window.innerWidth <= 1700 && window.innerWidth >= 900
-            //       ? '100%'
-            //       : window.innerWidth <= 900 && window.innerWidth >= 744
-            //         ? '120%'
-            //         : window.innerWidth <= 744 && window.innerWidth >= 0
-            //           ? '100%'
-            //           : table.getCenterTotalSize(),
-            // }}
-            // {...{
-            //   style: {
-            //     width: table.getCenterTotalSize(),
-            //   },
-            // }}
+          // className="w-full"
+          // style={{ width: table.getCenterTotalSize() }}
+          // style={{
+          //   minWidth:
+          //     window.innerWidth <= 1700 && window.innerWidth >= 744
+          //       ? '600px'
+          //       : window.innerWidth <= 744 && window.innerWidth >= 0
+          //         ? '350px'
+          //         : 'auto',
+          //   width:
+          //     window.innerWidth <= 1700 && window.innerWidth >= 900
+          //       ? '100%'
+          //       : window.innerWidth <= 900 && window.innerWidth >= 744
+          //         ? '120%'
+          //         : window.innerWidth <= 744 && window.innerWidth >= 0
+          //           ? '100%'
+          //           : table.getCenterTotalSize(),
+          // }}
+          // {...{
+          //   style: {
+          //     width: table.getCenterTotalSize(),
+          //   },
+          // }}
           >
             <thead
               style={{ width: table.getTotalSize() }}
@@ -247,12 +252,11 @@ export default function BasicTable() {
             </thead>
             <tbody className="relative text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <h4 className="mt-4 text-[0.4rem] md:text-[.88rem] tablet:mt-20 laptop:text-[1.2rem]">&#x200B;</h4>
-                  <h4 className="mt-3 text-center text-[0.4rem] md:text-[.88rem] tablet:mt-10 laptop:text-[1.2rem] ">
+                <tr className="absolute left-1/2 top-1/2 mt-5 h-full -translate-x-1/2 -translate-y-1/2">
+                  <td className="mt-3 text-center text-[0.4rem] md:text-[.88rem] tablet:mt-10 laptop:text-[1.2rem] ">
                     No results found
-                  </h4>
-                </div>
+                  </td>
+                </tr>
               ) : (
                 table.getRowModel().rows.map((row) => (
                   <tr
@@ -262,8 +266,6 @@ export default function BasicTable() {
                     {row.getVisibleCells().map((cell) => (
                       <td
                         className="truncate py-1 text-[0.4rem] tablet:py-3 tablet:text-[.88rem] laptop:text-[1.2rem]"
-                        // key={cell.id}
-                        // style={{ width: cell.column.getSize() }}
                         {...{
                           key: cell.id,
                           style: {
@@ -275,7 +277,7 @@ export default function BasicTable() {
                         {cell.column.id === 'txID'
                           ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
                           : cell.column.id === 'txDate'
-                            ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
+                            ? format(new Date(cell.getValue()), 'MMM dd yyyy, hh:mm a')
                             : cell.column.id === 'txFrom' &&
                                 cell.getValue() !== 'DAO Treasury' &&
                                 cell.getValue() !== 'dao' &&

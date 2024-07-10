@@ -20,13 +20,13 @@ import hiddenPostReducer from '../features/profile/hiddenPosts';
 import sharedLinksReducer from '../features/profile/sharedLinks';
 import feedbackReducer from '../features/profile/feedbackSlice';
 import systemConstantsReducer from '../features/constants/constantsSlice';
-import userSettingsReducer from '../features/profile/userSettingSlice'
+import userSettingsReducer from '../features/profile/userSettingSlice';
 
 const persistConfig = {
   key: 'persist-store',
   version: 1,
   storage,
-  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters', 'systemConstants', 'userSettings'],
+  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters', 'systemConstants', 'userSettings', 'ledger'],
 };
 
 const reducer = combineReducers({
@@ -45,7 +45,7 @@ const reducer = combineReducers({
   hiddenPosts: hiddenPostReducer,
   sharedLinks: sharedLinksReducer,
   feedback: feedbackReducer,
-  userSettings: userSettingsReducer
+  userSettings: userSettingsReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);
