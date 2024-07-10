@@ -15,15 +15,15 @@ const isWebview = () => {
 
   // Common webview identifiers or patterns
   const webviewIdentifiers = [
-    'wv',                // Common abbreviation for webview
-    'webview',           // Webview identifier
-    'fbav',              // Facebook App WebView
-    'instagram',         // Instagram WebView
-    'twitter',           // Twitter WebView
+    'wv', // Common abbreviation for webview
+    'webview', // Webview identifier
+    'fbav', // Facebook App WebView
+    'instagram', // Instagram WebView
+    'twitter', // Twitter WebView
   ];
 
   // Check if any of the webview identifiers exist in the userAgent string
-  return webviewIdentifiers.some(identifier => userAgent.includes(identifier));
+  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
 };
 
 export default function Signup() {
@@ -56,46 +56,46 @@ export default function Signup() {
 
   const triggerLogin = async () => {
     setIsLoadingSocial(true);
-  
+
     if (clickedButtonName === 'google') {
       if (isWebview(window.navigator.userAgent)) {
-        showToast("info", "webView");
+        showToast('info', 'webViewSignUp');
         setIsLoadingSocial(false);
       } else {
         window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
       }
     }
-  
+
     if (clickedButtonName === 'linkedin') {
       if (isWebview(window.navigator.userAgent)) {
-        showToast("info", "webView");
+        showToast('info', 'webViewSignUp');
         setIsLoadingSocial(false);
       } else {
         window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
       }
     }
-  
+
     if (clickedButtonName === 'github') {
       if (isWebview(window.navigator.userAgent)) {
-        showToast("info", "webView");
+        showToast('info', 'webViewSignUp');
         setIsLoadingSocial(false);
       } else {
         window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
       }
     }
-  
+
     if (clickedButtonName === 'facebook') {
       if (isWebview(window.navigator.userAgent)) {
-        showToast("info", "webView");
+        showToast('info', 'webViewSignUp');
         setIsLoadingSocial(false);
       } else {
         window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
       }
     }
-  
+
     if (clickedButtonName === 'twitter') {
       if (isWebview(window.navigator.userAgent)) {
-        showToast("info", "webView");
+        showToast('info', 'webViewSignUp');
         setIsLoadingSocial(false);
       } else {
         window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;

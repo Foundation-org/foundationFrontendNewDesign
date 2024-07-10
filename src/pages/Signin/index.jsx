@@ -43,7 +43,7 @@ export default function Signin() {
     switch (value) {
       case 'google':
         if (isWebview()) {
-          showToast("info", "webView");
+          showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
@@ -52,7 +52,7 @@ export default function Signin() {
   
       case 'linkedin':
         if (isWebview()) {
-          showToast("info", "webView");
+          showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
@@ -61,7 +61,7 @@ export default function Signin() {
   
       case 'github':
         if (isWebview()) {
-          showToast("info", "webView");
+          showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
@@ -70,7 +70,7 @@ export default function Signin() {
   
       case 'facebook':
         if (isWebview()) {
-          showToast("info", "webView");
+          showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
@@ -79,7 +79,7 @@ export default function Signin() {
   
       case 'instagram':
         if (isWebview()) {
-          showToast("info", "webView");
+          showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/instagram`;
@@ -88,7 +88,7 @@ export default function Signin() {
   
       case 'twitter':
         if (isWebview()) {
-          showToast("info", "webView");
+          showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;

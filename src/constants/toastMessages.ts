@@ -101,5 +101,7 @@ export const toastMessages = {
   emptyPostList: 'You cannot save without selecting a list!',
   recaptaFailed: 'Google recaptcha failed',
   emptyList: 'List name can not be empty',
-  webView: 'This webview is not compatible. Please open Google login in Safari or Chrome for better experience.',
+  webViewLogin: 'This web view within your application is not secure. To sign in, please copy and paste the link into Chrome, Safari or your stand alone browser of choice.',
+  webViewSignUp:'This web view within your application is not secure. To create an account, please copy and paste the link into Chrome, Safari or your stand alone browser of choice.'
 } as const;
+
