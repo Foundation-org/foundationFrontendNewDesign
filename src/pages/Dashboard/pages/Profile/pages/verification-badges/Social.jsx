@@ -23,7 +23,6 @@ const Social = ({
   const [loading, setLoading] = useState({ state: false, badge: '' });
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const queryClient = useQueryClient();
-  const [tabVisible, setTabVisible] = useState(true); // State to track tab visibility
 
   useEffect(() => {
     const handleVisibilityChange = () => {
