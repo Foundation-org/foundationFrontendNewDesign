@@ -112,9 +112,7 @@ function App() {
     <div className="h-dvh overflow-hidden">
       <SEO
         title={'Foundation'}
-        description={
-          'Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights'
-        }
+        description={'A revolutionary new social platform. Own your data. Get rewarded.'}
         url={import.meta.env.VITE_CLIENT_URL}
         image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
         type={'website'}
