@@ -212,6 +212,7 @@ const AgreeDisagree = () => {
       }
     }
   }, [
+    questionStatus,
     createQuestSlice.question,
     questionStatus.tooltipName,
     getMediaStates.isMedia,

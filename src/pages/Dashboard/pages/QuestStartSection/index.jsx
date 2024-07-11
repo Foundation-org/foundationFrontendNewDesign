@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 import MediaControls from '../../../../components/MediaControls';

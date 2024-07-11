@@ -52,7 +52,7 @@ const RankChoice = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
   const mouseSensor = useSensor(MouseSensor);
-  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { delay: 200, tolerance: 10 } });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
       delay: 500,
@@ -297,6 +297,7 @@ const RankChoice = () => {
       }
     }
   }, [
+    questionStatus,
     optionsValue,
     createQuestSlice.question,
     getMediaStates.isMedia,
