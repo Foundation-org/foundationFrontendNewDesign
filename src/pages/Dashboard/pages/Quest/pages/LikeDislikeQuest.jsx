@@ -211,6 +211,7 @@ const LikeDislike = () => {
       }
     }
   }, [
+    questionStatus,
     createQuestSlice.question,
     questionStatus.tooltipName,
     getMediaStates.isMedia,

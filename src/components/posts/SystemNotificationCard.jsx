@@ -1,7 +1,7 @@
 import { Button } from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 
-const SystemNotificationCard = ({ post, key, innerRef }) => {
+const SystemNotificationCard = ({ post, innerRef }) => {
   const navigate = useNavigate();
 
   return (
@@ -10,8 +10,11 @@ const SystemNotificationCard = ({ post, key, innerRef }) => {
       ref={innerRef}
     >
       <h1 className="text-[13px] font-bold leading-normal text-[#5B5B5B] tablet:text-[22px]">{post.header}</h1>
-      {post?.text?.map((item) => (
-        <p className="text-[13px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px]">
+      {post?.text?.map((item, index) => (
+        <p
+          key={index + 1}
+          className="text-[13px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px]"
+        >
           {item}
         </p>
       ))}

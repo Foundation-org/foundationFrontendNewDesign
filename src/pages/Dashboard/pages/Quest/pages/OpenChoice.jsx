@@ -49,7 +49,7 @@ const OpenChoice = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
   const mouseSensor = useSensor(MouseSensor);
-  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { delay: 200, tolerance: 10 } });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
       delay: 500,
@@ -61,7 +61,6 @@ const OpenChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        // setTimeout(() => {
         if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
           dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           dispatch(addPlayerId(resp.data.questID));
@@ -70,7 +69,6 @@ const OpenChoice = () => {
         queryClient.invalidateQueries(['userInfo']);
         dispatch(createQuestAction.resetCreateQuest());
         dispatch(pictureMediaAction.resetToInitialState());
-        // }, 500);
       }
 
       setLoading(false);
@@ -303,6 +301,7 @@ const OpenChoice = () => {
       }
     }
   }, [
+    questionStatus,
     optionsValue,
     createQuestSlice.question,
     getMediaStates.isMedia,

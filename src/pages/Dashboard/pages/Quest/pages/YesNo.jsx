@@ -213,6 +213,7 @@ const YesNo = () => {
       }
     }
   }, [
+    questionStatus,
     createQuestSlice.question,
     questionStatus.tooltipName,
     getMediaStates.isMedia,
