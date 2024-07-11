@@ -88,9 +88,9 @@ const QuestStartSection = () => {
   const content = data?.pages.map((posts) =>
     posts.map((post, index) => {
       if (post.id === 'system_notification' && posts.length == index + 1) {
-        return <SystemNotificationCard post={post} key={index + 1} innerRef={ref} />;
+        return <SystemNotificationCard key={index + 1} post={post} innerRef={ref} />;
       } else if (post.id === 'system_notification' && posts.length !== index + 1) {
-        return <SystemNotificationCard post={post} key={index + 1} />;
+        return <SystemNotificationCard key={index + 1} post={post} />;
       } else {
         if (posts.length == index + 1) {
           return (
