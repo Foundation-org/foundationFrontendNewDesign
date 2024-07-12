@@ -12,15 +12,15 @@ const isWebview = () => {
 
   // Common webview identifiers or patterns
   const webviewIdentifiers = [
-    'wv',                // Common abbreviation for webview
-    'webview',           // Webview identifier
-    'fbav',              // Facebook App WebView
-    'instagram',         // Instagram WebView
-    'twitter',           // Twitter WebView
+    'wv', // Common abbreviation for webview
+    'webview', // Webview identifier
+    'fbav', // Facebook App WebView
+    'instagram', // Instagram WebView
+    'twitter', // Twitter WebView
   ];
 
   // Check if any of the webview identifiers exist in the userAgent string
-  return webviewIdentifiers.some(identifier => userAgent.includes(identifier));
+  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
 };
 
 export default function Signin() {
@@ -37,64 +37,64 @@ export default function Signin() {
     if (!value) {
       value = clickedButtonName;
     }
-  
+
     setIsLoadingSocial(true);
-  
+
     switch (value) {
       case 'google':
         if (isWebview()) {
-          showToast("info", "webViewLogin");
+          showToast('info', 'webViewLogin');
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
         }
         break;
-  
+
       case 'linkedin':
-        if (!isWebview()) {
-          showToast("info", "webViewLogin");
-          setIsLoadingSocial(false);
-        } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
-        }
+        // if (!isWebview()) {
+        //   showToast('info', 'webViewLogin');
+        //   setIsLoadingSocial(false);
+        // } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
+        // }
         break;
-  
+
       case 'github':
-        if (!isWebview()) {
-          showToast("info", "webViewLogin");
-          setIsLoadingSocial(false);
-        } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
-        }
+        // if (!isWebview()) {
+        //   showToast('info', 'webViewLogin');
+        //   setIsLoadingSocial(false);
+        // } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
+        // }
         break;
-  
+
       case 'facebook':
-        if (!isWebview()) {
-          showToast("info", "webViewLogin");
-          setIsLoadingSocial(false);
-        } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
-        }
+        // if (!isWebview()) {
+        //   showToast("info", "webViewLogin");
+        //   setIsLoadingSocial(false);
+        // } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+        // }
         break;
-  
+
       case 'instagram':
-        if (isWebview()) {
-          showToast("info", "webViewLogin");
-          setIsLoadingSocial(false);
-        } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/auth/instagram`;
-        }
+        // if (isWebview()) {
+        //   showToast("info", "webViewLogin");
+        //   setIsLoadingSocial(false);
+        // } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/instagram`;
+        // }
         break;
-  
+
       case 'twitter':
-        if (!isWebview()) {
-          showToast("info", "webViewLogin");
-          setIsLoadingSocial(false);
-        } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
-        }
+        // if (!isWebview()) {
+        //   showToast("info", "webViewLogin");
+        //   setIsLoadingSocial(false);
+        // } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
+        // }
         break;
-  
+
       default:
         setIsLoadingSocial(false);
         break;
