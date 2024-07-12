@@ -95,7 +95,7 @@ export default function SwiperMainCarousel({ images, id }) {
       >
         {images.map((image, index) => (
           <swiper-slide key={index}>
-            <div className="flex h-full w-full min-w-[90px] items-center justify-center">
+            <div className={`flex h-full w-full min-w-[90px] items-center justify-center tablet:min-w-fit`}>
               <div className="relative px-2 tablet:px-3 tablet:py-0">
                 <img src={image} className="max-h-[80px] tablet:max-h-[90px]" alt={`Thumbnail ${index + 1}`} />
                 <p className="absolute -top-2 left-0 flex size-6 items-center justify-center rounded-full bg-[#647785] p-1 text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)] tablet:-top-1 tablet:left-1">

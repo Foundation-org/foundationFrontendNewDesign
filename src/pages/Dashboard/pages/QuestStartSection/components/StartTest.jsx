@@ -227,42 +227,52 @@ const StartTest = ({
       }
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
         return (
-          <DndContext
-            sensors={[touchSensor, mouseSensor, keyboardSensor]}
-            modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-            collisionDetection={closestCorners}
-            onDragEnd={handleOnDragEnd}
-          >
-            <SortableContext items={rankedAnswers}>
-              {rankedAnswers?.map((item, index) => (
-                <SingleAnswerRankedChoice
-                  key={item.id}
-                  dragId={item.id}
-                  questStartData={questStartData}
-                  id={index}
-                  item={item}
-                  number={index + 1}
-                  editable={item.edit}
-                  deleteable={item.delete}
-                  answer={item.label}
-                  addedAnswerUuid={item.uuid}
-                  answersSelection={answersSelection}
-                  setAnswerSelection={setAnswerSelection}
-                  rankedAnswers={rankedAnswers}
-                  title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                  checkInfo={false}
-                  check={findLabelChecked(rankedAnswers, item.label)}
-                  contend={findLabelContend(rankedAnswers, item.label)}
-                  handleCheckChange={(check) => handleCheckChange(index, check)}
-                  handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-                  setAddOptionField={setAddOptionField}
-                  checkOptionStatus={checkOptionStatus}
-                  setCheckOptionStatus={setCheckOptionStatus}
-                  postProperties={postProperties}
-                />
-              ))}
-            </SortableContext>
-          </DndContext>
+          <div className="flex flex-col overflow-auto">
+            <div
+              className={`${
+                isFullScreen === undefined
+                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
+                  : ''
+              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+            >
+              <DndContext
+                sensors={[touchSensor, mouseSensor, keyboardSensor]}
+                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+                collisionDetection={closestCorners}
+                onDragEnd={handleOnDragEnd}
+              >
+                <SortableContext items={rankedAnswers}>
+                  {rankedAnswers?.map((item, index) => (
+                    <SingleAnswerRankedChoice
+                      key={item.id}
+                      dragId={item.id}
+                      questStartData={questStartData}
+                      id={index}
+                      item={item}
+                      number={index + 1}
+                      editable={item.edit}
+                      deleteable={item.delete}
+                      answer={item.label}
+                      addedAnswerUuid={item.uuid}
+                      answersSelection={answersSelection}
+                      setAnswerSelection={setAnswerSelection}
+                      rankedAnswers={rankedAnswers}
+                      title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                      checkInfo={false}
+                      check={findLabelChecked(rankedAnswers, item.label)}
+                      contend={findLabelContend(rankedAnswers, item.label)}
+                      handleCheckChange={(check) => handleCheckChange(index, check)}
+                      handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
+                      setAddOptionField={setAddOptionField}
+                      checkOptionStatus={checkOptionStatus}
+                      setCheckOptionStatus={setCheckOptionStatus}
+                      postProperties={postProperties}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
+            </div>
+          </div>
         );
       }
     } else {
