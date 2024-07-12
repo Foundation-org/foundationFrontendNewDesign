@@ -24,7 +24,6 @@ import showToast from '../../../../../components/ui/Toast';
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
-
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
@@ -345,7 +344,13 @@ const QuestionCardWithToggle = (props) => {
     },
     onError: (err) => {
       console.log(err);
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message);
+      if (err.response.data.message === 'Sorry, this post has been deleted by the user who created it.') {
+        queryClient.setQueriesData(['posts'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== err.response.data._id)),
+        }));
+      }
       setLoading(false);
       dispatch(questUtilsActions.resetaddOptionLimit());
     },
