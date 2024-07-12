@@ -51,7 +51,7 @@ export default function Signin() {
         break;
   
       case 'linkedin':
-        if (isWebview()) {
+        if (!isWebview()) {
           showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
@@ -60,7 +60,7 @@ export default function Signin() {
         break;
   
       case 'github':
-        if (isWebview()) {
+        if (!isWebview()) {
           showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
@@ -69,7 +69,7 @@ export default function Signin() {
         break;
   
       case 'facebook':
-        if (isWebview()) {
+        if (!isWebview()) {
           showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
@@ -87,7 +87,7 @@ export default function Signin() {
         break;
   
       case 'twitter':
-        if (isWebview()) {
+        if (!isWebview()) {
           showToast("info", "webViewLogin");
           setIsLoadingSocial(false);
         } else {
