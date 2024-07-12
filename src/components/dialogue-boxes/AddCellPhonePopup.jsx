@@ -96,11 +96,15 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
 
   const handleAddContactBadge = async () => {
     try {
-      const addBadge = await api.post(`/addBadge/contact`, {
+      const payload = {
         uuid: localStorage.getItem('uuid'),
         type: type,
         data: otpResp?.data?.data?.phoneNumber,
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge/contact`, payload);
 
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');

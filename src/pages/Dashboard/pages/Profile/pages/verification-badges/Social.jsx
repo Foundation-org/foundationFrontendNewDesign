@@ -9,6 +9,8 @@ import { AuthKitProvider, SignInButton } from '@farcaster/auth-kit';
 import api from '../../../../../../services/api/Axios';
 import showToast from '../../../../../../components/ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { CanAdd } from './badgeUtils';
 
 const Social = ({
   handleRemoveBadgePopup,
@@ -167,19 +169,26 @@ const Social = ({
                       accountName: item.accountName,
                     });
                   } else {
-                    if (
-                      (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
-                      (checkLegacyBadge() && getAskPasswordFromRedux)
-                    ) {
-                      await handleOpenPasswordConfirmation();
+                    const timeRemaining = CanAdd(persistedUserInfo, item.type, 'social');
+                    if (timeRemaining === true) {
+                      if (
+                        (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
+                        (checkLegacyBadge() && getAskPasswordFromRedux)
+                      ) {
+                        await handleOpenPasswordConfirmation();
+                      }
+                      if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
+                        triggerFarcaster();
+                        return;
+                      }
+                      setLoading({ state: true, badge: item.accountName });
+                      localStorage.setItem('target-url', `${window.location.href}`);
+                      window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
+                    } else {
+                      toast.warning(
+                        `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+                      );
                     }
-                    if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
-                      triggerFarcaster();
-                      return;
-                    }
-                    setLoading({ state: true, badge: item.accountName });
-                    localStorage.setItem('target-url', `${window.location.href}`);
-                    window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
                   }
                 }}
               >

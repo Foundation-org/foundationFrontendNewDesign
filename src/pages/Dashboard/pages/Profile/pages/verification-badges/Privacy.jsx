@@ -4,6 +4,8 @@ import { legacy } from '../../../../../../constants/varification-badges';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { useState } from 'react';
 import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
+import { CanAdd } from './badgeUtils';
+import { toast } from 'sonner';
 
 const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
   const persistedContants = useSelector(getConstantsValues);
@@ -54,14 +56,23 @@ const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
                 // color={checkLegacyBadge() ? 'red' : 'blue'}
                 disabled={item.disabled}
                 onClick={() => {
-                  checkLegacyBadge()
-                    ? handleRemoveBadgePopup({
-                        title: 'Password',
-                        type: 'password',
-                        image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
-                        badgeType: 'password',
-                      })
-                    : setIsPersonalPopup(true);
+                  if (checkLegacyBadge()) {
+                    handleRemoveBadgePopup({
+                      title: 'Password',
+                      type: 'password',
+                      image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                      badgeType: 'password',
+                    });
+                  } else {
+                    const timeRemaining = CanAdd(persistedUserInfo, 'password', 'password');
+                    if (timeRemaining === true) {
+                      setIsPersonalPopup(true);
+                    } else {
+                      toast.warning(
+                        `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+                      );
+                    }
+                  }
                 }}
               >
                 {checkLegacyBadge() ? 'Remove' : 'Add'}

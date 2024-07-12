@@ -19,7 +19,7 @@ export default function BadgeRemovePopup({
   loading,
 }) {
   const queryClient = useQueryClient();
-
+  console.log(accountName);
   const handleRemoveBadge = async () => {
     setIsLoading(true);
     try {
@@ -28,33 +28,39 @@ export default function BadgeRemovePopup({
         removeBadge = await api.post(`/removeContactBadge`, {
           type: type,
           uuid: fetchUser.uuid,
+          badgeName: type,
         });
       } else if (badgeType === 'personal') {
         removeBadge = await api.post(`/removePersonalBadge`, {
           type: type,
           uuid: fetchUser.uuid,
+          badgeName: type,
         });
       } else if (badgeType === 'web3') {
         removeBadge = await api.post(`/removeWeb3Badge`, {
           type: type,
           uuid: fetchUser.uuid,
+          badgeName: type,
         });
       } else if (type === 'password') {
         removeBadge = await api.post('/addPasswordBadgesUpdate', {
           uuid: fetchUser.uuid,
           eyk: localStorage.getItem('legacyHash'),
+          badgeName: type,
         });
       } else if (badgeType === 'passkey') {
         removeBadge = await api.post(`/removePasskey`, {
           type: type,
           accountName: accountName,
           uuid: fetchUser.uuid,
+          badgeName: type,
         });
       } else if (badgeType === 'farcaster') {
         removeBadge = await api.post(`/removeFarCasterBadge`, {
           type: type,
           accountName: accountName,
           uuid: fetchUser.uuid,
+          badgeName: type,
         });
       } else {
         const findBadge = fetchUser.badges.filter((item) => {
@@ -62,10 +68,11 @@ export default function BadgeRemovePopup({
             return item;
           }
         });
-
+        console.log(findBadge[0]);
         removeBadge = await api.post(`/removeBadge`, {
           badgeAccountId: findBadge[0].accountId,
           uuid: fetchUser.uuid,
+          badgeName: type,
         });
       }
 

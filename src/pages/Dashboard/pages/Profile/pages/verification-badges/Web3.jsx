@@ -11,6 +11,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../../components/ui/Toast';
 import { Button } from '../../../../../../components/ui/Button';
+import { CanAdd } from './badgeUtils';
+import { toast } from 'sonner';
 export default function Web3({
   handleRemoveBadgePopup,
   handleOpenPasswordConfirmation,
@@ -309,8 +311,16 @@ export default function Web3({
                   if (
                     (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
                     (checkLegacyBadge() && getAskPassword)
-                  )
-                    await handleOpenPasswordConfirmation();
+                  ) {
+                    const timeRemaining = CanAdd(persistedUserInfo, item.type, 'web3');
+                    if (timeRemaining === true) {
+                      await handleOpenPasswordConfirmation();
+                    } else {
+                      toast.warning(
+                        `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+                      );
+                    }
+                  }
                 }
                 item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
                   ? triggerFarcaster()

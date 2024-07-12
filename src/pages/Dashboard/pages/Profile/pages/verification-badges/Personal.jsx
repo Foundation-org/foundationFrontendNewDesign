@@ -8,6 +8,7 @@ import EducationBadgePopup from '../../../../../../components/dialogue-boxes/Edu
 import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { Button } from '../../../../../../components/ui/Button';
+import { CanAdd } from './badgeUtils';
 
 export default function Personal({
   fetchUser,
@@ -40,17 +41,25 @@ export default function Personal({
       );
       return;
     } else {
-      if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
-        await handleOpenPasswordConfirmation();
-      // if (await handlePasskeyConfirmation()) {
+      const timeRemaining = CanAdd(persistedUserInfo, type, 'personal');
+      if (timeRemaining === true) {
+        if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
+          await handleOpenPasswordConfirmation();
+        // if (await handlePasskeyConfirmation()) {
 
-      if (edit) {
-        setEdit(true);
+        if (edit) {
+          setEdit(true);
+        } else {
+          setEdit(false);
+        }
+        setIsPersonalPopup(true);
+        setSelectedPersonalBadge(type);
       } else {
-        setEdit(false);
+        toast.warning(
+          `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+        );
       }
-      setIsPersonalPopup(true);
-      setSelectedPersonalBadge(type);
+
       // }
     }
   };

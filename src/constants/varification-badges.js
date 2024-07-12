@@ -46,6 +46,7 @@ export const socials = [
     NoOfButton: 1,
     link: '/auth/twitter',
     accountName: 'twitter',
+    type: 'twitter',
     disabled: true,
   },
   {
@@ -56,6 +57,7 @@ export const socials = [
     NoOfButton: 1,
     link: '/auth/linkedin',
     accountName: 'linkedin',
+    type: 'linkedin',
     disabled: true,
   },
   // {
@@ -66,6 +68,8 @@ export const socials = [
   //   NoOfButton: 1,
   //   link: '/auth/facebook',
   //   accountName: 'facebook',
+  //   type: 'facebook',
+
   // },
   // {
   //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
@@ -75,6 +79,7 @@ export const socials = [
   //   NoOfButton: 1,
   //   link: '/auth/instagram',
   //   accountName: 'instagram',
+  //   type: 'instagram',
   //   disabled: false,
   // },
   {
@@ -85,6 +90,7 @@ export const socials = [
     NoOfButton: 1,
     link: '/auth/github',
     accountName: 'github',
+    type: 'github',
     disabled: false,
   },
   {

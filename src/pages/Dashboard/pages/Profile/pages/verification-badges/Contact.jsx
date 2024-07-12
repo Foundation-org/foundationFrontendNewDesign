@@ -8,6 +8,7 @@ import AddCellPhonePopup from '../../../../../../components/dialogue-boxes/AddCe
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
 import { Button } from '../../../../../../components/ui/Button';
+import { CanAdd } from './badgeUtils';
 
 export default function Contact({
   fetchUser,
@@ -49,11 +50,26 @@ export default function Contact({
       handleGuestBadgeAdd();
     } else {
       if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) {
-        await handleOpenPasswordConfirmation();
+        const timeRemaining = CanAdd(persistedUserInfo, type, 'contact');
+        if (timeRemaining === true) {
+          await handleOpenPasswordConfirmation();
+        } else {
+          toast.warning(
+            `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+          );
+        }
       }
       if (!checkContact(type)) {
-        setIsPopup(true);
-        setSelectedBadge(type);
+        const timeRemaining = CanAdd(persistedUserInfo, type, 'contact');
+
+        if (timeRemaining === true) {
+          setIsPopup(true);
+          setSelectedBadge(type);
+        } else {
+          toast.warning(
+            `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+          );
+        }
       } else if (checkContact(type) && !checkPrimary(type)) {
         handleRemoveBadgePopup({
           title: title,
@@ -196,7 +212,7 @@ export default function Contact({
         setIsPersonalPopup={setIsPersonalPopup}
       />
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-      Contact badges increase your verification status and give you more options for account recovery. 
+        Contact badges increase your verification status and give you more options for account recovery.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         {renderContactBadgesPopup()}
