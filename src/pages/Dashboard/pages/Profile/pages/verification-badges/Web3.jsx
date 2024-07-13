@@ -330,7 +330,7 @@ export default function Web3({
                           title: item.title,
                           image: item.image,
                           type: item.type,
-                          badgeType: 'etherium-wallet',
+                          badgeType: 'web3',
                         })
                       : connect()
                     : checkPassKeyBadge(item.accountName, item.type)
