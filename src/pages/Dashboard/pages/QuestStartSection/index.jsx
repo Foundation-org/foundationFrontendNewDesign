@@ -142,12 +142,12 @@ const QuestStartSection = () => {
           </div>
         </div>
         {questUtils.isShowPlayer && (
-          <div className="absolute bottom-0 left-1/2 block -translate-x-1/2 laptop:hidden">
+          <div className="absolute bottom-0 left-1/2 z-10 block -translate-x-1/2 laptop:hidden">
             <div className="relative">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                 alt="mediaCloseIcon"
-                className="absolute -right-2 top-3 h-6 w-6 cursor-pointer text-black dark:text-white"
+                className="absolute -right-2 top-3 z-20 h-6 w-6 cursor-pointer text-black dark:text-white"
                 onClick={() => {
                   dispatch(questUtilsActions.setIsShowPlayer(false));
                   dispatch(questUtilsActions.setPlayingPlayerId(''));
