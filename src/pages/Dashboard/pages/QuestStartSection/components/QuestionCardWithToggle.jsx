@@ -350,6 +350,15 @@ const QuestionCardWithToggle = (props) => {
           ...oldData,
           pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== err.response.data._id)),
         }));
+        queryClient.setQueriesData({ queryKey: ['questByShareLink'] }, (oldData) => {
+          return {
+            ...oldData,
+            data: {
+              ...oldData.data,
+              data: oldData.data.data.filter((item) => item._id !== err.response.data._id),
+            },
+          };
+        });
       }
       setLoading(false);
       dispatch(questUtilsActions.resetaddOptionLimit());
