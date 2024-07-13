@@ -322,26 +322,37 @@ export default function Web3({
                     }
                   }
                 }
-                item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
-                  ? triggerFarcaster()
-                  : item.type === 'etherium-wallet'
-                    ? checkWeb3Badge(item.type)
-                      ? handleRemoveBadgePopup({
-                          title: item.title,
-                          image: item.image,
-                          type: item.type,
-                          badgeType: 'web3',
-                        })
-                      : connect()
-                    : checkPassKeyBadge(item.accountName, item.type)
-                      ? handleRemoveBadgePopup({
-                          title: item.title,
-                          image: item.image,
-                          type: item.type,
-                          badgeType: item.badgeType,
-                          accountName: item.accountName,
-                        })
-                      : handlePasskey(item?.title, item?.type);
+                if (item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)) {
+                  triggerFarcaster();
+                } else if (item.type === 'etherium-wallet') {
+                  if (checkWeb3Badge(item.type)) {
+                    handleRemoveBadgePopup({
+                      title: item.title,
+                      image: item.image,
+                      type: item.type,
+                      badgeType: 'web3',
+                    });
+                  } else {
+                    const timeRemaining = CanAdd(persistedUserInfo, item.type, 'etherium-wallet');
+                    if (timeRemaining === true) {
+                      connect();
+                    } else {
+                      toast.warning(
+                        `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+                      );
+                    }
+                  }
+                } else if (checkPassKeyBadge(item.accountName, item.type)) {
+                  handleRemoveBadgePopup({
+                    title: item.title,
+                    image: item.image,
+                    type: item.type,
+                    badgeType: item.badgeType,
+                    accountName: item.accountName,
+                  });
+                } else {
+                  handlePasskey(item?.title, item?.type);
+                }
               }}
               disabled={item.disabled}
             >
