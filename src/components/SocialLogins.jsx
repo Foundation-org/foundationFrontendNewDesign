@@ -19,7 +19,7 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
             } else {
               localStorage.setItem('target-url', `${window.location.href}`);
               setClickedButtonName(item.provider);
-              handleReferralOpen();
+              handleReferralOpen(item.provider);
             }
           }}
         >
