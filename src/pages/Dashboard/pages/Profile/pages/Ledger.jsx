@@ -121,13 +121,13 @@ export default function BasicTable() {
   }, [ledgerData?.data?.totalCount, rowsPerPage]);
 
   const handlePageClick = async (page) => {
-    // table.setPageIndex(page - 1);
-    console.log(page);
     setCurrentPage(page);
-    const data = await getAllLedgerData(page, itemsPerPage, sort);
-    if (data) {
-      setLedgerData(data);
-    }
+    // table.setPageIndex(page - 1);
+    // console.log(page);
+    // const data = await getAllLedgerData(page, itemsPerPage, sort);
+    // if (data) {
+    //   setLedgerData(data);
+    // }
   };
 
   const visibleButtons = 5;
