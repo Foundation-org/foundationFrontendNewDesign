@@ -47,9 +47,9 @@ export default function Signup() {
   const handlePopupOpen = () => setIspopup(true);
   const handlePopupClose = () => setIspopup(false);
 
-  const handleReferralOpen = () => {
-    if (clickedButtonName === 'google') {
-      if (isWebview(window.navigator.userAgent)) {
+  const handleReferralOpen = (provider) => {
+    if (isWebview(window.navigator.userAgent)) {
+      if (provider === 'google') {
         showToast('info', 'webViewSignUp');
         setIsLoadingSocial(false);
       } else {
