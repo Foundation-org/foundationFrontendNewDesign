@@ -47,8 +47,16 @@ export default function Signup() {
   const handlePopupOpen = () => setIspopup(true);
   const handlePopupClose = () => setIspopup(false);
 
-  const handleReferralOpen = () => setIsReferral(true);
-
+  const handleReferralOpen = () => {
+    if (clickedButtonName === 'google') {
+      if (isWebview(window.navigator.userAgent)) {
+        showToast('info', 'webViewSignUp');
+        setIsLoadingSocial(false);
+      } else {
+        setIsReferral(true);
+      }
+    }
+  };
   const handleReferralClose = () => {
     setIsReferral(false);
     setIsLoading(false);
@@ -58,12 +66,12 @@ export default function Signup() {
     setIsLoadingSocial(true);
 
     if (clickedButtonName === 'google') {
-      if (isWebview(window.navigator.userAgent)) {
-        showToast('info', 'webViewSignUp');
-        setIsLoadingSocial(false);
-      } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
-      }
+      // if (isWebview(window.navigator.userAgent)) {
+      //   showToast('info', 'webViewSignUp');
+      //   setIsLoadingSocial(false);
+      // } else {
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+      // }
     }
 
     if (clickedButtonName === 'linkedin') {
