@@ -186,7 +186,7 @@ const Social = ({
                       window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
                     } else {
                       toast.warning(
-                        `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
+                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`,
                       );
                     }
                   }

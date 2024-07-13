@@ -55,9 +55,7 @@ export default function Personal({
         setIsPersonalPopup(true);
         setSelectedPersonalBadge(type);
       } else {
-        toast.warning(
-          `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
-        );
+        toast.warning(`You need to wait just ${timeRemaining} more days before you can unlock this badge.`);
       }
 
       // }

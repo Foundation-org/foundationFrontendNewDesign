@@ -54,9 +54,7 @@ export default function Contact({
         if (timeRemaining === true) {
           await handleOpenPasswordConfirmation();
         } else {
-          toast.warning(
-            `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
-          );
+          toast.warning(`You need to wait just ${timeRemaining} more days before you can unlock this badge.`);
         }
       }
       if (!checkContact(type)) {
@@ -66,9 +64,7 @@ export default function Contact({
           setIsPopup(true);
           setSelectedBadge(type);
         } else {
-          toast.warning(
-            `${timeRemaining} days haven't elapsed since the deletion, so you cannot add a badge at this time`,
-          );
+          toast.warning(`You need to wait just ${timeRemaining} more days before you can unlock this badge.`);
         }
       } else if (checkContact(type) && !checkPrimary(type)) {
         handleRemoveBadgePopup({
