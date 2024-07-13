@@ -67,39 +67,39 @@ export default function Signup() {
     }
 
     if (clickedButtonName === 'linkedin') {
-      if (isWebview(window.navigator.userAgent)) {
-        showToast('info', 'webViewSignUp');
-        setIsLoadingSocial(false);
-      } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
-      }
+      // if (isWebview(window.navigator.userAgent)) {
+      //   showToast('info', 'webViewSignUp');
+      //   setIsLoadingSocial(false);
+      // } else {
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
+      // }
     }
 
     if (clickedButtonName === 'github') {
-      if (isWebview(window.navigator.userAgent)) {
-        showToast('info', 'webViewSignUp');
-        setIsLoadingSocial(false);
-      } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
-      }
+      // if (isWebview(window.navigator.userAgent)) {
+      //   showToast('info', 'webViewSignUp');
+      //   setIsLoadingSocial(false);
+      // } else {
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
+      // }
     }
 
     if (clickedButtonName === 'facebook') {
-      if (isWebview(window.navigator.userAgent)) {
-        showToast('info', 'webViewSignUp');
-        setIsLoadingSocial(false);
-      } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
-      }
+      // if (isWebview(window.navigator.userAgent)) {
+      //   showToast('info', 'webViewSignUp');
+      //   setIsLoadingSocial(false);
+      // } else {
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+      // }
     }
 
     if (clickedButtonName === 'twitter') {
-      if (isWebview(window.navigator.userAgent)) {
-        showToast('info', 'webViewSignUp');
-        setIsLoadingSocial(false);
-      } else {
-        window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
-      }
+      // if (isWebview(window.navigator.userAgent)) {
+      //   showToast('info', 'webViewSignUp');
+      //   setIsLoadingSocial(false);
+      // } else {
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
+      // }
     }
   };
 
