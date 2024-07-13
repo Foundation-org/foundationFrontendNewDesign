@@ -312,7 +312,7 @@ export default function Web3({
                     (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
                     (checkLegacyBadge() && getAskPassword)
                   ) {
-                    const timeRemaining = CanAdd(persistedUserInfo, item.type, 'web3');
+                    const timeRemaining = CanAdd(persistedUserInfo, item.type, 'etherium-wallet');
                     if (timeRemaining === true) {
                       await handleOpenPasswordConfirmation();
                     } else {
