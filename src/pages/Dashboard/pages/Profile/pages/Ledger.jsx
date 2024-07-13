@@ -65,7 +65,7 @@ export default function BasicTable() {
     } else {
       findingLedger();
     }
-  }, [sort, debouncedSearch]);
+  }, [sort, debouncedSearch, currentPage]);
 
   // const [{ pageIndex, pageSize }, setPagination] =
   // React.useState({
@@ -151,6 +151,10 @@ export default function BasicTable() {
       dispatch(updateColumnSize({ columnId, size: size }));
     });
   }, [columnSizes, table, table.getState().columnSizingInfo.isResizingColumn]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearch]);
 
   return (
     <div className="mb-6 overflow-y-auto">

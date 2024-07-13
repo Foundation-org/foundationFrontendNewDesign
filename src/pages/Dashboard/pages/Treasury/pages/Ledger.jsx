@@ -61,7 +61,7 @@ export default function Ledger() {
     } else {
       findingLedger();
     }
-  }, [sort, debouncedSearch]);
+  }, [sort, debouncedSearch, currentPage]);
 
   const columns = useMemo(() => {
     const tempColumns = Columns.map((column) => {
@@ -91,10 +91,10 @@ export default function Ledger() {
 
   const handlePageClick = async (page) => {
     setCurrentPage(page);
-    const data = await getAllRadeemLedgerData(page, itemsPerPage, sort);
-    if (data) {
-      setLedgerData(data);
-    }
+    // const data = await getAllRadeemLedgerData(page, itemsPerPage, sort);
+    // if (data) {
+    //   setLedgerData(data);
+    // }
   };
 
   const visibleButtons = 5;
@@ -108,6 +108,10 @@ export default function Ledger() {
       dispatch(updateColumnSize({ columnId, size: size }));
     });
   }, [columnSizes, table, table.getState().columnSizingInfo.isResizingColumn]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearch]);
 
   return (
     <div className="overflow-y-auto">
