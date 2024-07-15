@@ -89,7 +89,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     // Handle userInfoData when successfully fetched
     if (userInfoSuccess && userInfoData?.status === 200) {
-      if (userInfoData.data && userInfoData.data.role === 'user') {
+      if (userInfoData.data) {
         dispatch(addUser(userInfoData.data));
         // localStorage.setItem('userData', JSON.stringify(userInfoData.data));
         // Set into local storage
