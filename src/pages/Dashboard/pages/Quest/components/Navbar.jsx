@@ -7,13 +7,13 @@ const Navbar = ({ handleTab, tab }) => {
     <div className="flex justify-center gap-[6.7px] tablet:gap-4 laptop:gap-[30px]">
       <div>
         <div
-          className={`flex h-5 justify-center rounded-[3.82px] bg-transparent tablet:h-12 tablet:rounded-xl laptop:h-[60px] dark:bg-[#242424] ${
+          className={`flex h-5 justify-center rounded-[3.82px] bg-transparent dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px] ${
             persistedTheme === 'dark'
               ? 'dark-create-quest-box-shadow border border-[#FBFBFB] tablet:border-[3px]'
               : 'create-quest-box-shadow'
           }`}
         >
-          <p className="-mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px] dark:bg-[#242424] dark:text-white">
+          <p className="-mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none text-[#7C7C7C] dark:bg-[#242424] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Polls
           </p>
         </div>
@@ -22,7 +22,7 @@ const Navbar = ({ handleTab, tab }) => {
             className={`${
               tab === 0
                 ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-gray-250'
             } quest-topbar`}
             onClick={() => {
               handleTab(0);
@@ -34,7 +34,7 @@ const Navbar = ({ handleTab, tab }) => {
             className={`${
               tab === 1
                 ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-gray-250'
             } quest-topbar`}
             onClick={() => {
               handleTab(1);
@@ -46,7 +46,7 @@ const Navbar = ({ handleTab, tab }) => {
             className={`${
               tab === 5
                 ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-gray-250'
             } quest-topbar`}
             onClick={() => {
               handleTab(5);
@@ -58,7 +58,7 @@ const Navbar = ({ handleTab, tab }) => {
             className={`${
               tab === 2
                 ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-gray-250'
             } quest-topbar`}
             onClick={() => {
               handleTab(2);
@@ -71,13 +71,13 @@ const Navbar = ({ handleTab, tab }) => {
 
       <div>
         <div
-          className={`flex h-5 justify-center rounded-[3.82px] bg-transparent tablet:h-12 tablet:rounded-xl laptop:h-[60px] dark:bg-[#242424] ${
+          className={`flex h-5 justify-center rounded-[3.82px] bg-transparent dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px] ${
             persistedTheme === 'dark'
               ? 'dark-create-quest-box-shadow border border-[#FBFBFB] tablet:border-[3px]'
               : 'create-quest-box-shadow'
           }`}
         >
-          <p className="-mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px] dark:bg-[#242424] dark:text-white">
+          <p className="-mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none text-[#7C7C7C] dark:bg-[#242424] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Statements
           </p>
         </div>
@@ -86,7 +86,7 @@ const Navbar = ({ handleTab, tab }) => {
             className={`${
               tab === 3
                 ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-gray-250'
             } quest-topbar`}
             onClick={() => {
               handleTab(3);
@@ -98,7 +98,7 @@ const Navbar = ({ handleTab, tab }) => {
             className={`${
               tab === 4
                 ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:border-[#5F5F5F] dark:bg-[#5F5F5F] dark:text-gray-250'
             } quest-topbar`}
             onClick={() => {
               handleTab(4);

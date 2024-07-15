@@ -6,14 +6,16 @@ const SystemNotificationCard = ({ post, innerRef }) => {
 
   return (
     <div
-      className="flex flex-col gap-2 rounded-[13.842px] border-2 border-[#6BA5CF] bg-[#F4F8FF] px-7 pb-[15px] pt-[14px] tablet:gap-4 tablet:border-[3.5px] tablet:px-[44px] tablet:py-6"
+      className="dark:bg-blue-400 border-blue-500 bg-white-800 flex flex-col gap-2 rounded-[13.842px] border-2 px-7 pb-[15px] pt-[14px] dark:border-gray-300 tablet:gap-4 tablet:border-[3.5px] tablet:px-[44px] tablet:py-6"
       ref={innerRef}
     >
-      <h1 className="text-[13px] font-bold leading-normal text-[#5B5B5B] tablet:text-[22px]">{post.header}</h1>
+      <h1 className="text-accent-700 text-[13px] font-bold leading-normal dark:text-gray-300 tablet:text-[22px]">
+        {post.header}
+      </h1>
       {post?.text?.map((item, index) => (
         <p
           key={index + 1}
-          className="text-[13px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px]"
+          className="text-[13px] font-normal leading-normal text-gray-900 dark:text-gray-300 tablet:text-[18px] tablet:leading-[25px]"
         >
           {item}
         </p>
@@ -22,7 +24,7 @@ const SystemNotificationCard = ({ post, innerRef }) => {
         <div className="flex justify-end tablet:mt-2">
           <Button
             variant="hollow-submit"
-            className="w-fit bg-white"
+            className="w-fit bg-white dark:bg-transparent"
             onClick={() => {
               navigate(post.buttonUrl);
             }}

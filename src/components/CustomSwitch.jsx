@@ -5,7 +5,7 @@ const CustomSwitch = ({ enabled, setEnabled }) => {
     <Switch
       checked={enabled}
       onChange={setEnabled}
-      className={`${enabled ? 'bg-[#89CFF0]' : 'bg-[#D9D9D9]'}
+      className={`${enabled ? 'bg-[#89CFF0]' : 'bg-gray-250'}
     green-select`}
     >
       <span className="sr-only">Use setting</span>

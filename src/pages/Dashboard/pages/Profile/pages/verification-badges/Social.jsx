@@ -139,9 +139,9 @@ const Social = ({
               </div>
               <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
               <div
-                className={` flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+                className={` border-white-500 flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
               >
-                <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+                <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-[#CACACA] tablet:text-[20px]">
                   {item.title}
                 </h1>
               </div>

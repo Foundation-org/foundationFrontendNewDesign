@@ -235,11 +235,11 @@ const QuestCardLayout = ({
   const handleClose = () => setModalVisible(false);
   return (
     <div
-      className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] "
+      className="border-gray-250 max-w-[730px] rounded-[12.3px] border-2 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
       ref={imageGetter}
     >
       {questStartData?.suppressed && (
-        <div className="flex items-center justify-between rounded-t-[12.3px] border-b-[1.834px] border-[#D9D9D9] bg-[#FEECEC] px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-[#FF2C2C] tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
+        <div className="border-gray-250 bg-white-300 text-red-100 flex items-center justify-between rounded-t-[12.3px] border-b-[1.834px] px-5 py-2 text-[0.75rem] font-semibold leading-[15px] tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
           <h4 className="">SUPRESSED</h4>
           {questStartData.uuid === localStorage.getItem('uuid') && (
             <Link to="/profile/feedback" className="underline">
@@ -250,9 +250,9 @@ const QuestCardLayout = ({
       )}
 
       {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
-        <div className="mb-2 flex justify-between border-b border-[#D9D9D9] px-2 py-[5px] tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
+        <div className="border-gray-250 mb-2 flex justify-between border-b px-2 py-[5px] tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
           <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
-            <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
+            <h1 className="truncate text-wrap text-[10px] font-semibold text-gray-150 tablet:text-[20px] tablet:font-medium">
               {url}
             </h1>
           </div>

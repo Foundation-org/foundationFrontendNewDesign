@@ -5,7 +5,7 @@ import { Button } from '../ui/Button';
 import { useMutation } from '@tanstack/react-query';
 import { sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
-import showToast from '../ui/Toast'
+import showToast from '../ui/Toast';
 
 const PhoneOtpVerificationPopup = ({ isPopup, title, logo, handleClose, otpResp }) => {
   const [otp, setOTP] = useState(['', '', '', '', '', '']);
@@ -41,8 +41,7 @@ const PhoneOtpVerificationPopup = ({ isPopup, title, logo, handleClose, otpResp 
       handleClose();
     },
     onError: (error) => {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
-
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     },
   });
   console.log(otpResp);
@@ -65,7 +64,7 @@ const PhoneOtpVerificationPopup = ({ isPopup, title, logo, handleClose, otpResp 
                   <div key={index} className="size-[26.7px] tablet:size-[57px]">
                     <input
                       ref={refs[index]}
-                      className="flex h-full w-full flex-col items-center justify-center rounded-[6px] border border-[#DEE6F7] bg-[#FBFBFB] text-center text-[14px] outline-none focus:ring-0 tablet:rounded-[15px] tablet:border-[3px] tablet:text-[26px]"
+                      className="border-white-500 flex h-full w-full flex-col items-center justify-center rounded-[6px] border bg-[#FBFBFB] text-center text-[14px] outline-none focus:ring-0 tablet:rounded-[15px] tablet:border-[3px] tablet:text-[26px]"
                       type="text"
                       maxLength={1}
                       value={digit}

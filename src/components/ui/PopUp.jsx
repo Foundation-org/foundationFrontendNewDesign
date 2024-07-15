@@ -55,7 +55,7 @@ const PopUp = ({
             />
           )}
         </div>
-        <div className="rounded-b-[9.76px] bg-white tablet:rounded-b-[26px]">{children}</div>
+        <div className="rounded-b-[9.76px] bg-white dark:bg-gray-200 tablet:rounded-b-[26px]">{children}</div>
       </Box>
     </Modal>
   );

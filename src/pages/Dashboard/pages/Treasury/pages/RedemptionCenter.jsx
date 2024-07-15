@@ -244,7 +244,7 @@ export default function RedemptionCenter() {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col gap-3 rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+        <div className="flex flex-col gap-3 rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
           <input
             type="text"
             value={description}
@@ -254,14 +254,14 @@ export default function RedemptionCenter() {
               }
             }}
             placeholder="Description here....."
-            className="w-full max-w-[368px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
+            className="w-full max-w-[368px] rounded-[2.76px] border-[1.17px] border-white-500 bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
           />
           <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
             Create FDX and maximize your access to all features.
           </p>
           <div className="flex items-center gap-5 tablet:gap-6">
             <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
-            <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
+            <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-white-500 bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
               <FaMinus
                 className="w-[7px] cursor-pointer tablet:w-[23px]"
                 onClick={() => {
@@ -322,7 +322,7 @@ export default function RedemptionCenter() {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col gap-3 rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+        <div className="flex flex-col gap-3 rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
           <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
             You can add redemption code and earn reworded coins
           </p>
@@ -333,7 +333,7 @@ export default function RedemptionCenter() {
               placeholder="eg (rG57HK)"
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+              className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-white-500 bg-[#F9F9F9] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
             />
           </div>
           <div className="flex w-full justify-center">
@@ -357,10 +357,10 @@ export default function RedemptionCenter() {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-4 tablet:py-[18.73px]">
+        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-4 tablet:py-[18.73px]">
           <div>
             {!unredeemedData || unredeemedData.data.data.length === 0 ? (
-              <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
+              <div className="rounded-[5.85px] border-[1.84px] border-gray-250 bg-white py-2 tablet:rounded-[15px] tablet:py-6">
                 <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
                   Your have no un-redeemed codes
                 </p>
@@ -394,7 +394,7 @@ export default function RedemptionCenter() {
                     </p>
                   </div>
                 </div>
-                <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[10px]">
+                <div className="rounded-[5.85px] border-[1.84px] border-gray-250 bg-white tablet:rounded-[10px]">
                   {unredeemedData?.data?.data?.map((item, index) => (
                     <div key={index + 1}>
                       <div
@@ -485,9 +485,9 @@ export default function RedemptionCenter() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-[15.5px] tablet:py-[18.73px]">
+        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-[15.5px] tablet:py-[18.73px]">
           {!history || history.data.data.length === 0 ? (
-            <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
+            <div className="rounded-[5.85px] border-[1.84px] border-gray-250 bg-white py-2 tablet:rounded-[15px] tablet:py-6">
               <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
                 You have no records.
               </p>
@@ -511,13 +511,13 @@ export default function RedemptionCenter() {
                     </p>
                   </div>
                 </div>
-                <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
+                <div className="rounded-[5.85px] border-[1.84px] border-gray-250 bg-white tablet:rounded-[15px]">
                   {history?.data?.data
                     ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     ?.map((item, index) => (
                       <div
                         key={item._id}
-                        className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== history?.data?.data?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                        className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== history?.data?.data?.length - 1 && 'border-b-[1.84px] border-gray-250'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                       >
                         <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
                           <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">

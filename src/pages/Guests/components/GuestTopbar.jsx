@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 const GuestTopbar = ({ createdBy, badgeCount, QuestTopic, img }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   return (
-    <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-[10.4px] py-2 tablet:px-[22px] tablet:pb-[10px] tablet:pt-[17px]">
+    <div className="flex items-center justify-between border-b-2 border-gray-250 px-[10.4px] py-2 tablet:px-[22px] tablet:pb-[10px] tablet:pt-[17px]">
       {createdBy === persistedUserInfo?.uuid ? (
         <div className="relative h-fit w-fit">
           <img
@@ -23,7 +23,7 @@ const GuestTopbar = ({ createdBy, badgeCount, QuestTopic, img }) => {
           </p>
         </div>
       )}
-      <h1 className="text-center text-[10.414px] font-medium leading-normal text-[#9A9A9A] tablet:text-[1.51rem] dark:text-[#9A9A9A]">
+      <h1 className="text-center text-[10.414px] font-medium leading-normal text-[#9A9A9A] dark:text-[#9A9A9A] tablet:text-[1.51rem]">
         {QuestTopic}
       </h1>
     </div>

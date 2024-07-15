@@ -5,7 +5,7 @@ export default function ShowAdultDisabledPopup({ handleClose, modalVisible, titl
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           This post has been marked as adult content. You do not currently have adult posts enabled in your filter
           settings. You will not be able to see this post in your feed.
         </h1>

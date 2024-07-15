@@ -51,7 +51,7 @@ const CustomCombobox = ({
     >
       <div className="relative">
         <div
-          // className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-[#DEE6F7] bg-white text-left focus-visible:outline-none sm:text-sm tablet:rounded-[10px] tablet:border-[3px]"
+          // className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-white-500 bg-white text-left focus-visible:outline-none sm:text-sm tablet:rounded-[10px] tablet:border-[3px]"
           className="verification_badge_input"
         >
           <Combobox.Input

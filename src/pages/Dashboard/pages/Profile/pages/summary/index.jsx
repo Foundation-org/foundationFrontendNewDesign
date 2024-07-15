@@ -24,7 +24,7 @@ const Summary = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Activity</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Creating posts is a great way to earn FDX. Especially if others engage with them.
           </h1>
@@ -82,7 +82,7 @@ const Summary = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Feedback</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Not everything you post may be everyone’s cup of tea. See what posts you’ve created others have decided to
             hide and why.
@@ -125,7 +125,7 @@ const Summary = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared Posts</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Sharing posts is a great way to earn FDX - especially if people engage with them.
           </h1>
@@ -174,7 +174,7 @@ const Summary = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">My Lists</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Sharing lists is a great way to earn FDX - especially if people engage with them.
           </h1>

@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <>
       <Topbar />
-      <div className="flex h-[calc(100dvh-48px)] justify-between bg-[#F2F3F5] tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
+      <div className="bg-gray-400 dark:bg-black flex h-[calc(100dvh-48px)] justify-between tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
         <DashboardLayout>
           <Outlet />
         </DashboardLayout>

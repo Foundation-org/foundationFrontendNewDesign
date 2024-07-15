@@ -16,7 +16,7 @@ const UserSettings = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">User Settings</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Customize your data organization with various sorting options and switch between dark/light themes for
             optimal viewing. Manage and personalize notifications to stay updated without distractions.

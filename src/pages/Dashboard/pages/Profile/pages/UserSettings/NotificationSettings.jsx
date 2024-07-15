@@ -55,7 +55,7 @@ export default function NotificationSettings() {
             </h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
             <div className="flex items-center justify-between">
               <div>
@@ -69,7 +69,7 @@ export default function NotificationSettings() {
                 onChange={(e) => {
                   setModalVisible(true);
                 }}
-                className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+                className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
               >
                 <span className="sr-only">Use setting</span>
                 <span
@@ -95,7 +95,7 @@ export default function NotificationSettings() {
                   setSystemNotifications(e);
                   handleUserSettings({ uuid: persistedUserInfo.uuid, systemNotifications: e });
                 }}
-                className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+                className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
               >
                 <span className="sr-only">Use setting</span>
                 <span

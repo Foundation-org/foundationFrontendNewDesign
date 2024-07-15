@@ -46,7 +46,7 @@ export default function VerificationBadgeScore({ isMobile, children }) {
         </h1>
       </div>
       <div
-        className={`border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px] ${isMobile ? 'rounded-[10px]' : 'rounded-b-[10px]'}`}
+        className={`border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px] ${isMobile ? 'rounded-[10px]' : 'rounded-b-[10px]'}`}
       >
         <h1
           className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal ${isMobile ? 'tablet:hidden' : ''}`}

@@ -251,9 +251,9 @@ export default function Personal({
     >
       <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
       <div
-        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
+        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} border-white-500 flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
       >
-        <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+        <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-[#CACACA] tablet:text-[20px]">
           {item.title}
         </h1>
       </div>
@@ -281,7 +281,7 @@ export default function Personal({
         The more personal information you add, the stronger your data profile and the more FDX you earn.
       </h1>
       {renderPersonalBadgesPopup()}
-      {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
+      {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-white-500 py-[17px] tablet:flex tablet:flex-row">
         <div className="flex w-full flex-col items-center gap-[10px] tablet:gap-4 laptop:gap-5">
           {personal.slice(0, Math.ceil(personal.length / 2)).map((item, index) => (
             <PersonalItem
@@ -294,7 +294,7 @@ export default function Personal({
             />
           ))}
         </div>
-        <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
+        <div className="w-2 rounded-[16px] border-[3px] border-white-500 bg-[#FDFDFD]" />
         <div className="flex w-full flex-col items-center gap-7 tablet:gap-4 laptop:gap-5">
           {personal.slice(Math.ceil(personal.length / 2)).map((item, index) => (
             <PersonalItem

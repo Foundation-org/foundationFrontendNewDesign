@@ -33,9 +33,9 @@ const FbDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, quest
           </svg>
         </div>
       </div>
-      {/* <div className="px-6 py-[17px] tablet:pt-7 tablet:px-[27px] border-[0.728px] tablet:border-2 border-[#D9D9D9] mt-1">
+      {/* <div className="px-6 py-[17px] tablet:pt-7 tablet:px-[27px] border-[0.728px] tablet:border-2 border-gray-250 mt-1">
 
-        <div className="w-full rounded-[9.8px] tablet:rounded-[15px] border-[0.728px] tablet:border-2 border-[#D9D9D9]">
+        <div className="w-full rounded-[9.8px] tablet:rounded-[15px] border-[0.728px] tablet:border-2 border-gray-250">
           <CardTopbar
             badgeCount={createdBy === persistedUserInfo?.uuid ? badgeCount : badgeCount}
             QuestTopic="Technology"

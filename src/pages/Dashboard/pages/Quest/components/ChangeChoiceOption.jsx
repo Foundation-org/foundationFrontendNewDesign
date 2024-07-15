@@ -9,7 +9,7 @@ const ChangeChoiceOption = ({ changeState, setChangeState, setChangedOption, cha
   }, [changeState]);
 
   return (
-    <div className="mx-[15px] flex flex-col items-center rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+    <div className="border-white-500 mx-[15px] flex flex-col items-center rounded-[0.30925rem] border px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
       <div className="flex w-full items-center justify-between">
         <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
           Participants can change their choice at a later time.

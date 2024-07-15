@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Router } from './routes/route';
 import { Toaster } from 'sonner';
@@ -7,7 +7,7 @@ import { MaintenanceRouter } from './routes/maintenance';
 // import SEO from './utils/SEO';
 
 function App() {
-  const [theme, setTheme] = useState(null);
+  // const [theme, setTheme] = useState(null);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   useEffect(() => {
@@ -52,21 +52,13 @@ function App() {
   //   }
   // }, []); // Empty dependency array ensures this effect runs only once on component mount
 
-  useEffect(() => {
-    if (persistedTheme === 'dark') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
-  }, [persistedTheme]);
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
+  // useEffect(() => {
+  //   if (persistedTheme === 'dark') {
+  //     setTheme('dark');
+  //   } else {
+  //     setTheme('light');
+  //   }
+  // }, [persistedTheme]);
 
   // useEffect(() => {
   //   document.addEventListener("visibilitychange", function() {
@@ -107,6 +99,14 @@ function App() {
   //     clearTimeout(inactivityTimeout);
   //   };
   // }, []);
+
+  useEffect(() => {
+    if (persistedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [persistedTheme]);
 
   return (
     <div className="h-dvh overflow-hidden">

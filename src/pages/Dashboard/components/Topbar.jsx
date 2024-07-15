@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { TopbarItems } from '../../../constants/topbar';
@@ -13,13 +12,12 @@ import * as pictureMediaAction from '../../../features/createQuest/pictureMediaS
 
 const Topbar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
-    <div className="bg-[#389CE3]">
+    <div className="bg-blue-100 dark:bg-gray-200 border-b-blue-100 dark:border-b-gray-100 tablet:border-b-[1.85px]">
       <div className="static mx-auto flex h-[48px] max-h-[48px] min-h-[48px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-20 tablet:min-h-20 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row">
         <div className="relative flex h-full w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:px-0 laptop:py-0 laptop:pl-[31px] desktop:pl-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
           <div className="flex w-full items-center justify-between gap-[25px] laptop:justify-center">

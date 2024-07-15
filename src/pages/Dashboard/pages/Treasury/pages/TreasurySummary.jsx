@@ -24,7 +24,7 @@ const TreasurySummary = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Your FDX</h1>{' '}
           </div>
         </div>
-        <div className="flex items-center justify-between rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
+        <div className="flex items-center justify-between rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
           <div className="space-y-2">
             <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
               FDX balance
@@ -67,7 +67,7 @@ const TreasurySummary = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Rewards & Fees</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <div className="flex flex-col justify-between">
             <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward
@@ -119,7 +119,7 @@ const TreasurySummary = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">FDX Value</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[16px] tablet:font-medium tablet:leading-normal">
             Need more FDX? You can purchase more FDX from the Foundation treasury.
           </h1>
@@ -155,21 +155,21 @@ const TreasurySummary = () => {
             </h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <div className="rounded-[7.546px] border-[2.792px] border-[#D9D9D9]">
-            <div className="grid grid-cols-8 border-b-[2.792px] border-[#D9D9D9] pl-2 tablet:pl-8">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <div className="rounded-[7.546px] border-[2.792px] border-gray-250">
+            <div className="grid grid-cols-8 border-b-[2.792px] border-gray-250 pl-2 tablet:pl-8">
               <h1 className="col-span-6 py-2 text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 Total codes I’ve created
               </h1>
-              <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-medium leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-medium leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 {persistedUserInfo?.redemptionStatistics?.myTotalRedemptionCodeCreationCount}
               </h1>
             </div>
-            <div className="grid grid-cols-8 border-b-[2.792px] border-[#D9D9D9] pl-2 tablet:pl-8">
+            <div className="grid grid-cols-8 border-b-[2.792px] border-gray-250 pl-2 tablet:pl-8">
               <h1 className="col-span-6 py-2 text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 FDX spent to create codes
               </h1>
-              <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 {persistedUserInfo?.redemptionStatistics?.createCodeFdxSpent?.toFixed(2)} FDX
               </h1>
             </div>
@@ -177,7 +177,7 @@ const TreasurySummary = () => {
               <h1 className="col-span-6 py-2 text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 FDX earned from codes redeemed
               </h1>
-              <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned?.toFixed(2)} FDX
               </h1>
             </div>

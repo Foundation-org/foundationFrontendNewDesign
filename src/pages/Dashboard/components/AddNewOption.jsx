@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import showToast from '../../../components/ui/Toast'
+import showToast from '../../../components/ui/Toast';
 import { useSelector } from 'react-redux';
 
 const AddNewOption = ({ setAnswerSelection, answersSelection, handleClose, setAddOptionLimit }) => {
@@ -12,7 +12,7 @@ const AddNewOption = ({ setAnswerSelection, answersSelection, handleClose, setAd
 
   const handleAddOption = () => {
     if (temp.trim() === '') {
-      showToast('warning', 'emptyOption')
+      showToast('warning', 'emptyOption');
       return;
     }
 
@@ -39,7 +39,7 @@ const AddNewOption = ({ setAnswerSelection, answersSelection, handleClose, setAd
       </h1>
       <div className="w-full min-w-[30rem] rounded-[10px] bg-white dark:bg-[#0D1012]">
         <div className="flex items-center">
-          <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
+          <div className="bg-white-500 h-full w-fit rounded-l-[10px] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
             {persistedTheme === 'dark' ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
@@ -58,8 +58,9 @@ const AddNewOption = ({ setAnswerSelection, answersSelection, handleClose, setAd
         </div>
       </div>
       <button
-        className={` ${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-          } inset-0 w-full  rounded-[10px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner`}
+        className={` ${
+          persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+        } inset-0 w-full  rounded-[10px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner`}
         onClick={handleAddOption}
       >
         Submit

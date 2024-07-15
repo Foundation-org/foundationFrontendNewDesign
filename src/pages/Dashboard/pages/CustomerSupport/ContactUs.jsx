@@ -48,7 +48,7 @@ const ContactUs = () => {
         name="email"
         type="email"
         placeholder="Email Address*"
-        className="autofill_text_color-contact-us w-full rounded-[7px] border-2 border-[#DEE6F7] bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
+        className="autofill_text_color-contact-us border-white-500 w-full rounded-[7px] border-2 bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
         value={payload.email}
         onChange={handleChange}
       />
@@ -57,7 +57,7 @@ const ContactUs = () => {
         aria-label="message"
         minRows={3}
         placeholder="Your Message*"
-        className="w-full rounded-[10px] border-2 border-[#DEE6F7] bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
+        className="border-white-500 w-full rounded-[10px] border-2 bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
         value={payload.message}
         onChange={handleChange}
       />

@@ -58,7 +58,7 @@ const Contributions = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Activity</h1>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Creating posts is a great way to earn FDX. Especially if others engage with them.
           </h1>
@@ -114,9 +114,9 @@ const Contributions = () => {
             {persistedUserInfo.badges.length}/22
           </h1> */}
         </div>
-        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
+        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
           {yourPosts.map((item) => (
-            <div key={item.id} className="flex items-center justify-between text-[#7C7C7C]">
+            <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
               <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
               <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
             </div>
@@ -148,7 +148,7 @@ const Contributions = () => {
             {persistedUserInfo.role === 'user' ? 0 : persistedUserInfo.badges.length}/24
           </h1> */}
         </div>
-        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
+        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
           {othersPosts.map((item) => (
             <div key={item.id} className="flex items-center justify-between text-[#7C7C7C]">
               <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
@@ -184,7 +184,7 @@ const Contributions = () => {
             {persistedUserInfo.badges.length}/24
           </h1> */}
         </div>
-        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
+        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
           <div className="flex items-center justify-between text-[#7C7C7C]">
             <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">
               Number of code of conduct violations

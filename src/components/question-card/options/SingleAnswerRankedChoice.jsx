@@ -226,7 +226,7 @@ const SingleAnswerRankedChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/yellowBadge.svg`}
               alt="yellow badge"
@@ -234,7 +234,7 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/blueBadge.svg`}
               alt="blue badge"
@@ -243,21 +243,23 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px]">
           &#x200B;
         </div>
       )}
       {/* =============== To Display Option */}
       <div
         className={`${
-          isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
+          isDragging
+            ? 'border-blue-300 dark:bg-accent-100'
+            : 'dark:bg-green border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
         } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
       >
-        <div className="flex w-full items-center rounded-l-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
+        <div className="flex w-full items-center rounded-l-[4.734px] bg-white-500 dark:bg-gray-100">
           {props.btnText !== 'Results' && (
             <div
               className={`${
-                isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
               } flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[10px]`}
               style={{
                 backgroundImage: `url(${
@@ -271,8 +273,8 @@ const SingleAnswerRankedChoice = (props) => {
 
           <div
             className={`${
-              isDragging ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-            } flex w-full justify-between bg-white dark:bg-[#0D1012]`}
+              isDragging ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100' : 'border-white-500 dark:border-gray-250'
+            } flex w-full justify-between bg-white dark:bg-accent-100`}
           >
             {props.editable ? (
               <TextareaAutosize
@@ -283,18 +285,18 @@ const SingleAnswerRankedChoice = (props) => {
                 autoFocus
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className={`${
-                  isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
-                } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]`}
+                  isDragging ? 'bg-[#F2F6FF] dark:bg-accent-100' : 'bg-white dark:bg-accent-100'
+                } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]`}
               />
             ) : (
-              <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
+              <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                 {props.answer}
               </h1>
             )}
             {props.deleteable && (
               <div
                 className={`${
-                  isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
+                  isDragging ? 'bg-[#F2F6FF] dark:bg-accent-100 ' : 'bg-white dark:bg-accent-100'
                 } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
                   props.checkOptionStatus.color
                 }`}
@@ -309,17 +311,17 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
         <div
           className={`${
-            isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-          } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white tablet:h-full tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
+            isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
+          } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-accent-100 tablet:h-full tablet:rounded-r-[10px]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
       </div>
       {/* =============== To Display Contention and Trash Right of Option */}
       {props.postProperties === 'HiddenPosts' ? (
-        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px] dark:bg-[#000]"></div>
+        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
       ) : props.btnText !== 'Results' ? (
-        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px] dark:bg-[#000]">
+        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]">
           {props.deleteable ? (
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
@@ -350,7 +352,7 @@ const SingleAnswerRankedChoice = (props) => {
           </BasicModal>
         </div>
       ) : (
-        <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-[#000]">
+        <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-accent-100 tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
           {props.btnText === 'Results' ? (
             <>
               {props.contendPercentages &&

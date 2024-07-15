@@ -79,7 +79,7 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       handleClose={handleClose}
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           {questUtils.sharedQuestStatus.type === 'Delete' ? (
             <span>
               Are you sure you want to delete this Shared Link? The link will no longer work and all related results and

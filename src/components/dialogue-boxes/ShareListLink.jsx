@@ -121,7 +121,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
               ? 'Custom Link Address'
               : 'Copy the link below to share this list on other platforms. When other people engage with posts on your list, you will earn FDX. '}
           </p>
-          <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
+          <div className="border-white-500 flex rounded-[9.42px] border tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
               <div className="flex h-[28.38px] items-center tablet:h-[62.92px]">
                 <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]">
@@ -151,7 +151,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
             )}
             {!createCustom && (
               <button
-                className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
+                className="bg-white-500 rounded-r-[9px] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
                 onClick={() => {
                   copyToClipboard();
                   showToast('success', 'copyLink');

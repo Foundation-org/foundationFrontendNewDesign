@@ -39,7 +39,7 @@ const RewardSchedule = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Total FDX</h1>{' '}
           </div>
         </div>
-        <div className="flex items-center justify-between rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
+        <div className="flex items-center justify-between rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
           <div className="space-y-2">
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               FDX earned:
@@ -76,7 +76,7 @@ const RewardSchedule = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Rewards & Fees</h1>
           </div>
         </div>
-        <div className="flex flex-col justify-between rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-5 tablet:py-[18.73px]">
+        <div className="flex flex-col justify-between rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-5 tablet:py-[18.73px]">
           <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward and
             fee values below.
@@ -163,7 +163,7 @@ const RewardSchedule = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Fee schedule</h1>
           </div>
         </div>
-        <div className="flex items-center justify-between rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
+        <div className="flex items-center justify-between rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
           <div className="space-y-2">
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               Creating a post
@@ -205,7 +205,7 @@ const RewardSchedule = () => {
             {persistedConstants?.TRANSACTION}
           </h1>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             We charge a transaction fee to keep the platform running smoothly for you. We want you to be in charge of
             your data, tokens, and what you do with them, and want to ensure the platform can function properly for you

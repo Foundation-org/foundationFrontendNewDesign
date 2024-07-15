@@ -5,7 +5,6 @@ import { Button } from '../../../../../../components/ui/Button';
 import { changeTheme } from '../../../../../../features/utils/utilsSlice';
 import { signOut, updateUserSettings } from '../../../../../../services/api/userAuth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
 import { resetFilters } from '../../../../../../features/sidebar/filtersSlice';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../../../../../features/auth/authSlice';
@@ -16,22 +15,20 @@ export const Settings = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [checkState, setCheckState] = useState(persistedTheme === 'dark' ? true : false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [defaultSort, setDefaultSort] = useState(persistedUserInfo.userSettings.defaultSort || false);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [askPasswordEverytime, setAskPasswordEverytime] = useState(getAskPasswordFromRedux);
 
-  useEffect(() => {
-    if (persistedTheme === 'light') {
-      setCheckState(false);
-      localStorage.setItem('theme', 'light');
-    } else {
-      setCheckState(true);
-      localStorage.setItem('theme', 'dark');
-    }
-  }, [persistedTheme]);
+  // useEffect(() => {
+  //   if (persistedTheme === 'light') {
+  //     setCheckState(false);
+  //   } else {
+  //     setCheckState(true);
+  //   }
+  // }, [persistedTheme]);
 
   const handleTheme = () => {
     dispatch(changeTheme());
@@ -84,7 +81,7 @@ export const Settings = () => {
               </h1>
             </div>
           </div>
-          <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
             <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
               <div>
                 <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Dark Mode</h1>
@@ -92,9 +89,8 @@ export const Settings = () => {
               </div>
               <Switch
                 checked={checkState}
-                onChange={() => showToast('info', 'featureComingSoon')}
-                // onChange={handleTheme}
-                className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+                onChange={handleTheme}
+                className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
               >
                 <span className="sr-only">Use setting</span>
                 <span
@@ -123,7 +119,7 @@ export const Settings = () => {
               </h1>
             </div>
           </div>
-          <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
             <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
               <div className="">
                 <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Default Sort</h1>
@@ -137,7 +133,7 @@ export const Settings = () => {
                   setDefaultSort(e);
                   handleUserSettings({ uuid: persistedUserInfo.uuid, darkMode: false, defaultSort: e });
                 }}
-                className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+                className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
               >
                 <span className="sr-only">Use setting</span>
                 <span
@@ -148,7 +144,7 @@ export const Settings = () => {
             </div>
           </div>
         </div>
-
+        {/* Encryption Settings */}
         <div className="mx-auto w-full">
           <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
             <div className="flex items-center gap-2">
@@ -162,7 +158,7 @@ export const Settings = () => {
               </h1>
             </div>
           </div>
-          <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
             <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
               <div className="">
                 <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Ask Password</h1>
@@ -176,7 +172,7 @@ export const Settings = () => {
                   setAskPasswordEverytime(e);
                   dispatch(setAskPassword(e));
                 }}
-                className={`${askPasswordEverytime ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+                className={`${askPasswordEverytime ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
               >
                 <span className="sr-only">Use setting</span>
                 <span

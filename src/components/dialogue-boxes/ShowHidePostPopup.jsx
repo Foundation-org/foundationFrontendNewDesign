@@ -145,7 +145,7 @@ export default function ShowHidePostPopup({
               <div
                 key={index + 1}
                 id={item.id}
-                className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-[#DEE6F7] px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
+                className="border-white-500 flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
                 onClick={() => handleCheckboxChange(index)}
               >
                 <div id="custom-checkbox-popup" className="flex h-full items-center">
