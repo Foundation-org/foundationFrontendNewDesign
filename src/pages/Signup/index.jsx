@@ -55,6 +55,8 @@ export default function Signup() {
       } else {
         setIsReferral(true);
       }
+    } else {
+      setIsReferral(true);
     }
   };
   const handleReferralClose = () => {
