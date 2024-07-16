@@ -300,6 +300,9 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
+      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+      queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
+
       queryClient.setQueriesData(['posts'], (oldData) => ({
         ...oldData,
         pages: oldData?.pages?.map((page) =>
@@ -322,9 +325,6 @@ const QuestionCardWithToggle = (props) => {
             },
           };
         });
-
-        queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
-        queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
       }
 
       // if (persistedUserInfo.role === 'guest') {
