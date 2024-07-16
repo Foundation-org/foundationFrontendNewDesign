@@ -204,8 +204,8 @@ const Result = (props) => {
             a.question
           ]?.replace('%', '')
             ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
-              a.question
-            ]?.replace('%', '')
+                a.question
+              ]?.replace('%', '')
             : 0,
         );
         const percentageB = parseFloat(
@@ -213,8 +213,8 @@ const Result = (props) => {
             b.question
           ]?.replace('%', '')
             ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
-              b.question
-            ]?.replace('%', '')
+                b.question
+              ]?.replace('%', '')
             : 0,
         );
 
@@ -310,7 +310,6 @@ const Result = (props) => {
       const sortedDescendingByPercentage = sortAnswersDataByPercentage(getQuestionData(), 'descending');
       setAnswersData(sortedDescendingByPercentage);
     }
-
   }, [props.questStartData]);
 
   useEffect(() => {
@@ -363,10 +362,11 @@ const Result = (props) => {
             </button>
           </div>
           <div
-            className={`${isFullScreen === undefined
-              ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
-              : ''
-              }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+            className={`${
+              isFullScreen === undefined
+                ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
+                : ''
+            }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {sortedAnswers?.map((item, index) => (
               <div key={index + 1}>
@@ -389,14 +389,14 @@ const Result = (props) => {
                   check={findSelectionContentionCheck(
                     props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                       ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                        .selected
+                          .selected
                       : [],
                     item.question,
                   )}
                   contend={findSelectionContentionCheck(
                     props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                       ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                        .contended
+                          .contended
                       : [],
                     item.question,
                   )}
@@ -426,10 +426,11 @@ const Result = (props) => {
             </button>
           </div>
           <div
-            className={`${isFullScreen === undefined
-              ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
-              : ''
-              }  mr-[2px] flex flex-col gap-[5.7px] tablet:mr-1 tablet:gap-[10px]`}
+            className={`${
+              isFullScreen === undefined
+                ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
+                : ''
+            }  mr-[2px] flex flex-col gap-[5.7px] tablet:mr-1 tablet:gap-[10px]`}
           >
             {sortedAnswers?.map((item, index) => (
               <div key={index + 1}>
@@ -453,7 +454,7 @@ const Result = (props) => {
                   contend={findSelectionContentionCheck(
                     props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                       ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                        .contended
+                          .contended
                       : [],
                     item.question,
                   )}

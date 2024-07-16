@@ -182,7 +182,7 @@ const StartTest = ({
               ref={listContainerRef}
               className={`${
                 isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
+                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
                   : ''
               } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
@@ -231,7 +231,7 @@ const StartTest = ({
             <div
               className={`${
                 isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
+                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
                   : ''
               } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
