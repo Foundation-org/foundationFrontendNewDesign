@@ -386,6 +386,9 @@ const ButtonGroup = ({
                       />
                     )}
                     Add Option
+                    <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                      (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+                    </span>
                   </Button>
                 )
               ) : (
@@ -476,6 +479,9 @@ const ButtonGroup = ({
                   />
                 )}
                 Add Option
+                <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                  (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+                </span>
               </Button>
             )
           ) : (
@@ -569,6 +575,9 @@ const ButtonGroup = ({
                           />
                         )}
                         Add Option
+                        <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                          (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+                        </span>
                       </Button>
                     )}
                   </div>
@@ -626,6 +635,9 @@ const ButtonGroup = ({
                     />
                   )}
                   Add Option
+                  <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                    (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+                  </span>
                 </Button>
               )
             ) : (
@@ -679,6 +691,9 @@ const ButtonGroup = ({
                 />
               )}
               Add Option
+              <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+              </span>
             </Button>
 
             <div className="flex gap-2">
@@ -731,6 +746,9 @@ const ButtonGroup = ({
                           />
                         )}
                         Add Option
+                        <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                          (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+                        </span>
                       </Button>
                     )}
                   </div>
@@ -768,6 +786,9 @@ const ButtonGroup = ({
                       />
                     )}
                     Add Option
+                    <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                      (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+                    </span>
                   </Button>
                 )
               ) : (
