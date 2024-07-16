@@ -122,8 +122,8 @@ export default function AddMedia({ handleTab }) {
   return (
     <div>
       {getMediaStates?.isMedia.isMedia ? (
-        <div className="w-[calc(100%-51.75px] border-white-500 relative mx-[15px] mt-3 flex flex-col gap-[6px] rounded-[7.175px] border p-[15px] px-[5px] py-[10px] tablet:mx-11 tablet:mt-[25px] tablet:gap-[15px] tablet:border-[2.153px] tablet:px-[15px] tablet:py-[25px]">
-          <h1 className="absolute -top-[5.5px] left-5 bg-white text-[10px] font-semibold leading-[10px] text-[#707175] tablet:-top-[11px] tablet:left-9 tablet:text-[20px] tablet:leading-[20px]">
+        <div className="w-[calc(100%-51.75px] border-white-500 dark:border-gray-250 relative mx-[15px] mt-3 flex flex-col gap-[6px] rounded-[7.175px] border p-[15px] px-[5px] py-[10px] tablet:mx-11 tablet:mt-[25px] tablet:gap-[15px] tablet:border-[2.153px] tablet:px-[15px] tablet:py-[25px]">
+          <h1 className="dark:text-white-400 absolute -top-[5.5px] left-5 bg-white text-[10px] font-semibold leading-[10px] text-[#707175] dark:bg-gray-200 tablet:-top-[11px] tablet:left-9 tablet:text-[20px] tablet:leading-[20px]">
             {getMediaStates.isMedia.type === 'EmbedVideo' ? 'Video' : 'Audio'}
           </h1>
           <div
@@ -208,12 +208,12 @@ export default function AddMedia({ handleTab }) {
                     ? 'Paste Youtube share link or url here...'
                     : 'Paste Soundcloud share link or url here...'
                 }
-                className="border-white-500 box-border flex h-[27px] min-h-[27px] w-full resize-none items-center overflow-hidden rounded-l-[5.128px] border-y border-l bg-white px-[9.24px] py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:h-[51px] tablet:min-h-[51px] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:text-[18px]"
+                className="border-white-500 dark:bg-accent-100 dark:text-white-400 box-border flex h-[27px] min-h-[27px] w-full resize-none items-center overflow-hidden rounded-l-[5.128px] border-y border-l bg-white px-[9.24px] py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:border-gray-100 tablet:h-[51px] tablet:min-h-[51px] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:text-[18px]"
               />
               <button
-                className={`border-white-500 relative rounded-r-[5.128px] border-y border-r bg-white text-[0.5rem] font-semibold leading-none dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] ${getMediaStates.urlStatus.color}`}
+                className={`border-white-500 dark:bg-accent-100 relative rounded-r-[5.128px] border-y border-r bg-white text-[0.5rem] font-semibold leading-none dark:border-gray-100 tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] ${getMediaStates.urlStatus.color}`}
               >
-                <div className="border-white-500 flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
+                <div className="border-white-500 flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] dark:border-gray-100 tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
                   {getMediaStates.urlStatus.name}
                 </div>
                 <Tooltip optionStatus={getMediaStates.urlStatus} type="mediaURL" />

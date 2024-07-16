@@ -25,6 +25,7 @@ import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 import { saveConstants } from '../../../features/constants/constantsSlice';
 import showToast from '../../../components/ui/Toast';
+import { changeThemeTo } from '../../../features/utils/utilsSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ export default function DashboardLayout({ children }) {
     if (userInfoSuccess && userInfoData?.status === 200) {
       if (userInfoData.data && userInfoData.data.role === 'user') {
         dispatch(addUser(userInfoData.data));
-        if (userInfo.data?.userSettings.darkMode) {
+        if (userInfoData.data?.userSettings.darkMode) {
           dispatch(changeThemeTo('dark'));
         } else {
           dispatch(changeThemeTo('light'));
@@ -225,7 +226,7 @@ export default function DashboardLayout({ children }) {
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+        <div className="bg-white-500 flex h-[43px] min-h-[43px] items-center justify-between px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
           <div className="h-fit rounded-[15px]" onClick={() => navigate('/treasury')}>
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">
@@ -377,7 +378,7 @@ export default function DashboardLayout({ children }) {
               />
               <div className="flex h-[47px] flex-col justify-between">
                 <h4 className="heading w-fit border-b-2">Treasury</h4>
-                <p className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                <p className="font-inter text-gray-650 dark:text-white-100 text-[10.79px] text-base font-medium tablet:text-[18px] tablet:leading-[18px]">
                   <span>{constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
               </div>
@@ -589,7 +590,7 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance (Guest)</h4>
-                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                  <div className="font-inter text-gray-650 dark:text-white-100 text-[10.79px] text-base font-medium tablet:text-[18px] tablet:leading-[18px]">
                     <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>
                 </div>
@@ -613,7 +614,7 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance</h4>
-                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                  <div className="font-inter text-gray-650 dark:text-white-100 text-[10.79px] text-base font-medium tablet:text-[18px] tablet:leading-[18px]">
                     <p>
                       {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
                     </p>

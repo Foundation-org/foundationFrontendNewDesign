@@ -12,7 +12,7 @@ export const utilsSlice = createSlice({
       state.theme = state.theme === 'light' ? 'dark' : 'light';
     },
     changeThemeTo: (state, payload) => {
-      state.theme = payload;
+      state.theme = payload.payload;
     },
   },
 });
