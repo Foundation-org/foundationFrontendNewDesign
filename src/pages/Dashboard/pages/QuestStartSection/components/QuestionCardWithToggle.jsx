@@ -377,7 +377,7 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
         setLoading(false);
         handleViewResults(questStartData._id);
 
