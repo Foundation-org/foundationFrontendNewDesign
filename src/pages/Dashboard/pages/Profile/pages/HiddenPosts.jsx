@@ -10,6 +10,7 @@ import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 import api from '../../../../../services/api/Axios';
 import { setAreHiddenPosts } from '../../../../../features/quest/utilsSlice';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+import SummaryCard from '../../../../../components/SummaryCard';
 
 export default function HiddenPosts() {
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
@@ -131,32 +132,22 @@ export default function HiddenPosts() {
     <>
       {/* Summary Section */}
       <div className="mx-4 mb-3 tablet:mx-6 tablet:mb-5">
-        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-          <div className="flex items-center gap-2">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/hidden-post-logo.svg`}
-              alt={'badge'}
-              className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[29px] tablet:w-6"
-            />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Hidden Posts</h1>
-          </div>
-        </div>
-        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+        <SummaryCard headerIcon="/assets/summary/hidden-post-logo.svg" headerTitle="Hidden Posts">
+          <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
             Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
             with it.
           </h1>
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
             <div className="max-w-28 pr-3 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve hidden
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+              <h5 className="text-center text-[18px] font-normal">
                 {persistedUserInfo?.questsActivity?.myHiddenQuestsCount}
               </h5>
             </div>
           </div>
-        </div>
+        </SummaryCard>
       </div>
 
       {/* Main Content */}
@@ -170,14 +161,14 @@ export default function HiddenPosts() {
               <input
                 type="text"
                 id="floating_outlined"
-                className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px]"
+                className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px]"
                 value={hiddenSearch}
                 placeholder=""
                 onChange={handleHiddenPostSearch}
               />
               <label
                 htmlFor="floating_outlined"
-                className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175]  duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 dark:bg-[#0A0A0C] tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                className="peer-focus:text-blue-600 absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175] duration-300  peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
               >
                 Search
               </label>
@@ -203,7 +194,7 @@ export default function HiddenPosts() {
         </div>
       )}
 
-      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
+      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-black">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
           {content}
           {!isFetching ? (

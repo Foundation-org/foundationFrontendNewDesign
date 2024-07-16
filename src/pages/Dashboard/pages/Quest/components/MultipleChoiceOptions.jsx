@@ -31,7 +31,7 @@ const MultipleChoiceOptions = ({
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">
-            <div className="bg-white-500 flex h-full w-[14.7px] items-center justify-center rounded-l-[5.387px] px-[7px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[38px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px]">
+            <div className="flex h-full w-[14.7px] items-center justify-center rounded-l-[5.387px] bg-white-500 px-[7px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[38px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px]">
               {dragable ? (
                 persistedTheme === 'dark' ? (
                   <img
@@ -73,7 +73,7 @@ const MultipleChoiceOptions = ({
         </div>
       ) : (
         <div className="flex items-center">
-          <div className="bg-white-500 flex h-[24.8px] w-[13.46px] items-center justify-center rounded-l-[5.387px] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[49.6px] tablet:w-[28.2px] tablet:rounded-l-[10.3px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[40px]">
+          <div className="flex h-[24.8px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-white-500 px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[49.6px] tablet:w-[28.2px] tablet:rounded-l-[10.3px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[40px]">
             {dragable ? (
               persistedTheme === 'dark' ? (
                 <img
@@ -101,7 +101,7 @@ const MultipleChoiceOptions = ({
               {title === 'MultipleChoice' && trash && (
                 <button
                   id={`test${number}`}
-                  className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] laptop:text-[1.875rem] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`border-y-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] laptop:text-[1.875rem] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
                     <>

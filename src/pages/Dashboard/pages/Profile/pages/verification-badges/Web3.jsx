@@ -153,7 +153,7 @@ export default function Web3({
 
   return (
     <>
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
         Linking your wallet gives you more FDX transaction options.
       </h1>
       <AuthKitProvider config={config}>
@@ -294,9 +294,9 @@ export default function Web3({
             <div
               className={`${
                 persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } border-white-500 flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
-              <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-[#CACACA] tablet:text-[20px]">
+              <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
                 {item.title}
               </h1>
             </div>

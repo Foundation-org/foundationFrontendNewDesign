@@ -304,7 +304,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         {props?.postProperties === 'HiddenPosts' ? (
-          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px]  text-[9.238px] dark:border-white-500 dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px]"></div>
+          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px] text-[9.238px] dark:border-gray-100  dark:bg-accent-100 tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px]"></div>
         ) : (
           <div
             className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px]  text-[9.238px] dark:border-gray-100 dark:bg-accent-100 tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${

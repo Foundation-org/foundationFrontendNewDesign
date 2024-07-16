@@ -247,7 +247,7 @@ const VerificationBadges = () => {
         from={persistedUserInfo?.badges.length}
         outof={badgesTotalLength}
       >
-        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
           Boost your earnings now and in the future by adding more verified badges to your profile.
         </h1>
       </ContentCard>
@@ -284,7 +284,7 @@ const VerificationBadges = () => {
         <MetaMaskProvider
           debug={false}
           sdkOptions={{
-            checkInstallationImmediately: false, // This will automatically connect to MetaMask on page load
+            checkInstallationImmediately: false,
             dappMetadata: {
               name: 'Foundation',
               url: window.location.href,

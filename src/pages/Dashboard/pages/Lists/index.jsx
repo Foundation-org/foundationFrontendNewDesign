@@ -17,6 +17,8 @@ import ListItem from './components/list-item';
 import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import ContentCard from '../../../../components/ContentCard';
+import SummaryCard from '../../../../components/SummaryCard';
 
 const Lists = () => {
   const navigate = useNavigate();
@@ -165,49 +167,37 @@ const Lists = () => {
       )}
 
       {/* Summary Section */}
-      <div>
-        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-          <div className="flex items-center gap-2">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/my-list-logo.svg`}
-              alt={'badge'}
-              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-5"
-            />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">My Lists</h1>
+      <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Lists">
+        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+          Sharing lists is a great way to earn FDX - especially if people engage with them.
+        </h1>
+        <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Lists you’ve shared
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">
+              {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
+            </h5>
+          </div>
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Total list clicks
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">
+              {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
+            </h5>
+          </div>
+          <div>
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Total list engagement
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">
+              {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
+            </h5>
           </div>
         </div>
-        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            Sharing lists is a great way to earn FDX - especially if people engage with them.
-          </h1>
-          <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
-            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Lists you’ve shared
-              </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
-              </h5>
-            </div>
-            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Total list clicks
-              </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
-              </h5>
-            </div>
-            <div>
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Total list engagement
-              </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
-              </h5>
-            </div>
-          </div>
-        </div>
-      </div>
+      </SummaryCard>
 
       {/* Main Content */}
       {items.length < 1 ? (
@@ -222,14 +212,14 @@ const Lists = () => {
             items?.map((categoryItem, categoryIndex) => (
               <div
                 key={categoryItem._id}
-                className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white dark:border-white dark:bg-[#000] tablet:rounded-[15px]"
+                className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
               >
                 <div className="flex items-center gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
-                  <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
+                  <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
                     {categoryItem.category}
                   </h4>
                   <h4
-                    className="cursor-pointer text-[9px] font-normal leading-[9px] text-[#7C7C7C] underline tablet:text-[1rem] tablet:leading-[23px]"
+                    className="cursor-pointer text-[9px] font-normal leading-[9px] text-[#7C7C7C] underline dark:text-gray-300 tablet:text-[1rem] tablet:leading-[23px]"
                     onClick={() => {
                       setCategoryId(categoryItem._id);
                       setListName(categoryItem.category);
@@ -279,7 +269,7 @@ const Lists = () => {
                         alt="clicks"
                         className="h-2 w-2 tablet:h-6 tablet:w-6"
                       />
-                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
+                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
                         {categoryItem.clicks === null ? 0 : categoryItem.clicks} Clicks{' '}
                       </h2>
                     </div>
@@ -289,7 +279,7 @@ const Lists = () => {
                         alt="participants"
                         className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                       />
-                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
+                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
                         {categoryItem.participents === null ? 0 : categoryItem.participents} Participants{' '}
                       </h2>
                     </div>
@@ -338,7 +328,7 @@ const Lists = () => {
                 </div>
 
                 <div className="flex items-center justify-between border-t-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
-                  <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px]">
+                  <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px]">
                     {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''}
                   </h4>
                   <div className="flex items-center gap-3 tablet:gap-[1.62rem]">

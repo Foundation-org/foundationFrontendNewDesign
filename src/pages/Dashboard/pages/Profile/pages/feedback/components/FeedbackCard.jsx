@@ -8,9 +8,9 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
   return (
     <div
       ref={innerRef}
-      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-white dark:bg-[#000] tablet:rounded-[15px] "
+      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px] "
     >
-      <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
+      <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] dark:border-gray-100 tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
         <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-[18px]">
           <div className="flex items-center gap-2 tablet:gap-4 ">
             {post.uuid === persistedUserInfo?.uuid ? (
@@ -39,14 +39,14 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
 
             {post.feedback.some((item) => item.violated === true) && (
               <div className="mt-[1.5px] flex items-center gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
-                <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#FF2C2C] tablet:text-[1.25rem] tablet:leading-[23px]">
-                  SUPRESSED
+                <h4 className="text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:text-[1.25rem] tablet:leading-[23px]">
+                  SUPPRESSED
                 </h4>
               </div>
             )}
           </div>
           <div className="flex items-center gap-[15px]">
-            <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
+            <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
               {post.hiddenCount} Times Hidden
             </h4>
             <img
@@ -57,7 +57,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
           </div>
         </div>
       </div>
-      <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px]">
+      <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px]">
         {post.Question}
       </h1>
       <div className="mb-3 ml-7 mt-2 grid grid-cols-2 gap-x-[23px] gap-y-2 tablet:mb-[26px] tablet:ml-[60px] tablet:mt-[15px] tablet:gap-x-[50px] tablet:gap-y-[15px] ">
@@ -69,7 +69,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
           return (
             <p
               key={item.id}
-              className={`${post.suppressedReason === item.title && item.title === 'Invalid Media' ? 'font-semibold text-[#DC1010]' : feedbackViolated ? 'font-semibold text-[#DC1010]' : feedbackCount >= 1 ? 'text-[#4A8DBD]' : 'font-normal text-[#BABABA]'} text-[10px] tablet:text-[18px]`}
+              className={`${post.suppressedReason === item.title && item.title === 'Invalid Media' ? 'text-red-200 font-semibold' : feedbackViolated ? 'text-red-200 font-semibold' : feedbackCount >= 1 ? 'text-[#4A8DBD]' : 'font-normal text-[#BABABA] dark:text-gray-300'} text-[10px] tablet:text-[18px]`}
             >
               {post.suppressedReason === item.title && item.title === 'Invalid Media' ? 1 : feedbackCount} {item.title}
             </p>
