@@ -161,7 +161,13 @@ export const answerValidation = async ({ answer }) => {
     if (responseObj) {
       return { validatedAnswer: responseObj.response };
     }
-    const response = await api.get(`/ai-validation/2?userMessage=${answer}`);
+    let val = 2;
+    // Check if message has only 1 word
+    if (answer.split(' ').length === 1) {
+      val = 10;
+    }
+    const response = await api.get(`/ai-validation/${val}?userMessage=${answer}`);
+
     if (response.data.status === 'VIOLATION') {
       await updateViolationCounterAPI();
       return { validatedAnswer: null, errorMessage: 'VIOLATION' };
