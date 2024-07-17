@@ -113,7 +113,7 @@ const CredentialRegister = () => {
             type="email"
             id="email"
             label="Email Address"
-            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
             autoComplete="sign-email"
             onChange={onEmailChange}
             value={email}
@@ -143,7 +143,7 @@ const CredentialRegister = () => {
                 type={inputType}
                 id="password"
                 label="Password"
-                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
                 autoComplete="new-password"
                 onChange={onPassChange}
               />
@@ -189,7 +189,7 @@ const CredentialRegister = () => {
                 type={cnfmPassInputType}
                 id="cnfmpassword"
                 label="Re-type Password"
-                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
                 autoComplete="new-password"
                 onChange={onReTypePassChange}
               />

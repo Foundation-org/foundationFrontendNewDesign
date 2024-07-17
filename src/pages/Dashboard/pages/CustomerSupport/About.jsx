@@ -19,13 +19,13 @@ const About = () => {
           right time can make it very valuable.
         </p>
       </div>
-      <div className="dark:bg-silver-200 mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white dark:border-gray-100 tablet:px-16 tablet:py-6 tablet:dark:border-y-[2.56px]">
+      <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white dark:border-gray-100 dark:bg-silver-200 tablet:px-16 tablet:py-6 tablet:dark:border-y-[2.56px]">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
           Foundation is a revolutionary data exchange platform where users can monetize their personal data, insights
           and achievements in a secure and anonymous environment. Imagine brands paying you to show you an ad!
         </p>
       </div>
-      <div className="dark:bg-silver-300 bg-[#F5F6F8] px-8 py-3 text-[#707175] dark:border-gray-100 dark:text-gray-300 tablet:px-16 tablet:py-5 tablet:dark:border-b-[2.56px]">
+      <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:px-16 tablet:py-5 tablet:dark:border-b-[2.56px]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How to get started
         </h1>
@@ -97,7 +97,7 @@ const About = () => {
         </p>
       </div>
       {persistedUserInfo.role !== 'user' && (
-        <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem]">
+        <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white dark:border-gray-100 dark:bg-silver-200 tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem] tablet:dark:border-t-[2.56px]">
           <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
             Join Foundation BETA
           </h1>

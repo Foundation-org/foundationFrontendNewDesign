@@ -135,7 +135,6 @@ const QuestBottombar = ({
   }, [time]);
 
   const customModalStyle = {
-    backgroundColor: '#FCFCFD',
     boxShadow: 'none',
     border: '0px',
     outline: 'none',

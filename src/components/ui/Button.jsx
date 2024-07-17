@@ -7,7 +7,7 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       'flex cursor-pointer select-none items-center justify-center [outline:none] disabled:cursor-not-allowed',
       rounded ? 'rounded' : '',
       variant === 'auth'
-        ? 'h-[36px] w-full max-w-[297px] rounded-[6.043px] border-[1.463px] border-[#E4D9D9] bg-white text-[9px] font-medium text-black 2xl:rounded-[11.703px] tablet:h-[60px] tablet:rounded-[11.703px] tablet:text-[17.554px]'
+        ? 'h-[36px] w-full max-w-[297px] rounded-[6.043px] border-[1.463px] border-[#E4D9D9] bg-white text-[9px] font-medium text-black dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 2xl:rounded-[11.703px] tablet:h-[60px] tablet:rounded-[11.703px] tablet:text-[17.554px]'
         : '',
       variant === 'addOption'
         ? 'addoption-boxShadow h-[1.375rem] w-[5.1rem] max-w-[10.8125rem] gap-[0.27rem] rounded-[0.28688rem] bg-gray-250 text-[0.625rem] font-normal  text-[#435059] tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:w-[12vw]'
