@@ -1,3 +1,4 @@
+import { version } from '../../../../package.json';
 import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -53,7 +54,7 @@ const Topbar = () => {
                   className="h-[10px] w-auto tablet:h-auto"
                 />
                 <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[13px] tablet:leading-[13px]">
-                  v 1.14.99
+                  v {version}
                 </span>
               </Link>
             </div>
