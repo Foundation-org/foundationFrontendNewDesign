@@ -4,11 +4,12 @@ import { Router } from './routes/route';
 import { Toaster } from 'sonner';
 import SEO from './utils/SEO';
 import { MaintenanceRouter } from './routes/maintenance';
+import api from './services/api/Axios';
 // import SEO from './utils/SEO';
 
 function App() {
-  const [theme, setTheme] = useState(null);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [isMaintenance, setIsMaintenance] = useState(false);
 
   useEffect(() => {
     // Function to handle the event
@@ -52,22 +53,6 @@ function App() {
   //   }
   // }, []); // Empty dependency array ensures this effect runs only once on component mount
 
-  useEffect(() => {
-    if (persistedTheme === 'dark') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
-  }, [persistedTheme]);
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
-
   // useEffect(() => {
   //   document.addEventListener("visibilitychange", function() {
   //     if (document.visibilityState === 'hidden') {
@@ -108,6 +93,29 @@ function App() {
   //   };
   // }, []);
 
+  useEffect(() => {
+    if (persistedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [persistedTheme]);
+
+  api.interceptors.response.use(
+    function (response) {
+      setIsMaintenance(false);
+      return response;
+    },
+    function (error) {
+      if (error.response.request.status === 503) {
+        setIsMaintenance(true);
+      } else {
+        setIsMaintenance(false);
+      }
+      return Promise.reject(error);
+    },
+  );
+
   return (
     <div className="h-dvh overflow-hidden">
       <SEO
@@ -117,8 +125,7 @@ function App() {
         image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
         type={'website'}
       />
-      <Router />
-      {/* <MaintenanceRouter /> */}
+      {isMaintenance ? <MaintenanceRouter /> : <Router />}
       <Toaster position="top-right" expand={true} theme={persistedTheme === 'dark' ? 'dark' : 'light'} richColors />
     </div>
   );
