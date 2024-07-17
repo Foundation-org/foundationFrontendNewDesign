@@ -6,11 +6,11 @@ const About = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
-    <div className="bg-white tablet:rounded-t-[0.86513rem]">
-      <h1 className="py-3 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+    <div className="bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-t-[0.86513rem] tablet:dark:border-[2.56px]">
+      <h1 className="py-3 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] dark:text-gray-300 tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Let your data work for you
       </h1>
-      <div className="-mt-[2px] space-y-[0.63rem]  px-8 text-[#7C7C7C] tablet:mt-0 tablet:space-y-2 tablet:px-16">
+      <div className="-mt-[2px] space-y-[0.63rem]  px-8 text-[#7C7C7C] dark:text-gray-300 tablet:mt-0 tablet:space-y-2 tablet:px-16">
         {/* <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
           Unlock the potential of your personal data.
         </p> */}
@@ -19,13 +19,13 @@ const About = () => {
           right time can make it very valuable.
         </p>
       </div>
-      <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:px-16 tablet:py-6">
+      <div className="dark:bg-silver-200 mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white dark:border-gray-100 tablet:px-16 tablet:py-6 tablet:dark:border-y-[2.56px]">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
           Foundation is a revolutionary data exchange platform where users can monetize their personal data, insights
           and achievements in a secure and anonymous environment. Imagine brands paying you to show you an ad!
         </p>
       </div>
-      <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] tablet:px-16 tablet:py-5">
+      <div className="dark:bg-silver-300 bg-[#F5F6F8] px-8 py-3 text-[#707175] dark:border-gray-100 dark:text-gray-300 tablet:px-16 tablet:py-5 tablet:dark:border-b-[2.56px]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How to get started
         </h1>
@@ -82,7 +82,7 @@ const About = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] tablet:gap-5 tablet:px-16 tablet:py-[1.8rem]">
+      <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] dark:text-gray-300 tablet:gap-5 tablet:px-16 tablet:py-[1.8rem]">
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/lock.svg`}
           alt="account"

@@ -226,7 +226,7 @@ export default function DashboardLayout({ children }) {
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+        <div className="dark:bg-silver-500 flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
           <div className="h-fit rounded-[15px]" onClick={() => navigate('/treasury')}>
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">

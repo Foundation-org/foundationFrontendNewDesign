@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
 import { changeTheme } from '../../../../../../features/utils/utilsSlice';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../../../../../features/auth/authSlice';
 import showToast from '../../../../../../components/ui/Toast';
 import { getAskPassword, setAskPassword } from '../../../../../../features/profile/userSettingSlice';
+import SummaryCard from '../../../../../../components/SummaryCard';
 
 export const Settings = () => {
   const dispatch = useDispatch();
@@ -22,17 +23,12 @@ export const Settings = () => {
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [askPasswordEverytime, setAskPasswordEverytime] = useState(getAskPasswordFromRedux);
 
-  // useEffect(() => {
-  //   if (persistedTheme === 'light') {
-  //     setCheckState(false);
-  //   } else {
-  //     setCheckState(true);
-  //   }
-  // }, [persistedTheme]);
-
   const handleTheme = () => {
     dispatch(changeTheme());
-    setCheckState((prevCheckState) => !prevCheckState);
+    setCheckState((prevCheckState) => {
+      handleUserSettings({ uuid: persistedUserInfo.uuid, darkMode: !prevCheckState });
+      return !prevCheckState;
+    });
   };
 
   const { mutateAsync: handleSignout } = useMutation({
@@ -67,126 +63,87 @@ export const Settings = () => {
   return (
     <>
       <div className="space-y-2 tablet:space-y-[15px]">
-        {/* Change Theme */}
-        <div className="mx-auto w-full">
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/display-settings.svg`}
-                alt={'display settings'}
-                className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-6"
-              />
-              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-                Display Settings
+        <SummaryCard headerIcon="/assets/svgs/display-settings.svg" headerTitle="Display Settings">
+          <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
+            <div>
+              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                Dark Mode
               </h1>
+              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                Switch to Dark Mode
+              </p>
             </div>
-          </div>
-          <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-            <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
-              <div>
-                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Dark Mode</h1>
-                <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Switch to Dark Mode</p>
-              </div>
-              <Switch
-                checked={checkState}
-                onChange={handleTheme}
-                className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-              >
-                <span className="sr-only">Use setting</span>
-                <span
-                  aria-hidden="true"
-                  className={`switch_base ${
-                    checkState
-                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                      : 'translate-x-[1px] bg-[#707175]'
-                  }`}
-                />
-              </Switch>
-            </div>
-          </div>
-        </div>
-        {/* Default Sort */}
-        <div className="mx-auto w-full">
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/feed-settings.svg`}
-                alt={'feed settings'}
-                className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-6"
+            <Switch
+              checked={checkState}
+              onChange={handleTheme}
+              className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+            >
+              <span className="sr-only">Use setting</span>
+              <span
+                aria-hidden="true"
+                className={`switch_base ${
+                  checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+                }`}
               />
-              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-                Feed Settings
+            </Switch>
+          </div>
+        </SummaryCard>
+        <SummaryCard headerIcon="/assets/svgs/feed-settings.svg" headerTitle="Feed Settings">
+          <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
+            <div className="">
+              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                Default Sort
               </h1>
+              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                Automatically sort results from highest to lowest
+              </p>
             </div>
-          </div>
-          <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-            <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
-              <div className="">
-                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Default Sort</h1>
-                <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
-                  Automatically sort results from highest to lowest
-                </p>
-              </div>
-              <Switch
-                checked={defaultSort}
-                onChange={(e) => {
-                  setDefaultSort(e);
-                  handleUserSettings({ uuid: persistedUserInfo.uuid, darkMode: false, defaultSort: e });
-                }}
-                className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-              >
-                <span className="sr-only">Use setting</span>
-                <span
-                  aria-hidden="true"
-                  className={`switch_base ${defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'}`}
-                />
-              </Switch>
-            </div>
-          </div>
-        </div>
-        {/* Encryption Settings */}
-        <div className="mx-auto w-full">
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/encrypt.svg`}
-                alt={'feed settings'}
-                className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-6"
+            <Switch
+              checked={defaultSort}
+              onChange={(e) => {
+                setDefaultSort(e);
+                handleUserSettings({ uuid: persistedUserInfo.uuid, defaultSort: e });
+              }}
+              className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+            >
+              <span className="sr-only">Use setting</span>
+              <span
+                aria-hidden="true"
+                className={`switch_base ${defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'}`}
               />
-              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-                Encryption Settings
+            </Switch>
+          </div>
+        </SummaryCard>
+        <SummaryCard headerIcon="/assets/svgs/encrypt.svg" headerTitle="Encryption Settings">
+          <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
+            <div className="">
+              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                Ask Password
               </h1>
+              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                Ask for the password every time when encrypting or decrypting.
+              </p>
             </div>
+            <Switch
+              checked={askPasswordEverytime}
+              onChange={(e) => {
+                setAskPasswordEverytime(e);
+                dispatch(setAskPassword(e));
+              }}
+              className={`${askPasswordEverytime ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+            >
+              <span className="sr-only">Use setting</span>
+              <span
+                aria-hidden="true"
+                className={`switch_base ${
+                  askPasswordEverytime
+                    ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                    : 'translate-x-[1px] bg-[#707175]'
+                }`}
+              />
+            </Switch>
           </div>
-          <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-            <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
-              <div className="">
-                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Ask Password</h1>
-                <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
-                  Ask for the password every time when encrypting or decrypting.
-                </p>
-              </div>
-              <Switch
-                checked={askPasswordEverytime}
-                onChange={(e) => {
-                  setAskPasswordEverytime(e);
-                  dispatch(setAskPassword(e));
-                }}
-                className={`${askPasswordEverytime ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-              >
-                <span className="sr-only">Use setting</span>
-                <span
-                  aria-hidden="true"
-                  className={`switch_base ${
-                    askPasswordEverytime
-                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                      : 'translate-x-[1px] bg-[#707175]'
-                  }`}
-                />
-              </Switch>
-            </div>
-          </div>
-        </div>
+        </SummaryCard>
       </div>
       {/* Logout */}
       {persistedUserInfo.role === 'user' && (

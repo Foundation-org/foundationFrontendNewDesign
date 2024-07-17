@@ -40,15 +40,15 @@ const ContactUs = () => {
   });
 
   return (
-    <div className="flex w-full flex-col gap-3 rounded-[0.86513rem] bg-white px-[14px] py-[15px] tablet:gap-[25px] tablet:px-[58px] tablet:pb-10 tablet:pt-[25px]">
-      <h1 className="text-[14px] font-bold leading-none -tracking-[2%] text-[#707175] tablet:text-[20px]">
+    <div className="flex w-full flex-col gap-3 rounded-[0.86513rem] bg-white px-[14px] py-[15px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-[25px] tablet:px-[58px] tablet:pb-10 tablet:pt-[25px] tablet:dark:border-[2.56px]">
+      <h1 className="text-[14px] font-bold leading-none -tracking-[2%] text-[#707175] dark:text-gray-300 tablet:text-[20px]">
         Get in Touch With Us
       </h1>
       <input
         name="email"
         type="email"
         placeholder="Email Address*"
-        className="autofill_text_color-contact-us border-white-500 w-full rounded-[7px] border-2 bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
+        className="autofill_text_color-contact-us w-full rounded-[7px] border-2 border-white-500 bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-800 tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
         value={payload.email}
         onChange={handleChange}
       />
@@ -57,7 +57,7 @@ const ContactUs = () => {
         aria-label="message"
         minRows={3}
         placeholder="Your Message*"
-        className="border-white-500 w-full rounded-[10px] border-2 bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
+        className="w-full rounded-[10px] border-2 border-white-500 bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-800 tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
         value={payload.message}
         onChange={handleChange}
       />

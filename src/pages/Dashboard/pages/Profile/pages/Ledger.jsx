@@ -10,7 +10,6 @@ import { updateColumnSize } from '../../../../../features/profile/legerSlice';
 
 export default function BasicTable() {
   const dispatch = useDispatch();
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const columnSizes = useSelector((state) => state.ledger);
   const itemsPerPage = 10;
@@ -158,11 +157,7 @@ export default function BasicTable() {
 
   return (
     <div className="mb-6 overflow-y-auto">
-      <div
-        className={`${
-          persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
-        } mx-[17px] mb-5 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
-      >
+      <div className="ledger-light dark:ledger-dark mx-[17px] mb-5 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left dark:border-gray-100 dark:bg-gray-200 tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] tablet:dark:border-[2.56px] laptop:mx-[106px] laptop:rounded-[45px]">
         <LedgerTableTopbar
           sort={sort}
           setsort={setsort}
@@ -199,7 +194,7 @@ export default function BasicTable() {
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.4rem] text-[#bbb] tablet:text-[1rem] laptop:text-[1.2rem] dark:text-[#B5B7C0]"
+              className="text-[0.4rem] text-[#bbb] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
@@ -265,7 +260,7 @@ export default function BasicTable() {
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8]"
+                    className="whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-gray-300"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
@@ -327,7 +322,7 @@ export default function BasicTable() {
             </button>
             <div className=" flex items-center gap-[0.46rem] tablet:gap-4 ">
               {rangeStart > 1 && (
-                <button className="bg-white/0 text-[9px] font-medium text-black tablet:text-[16px] dark:text-[#B3B3B3]">
+                <button className="bg-white/0 text-[9px] font-medium text-black dark:text-[#B3B3B3] tablet:text-[16px]">
                   ...
                 </button>
               )}
@@ -338,8 +333,8 @@ export default function BasicTable() {
                       <button
                         className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${
                           pageNumber === currentPage
-                            ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
-                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
+                            ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-gray-500'
+                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-gray-300'
                         }`}
                         key={pageNumber}
                         onClick={() => handlePageClick(pageNumber)}
@@ -350,7 +345,7 @@ export default function BasicTable() {
                   })
                 : null}
               {rangeEnd < totalPages && (
-                <button className="mr-2 bg-white/0 text-[9px] font-medium text-black tablet:mr-4 tablet:text-[16px] dark:text-[#B3B3B3]">
+                <button className="mr-2 bg-white/0 text-[9px] font-medium text-black dark:text-gray-300 tablet:mr-4 tablet:text-[16px]">
                   ...
                 </button>
               )}
