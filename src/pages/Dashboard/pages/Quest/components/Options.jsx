@@ -130,7 +130,7 @@ const Options = ({
                   isDragging
                     ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100'
                     : 'border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
-                } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:text-[#7C7C7C] tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px]`}
+                } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:text-gray-300 tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px]`}
               />
               <div
                 id={`test${number}`}

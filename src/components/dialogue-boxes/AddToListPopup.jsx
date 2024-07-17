@@ -200,13 +200,13 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                   .map((item) => (
                     <div
                       key={item._id}
-                      className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
+                      className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
                     >
                       <div className="w-fit space-y-2 tablet:space-y-5">
-                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
                           {item.category}
                         </h4>
-                        <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
+                        <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] dark:text-gray-300 tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
                           {item.post.length} Post{item.post.length > 1 ? 's' : ''}
                         </h4>
                       </div>
