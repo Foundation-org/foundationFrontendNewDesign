@@ -39,6 +39,7 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
     onError: (err) => {
       setIsLoading(false);
       console.log(err);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
     },
   });
 
