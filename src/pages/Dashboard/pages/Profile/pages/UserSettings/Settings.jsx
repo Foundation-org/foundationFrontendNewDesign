@@ -167,7 +167,7 @@ export const Settings = () => {
               <div className="">
                 <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Ask Password</h1>
                 <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
-                  Ask for the password every time when encrypting or decrypting.
+                  Ask for your password every time when encrypting or decrypting.
                 </p>
               </div>
               <Switch
