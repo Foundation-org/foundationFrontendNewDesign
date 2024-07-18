@@ -372,19 +372,11 @@ const ButtonGroup = ({
                     }}
                     variant={'addOption'}
                   >
-                    {persistedTheme === 'dark' ? (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    ) : (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    )}
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
                     Add Option
                     <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
                       (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
@@ -465,19 +457,11 @@ const ButtonGroup = ({
                 }}
                 variant={'addOption'}
               >
-                {persistedTheme === 'dark' ? (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                )}
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
+                  alt="add"
+                  className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                />
                 Add Option
                 <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
@@ -561,19 +545,11 @@ const ButtonGroup = ({
                   <div>
                     {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                       <Button onClick={handleOpen} variant={'addOption'}>
-                        {persistedTheme === 'dark' ? (
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                            alt="add"
-                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                          />
-                        ) : (
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                            alt="add"
-                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                          />
-                        )}
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
+                          alt="add"
+                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                        />
                         Add Option
                         <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
                           (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
@@ -621,19 +597,11 @@ const ButtonGroup = ({
             {questStartData.usersAddTheirAns && addOptionField === 0 ? (
               title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                 <Button onClick={handleOpen} variant={'addOption'}>
-                  {persistedTheme === 'dark' ? (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  ) : (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  )}
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
                   Add Option
                   <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
                     (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
@@ -677,19 +645,11 @@ const ButtonGroup = ({
         {questStartData.startStatus === 'change answer' && startTest === questStartData._id && (
           <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
             <Button onClick={handleOpen} variant={'addOption'}>
-              {persistedTheme === 'dark' ? (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                  alt="add"
-                  className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                />
-              ) : (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                  alt="add"
-                  className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                />
-              )}
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
+                alt="add"
+                className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+              />
               Add Option
               <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
@@ -732,19 +692,11 @@ const ButtonGroup = ({
                         }}
                         variant={'addOption'}
                       >
-                        {persistedTheme === 'dark' ? (
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                            alt="add"
-                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                          />
-                        ) : (
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                            alt="add"
-                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                          />
-                        )}
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
+                          alt="add"
+                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                        />
                         Add Option
                         <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
                           (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
@@ -772,19 +724,11 @@ const ButtonGroup = ({
               {questStartData.usersAddTheirAns && addOptionField === 0 ? (
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button onClick={handleOpen} variant={'addOption'}>
-                    {persistedTheme === 'dark' ? (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    ) : (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    )}
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
                     Add Option
                     <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
                       (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)

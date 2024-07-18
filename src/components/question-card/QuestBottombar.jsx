@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 import showToast from '../ui/Toast';
+
 const data = [
   {
     id: 1,
@@ -64,7 +65,6 @@ const QuestBottombar = ({
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
   const [timeAgo, setTimeAgo] = useState('');
   const [copyModal, setCopyModal] = useState(false);
   const [linkModal, setLinkModal] = useState(false);
@@ -348,7 +348,7 @@ const QuestBottombar = ({
             !questStartData?.result?.length >= 1 &&
             createdBy === localStorage.getItem('uuid') && (
               <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/deletePost.png`}
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/hiddenposts/unhide/deletePost.png'}`}
                 alt="eye-latest"
                 className="h-3 w-[9px] cursor-pointer tablet:h-[22px] tablet:w-[17px]"
                 onClick={() => setDelModalVisible(true)}
@@ -377,7 +377,7 @@ const QuestBottombar = ({
           )}
           {postProperties === 'HiddenPosts' ? null : postProperties === 'SharedLinks' ? null : (
             <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/icon1.png`}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
               alt="eye-latest"
               className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
               onClick={showHidePostOpen}
@@ -401,17 +401,11 @@ const QuestBottombar = ({
                     });
                   }}
                 >
-                  <svg
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/fullscreen.svg' : 'assets/svgs/fullscreen-icon.svg'}`}
+                    alt="full-screen"
                     className="h-3 w-3 tablet:h-[23px] tablet:w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 23"
-                    fill="none"
-                  >
-                    <path
-                      d="M6.30165 0H0.943359C0.422241 0 0 0.477316 0 1.06641V7.10938C0 7.69846 0.422241 8.17578 0.943359 8.17578C1.46448 8.17578 1.88672 7.69846 1.88672 7.10938V2.13281H6.30165C6.82277 2.13281 7.24501 1.6555 7.24501 1.06641C7.24501 0.477316 6.82277 0 6.30165 0ZM18.5527 13.8633C18.0316 13.8633 17.6094 14.3406 17.6094 14.9297V19.9062H13.2258C12.7046 19.9062 12.2824 20.3836 12.2824 20.9727C12.2824 21.5617 12.7046 22.0391 13.2258 22.0391H18.5527C19.0739 22.0391 19.4961 21.5617 19.4961 20.9727V14.9297C19.4961 14.3406 19.0739 13.8633 18.5527 13.8633ZM6.30165 19.9062H1.88672V14.9297C1.88672 14.3406 1.46448 13.8633 0.943359 13.8633C0.422241 13.8633 0 14.3406 0 14.9297V20.9727C0 21.5617 0.422241 22.0391 0.943359 22.0391H6.30165C6.82277 22.0391 7.24501 21.5617 7.24501 20.9727C7.24501 20.3836 6.82277 19.9062 6.30165 19.9062ZM18.5527 0H13.2258C12.7046 0 12.2824 0.477316 12.2824 1.06641C12.2824 1.6555 12.7046 2.13281 13.2258 2.13281H17.6094V7.10938C17.6094 7.69846 18.0316 8.17578 18.5527 8.17578C19.0739 8.17578 19.4961 7.69846 19.4961 7.10938V1.06641C19.4961 0.477316 19.0739 0 18.5527 0Z"
-                      fill="#85898C"
-                    />
-                  </svg>
+                  />
                 </div>
               ) : (
                 <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>
@@ -420,7 +414,7 @@ const QuestBottombar = ({
           ) : null}
 
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToList.svg`}
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/list.svg' : 'assets/svgs/addToList.svg'}`}
             alt="addToList"
             className="h-auto w-3 cursor-pointer tablet:w-[22px]"
             onClick={() => {
@@ -442,8 +436,6 @@ const QuestBottombar = ({
           />
         </div>
       )}
-
-      {/* <div className="border-l border-gray-250 tablet:pl-5 min-w-[70px] tablet:min-w-[160px]"> */}
     </div>
   );
 };
