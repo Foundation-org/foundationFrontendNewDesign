@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Router } from './routes/route';
 import { Toaster } from 'sonner';
@@ -8,6 +8,7 @@ import api from './services/api/Axios';
 // import SEO from './utils/SEO';
 
 function App() {
+  // const [theme, setTheme] = useState(null);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [isMaintenance, setIsMaintenance] = useState(false);
 
@@ -52,6 +53,14 @@ function App() {
   //     window.location.reload();
   //   }
   // }, []); // Empty dependency array ensures this effect runs only once on component mount
+
+  // useEffect(() => {
+  //   if (persistedTheme === 'dark') {
+  //     setTheme('dark');
+  //   } else {
+  //     setTheme('light');
+  //   }
+  // }, [persistedTheme]);
 
   // useEffect(() => {
   //   document.addEventListener("visibilitychange", function() {

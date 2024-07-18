@@ -28,10 +28,10 @@ const FdxActivity = ({ isPulse }) => {
           <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Buy FDX Activity</h1>
         </div>
       </div>
-      <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:border-[1.85px] tablet:px-5 tablet:py-[18.73px]">
+      <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-2 py-[10px] tablet:border-[1.85px] tablet:px-5 tablet:py-[18.73px]">
         <div className="flex flex-col gap-[5px] rounded-b-[10px] bg-[#FDFDFD] tablet:gap-[15px]">
           {!historyData?.history || historyData?.history?.length === 0 ? (
-            <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
+            <div className="rounded-[5.85px] border-[1.84px] border-gray-250 bg-white py-2 tablet:rounded-[15px] tablet:py-6">
               <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
                 You have no records.
               </p>
@@ -54,7 +54,7 @@ const FdxActivity = ({ isPulse }) => {
                   </p>
                 </div>
               </div>
-              <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
+              <div className="rounded-[5.85px] border-[1.84px] border-gray-250 bg-white tablet:rounded-[15px]">
                 {!isLoading &&
                   !isError &&
                   historyData?.history
@@ -62,7 +62,7 @@ const FdxActivity = ({ isPulse }) => {
                     ?.map((item, index) => (
                       <div
                         key={item._id}
-                        className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== historyData?.history?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                        className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== historyData?.history?.length - 1 && 'border-b-[1.84px] border-gray-250'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                       >
                         <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
                           <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">

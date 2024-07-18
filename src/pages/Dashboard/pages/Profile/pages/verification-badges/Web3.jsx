@@ -153,7 +153,7 @@ export default function Web3({
 
   return (
     <>
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
         Linking your wallet gives you more FDX transaction options.
       </h1>
       <AuthKitProvider config={config}>
@@ -174,7 +174,7 @@ export default function Web3({
         </div>
         <div className="hidden"></div>
       </AuthKitProvider>
-      {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
+      {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-white-500 py-[17px] tablet:flex tablet:flex-row">
         <div className="flex w-full flex-col items-center gap-[10px] tablet:gap-4 laptop:gap-5">
           {web3.slice(0, Math.ceil(web3.length / 2)).map((item, index) => (
             <div
@@ -189,7 +189,7 @@ export default function Web3({
               <div
                 className={`${
                   persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000]  tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 text-[2.11vw] font-medium leading-normal text-[#000]  tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
               >
                 <h1>{item.title}</h1>
               </div>
@@ -227,7 +227,7 @@ export default function Web3({
             </div>
           ))}
         </div>
-        <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
+        <div className="w-2 rounded-[16px] border-[3px] border-white-500 bg-[#FDFDFD]" />
         <div className="flex w-full flex-col items-center gap-7 tablet:gap-4 laptop:gap-5">
           {web3.slice(Math.ceil(web3.length / 2)).map((item, index) => (
             <div
@@ -242,7 +242,7 @@ export default function Web3({
               <div
                 className={`${
                   persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000]  tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 text-[2.11vw] font-medium leading-normal text-[#000]  tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
               >
                 <h1>{item.title}</h1>
               </div>
@@ -294,9 +294,9 @@ export default function Web3({
             <div
               className={`${
                 persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
-              <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+              <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
                 {item.title}
               </h1>
             </div>

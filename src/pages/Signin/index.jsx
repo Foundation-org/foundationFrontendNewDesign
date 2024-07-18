@@ -102,7 +102,7 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex h-dvh w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
+    <div className="bg-blue flex h-dvh w-full flex-col text-white dark:bg-black lg:flex-row">
       <LegacyConfirmationPopup
         isPopup={isPasswordConfirmation}
         setIsPopup={setIsPasswordConfirmation}
@@ -122,9 +122,9 @@ export default function Signin() {
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
-      <div className="flex h-full flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
+      <div className="flex h-full flex-col items-center bg-white dark:bg-gray-200 md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-br-[65px] lg:rounded-tr-[65px]">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
-          <h1 className="text-center text-[18px] font-[700] text-black tablet:text-left tablet:text-[35px] tablet:leading-[35px] dark:text-white">
+          <h1 className="text-center text-[18px] font-[700] text-black dark:text-gray-300 tablet:text-left tablet:text-[35px] tablet:leading-[35px]">
             {location.pathname === '/signin' ? 'Login' : 'Login with Email'}
           </h1>
           {location.pathname === '/signin' && (
@@ -134,11 +134,11 @@ export default function Signin() {
           )}
           <Outlet />
           <div className="mt-5 flex justify-center gap-3 tablet:mt-14">
-            <p className="text-[11.21px] font-[500] text-gray-100 md:text-[22px] dark:text-gray">
+            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 md:text-[22px]">
               Don’t have an account?
             </p>
             <Link to={persistedUserInfo && persistedUserInfo.role === 'guest' ? '/guest-signup' : '/signup'}>
-              <p className="text-[11.21px] font-[500] text-blue md:text-[22px] dark:text-white">Sign up</p>
+              <p className="text-[11.21px] font-[500] text-blue-200 md:text-[22px]">Sign up</p>
             </Link>
           </div>
         </div>

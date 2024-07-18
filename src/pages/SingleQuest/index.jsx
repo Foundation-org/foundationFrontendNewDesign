@@ -86,7 +86,7 @@ const SingleQuest = () => {
         <meta name="google" content="notranslate"></meta>
       </Helmet>
       <Topbar />
-      <div className="w-full bg-[#F2F3F5]">
+      <div className="w-full bg-[#F2F3F5] dark:bg-black">
         <DashboardLayout>
           <div className="no-scrollbar relative mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[1440px] flex-col gap-2 overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
             {isLoading ? (

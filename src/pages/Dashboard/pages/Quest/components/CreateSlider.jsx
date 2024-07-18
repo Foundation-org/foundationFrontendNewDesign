@@ -83,13 +83,13 @@ export default function CreateSlider() {
         {createQuestItems.map((tab, index) => (
           <li key={index} ref={(el) => (tabRefs.current[tab.id] = el)} className={index === 2 ? 'flex' : ''}>
             <Link
-              className={`${location.pathname === tab.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'} slider-link`}
+              className={`${location.pathname === tab.path ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
               to={tab.path}
             >
               {tab.title}
             </Link>
             {index === 2 && (
-              <div className="ml-[6.75px] min-w-[1.4px] bg-[#CECECE] tablet:ml-[13.82px] tablet:min-w-[2.4px]" />
+              <div className="ml-[6.75px] min-w-[1.4px] bg-gray-50 tablet:ml-[13.82px] tablet:min-w-[2.4px]" />
             )}
           </li>
         ))}

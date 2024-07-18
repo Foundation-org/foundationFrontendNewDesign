@@ -246,9 +246,9 @@ function Slider() {
         />
       </div>
       <ul ref={tabsListRef} onMouseDown={() => setDragging(true)} onMouseMove={drag}>
-        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
+        <div className="flex gap-[6.75px] border-r-[2.4px] border-gray-50 pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Link
-            className={`${filterStates.filterBySort === 'Newest First' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
             to={''}
             onClick={() => {
               handleButtonSelection('newest-first', null, 'newButton');
@@ -258,7 +258,7 @@ function Slider() {
             New!
           </Link>
           <Link
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
             to={''}
             onClick={() => {
               handleButtonSelection('most-popular', null, 'trendingButton');
@@ -268,7 +268,7 @@ function Slider() {
             Trending!
           </Link>
           <Link
-            className={`${filterStates.filterByScope === 'Me' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            className={`${filterStates.filterByScope === 'Me' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
             to={''}
             onClick={() => {
               handleButtonSelection('my-posts', null, 'myPostButton');
@@ -278,7 +278,7 @@ function Slider() {
             My Posts
           </Link>
           <Link
-            className={`${filterStates.bookmarks === true ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            className={`${filterStates.bookmarks === true ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
             to={''}
             onClick={() => {
               handleButtonSelection('bookmarks', null, 'bookmarkButton');
@@ -293,7 +293,7 @@ function Slider() {
           return (
             <li key={index} ref={(el) => (tabRefs.current[index] = el)}>
               <Link
-                className={`${isItemBlocked ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'} slider-link`}
+                className={`${isItemBlocked ? 'slider-link-active' : 'slider-inactive'} slider-link`}
                 to={''}
                 onClick={() => {
                   handleButtonSelection('topics', tab, `topic-${index}`);

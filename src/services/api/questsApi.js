@@ -167,6 +167,7 @@ export const answerValidation = async ({ answer }) => {
       val = 10;
     }
     const response = await api.get(`/ai-validation/${val}?userMessage=${answer}`);
+
     if (response.data.status === 'VIOLATION') {
       await updateViolationCounterAPI();
       return { validatedAnswer: null, errorMessage: 'VIOLATION' };

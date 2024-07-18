@@ -37,8 +37,8 @@ const CardTopbar = ({
   // } else ratingImage = 'post-a.svg';
 
   return (
-    <div className="flex flex-col justify-between border-[#D9D9D9] px-2 pt-2 tablet:px-5 tablet:pt-4">
-      <div className="flex items-start justify-between border-[#D9D9D9]">
+    <div className="flex flex-col justify-between border-gray-250 px-2 pt-2 tablet:px-5 tablet:pt-4">
+      <div className="flex items-start justify-between border-gray-250">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
           <div className="flex items-start gap-2 tablet:gap-4 ">
             {createdBy === persistedUserInfo?.uuid ? (
@@ -69,7 +69,7 @@ const CardTopbar = ({
               {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
             </h4> */}
-              <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
+              <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
                 {questStartData.Question}
               </h4>
             </div>

@@ -115,7 +115,7 @@ const QuestStartSection = () => {
   );
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] laptop:mx-[331px] desktop:mx-auto dark:bg-black">
+    <div className="dark:bg-black mx-auto w-full max-w-[1440px] bg-[#F2F3F5] laptop:mx-[331px] desktop:mx-auto">
       {filterStates?.moderationRatingFilter?.initial === 0 &&
         filterStates?.moderationRatingFilter?.final === 0 &&
         questUtils.adultFilterPopup.rating !== 0 && (
@@ -132,7 +132,7 @@ const QuestStartSection = () => {
         <div className="block tablet:hidden">
           <SidebarLeft />
         </div>
-        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
+        <div className="no-scrollbar dark:bg-black mx-auto flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)]">
           <div className="fixed left-auto right-auto max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>
@@ -147,7 +147,7 @@ const QuestStartSection = () => {
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                 alt="mediaCloseIcon"
-                className="absolute -right-2 top-3 z-20 h-6 w-6 cursor-pointer text-black dark:text-white"
+                className="text-black absolute -right-2 top-3 z-20 h-6 w-6 cursor-pointer dark:text-white"
                 onClick={() => {
                   dispatch(questUtilsActions.setIsShowPlayer(false));
                   dispatch(questUtilsActions.setPlayingPlayerId(''));

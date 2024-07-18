@@ -125,7 +125,6 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     handleSearchPost();
   }, [searchPost]);
 
-
   useEffect(() => {
     if (selectedItem?.post.length > 0) {
       selectedItem.post.map((item) => {
@@ -138,17 +137,13 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     }
   }, [selectedPostId]);
 
-
-
   const handleAddPost = async () => {
-
     addPostInList({
       userUuid: persistedUserInfo.uuid,
       categoryIdArray: [categoryId],
       questForeginKey: selectedPostId,
     });
   };
-
 
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
@@ -157,23 +152,23 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
           <TextareaAutosize
             onChange={(e) => setCategoryName(e.target.value)}
             value={categoryName}
-            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[4px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] laptop:rounded-l-[0.625rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[4px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] laptop:rounded-l-[0.625rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
           />
           <button
-            className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012]`}
+            className={`relative rounded-r-[5.128px] border-y border-r border-white-500 bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012]`}
           >
-            <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] text-[#0FB063] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[60px]">
+            <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-white-500 text-[#0FB063] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[60px]">
               OK
             </div>
           </button>
         </div> */}
         <div className="flex flex-col gap-[15px]">
           <div className="flex w-full items-center rounded-[5.387px] bg-transparent tablet:w-full tablet:rounded-[10px]">
-            <div className="w-full rounded-[5.387px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
+            <div className="w-full rounded-[5.387px] border border-white-500 tablet:rounded-[15px] tablet:border-[3px]">
               {/* <div className="flex"> */}
               {/* <div
                   className={`${
-                    false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                    false ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
                   } dragIconWrapper border-y border-s tablet:border-y-[3px] tablet:border-s-[3px]`}
                 >
                   {persistedTheme === 'dark' ? (
@@ -193,24 +188,24 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
               <TextareaAutosize
                 onChange={(e) => {
                   setSelectedPostId('');
-                  setSearchPost(e.target.value)
+                  setSearchPost(e.target.value);
                   setHollow(true);
-                }
-                }
+                }}
                 value={searchPost}
                 placeholder="Search Post"
-                className={`${selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
-                  } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
+                className={`${
+                  selectedPostId === '' && searchPost !== '' ? 'border-b border-white-500 tablet:border-b-[3px]' : ''
+                } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px]`}
               />
               {/* </div> */}
               {/* To Render and Select The Post */}
-              <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[10px] font-medium text-[#707175] tablet:text-[15.7px]">
+              <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[10px] font-medium text-[#707175] dark:text-gray-300 tablet:text-[15.7px]">
                 {selectedPostId === '' &&
                   searchPost !== '' &&
                   searchResult?.map((item) => (
                     <li
                       key={item._id}
-                      className="cursor-pointer border-b border-[#DEE6F7] px-4 py-[6px] last:border-b-0 tablet:border-b-[3px] tablet:py-2"
+                      className="cursor-pointer border-b border-white-500 px-4 py-[6px] last:border-b-0 dark:border-gray-100 tablet:border-b-[3px] tablet:py-2"
                       onClick={() => {
                         setSearchPost(item.Question);
                         setSelectedPostId(item._id);
@@ -226,7 +221,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
           </div>
         </div>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
-          {!hollow ?
+          {!hollow ? (
             <Button
               variant={'submit'}
               onClick={() => {
@@ -234,13 +229,12 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
               }}
             >
               {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
-            </Button> :
-            <Button
-              variant={'hollow-submit'}
-              disabled={true}
-            >
+            </Button>
+          ) : (
+            <Button variant={'hollow-submit'} disabled={true}>
               {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
-            </Button>}
+            </Button>
+          )}
           <Button variant={'cancel'} onClick={handleClose}>
             Cancel
           </Button>

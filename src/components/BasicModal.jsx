@@ -18,7 +18,7 @@ const BasicModal = ({ open, handleClose, children, customStyle, customClasses })
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={mergedStyle} className={customClasses}>
+      <Box sx={mergedStyle} className={`${customClasses} bg-[#FCFCFD] dark:bg-gray-200`}>
         {children}
       </Box>
     </Modal>

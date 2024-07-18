@@ -99,7 +99,7 @@ const BuyBalance = ({ triggerPulse }) => {
             {persistedUserInfo?.balance?.toFixed(2)}
           </h1>
         </div>
-        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+        <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Need more FDX?
           </h1>
@@ -116,7 +116,7 @@ const BuyBalance = ({ triggerPulse }) => {
                 placeholder="e.g 10"
                 value={fdx}
                 onChange={handleFdxChange}
-                className="w-full max-w-[217px] rounded-[3.204px] border-[1.358px] border-[#DEE6F7] bg-[#F9F9F9] px-2 py-[4.5px] text-[9.053px] font-semibold leading-normal focus:outline-none tablet:max-w-[480px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-4 tablet:py-[10px] tablet:text-[20px]"
+                className="w-full max-w-[217px] rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 py-[4.5px] text-[9.053px] font-semibold leading-normal focus:outline-none tablet:max-w-[480px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-4 tablet:py-[10px] tablet:text-[20px]"
               />
             </div>
             <img
@@ -133,7 +133,7 @@ const BuyBalance = ({ triggerPulse }) => {
                 placeholder="e.g 1"
                 value={dollar}
                 onChange={handleDollarChange}
-                className="w-full max-w-[217px] rounded-[3.204px] border-[1.358px] border-[#DEE6F7] bg-[#F9F9F9] px-2 py-[4.5px] text-[9.053px] font-semibold leading-normal focus:outline-none tablet:max-w-[480px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-4 tablet:py-[10px] tablet:text-[20px]"
+                className="w-full max-w-[217px] rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 py-[4.5px] text-[9.053px] font-semibold leading-normal focus:outline-none tablet:max-w-[480px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-4 tablet:py-[10px] tablet:text-[20px]"
               />
             </div>
           </div>

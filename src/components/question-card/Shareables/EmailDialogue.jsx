@@ -72,7 +72,7 @@ const EmailDialogue = ({ handleClose, id }) => {
         </div>
       </div>
       <div className="mx-[19px] flex flex-col gap-[10.76px] pb-[17px] pt-[25px] tablet:mx-[40px] tablet:gap-[15px] tablet:pb-6 laptop:mx-[64px]">
-        <div className="flex w-full rounded-[10px] border border-[#DEE6F7] px-[16.6px] py-3 text-[12px] font-normal leading-none text-[#435059] tablet:rounded-[15px] tablet:border-[3px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] tablet:font-bold">
+        <div className="border-white-500 flex w-full rounded-[10px] border px-[16.6px] py-3 text-[12px] font-normal leading-none text-[#435059] tablet:rounded-[15px] tablet:border-[3px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] tablet:font-bold">
           <label htmlFor="email">Email:</label>
           <input
             name="email"
@@ -82,7 +82,7 @@ const EmailDialogue = ({ handleClose, id }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="flex w-full rounded-[10px] border border-[#DEE6F7] px-[16.6px] py-3 text-[12px] font-normal leading-none text-[#435059] tablet:rounded-[15px] tablet:border-[3px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] tablet:font-bold">
+        <div className="border-white-500 flex w-full rounded-[10px] border px-[16.6px] py-3 text-[12px] font-normal leading-none text-[#435059] tablet:rounded-[15px] tablet:border-[3px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] tablet:font-bold">
           <label htmlFor="Subject">Subject:</label>
           <input
             name="subject"
@@ -92,7 +92,7 @@ const EmailDialogue = ({ handleClose, id }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="flex w-full rounded-[10px] border border-[#DEE6F7] px-[16.6px] py-3 text-[12px] font-normal leading-none text-[#435059] tablet:rounded-[15px] tablet:border-[3px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] tablet:font-bold">
+        <div className="border-white-500 flex w-full rounded-[10px] border px-[16.6px] py-3 text-[12px] font-normal leading-none text-[#435059] tablet:rounded-[15px] tablet:border-[3px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] tablet:font-bold">
           <label htmlFor="Subject">Message:</label>
           <textarea
             name="message"

@@ -3,7 +3,6 @@ import Input from '../../../components/Input';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useState } from 'react';
 import Button from '../../../components/Button';
-import Anchor from '../../../components/Anchor';
 import { useMutation } from '@tanstack/react-query';
 import { signUpGuest } from '../../../services/api/userAuth';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -15,7 +14,7 @@ import showToast from '../../../components/ui/Toast';
 import { LoginSocialGoogle } from 'reactjs-social-login';
 import PopUp from '../../../components/ui/PopUp';
 import { Button as UiButton } from '../../../components/ui/Button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../../services/api/Axios';
 import { addUser } from '../../../features/auth/authSlice';
 
@@ -108,13 +107,13 @@ const CredentialRegister = () => {
 
   return (
     <>
-      <form className="mt-11 flex w-full flex-col gap-11 text-gray-600 tablet:mt-16 5xl:gap-14 short:gap-[38px] dark:text-white">
+      <form className="mt-11 flex w-full flex-col gap-11 text-gray-600 dark:text-white tablet:mt-16 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
             id="email"
             label="Email Address"
-            className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1  pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
+            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
             autoComplete="sign-email"
             onChange={onEmailChange}
             value={email}
@@ -144,7 +143,7 @@ const CredentialRegister = () => {
                 type={inputType}
                 id="password"
                 label="Password"
-                className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
+                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
                 autoComplete="new-password"
                 onChange={onPassChange}
               />
@@ -190,7 +189,7 @@ const CredentialRegister = () => {
                 type={cnfmPassInputType}
                 id="cnfmpassword"
                 label="Re-type Password"
-                className="peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1  pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
+                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
                 autoComplete="new-password"
                 onChange={onReTypePassChange}
               />
@@ -250,9 +249,21 @@ const CredentialRegister = () => {
             />
           </label>
         </div>
-        <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
-          Creating an account means you have agreed with our <Anchor href="/term-of-service">Terms of Service</Anchor> &{' '}
-          <Anchor href="/privacy-policy">Privacy Policy</Anchor>.
+        <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
+          Creating an account means you have agreed with our{` `}
+          <Link
+            to="/term-of-service"
+            className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+          >
+            Terms of Service
+          </Link>
+          {` `}&{' '}
+          <Link
+            to="/privacy-policy"
+            className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+          >
+            Privacy Policy
+          </Link>
         </label>
       </div>
       <Button

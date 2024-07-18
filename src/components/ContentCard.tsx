@@ -12,7 +12,7 @@ type Props = {
 const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) => {
   return (
     <div className="mx-4 mb-[15px] tablet:mx-6">
-      <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+      <div className="flex items-center justify-between rounded-t-[10px] bg-blue-200 px-5 py-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:border-x-[1.85px] tablet:border-t-[1.85px]">
         <div className="flex items-center gap-2">
           <div className="relative h-fit w-fit">
             <img
@@ -21,7 +21,7 @@ const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) =>
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
             {badgeVal && (
-              <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
+              <p className="text-gold-100 absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none tablet:top-[40%] tablet:text-[13px]">
                 {badgeVal}
               </p>
             )}
@@ -34,7 +34,9 @@ const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) =>
           </h1>
         )}
       </div>
-      <div className="rounded-b-[10px] bg-[#FDFDFD] px-5 py-[10px] tablet:py-[18.73px]">{children}</div>
+      <div className="rounded-b-[10px] bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:py-[18.73px] tablet:dark:border-x-[1.85px] tablet:dark:border-b-[1.85px]">
+        {children}
+      </div>
     </div>
   );
 };

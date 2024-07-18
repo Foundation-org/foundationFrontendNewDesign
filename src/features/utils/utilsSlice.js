@@ -11,9 +11,12 @@ export const utilsSlice = createSlice({
     changeTheme: (state) => {
       state.theme = state.theme === 'light' ? 'dark' : 'light';
     },
+    changeThemeTo: (state, payload) => {
+      state.theme = payload.payload;
+    },
   },
 });
 
-export const { changeTheme } = utilsSlice.actions;
+export const { changeTheme, changeThemeTo } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

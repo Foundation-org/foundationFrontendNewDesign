@@ -33,15 +33,11 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
 
   return (
     <div>
-      <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white py-3 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:py-[27px] laptop:py-[25px] dark:bg-[#141618]`}
-      >
-        <h1 className="hidden text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:block tablet:text-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-[#D8D8D8]">
+      <div className="mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white py-3 dark:bg-gray-200 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:py-[27px] laptop:py-[25px]">
+        <h1 className="dark:text-white-400 text-gray-900 hidden text-center text-[10px] font-semibold leading-normal tablet:block tablet:text-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
           Create a {type}
         </h1>
-        <h4 className="mt-1 text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px] tablet:leading-[16px]">
+        <h4 className="text-gray-800 mt-1 text-center text-[8px] font-medium leading-normal tablet:mt-[25px] tablet:text-[16px] tablet:leading-[16px]">
           {msg}
         </h4>
         {getMediaStates?.isMedia.isMedia === false && getPicMediaStates.isPicMedia === false && (
@@ -114,14 +110,14 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             }
             tabIndex={3}
             onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(2, 'Enter'))}
-            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[7px] text-[10px] font-medium leading-3 tracking-wide text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+            className="border-white-500 dark:bg-accent-100 dark:text-white-400 w-full resize-none rounded-l-[5.128px] border-y border-l bg-white px-[9.24px] py-[7px] text-[10px] font-medium leading-3 tracking-wide text-[#7C7C7C] focus-visible:outline-none dark:border-gray-100 tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
           />
 
           <button
             id="new"
-            className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${questionStatus.color}`}
+            className={`border-white-500 dark:bg-accent-100 relative rounded-r-[5.128px] border-y border-r bg-white text-[0.5rem] font-semibold leading-none dark:border-gray-100 tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] ${questionStatus.color}`}
           >
-            <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
+            <div className="border-white-500 flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] dark:border-gray-100 tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
               {createQuestSlice.questionTyping ? `${createQuestSlice.question.length}/350` : questionStatus.name}
             </div>
             <Tooltip optionStatus={questionStatus} />

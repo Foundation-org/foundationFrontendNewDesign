@@ -162,7 +162,7 @@
 //           />
 //         </div>
 //       </div>
-//       <div className="relative h-full w-[90vw] rounded-b-[0.9375rem] border-x-2 border-b-2 border-[#DEE6F7] px-[1.19rem] py-[12px] tablet:w-fit tablet:rounded-b-[37px] tablet:border-x-[6px] tablet:border-b-[6px] tablet:px-[35px] tablet:py-[25px] dark:border-[#8B8B8B]">
+//       <div className="relative h-full w-[90vw] rounded-b-[0.9375rem] border-x-2 border-b-2 border-white-500 px-[1.19rem] py-[12px] tablet:w-fit tablet:rounded-b-[37px] tablet:border-x-[6px] tablet:border-b-[6px] tablet:px-[35px] tablet:py-[25px] dark:border-[#8B8B8B]">
 //         <div className="max-[100%] mx-auto flex items-center gap-2 tablet:gap-[12.6px] laptop:max-w-[80%]">
 //           <h1 className="text-[10px] font-medium leading-normal text-[#535353] tablet:text-[22px] dark:text-white">
 //             Topic
@@ -171,7 +171,7 @@
 //             <input
 //               type="text"
 //               placeholder="Search here...."
-//               className="h-[25px] w-full min-w-[215px] rounded-[5px] border-[1px] border-[#DEE6F7] bg-white px-3 text-[8.4px] text-[#435059] focus:outline-none tablet:h-[38px] tablet:border-[3px] tablet:text-[18px] laptop:h-[57px] laptop:rounded-[10px] laptop:pl-5 laptop:pr-[60px] laptop:text-[20px] dark:border-[#151515] dark:bg-[#151515] dark:text-white"
+//               className="h-[25px] w-full min-w-[215px] rounded-[5px] border-[1px] border-white-500 bg-white px-3 text-[8.4px] text-[#435059] focus:outline-none tablet:h-[38px] tablet:border-[3px] tablet:text-[18px] laptop:h-[57px] laptop:rounded-[10px] laptop:pl-5 laptop:pr-[60px] laptop:text-[20px] dark:border-[#151515] dark:bg-[#151515] dark:text-white"
 //               value={getPreferences?.topicSearch}
 //               onChange={handleSearch}
 //             />
@@ -208,11 +208,11 @@
 //                       <h2
 //                         className={`flex h-[2rem] w-full items-center justify-center laptop:h-[4.18rem] ${
 //                           col.id === 'All' ? 'rounded-t-[0.5rem]' : ''
-//                         } bg-[#DEE6F7] text-center text-[1rem] font-semibold text-[#535353] tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem] dark:bg-[#000] dark:text-white`}
+//                         } bg-white-500 text-center text-[1rem] font-semibold text-[#535353] tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem] dark:bg-[#000] dark:text-white`}
 //                       >
 //                         {col.id === 'Preferences' ? 'Show Only' : col.id === 'Block' ? 'Hide' : col.id}
 //                       </h2>
-//                       <div className="h-full border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FCFCFD] pr-1 tablet:border-x-[6px] tablet:border-b-[6px] laptop:rounded-b-[1.25rem] dark:border-[#212121] dark:bg-[#212121]">
+//                       <div className="h-full border-x-[3px] border-b-[3px] border-white-500 bg-[#FCFCFD] pr-1 tablet:border-x-[6px] tablet:border-b-[6px] laptop:rounded-b-[1.25rem] dark:border-[#212121] dark:bg-[#212121]">
 //                         <div
 //                           className="custom-scrollbar flex h-[25vh] min-h-[25vh] flex-col gap-[0.4rem] overflow-y-auto overflow-x-hidden bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem] dark:bg-[#212121]"
 //                           {...provided.droppableProps}
@@ -233,9 +233,9 @@
 //                                     <div
 //                                       className={`${
 //                                         snapshot.isDragging
-//                                           ? 'border-[#5FA3D5]'
-//                                           : 'border-[#DEE6F7] dark:border-[#282828]'
-//                                       } flex h-6 w-[0.7rem] min-w-[0.7rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem] dark:bg-[#8E8E8E]`}
+//                                           ? 'border-blue-300'
+//                                           : 'border-white-500 dark:border-[#282828]'
+//                                       } flex h-6 w-[0.7rem] min-w-[0.7rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-white-500 tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem] dark:bg-[#8E8E8E]`}
 //                                     >
 //                                       {persistedTheme === 'dark' ? (
 //                                         <img
@@ -254,7 +254,7 @@
 //                                     <p
 //                                       className={`${
 //                                         snapshot.isDragging
-//                                           ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+//                                           ? 'border-blue-300 bg-[#F2F6FF]'
 //                                           : 'border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]'
 //                                       } flex h-6 w-fit select-none items-center gap-3 truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px] dark:text-white`}
 //                                     >

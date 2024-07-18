@@ -1,14 +1,12 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/Input';
-import Anchor from '../../../components/Anchor';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Button from '../../../components/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { signIn } from '../../../services/api/userAuth';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
+import { Link, useNavigate } from 'react-router-dom';
 import { addUser } from '../../../features/auth/authSlice';
 import LegacyConfirmationPopup from '../../../components/dialogue-boxes/LegacyConfirmationPopup';
 import showToast from '../../../components/ui/Toast';
@@ -140,7 +138,7 @@ const CredentialLogin = () => {
             type="email"
             id="email"
             label="Email Address"
-            className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
+            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
             autoComplete="sign-email"
             onChange={onEmailChange}
             value={email}
@@ -171,7 +169,7 @@ const CredentialLogin = () => {
                 type={inputType}
                 id="password"
                 label="Password"
-                className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
+                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
                 autoComplete="new-password"
                 onChange={onPassChange}
               />
@@ -208,7 +206,9 @@ const CredentialLogin = () => {
               )}
             </div>
           </div>
-          <Anchor className="cursor-pointer dark:text-white">Forgot Password?</Anchor>
+          <Link className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]">
+            Forgot Password?
+          </Link>
         </div>
       </form>
       <div className="mb-4 mt-4 hidden w-full items-start md:mb-10 laptop:mb-[5.5rem] laptop:mt-[2.5rem] taller:mb-[30px] taller:mt-[35px]">

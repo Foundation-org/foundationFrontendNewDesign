@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
 import { useSelector, useDispatch } from 'react-redux';
-
 import PopUp from '../ui/PopUp';
-// extras
 import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
@@ -106,11 +104,13 @@ const FilterContainer = (props) => {
 
   return (
     <div className={`w-full`}>
-      <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
-        <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">{heading}</h1>
+      <div className="rounded-t-[15px] border-x-[3px] border-t-[3px] border-white-500 bg-white-500 py-2 dark:border-gray-100 dark:bg-accent-100">
+        <h1 className="text-center text-[12px] font-bold text-[#707175] dark:text-gray-300 tablet:text-[22px]">
+          {heading}
+        </h1>
       </div>
       <div
-        className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FDFDFD] p-2 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
+        className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} bg-white-900 flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-white-500 p-2 dark:border-gray-100 dark:bg-gray-200 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
       >
         {list?.map((item, index) => (
           <div
@@ -128,17 +128,17 @@ const FilterContainer = (props) => {
               }
             }}
           >
-            <div className="flex size-4 min-h-4 min-w-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:min-h-6 tablet:size-6 tablet:min-w-6">
+            <div className="flex size-4 min-h-4 min-w-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:min-h-6 dark:border-gray-300 tablet:size-6 tablet:min-w-6">
               {heading === 'Status' && props.filterValues.status === item.title ? (
-                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252]  tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
+                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] dark:bg-gray-300 tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : heading === 'Type' && props.filterValues.type === item.val ? (
-                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
+                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] dark:bg-gray-300 tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : heading === 'Media' && props.filterValues.media === item.val ? (
-                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
+                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] dark:bg-gray-300 tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : null}
             </div>
 
-            <h3 className="whitespace-nowrap text-center text-[12px] font-normal leading-[12px] text-[#707175] tablet:text-[18px] tablet:font-semibold tablet:leading-[18px]">
+            <h3 className="whitespace-nowrap text-center text-[12px] font-normal leading-[12px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:font-semibold tablet:leading-[18px]">
               {item.title}
             </h3>
           </div>
@@ -406,10 +406,10 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       }}
     >
       <div className="px-[18px] pt-[10px] tablet:px-[45px] tablet:pt-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating Category
         </h1>
-        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] border-b border-[#7C7C7C] pb-[25px] tablet:mt-[25px] tablet:gap-[100px]">
+        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] border-b border-[#7C7C7C] pb-[25px] dark:border-gray-300 tablet:mt-[25px] tablet:gap-[100px]">
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <div id="custom-rating-checkbox" className="flex h-full items-center">
               <input
@@ -427,7 +427,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Everyone</p>
+              <p className="text-[10px] font-semibold text-gray-150 dark:text-gray-300 tablet:text-[20px]">Everyone</p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
@@ -464,13 +464,13 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Adult</p>
+              <p className="text-[10px] font-semibold text-gray-150 dark:text-gray-300 tablet:text-[20px]">Adult</p>
             </div>
           </div>
         </div>
       </div>
       <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Filter Options
         </h1>
         <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 laptop:grid-cols-3">

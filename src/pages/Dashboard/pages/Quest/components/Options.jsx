@@ -45,7 +45,7 @@ const Options = ({
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">
-            <div className="flex h-full w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
+            <div className="flex h-full w-[38px] items-center justify-center rounded-l-[10px] bg-white-500 px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {dragable ? (
                 persistedTheme === 'dark' ? (
                   <img
@@ -91,7 +91,7 @@ const Options = ({
             <div className="flex w-full rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10.3px] laptop:rounded-[10px]">
               <div
                 className={`${
-                  isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                  isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'
                 } dragIconWrapper border-y border-s tablet:border-y-[3px] tablet:border-s-[3px]`}
               >
                 {persistedTheme === 'dark' ? (
@@ -111,8 +111,8 @@ const Options = ({
               <div
                 className={`${
                   isDragging
-                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+                    ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100'
+                    : 'border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
                 } w-5 min-w-5 border-y tablet:border-y-[3px]`}
               ></div>
               <TextareaAutosize
@@ -128,21 +128,21 @@ const Options = ({
                 }
                 className={`${
                   isDragging
-                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px] dark:text-[#7C7C7C]`}
+                    ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100'
+                    : 'border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
+                } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:text-gray-300 tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px]`}
               />
               <div
                 id={`test${number}`}
                 className={`${
                   isDragging
-                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+                    ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100'
+                    : 'border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
                 } relative flex items-center rounded-r-[0.33rem] border-y border-r text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[10px] laptop:text-[1.25rem] ${
                   optionStatus.color
                 }`}
               >
-                <div className="flex h-[75%] w-[50px] items-center justify-center border-l border-[#DEE6F7] tablet:w-[99.58px] tablet:border-l-[3px] laptop:w-[134px]">
+                <div className="flex h-[75%] w-[50px] items-center justify-center border-l border-white-500 dark:border-gray-100 tablet:w-[99.58px] tablet:border-l-[3px] laptop:w-[134px]">
                   <span> {isTyping ? `${typedValue.length}/200` : optionStatus.name} </span>
                 </div>
                 <Tooltip optionStatus={optionStatus} id={`input-${number}`} />
@@ -150,7 +150,7 @@ const Options = ({
               {(title === 'RankChoice' || title === 'MultipleChoice' || title === 'OpenChoice') && trash && (
                 <div
                   id={`test${number}`}
-                  className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] dark:bg-[#141618] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold dark:bg-gray-200 xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>

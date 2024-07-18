@@ -83,7 +83,7 @@ export default function TreasurySlider() {
         {treasuryItems.map((tab, index) => (
           <li key={index} ref={(el) => (tabRefs.current[tab.id] = el)}>
             <Link
-              className={`${location.pathname === tab.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'} slider-link`}
+              className={`${location.pathname === tab.path ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
               to={tab.path}
             >
               {tab.title}

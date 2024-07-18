@@ -34,9 +34,9 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
           </svg>
         </div>
       </div>
-      {/* <div className="px-6 py-[17px] tablet:pt-7 tablet:px-[27px] border-[0.728px] tablet:border-2 border-[#D9D9D9] mt-1">
+      {/* <div className="px-6 py-[17px] tablet:pt-7 tablet:px-[27px] border-[0.728px] tablet:border-2 border-gray-250 mt-1">
 
-        <div className="w-full rounded-[9.8px] tablet:rounded-[15px] border-[0.728px] tablet:border-2 border-[#D9D9D9]">
+        <div className="w-full rounded-[9.8px] tablet:rounded-[15px] border-[0.728px] tablet:border-2 border-gray-250">
           <CardTopbar badgeCount={5} QuestTopic="Technology" />
           <div className="pt-[12px] pb-4 tablet:pb-5 tablet:pt-[0.94rem]">
             <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">

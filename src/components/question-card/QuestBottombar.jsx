@@ -135,7 +135,6 @@ const QuestBottombar = ({
   }, [time]);
 
   const customModalStyle = {
-    backgroundColor: '#FCFCFD',
     boxShadow: 'none',
     border: '0px',
     outline: 'none',
@@ -170,7 +169,7 @@ const QuestBottombar = ({
 
   return (
     <div
-      className={`relative flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-[5px] tablet:px-5  tablet:py-[11px]`}
+      className={`relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5  tablet:py-[11px]`}
     >
       <ShowHidePostPopup
         handleClose={showHidePostClose}
@@ -198,7 +197,7 @@ const QuestBottombar = ({
             alt="eye-cut"
             className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
-          <h1 className="text-[0.6rem] font-medium text-[#9A9A9A] tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+          <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-600 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {questStartData?.userQuestSetting?.hiddenMessage}
           </h1>
         </div>
@@ -218,7 +217,7 @@ const QuestBottombar = ({
               className=" h-[15px] w-full tablet:h-[23px]"
             />
           ) : null}
-          <h1 className="relative  text-[0.6rem] font-medium text-[#9A9A9A]  tablet:text-[1.13531rem] laptop:text-[1.2rem] ">
+          <h1 className="relative text-[0.6rem] font-medium text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] ">
             {questStartData.QuestTopic}
           </h1>
         </div>
@@ -290,7 +289,7 @@ const QuestBottombar = ({
             timeAgo={timeAgo}
           />
         </BasicModal>
-        <div className="cursor-pointer border-r border-[#D9D9D9] pr-2 tablet:pr-5" onClick={handleFbOpen}>
+        <div className="cursor-pointer border-r border-gray-250 pr-2 tablet:pr-5" onClick={handleFbOpen}>
           {persistedTheme === 'dark' ? <Facebook /> : <Facebook />}
         </div>
         <BasicModal
@@ -338,7 +337,7 @@ const QuestBottombar = ({
           />
         )}
 
-        <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
+        <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
           {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null} {timeAgo}
         </h4>
       </div>
@@ -395,7 +394,7 @@ const QuestBottombar = ({
             <div className="flex justify-center ">
               {isFullScreen === undefined ? (
                 <div
-                  className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
+                  className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
                   onClick={() => {
                     navigate('/post/isfullscreen', {
                       state: { questId: questStartData._id },
@@ -444,7 +443,7 @@ const QuestBottombar = ({
         </div>
       )}
 
-      {/* <div className="border-l border-[#D9D9D9] tablet:pl-5 min-w-[70px] tablet:min-w-[160px]"> */}
+      {/* <div className="border-l border-gray-250 tablet:pl-5 min-w-[70px] tablet:min-w-[160px]"> */}
     </div>
   );
 };

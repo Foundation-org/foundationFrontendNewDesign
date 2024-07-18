@@ -134,7 +134,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
+    <div className="bg-blue flex h-screen w-full flex-col text-white dark:bg-black lg:flex-row">
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       {/* Mobile Top Header */}
@@ -154,9 +154,9 @@ export default function Signup() {
         />
       </div>
       {/* Main Content */}
-      <div className="flex h-screen flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
+      <div className="dark:bg-dark flex h-screen flex-col items-center bg-white dark:bg-gray-200 md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-bl-[65px] lg:rounded-tl-[65px]">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
-          <h1 className="text-[18px] font-[700] text-black tablet:text-[35px] tablet:leading-[35px] dark:text-white">
+          <h1 className="text-[18px] font-[700] text-black dark:text-white tablet:text-[35px] tablet:leading-[35px]">
             {location.pathname === '/signup' || location.pathname === '/guest-signup'
               ? 'Create an Account'
               : 'Create Account with Email'}
@@ -168,11 +168,11 @@ export default function Signup() {
           )}
           <Outlet />
           <div className="mt-5 flex gap-3 tablet:mt-14">
-            <p className="text-[11.21px] font-[500] text-gray-100 md:text-[22px] dark:text-gray">
+            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 md:text-[22px]">
               Already have an account?
             </p>
             <Link to="/signin">
-              <p className="text-[11.21px] font-[500] text-blue md:text-[22px] dark:text-white">Sign in</p>
+              <p className="text-[11.21px] font-[500] text-blue-200 md:text-[22px]">Sign in</p>
             </Link>
           </div>
         </div>
