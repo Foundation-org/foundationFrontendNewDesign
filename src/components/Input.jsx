@@ -28,7 +28,7 @@ const Input = ({ type, id, label, className, autoComplete, value, onChange }) =>
       />
       <label
         htmlFor={id}
-        className="absolute -top-4 left-0 cursor-text text-[10.2px] leading-none text-gray-300 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-gray-300 md:text-[20px] tablet:text-[18px] short:text-[14px] dark:text-white-200"
+        className="text-silver-600 peer-focus:text-silver-600 absolute -top-4 left-0 cursor-text text-[10.2px] leading-none transition-all peer-focus:-top-4 peer-focus:text-xs dark:text-white-200 md:text-[20px] tablet:text-[18px] short:text-[14px]"
       >
         {label}
       </label>

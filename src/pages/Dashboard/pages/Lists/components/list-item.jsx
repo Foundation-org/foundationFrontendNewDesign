@@ -48,7 +48,7 @@ const ListItem = ({ post, setCategoryId, categoryItem, setPostId, setDeletePostP
         </div>
       </div>
       <img
-        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
         alt="trash"
         className="ml-[11px] h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
         onClick={() => {

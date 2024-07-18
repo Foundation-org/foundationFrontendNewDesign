@@ -107,7 +107,7 @@ const CredentialRegister = () => {
 
   return (
     <>
-      <form className="mt-11 flex w-full flex-col gap-11 text-gray-600 dark:text-white tablet:mt-16 5xl:gap-14 short:gap-[38px]">
+      <form className="text-silver-600 mt-11 flex w-full flex-col gap-11 dark:text-white tablet:mt-16 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"

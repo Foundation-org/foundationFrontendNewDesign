@@ -215,21 +215,14 @@ export const printNoRecordsMessage = (
   const isOtherCategory = filterStates?.topics?.Block?.list !== undefined && filterStates?.topics?.Block.list[0];
   return (
     <div className="my-[15vh] flex  flex-col items-center justify-center">
-      {persistedTheme === 'dark' ? (
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
-          alt="noposts image"
-        />
-      ) : (
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
-          alt="noposts image"
-          className="h-[173px] w-[160px]"
-        />
-      )}
+      <img
+        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
+        alt="no posts image"
+        className="h-[173px] w-[160px]"
+      />
       {isBookmarked ? (
         <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-          <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
             No bookmarks found!
           </p>
           {(result === false || !resultPreferencesForBookmark) && (
@@ -258,7 +251,7 @@ export const printNoRecordsMessage = (
         </div>
       ) : (
         <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-          <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+          <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
             No matching posts found!
           </p>
           {(result === false || !resultPreferences) && isOtherCategory !== 'Other' && (
@@ -337,21 +330,14 @@ export const printEndMessage = (
     <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
       {filterStates.searchData && allData.length == 0 ? (
         <div className="my-[15vh] flex  flex-col items-center justify-center">
-          {persistedTheme === 'dark' ? (
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
-              alt="noposts image"
-            />
-          ) : (
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
-              alt="noposts image"
-              className="h-[173px] w-[160px]"
-            />
-          )}
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
+            alt="noposts image"
+            className="h-[173px] w-[160px]"
+          />
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-              <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+              <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                 No bookmarks found!
               </p>
               {(result === false || !resultPreferencesForBookmark) && (
@@ -389,7 +375,7 @@ export const printEndMessage = (
             </div>
           ) : (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-              <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+              <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                 No matching posts found!
               </p>
               {(result === false || !resultPreferences) && (

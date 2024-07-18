@@ -193,7 +193,7 @@ const QuestBottombar = ({
       {postProperties === 'HiddenPosts' ? (
         <div className="flex items-center gap-[2px] tablet:gap-2">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-latest-cut.svg`}
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hidden.svg' : 'assets/svgs/eye-latest-cut.svg'}`}
             alt="eye-cut"
             className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
@@ -203,7 +203,7 @@ const QuestBottombar = ({
         </div>
       ) : postProperties === 'SharedLinks' ? (
         <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
           alt="trash"
           className="h-3 w-[9px] cursor-pointer tablet:h-[30px] tablet:w-[25px]"
           onClick={showDisableSharedLinkPopup}

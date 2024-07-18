@@ -18,7 +18,7 @@ const Button = ({
       'bg-white dark:bg-gray-500 text-black dark:text-white': color === 'darkgray',
       'bg-blue-200 dark:bg-[#2759A5]': color === 'blue-200',
       'text-primary bg-white hover:bg-gray-200 border-[1px] border-gray-300': color === 'light',
-      'disabled:bg-gray-300 disabled:cursor-not-allowed': disabled,
+      // 'disabled:bg-gray-300 disabled:cursor-not-allowed': disabled,
     },
     {
       'text-[13px] justify-center font-[500] px-[10px] h-[30px] gap-[15px]': size === 'small',

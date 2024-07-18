@@ -7,10 +7,9 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDebounce } from '../../../../../../utils/useDebounce';
 import { FeedbackCard } from './components/FeedbackCard';
 import { feedbackFilters, updateFeedbackSearch } from '../../../../../../features/profile/feedbackSlice';
-import api from '../../../../../../services/api/Axios';
 import * as questUtilsActions from '../../../../../../features/quest/utilsSlice';
 import ContentCard from '../../../../../../components/ContentCard';
-import SummaryCard from '../../../../../../components/SummaryCard';
+import api from '../../../../../../services/api/Axios';
 
 export default function Feedback() {
   const dispatch = useDispatch();
@@ -80,9 +79,9 @@ export default function Feedback() {
   const content = data?.pages.map((posts) =>
     posts.map((post, index) => {
       if (posts.length == index + 1) {
-        return <FeedbackCard innerRef={ref} persistedUserInfo={persistedUserInfo} post={post} />;
+        return <FeedbackCard key={index + 1} innerRef={ref} persistedUserInfo={persistedUserInfo} post={post} />;
       } else {
-        return <FeedbackCard persistedUserInfo={persistedUserInfo} post={post} />;
+        return <FeedbackCard key={index + 1} persistedUserInfo={persistedUserInfo} post={post} />;
       }
     }),
   );
@@ -162,20 +161,13 @@ export default function Feedback() {
             <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
               {getFeedbackFilters.searchData && data?.pages[0].length == 0 ? (
                 <div className="my-[15vh] flex  flex-col items-center justify-center">
-                  {persistedTheme === 'dark' ? (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
-                      alt="noposts image"
-                    />
-                  ) : (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
-                      alt="noposts image"
-                      className="h-[173px] w-[160px]"
-                    />
-                  )}
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
+                    alt="noposts image"
+                    className="h-[173px] w-[160px]"
+                  />
                   <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                    <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+                    <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                       No matching posts found!
                     </p>
                     <button
@@ -204,7 +196,7 @@ export default function Feedback() {
                 </p>
               ) : (
                 <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                  <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+                  <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                     You are all caught up!
                   </p>
                   <button

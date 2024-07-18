@@ -265,7 +265,7 @@ const Lists = () => {
                   <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
                     <div className="flex items-center gap-[1px] tablet:gap-2">
                       <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/clicks.svg`}
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
                         alt="clicks"
                         className="h-2 w-2 tablet:h-6 tablet:w-6"
                       />
@@ -275,7 +275,7 @@ const Lists = () => {
                     </div>
                     <div className="flex items-center gap-[1px] tablet:gap-2">
                       <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/participants.svg`}
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/group.svg' : 'assets/svgs/participants.svg'}`}
                         alt="participants"
                         className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                       />
@@ -342,7 +342,7 @@ const Lists = () => {
                       {persistedTheme === 'dark' ? <Copy /> : <Copy />}
                     </div>
                     <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/trash-icon.svg`}
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
                       alt="trash-icon"
                       className="h-[15px] w-3 cursor-pointer tablet:h-[25px] tablet:w-5"
                       onClick={() => {

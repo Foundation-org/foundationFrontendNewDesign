@@ -173,7 +173,7 @@ const Contributions = () => {
           ))}
           <Link
             to={'/profile/feedback'}
-            className="font-noraml -mt-2 cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline dark:text-white-100 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            className="dark:text-blue-600 -mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             See why your posts were hidden {'>'}
           </Link>
@@ -194,7 +194,7 @@ const Contributions = () => {
           ))}
           <Link
             to={'/profile/hidden-posts'}
-            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-white-100 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            className="dark:text-blue-600 -mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             View posts you’ve hidden and why {'>'}
           </Link>
@@ -217,7 +217,7 @@ const Contributions = () => {
           </div>
           <Link
             to={'/help/terms-of-service'}
-            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-white-100 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            className="dark:text-blue-600 -mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             View code of conduct {'>'}
           </Link>

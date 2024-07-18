@@ -102,7 +102,7 @@ export default function Signin() {
   };
 
   return (
-    <div className="bg-blue flex h-dvh w-full flex-col text-white dark:bg-black lg:flex-row">
+    <div className="flex h-dvh w-full flex-col bg-blue-100 text-white dark:bg-black lg:flex-row">
       <LegacyConfirmationPopup
         isPopup={isPasswordConfirmation}
         setIsPopup={setIsPasswordConfirmation}

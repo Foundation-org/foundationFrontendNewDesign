@@ -73,6 +73,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
                 localStorage.setItem('target-url', `${window.location.href}`);
                 window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
               }}
+              className={'dark:bg-accent-100'}
             >
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}

@@ -134,7 +134,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="bg-blue flex h-screen w-full flex-col text-white dark:bg-black lg:flex-row">
+    <div className="flex h-screen w-full flex-col bg-blue-100 text-white dark:bg-black lg:flex-row">
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       {/* Mobile Top Header */}

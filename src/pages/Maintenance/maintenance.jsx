@@ -12,7 +12,9 @@ const Maintenance = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="max-w-md rounded-md bg-white p-8 shadow-md">
         <h1 className="mb-4 text-center text-3xl font-bold text-gray-800">Site Under Maintenance</h1>
-        <p className="text-center text-gray-600">We are currently performing maintenance. Please check back later.</p>
+        <p className="text-silver-600 text-center dark:text-gray-300">
+          We are currently performing maintenance. Please check back later.
+        </p>
       </div>
     </div>
   );

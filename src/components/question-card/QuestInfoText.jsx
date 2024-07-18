@@ -1,4 +1,8 @@
+import { useSelector } from 'react-redux';
+
 const QuestInfoText = ({ questStartData, show, postProperties }) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
+
   const renderQuestInfoText = () => {
     if (show) {
       return (
@@ -33,7 +37,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
               <div className="my-2 ml-10 flex gap-1 tablet:my-5 tablet:ml-[86px] tablet:gap-20">
                 <div className="flex items-center gap-[1px] tablet:gap-2">
                   <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/clicks.svg`}
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
                     alt="clicks"
                     className="h-2 w-2 tablet:h-6 tablet:w-6"
                   />
@@ -43,7 +47,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                 </div>
                 <div className="flex items-center gap-[1px] tablet:gap-2">
                   <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/participants.svg`}
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/group.svg' : 'assets/svgs/participants.svg'}`}
                     alt="participants"
                     className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                   />
@@ -64,7 +68,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                 <div className="my-2 ml-10 flex gap-1 tablet:mb-[25px] tablet:ml-16 tablet:mt-[15px] tablet:gap-20">
                   <div className="flex items-center gap-[1px] tablet:gap-2">
                     <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/clicks.svg`}
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
                       alt="clicks"
                       className="h-2 w-2 tablet:h-6 tablet:w-6"
                     />
@@ -74,7 +78,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                   </div>
                   <div className="flex items-center gap-[1px] tablet:gap-2">
                     <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/participants.svg`}
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/group.svg' : 'assets/svgs/participants.svg'}`}
                       alt="participants"
                       className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                     />

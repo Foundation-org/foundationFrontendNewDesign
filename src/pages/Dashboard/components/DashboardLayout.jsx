@@ -457,7 +457,7 @@ export default function DashboardLayout({ children }) {
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] dark:focus:border-blue-500 tablet:text-[18.23px]"
+                    className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
                     value={hiddenSearch}
                     placeholder=""
                     onChange={handleHiddenPostSearch}
@@ -498,7 +498,7 @@ export default function DashboardLayout({ children }) {
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] dark:focus:border-blue-500 tablet:text-[18.23px]"
+                    className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
                     value={sharedlinkSearch}
                     placeholder=""
                     onChange={handleSharedLinkSearch}
@@ -539,7 +539,7 @@ export default function DashboardLayout({ children }) {
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] dark:focus:border-blue-500 tablet:text-[18.23px]"
+                    className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
                     value={feedbackSearch}
                     placeholder=""
                     onChange={handleFeedbackSearch}

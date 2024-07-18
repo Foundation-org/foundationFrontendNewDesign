@@ -226,20 +226,13 @@ export default function SharedLinks() {
               </div>
             ) : getSharedLinksFilters.searchData && data?.pages[0].length === 0 ? (
               <div className="my-[15vh] flex  flex-col items-center justify-center">
-                {persistedTheme === 'dark' ? (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
-                    alt="no posts image"
-                  />
-                ) : (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
-                    alt="no posts image"
-                    className="h-[173px] w-[160px]"
-                  />
-                )}
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
+                  alt="noposts image"
+                  className="h-[173px] w-[160px]"
+                />
                 <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                  <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+                  <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                     No matching posts found!
                   </p>
                   <button
@@ -264,7 +257,7 @@ export default function SharedLinks() {
               </p>
             ) : (
               <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw]">
+                <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                   You are all caught up!
                 </p>
                 <button

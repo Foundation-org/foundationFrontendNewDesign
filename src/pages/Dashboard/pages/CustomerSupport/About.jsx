@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const About = () => {
   const navigate = useNavigate();
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
@@ -32,7 +33,7 @@ const About = () => {
         <div className="mt-3 space-y-[15px] tablet:mt-3 tablet:space-y-4">
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
             <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/account.svg`}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/addUser.svg' : 'assets/about/account.svg'}`}
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
             />
@@ -47,7 +48,7 @@ const About = () => {
           </div>
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
             <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/conversation.svg`}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/chat.svg' : 'assets/about/conversation.svg'}`}
               alt="conversation"
               className="size-5 tablet:h-[1.875rem] tablet:w-[2.13rem]"
             />
@@ -67,7 +68,7 @@ const About = () => {
           </div>
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
             <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/asset.svg`}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/dollar.svg' : 'assets/about/asset.svg'}`}
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
             />
@@ -84,7 +85,7 @@ const About = () => {
       </div>
       <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] dark:text-gray-300 tablet:gap-5 tablet:px-16 tablet:py-[1.8rem]">
         <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/lock.svg`}
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/lock.svg' : 'assets/about/lock.svg'}`}
           alt="account"
           className="h-10 w-7 tablet:h-[2.18rem] tablet:w-[1.53rem]"
         />

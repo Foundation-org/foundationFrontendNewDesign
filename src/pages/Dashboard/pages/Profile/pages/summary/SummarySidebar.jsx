@@ -27,18 +27,18 @@ const SummarySidebar = ({ userData }) => {
 
   return (
     <div>
-      <div className="dark:bg-gray-200 mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] laptop:block">
-        <h1 className="dark:text-white-100 text-[18px] font-semibold text-blue-200">Your posts</h1>
+      <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:bg-gray-200 laptop:block">
+        <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Your posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {yourPosts.map((item) => (
-            <div key={item.id} className="text-gray-900 dark:text-white-100 flex items-center justify-between">
+            <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
               <p className="text-[16px] font-medium leading-[118.75%]">{item.title}</p>
               <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
             </div>
           ))}
           <Link
             to={'/profile/feedback'}
-            className="dark:text-white-100 cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline tablet:-mt-3"
+            className="dark:text-blue-600 cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline tablet:-mt-3"
           >
             See why your posts were
             <br /> hidden {'>'}
@@ -46,18 +46,18 @@ const SummarySidebar = ({ userData }) => {
         </div>
       </div>
       {/* Other posts */}
-      <div className="dark:bg-gray-200 mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] laptop:block">
-        <h1 className="dark:text-white-100 text-[18px] font-semibold text-blue-200">Others Posts</h1>
+      <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:bg-gray-200 laptop:block">
+        <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Others Posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {othersPosts.map((item) => (
-            <div key={item.id} className="text-gray-900 dark:text-white-100 flex items-center justify-between">
+            <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
               <p className="text-[16px] font-medium leading-[118.75%]">{item.title}</p>
               <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
             </div>
           ))}
           <Link
             to={'/profile/hidden-posts'}
-            className="dark:text-white-100 cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline tablet:-mt-3"
+            className="dark:text-blue-600 cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline tablet:-mt-3"
           >
             View posts you’ve hidden
             <br /> and why {'>'}
