@@ -1074,14 +1074,7 @@ input[type='number'] {
 
 .scrollable-tabs-container .right-arrow,
 .scrollable-tabs-container .left-arrow {
-  position: absolute;
-  height: 100%;
-  width: 18px;
-  top: 0;
-  display: none;
-  align-items: center;
-  padding: 0px;
-  pointer-events: none;
+  @apply pointer-events-none absolute top-0 hidden h-full w-[18px] items-center p-0;
 }
 
 .scrollable-tabs-container .right-arrow.active,
@@ -1099,35 +1092,27 @@ input[type='number'] {
 
 @media only screen and (min-width: 744px) {
   .scrollable-tabs-container {
-    padding: 14.8px 1.5rem;
+    @apply px-6 py-[14.8px];
   }
 
   .scrollable-tabs-container img {
-    width: 24px;
-    height: 24px;
+    @apply size-6;
   }
 
   .scrollable-tabs-container .right-arrow,
   .scrollable-tabs-container .left-arrow {
-    width: 44px;
-    padding: 0 10px;
-  }
-
-  .scrollable-tabs-container .right-arrow,
-  .scrollable-tabs-container .left-arrow {
-    width: 44px;
-    padding: 0 10px;
+    @apply w-11 px-[10px] py-0;
   }
 
   .scrollable-tabs-container .left-arrow {
-    left: 10px;
+    @apply left-[10px];
   }
 
   .scrollable-tabs-container .right-arrow {
-    right: 10px;
+    @apply right-[10px];
   }
 
   .scrollable-tabs-container ul {
-    gap: 16px;
+    @apply gap-4;
   }
 }
