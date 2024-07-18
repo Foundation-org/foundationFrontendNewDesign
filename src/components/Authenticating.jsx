@@ -9,6 +9,7 @@ import api from '../services/api/Axios';
 import showToast from './ui/Toast';
 import LegacyConfirmationPopup from './dialogue-boxes/LegacyConfirmationPopup';
 import { FaSpinner } from 'react-icons/fa';
+import { toast } from 'sonner';
 
 const Authenticating = () => {
   const navigate = useNavigate();
@@ -55,8 +56,18 @@ const Authenticating = () => {
         navigate('/');
       }
     } catch (error) {
-      console.log('handleSignUpSocialGuestError', error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+      if (error.response.data.message.split(':')[1].trim() === 'Email Already Exist') {
+        toast.error(
+          <p>
+            Email Already Exist{' '}
+            <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/signin')}>
+              Sign in
+            </span>{' '}
+          </p>,
+        );
+      } else {
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+      }
       navigate(pathname);
     }
   };
@@ -107,8 +118,18 @@ const Authenticating = () => {
         }
       }
     } catch (error) {
-      console.log({ error });
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+      if (error.response.data.message.split(':')[1].trim() === 'User not Found') {
+        toast.error(
+          <p>
+            User not Found{' '}
+            <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/signup')}>
+              Create an Account
+            </span>{' '}
+          </p>,
+        );
+      } else {
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+      }
       navigate(pathname);
     }
   };
