@@ -688,10 +688,7 @@ input[type='number'] {
 }
 
 #custom-rating-checkbox .checkbox::after {
-  content: url('/assets/svgs/checkmark-black-sm.svg');
-  display: none;
-  width: 100%;
-  height: 100%;
+  @apply hidden h-full w-full content-[url('/assets/svgs/checkmark-black-sm.svg')] dark:content-[url('/assets/svgs/dark/checkmark-dark.svg')];
 }
 
 /* Media query for larger screens */
@@ -701,11 +698,7 @@ input[type='number'] {
   }
 
   #custom-rating-checkbox .checkbox::after {
-    content: url('/assets/svgs/checkmark-black.svg');
-    display: none;
-    padding-top: 5px;
-    width: 100%;
-    height: 100%;
+    @apply hidden h-full w-full pt-[5px] content-[url('/assets/svgs/checkmark-black.svg')] dark:content-[url('/assets/svgs/dark/checkmark.svg')];
   }
 
   #custom-rating-checkbox .checkbox:checked::after {

@@ -21,7 +21,9 @@ const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) =>
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
             {badgeVal && (
-              <p className="text-gold-100 absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none tablet:top-[40%] tablet:text-[13px]">
+              <p
+                className={`absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-gold-100  tablet:top-[40%] tablet:text-[13px] ${title === 'Your Posts' ? '' : title === 'Other Posts' ? 'dark:text-white' : ''}`}
+              >
                 {badgeVal}
               </p>
             )}

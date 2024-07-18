@@ -156,7 +156,7 @@ export const EmbededVideo = ({
                 show_user: false, // Hide user information
                 show_reposts: false, // Hide reposts
                 show_teaser: false, // Hide track teasers
-                visual: false, // Disable visual mode
+                visual: true, // Disable visual mode
                 show_playcount: false, // Hide play count
                 sharing: false, // Disable sharing
                 buying: false, // Disable buying options

@@ -200,12 +200,7 @@ const Contributions = () => {
           </Link>
         </div>
       </ContentCard>
-      <ContentCard
-        icon="assets/post-activity/coc-icon.svg"
-        title="Code of Conduct"
-        badgeVal={persistedUserInfo?.badges?.length}
-        from={persistedUserInfo?.badges.length}
-      >
+      <ContentCard icon="assets/post-activity/coc-icon.svg" title="Code of Conduct">
         <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
           <div className="flex items-center justify-between text-gray-900 dark:text-white-100">
             <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">
