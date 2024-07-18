@@ -123,7 +123,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
           )}
           <input
             type="text"
-            className="focus:border-blue-600 peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-white-500 bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-100 dark:bg-accent-100 dark:text-[#707175] dark:focus:border-blue-500 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px]"
+            className="focus:border-blue-600 peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-white-500 bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px]"
             value={listName}
             placeholder="List name"
             onChange={(e) => setListName(e.target.value)}
