@@ -37,6 +37,7 @@ export const Settings = () => {
       dispatch(resetFilters());
       dispatch(addUser(null));
       localStorage.clear();
+      localStorage.setItem('userExist', 'true');
       navigate('/signin');
     },
     onError: (error) => {
@@ -66,10 +67,10 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/display-settings.svg" headerTitle="Display Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div>
-              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px] dark:text-gray-300">
                 Dark Mode
               </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px] dark:text-gray-300">
                 Switch to Dark Mode
               </p>
             </div>
@@ -91,10 +92,10 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/feed-settings.svg" headerTitle="Feed Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
-              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px] dark:text-gray-300">
                 Default Sort
               </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px] dark:text-gray-300">
                 Automatically sort results from highest to lowest
               </p>
             </div>
@@ -117,10 +118,10 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/encrypt.svg" headerTitle="Encryption Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
-              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px] dark:text-gray-300">
                 Ask Password
               </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px] dark:text-gray-300">
                 Ask for your password every time when encrypting or decrypting.
               </p>
             </div>

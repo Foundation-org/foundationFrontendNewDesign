@@ -71,7 +71,17 @@ export function Router() {
     <>
       {!persistedUser?.uuid ? (
         <Routes>
-          <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} />
+          <Route
+            path="/"
+            element={
+              localStorage.getItem('userExist') === 'true' ? (
+                <Navigate to="/signin" />
+              ) : (
+                <GuestRedirect redirectUrl="/help/about" />
+              )
+            }
+          />
+          {/* <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} /> */}
           <Route path="/term-of-service" element={<TermOfService />} />
           <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
           <Route path="/signin/" element={<Signin />}>
