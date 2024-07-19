@@ -34,7 +34,7 @@ const About = () => {
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How to get started
         </h1>
-        <div className="mt-[1.425rem] space-y-[15px] tablet:mt-3 tablet:space-y-4">
+        <div className="mt-[1.425rem] space-y-[15px] tablet:mt-[1.125rem] tablet:space-y-4">
           {/* <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]"> 
            <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/addUser.svg' : 'assets/about/account.svg'}`}
