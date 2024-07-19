@@ -95,16 +95,16 @@ const About = () => {
         </div>
         {/* </div> */}
       </div>
-      <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] tablet:gap-5 tablet:px-16 tablet:py-[1.8rem] dark:text-gray-300">
-        <img
+      <div className=" space-y-[0.63rem] bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:mt-0  tablet:space-y-2 tablet:rounded-b-[0.86513rem] tablet:px-16 tablet:py-6 dark:bg-silver-200 dark:text-gray-300">
+        {/* <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/lock.svg' : 'assets/about/lock.svg'}`}
           alt="account"
           className="h-10 w-7 tablet:h-[2.18rem] tablet:w-[1.53rem]"
-        />
-        <h5 className="text-center text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.375rem] tablet:leading-[161%]">
+        /> */}
+        <h5 className="pb-3 text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:pb-[10px] tablet:text-[1.25rem] tablet:leading-[1.25rem] dark:text-gray-300">
           Safe & secure
         </h5>
-        <p className="text-center text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
+        <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
           Foundation does not own and cannot share any of the personal data you populate. You choose what data you want
           to share and at what price.
         </p>
