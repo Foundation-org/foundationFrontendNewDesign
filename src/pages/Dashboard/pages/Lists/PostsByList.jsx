@@ -10,6 +10,7 @@ import QuestionCardWithToggle from '../QuestStartSection/components/QuestionCard
 import Topbar from '../../components/Topbar';
 import DashboardLayout from '../../components/DashboardLayout';
 import { useEffect } from 'react';
+import SystemNotificationCard from '../../../../components/posts/SystemNotificationCard';
 
 const PostsByList = () => {
   let { id, categoryId } = useParams();
@@ -38,18 +39,22 @@ const PostsByList = () => {
   }, [isSuccess, listData]);
 
   const content =
-    listData?.post?.map((item) => {
-      return (
-        <div key={item._id}>
-          <QuestionCardWithToggle questStartData={item.questForeginKey} categoryId={item._id} />
-        </div>
-      );
+    listData?.post?.map((item, index) => {
+      if (item.id === 'system_notification') {
+        return <SystemNotificationCard key={index + 1} post={item} />;
+      } else {
+        return (
+          <div key={item._id}>
+            <QuestionCardWithToggle questStartData={item.questForeginKey} categoryId={item._id} />
+          </div>
+        );
+      }
     }) ?? null;
 
   return (
     <>
       {id === null || id === '' || id === undefined ? (
-        <div className="mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
+        <div className="mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] dark:bg-[#242424] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)]">
           <div className="no-scrollbar flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
             {content}
           </div>
@@ -59,7 +64,7 @@ const PostsByList = () => {
           <Topbar />
           <div className="w-full bg-[#F2F3F5]">
             <DashboardLayout>
-              <div className="no-scrollbar mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:mx-[331px] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] desktop:mx-auto dark:bg-[#242424]">
+              <div className="no-scrollbar mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] dark:bg-[#242424] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:mx-[331px] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] desktop:mx-auto">
                 <div className="no-scrollbar flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
                   {content}
                 </div>
