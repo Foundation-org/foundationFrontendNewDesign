@@ -26,7 +26,7 @@ const RankedResult = (props) => {
     <div className="flex items-center tablet:mr-[44px] tablet:pl-[1.75rem]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-gray-200 tablet:w-[45.6px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/optionMeBadge.svg`}
               alt="trash"
@@ -34,7 +34,7 @@ const RankedResult = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-gray-200 tablet:w-[45.6px]">
             {/* <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/bluebadge.svg`}
               alt="trash"
