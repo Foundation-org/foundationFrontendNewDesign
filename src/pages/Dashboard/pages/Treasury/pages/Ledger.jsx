@@ -272,7 +272,7 @@ export default function Ledger() {
                   })
                 : null}
               {rangeEnd < totalPages && (
-                <button className="mr-2 bg-white/0 text-[9px] font-medium text-black dark:text-gray-300 tablet:mr-4 tablet:text-[16px]">
+                <button className="bg-white/0 text-[9px] font-medium text-black dark:text-gray-300 tablet:text-[16px]">
                   ...
                 </button>
               )}

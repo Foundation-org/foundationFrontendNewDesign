@@ -1,5 +1,12 @@
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
+
+const CustomModal = styled(Modal)(({ theme }) => ({
+  '& .MuiBackdrop-root': {
+    transition: 'none !important',
+  },
+}));
 
 const PopUp = ({
   open,
@@ -25,7 +32,7 @@ const PopUp = ({
   const mergedStyle = { ...defaultStyle, ...customStyle };
 
   return (
-    <Modal
+    <CustomModal
       open={open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
@@ -58,7 +65,7 @@ const PopUp = ({
         </div>
         <div className="rounded-b-[9.76px] bg-white dark:bg-gray-200 tablet:rounded-b-[26px]">{children}</div>
       </Box>
-    </Modal>
+    </CustomModal>
   );
 };
 

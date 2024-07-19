@@ -49,13 +49,13 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
         ? 'rounded-[7.28px] border-2 border-[#4A8DBD] bg-gradient-to-tr px-[24.5px] py-[7px] text-[12px] font-semibold leading-[14.562px] text-[#4A8DBD] tablet:rounded-[15.2px] tablet:border-[3px] tablet:px-[15.26px] tablet:py-[13px] tablet:text-[30px] tablet:font-semibold tablet:leading-[36px]'
         : '',
       variant === 'change'
-        ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] rounded-[0.28688rem]  bg-[#FDD503] text-[0.625rem] font-semibold text-white disabled:border-[1.428px] disabled:border-[#FDD503] disabled:bg-transparent disabled:text-[#FDD503] disabled:dark:text-[#FDD503] tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
+        ? 'addoption-boxShadow dark:bg-yellow-200 h-[1.375rem] w-[4.875rem] rounded-[0.28688rem] bg-[#FDD503] text-[0.625rem] font-semibold text-white disabled:border-[1.428px] disabled:border-[#FDD503] disabled:bg-transparent disabled:text-[#FDD503] disabled:dark:text-[#FDD503] tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
         : '',
       variant === 'change-outline'
-        ? 'h-[1.375rem] w-[4.875rem] rounded-[0.28688rem] border-[1.428px] border-[#FDD503] text-[0.625rem] font-semibold text-[#FDD503] disabled:bg-transparent disabled:text-[#FDD503] disabled:dark:text-[#FDD503] tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem]'
+        ? 'dark:border-yellow-200 h-[1.375rem] w-[4.875rem] rounded-[0.28688rem] border-[1.428px] border-[#FDD503] text-[0.625rem] font-semibold text-[#FDD503] disabled:bg-transparent disabled:text-[#FDD503] disabled:dark:text-[#FDD503] tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem]'
         : '',
       variant === 'result'
-        ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] rounded-[0.28688rem]  bg-[#0FB063] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] '
+        ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] rounded-[0.28688rem] bg-[#0FB063] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] '
         : '',
       variant === 'result-outline'
         ? 'h-[1.375rem] w-[4.875rem] rounded-[0.28688rem] border-[1.428px] border-[#20D47E] text-[0.625rem] font-semibold text-[#0FB063] tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem]'
