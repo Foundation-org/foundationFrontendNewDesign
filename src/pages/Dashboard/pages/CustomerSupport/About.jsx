@@ -8,7 +8,7 @@ const About = () => {
 
   return (
     <div className="bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-b-[0.86513rem] tablet:rounded-t-[0.86513rem] tablet:dark:border-[2.56px]">
-      <div className="-mt-[2px] space-y-[0.63rem] bg-[#238AD4] px-8 pb-[1.3rem] text-white dark:bg-silver-200  dark:text-gray-300 tablet:mt-0 tablet:space-y-2 tablet:rounded-t-[0.86513rem] tablet:px-16 tablet:py-6">
+      <div className="-mt-[2px] space-y-[0.63rem] bg-[#238AD4] px-8 py-[1.3rem] text-white dark:bg-silver-200  dark:text-gray-300 tablet:mt-0 tablet:space-y-2 tablet:rounded-t-[0.86513rem] tablet:px-16 tablet:py-6">
         <h1 className="pb-3 text-center text-[0.875rem] font-bold leading-[0.875rem] dark:text-gray-300 tablet:pb-[10px] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           Why we started Foundation
         </h1>
