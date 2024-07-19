@@ -344,7 +344,7 @@ const QuestionCardWithToggle = (props) => {
     },
     onError: (err) => {
       console.log(err);
-      showToast('error', 'error', {}, err.response.data.message);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       if (err.response.data.message === 'Sorry, this post has been deleted by the user who created it.') {
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,

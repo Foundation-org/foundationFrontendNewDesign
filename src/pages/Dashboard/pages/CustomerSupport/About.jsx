@@ -7,9 +7,9 @@ const About = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
-    <div className="bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-b-[0.86513rem] tablet:rounded-t-[0.86513rem] tablet:dark:border-[2.56px]">
-      <div className="-mt-[2px] space-y-[0.63rem] bg-[#238AD4] px-8 py-[1.3rem] text-white dark:bg-silver-200  dark:text-gray-300 tablet:mt-0 tablet:space-y-2 tablet:rounded-t-[0.86513rem] tablet:px-16 tablet:py-6">
-        <h1 className="pb-3 text-center text-[0.875rem] font-bold leading-[0.875rem] dark:text-gray-300 tablet:pb-[10px] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+    <div className="bg-white tablet:rounded-b-[0.86513rem] tablet:rounded-t-[0.86513rem] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border-[2.56px]">
+      <div className="-mt-[2px] space-y-[0.63rem] bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:mt-0  tablet:space-y-2 tablet:rounded-t-[0.86513rem] tablet:px-16 tablet:py-6 dark:bg-silver-200 dark:text-gray-300">
+        <h1 className="pb-3 text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:pb-[10px] tablet:text-[1.25rem] tablet:leading-[1.25rem] dark:text-gray-300">
           Why we started Foundation
         </h1>
         {/* <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
@@ -30,7 +30,7 @@ const About = () => {
           and achievements in a secure and anonymous environment. Imagine brands paying you to show you an ad!
         </p>
       </div> */}
-      <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:px-16 tablet:py-5 tablet:dark:border-b-[2.56px]">
+      <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] tablet:px-16 tablet:py-5 dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:dark:border-b-[2.56px]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How to get started
         </h1>
@@ -46,7 +46,7 @@ const About = () => {
               Step 1
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-              Build Your Profile - build an anonymous profile on Foundation, adding valuable data as you choose.
+              Build Your Profile - Build an anonymous profile on Foundation, adding valuable data as you choose.
             </p>
           </div>
           {/* </div> */}
@@ -61,7 +61,7 @@ const About = () => {
               Step 2
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-              Participate in posts, - create posts, give feedback and share your thoughts safely while staying anonymous
+              Participate in posts - Create posts, give feedback and share your thoughts safely while staying anonymous
               and verified.
             </p>
             {/* <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
@@ -80,7 +80,7 @@ const About = () => {
               Step 3
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-              Earn rewards - gain FDX tokens and receive relevant payed offers from companies.
+              Earn rewards - Gain FDX tokens and receive relevant payed offers from companies.
             </p>
           </div>
           <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
@@ -95,7 +95,7 @@ const About = () => {
         </div>
         {/* </div> */}
       </div>
-      <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] dark:text-gray-300 tablet:gap-5 tablet:px-16 tablet:py-[1.8rem]">
+      <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] tablet:gap-5 tablet:px-16 tablet:py-[1.8rem] dark:text-gray-300">
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/lock.svg' : 'assets/about/lock.svg'}`}
           alt="account"
@@ -110,7 +110,7 @@ const About = () => {
         </p>
       </div>
       {persistedUserInfo.role !== 'user' && (
-        <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white dark:border-gray-100 dark:bg-silver-200 tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem] tablet:dark:border-t-[2.56px]">
+        <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem] dark:border-gray-100 dark:bg-silver-200 tablet:dark:border-t-[2.56px]">
           <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
             Join Foundation BETA
           </h1>
