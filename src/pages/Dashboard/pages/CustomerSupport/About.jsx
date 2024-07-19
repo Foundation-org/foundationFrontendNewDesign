@@ -80,7 +80,7 @@ const About = () => {
               Step 3
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-              Earn rewards - Gain FDX tokens and receive relevant payed offers from companies.
+              Earn rewards - Gain FDX tokens and receive relevant paid offers from companies.
             </p>
           </div>
           <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
@@ -89,7 +89,7 @@ const About = () => {
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Influence the Future - Your contributions help shape decisions by providing valuable insights to
-              researchers, companies, and policymakers.
+              businesses, policymakers, and researchers.
             </p>
           </div>
         </div>
