@@ -99,6 +99,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'addOption-fit'
         ? 'addoption-boxShadow h-[1.375rem] w-fit rounded-[0.28688rem] bg-gray-250 px-[6.63px] text-[0.625rem] font-semibold text-[#435059] tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:px-[13px] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
+      variant === 'show-more-options'
+        ? 'h-fit cursor-pointer text-[18px] font-semibold leading-normal tracking-[0.9px] text-blue-200'
+        : '',
       className,
     )}
     {...props}
@@ -142,5 +145,6 @@ Button.propTypes = {
     'addEmbeded',
     'submit-fit',
     'addOption-fit',
+    'show-more-options',
   ]),
 };

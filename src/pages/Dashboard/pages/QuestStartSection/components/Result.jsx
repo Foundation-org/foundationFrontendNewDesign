@@ -6,6 +6,7 @@ import SingleAnswerMultipleChoice from '../../../../../components/question-card/
 import RankedResult from '../../../components/RankedResult';
 import SortIcon from '../../../../../assets/SortIcon';
 import { useSelector } from 'react-redux';
+import SeeMoreOptions from '../../../../../components/see-more-options';
 
 const Result = (props) => {
   const { isFullScreen } = useParams();
@@ -425,14 +426,8 @@ const Result = (props) => {
               />
             </button>
           </div>
-          <div
-            className={`${
-              isFullScreen === undefined
-                ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
-                : ''
-            }  mr-[2px] flex flex-col gap-[5.7px] tablet:mr-1 tablet:gap-[10px]`}
-          >
-            {sortedAnswers?.map((item, index) => (
+          <div className={`relative mr-[2px] flex flex-col gap-[5.7px] tablet:mr-1 tablet:gap-[10px]`}>
+            {sortedAnswers?.slice(0, isFullScreen === undefined ? 6 : sortedAnswers.length).map((item, index) => (
               <div key={index + 1}>
                 <RankedResult
                   number={'#' + (index + 1)}
@@ -464,6 +459,7 @@ const Result = (props) => {
                 />
               </div>
             ))}
+            {isFullScreen === undefined ? <SeeMoreOptions questId={props.questStartData._id} /> : null}
           </div>
         </div>
       ) : null}
