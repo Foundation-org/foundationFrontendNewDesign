@@ -30,11 +30,11 @@ const About = () => {
           and achievements in a secure and anonymous environment. Imagine brands paying you to show you an ad!
         </p>
       </div> */}
-      <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] tablet:px-16 tablet:py-5 dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:dark:border-b-[2.56px]">
+      <div className="bg-[#F5F6F8]  px-8 py-[1.3rem] text-[#707175] tablet:px-16 tablet:py-6 dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:dark:border-b-[2.56px]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How to get started
         </h1>
-        <div className="mt-3 space-y-[15px] tablet:mt-3 tablet:space-y-4">
+        <div className="mt-[1.425rem] space-y-[15px] tablet:mt-3 tablet:space-y-4">
           {/* <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]"> 
            <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/addUser.svg' : 'assets/about/account.svg'}`}
