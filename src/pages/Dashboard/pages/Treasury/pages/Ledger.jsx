@@ -115,7 +115,7 @@ export default function Ledger() {
 
   return (
     <div className="overflow-y-auto">
-      <div className="ledger-light dark:ledger-dark mx-[17px] mb-5 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left dark:border-gray-100 dark:bg-gray-200 tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] tablet:dark:border-[2.56px] laptop:mx-[106px] laptop:rounded-[45px]">
+      <div className="ledger-light dark:ledger-dark mx-[17px] mb-5 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px] dark:border-[2.56px] dark:border-gray-100 dark:bg-gray-200">
         <LedgerTableTopbar
           isTreasury={false}
           sort={sort}
@@ -152,7 +152,7 @@ export default function Ledger() {
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.4rem] text-[#bbb] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
+              className="text-[0.4rem] text-[#bbb] tablet:text-[1rem] laptop:text-[1.2rem] dark:text-gray-300"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -249,7 +249,7 @@ export default function Ledger() {
             </button>
             <div className=" flex items-center gap-[0.46rem] tablet:gap-4 ">
               {rangeStart > 1 && (
-                <button className="bg-white/0 text-[9px] font-medium text-black dark:text-[#B3B3B3] tablet:text-[16px]">
+                <button className="bg-white/0 text-[9px] font-medium text-black tablet:text-[16px] dark:text-[#B3B3B3]">
                   ...
                 </button>
               )}
@@ -272,7 +272,7 @@ export default function Ledger() {
                   })
                 : null}
               {rangeEnd < totalPages && (
-                <button className="bg-white/0 text-[9px] font-medium text-black dark:text-gray-300 tablet:text-[16px]">
+                <button className="bg-white/0 text-[9px] font-medium text-black tablet:text-[16px] dark:text-gray-300">
                   ...
                 </button>
               )}

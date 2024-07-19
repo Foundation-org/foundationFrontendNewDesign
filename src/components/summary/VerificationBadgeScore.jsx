@@ -11,7 +11,7 @@ export default function VerificationBadgeScore({ isMobile, children }) {
   return (
     <div className={`${isMobile ? 'mx-4 tablet:mx-6 ' : ''}`}>
       <div
-        className={`flex items-center justify-between rounded-t-[10px] border-blue-200 bg-blue-200 px-5 py-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:border-x-[1.85px] tablet:border-t-[1.85px] ${isMobile ? 'tablet:hidden' : ''}`}
+        className={`flex items-center justify-between rounded-t-[10px] border-blue-200 bg-blue-200 px-5 py-[10px] dark:border-x-[1.85px] dark:border-t-[1.85px] dark:border-gray-100 dark:bg-accent-100 ${isMobile ? 'tablet:hidden' : ''}`}
       >
         <div className="flex items-center gap-2">
           {persistedUserInfo?.uuid && persistedUserInfo.role === 'user' ? (
@@ -46,10 +46,10 @@ export default function VerificationBadgeScore({ isMobile, children }) {
         </h1>
       </div>
       <div
-        className={`border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:border-x-[1.85px] tablet:border-b-[1.85px] tablet:py-[18.73px] ${isMobile ? 'rounded-[10px]' : 'rounded-b-[10px]'}`}
+        className={`border-x-[1.85px]  border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:py-[18.73px] dark:border-gray-100 dark:bg-gray-200 ${isMobile ? 'rounded-[10px]' : 'rounded-b-[10px]'}`}
       >
         <h1
-          className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal ${isMobile ? 'tablet:hidden' : ''}`}
+          className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-gray-300 ${isMobile ? 'tablet:hidden' : ''}`}
         >
           Boost your earnings now and in the future by adding more verified badges to your profile.
         </h1>
