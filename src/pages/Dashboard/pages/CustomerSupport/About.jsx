@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const About = () => {
   const navigate = useNavigate();
@@ -7,81 +7,93 @@ const About = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
-    <div className="bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-t-[0.86513rem] tablet:dark:border-[2.56px]">
-      <h1 className="py-3 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] dark:text-gray-300 tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
-        Let your data work for you
-      </h1>
-      <div className="-mt-[2px] space-y-[0.63rem]  px-8 text-[#7C7C7C] dark:text-gray-300 tablet:mt-0 tablet:space-y-2 tablet:px-16">
+    <div className="bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-b-[0.86513rem] tablet:rounded-t-[0.86513rem] tablet:dark:border-[2.56px]">
+      <div className="-mt-[2px] space-y-[0.63rem] bg-[#238AD4] px-8 pb-[1.3rem] text-white dark:bg-silver-200  dark:text-gray-300 tablet:mt-0 tablet:space-y-2 tablet:rounded-t-[0.86513rem] tablet:px-16 tablet:py-6">
+        <h1 className="pb-3 text-center text-[0.875rem] font-bold leading-[0.875rem] dark:text-gray-300 tablet:pb-[10px] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+          Why we started Foundation
+        </h1>
         {/* <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
           Unlock the potential of your personal data.
         </p> */}
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
-          We generate data all the time. Most of it is not worth much on its own. But combining the right pieces at the
-          right time can make it very valuable.
+          We all create and engage with content every single day for free, and that information is used by brands and
+          corporations alike.
+        </p>
+        <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
+          We wanted to create a rewards based platform that lets you own the content you create - putting the value of
+          your data back in your hands.
         </p>
       </div>
-      <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white dark:border-gray-100 dark:bg-silver-200 tablet:px-16 tablet:py-6 tablet:dark:border-y-[2.56px]">
+      {/* <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white dark:border-gray-100 dark:bg-silver-200 tablet:px-16 tablet:py-6 tablet:dark:border-y-[2.56px]">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
           Foundation is a revolutionary data exchange platform where users can monetize their personal data, insights
           and achievements in a secure and anonymous environment. Imagine brands paying you to show you an ad!
         </p>
-      </div>
+      </div> */}
       <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:px-16 tablet:py-5 tablet:dark:border-b-[2.56px]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How to get started
         </h1>
         <div className="mt-3 space-y-[15px] tablet:mt-3 tablet:space-y-4">
-          <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
-            <img
+          {/* <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]"> 
+           <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/addUser.svg' : 'assets/about/account.svg'}`}
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
-            />
-            <div className="space-y-[0.6rem] tablet:space-y-1">
-              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-normal">
-                Create an account
-              </h5>
-              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-                Build your profile, and start earning.
-              </p>
-            </div>
+            /> */}
+          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+            <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-normal">
+              Step 1
+            </h5>
+            <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+              Build Your Profile - build an anonymous profile on Foundation, adding valuable data as you choose.
+            </p>
           </div>
-          <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
-            <img
+          {/* </div> */}
+          {/*<div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
+             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/chat.svg' : 'assets/about/conversation.svg'}`}
               alt="conversation"
               className="size-5 tablet:h-[1.875rem] tablet:w-[2.13rem]"
-            />
-            <div className="space-y-[0.6rem] tablet:space-y-1">
-              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-                Start participating
-              </h5>
-              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-                Engage with posts, create your own and more. The more you participate, the stronger your profile of data
-                assets. The more you contribute, the more likely you are to start earning from brands who want to market
-                to you. Your participation enhances the overall value of the network.
-              </p>
-              {/* <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+            /> */}
+          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+            <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+              Step 2
+            </h5>
+            <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+              Participate in posts, - create posts, give feedback and share your thoughts safely while staying anonymous
+              and verified.
+            </p>
+            {/* <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 Every post is anonymous, so the focus can stay on the conversation, not personal attacks.
               </p> */}
-            </div>
+            {/* </div> */}
           </div>
-          <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
-            <img
+          {/*<div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
+             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/dollar.svg' : 'assets/about/asset.svg'}`}
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
-            />
-            <div className="space-y-[0.6rem] tablet:space-y-1">
-              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-                Strengthen your profile
-              </h5>
-              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-                Add badges to increase your verification score and add to the quality of information shared.
-              </p>
-            </div>
+            /> */}
+          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+            <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+              Step 3
+            </h5>
+            <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+              Earn rewards - gain FDX tokens and receive relevant payed offers from companies.
+            </p>
+          </div>
+          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+            <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+              Step 4
+            </h5>
+            <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
+              Influence the Future - Your contributions help shape decisions by providing valuable insights to
+              researchers, companies, and policymakers.
+            </p>
           </div>
         </div>
+        {/* </div> */}
       </div>
       <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] dark:text-gray-300 tablet:gap-5 tablet:px-16 tablet:py-[1.8rem]">
         <img
@@ -93,8 +105,8 @@ const About = () => {
           Safe & secure
         </h5>
         <p className="text-center text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
-          Foundation does not own and cannot share any of the personal data you populate. The only time your data is
-          shared is when you decide it should be, with the benefit of you monetizing from it.
+          Foundation does not own and cannot share any of the personal data you populate. You choose what data you want
+          to share and at what price.
         </p>
       </div>
       {persistedUserInfo.role !== 'user' && (

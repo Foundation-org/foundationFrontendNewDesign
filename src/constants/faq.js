@@ -21,7 +21,7 @@ export const faqData = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/2.png`,
     title: 'Can I earn money using Foundation?',
     desc: [
-      'Yes, sort of. While you cannot monetize with Foundation right now, the more tokens you build up today, the more you have to monetize by cashing out, trading, etc. later on when the feature becomes available [coming soon - late 2024].',
+      "In the future, you'll be able to sell your FDX tokens directly back to the platform for dollars in your bank account",
     ],
   },
   {
@@ -31,7 +31,7 @@ export const faqData = [
     desc: [
       'FDX is the utility token that Foundation uses within the Foundation network. When you join, you will be able to start engaging with posts, adding badges, etc. All of those things add to your FDX token balance.',
       'You can use your FDX balance to create your own posts, object to posts, create lists, and much more.',
-      "In the future, you'll be able to sell your FDX tokens directly back to the platform for dollars in your bank account",
+      // "In the future, you'll be able to sell your FDX tokens directly back to the platform for dollars in your bank account",
     ],
   },
   {

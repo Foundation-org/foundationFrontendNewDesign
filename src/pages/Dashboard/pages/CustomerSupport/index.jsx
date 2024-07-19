@@ -21,7 +21,7 @@ const CustomerSupport = () => {
       </div>
       <div
         ref={scrollRef}
-        className={`no-scrollbar mx-auto mt-10 h-[calc(100dvh-174px)] max-w-[778px] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-224px)] tablet:px-6 laptop:h-[calc(100dvh-147.6px)] ${location.pathname === '/help/contact-us' && 'px-3 tablet:px-0'}`}
+        className={`no-scrollbar mx-auto mt-10 h-[calc(100dvh-174px)] max-w-[778px] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-224px)] tablet:px-6 tablet:pb-5 laptop:h-[calc(100dvh-147.6px)] ${location.pathname === '/help/contact-us' && 'px-3 tablet:px-0'}`}
       >
         <Outlet />
       </div>
