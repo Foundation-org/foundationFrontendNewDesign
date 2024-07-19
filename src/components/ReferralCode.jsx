@@ -90,7 +90,7 @@ const ReferralCode = ({
 
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
-      <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px]">
+      <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] px-[15px] py-1 dark:bg-gradient-to-tr dark:from-accent-100 dark:to-accent-100 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px]">
         <div className="w-fit rounded-full bg-white px-[6px] py-[8px] tablet:p-[15px]">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/referralicon.svg`}
@@ -116,12 +116,12 @@ const ReferralCode = ({
           const data = { code: referralCode.trim() };
           handleReferral(data);
         }}
-        className="px-5 py-[14px] tablet:px-[50px] tablet:py-[25px]"
+        className="px-5 py-[14px] dark:bg-gray-200 tablet:px-[50px] tablet:py-[25px]"
       >
-        <h2 className="text-[9px] font-normal leading-none tracking-[0.15px] text-[#828282] tablet:text-[20px] tablet:leading-6">
+        <h2 className="text-[9px] font-normal leading-none tracking-[0.15px] text-[#828282] dark:text-gray-300 tablet:text-[20px] tablet:leading-6">
           Enter your registration code for completing registration process.
         </h2>
-        <h1 className="mt-1 text-[12px] font-medium leading-normal text-[#7C7C7C] tablet:mb-7 tablet:mt-5 tablet:text-[25px]">
+        <h1 className="mt-1 text-[12px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:mb-7 tablet:mt-5 tablet:text-[25px]">
           Referral Code
         </h1>
         <input
@@ -129,7 +129,7 @@ const ReferralCode = ({
           placeholder="Enter referral code"
           value={referralCode}
           onChange={handleInputChange}
-          className="hide_number_input_arrows hide_number_input_arrows2 autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-transparent pr-8 text-[10px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none tablet:text-[22.9px] short:py-0 dark:border-white dark:bg-dark dark:focus:border-white"
+          className="hide_number_input_arrows hide_number_input_arrows2 autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-transparent pr-8 text-[10px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:text-gray-300 dark:focus:border-white tablet:text-[22.9px] short:py-0"
         />
         <div className="mt-2 flex w-full justify-end tablet:mt-[25px]">
           <Button variant="submit" type="submit">
