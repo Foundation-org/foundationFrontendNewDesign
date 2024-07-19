@@ -32,13 +32,13 @@ const SummarySidebar = ({ userData }) => {
         <div className="mt-5 flex flex-col gap-[17px]">
           {yourPosts.map((item) => (
             <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
-              <p className="text-[16px] font-medium leading-[118.75%]">{item.title}</p>
+              <p className="max-w-[180px] text-[16px] font-medium leading-[118.75%]">{item.title}</p>
               <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
             </div>
           ))}
           <Link
             to={'/profile/feedback'}
-            className="dark:text-blue-600 cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline tablet:-mt-3"
+            className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3"
           >
             See why your posts were
             <br /> hidden {'>'}
@@ -51,13 +51,13 @@ const SummarySidebar = ({ userData }) => {
         <div className="mt-5 flex flex-col gap-[17px]">
           {othersPosts.map((item) => (
             <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
-              <p className="text-[16px] font-medium leading-[118.75%]">{item.title}</p>
+              <p className="max-w-[180px] text-[16px] font-medium leading-[118.75%]">{item.title}</p>
               <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
             </div>
           ))}
           <Link
             to={'/profile/hidden-posts'}
-            className="dark:text-blue-600 cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline tablet:-mt-3"
+            className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3"
           >
             View posts you’ve hidden
             <br /> and why {'>'}

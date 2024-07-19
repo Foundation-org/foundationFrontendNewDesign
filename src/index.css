@@ -440,16 +440,7 @@ th,
 }
 
 .resizer {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 5px;
-  background: gray;
-  cursor: col-resize;
-  user-select: none;
-  touch-action: none;
-  border-radius: 6px;
+  @apply absolute right-0 top-0 h-full w-[5px] cursor-col-resize touch-none select-none rounded-[6px] bg-[#808080];
 }
 
 .resizer.isResizing {
@@ -928,24 +919,15 @@ input[type='number'] {
 }
 
 .carousel .thumb img {
-  max-height: 74px !important;
-  vertical-align: middle !important;
-  height: fit-content !important;
-  object-fit: contain !important;
+  @apply !h-fit !max-h-[74px] !object-contain !align-middle;
 }
 
 .carousel .thumb > img {
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
+  @apply h-full w-full object-contain;
 }
 
 .slide {
-  padding: 19px !important;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @apply flex w-full items-center justify-center !p-[19px];
 }
 
 .carousel .thumb {
@@ -959,11 +941,7 @@ input[type='number'] {
 }
 
 #fullscreen_carousel_container > div:first-child {
-  height: 100dvh !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @apply flex !h-dvh flex-col items-center justify-center;
 }
 
 #fullscreen_carousel_container > div:first-child > div:first-child {
@@ -1030,16 +1008,11 @@ input[type='number'] {
 }
 
 .scrollable-tabs-container {
-  padding: 8px 16px;
-  overflow: hidden;
-  position: relative;
+  @apply relative overflow-hidden px-4 py-2;
 }
 
 .scrollable-tabs-container img {
-  width: 10px;
-  height: 10px;
-  cursor: pointer;
-  pointer-events: auto;
+  @apply pointer-events-auto size-[10px] cursor-pointer;
 }
 
 .scrollable-tabs-container ul {
