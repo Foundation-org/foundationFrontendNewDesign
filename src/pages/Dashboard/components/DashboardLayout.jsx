@@ -598,7 +598,7 @@ export default function DashboardLayout({ children }) {
               </div>
             ) : (
               <div
-                className="flex cursor-pointer items-center gap-[15px]"
+                className="flex cursor-pointer items-center gap-[15px] "
                 onClick={() => {
                   navigate('/profile');
                 }}

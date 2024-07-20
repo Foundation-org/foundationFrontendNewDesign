@@ -164,7 +164,7 @@ const Contributions = () => {
         badgeVal={persistedUserInfo?.badges?.length}
         from={persistedUserInfo?.badges.length}
       >
-        <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
+        <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]  ">
           {yourPosts.map((item) => (
             <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
               <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
@@ -173,7 +173,7 @@ const Contributions = () => {
           ))}
           <Link
             to={'/profile/feedback'}
-            className="dark:text-blue-600 -mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%] dark:text-blue-600"
           >
             See why your posts were hidden {'>'}
           </Link>
@@ -194,7 +194,7 @@ const Contributions = () => {
           ))}
           <Link
             to={'/profile/hidden-posts'}
-            className="dark:text-blue-600 -mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%] dark:text-blue-600"
           >
             View posts you’ve hidden and why {'>'}
           </Link>
@@ -212,7 +212,7 @@ const Contributions = () => {
           </div>
           <Link
             to={'/help/terms-of-service'}
-            className="dark:text-blue-600 -mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%] dark:text-blue-600"
           >
             View code of conduct {'>'}
           </Link>
