@@ -110,7 +110,7 @@ const About = () => {
         </p>
       </div>
       {persistedUserInfo.role !== 'user' && (
-        <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem] dark:border-gray-100 dark:bg-silver-200 tablet:dark:border-t-[2.56px]">
+        <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-5 tablet:gap-[1.56rem] tablet:rounded tablet:py-[1.92rem] dark:border-gray-100 dark:bg-silver-200 tablet:dark:border-t-[2.56px]">
           <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
             Join Foundation BETA
           </h1>
