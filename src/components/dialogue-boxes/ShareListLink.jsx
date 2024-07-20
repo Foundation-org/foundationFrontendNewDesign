@@ -75,9 +75,9 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
   };
 
   return (
-    <div className="relative w-[90vw] laptop:w-[52.6rem]">
+    <div className="relative w-[90vw] laptop:w-[52.6rem] ">
       {/* Dialogue box header */}
-      <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] from-accent-100 to-accent-100 px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px] dark:bg-gradient-to-tr">
+      <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] from-accent-100 to-accent-100 px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px] dark:border dark:border-gray-100 dark:bg-gradient-to-tr">
         <div className="w-fit rounded-full bg-white p-[5px] tablet:p-[10px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -115,14 +115,14 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
       </div>
 
       {/* Dialogue box body */}
-      <div className="flex flex-col justify-center py-[15px] tablet:py-[25px]">
-        <div className="px-[20px] laptop:px-[80px]">
-          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal dark:text-gray-300">
+      <div className="flex flex-col justify-center py-[15px] tablet:py-[25px] dark:rounded-b-[0.5rem] dark:border dark:border-gray-100 dark:bg-gray-200 dark:tablet:rounded-b-[1.5rem]">
+        <div className="px-[20px] laptop:px-[80px] ">
+          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal dark:bg-gray-200 dark:text-gray-300">
             {createCustom
               ? 'Custom Link Address'
               : 'Copy the link below to share this list on other platforms. When other people engage with posts on your list, you will earn FDX. '}
           </p>
-          <div className="flex rounded-[9.42px] border border-white-500 tablet:rounded-[15px] tablet:border-[3px] dark:border-gray-100 dark:bg-accent-100">
+          <div className="flex rounded-[9.42px] border border-white-500 tablet:rounded-[15px] tablet:border-[3px] dark:border-gray-100 dark:bg-accent-100 ">
             {createCustom ? (
               <div className="flex h-[28.38px] items-center tablet:h-[62.92px]">
                 <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px] dark:text-gray-300">
@@ -163,7 +163,11 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
             )}
           </div>
         </div>
-        <div className={'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
+        <div
+          className={
+            'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8 dark:bg-gray-200'
+          }
+        >
           {!createCustom ? (
             <div className="flex items-center gap-[25px]">
               <Button

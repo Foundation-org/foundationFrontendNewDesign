@@ -72,7 +72,11 @@ const SingleQuest = () => {
         <meta property="og:video:type" content={seoMeta.videoType} /> */}
         {/* Show Image Meta Tags */}
         <meta property="og:image" itemprop="image" content={`${import.meta.env.VITE_CLIENT_URL}/seo-logo-v2.png`} />
-        <meta property="og:image:secure_url" itemprop="image" content={`${import.meta.env.VITE_CLIENT_URL}/seo-logo-v2.png`} />
+        <meta
+          property="og:image:secure_url"
+          itemprop="image"
+          content={`${import.meta.env.VITE_CLIENT_URL}/seo-logo-v2.png`}
+        />
         {/* <meta property="og:image:type" content="image/svg" /> */}
         {/* <meta property="og:audio" content={seoMeta.preview} />
         <meta property="og:audio:type" content="audio/vnd.facebook.bridge" />
