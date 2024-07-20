@@ -13,7 +13,7 @@ const TreasurySummary = () => {
 
   return (
     <div className=" mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
-      <SummaryCard headerIcon="assets/svgs/your-fdx.svg" headerTitle="Your FDX">
+      <SummaryCard headerIcon="/assets/svgs/your-fdx.svg" headerTitle="Your FDX">
         <div className="flex items-center justify-between tablet:px-[45.27px]">
           <div className="space-y-2">
             <h1 className="text-[12px] font-semibold leading-[113%] tablet:text-[18px] tablet:leading-normal">
@@ -46,7 +46,7 @@ const TreasurySummary = () => {
         </div>
       </SummaryCard>
       {/* Rewards & Fees */}
-      <SummaryCard headerIcon="assets/svgs/reward-and-fees.svg" headerTitle="Rewards & Fees">
+      <SummaryCard headerIcon="/assets/svgs/reward-and-fees.svg" headerTitle="Rewards & Fees">
         <div className="flex flex-col justify-between">
           <h1 className="text-[12px] font-normal leading-[133%] tablet:text-[16px] tablet:leading-normal">
             When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward and
