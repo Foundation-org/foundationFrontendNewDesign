@@ -132,13 +132,13 @@ const CredentialLogin = () => {
         login={true}
         uuid={uuid}
       />
-      <form className="text-silver-600 mb-5 mt-[50px] flex w-full flex-col gap-11 tablet:my-16 5xl:gap-14 short:gap-[38px]">
+      <form className="mb-5 mt-[50px] flex w-full flex-col gap-11 text-silver-600 tablet:my-16 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
             id="email"
             label="Email Address"
-            className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+            className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:text-white dark:focus:border-white"
             autoComplete="sign-email"
             onChange={onEmailChange}
             value={email}
@@ -169,7 +169,7 @@ const CredentialLogin = () => {
                 type={inputType}
                 id="password"
                 label="Password"
-                className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+                className="autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:text-white dark:focus:border-white"
                 autoComplete="new-password"
                 onChange={onPassChange}
               />
@@ -206,7 +206,7 @@ const CredentialLogin = () => {
               )}
             </div>
           </div>
-          <Link className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]">
+          <Link className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] md:text-[16px] tablet:leading-[22px] short:text-[12px] dark:text-white">
             Forgot Password?
           </Link>
         </div>
