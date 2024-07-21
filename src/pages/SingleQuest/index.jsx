@@ -86,7 +86,7 @@ const SingleQuest = () => {
         <meta property="twitter:title" content="Foundation" />
         <meta property="twitter:description" content={singleQuestData?.data?.data?.Question} />
         <meta property="twitter:domain" content="on.foundation" />
-        <meta property="twitter:image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
+        <meta property="twitter:image" content={`${import.meta.env.VITE_CLIENT_URL}/seo-logo-v2`} />
         <meta name="google" content="notranslate"></meta>
       </Helmet>
       <Topbar />
