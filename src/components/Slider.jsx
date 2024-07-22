@@ -124,6 +124,31 @@ function Slider() {
           dispatch(filtersActions.setFilterBySort('Newest First'));
         }
         break;
+      case 'oldest-first':
+        if (filterStates.filterBySort !== 'Oldest First') {
+          setFilters({
+            ...filterStates,
+            filterBySort: 'Oldest First',
+            filterByScope: '',
+            bookmarks: false,
+            selectedBtnId: localStorage.getItem('selectedButtonId'),
+            topics: {
+              ...filterStates.topics,
+              Block: {
+                ...filterStates.topics.Block,
+                list: [],
+              },
+            },
+          });
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
+          dispatch(filtersActions.setBookmarks(false));
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterByScope('All'));
+          dispatch(filtersActions.setFilterBySort('Oldest First'));
+        }
+        break;
       case 'most-popular':
         if (filterStates.filterBySort !== 'Most Popular') {
           setFilters({
@@ -246,7 +271,7 @@ function Slider() {
         />
       </div>
       <ul ref={tabsListRef} onMouseDown={() => setDragging(true)} onMouseMove={drag}>
-        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] dark:border-[#CECDCD] ">
+        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] dark:border-[#CECDCD] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Link
             className={`${filterStates.filterBySort === 'Newest First' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
             to={''}
@@ -256,6 +281,16 @@ function Slider() {
             id={'newButton'}
           >
             New!
+          </Link>
+          <Link
+            className={`${filterStates.filterBySort === 'Oldest First' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
+            to={''}
+            onClick={() => {
+              handleButtonSelection('oldest-first', null, 'oldButton');
+            }}
+            id={'oldButton'}
+          >
+            Old!
           </Link>
           <Link
             className={`${filterStates.filterBySort === 'Most Popular' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
