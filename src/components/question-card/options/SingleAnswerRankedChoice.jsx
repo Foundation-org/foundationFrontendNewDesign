@@ -31,7 +31,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const reset = {
     name: 'Ok',
-    color: 'text-[#389CE3]',
+    color: 'text-[#389CE3] dark:text-blue-700',
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
     showToolTipMsg: true,
@@ -324,7 +324,7 @@ const SingleAnswerRankedChoice = (props) => {
         <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]">
           {props.deleteable ? (
             <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
               alt="trash"
               className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
               onClick={() => handleDeleteOption(props.number)}

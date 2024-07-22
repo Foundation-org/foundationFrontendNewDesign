@@ -35,7 +35,7 @@
     @apply border-blue-200 bg-blue-200 text-white dark:border-gray-300 dark:bg-gray-300 dark:text-gray-500;
   }
   .slider-link-inactive {
-    @apply border-gray-800 bg-white text-gray-700 dark:border-gray-500 dark:bg-gray-500 dark:text-gray-600;
+    @apply border-gray-800 bg-white text-gray-150 dark:border-gray-500 dark:bg-gray-500 dark:text-gray-600;
   }
   .slider-inactive {
     @apply border-gray-800 bg-white text-gray-150 dark:border-gray-500 dark:bg-gray-500 dark:text-gray-600;

@@ -17,7 +17,7 @@ export const checkPictureUrl = createAsyncThunk('createQuest/checkPictureUrl', a
 
 const defaultStatus = {
   name: 'Ok',
-  color: 'text-[#389CE3]',
+  color: 'text-[#389CE3] dark:text-blue-700',
   tooltipName: 'Please write something...',
   tooltipStyle: 'tooltip-info',
   status: false,

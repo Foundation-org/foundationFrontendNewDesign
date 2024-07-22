@@ -21,10 +21,11 @@ const SingleAnswerMultipleChoice = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
   const [isTyping, setIsTyping] = useState(true);
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   const reset = {
     name: 'Ok',
-    color: 'text-[#389CE3]',
+    color: 'text-[#389CE3] dark:text-blue-700',
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
   };
@@ -353,7 +354,7 @@ const SingleAnswerMultipleChoice = (props) => {
           >
             {props.deleteable ? (
               <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
                 alt="trash"
                 className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
                 onClick={() => handleDeleteOption(props.number)}

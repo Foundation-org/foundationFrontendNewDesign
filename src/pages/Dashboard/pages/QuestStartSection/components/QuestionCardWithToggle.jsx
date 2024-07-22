@@ -55,7 +55,7 @@ const QuestionCardWithToggle = (props) => {
   const navigate = useNavigate();
   const reset = {
     name: 'Ok',
-    color: 'text-[#389CE3]',
+    color: 'text-[#389CE3] dark:text-blue-700',
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
   };

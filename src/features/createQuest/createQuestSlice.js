@@ -59,7 +59,7 @@ export const checkAnswer = createAsyncThunk('createQuest/checkAnswer', async ({ 
 
 const defaultStatus = {
   name: 'Ok',
-  color: 'text-[#389CE3]',
+  color: 'text-[#389CE3] dark:text-blue-700',
   tooltipName: 'Please write something...',
   tooltipStyle: 'tooltip-info',
   status: false,
@@ -304,7 +304,7 @@ export const createQuestSlice = createSlice({
         selected: false,
         optionStatus: {
           name: 'Ok',
-          color: 'text-[#389CE3]',
+          color: 'text-[#389CE3] dark:text-blue-700',
           tooltipName: 'Please write something...',
           tooltipStyle: 'tooltip-info',
         },
