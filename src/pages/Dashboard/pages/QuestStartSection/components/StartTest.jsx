@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 import Loader from '../../../../../components/ui/Loader';
@@ -8,6 +8,7 @@ import SingleAnswerMultipleChoice from '../../../../../components/question-card/
 import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import SeeMoreOptions from '../../../../../components/see-more-options';
 
 const StartTest = ({
   questStartData,
@@ -33,6 +34,7 @@ const StartTest = ({
       tolerance: 0,
     },
   });
+  const [showOptions, setShowOptions] = useState(false);
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
@@ -228,13 +230,7 @@ const StartTest = ({
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
         return (
           <div className="flex flex-col overflow-auto">
-            <div
-              className={`${
-                isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
-                  : ''
-              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-            >
+            <div className="relative mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]">
               <DndContext
                 sensors={[touchSensor, mouseSensor, keyboardSensor]}
                 modifiers={[restrictToVerticalAxis, restrictToParentElement]}
@@ -242,7 +238,7 @@ const StartTest = ({
                 onDragEnd={handleOnDragEnd}
               >
                 <SortableContext items={rankedAnswers}>
-                  {rankedAnswers?.map((item, index) => (
+                  {rankedAnswers?.slice(0, showOptions ? rankedAnswers.length : 8).map((item, index) => (
                     <SingleAnswerRankedChoice
                       key={item.id}
                       dragId={item.id}
@@ -271,6 +267,7 @@ const StartTest = ({
                   ))}
                 </SortableContext>
               </DndContext>
+              {!showOptions && <SeeMoreOptions setShowOptions={setShowOptions} />}
             </div>
           </div>
         );

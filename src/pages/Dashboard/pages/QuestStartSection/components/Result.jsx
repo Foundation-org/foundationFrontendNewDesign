@@ -14,6 +14,7 @@ const Result = (props) => {
   const [selectedOption, setSelectedOption] = useState(1);
   const [contendedOption, setCcontendedOption] = useState(1);
   const [sortedAnswers, setSortedAnswers] = useState();
+  const [showOptions, setShowOptions] = useState(false);
 
   const getAnswerData = (answer, type, index) => {
     const percentage =
@@ -426,8 +427,8 @@ const Result = (props) => {
               />
             </button>
           </div>
-          <div className={`relative mr-[2px] flex flex-col gap-[5.7px] tablet:mr-1 tablet:gap-[10px]`}>
-            {sortedAnswers?.slice(0, isFullScreen === undefined ? 6 : sortedAnswers.length).map((item, index) => (
+          <div className="relative mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]">
+            {sortedAnswers?.slice(0, showOptions ? sortedAnswers.length : 8).map((item, index) => (
               <div key={index + 1}>
                 <RankedResult
                   number={'#' + (index + 1)}
@@ -459,7 +460,7 @@ const Result = (props) => {
                 />
               </div>
             ))}
-            {isFullScreen === undefined ? <SeeMoreOptions questId={props.questStartData._id} /> : null}
+            {!showOptions && <SeeMoreOptions setShowOptions={setShowOptions} />}
           </div>
         </div>
       ) : null}
