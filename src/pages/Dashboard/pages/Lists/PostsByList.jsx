@@ -12,10 +12,17 @@ import DashboardLayout from '../../components/DashboardLayout';
 import { useEffect } from 'react';
 import SystemNotificationCard from '../../../../components/posts/SystemNotificationCard';
 import { Helmet } from 'react-helmet-async';
+import useDynamicMetaTags from '../../../../hooks/useDynamicMetaTags';
 
 const PostsByList = () => {
   let { id, categoryId } = useParams();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  useDynamicMetaTags({
+    title: 'Foundation: Shared list',
+    description: 'A revolutionary new social platform. Own your data. Get rewarded.',
+    image: 'https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png',
+  });
 
   const {
     data: listData,
@@ -32,6 +39,7 @@ const PostsByList = () => {
     },
     queryKey: ['postsByCategory', categoryId, persistedUserInfo.uuid, id],
   });
+
   useEffect(() => {
     if (isSuccess && listData) {
       updateCategoryViewCount({ categoryLink: id });
@@ -53,12 +61,7 @@ const PostsByList = () => {
 
   return (
     <>
-      <Helmet>
-        <script>
-          {`
-            window.prerenderReady = false;
-          `}
-        </script>
+      {/* <Helmet>
         <title>Foundation: Shared list</title>
         <meta name="description" content="A revolutionary new social platform. Own your data. Get rewarded." />
         <meta property="og:title" content="Foundation: Shared list" />
@@ -74,9 +77,9 @@ const PostsByList = () => {
         />
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
         <meta name="google" content="notranslate" />
-      </Helmet>
+      </Helmet> */}
       {id === null || id === '' || id === undefined ? (
-        <div className="mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-black">
+        <div className="mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] dark:bg-black tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)]">
           <div className="no-scrollbar flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
             {content}
           </div>
@@ -86,7 +89,7 @@ const PostsByList = () => {
           <Topbar />
           <div className="w-full bg-[#F2F3F5] dark:bg-black">
             <DashboardLayout>
-              <div className="no-scrollbar mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-70px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:mx-[331px] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] desktop:mx-auto dark:bg-black">
+              <div className="no-scrollbar mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-70px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] dark:bg-black tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:mx-[331px] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] desktop:mx-auto">
                 <div className=" no-scrollbar mb-10 flex h-[calc(100dvh)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mb-0 tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
                   {isLoading ? (
                     <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
