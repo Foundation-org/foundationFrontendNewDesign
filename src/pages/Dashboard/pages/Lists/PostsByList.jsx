@@ -63,7 +63,7 @@ const PostsByList = () => {
         <title>Foundation: Shared list</title>
         <meta name="description" content="A revolutionary new social platform. Own your data. Get rewarded." />
         //OG
-        <meta property="og:title" content="Foundation" />
+        <meta property="og:title" content="Foundation: Shared list" />
         <meta property="og:description" content="A revolutionary new social platform. Own your data. Get rewarded." />
         <meta property="og:type" content="website" />
         {/* <meta name="theme-color" content={seoMeta.color} />
@@ -84,7 +84,7 @@ const PostsByList = () => {
         <meta property="og:audio:type" content="audio/mpeg" /> */}
         //Note // Twitter
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content="Foundation" />
+        <meta property="twitter:title" content="Foundation: Shared list" />
         <meta
           property="twitter:description"
           content="A revolutionary new social platform. Own your data. Get rewarded."
