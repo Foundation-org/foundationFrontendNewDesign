@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import SEO from './utils/SEO';
 import { MaintenanceRouter } from './routes/maintenance';
 import api from './services/api/Axios';
+import { Helmet } from 'react-helmet-async';
 // import SEO from './utils/SEO';
 
 function App() {
@@ -127,13 +128,21 @@ function App() {
 
   return (
     <div className="h-dvh overflow-hidden">
-      <SEO
-        title={'Foundation'}
-        description={'A revolutionary new social platform. Own your data. Get rewarded.'}
-        url={import.meta.env.VITE_CLIENT_URL}
-        image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
-        type={'website'}
-      />
+      <Helmet>
+        <title>Foundation</title>
+        <meta name="description" content="A revolutionary new social platform. Own your data. Get rewarded." />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Foundation" />
+        <meta property="og:description" content="A revolutionary new social platform. Own your data. Get rewarded." />
+        <meta property="og:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="Foundation" />
+        <meta
+          property="twitter:description"
+          content="A revolutionary new social platform. Own your data. Get rewarded."
+        />
+        <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
+      </Helmet>
       {isMaintenance ? <MaintenanceRouter /> : <Router />}
       <Toaster position="top-right" expand={true} theme={persistedTheme === 'dark' ? 'dark' : 'light'} richColors />
     </div>
