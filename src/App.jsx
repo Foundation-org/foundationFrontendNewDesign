@@ -129,6 +129,11 @@ function App() {
   return (
     <div className="h-dvh overflow-hidden">
       <Helmet>
+        <script>
+          {`
+            window.prerenderReady = false;
+          `}
+        </script>
         <title>Foundation</title>
         <meta name="description" content="A revolutionary new social platform. Own your data. Get rewarded." />
         <meta property="og:type" content="website" />

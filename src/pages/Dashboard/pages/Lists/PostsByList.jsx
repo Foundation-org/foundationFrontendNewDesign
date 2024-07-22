@@ -54,6 +54,11 @@ const PostsByList = () => {
   return (
     <>
       <Helmet>
+        <script>
+          {`
+            window.prerenderReady = false;
+          `}
+        </script>
         <title>Foundation: Shared list</title>
         <meta name="description" content="A revolutionary new social platform. Own your data. Get rewarded." />
         <meta property="og:title" content="Foundation: Shared list" />
