@@ -108,14 +108,14 @@ const SidebarLeft = () => {
             <input
               type="text"
               id="floating_outlined"
-              className="focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-white-100 dark:text-white-100 dark:focus:border-blue-500 tablet:text-[18.23px]"
+              className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-white-100 dark:text-white-100 dark:focus:border-blue-500 tablet:text-[18.23px]"
               value={search}
               placeholder=""
               onChange={handleSearch}
             />
             <label
               htmlFor="floating_outlined"
-              className="peer-focus:text-blue-600 absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+              className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Search
             </label>
@@ -185,7 +185,7 @@ const SidebarLeft = () => {
               <input
                 type="text"
                 placeholder="Search here...."
-                className="h-[23px] w-full rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] pl-[10px] pr-6 text-[9px] font-normal text-[#858585] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#E8E8E8] tablet:h-[36px] tablet:pr-10 tablet:text-[16px] tablet:leading-[16px]"
+                className="h-[23px] w-full rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] pl-[10px] pr-6 text-[9px] font-normal text-[#858585] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:h-[36px] tablet:pr-10 tablet:text-[16px] tablet:leading-[16px]"
                 value={search}
                 onChange={handleSearch}
               />

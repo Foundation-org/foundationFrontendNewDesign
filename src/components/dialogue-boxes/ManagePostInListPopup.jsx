@@ -164,7 +164,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
         </div> */}
         <div className="flex flex-col gap-[15px]">
           <div className="flex w-full items-center rounded-[5.387px] bg-transparent tablet:w-full tablet:rounded-[10px]">
-            <div className="w-full rounded-[5.387px] border border-white-500 tablet:rounded-[15px] tablet:border-[3px]">
+            <div className="w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[15px] tablet:border-[3px]">
               {/* <div className="flex"> */}
               {/* <div
                   className={`${
@@ -195,17 +195,17 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                 placeholder="Search Post"
                 className={`${
                   selectedPostId === '' && searchPost !== '' ? 'border-b border-white-500 tablet:border-b-[3px]' : ''
-                } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300`}
+                } flex w-full resize-none items-center rounded-[5.387px] bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:rounded-[15px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px]`}
               />
               {/* </div> */}
               {/* To Render and Select The Post */}
-              <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[10px] font-medium text-[#707175] tablet:text-[15.7px] dark:text-gray-300">
+              <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[10px] font-medium text-[#707175] dark:text-gray-300 tablet:text-[15.7px]">
                 {selectedPostId === '' &&
                   searchPost !== '' &&
                   searchResult?.map((item) => (
                     <li
                       key={item._id}
-                      className="cursor-pointer border-b border-white-500 px-4 py-[6px] last:border-b-0 tablet:border-b-[3px] tablet:py-2 dark:border-gray-100"
+                      className="cursor-pointer border-b border-white-500 px-4 py-[6px] last:border-b-0 dark:border-gray-100 tablet:border-b-[3px] tablet:py-2"
                       onClick={() => {
                         setSearchPost(item.Question);
                         setSelectedPostId(item._id);
