@@ -15,3 +15,10 @@ export function formatDate(timestamp) {
   const formattedDate = `${day}-${month}-${year}`;
   return formattedDate;
 }
+
+export const saveScrollPosition = () => {
+  const scrollableElement = document.getElementById('scrollable-list');
+  if (scrollableElement) {
+    sessionStorage.setItem('scrollPosition', scrollableElement.scrollTop.toString());
+  }
+};

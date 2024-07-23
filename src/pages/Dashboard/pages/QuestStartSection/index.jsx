@@ -114,6 +114,14 @@ const QuestStartSection = () => {
     }),
   );
 
+  useEffect(() => {
+    const scrollableElement = document.getElementById('scrollable-list');
+    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+    if (scrollableElement && savedScrollPosition) {
+      scrollableElement.scrollTop = parseInt(savedScrollPosition, 10);
+    }
+  }, []);
+
   return (
     <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] dark:bg-black laptop:mx-[331px] desktop:mx-auto">
       {filterStates?.moderationRatingFilter?.initial === 0 &&
@@ -136,7 +144,10 @@ const QuestStartSection = () => {
           <div className="fixed left-auto right-auto max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>
-          <div className="no-scrollbar mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
+          <div
+            id="scrollable-list"
+            className="scrollable-list no-scrollbar mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full"
+          >
             {content}
             {printEndMessage(data?.pages[0], filterStates.bookmarks, isFetching)}
           </div>
