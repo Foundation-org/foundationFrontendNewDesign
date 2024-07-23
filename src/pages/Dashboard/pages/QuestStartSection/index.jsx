@@ -115,10 +115,16 @@ const QuestStartSection = () => {
   );
 
   useEffect(() => {
-    const scrollableElement = document.getElementById('scrollable-list');
-    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
-    if (scrollableElement && savedScrollPosition) {
-      scrollableElement.scrollTop = parseInt(savedScrollPosition, 10);
+    const savedElement = sessionStorage.getItem('element-to-scroll');
+    const elementToScroll = document.getElementById(savedElement);
+
+    if (elementToScroll) {
+      setTimeout(() => {
+        elementToScroll.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }, 500);
     }
   }, []);
 
@@ -144,10 +150,7 @@ const QuestStartSection = () => {
           <div className="fixed left-auto right-auto max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>
-          <div
-            id="scrollable-list"
-            className="scrollable-list no-scrollbar mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full"
-          >
+          <div className="no-scrollbar mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
             {content}
             {printEndMessage(data?.pages[0], filterStates.bookmarks, isFetching)}
           </div>

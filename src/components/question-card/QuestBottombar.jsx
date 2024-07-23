@@ -16,7 +16,6 @@ import { toast } from 'sonner';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 import showToast from '../ui/Toast';
-import { saveScrollPosition } from '../../utils/utils';
 
 const data = [
   {
@@ -395,7 +394,7 @@ const QuestBottombar = ({
                 <div
                   className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
                   onClick={() => {
-                    saveScrollPosition();
+                    sessionStorage.setItem('element-to-scroll', questStartData._id);
                     navigate('/post/isfullscreen', {
                       state: { questId: questStartData._id },
                     });
