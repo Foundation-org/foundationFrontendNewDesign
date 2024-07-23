@@ -1,13 +1,16 @@
-import React from 'react';
 import { Button } from './ui/Button';
+import { useDispatch } from 'react-redux';
+import { setOptionState } from '../features/quest/seeMoreOptionsSlice';
 
 type Props = {
-  setShowOptions: React.Dispatch<React.SetStateAction<boolean>>;
+  id: string;
 };
 
-export default function SeeMoreOptions({ setShowOptions }: Props) {
+export default function SeeMoreOptions({ id }: Props) {
+  const dispatch = useDispatch();
+
   const handleSeeMore = () => {
-    setShowOptions(true);
+    dispatch(setOptionState({ id, isShow: true }));
   };
 
   return (

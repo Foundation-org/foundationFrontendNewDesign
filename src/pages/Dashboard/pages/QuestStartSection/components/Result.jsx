@@ -7,6 +7,7 @@ import RankedResult from '../../../components/RankedResult';
 import SortIcon from '../../../../../assets/SortIcon';
 import { useSelector } from 'react-redux';
 import SeeMoreOptions from '../../../../../components/see-more-options';
+import { getSeeMoreOptions } from '../../../../../features/quest/seeMoreOptionsSlice';
 
 const Result = (props) => {
   const { isFullScreen } = useParams();
@@ -14,7 +15,7 @@ const Result = (props) => {
   const [selectedOption, setSelectedOption] = useState(1);
   const [contendedOption, setCcontendedOption] = useState(1);
   const [sortedAnswers, setSortedAnswers] = useState();
-  const [showOptions, setShowOptions] = useState(false);
+  const showOptions = useSelector(getSeeMoreOptions);
 
   const getAnswerData = (answer, type, index) => {
     const percentage =
@@ -428,39 +429,43 @@ const Result = (props) => {
             </button>
           </div>
           <div className="relative mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]">
-            {sortedAnswers?.slice(0, showOptions ? sortedAnswers.length : 8).map((item, index) => (
-              <div key={index + 1}>
-                <RankedResult
-                  number={'#' + (index + 1)}
-                  answer={item.question}
-                  addedAnswerUuid={item.uuid}
-                  answersSelection={props.answersSelection}
-                  setAnswerSelection={props.setAnswerSelection}
-                  title={props.title}
-                  selectedPercentages={
-                    props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
-                      ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
-                      : null
-                  }
-                  contendPercentages={
-                    props.questStartData?.contendedPercentage && props.questStartData.contendedPercentage.length > 0
-                      ? props.questStartData.contendedPercentage[props.questStartData.contendedPercentage.length - 1]
-                      : null
-                  }
-                  contend={findSelectionContentionCheck(
-                    props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
-                      ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                          .contended
-                      : [],
-                    item.question,
-                  )}
-                  setAddOptionLimit={props.setAddOptionLimit}
-                  btnText={'Results'}
-                  postProperties={props.postProperties}
-                />
-              </div>
-            ))}
-            {!showOptions && <SeeMoreOptions setShowOptions={setShowOptions} />}
+            {sortedAnswers
+              ?.slice(0, showOptions.isShow && showOptions.id === props.questStartData._id ? sortedAnswers.length : 8)
+              .map((item, index) => (
+                <div key={index + 1}>
+                  <RankedResult
+                    number={'#' + (index + 1)}
+                    answer={item.question}
+                    addedAnswerUuid={item.uuid}
+                    answersSelection={props.answersSelection}
+                    setAnswerSelection={props.setAnswerSelection}
+                    title={props.title}
+                    selectedPercentages={
+                      props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
+                        ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
+                        : null
+                    }
+                    contendPercentages={
+                      props.questStartData?.contendedPercentage && props.questStartData.contendedPercentage.length > 0
+                        ? props.questStartData.contendedPercentage[props.questStartData.contendedPercentage.length - 1]
+                        : null
+                    }
+                    contend={findSelectionContentionCheck(
+                      props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
+                        ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
+                            .contended
+                        : [],
+                      item.question,
+                    )}
+                    setAddOptionLimit={props.setAddOptionLimit}
+                    btnText={'Results'}
+                    postProperties={props.postProperties}
+                  />
+                </div>
+              ))}
+            {showOptions.id !== props.questStartData._id && sortedAnswers?.length >= 8 && (
+              <SeeMoreOptions id={props.questStartData._id} />
+            )}
           </div>
         </div>
       ) : null}

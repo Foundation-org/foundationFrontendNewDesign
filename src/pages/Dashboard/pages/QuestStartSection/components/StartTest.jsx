@@ -9,6 +9,8 @@ import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from 
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import SeeMoreOptions from '../../../../../components/see-more-options';
+import { useSelector } from 'react-redux';
+import { getSeeMoreOptions } from '../../../../../features/quest/seeMoreOptionsSlice';
 
 const StartTest = ({
   questStartData,
@@ -34,7 +36,8 @@ const StartTest = ({
       tolerance: 0,
     },
   });
-  const [showOptions, setShowOptions] = useState(false);
+  const showOptions = useSelector(getSeeMoreOptions);
+  console.log('showOptions', showOptions);
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
@@ -238,36 +241,40 @@ const StartTest = ({
                 onDragEnd={handleOnDragEnd}
               >
                 <SortableContext items={rankedAnswers}>
-                  {rankedAnswers?.slice(0, showOptions ? rankedAnswers.length : 8).map((item, index) => (
-                    <SingleAnswerRankedChoice
-                      key={item.id}
-                      dragId={item.id}
-                      questStartData={questStartData}
-                      id={index}
-                      item={item}
-                      number={index + 1}
-                      editable={item.edit}
-                      deleteable={item.delete}
-                      answer={item.label}
-                      addedAnswerUuid={item.uuid}
-                      answersSelection={answersSelection}
-                      setAnswerSelection={setAnswerSelection}
-                      rankedAnswers={rankedAnswers}
-                      title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                      checkInfo={false}
-                      check={findLabelChecked(rankedAnswers, item.label)}
-                      contend={findLabelContend(rankedAnswers, item.label)}
-                      handleCheckChange={(check) => handleCheckChange(index, check)}
-                      handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-                      setAddOptionField={setAddOptionField}
-                      checkOptionStatus={checkOptionStatus}
-                      setCheckOptionStatus={setCheckOptionStatus}
-                      postProperties={postProperties}
-                    />
-                  ))}
+                  {rankedAnswers
+                    ?.slice(0, showOptions.isShow && showOptions.id === questStartData._id ? rankedAnswers.length : 8)
+                    .map((item, index) => (
+                      <SingleAnswerRankedChoice
+                        key={item.id}
+                        dragId={item.id}
+                        questStartData={questStartData}
+                        id={index}
+                        item={item}
+                        number={index + 1}
+                        editable={item.edit}
+                        deleteable={item.delete}
+                        answer={item.label}
+                        addedAnswerUuid={item.uuid}
+                        answersSelection={answersSelection}
+                        setAnswerSelection={setAnswerSelection}
+                        rankedAnswers={rankedAnswers}
+                        title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                        checkInfo={false}
+                        check={findLabelChecked(rankedAnswers, item.label)}
+                        contend={findLabelContend(rankedAnswers, item.label)}
+                        handleCheckChange={(check) => handleCheckChange(index, check)}
+                        handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
+                        setAddOptionField={setAddOptionField}
+                        checkOptionStatus={checkOptionStatus}
+                        setCheckOptionStatus={setCheckOptionStatus}
+                        postProperties={postProperties}
+                      />
+                    ))}
                 </SortableContext>
               </DndContext>
-              {!showOptions && <SeeMoreOptions setShowOptions={setShowOptions} />}
+              {showOptions.id !== questStartData._id && rankedAnswers?.length >= 8 && (
+                <SeeMoreOptions id={questStartData._id} />
+              )}
             </div>
           </div>
         );
