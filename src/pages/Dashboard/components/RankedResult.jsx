@@ -23,7 +23,7 @@ const RankedResult = (props) => {
   }, [props.contend]);
 
   return (
-    <div className="flex items-center tablet:mr-[44px] tablet:pl-[1.75rem]">
+    <div className="flex items-center tablet:mr-[43px] tablet:pl-[1.75rem]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-gray-200 tablet:w-[45.6px]">
@@ -150,7 +150,7 @@ const RankedResult = (props) => {
 
       {/* =============== To Display Contention and Trash Right of Option */}
 
-      <div className="flex w-[42px] min-w-[42px] items-center bg-white pl-1 text-[9.238px] dark:bg-gray-200 tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
+      <div className="flex w-12 min-w-12 items-center bg-white pl-1 text-[9.238px] dark:bg-gray-200 tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
         {props.btnText === 'Results' ? (
           <>
             {props.contendPercentages &&

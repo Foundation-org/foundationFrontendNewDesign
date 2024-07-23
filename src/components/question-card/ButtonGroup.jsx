@@ -683,7 +683,7 @@ const ButtonGroup = ({
         )}
       </div>
 
-      {/* Change Add Options Submit */}
+      {/*Add Options - Change || Change Add Options Submit */}
       <div className="flex w-full justify-end px-[14.4px] tablet:px-[3.44rem]">
         {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
           <div className="flex w-full justify-between">
@@ -694,8 +694,8 @@ const ButtonGroup = ({
                     {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                       <Button
                         onClick={() => {
+                          dispatch(setOptionState({ id: questStartData._id, isShow: true }));
                           handleStartChange('addOption');
-                          // handleOpen();
                         }}
                         variant={'addOption'}
                       >

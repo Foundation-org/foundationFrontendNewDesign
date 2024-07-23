@@ -219,7 +219,7 @@ const SingleAnswerMultipleChoice = (props) => {
   return (
     <div
       className={`flex items-center  tablet:gap-[10px] tablet:pl-[1.75rem] ${
-        props.btnText === 'Results' ? 'tablet:mr-[41px]' : 'tablet:mr-[52px]'
+        props.btnText === 'Results' ? 'tablet:mr-[47.44px]' : 'tablet:mr-[52px]'
       }`}
     >
       {/* =============== To Display Badges on Left of Option */}

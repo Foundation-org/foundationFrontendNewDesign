@@ -10,7 +10,6 @@ import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 import ObjectionPopUp from '../../ObjectionPopUp';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { resetSeeMoreOptions } from '../../../features/quest/seeMoreOptionsSlice';
 
 const SingleAnswerRankedChoice = (props) => {
   const id = props.id;
@@ -173,7 +172,6 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleDeleteOption = () => {
     // toast.success('Item deleted');
-    dispatch(resetSeeMoreOptions());
     props.setCheckOptionStatus(reset);
 
     const newArr = props.rankedAnswers.filter((item, index) => index !== id);
@@ -223,7 +221,7 @@ const SingleAnswerRankedChoice = (props) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]"
+      className="flex items-center tablet:mr-12 tablet:gap-[10px] tablet:pl-[1.75rem]"
     >
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
@@ -288,10 +286,10 @@ const SingleAnswerRankedChoice = (props) => {
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className={`${
                   isDragging ? 'bg-[#F2F6FF] dark:bg-accent-100' : 'bg-white dark:bg-accent-100'
-                } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]`}
+                } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]`}
               />
             ) : (
-              <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
+              <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                 {props.answer}
               </h1>
             )}
@@ -314,16 +312,16 @@ const SingleAnswerRankedChoice = (props) => {
         <div
           className={`${
             isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
-          } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white tablet:h-full tablet:rounded-r-[10px] dark:bg-accent-100`}
+          } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-accent-100 tablet:h-full tablet:rounded-r-[10px]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
       </div>
       {/* =============== To Display Contention and Trash Right of Option */}
       {props.postProperties === 'HiddenPosts' ? (
-        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
+        <div className="flex w-12 min-w-12 items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
       ) : props.btnText !== 'Results' ? (
-        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]">
+        <div className="flex w-12 min-w-12 items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]">
           {props.deleteable ? (
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
@@ -354,7 +352,7 @@ const SingleAnswerRankedChoice = (props) => {
           </BasicModal>
         </div>
       ) : (
-        <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-accent-100">
+        <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-accent-100 tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
           {props.btnText === 'Results' ? (
             <>
               {props.contendPercentages &&

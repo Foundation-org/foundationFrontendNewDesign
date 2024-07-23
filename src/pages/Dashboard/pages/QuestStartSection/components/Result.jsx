@@ -364,16 +364,19 @@ const Result = (props) => {
               />
             </button>
           </div>
-          <div
-            className={`${
-              isFullScreen === undefined
-                ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
-                : ''
-            }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-          >
-            {sortedAnswers?.map((item, index) => (
-              <div key={index + 1}>
+          <div className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
+            {sortedAnswers
+              ?.slice(
+                0,
+                showOptions.isShow && showOptions.id === props.questStartData._id
+                  ? sortedAnswers.length
+                  : isFullScreen
+                    ? sortedAnswers.length
+                    : 8,
+              )
+              .map((item, index) => (
                 <SingleAnswerMultipleChoice
+                  key={index + 1}
                   number={'#' + (index + 1)}
                   answer={item.question}
                   addedAnswerUuid={item.uuid}
@@ -408,8 +411,10 @@ const Result = (props) => {
                   setAnswerSelection={props.setAnswerSelection}
                   postProperties={props.postProperties}
                 />
-              </div>
-            ))}
+              ))}
+            {showOptions.id !== props.questStartData._id &&
+              sortedAnswers?.length >= 8 &&
+              isFullScreen === undefined && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
         </div>
       ) : props.title === 'Ranked Choice' ? (
@@ -428,9 +433,16 @@ const Result = (props) => {
               />
             </button>
           </div>
-          <div className="relative mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]">
+          <div className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
             {sortedAnswers
-              ?.slice(0, showOptions.isShow && showOptions.id === props.questStartData._id ? sortedAnswers.length : 8)
+              ?.slice(
+                0,
+                showOptions.isShow && showOptions.id === props.questStartData._id
+                  ? sortedAnswers.length
+                  : isFullScreen
+                    ? sortedAnswers.length
+                    : 8,
+              )
               .map((item, index) => (
                 <div key={index + 1}>
                   <RankedResult
@@ -463,9 +475,9 @@ const Result = (props) => {
                   />
                 </div>
               ))}
-            {showOptions.id !== props.questStartData._id && sortedAnswers?.length >= 8 && (
-              <SeeMoreOptions id={props.questStartData._id} />
-            )}
+            {showOptions.id !== props.questStartData._id &&
+              sortedAnswers?.length >= 8 &&
+              isFullScreen === undefined && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
         </div>
       ) : null}

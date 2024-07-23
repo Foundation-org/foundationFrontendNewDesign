@@ -14,7 +14,7 @@ export default function SeeMoreOptions({ id }: Props) {
   };
 
   return (
-    <div className="absolute bottom-0 flex h-[108px] min-h-[108px] w-full items-center justify-center bg-gradient-to-b from-white/60 via-white/80 to-white">
+    <div className="absolute bottom-0 flex h-[54px] min-h-[54px] w-full items-center justify-center bg-gradient-to-b from-white/60 via-white/80 to-white dark:from-gray-200/60 dark:via-gray-200/80 dark:to-gray-200 tablet:h-[108px] tablet:min-h-[108px]">
       <Button
         variant="show-more-options"
         className="flex flex-col items-center gap-1"
