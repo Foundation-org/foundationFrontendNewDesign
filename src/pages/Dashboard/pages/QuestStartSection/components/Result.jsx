@@ -370,7 +370,7 @@ const Result = (props) => {
                 0,
                 showOptions.isShow && showOptions.id === props.questStartData._id
                   ? sortedAnswers.length
-                  : isFullScreen
+                  : isFullScreen || location.pathname.startsWith('/p')
                     ? sortedAnswers.length
                     : 8,
               )
@@ -414,7 +414,8 @@ const Result = (props) => {
               ))}
             {showOptions.id !== props.questStartData._id &&
               sortedAnswers?.length >= 8 &&
-              isFullScreen === undefined && <SeeMoreOptions id={props.questStartData._id} />}
+              isFullScreen === undefined &&
+              !location.pathname.startsWith('/p') && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
         </div>
       ) : props.title === 'Ranked Choice' ? (
@@ -439,7 +440,7 @@ const Result = (props) => {
                 0,
                 showOptions.isShow && showOptions.id === props.questStartData._id
                   ? sortedAnswers.length
-                  : isFullScreen
+                  : isFullScreen || location.pathname.startsWith('/p')
                     ? sortedAnswers.length
                     : 8,
               )
@@ -477,7 +478,8 @@ const Result = (props) => {
               ))}
             {showOptions.id !== props.questStartData._id &&
               sortedAnswers?.length >= 8 &&
-              isFullScreen === undefined && <SeeMoreOptions id={props.questStartData._id} />}
+              isFullScreen === undefined &&
+              !location.pathname.startsWith('/p') && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
         </div>
       ) : null}

@@ -189,7 +189,7 @@ const StartTest = ({
                     0,
                     showOptions.isShow && showOptions.id === questStartData._id
                       ? rankedAnswers.length
-                      : isFullScreen
+                      : isFullScreen || location.pathname.startsWith('/p')
                         ? rankedAnswers.length
                         : 8,
                   )
@@ -227,9 +227,10 @@ const StartTest = ({
                       postProperties={postProperties}
                     />
                   ))}
-              {showOptions.id !== questStartData._id && rankedAnswers?.length >= 8 && isFullScreen === undefined && (
-                <SeeMoreOptions id={questStartData._id} />
-              )}
+              {showOptions.id !== questStartData._id &&
+                rankedAnswers?.length >= 8 &&
+                isFullScreen === undefined &&
+                !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
             </div>
           </div>
         );
@@ -250,7 +251,7 @@ const StartTest = ({
                       0,
                       showOptions.isShow && showOptions.id === questStartData._id
                         ? rankedAnswers.length
-                        : isFullScreen
+                        : isFullScreen || location.pathname.startsWith('/p')
                           ? rankedAnswers.length
                           : 8,
                     )
@@ -283,9 +284,10 @@ const StartTest = ({
                     ))}
                 </SortableContext>
               </DndContext>
-              {showOptions.id !== questStartData._id && rankedAnswers?.length >= 8 && isFullScreen === undefined && (
-                <SeeMoreOptions id={questStartData._id} />
-              )}
+              {showOptions.id !== questStartData._id &&
+                rankedAnswers?.length >= 8 &&
+                isFullScreen === undefined &&
+                !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
             </div>
           </div>
         );

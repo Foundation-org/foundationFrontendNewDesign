@@ -18,7 +18,7 @@ export default function SeeMoreOptions({ id }: Props) {
       <Button
         variant="show-more-options"
         className="flex flex-col items-center gap-1"
-        rounded=""
+        rounded={false}
         onClick={handleSeeMore}
       >
         <span>Show more options</span>
