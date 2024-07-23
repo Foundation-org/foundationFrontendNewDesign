@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 import Loader from '../../../../../components/ui/Loader';
@@ -8,6 +8,9 @@ import SingleAnswerMultipleChoice from '../../../../../components/question-card/
 import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import SeeMoreOptions from '../../../../../components/see-more-options';
+import { useSelector } from 'react-redux';
+import { getSeeMoreOptions } from '../../../../../features/quest/seeMoreOptionsSlice';
 
 const StartTest = ({
   questStartData,
@@ -33,6 +36,8 @@ const StartTest = ({
       tolerance: 0,
     },
   });
+  const showOptions = useSelector(getSeeMoreOptions);
+  console.log('showOptions', showOptions);
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
@@ -178,49 +183,54 @@ const StartTest = ({
       ) {
         return (
           <div className="flex flex-col overflow-auto">
-            <div
-              ref={listContainerRef}
-              className={`${
-                isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
-                  : ''
-              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-            >
+            <div ref={listContainerRef} className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
               {answersSelection &&
-                [...answersSelection]?.map((item, index) => (
-                  <SingleAnswerMultipleChoice
-                    questStartData={questStartData}
-                    id={index}
-                    key={index}
-                    number={'#' + (index + 1)}
-                    answer={item.label}
-                    addedAnswerUuid={item.uuid}
-                    editable={item.edit}
-                    deleteable={item.delete}
-                    title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                    multipleOption={questStartData.userCanSelectMultiple}
-                    answersSelection={answersSelection}
-                    setAnswerSelection={setAnswerSelection}
-                    checkInfo={true}
-                    check={findLabelChecked(answersSelection, item.label)}
-                    contend={findLabelContend(answersSelection, item.label)}
-                    whichTypeQuestion={questStartData.whichTypeQuestion}
-                    handleCheckChange={
-                      questStartData.userCanSelectMultiple === true
-                        ? (check) => handleCheckChange(index, check)
-                        : (check) => handleCheckChangeSingle(index, check)
-                    }
-                    handleContendChange={
-                      questStartData.userCanSelectMultiple === true
-                        ? (contend) => handleContendChange(index, contend)
-                        : (contend) => handleContendChangeSingle(index, contend)
-                    }
-                    setAddOptionField={setAddOptionField}
-                    checkOptionStatus={checkOptionStatus}
-                    setCheckOptionStatus={setCheckOptionStatus}
-                    postProperties={postProperties}
-                  />
-                ))}
+                [...answersSelection]
+                  ?.slice(
+                    0,
+                    showOptions.isShow && showOptions.id === questStartData._id
+                      ? rankedAnswers.length
+                      : isFullScreen
+                        ? rankedAnswers.length
+                        : 8,
+                  )
+                  .map((item, index) => (
+                    <SingleAnswerMultipleChoice
+                      questStartData={questStartData}
+                      id={index}
+                      key={index}
+                      number={'#' + (index + 1)}
+                      answer={item.label}
+                      addedAnswerUuid={item.uuid}
+                      editable={item.edit}
+                      deleteable={item.delete}
+                      title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                      multipleOption={questStartData.userCanSelectMultiple}
+                      answersSelection={answersSelection}
+                      setAnswerSelection={setAnswerSelection}
+                      checkInfo={true}
+                      check={findLabelChecked(answersSelection, item.label)}
+                      contend={findLabelContend(answersSelection, item.label)}
+                      whichTypeQuestion={questStartData.whichTypeQuestion}
+                      handleCheckChange={
+                        questStartData.userCanSelectMultiple === true
+                          ? (check) => handleCheckChange(index, check)
+                          : (check) => handleCheckChangeSingle(index, check)
+                      }
+                      handleContendChange={
+                        questStartData.userCanSelectMultiple === true
+                          ? (contend) => handleContendChange(index, contend)
+                          : (contend) => handleContendChangeSingle(index, contend)
+                      }
+                      setAddOptionField={setAddOptionField}
+                      checkOptionStatus={checkOptionStatus}
+                      setCheckOptionStatus={setCheckOptionStatus}
+                      postProperties={postProperties}
+                    />
+                  ))}
+              {showOptions.id !== questStartData._id && rankedAnswers?.length >= 8 && isFullScreen === undefined && (
+                <SeeMoreOptions id={questStartData._id} />
+              )}
             </div>
           </div>
         );
@@ -228,13 +238,7 @@ const StartTest = ({
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
         return (
           <div className="flex flex-col overflow-auto">
-            <div
-              className={`${
-                isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[344px]'
-                  : ''
-              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-            >
+            <div className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
               <DndContext
                 sensors={[touchSensor, mouseSensor, keyboardSensor]}
                 modifiers={[restrictToVerticalAxis, restrictToParentElement]}
@@ -242,35 +246,47 @@ const StartTest = ({
                 onDragEnd={handleOnDragEnd}
               >
                 <SortableContext items={rankedAnswers}>
-                  {rankedAnswers?.map((item, index) => (
-                    <SingleAnswerRankedChoice
-                      key={item.id}
-                      dragId={item.id}
-                      questStartData={questStartData}
-                      id={index}
-                      item={item}
-                      number={index + 1}
-                      editable={item.edit}
-                      deleteable={item.delete}
-                      answer={item.label}
-                      addedAnswerUuid={item.uuid}
-                      answersSelection={answersSelection}
-                      setAnswerSelection={setAnswerSelection}
-                      rankedAnswers={rankedAnswers}
-                      title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                      checkInfo={false}
-                      check={findLabelChecked(rankedAnswers, item.label)}
-                      contend={findLabelContend(rankedAnswers, item.label)}
-                      handleCheckChange={(check) => handleCheckChange(index, check)}
-                      handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-                      setAddOptionField={setAddOptionField}
-                      checkOptionStatus={checkOptionStatus}
-                      setCheckOptionStatus={setCheckOptionStatus}
-                      postProperties={postProperties}
-                    />
-                  ))}
+                  {rankedAnswers
+                    ?.slice(
+                      0,
+                      showOptions.isShow && showOptions.id === questStartData._id
+                        ? rankedAnswers.length
+                        : isFullScreen
+                          ? rankedAnswers.length
+                          : 8,
+                    )
+                    .map((item, index) => (
+                      <SingleAnswerRankedChoice
+                        key={item.id}
+                        dragId={item.id}
+                        questStartData={questStartData}
+                        id={index}
+                        item={item}
+                        number={index + 1}
+                        editable={item.edit}
+                        deleteable={item.delete}
+                        answer={item.label}
+                        addedAnswerUuid={item.uuid}
+                        answersSelection={answersSelection}
+                        setAnswerSelection={setAnswerSelection}
+                        rankedAnswers={rankedAnswers}
+                        title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                        checkInfo={false}
+                        check={findLabelChecked(rankedAnswers, item.label)}
+                        contend={findLabelContend(rankedAnswers, item.label)}
+                        handleCheckChange={(check) => handleCheckChange(index, check)}
+                        handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
+                        setAddOptionField={setAddOptionField}
+                        checkOptionStatus={checkOptionStatus}
+                        setCheckOptionStatus={setCheckOptionStatus}
+                        postProperties={postProperties}
+                      />
+                    ))}
                 </SortableContext>
               </DndContext>
+              {showOptions.id !== questStartData._id && rankedAnswers?.length >= 8 && isFullScreen === undefined && (
+                <SeeMoreOptions id={questStartData._id} />
+              )}
             </div>
           </div>
         );

@@ -221,7 +221,7 @@ const SingleAnswerRankedChoice = (props) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]"
+      className="flex items-center tablet:mr-12 tablet:gap-[10px] tablet:pl-[1.75rem]"
     >
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
@@ -319,9 +319,9 @@ const SingleAnswerRankedChoice = (props) => {
       </div>
       {/* =============== To Display Contention and Trash Right of Option */}
       {props.postProperties === 'HiddenPosts' ? (
-        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
+        <div className="flex w-12 min-w-12 items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
       ) : props.btnText !== 'Results' ? (
-        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]">
+        <div className="flex w-12 min-w-12 items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]">
           {props.deleteable ? (
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}

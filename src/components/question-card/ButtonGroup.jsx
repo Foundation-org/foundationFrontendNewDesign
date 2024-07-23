@@ -12,6 +12,7 @@ import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import { getConstantsValues } from '../../features/constants/constantsSlice';
+import { setOptionState } from '../../features/quest/seeMoreOptionsSlice';
 
 const ButtonGroup = ({
   questStartData,
@@ -596,7 +597,13 @@ const ButtonGroup = ({
           <div className="flex w-full justify-between">
             {questStartData.usersAddTheirAns && addOptionField === 0 ? (
               title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                <Button onClick={handleOpen} variant={'addOption'}>
+                <Button
+                  onClick={() => {
+                    dispatch(setOptionState({ id: questStartData._id, isShow: true }));
+                    handleOpen();
+                  }}
+                  variant={'addOption'}
+                >
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
                     alt="add"
@@ -676,7 +683,7 @@ const ButtonGroup = ({
         )}
       </div>
 
-      {/* Change Add Options Submit */}
+      {/*Add Options - Change || Change Add Options Submit */}
       <div className="flex w-full justify-end px-[14.4px] tablet:px-[3.44rem]">
         {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
           <div className="flex w-full justify-between">
@@ -687,8 +694,8 @@ const ButtonGroup = ({
                     {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                       <Button
                         onClick={() => {
+                          dispatch(setOptionState({ id: questStartData._id, isShow: true }));
                           handleStartChange('addOption');
-                          // handleOpen();
                         }}
                         variant={'addOption'}
                       >
