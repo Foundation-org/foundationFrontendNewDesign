@@ -37,7 +37,6 @@ const StartTest = ({
     },
   });
   const showOptions = useSelector(getSeeMoreOptions);
-  console.log('showOptions', showOptions);
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
