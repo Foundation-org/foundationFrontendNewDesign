@@ -251,7 +251,7 @@ export const printNoRecordsMessage = (
         </div>
       ) : (
         <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-          <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
+          <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[4vw] laptop:text-[2.083vw]">
             No matching posts found!
           </p>
           {(result === false || !resultPreferences) && isOtherCategory !== 'Other' && (
@@ -540,7 +540,7 @@ export const printEndMessage = (
     </div>
   ) : (
     <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">
-      <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[4vw]" />
+      <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[8vw] laptop:text-[4vw]" />
     </div>
   );
 };

@@ -309,21 +309,16 @@ body {
 }
 
 #dragIcon > div {
-  position: relative;
-  height: 23.19px;
-  display: flex;
+  @apply relative flex h-[23.19px];
 }
 
 .non-active-radio {
-  width: 16px !important;
-  height: 16px !important;
+  @apply !size-4;
 }
 
 @media (min-width: 744px) {
   #dragIcon > div {
-    position: relative;
-    height: 45px;
-    display: flex;
+    @apply relative flex h-[45px];
   }
 
   .okayContainer {
@@ -333,9 +328,7 @@ body {
 
 @media (min-width: 1280px) {
   #dragIcon > div {
-    position: relative;
-    height: 74px;
-    display: flex;
+    @apply relative flex h-[74px];
   }
 }
 
@@ -753,17 +746,11 @@ input[type='number'] {
 }
 
 .carousel .slide img {
-  max-height: 230px !important;
-  height: fit-content !important;
-  width: fit-content !important;
-  object-fit: contain;
+  @apply !h-fit !max-h-[230px] !w-fit object-contain;
 }
 
 .carousel .thumb {
-  margin-right: 16px !important;
-  max-width: 80px !important;
-  width: fit-content !important;
-  height: fit-content !important;
+  @apply !mr-4 !h-fit !w-fit !max-w-[80px];
 }
 
 .carousel .thumb img {
@@ -942,12 +929,11 @@ input[type='number'] {
   }
 
   #custom-rating-checkbox .checkbox:checked::after {
-    @apply absolute left-1/2 top-[60%] -mt-[1px] flex -translate-x-1/2 -translate-y-1/2 items-center justify-center;
+    @apply absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center;
   }
 
   #custom-square-checkbox .checkbox {
-    border: 3px solid #dee6f7;
-    border-radius: 5px;
+    @apply rounded-[5px] border-[3px] border-[#dee6f7];
   }
 
   #custom-square-checkbox .checkbox::after {
@@ -963,27 +949,19 @@ input[type='number'] {
   }
 
   .react-player div iframe {
-    height: 371px !important;
-    width: 100% !important;
-    margin-left: auto;
-    margin-right: auto;
+    @apply mx-auto !h-[371px] !w-full;
   }
 
   .feed-react-player div iframe {
-    height: 371px !important;
-    width: 100% !important;
-    margin-left: auto;
-    margin-right: auto;
+    @apply mx-auto !h-[371px] !w-full;
   }
 
   .react-player iframe {
-    width: 100% !important;
-    height: 180px !important;
+    @apply !h-[180px] !w-full;
   }
 
   .feed-react-player iframe {
-    width: 100% !important;
-    height: 85px !important;
+    @apply !h-[85px] !w-full;
   }
 
   .youtube-iframe {

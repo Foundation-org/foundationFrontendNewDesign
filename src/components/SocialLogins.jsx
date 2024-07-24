@@ -7,7 +7,7 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
   const navigate = useNavigate();
 
   return (
-    <div className="mb-2 flex min-w-[145px] flex-col gap-2 rounded-[6.043px] lg:min-w-[305px] 2xl:rounded-[11.703px] laptop:mb-[1.56rem] laptop:justify-between laptop:gap-[1.56rem]">
+    <div className="mb-2 flex min-w-[145px] flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] tablet:min-w-[220px] laptop:mb-[1.56rem] laptop:min-w-[305px] laptop:justify-between laptop:gap-[1.56rem]">
       {authMethods.map((item) => (
         <Button
           variant="auth"

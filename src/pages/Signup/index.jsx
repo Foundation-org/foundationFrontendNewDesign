@@ -141,9 +141,13 @@ export default function Signup() {
       <div
         className={`${
           persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden tablet:h-16`}
       >
-        <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+          alt="logo"
+          className="h-[10px] tablet:h-4"
+        />
       </div>
       {/* Tablet Left Header */}
       <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
@@ -168,11 +172,11 @@ export default function Signup() {
           )}
           <Outlet />
           <div className="mt-5 flex gap-3 tablet:mt-14">
-            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 md:text-[22px]">
+            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
               Already have an account?
             </p>
             <Link to="/signin">
-              <p className="text-[11.21px] font-[500] text-blue-200 md:text-[22px]">Sign in</p>
+              <p className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]">Sign in</p>
             </Link>
           </div>
         </div>
