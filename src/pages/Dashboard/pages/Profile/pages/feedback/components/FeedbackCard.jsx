@@ -47,7 +47,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
           </div>
           <div className="flex items-center gap-[15px]">
             <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
-              {post.hiddenCount} Times Hidden
+              {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
             </h4>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/hidden-eye.svg`}
@@ -69,7 +69,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
           return (
             <p
               key={item.id}
-              className={`${post.suppressedReason === item.title && item.title === 'Invalid Media' ? 'text-red-200 font-semibold' : feedbackViolated ? 'text-red-200 font-semibold' : feedbackCount >= 1 ? 'text-[#4A8DBD]' : 'font-normal text-[#BABABA] dark:text-gray-300'} text-[10px] tablet:text-[18px]`}
+              className={`${post.suppressedReason === item.title && item.title === 'Invalid Media' ? 'font-semibold text-red-200' : feedbackViolated ? 'font-semibold text-red-200' : feedbackCount >= 1 ? 'text-[#4A8DBD]' : 'font-normal text-[#BABABA] dark:text-gray-300'} text-[10px] tablet:text-[18px]`}
             >
               {post.suppressedReason === item.title && item.title === 'Invalid Media' ? 1 : feedbackCount} {item.title}
             </p>

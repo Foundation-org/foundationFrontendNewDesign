@@ -44,7 +44,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
           {msg}
         </h4>
         {getMediaStates?.isMedia.isMedia === false && getPicMediaStates.isPicMedia === false && (
-          <div className="mx-[30px] mt-3 flex items-center justify-between gap-1 tablet:mt-[25px] tablet:gap-2 laptop:mx-4 laptop:gap-4 desktop:mx-[50px] desktop:gap-12">
+          <div className="mx-[30px] mt-3 flex items-center justify-between tablet:mx-[50px] tablet:mt-[25px] laptop:mx-4 desktop:mx-[50px]">
             <Button
               variant="addEmbeded"
               className="px-2 tablet:px-[25px]"
@@ -58,7 +58,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                 );
               }}
             >
-              + Add Video
+              + Add YouTube
             </Button>
             {getMediaStates?.isMedia.isMedia === false && (
               <Button
@@ -74,7 +74,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                   );
                 }}
               >
-                + Add Audio
+                + Add Soundcloud
               </Button>
             )}
             <Button
@@ -90,7 +90,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                 dispatch(pictureMediaAction.updateIsPicMedia(true));
               }}
             >
-              + Add Image
+              + Add Flickr
             </Button>
           </div>
         )}

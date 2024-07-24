@@ -49,7 +49,7 @@ const Summary = () => {
           </div>
         </div>
         <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-          <Button variant={'submit'} onClick={() => navigate('/profile/hidden-posts')}>
+          <Button variant={'submit'} onClick={() => navigate('/profile/feedback-given')}>
             View hidden posts
           </Button>
         </div>
@@ -79,7 +79,7 @@ const Summary = () => {
         </div>
         <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
           <Button variant={'submit'} onClick={() => navigate('/profile/feedback')}>
-            View all post feedback
+            View all feedback received
           </Button>
         </div>
       </SummaryCard>

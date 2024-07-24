@@ -267,7 +267,7 @@ export default function DashboardLayout({ children }) {
                         {userInfoData && userInfoData?.data?.badges?.length}
                       </p>
                     </div>
-                    <div className="flex h-9 flex-col justify-between laptop:h-7">
+                    <div className="flex h-7 flex-col justify-between tablet:h-9 laptop:h-7">
                       <h4 className="heading w-fit border-b">My Balance</h4>
                       <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] dark:text-[#D2D2D2] tablet:text-[16px]">
                         {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
@@ -300,7 +300,7 @@ export default function DashboardLayout({ children }) {
           {!location.pathname.startsWith('/help/') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
-            location.pathname !== '/profile/hidden-posts' &&
+            location.pathname !== '/profile/feedback-given' &&
             location.pathname !== '/profile/shared-links' &&
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/post-activity' &&
@@ -389,7 +389,7 @@ export default function DashboardLayout({ children }) {
           {!location.pathname.startsWith('/post') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
-            location.pathname !== '/profile/hidden-posts' &&
+            location.pathname !== '/profile/feedback-given' &&
             location.pathname !== '/profile/shared-links' &&
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/feedback' &&
@@ -421,7 +421,7 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/post') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
-            location.pathname !== '/profile/hidden-posts' &&
+            location.pathname !== '/profile/feedback-given' &&
             location.pathname !== '/profile/shared-links' &&
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/post-activity' &&
@@ -451,7 +451,7 @@ export default function DashboardLayout({ children }) {
           {/* {canAddPost !== 'true' && location.pathname.startsWith('/profile/postsbylist/') && <ManageList />} */}
 
           {/* HiddenPost Search */}
-          {location.pathname === '/profile/hidden-posts' && questUtils.areHiddenPosts && (
+          {location.pathname === '/profile/feedback-given' && questUtils.areHiddenPosts && (
             <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
               <div className="relative">
                 <div className="relative h-[45px] w-full">

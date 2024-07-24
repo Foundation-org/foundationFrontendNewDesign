@@ -107,11 +107,11 @@ const SingleQuest = () => {
             {singleQuestData &&
               singleQuestData?.data.data?.map((item, index) =>
                 item.id === 'guest_notification' ? (
-                  <div className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
-                    <SystemNotificationCard post={item} key={index + 1} />
+                  <div key={index + 1} className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
+                    <SystemNotificationCard post={item} />
                   </div>
                 ) : (
-                  <div className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
+                  <div key={index + 1} className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
                     <QuestionCardWithToggle
                       questStartData={item}
                       isBookmarked={false}

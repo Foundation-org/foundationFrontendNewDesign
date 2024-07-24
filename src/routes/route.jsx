@@ -145,10 +145,10 @@ export function Router() {
                   <Route path="lists" element={<Lists />} />
                   <Route path="postsbylist/:categoryId" element={<PostsByList />} />
                   <Route path="ledger" element={<BasicTable />} />
-                  <Route path="hidden-posts" element={<HiddenPosts />} />
+                  <Route path="feedback-given" element={<HiddenPosts />} />
+                  <Route path="feedback" element={<Feedback />} />
                   <Route path="shared-links" element={<SharedLinks />} />
                   <Route path="user-settings" element={<UserSettings />} />
-                  <Route path="feedback" element={<Feedback />} />
                   <Route path="change-password" element={<ChangePassword />} />
                 </Route>
               </Route>

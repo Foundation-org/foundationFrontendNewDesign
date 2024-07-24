@@ -10,7 +10,7 @@ export const TopbarItems = [
       '/profile/post-activity',
       '/profile/feedback',
       '/profile/ledger',
-      '/profile/hidden-posts',
+      '/profile/feedback-given',
       '/profile/shared-links',
       '/profile/user-settings',
       '/profile/lists',

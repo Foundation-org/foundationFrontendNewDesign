@@ -98,6 +98,9 @@ function Slider() {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
+    const container = document.getElementById('post-container');
+    container?.scrollTo({ top: 0, behavior: 'smooth' });
+
     switch (type) {
       case 'newest-first':
         if (filterStates.filterBySort !== 'Newest First') {

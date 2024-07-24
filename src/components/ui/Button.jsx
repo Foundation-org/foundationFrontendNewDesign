@@ -16,7 +16,7 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
         ? 'addoption-boxShadow h-[1.375rem] w-fit gap-[0.27rem] rounded-[0.28688rem] bg-gray-250 p-2 text-[0.625rem] font-normal text-[#435059] tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
         : '',
       variant === 'addEmbeded'
-        ? 'addoption-boxShadow h-[1.375rem] w-fit gap-[0.27rem] rounded-[0.28688rem] bg-gray-250 p-2 text-[0.625rem] font-normal text-[#435059] tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
+        ? 'addoption-boxShadow h-[1.375rem] w-fit gap-[0.27rem] whitespace-nowrap rounded-[0.28688rem] bg-gray-250 px-[5px] py-2 text-[0.625rem] font-normal text-[#435059] tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
         : '',
       variant === 'cancel'
         ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] rounded-[0.28688rem] bg-[#707175] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:w-[12vw]'
