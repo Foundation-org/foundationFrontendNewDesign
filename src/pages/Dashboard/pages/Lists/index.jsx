@@ -229,6 +229,7 @@ const Lists = () => {
                     Edit List Name
                   </h4>
                 </div>
+
                 <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
                   <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
                     <DndContext
@@ -300,6 +301,7 @@ const Lists = () => {
                     {listData[categoryIndex]?.post?.length > 0 && (
                       <Button
                         variant="submit"
+                        className={'tablet:min-w-[9rem]'}
                         onClick={() =>
                           navigate('/shared-list-link/result', {
                             state: { categoryItem: categoryItem._id },
@@ -320,7 +322,7 @@ const Lists = () => {
                         Save
                       </Button>
                     ) : (
-                      <Button variant="hollow-submit" disabled={true}>
+                      <Button variant="hollow-submit" disabled={true} className={'tablet:min-w-[9rem]'}>
                         Save
                       </Button>
                     )}
