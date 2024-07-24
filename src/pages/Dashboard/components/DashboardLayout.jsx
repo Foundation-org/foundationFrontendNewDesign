@@ -23,7 +23,7 @@ import {
 } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
-import { saveConstants } from '../../../features/constants/constantsSlice';
+import { getConstantsValues, saveConstants } from '../../../features/constants/constantsSlice';
 import showToast from '../../../components/ui/Toast';
 import { changeThemeTo } from '../../../features/utils/utilsSlice';
 
@@ -43,6 +43,7 @@ export default function DashboardLayout({ children }) {
   const [feedbackSearch, setFeedbackSearch] = useState('');
   const questUtilsState = useSelector(getQuestUtils);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
+  const persistedConstants = useSelector(getConstantsValues);
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
@@ -227,7 +228,7 @@ export default function DashboardLayout({ children }) {
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 dark:bg-silver-500 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden dark:bg-silver-500">
           <div className="h-fit rounded-[15px]" onClick={() => navigate('/treasury')}>
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">
@@ -269,7 +270,7 @@ export default function DashboardLayout({ children }) {
                     </div>
                     <div className="flex h-7 flex-col justify-between tablet:h-9 laptop:h-7">
                       <h4 className="heading w-fit border-b">My Balance</h4>
-                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] dark:text-[#D2D2D2] tablet:text-[16px]">
+                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
                         {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
                       </p>
                     </div>
@@ -288,7 +289,7 @@ export default function DashboardLayout({ children }) {
                     />
                     <div className="flex h-9 flex-col justify-between gap-1 tablet:h-7">
                       <h4 className="heading w-fit border-b">Treasury</h4>
-                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] dark:text-[#D2D2D2] tablet:text-[16px]">
+                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
                         {constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX
                       </p>
                     </div>
@@ -322,6 +323,9 @@ export default function DashboardLayout({ children }) {
                       onClick={() => navigate('/post')}
                     >
                       Create Post
+                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                        (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
+                      </span>
                     </Button>
                     <Button
                       variant="hollow-submit2"
@@ -329,6 +333,9 @@ export default function DashboardLayout({ children }) {
                       onClick={() => navigate('/profile/verification-badges')}
                     >
                       Add Badge
+                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                        (+{persistedConstants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
+                      </span>
                     </Button>
                   </div>
                 ) : (
@@ -368,7 +375,7 @@ export default function DashboardLayout({ children }) {
         {/* Desktop Left Side */}
         <div className="left-0 top-0 hidden tablet:block laptop:absolute">
           <div
-            className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:bg-gray-200 laptop:block"
+            className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:bg-gray-200"
             onClick={() => navigate('/treasury')}
           >
             <div className="flex items-center gap-[15px]">
@@ -379,7 +386,7 @@ export default function DashboardLayout({ children }) {
               />
               <div className="flex h-[47px] flex-col justify-between">
                 <h4 className="heading w-fit border-b-2">Treasury</h4>
-                <p className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                <p className="font-inter text-[10.79px] text-base font-medium text-gray-650 tablet:text-[18px] tablet:leading-[18px] dark:text-white-100">
                   <span>{constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
               </div>
@@ -437,7 +444,7 @@ export default function DashboardLayout({ children }) {
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                   alt="mediaCloseIcon"
-                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black dark:text-white tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px]"
+                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
                   onClick={() => {
                     dispatch(setIsShowPlayer(false));
                     dispatch(setPlayingPlayerId(''));
@@ -452,20 +459,20 @@ export default function DashboardLayout({ children }) {
 
           {/* HiddenPost Search */}
           {location.pathname === '/profile/feedback-given' && questUtils.areHiddenPosts && (
-            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:border-gray-100 dark:bg-gray-200">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
+                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500"
                     value={hiddenSearch}
                     placeholder=""
                     onChange={handleHiddenPostSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
-                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500"
                   >
                     Search
                   </label>
@@ -493,20 +500,20 @@ export default function DashboardLayout({ children }) {
 
           {/* SharedLinks Search */}
           {location.pathname === '/profile/shared-links' && questUtils.areShareLinks && (
-            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:border-gray-100 dark:bg-gray-200">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
+                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500"
                     value={sharedlinkSearch}
                     placeholder=""
                     onChange={handleSharedLinkSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
-                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500"
                   >
                     Search
                   </label>
@@ -534,20 +541,20 @@ export default function DashboardLayout({ children }) {
 
           {/* Feedback Search */}
           {location.pathname === '/profile/feedback' && questUtils.areFeedBackPosts && (
-            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:border-gray-100 dark:bg-gray-200">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
+                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500"
                     value={feedbackSearch}
                     placeholder=""
                     onChange={handleFeedbackSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
-                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500"
                   >
                     Search
                   </label>
@@ -576,7 +583,7 @@ export default function DashboardLayout({ children }) {
         {children}
         {/* Desktop Right Side */}
         <div className="right-0 top-0 hidden tablet:block laptop:absolute">
-          <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border laptop:block">
+          <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border-gray-100 dark:bg-gray-200 tablet:dark:border">
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
                 <div className="relative h-fit w-fit">
@@ -591,7 +598,7 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance (Guest)</h4>
-                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 tablet:text-[18px] tablet:leading-[18px] dark:text-white-100">
                     <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>
                 </div>
@@ -615,7 +622,7 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance</h4>
-                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 tablet:text-[18px] tablet:leading-[18px] dark:text-white-100">
                     <p>
                       {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
                     </p>

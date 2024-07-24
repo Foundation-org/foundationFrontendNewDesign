@@ -413,6 +413,9 @@ const MultipleChoice = () => {
         <div className="mt-[10px] flex w-full justify-end pr-7 tablet:mt-[25px] tablet:pr-[50px]">
           <Button variant="hollow-submit" id="submitButton" disabled={true}>
             Create
+            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+              (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
+            </span>
           </Button>
         </div>
       ) : (
@@ -426,7 +429,7 @@ const MultipleChoice = () => {
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
             <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-              (-{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
+              (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
             </span>
           </Button>
         </div>
