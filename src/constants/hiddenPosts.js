@@ -1,27 +1,31 @@
 export const hideReasons = [
   {
-    id: 0,
+    id: 1,
     title: 'Does not apply to me',
   },
   {
-    id: 1,
+    id: 2,
     title: 'Not interested',
   },
   {
-    id: 2,
+    id: 3,
     title: 'Has Mistakes or Errors',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Needs More Options',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Unclear / Doesn’t make Sense',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Duplicate / Similar Post',
+  },
+  {
+    id: 7,
+    title: 'Historical / Past Event',
   },
   // {
   //   id: 6,
