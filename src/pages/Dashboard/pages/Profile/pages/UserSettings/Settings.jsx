@@ -155,7 +155,7 @@ export const Settings = () => {
             if (localStorage.getItem('isGuestMode')) {
               handleGuestSignout();
             } else {
-              handleSignout();
+              handleSignout(persistedUserInfo.uuid);
             }
           }}
         >

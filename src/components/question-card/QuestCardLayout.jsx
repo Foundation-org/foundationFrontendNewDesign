@@ -8,7 +8,7 @@ import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import { Link, useLocation } from 'react-router-dom';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import { addBookmarkResponse, removeBookmarkResponse, updateDialogueBox } from '../../features/quest/utilsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as HomepageApis from '../../services/api/homepageApis';
 
 import { EmbededVideo } from './EmbededVideo';
@@ -58,6 +58,7 @@ const QuestCardLayout = ({
 }) => {
   const dispatch = useDispatch();
   // const location = useLocation();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -127,6 +128,7 @@ const QuestCardLayout = ({
     if (bookmarkStatus) {
       const params = {
         questForeignKey: questStartData._id,
+        uuid: persistedUserInfo.uuid,
       };
       DelBookmark(params);
     } else {
@@ -135,6 +137,7 @@ const QuestCardLayout = ({
         Question: questStartData.Question,
         whichTypeQuestion: questStartData.whichTypeQuestion,
         moderationRatingCount: questStartData.moderationRatingCount,
+        uuid: persistedUserInfo.uuid,
       };
       AddBookmark(params);
     }

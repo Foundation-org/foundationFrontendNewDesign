@@ -299,6 +299,7 @@ export const printEndMessage = (
   const persistedTheme = useSelector((state) => state.utils.theme);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   // console.log(feedData?.hasNextPage, isPending, isLoading);
 
   const resetOtherStates = {
@@ -317,6 +318,7 @@ export const printEndMessage = (
       },
     },
     selectedBtnId: 'newButton',
+    uuid: persistedUserInfo.uuid,
   };
 
   const { mutateAsync: setFilters } = useMutation({
