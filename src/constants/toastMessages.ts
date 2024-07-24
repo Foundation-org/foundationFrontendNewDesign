@@ -52,7 +52,7 @@ export const toastMessages = {
   linkAlready: 'Link already created',
   copyLink: 'Link Copied!',
   postHidden: 'Post hidden successfully',
-  hidingOwnPost: 'You cannot hide your own post.',
+  hidingOwnPost: 'You cannot give feedback or hide your own post.',
   hiddenReason: 'You must select a reason before submitting.',
   postUnhidden: 'Post unhidden successfully',
   paymentSuccessful: 'Payment succeeded!',

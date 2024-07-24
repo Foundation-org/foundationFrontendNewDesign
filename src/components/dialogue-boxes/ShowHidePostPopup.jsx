@@ -131,7 +131,7 @@ export default function ShowHidePostPopup({
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-latest-cut.svg`}
-      title={'Hide Post'}
+      title={'Give Feedback / Hide'}
       open={modalVisible}
       handleClose={handleClose}
       isBackground={true}
@@ -145,7 +145,7 @@ export default function ShowHidePostPopup({
               <div
                 key={index + 1}
                 id={item.id}
-                className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-white-500 px-[10px] py-[5px] dark:border-gray-100 dark:bg-accent-100 tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
+                className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-white-500 px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3 dark:border-gray-100 dark:bg-accent-100"
                 onClick={() => handleCheckboxChange(index)}
               >
                 <div id="custom-checkbox-popup" className="flex h-full items-center">
@@ -156,7 +156,7 @@ export default function ShowHidePostPopup({
                     onChange={() => handleCheckboxChange(index)}
                   />
                 </div>
-                <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] dark:text-gray-300 tablet:text-[19px] tablet:leading-[23px]">
+                <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] tablet:text-[19px] tablet:leading-[23px] dark:text-gray-300">
                   {item.title}
                 </p>
               </div>
