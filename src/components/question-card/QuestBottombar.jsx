@@ -394,7 +394,6 @@ const QuestBottombar = ({
                 <div
                   className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
                   onClick={() => {
-                    sessionStorage.setItem('element-to-scroll', questStartData._id);
                     navigate('/post/isfullscreen', {
                       state: { questId: questStartData._id },
                     });

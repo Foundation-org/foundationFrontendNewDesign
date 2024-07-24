@@ -114,20 +114,6 @@ const QuestStartSection = () => {
     }),
   );
 
-  useEffect(() => {
-    const savedElement = sessionStorage.getItem('element-to-scroll');
-    const elementToScroll = document.getElementById(savedElement);
-
-    if (elementToScroll) {
-      setTimeout(() => {
-        elementToScroll.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      }, 500);
-    }
-  }, []);
-
   return (
     <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] dark:bg-black laptop:mx-[331px] desktop:mx-auto">
       {filterStates?.moderationRatingFilter?.initial === 0 &&
