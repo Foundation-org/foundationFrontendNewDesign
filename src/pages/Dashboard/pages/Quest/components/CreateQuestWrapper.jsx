@@ -47,7 +47,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
           <div className="mx-[30px] mt-3 flex items-center justify-between tablet:mx-[50px] tablet:mt-[25px] laptop:mx-4 desktop:mx-[50px]">
             <Button
               variant="addEmbeded"
-              className="px-2 tablet:px-[25px]"
+              className="px-2 tablet:px-3.5"
               onClick={() => {
                 dispatch(createQuestAction.updateIsPicMedia(false));
                 dispatch(
@@ -63,7 +63,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             {getMediaStates?.isMedia.isMedia === false && (
               <Button
                 variant="addEmbeded"
-                className="px-2 tablet:px-[25px]"
+                className="px-2 tablet:px-3.5"
                 onClick={() => {
                   dispatch(createQuestAction.updateIsPicMedia(false));
                   dispatch(
@@ -79,7 +79,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             )}
             <Button
               variant="addEmbeded"
-              className="px-2 tablet:px-[25px]"
+              className="px-2 tablet:px-3.5"
               onClick={() => {
                 dispatch(
                   createQuestAction.updateIsMedia({
