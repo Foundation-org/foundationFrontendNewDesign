@@ -27,7 +27,7 @@ const SummarySidebar = ({ userData }) => {
 
   return (
     <div>
-      <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:border-gray-100 dark:bg-gray-200 dark:bg-gray-200 tablet:dark:border laptop:block">
+      <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border laptop:block">
         <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Your posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {yourPosts.map((item) => (
@@ -46,7 +46,7 @@ const SummarySidebar = ({ userData }) => {
         </div>
       </div>
       {/* Other posts */}
-      <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:border-gray-100 dark:bg-gray-200 dark:bg-gray-200 tablet:dark:border laptop:block">
+      <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border laptop:block">
         <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Others Posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {othersPosts.map((item) => (
