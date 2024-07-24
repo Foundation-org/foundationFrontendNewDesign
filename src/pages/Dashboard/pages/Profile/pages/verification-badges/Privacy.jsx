@@ -76,7 +76,7 @@ const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
                 }}
               >
                 {checkLegacyBadge() ? 'Remove' : 'Add'}
-                <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                   {checkLegacyBadge() ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>

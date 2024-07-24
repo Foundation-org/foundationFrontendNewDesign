@@ -267,7 +267,7 @@ export default function Personal({
       >
         {checkPersonalBadge(item.type) ? 'Edit' : item.ButtonText}
         {!checkPersonalBadge(item.type) && (
-          <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+          <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
             (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
           </span>
         )}
