@@ -19,8 +19,12 @@ export const signIn = async (data) => {
   return await api.post('/user/signInUser', data);
 };
 
-export const signOut = async () => {
-  return await api.post('user/logout');
+export const signOut = async (uuid) => {
+  return await api.post('user/logout',
+    {
+      uuid
+    }
+  );
 };
 
 export const userInfo = async () => {
@@ -115,6 +119,7 @@ export const setFilterStates = async (state) => {
   localStorage.setItem('userData', JSON.stringify(data?.data?.updatedUser));
 };
 
+// Not being used in the APP
 export const setBookmarkFilterStates = async (state) => {
   return await api.post('/user/setBookmarkStates', state);
 };

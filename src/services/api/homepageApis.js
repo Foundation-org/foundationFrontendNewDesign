@@ -91,6 +91,7 @@ export const createBookmark = async (data) => {
     whichTypeQuestion: data.whichTypeQuestion,
     Question: data.Question,
     moderationRatingCount: data.moderationRatingCount,
+    uuid: data.uuid,
   });
 };
 
@@ -98,6 +99,7 @@ export const createBookmark = async (data) => {
 export const deleteBookmarkById = async (data) => {
   return await api.post(`/bookmarkQuest/deleteBookmarkQuest`, {
     questForeignKey: data.questForeignKey,
+    uuid: data.uuid,
   });
 };
 

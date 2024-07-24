@@ -251,6 +251,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               ? 100
               : 0,
       },
+      uuid: persistedUserInfo.uuid,
       // filterBySort: 'Newest First',
       // filterByScope: '',
       // bookmarks: false,
@@ -545,6 +546,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                     },
                   },
                   selectedBtnId: 'newButton',
+                  uuid: persistedUserInfo.uuid,
                 });
               }
             }}

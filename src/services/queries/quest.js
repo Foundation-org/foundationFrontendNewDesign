@@ -22,6 +22,7 @@ import * as HomepageAPIs from '../api/homepageApis';
 //   return { data, isLoading, isFetching };
 // }
 
+// Not being used at FE
 export function useGetHiddenFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
   return useQuery({
@@ -39,6 +40,7 @@ export function useGetHiddenFeedData(filterStates, debouncedSearch, pagination, 
   });
 }
 
+// Not being used in FE
 export function useGetBookmarkFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
   return useQuery({
@@ -65,6 +67,7 @@ export function useGetSingleQuest(uuid, id) {
   });
 }
 
+// Not being used in the app
 export function useGetBookmarkData() {
   const { data, isLoading } = useQuery({
     queryFn: () => HomepageAPIs.getAllBookmarkedQuests(),

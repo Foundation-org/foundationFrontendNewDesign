@@ -10,6 +10,7 @@ import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice
 
 function Slider() {
   let filtersActions;
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const location = useLocation();
   const rightArrowRef = useRef(null);
@@ -117,6 +118,7 @@ function Slider() {
                 list: [],
               },
             },
+            uuid: persistedUserInfo.uuid,
           });
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
@@ -142,6 +144,7 @@ function Slider() {
                 list: [],
               },
             },
+            uuid: persistedUserInfo.uuid,
           });
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
@@ -167,6 +170,7 @@ function Slider() {
                 list: [],
               },
             },
+            uuid: persistedUserInfo.uuid,
           });
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
@@ -192,6 +196,7 @@ function Slider() {
                 list: [],
               },
             },
+            uuid: persistedUserInfo.uuid,
           });
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
@@ -217,6 +222,7 @@ function Slider() {
                 list: [],
               },
             },
+            uuid: persistedUserInfo.uuid,
           });
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
@@ -242,6 +248,7 @@ function Slider() {
             },
           },
           selectedBtnId: id,
+          uuid: persistedUserInfo.uuid,
         });
         dispatch(setIsShowPlayer(false));
         dispatch(setPlayingPlayerId(''));
