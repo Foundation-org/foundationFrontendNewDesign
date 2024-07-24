@@ -12,7 +12,6 @@ import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import { getConstantsValues } from '../../features/constants/constantsSlice';
-import { setOptionState } from '../../features/quest/seeMoreOptionsSlice';
 
 const ButtonGroup = ({
   questStartData,
@@ -24,12 +23,9 @@ const ButtonGroup = ({
   setRankedAnswers,
   answersSelection,
   setAnswerSelection,
-  handleOpen,
-  title,
   handleSubmit,
   loading,
   startTest,
-  addOptionField,
   setAddOptionField,
   checkOptionStatus,
   postProperties,
@@ -39,7 +35,6 @@ const ButtonGroup = ({
   const navigate = useNavigate();
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const [modalVisible, setModalVisible] = useState(false);
   const persistedContants = useSelector(getConstantsValues);
 
@@ -51,11 +46,17 @@ const ButtonGroup = ({
     filterState = useSelector(filterActions.getFilters);
   }
 
-  const uuidExists = questStartData.QuestAnswers
-    ? questStartData.QuestAnswers?.some(
-        (item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'),
-      )
-    : false;
+  const showGuestSignUpToastWarning = () => {
+    toast.warning(
+      <p>
+        Please{' '}
+        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+          Create an Account
+        </span>{' '}
+        to unlock this feature
+      </p>,
+    );
+  };
 
   function updateAnswerSelection(apiResponse, answerSelectionArray, type) {
     const data = apiResponse?.startQuestData.data[apiResponse?.startQuestData.data.length - 1];
@@ -320,15 +321,7 @@ const ButtonGroup = ({
           variant="cancel"
           onClick={() => {
             if (persistedUserInfo?.role === 'guest') {
-              toast.warning(
-                <p>
-                  Please{' '}
-                  <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-                    Create an Account
-                  </span>{' '}
-                  to unlock this feature
-                </p>,
-              );
+              showGuestSignUpToastWarning();
             } else {
               if (location.pathname === '/shared-list-link/result') {
                 navigate('/profile/lists');
@@ -353,40 +346,7 @@ const ButtonGroup = ({
       return (
         <>
           {questStartData.startStatus === '' ? (
-            <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-              {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
-                title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                  <Button
-                    onClick={() => {
-                      toast.warning(
-                        <p>
-                          Please{' '}
-                          <span
-                            className="cursor-pointer text-[#389CE3] underline"
-                            onClick={() => navigate('/guest-signup')}
-                          >
-                            Create an Account
-                          </span>{' '}
-                          to unlock this feature
-                        </p>,
-                      );
-                    }}
-                    variant={'addOption'}
-                  >
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                    Add Option
-                    <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-                      (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-                    </span>
-                  </Button>
-                )
-              ) : (
-                <div></div>
-              )}
+            <div className="flex w-full justify-end pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
               <Button
                 variant="submit"
                 onClick={() => handleSubmit()}
@@ -414,20 +374,7 @@ const ButtonGroup = ({
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  onClick={() => {
-                    toast.warning(
-                      <p>
-                        Please{' '}
-                        <span
-                          className="cursor-pointer text-[#389CE3] underline"
-                          onClick={() => navigate('/guest-signup')}
-                        >
-                          Create an Account
-                        </span>{' '}
-                        to unlock this feature
-                      </p>,
-                    );
-                  }}
+                  onClick={showGuestSignUpToastWarning}
                 >
                   Change
                 </Button>
@@ -438,60 +385,14 @@ const ButtonGroup = ({
       );
     } else {
       return (
-        <div className="flex w-full justify-between pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-          {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
-            title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-              <Button
-                onClick={() => {
-                  toast.warning(
-                    <p>
-                      Please{' '}
-                      <span
-                        className="cursor-pointer text-[#389CE3] underline"
-                        onClick={() => navigate('/guest-signup')}
-                      >
-                        Create an Account
-                      </span>{' '}
-                      to unlock this feature
-                    </p>,
-                  );
-                }}
-                variant={'addOption'}
-              >
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
-                  alt="add"
-                  className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                />
-                Add Option
-                <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-                  (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-                </span>
-              </Button>
-            )
-          ) : (
-            <div></div>
-          )}
+        <div className="flex w-full justify-end pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
           {questStartData.startStatus === 'change answer' ? (
             <div>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  onClick={() => {
-                    toast.warning(
-                      <p>
-                        Please{' '}
-                        <span
-                          className="cursor-pointer text-[#389CE3] underline"
-                          onClick={() => navigate('/guest-signup')}
-                        >
-                          Create an Account
-                        </span>{' '}
-                        to unlock this feature
-                      </p>,
-                    );
-                  }}
+                  onClick={showGuestSignUpToastWarning()}
                 >
                   Change
                 </Button>
@@ -500,17 +401,7 @@ const ButtonGroup = ({
           ) : questStartData.startStatus === 'completed' ? null : (
             <Button
               variant="submit"
-              onClick={() => {
-                toast.warning(
-                  <p>
-                    Please{' '}
-                    <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-                      Create an Account
-                    </span>{' '}
-                    to unlock this feature
-                  </p>,
-                );
-              }}
+              onClick={showGuestSignUpToastWarning()}
               disabled={
                 loading === true
                   ? true
@@ -534,90 +425,40 @@ const ButtonGroup = ({
     }
   }
 
+  /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id) {
     return (
-      <div className="flex w-full justify-between gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
-        {/* Add Option - Go back - Submit / add Option - Submit*/}
+      <div className="flex w-full justify-end gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
         {questStartData.startStatus === 'change answer' ? (
-          <>
-            {addOptionField === 0 ? (
-              <div className="flex items-center justify-center">
-                {questStartData.usersAddTheirAns && uuidExists === false ? (
-                  <div>
-                    {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                      <Button onClick={handleOpen} variant={'addOption'}>
-                        <img
-                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
-                          alt="add"
-                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                        />
-                        Add Option
-                        <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-                          (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-                        </span>
-                      </Button>
-                    )}
-                  </div>
-                ) : null}
-              </div>
-            ) : (
-              <div></div>
-            )}
-            <div>
-              <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
-                <Button
-                  variant="cancel"
-                  onClick={() => {
-                    handleViewResults(questStartData._id);
-                    handleRemoveItem();
-                  }}
-                >
-                  Go Back
-                </Button>
-                <Button
-                  id={`submit-${questStartData._id}`}
-                  variant="submit"
-                  onClick={() => handleSubmit()}
-                  disabled={
-                    loading === true
-                      ? true
-                      : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                        ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                          ? false
-                          : true
-                        : false
-                  }
-                >
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                </Button>
-              </div>
-            </div>
-          </>
+          <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
+            <Button
+              variant="cancel"
+              onClick={() => {
+                handleViewResults(questStartData._id);
+                handleRemoveItem();
+              }}
+            >
+              Go Back
+            </Button>
+            <Button
+              id={`submit-${questStartData._id}`}
+              variant="submit"
+              onClick={() => handleSubmit()}
+              disabled={
+                loading === true
+                  ? true
+                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                      ? false
+                      : true
+                    : false
+              }
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            </Button>
+          </div>
         ) : (
-          <div className="flex w-full justify-between">
-            {questStartData.usersAddTheirAns && addOptionField === 0 ? (
-              title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                <Button
-                  onClick={() => {
-                    dispatch(setOptionState({ id: questStartData._id, isShow: true }));
-                    handleOpen();
-                  }}
-                  variant={'addOption'}
-                >
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                  Add Option
-                  <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-                    (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-                  </span>
-                </Button>
-              )
-            ) : (
-              <div></div>
-            )}
+          <div className="flex w-full justify-end">
             <Button
               id={`submit-${questStartData._id}`}
               variant="submit"
@@ -645,126 +486,21 @@ const ButtonGroup = ({
     );
   }
 
+  /* Change */
   return (
-    <>
-      <div className="flex">
-        {/* Add Options / Go Back / Submit */}
-        {questStartData.startStatus === 'change answer' && startTest === questStartData._id && (
-          <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-            <Button onClick={handleOpen} variant={'addOption'}>
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
-                alt="add"
-                className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-              />
-              Add Option
-              <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-                (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-              </span>
-            </Button>
-
-            <div className="flex gap-2">
-              <Button
-                variant="cancel"
-                onClick={() => {
-                  handleViewResults(questStartData._id);
-                  handleStartTest(false);
-                }}
-              >
-                Go Back
-              </Button>
-              {viewResult !== questStartData._id && (
-                <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                </Button>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/*Add Options - Change || Change Add Options Submit */}
-      <div className="flex w-full justify-end px-[14.4px] tablet:px-[3.44rem]">
-        {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
-          <div className="flex w-full justify-between">
-            {addOptionField === 0 ? (
-              <div className="flex items-center justify-center">
-                {questStartData.usersAddTheirAns && uuidExists === false ? (
-                  <div>
-                    {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                      <Button
-                        onClick={() => {
-                          dispatch(setOptionState({ id: questStartData._id, isShow: true }));
-                          handleStartChange('addOption');
-                        }}
-                        variant={'addOption'}
-                      >
-                        <img
-                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
-                          alt="add"
-                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                        />
-                        Add Option
-                        <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-                          (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-                        </span>
-                      </Button>
-                    )}
-                  </div>
-                ) : null}
-              </div>
-            ) : (
-              <div></div>
-            )}
-
-            <Button
-              variant={result === ', you are good to go' ? 'change' : 'change-outline'}
-              disabled={result === ', you are good to go' ? false : true}
-              onClick={handleStartChange}
-            >
-              Change
-            </Button>
-          </div>
-        ) : (
-          questStartData.startStatus !== 'completed' && (
-            <div className="flex w-full justify-between pl-7 tablet:pl-[3.19rem]">
-              {questStartData.usersAddTheirAns && addOptionField === 0 ? (
-                title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                  <Button onClick={handleOpen} variant={'addOption'}>
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                    Add Option
-                    <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-                      (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-                    </span>
-                  </Button>
-                )
-              ) : (
-                <div></div>
-              )}
-              <Button
-                variant="submit"
-                onClick={() => handleSubmit()}
-                disabled={
-                  loading === true
-                    ? true
-                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                        ? false
-                        : true
-                      : false
-                }
-              >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              </Button>
-            </div>
-          )
-        )}
-      </div>
-    </>
+    <div className="flex w-full justify-end px-[14.4px] tablet:px-[3.44rem]">
+      {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
+        <div className="flex w-full justify-end">
+          <Button
+            variant={result === ', you are good to go' ? 'change' : 'change-outline'}
+            disabled={result === ', you are good to go' ? false : true}
+            onClick={handleStartChange}
+          >
+            Change
+          </Button>
+        </div>
+      )}
+    </div>
   );
 };
 

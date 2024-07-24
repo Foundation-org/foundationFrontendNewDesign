@@ -2,7 +2,6 @@ import { toast } from 'sonner';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { validateInterval } from '../../../../../utils';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
@@ -20,6 +19,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
 import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 import showToast from '../../../../../components/ui/Toast';
+import AddOptions from '../../../../../components/question-card/AddOptions';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -813,6 +813,19 @@ const QuestionCardWithToggle = (props) => {
             setCheckOptionStatus={setCheckOptionStatus}
             postProperties={postProperties}
           />
+          <AddOptions
+            questStartData={questStartData}
+            addOptionField={addOptionField}
+            handleOpen={handleAddOption}
+            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+            handleToggleCheck={handleToggleCheck}
+            setAnswerSelection={setAnswerSelection}
+            setAddOptionField={setAddOptionField}
+            setRankedAnswers={setRankedAnswers}
+            handleStartTest={handleStartTest}
+            handleViewResults={handleViewResults}
+            answersSelection={answersSelection}
+          />
           <QuestInfoText questStartData={questStartData} show={true} />
         </>
       );
@@ -837,6 +850,19 @@ const QuestionCardWithToggle = (props) => {
             questSelection={questSelection}
             cardSize={cardSize}
             postProperties={postProperties}
+          />
+          <AddOptions
+            questStartData={questStartData}
+            addOptionField={addOptionField}
+            handleOpen={handleAddOption}
+            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+            handleToggleCheck={handleToggleCheck}
+            setAnswerSelection={setAnswerSelection}
+            setAddOptionField={setAddOptionField}
+            setRankedAnswers={setRankedAnswers}
+            handleStartTest={handleStartTest}
+            handleViewResults={handleViewResults}
+            answersSelection={answersSelection}
           />
           <QuestInfoText questStartData={questStartData} show={true} />
         </>
@@ -864,12 +890,9 @@ const QuestionCardWithToggle = (props) => {
             setRankedAnswers={setRankedAnswers}
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
-            handleOpen={handleAddOption}
-            title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleSubmit={handleSubmit}
             loading={loading}
             startTest={startTest}
-            addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
             checkOptionStatus={checkOptionStatus}
             postProperties={postProperties}
