@@ -40,7 +40,7 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
         ? 'h-[1.375rem] min-w-[4.875rem] rounded-[7.28px] border-[1.428px] border-[#389CE3] bg-gradient-to-tr px-[6.63px] py-[3.8px] text-[10px] font-semibold leading-normal text-[#389CE3] dark:border-gray-300 dark:text-gray-300 tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[15.2px] tablet:border-[3px] tablet:text-[20.73px]  tablet:leading-none laptop:rounded-[12px] laptop:px-[17px] laptop:text-[25px]'
         : '',
       variant === 'hollow-submit2'
-        ? 'h-[25px] min-w-[4.875rem] rounded-[0.28688rem] border-[1.428px] border-[#6BA5CF] bg-gradient-to-tr px-[6.63px] py-[3.8px] text-[10px] font-semibold leading-normal text-[#6BA5CF] dark:border-white-200 dark:bg-gray-200 dark:text-white-200  tablet:h-[40px] tablet:min-w-[10.8125rem] tablet:rounded-[9px] tablet:border-2 tablet:text-[1.25rem] tablet:leading-none laptop:px-[17px]'
+        ? 'h-[25px] min-w-[4.875rem] whitespace-nowrap rounded-[0.28688rem] border-[1.428px] border-[#6BA5CF] bg-gradient-to-tr px-1 py-[3.8px] text-[10px] font-semibold leading-normal text-[#6BA5CF] dark:border-white-200 dark:bg-gray-200 dark:text-white-200  tablet:h-[40px] tablet:min-w-[12rem] tablet:rounded-[9px] tablet:border-2 tablet:text-[1.25rem] tablet:leading-none laptop:w-full laptop:px-[17px]'
         : '',
       variant === 'submit-welcome'
         ? 'addoption-boxShadow min-w-[4.875rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[6.63px] py-[9px] text-[12px] font-semibold leading-[14.562px] text-white tablet:min-w-[10.8125rem] tablet:rounded-[11.7px] tablet:py-4 tablet:text-[30px] tablet:font-semibold tablet:leading-[36px] laptop:px-[17px] '

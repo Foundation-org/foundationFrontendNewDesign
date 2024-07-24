@@ -191,7 +191,7 @@ const StartTest = ({
                       ? rankedAnswers.length
                       : isFullScreen || location.pathname.startsWith('/p')
                         ? rankedAnswers.length
-                        : 8,
+                        : 10,
                   )
                   .map((item, index) => (
                     <SingleAnswerMultipleChoice
@@ -228,7 +228,7 @@ const StartTest = ({
                     />
                   ))}
               {showOptions.id !== questStartData._id &&
-                rankedAnswers?.length >= 8 &&
+                rankedAnswers?.length >= 10 &&
                 isFullScreen === undefined &&
                 !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
             </div>
@@ -253,7 +253,7 @@ const StartTest = ({
                         ? rankedAnswers.length
                         : isFullScreen || location.pathname.startsWith('/p')
                           ? rankedAnswers.length
-                          : 8,
+                          : 10,
                     )
                     .map((item, index) => (
                       <SingleAnswerRankedChoice
@@ -285,7 +285,7 @@ const StartTest = ({
                 </SortableContext>
               </DndContext>
               {showOptions.id !== questStartData._id &&
-                rankedAnswers?.length >= 8 &&
+                rankedAnswers?.length >= 10 &&
                 isFullScreen === undefined &&
                 !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
             </div>

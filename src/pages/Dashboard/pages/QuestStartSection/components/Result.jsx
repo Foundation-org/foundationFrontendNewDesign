@@ -372,7 +372,7 @@ const Result = (props) => {
                   ? sortedAnswers.length
                   : isFullScreen || location.pathname.startsWith('/p')
                     ? sortedAnswers.length
-                    : 8,
+                    : 10,
               )
               .map((item, index) => (
                 <SingleAnswerMultipleChoice
@@ -413,7 +413,7 @@ const Result = (props) => {
                 />
               ))}
             {showOptions.id !== props.questStartData._id &&
-              sortedAnswers?.length >= 8 &&
+              sortedAnswers?.length >= 10 &&
               isFullScreen === undefined &&
               !location.pathname.startsWith('/p') && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
@@ -442,7 +442,7 @@ const Result = (props) => {
                   ? sortedAnswers.length
                   : isFullScreen || location.pathname.startsWith('/p')
                     ? sortedAnswers.length
-                    : 8,
+                    : 10,
               )
               .map((item, index) => (
                 <div key={index + 1}>
@@ -477,7 +477,7 @@ const Result = (props) => {
                 </div>
               ))}
             {showOptions.id !== props.questStartData._id &&
-              sortedAnswers?.length >= 8 &&
+              sortedAnswers?.length >= 10 &&
               isFullScreen === undefined &&
               !location.pathname.startsWith('/p') && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
