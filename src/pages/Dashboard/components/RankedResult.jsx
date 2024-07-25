@@ -68,7 +68,7 @@ const RankedResult = (props) => {
           )}
           <div className="relative flex w-full justify-between">
             <div
-              className="absolute top-0 block h-[5px] bg-[#4DD896] tablet:h-[10px]"
+              className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
               style={{
                 width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
               }}
