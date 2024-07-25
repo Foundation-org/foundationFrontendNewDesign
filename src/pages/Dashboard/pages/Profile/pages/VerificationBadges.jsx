@@ -97,9 +97,6 @@ const VerificationBadges = () => {
   const handleBadgesClose = () => setModalVisible(false);
   const checkSocial = (name) => persistedUserInfo?.badges?.some((i) => i.accountName === name);
 
-  console.log('persistedUserInfo', persistedUserInfo?.badges);
-  console.log('check Social', checkSocial('Farcaster'));
-
   const handleRemoveBadge = async (accountName) => {
     const findBadge = persistedUserInfo.badges.filter((item) => {
       if (item.accountName === accountName) {

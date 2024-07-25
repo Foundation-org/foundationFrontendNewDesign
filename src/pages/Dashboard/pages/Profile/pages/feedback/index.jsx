@@ -1,5 +1,4 @@
 import { GrClose } from 'react-icons/gr';
-import { FaSpinner } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
@@ -10,12 +9,12 @@ import { feedbackFilters, updateFeedbackSearch } from '../../../../../../feature
 import * as questUtilsActions from '../../../../../../features/quest/utilsSlice';
 import ContentCard from '../../../../../../components/ContentCard';
 import api from '../../../../../../services/api/Axios';
+import FeedEndStatus from '../../../../../../components/FeedEndStatus';
 
 export default function Feedback() {
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const getFeedbackFilters = useSelector(feedbackFilters);
   const [feedbackSearch, setFeedbackSearch] = useState('');
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
@@ -86,6 +85,14 @@ export default function Feedback() {
     }),
   );
 
+  useEffect(() => {
+    if (data?.pages[0].length !== 0) {
+      dispatch(questUtilsActions.setAreFeedbackPosts(true));
+    } else {
+      dispatch(questUtilsActions.setAreFeedbackPosts(false));
+    }
+  }, [data]);
+
   return (
     <div>
       {/* Summary Section */}
@@ -113,6 +120,7 @@ export default function Feedback() {
           </div>
         </div>
       </ContentCard>
+
       {/* Main Content */}
       {questUtils.areFeedBackPosts && (
         <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
@@ -157,67 +165,16 @@ export default function Feedback() {
       <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-black">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
           {content}
-          {!isFetching ? (
-            <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
-              {getFeedbackFilters.searchData && data?.pages[0].length == 0 ? (
-                <div className="my-[15vh] flex  flex-col items-center justify-center">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
-                    alt="noposts image"
-                    className="h-[173px] w-[160px]"
-                  />
-                  <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                    <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
-                      No matching posts found!
-                    </p>
-                    <button
-                      className={`${
-                        persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
-                      onClick={() => {
-                        dispatch(updateFeedbackSearch(''));
-                      }}
-                    >
-                      Clear Search
-                    </button>
-                  </div>
-                </div>
-              ) : !getFeedbackFilters.searchData && data?.pages[0].length === 0 ? (
-                dispatch(questUtilsActions.setAreFeedbackPosts(false)) && (
-                  <p className="text-center text-[4vw] laptop:text-[2vw]">
-                    <b>No feedback on your posts!</b>
-                  </p>
-                )
-              ) : !getFeedbackFilters.searchData && data?.pages[0].length !== 0 ? (
-                dispatch(questUtilsActions.setAreFeedbackPosts(true)) && <></>
-              ) : !getFeedbackFilters.searchData ? (
-                <p className="text-center text-[4vw] laptop:text-[2vw]">
-                  <b>No more posts!</b>
-                </p>
-              ) : (
-                <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                  <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
-                    You are all caught up!
-                  </p>
-                  <button
-                    className={`${
-                      persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                    }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
-                    onClick={() => {
-                      dispatch(updateFeedbackSearch(''));
-                    }}
-                  >
-                    Clear Search
-                  </button>
-                </div>
-              )}
-              <div></div>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center">
-              <FaSpinner className="text-blue animate-spin text-[10vw] tablet:text-[4vw]" />
-            </div>
-          )}
+          <FeedEndStatus
+            isFetching={isFetching}
+            searchData={getFeedbackFilters.searchData}
+            data={data}
+            noMatchText="No matching posts found!"
+            clearSearchText="Clear Search"
+            noDataText="No feedback on your posts!"
+            noMoreDataText="No more posts!"
+            clearSearchAction={() => dispatch(updateFeedbackSearch(''))}
+          />
         </div>
       </div>
     </div>

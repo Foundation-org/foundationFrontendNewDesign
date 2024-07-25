@@ -108,33 +108,33 @@ const QuestBottombar = ({
   const handleFbOpen = () => setFbModal(true);
   const handleFbClose = () => setFbModal(false);
 
+  const calculateTimeAgo = () => {
+    const currentDate = new Date();
+    const createdAtDate = new Date(time);
+
+    if (isNaN(createdAtDate.getTime())) {
+      setTimeAgo('Invalid date');
+      return;
+    }
+
+    const timeDifference = currentDate - createdAtDate;
+    const seconds = Math.floor(Math.max(timeDifference / 1000, 0));
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      setTimeAgo(`${days} ${days === 1 ? 'day' : 'days'} ago`);
+    } else if (hours > 0) {
+      setTimeAgo(`${hours} ${hours === 1 ? 'hour' : 'hours'} ago`);
+    } else if (minutes > 0) {
+      setTimeAgo(`${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`);
+    } else {
+      setTimeAgo(`${seconds} ${seconds === 1 ? 'second' : 'seconds'} ago`);
+    }
+  };
+
   useEffect(() => {
-    const calculateTimeAgo = () => {
-      const currentDate = new Date();
-      const createdAtDate = new Date(time);
-
-      if (isNaN(createdAtDate.getTime())) {
-        setTimeAgo('Invalid date');
-        return;
-      }
-
-      const timeDifference = currentDate - createdAtDate;
-      const seconds = Math.floor(Math.max(timeDifference / 1000, 0));
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
-
-      if (days > 0) {
-        setTimeAgo(`${days} ${days === 1 ? 'day' : 'days'} ago`);
-      } else if (hours > 0) {
-        setTimeAgo(`${hours} ${hours === 1 ? 'hour' : 'hours'} ago`);
-      } else if (minutes > 0) {
-        setTimeAgo(`${minutes} ${minutes === 1 ? 'min' : 'mins'} ago`);
-      } else {
-        setTimeAgo(`${seconds} ${seconds === 1 ? 'sec' : 'secs'} ago`);
-      }
-    };
-
     calculateTimeAgo();
   }, [time]);
 
@@ -172,7 +172,7 @@ const QuestBottombar = ({
   } else ratingImage = 'post-a.svg';
 
   return (
-    <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
+    <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
       <ShowHidePostPopup
         handleClose={showHidePostClose}
         setCheckboxStates={setCheckboxStates}
@@ -199,7 +199,7 @@ const QuestBottombar = ({
             alt="eye-cut"
             className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
-          <h1 className="text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-600">
+          <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-600 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {questStartData?.userQuestSetting?.hiddenMessage}
           </h1>
         </div>
@@ -219,7 +219,7 @@ const QuestBottombar = ({
               className=" h-[15px] w-full tablet:h-[23px]"
             />
           ) : null}
-          <h1 className="relative text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-200 ">
+          <h1 className="relative text-[0.6rem] font-medium text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] ">
             {questStartData.QuestTopic}
           </h1>
         </div>
@@ -339,7 +339,7 @@ const QuestBottombar = ({
           />
         )}
 
-        <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
+        <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
           {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null} {timeAgo}
         </h4>
       </div>
@@ -396,7 +396,7 @@ const QuestBottombar = ({
             <div className="flex justify-center ">
               {isFullScreen === undefined ? (
                 <div
-                  className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
+                  className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
                   onClick={() => {
                     navigate('/post/isfullscreen', {
                       state: { questId: questStartData._id },

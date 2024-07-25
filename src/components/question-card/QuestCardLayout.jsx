@@ -242,11 +242,11 @@ const QuestCardLayout = ({
   const handleClose = () => setModalVisible(false);
   return (
     <div
-      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white tablet:rounded-[15px] dark:border-gray-100 dark:bg-gray-200"
+      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
       ref={imageGetter}
     >
       {questStartData?.suppressed && (
-        <div className="flex items-center justify-between rounded-t-[12.3px] border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px] dark:border-gray-100 dark:bg-red-300 dark:text-red-400">
+        <div className="flex items-center justify-between rounded-t-[12.3px] border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 dark:border-gray-100 dark:bg-red-300 dark:text-red-400 tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
           <h4 className="">SUPPRESSED</h4>
           {questStartData.uuid === localStorage.getItem('uuid') && (
             <Link to="/profile/feedback" className="underline">
@@ -257,9 +257,9 @@ const QuestCardLayout = ({
       )}
 
       {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
-        <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5 dark:border-gray-100">
+        <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] dark:border-gray-100 tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
           <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
-            <h1 className="truncate text-wrap text-[10px] font-semibold text-gray-150 tablet:text-[20px] tablet:font-medium dark:text-white-200">
+            <h1 className="truncate text-wrap text-[10px] font-semibold text-gray-150 dark:text-white-200 tablet:text-[20px] tablet:font-medium">
               {url}
             </h1>
           </div>
@@ -344,6 +344,7 @@ const QuestCardLayout = ({
           id={questStartData._id}
         />
       )}
+
       <QuestBottombar
         uniqueShareLink={questStartData.uniqueShareLink}
         time={

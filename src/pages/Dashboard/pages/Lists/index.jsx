@@ -17,7 +17,6 @@ import ListItem from './components/list-item';
 import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import ContentCard from '../../../../components/ContentCard';
 import SummaryCard from '../../../../components/SummaryCard';
 
 const Lists = () => {
@@ -54,7 +53,6 @@ const Lists = () => {
   const {
     data: listData = [],
     isError,
-    isPending,
     isSuccess,
   } = useQuery({
     queryFn: () => fetchLists(),
@@ -62,7 +60,9 @@ const Lists = () => {
   });
 
   useEffect(() => {
-    setItems(listData);
+    if (isSuccess) {
+      setItems(listData);
+    }
   }, [isSuccess, listData]);
 
   if (isError) {
