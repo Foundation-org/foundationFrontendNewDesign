@@ -54,6 +54,7 @@ export default {
       'red-300': '#280202',
       'red-400': '#FF4057',
       'green-100': '#4DD896',
+      'green-200': '#0fb063',
       'gold-100': '#7A7016',
       'yellow-200': '#FFC300',
     },

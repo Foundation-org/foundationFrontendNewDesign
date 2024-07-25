@@ -488,6 +488,9 @@ const ButtonGroup = ({
           <div className="flex w-full items-center justify-between">
             <Button
               variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-submit' : 'submit'}
+              className={
+                persistedUserInfo?.uuid !== questStartData?.uuid && 'to-green-200 from-green-200 bg-gradient-to-tr'
+              }
               onClick={openFeedbackAndVisiblePopup}
             >
               Feedback / Hide
