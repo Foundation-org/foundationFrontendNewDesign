@@ -247,12 +247,12 @@ const ButtonGroup = ({
             </Button>
             {/* ) : null} */}
             {questStartData.userQuestSetting.hidden ? (
-              <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
+              <Button variant="danger" onClick={showHidePostOpen} className={'bg-red-400'}>
                 Unhide
               </Button>
             ) : (
-              <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
-                hide
+              <Button variant="danger" onClick={showHidePostOpen} className={'bg-red-400'}>
+                Hide
               </Button>
             )}
             <UnHidePostPopup

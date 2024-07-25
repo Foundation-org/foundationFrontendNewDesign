@@ -749,7 +749,7 @@ const VerificationBadges = () => {
                 cssClass={'hideBack'}
               >
                 <div
-                  className={`${checkSocial('instagram') ? 'bg-[#FF4057] text-white dark:bg-[#C13232]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] text-white dark:bg-[#252D37] dark:from-[#252D37] dark:to-[#252D37]'} flex h-[21.5px] w-[120px] items-center justify-center rounded-[1.31vw] text-[2.65vw] font-semibold leading-normal tablet:h-[50px] tablet:w-[207px] tablet:rounded-[8px] tablet:text-[20px] laptop:rounded-[15px]`}
+                  className={`${checkSocial('instagram') ? 'bg-red-400 text-white dark:bg-[#C13232]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] text-white dark:bg-[#252D37] dark:from-[#252D37] dark:to-[#252D37]'} flex h-[21.5px] w-[120px] items-center justify-center rounded-[1.31vw] text-[2.65vw] font-semibold leading-normal tablet:h-[50px] tablet:w-[207px] tablet:rounded-[8px] tablet:text-[20px] laptop:rounded-[15px]`}
                 >
                   {checkSocial('instagram') ? '' : 'Add'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">

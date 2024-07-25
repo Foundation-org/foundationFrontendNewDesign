@@ -16,6 +16,8 @@ import { isImageUrl } from '../../utils/embeddedutils';
 import { EmbededImage } from './EmbededImage';
 import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 import showToast from '../ui/Toast';
+import Topbar from '../../pages/Dashboard/components/Topbar';
+import PostTopBar from './PostTopBar';
 
 const data = [
   {
@@ -245,6 +247,17 @@ const QuestCardLayout = ({
       className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
       ref={imageGetter}
     >
+      <PostTopBar
+        questStartData={questStartData}
+        postProperties={postProperties}
+        time={
+          postProperties === 'HiddenPosts'
+            ? questStartData.userQuestSetting.feedbackTime
+            : postProperties === 'SharedLinks'
+              ? questStartData.userQuestSetting.sharedTime
+              : questStartData.createdAt
+        }
+      />
       {questStartData?.suppressed && (
         <div className="flex items-center justify-between rounded-t-[12.3px] border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 dark:border-gray-100 dark:bg-red-300 dark:text-red-400 tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
           <h4 className="">SUPPRESSED</h4>
@@ -346,26 +359,27 @@ const QuestCardLayout = ({
       )}
 
       <QuestBottombar
-        uniqueShareLink={questStartData.uniqueShareLink}
-        time={
-          postProperties === 'HiddenPosts'
-            ? questStartData.userQuestSetting.feedbackTime
-            : postProperties === 'SharedLinks'
-              ? questStartData.userQuestSetting.sharedTime
-              : questStartData.createdAt
-        }
-        id={questStartData._id}
-        createdBy={questStartData.uuid}
-        title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        question={questStartData.Question}
-        img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
-        alt={'badge'}
-        badgeCount={questStartData.getUserBadge?.badges?.length}
         questStartData={questStartData}
         postProperties={postProperties}
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
-        // getImage={getImage}
         setDelModalVisible={setModalVisible}
+        createdBy={questStartData.uuid}
+        // time={
+        //   postProperties === 'HiddenPosts'
+        //     ? questStartData.userQuestSetting.feedbackTime
+        //     : postProperties === 'SharedLinks'
+        //       ? questStartData.userQuestSetting.sharedTime
+        //       : questStartData.createdAt
+        // }
+        // uniqueShareLink={questStartData.uniqueShareLink}
+        // id={questStartData._id}
+        // title={getQuestionTitle(questStartData.whichTypeQuestion)}
+        // question={questStartData.Question}
+        // img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
+        // alt={'badge'}
+        // badgeCount={questStartData.getUserBadge?.badges?.length}
+
+        // getImage={getImage}
       />
       {/* <ShowHidePostPopup
         handleClose={showHidePostClose}
