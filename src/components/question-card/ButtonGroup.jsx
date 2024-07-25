@@ -36,7 +36,7 @@ const ButtonGroup = ({
   const navigate = useNavigate();
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const persistedContants = useSelector(getConstantsValues);
   const feedbackAndVisibilityRef = useRef();
 
@@ -205,8 +205,8 @@ const ButtonGroup = ({
     questStartData.usersChangeTheirAns,
   );
 
-  const showHidePostOpen = () => setModalVisible(true);
-  const showHidePostClose = () => setModalVisible(false);
+  const showHidePostOpen = (type) => setModalVisible({ state: true, type });
+  const showHidePostClose = () => setModalVisible({ state: false, type: '' });
 
   const showDisableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addDisabledPostId(null)),
@@ -247,11 +247,23 @@ const ButtonGroup = ({
             </Button>
             {/* ) : null} */}
             {questStartData.userQuestSetting.hidden ? (
-              <Button variant="danger" onClick={showHidePostOpen} className={'bg-red-400'}>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  showHidePostOpen('hidden');
+                }}
+                className={'bg-red-400'}
+              >
                 Unhide
               </Button>
             ) : (
-              <Button variant="danger" onClick={showHidePostOpen} className={'bg-red-400'}>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  showHidePostOpen('unhidden');
+                }}
+                className={'bg-red-400'}
+              >
                 Hide
               </Button>
             )}

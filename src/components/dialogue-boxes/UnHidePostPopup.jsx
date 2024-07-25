@@ -1,23 +1,18 @@
 import PopUp from '../ui/PopUp';
-import { Button } from '../ui/Button';
-import { useSelector } from 'react-redux';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateHiddenQuest } from '../../services/api/questsApi';
-import { toast } from 'sonner';
-import { useDispatch } from 'react-redux';
-import { removeHiddenPosts } from '../../features/quest/utilsSlice';
-import { useState } from 'react';
-import { FaSpinner } from 'react-icons/fa';
 import showToast from '../ui/Toast';
+import { Button } from '../ui/Button';
+import { FaSpinner } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { removeHiddenPosts } from '../../features/quest/utilsSlice';
+import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 
 export default function UnHidePostPopup({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
-  const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { mutateAsync: hidePost } = useMutation({
+  const { mutateAsync: unHidePost, isPending: unHidePostLoading } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
       showToast('success', 'postUnhidden');
@@ -33,13 +28,31 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
         // }
       });
 
-      setIsLoading(false);
       handleClose();
     },
     onError: (err) => {
-      setIsLoading(false);
       console.log(err);
       showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+    },
+  });
+
+  const { mutateAsync: hidePost, isPending: hidePostLoading } = useMutation({
+    mutationFn: hideQuest,
+    onSuccess: (resp) => {
+      // dispatch(addHiddenPosts(resp.data.data.questForeignKey));
+      showToast('success', 'postHidden');
+      queryClient.invalidateQueries(['userInfo']);
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        };
+      });
+
+      handleClose();
+    },
+    onError: (err) => {
+      console.log(err);
     },
   });
 
@@ -47,7 +60,7 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/unhide.svg`}
       title={'Unhide Post'}
-      open={modalVisible}
+      open={modalVisible.state}
       handleClose={handleClose}
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
@@ -58,18 +71,31 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
           <Button
             variant={'submit'}
             onClick={() => {
-              setIsLoading(true);
-              hidePost({
-                uuid: persistedUserInfo?.uuid,
-                questForeignKey: questStartData._id,
-                hidden: false,
-                hiddenMessage: '',
-              });
-              dispatch(removeHiddenPosts(questStartData._id));
+              if (modalVisible.type === 'hidden') {
+                unHidePost({
+                  uuid: persistedUserInfo?.uuid,
+                  questForeignKey: questStartData._id,
+                  hidden: false,
+                  hiddenMessage: '',
+                });
+                dispatch(removeHiddenPosts(questStartData._id));
+              } else {
+                hidePost({
+                  uuid: persistedUserInfo?.uuid,
+                  questForeignKey: questStartData._id,
+                  hidden: true,
+                  hiddenMessage: selectedTitle,
+                  Question: questStartData.Question,
+                });
+              }
             }}
-            disabled={isLoading}
+            disabled={hidePostLoading || unHidePostLoading}
           >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
+            {(hidePostLoading || unHidePostLoading) === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              'Yes'
+            )}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
             No
