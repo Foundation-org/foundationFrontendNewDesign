@@ -349,7 +349,7 @@ const QuestCardLayout = ({
         uniqueShareLink={questStartData.uniqueShareLink}
         time={
           postProperties === 'HiddenPosts'
-            ? questStartData.userQuestSetting.hiddenTime
+            ? questStartData.userQuestSetting.feedbackTime
             : postProperties === 'SharedLinks'
               ? questStartData.userQuestSetting.sharedTime
               : questStartData.createdAt

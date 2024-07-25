@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
+import { useMutation } from '@tanstack/react-query';
+import { createFeedback } from '../../services/api/questsApi';
 import { Button } from '../ui/Button';
 import { toast } from 'sonner';
-import PopUp from '../ui/PopUp';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import * as questsActions from '../../features/quest/utilsSlice';
 import { useNavigate } from 'react-router-dom';
+import PopUp from '../ui/PopUp';
 import showToast from '../ui/Toast';
+import HidePostPopup from './HidePostPopup';
 
 const customStyle = {
   width: 'fit-content',
@@ -24,13 +23,13 @@ export default function ShowHidePostPopup({
   setCheckboxStates,
   data,
 }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
   const [selectedTitle, setSelectedTitle] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [hidePostModal, setHidePostModal] = useState(false);
+
+  const handleHidePostModalClose = () => setHidePostModal(false);
 
   const handleCheckboxChange = (index) => {
     const newCheckboxStates = new Array(data.length).fill(false);
@@ -40,56 +39,20 @@ export default function ShowHidePostPopup({
     setSelectedTitle(data[index].title);
   };
 
-  const { mutateAsync: hidePost } = useMutation({
-    mutationFn: hideQuest,
+  const { mutateAsync: handleCreateFeedback, isPending } = useMutation({
+    mutationFn: createFeedback,
     onSuccess: (resp) => {
-      dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-      showToast('success', 'postHidden');
-      queryClient.invalidateQueries(['userInfo']);
-      queryClient.setQueriesData(['posts'], (oldData) => {
-        return {
-          ...oldData,
-          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-        };
-      });
-
-      setIsLoading(false);
-      handleClose();
+      if (resp.status === 201) {
+        toast.success(resp.data.message);
+        setHidePostModal(true);
+      }
     },
     onError: (err) => {
-      setIsLoading(false);
-      console.log(err);
-    },
-  });
-
-  const { mutateAsync: updateHiddenPost } = useMutation({
-    mutationFn: updateHiddenQuest,
-    onSuccess: (resp) => {
-      dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-      showToast('success', 'postHidden');
-      queryClient.invalidateQueries(['userInfo']);
-
-      queryClient.setQueriesData(['posts'], (oldData) => {
-        // if (oldData.pages[0].length <= 1) {
-        //   queryClient.invalidateQueries(['posts']);
-        // } else {
-        return {
-          ...oldData,
-          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-        };
-      });
-
-      setIsLoading(false);
-      handleClose();
-    },
-    onError: (err) => {
-      setIsLoading(false);
-      console.log(err);
+      toast.error(err.response.data.message);
     },
   });
 
   const handleHiddenPostApiCall = () => {
-    setIsLoading(true);
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>
@@ -100,30 +63,18 @@ export default function ShowHidePostPopup({
           to unlock this feature
         </p>,
       );
-      setIsLoading(false);
       return;
     } else {
       if (selectedTitle === '') {
         showToast('warning', 'hiddenReason');
-        setIsLoading(false);
         return;
       } else {
-        if (questStartData?.userQuestSetting) {
-          updateHiddenPost({
-            uuid: persistedUserInfo?.uuid,
-            questForeignKey: questStartData._id,
-            hidden: true,
-            hiddenMessage: selectedTitle,
-          });
-        } else {
-          hidePost({
-            uuid: persistedUserInfo?.uuid,
-            questForeignKey: questStartData._id,
-            hidden: true,
-            hiddenMessage: selectedTitle,
-            Question: questStartData.Question,
-          });
-        }
+        handleCreateFeedback({
+          uuid: persistedUserInfo?.uuid,
+          questForeignKey: questStartData._id,
+          hiddenMessage: selectedTitle,
+          Question: questStartData.Question,
+        });
       }
     }
   };
@@ -138,6 +89,17 @@ export default function ShowHidePostPopup({
       customStyle={customStyle}
     >
       <div className="px-[25px] py-[13px] tablet:px-[50px] tablet:py-[27px]">
+        {hidePostModal && (
+          <HidePostPopup
+            handleClose={handleHidePostModalClose}
+            modalVisible={hidePostModal}
+            title={'Hide Post'}
+            image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+            questStartData={questStartData}
+            selectedTitle={selectedTitle}
+            dispatch={dispatch}
+          />
+        )}
         <div className="flex flex-col gap-[5px] tablet:gap-3">
           {data
             .filter((filterItem) => (questStartData.usersAddTheirAns ? ![4].includes(filterItem.id) : true))
@@ -145,7 +107,7 @@ export default function ShowHidePostPopup({
               <div
                 key={index + 1}
                 id={item.id}
-                className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-white-500 px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3 dark:border-gray-100 dark:bg-accent-100"
+                className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-white-500 px-[10px] py-[5px] dark:border-gray-100 dark:bg-accent-100 tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
                 onClick={() => handleCheckboxChange(index)}
               >
                 <div id="custom-checkbox-popup" className="flex h-full items-center">
@@ -156,7 +118,7 @@ export default function ShowHidePostPopup({
                     onChange={() => handleCheckboxChange(index)}
                   />
                 </div>
-                <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] tablet:text-[19px] tablet:leading-[23px] dark:text-gray-300">
+                <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] dark:text-gray-300 tablet:text-[19px] tablet:leading-[23px]">
                   {item.title}
                 </p>
               </div>
@@ -173,11 +135,12 @@ export default function ShowHidePostPopup({
           <Button
             variant={'submit'}
             className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+            disabled={isPending}
             onClick={() => {
               handleHiddenPostApiCall();
             }}
           >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
           </Button>
         </div>
       </div>

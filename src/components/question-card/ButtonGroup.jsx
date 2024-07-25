@@ -237,18 +237,24 @@ const ButtonGroup = ({
       <div>
         {startTest !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-            {getButtonText(questStartData.startStatus) !== 'Completed' ? (
-              <Button
-                variant={'submit'}
-                onClick={startHiddenTest}
-                className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
-              >
-                View
-              </Button>
-            ) : null}
-            <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
-              Unhide
+            {/* {getButtonText(questStartData.startStatus) !== 'Completed' ? ( */}
+            <Button
+              variant={'submit'}
+              onClick={startHiddenTest}
+              className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
+            >
+              View
             </Button>
+            {/* ) : null} */}
+            {questStartData.userQuestSetting.hidden ? (
+              <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
+                Unhide
+              </Button>
+            ) : (
+              <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
+                hide
+              </Button>
+            )}
             <UnHidePostPopup
               handleClose={showHidePostClose}
               modalVisible={modalVisible}
@@ -436,19 +442,8 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id) {
     return (
-      <div className="flex w-full justify-between gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
+      <div className="flex w-full justify-end gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
         <FeedbackAndVisibility ref={feedbackAndVisibilityRef} questStartData={questStartData} />
-        <Button
-          variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-submit' : 'submit'}
-          onClick={openFeedbackAndVisiblePopup}
-          // disabled={persistedUserInfo?.uuid === questStartData?.uuid ? true : false}
-        >
-          {/* {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Feedback'} */}
-          Feedback
-          <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-            (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-          </span>
-        </Button>
         {questStartData.startStatus === 'change answer' ? (
           <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
             <Button
@@ -478,27 +473,38 @@ const ButtonGroup = ({
             </Button>
           </div>
         ) : (
-          <Button
-            id={`submit-${questStartData._id}`}
-            variant="submit"
-            onClick={() => handleSubmit()}
-            disabled={
-              loading === true
-                ? true
-                : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                  ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                    ? false
-                    : true
-                  : false
-            }
-          >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-            {questStartData.startStatus !== 'change answer' && (
+          <div className="flex w-full items-center justify-between">
+            <Button
+              variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-submit' : 'submit'}
+              onClick={openFeedbackAndVisiblePopup}
+            >
+              Feedback / Hide
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
               </span>
-            )}
-          </Button>
+            </Button>
+            <Button
+              id={`submit-${questStartData._id}`}
+              variant="submit"
+              onClick={() => handleSubmit()}
+              disabled={
+                loading === true
+                  ? true
+                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                      ? false
+                      : true
+                    : false
+              }
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+              {questStartData.startStatus !== 'change answer' && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                </span>
+              )}
+            </Button>
+          </div>
         )}
       </div>
     );
@@ -506,21 +512,9 @@ const ButtonGroup = ({
 
   /* Change */
   return (
-    <div className="flex w-full justify-between px-[14.4px] tablet:px-[3.44rem]">
+    <div className="px-[14.4px] tablet:px-[3.44rem]">
       {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
-        <div className="flex w-full justify-between">
-          <FeedbackAndVisibility ref={feedbackAndVisibilityRef} questStartData={questStartData} />
-          <Button
-            variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-submit' : 'submit'}
-            onClick={openFeedbackAndVisiblePopup}
-            // disabled={persistedUserInfo?.uuid === questStartData?.uuid ? true : false}
-          >
-            {/* {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Feedback'} */}
-            Feedback
-            <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-              (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-            </span>
-          </Button>
+        <div className="flex w-full justify-end">
           <Button
             variant={result === ', you are good to go' ? 'change' : 'change-outline'}
             disabled={result === ', you are good to go' ? false : true}
