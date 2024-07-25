@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import { getConstantsValues } from '../../features/constants/constantsSlice';
+import FeedbackAndVisibility from '../../pages/Dashboard/pages/Profile/pages/feedback-given/component/FeedbackAndVisibility';
 
 const ButtonGroup = ({
   questStartData,
@@ -37,6 +38,7 @@ const ButtonGroup = ({
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [modalVisible, setModalVisible] = useState(false);
   const persistedContants = useSelector(getConstantsValues);
+  const feedbackAndVisibilityRef = useRef();
 
   let filterState;
 
@@ -45,6 +47,12 @@ const ButtonGroup = ({
   } else {
     filterState = useSelector(filterActions.getFilters);
   }
+
+  const openFeedbackAndVisiblePopup = () => {
+    if (feedbackAndVisibilityRef.current) {
+      feedbackAndVisibilityRef.current.showHidePostOpen();
+    }
+  };
 
   const showGuestSignUpToastWarning = () => {
     toast.warning(
@@ -428,7 +436,19 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id) {
     return (
-      <div className="flex w-full justify-end gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
+      <div className="flex w-full justify-between gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
+        <FeedbackAndVisibility ref={feedbackAndVisibilityRef} questStartData={questStartData} />
+        <Button
+          variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-submit' : 'submit'}
+          onClick={openFeedbackAndVisiblePopup}
+          // disabled={persistedUserInfo?.uuid === questStartData?.uuid ? true : false}
+        >
+          {/* {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Feedback'} */}
+          Feedback
+          <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+            (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+          </span>
+        </Button>
         {questStartData.startStatus === 'change answer' ? (
           <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
             <Button
@@ -458,29 +478,27 @@ const ButtonGroup = ({
             </Button>
           </div>
         ) : (
-          <div className="flex w-full justify-end">
-            <Button
-              id={`submit-${questStartData._id}`}
-              variant="submit"
-              onClick={() => handleSubmit()}
-              disabled={
-                loading === true
-                  ? true
-                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                      ? false
-                      : true
-                    : false
-              }
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              {questStartData.startStatus !== 'change answer' && (
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-                </span>
-              )}
-            </Button>
-          </div>
+          <Button
+            id={`submit-${questStartData._id}`}
+            variant="submit"
+            onClick={() => handleSubmit()}
+            disabled={
+              loading === true
+                ? true
+                : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                  ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                    ? false
+                    : true
+                  : false
+            }
+          >
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            {questStartData.startStatus !== 'change answer' && (
+              <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+              </span>
+            )}
+          </Button>
         )}
       </div>
     );
@@ -488,9 +506,21 @@ const ButtonGroup = ({
 
   /* Change */
   return (
-    <div className="flex w-full justify-end px-[14.4px] tablet:px-[3.44rem]">
+    <div className="flex w-full justify-between px-[14.4px] tablet:px-[3.44rem]">
       {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
-        <div className="flex w-full justify-end">
+        <div className="flex w-full justify-between">
+          <FeedbackAndVisibility ref={feedbackAndVisibilityRef} questStartData={questStartData} />
+          <Button
+            variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-submit' : 'submit'}
+            onClick={openFeedbackAndVisiblePopup}
+            // disabled={persistedUserInfo?.uuid === questStartData?.uuid ? true : false}
+          >
+            {/* {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Feedback'} */}
+            Feedback
+            <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+              (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+            </span>
+          </Button>
           <Button
             variant={result === ', you are good to go' ? 'change' : 'change-outline'}
             disabled={result === ', you are good to go' ? false : true}

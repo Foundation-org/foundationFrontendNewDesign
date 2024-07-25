@@ -17,37 +17,6 @@ import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 import showToast from '../ui/Toast';
 
-const data = [
-  {
-    id: 1,
-    title: 'Does not apply to me',
-  },
-  {
-    id: 2,
-    title: 'Not interested',
-  },
-  {
-    id: 3,
-    title: 'Has Mistakes or Errors',
-  },
-  {
-    id: 4,
-    title: 'Needs More Options',
-  },
-  {
-    id: 5,
-    title: 'Unclear / Doesn’t make Sense',
-  },
-  {
-    id: 6,
-    title: 'Duplicate / Similar Post',
-  },
-  {
-    id: 7,
-    title: 'Historical / Past Event',
-  },
-];
-
 const QuestBottombar = ({
   time,
   id,
@@ -75,9 +44,7 @@ const QuestBottombar = ({
   const [emailModal, setEmailModal] = useState(false);
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [addToList, setAddToList] = useState(false);
-  const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
 
   const handleCopyOpen = () => {
     if (persistedUserInfo?.role === 'guest') {
@@ -146,19 +113,6 @@ const QuestBottombar = ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
   };
-  const showHidePostOpen = () => {
-    if (questStartData.uuid === persistedUserInfo.uuid) {
-      showToast('warning', 'hidingOwnPost');
-      return;
-    }
-
-    setCheckboxStates(data.map(() => false));
-    setModalVisible(true);
-  };
-
-  const showHidePostClose = () => {
-    setModalVisible(false);
-  };
 
   const addToListPopupClose = () => {
     setAddToList(false);
@@ -173,14 +127,6 @@ const QuestBottombar = ({
 
   return (
     <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
-      <ShowHidePostPopup
-        handleClose={showHidePostClose}
-        setCheckboxStates={setCheckboxStates}
-        checkboxStates={checkboxStates}
-        data={data}
-        modalVisible={modalVisible}
-        questStartData={questStartData}
-      />
       {addToList && (
         <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
       )}
@@ -376,14 +322,6 @@ const QuestBottombar = ({
                 <CopyDialogue handleClose={handleCopyClose} questStartData={questStartData} />
               </BasicModal>
             </div>
-          )}
-          {postProperties === 'HiddenPosts' ? null : postProperties === 'SharedLinks' ? null : (
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
-              alt="eye-latest"
-              className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
-              onClick={showHidePostOpen}
-            />
           )}
 
           {postProperties !== 'HiddenPosts' &&
