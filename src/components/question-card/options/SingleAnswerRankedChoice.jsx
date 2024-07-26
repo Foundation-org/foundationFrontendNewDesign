@@ -319,18 +319,23 @@ const SingleAnswerRankedChoice = (props) => {
       </div>
       {/* =============== To Display Contention and Trash Right of Option */}
       {props.postProperties === 'HiddenPosts' ? (
-        <div className="flex w-12 min-w-12 items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
+        <div className="flex w-12 min-w-12 items-center pl-3 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
       ) : props.btnText !== 'Results' ? (
-        <div className="flex w-12 min-w-12 items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px]">
+        <div className="flex w-12 min-w-12 items-center tablet:w-8 tablet:justify-center ">
           {props.deleteable ? (
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
-              alt="trash"
-              className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-              onClick={() => handleDeleteOption(props.number)}
-            />
+            <div className="pl-2 tablet:pl-[5px]">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
+                alt="trash"
+                className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                onClick={() => handleDeleteOption(props.number)}
+              />
+            </div>
           ) : (
-            <div className="flex items-center gap-1 laptop:gap-[18px]" onClick={handleContendPopup}>
+            <div
+              className="flex items-center gap-1 pl-3 tablet:pl-[5px] laptop:gap-[18px]"
+              onClick={handleContendPopup}
+            >
               <div id="custom-yello-checkbox" className="flex h-full items-center ">
                 <div className="cursor-pointer">
                   <ContentionIcon

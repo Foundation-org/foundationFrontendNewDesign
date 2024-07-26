@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { createFeedback } from '../../services/api/questsApi';
 import { Button } from '../ui/Button';
@@ -10,6 +10,7 @@ import PopUp from '../ui/PopUp';
 import showToast from '../ui/Toast';
 import HidePostPopup from './HidePostPopup';
 import { useQueryClient } from '@tanstack/react-query';
+import PickHistoricalDateTime from './PickHistoricalDateTime';
 
 const customStyle = {
   width: 'fit-content',
@@ -30,7 +31,10 @@ export default function ShowHidePostPopup({
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedTitle, setSelectedTitle] = useState('');
   const [hidePostModal, setHidePostModal] = useState(false);
+  const [pickHistoricalDateModal, setPickHistoricalDateModal] = useState(false);
+  const [historicalDate, setHistoricalDate] = useState('');
 
+  const handlePickHistoricalDateModalClose = () => setPickHistoricalDateModal(false);
   const handleHidePostModalClose = () => setHidePostModal(false);
 
   const handleCheckboxChange = (index) => {
@@ -89,6 +93,10 @@ export default function ShowHidePostPopup({
     }
   };
 
+  useEffect(() => {
+    if (selectedTitle === 'Historical / Past Event') setPickHistoricalDateModal(true);
+  }, [selectedTitle]);
+
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-latest-cut.svg`}
@@ -99,6 +107,16 @@ export default function ShowHidePostPopup({
       customStyle={customStyle}
     >
       <div className="px-[25px] py-[13px] tablet:px-[50px] tablet:py-[27px]">
+        {pickHistoricalDateModal && (
+          <PickHistoricalDateTime
+            handleClose={handlePickHistoricalDateModalClose}
+            modalVisible={pickHistoricalDateModal}
+            title={'Select Historical Date'}
+            image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+            historicalDate={historicalDate}
+            setHistoricalDate={setHistoricalDate}
+          />
+        )}
         {hidePostModal && (
           <HidePostPopup
             handleClose={handleHidePostModalClose}
