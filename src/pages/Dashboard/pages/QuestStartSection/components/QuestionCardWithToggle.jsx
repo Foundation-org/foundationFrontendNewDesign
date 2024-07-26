@@ -253,8 +253,12 @@ const QuestionCardWithToggle = (props) => {
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Like'
             ? 'Like'
-            : 'Dislike'
+            : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected ===
+                'Dislike'
+              ? 'Dislike'
+              : ''
           : null,
+
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Like'
             ? true
