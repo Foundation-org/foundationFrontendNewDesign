@@ -308,6 +308,29 @@ export const pictureUrlCheck = async ({ url }) => {
   }
 };
 
+export const gifUrlCheck = async ({ url }) => {
+  try {
+    const constraintResponses = await api.get(`/infoquestions/getFlickerUrl?url=${url}`);
+
+    let urlId = constraintResponses.data.imageUrl.split('/')[4];
+    let beforeDot = urlId.split('.')[0];
+
+    const checkDuplicate = await api.get(`/infoquestions/checkMediaDuplicateUrl/${beforeDot}`);
+
+    if (checkDuplicate.status === 200 && constraintResponses) {
+      return { message: 'Success', errorMessage: null, url: constraintResponses?.data.imageUrl };
+    }
+  } catch (error) {
+    console.log({ error });
+    if (error.response.data.duplicate === true) {
+      return { message: error.response.data.error, errorMessage: 'DUPLICATION' };
+    }
+    if (error.response.status === 500) {
+      return { message: error.response.data.message, errorMessage: 'ERROR' };
+    }
+  }
+};
+
 export const moderationRating = async ({ validatedQuestion }) => {
   try {
     const response = await api.post(`/ai-validation/moderator?userMessage=${validatedQuestion}`);
