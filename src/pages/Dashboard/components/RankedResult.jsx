@@ -12,6 +12,7 @@ const RankedResult = (props) => {
   const [checkState, setCheckState] = useState(props.contend);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const originalOrder = Object.values(props.originalOrder[0]);
 
   const handleEditOpen = () => setEditModal(true);
   const handleEditClose = () => setEditModal(false);
@@ -135,7 +136,9 @@ const RankedResult = (props) => {
             <>
               {props?.selectedPercentages && props.selectedPercentages[props.answer.trim()] ? (
                 <div className="flex items-center gap-[10px]">
-                  <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">R</h1>
+                  <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">
+                    {originalOrder.indexOf(props?.selectedPercentages[props?.answer.trim()]) + 1}
+                  </h1>
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                     {props?.selectedPercentages[props?.answer.trim()]}
                   </span>

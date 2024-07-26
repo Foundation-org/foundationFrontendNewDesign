@@ -448,6 +448,7 @@ const Result = (props) => {
                 <div key={index + 1}>
                   <RankedResult
                     number={'#' + (index + 1)}
+                    originalOrder={props.questStartData.selectedPercentage}
                     answer={item.question}
                     addedAnswerUuid={item.uuid}
                     answersSelection={props.answersSelection}
