@@ -89,7 +89,7 @@ export const EmbededVideo = ({
   }
 
   return (
-    <div className={`relative flex flex-col justify-start pb-2 pt-1 tablet:py-2`}>
+    <div className={`relative flex flex-col justify-start`}>
       {/* <h2 className="mb-1 ml-2 text-[8px] font-medium text-[#7C7C7C] tablet:mb-2 tablet:ml-3 tablet:text-[14.692px]">
         {description}
       </h2> */}

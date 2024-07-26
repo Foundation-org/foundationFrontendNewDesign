@@ -664,7 +664,7 @@ input[type='number'] {
 }
 
 .react-player {
-  @apply aspect-video !pt-0;
+  @apply !pt-0;
 }
 
 .react-player div iframe {
