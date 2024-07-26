@@ -37,9 +37,8 @@ export const checkAudioUrl = createAsyncThunk('createQuest/checkAudioUrl', async
 });
 
 export const checkGifUrl = createAsyncThunk('createQuest/checkGifUrl', async (data) => {
-  // const result = await questServices.urlDuplicateCheck(data);
-  // return result;
-  return data;
+  const result = await questServices.gifUrlCheck(data);
+  return result;
 });
 
 export const checkPictureUrl = createAsyncThunk('createQuest/checkPictureUrl', async (data) => {

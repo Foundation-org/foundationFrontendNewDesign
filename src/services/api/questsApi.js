@@ -310,18 +310,13 @@ export const pictureUrlCheck = async ({ url }) => {
 
 export const gifUrlCheck = async ({ url }) => {
   try {
-    const constraintResponses = await api.get(`/infoquestions/getFlickerUrl?url=${url}`);
+    const encodedUrl = encodeURIComponent(url);
+    const checkDuplicate = await api.get(`/infoquestions/checkGifDuplicateUrl/url=${encodedUrl}`);
 
-    let urlId = constraintResponses.data.imageUrl.split('/')[4];
-    let beforeDot = urlId.split('.')[0];
-
-    const checkDuplicate = await api.get(`/infoquestions/checkMediaDuplicateUrl/${beforeDot}`);
-
-    if (checkDuplicate.status === 200 && constraintResponses) {
-      return { message: 'Success', errorMessage: null, url: constraintResponses?.data.imageUrl };
+    if (checkDuplicate.status === 200) {
+      return { message: 'Success', errorMessage: null, url };
     }
   } catch (error) {
-    console.log({ error });
     if (error.response.data.duplicate === true) {
       return { message: error.response.data.error, errorMessage: 'DUPLICATION' };
     }

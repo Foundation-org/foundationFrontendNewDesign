@@ -37,6 +37,7 @@ const LikeDislike = () => {
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
+  const getGifUrl = useSelector(createQuestAction.getGif);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
@@ -141,7 +142,7 @@ const LikeDislike = () => {
       uuid: persistedUserInfo.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls ? getPictureUrls : getGifUrl.gifUrl,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 
