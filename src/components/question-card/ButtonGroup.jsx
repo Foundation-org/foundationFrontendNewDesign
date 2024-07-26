@@ -402,7 +402,9 @@ const ButtonGroup = ({
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  onClick={showGuestSignUpToastWarning}
+                  onClick={() => {
+                    showGuestSignUpToastWarning();
+                  }}
                 >
                   Change
                 </Button>
@@ -420,7 +422,9 @@ const ButtonGroup = ({
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  onClick={showGuestSignUpToastWarning()}
+                  onClick={() => {
+                    showGuestSignUpToastWarning();
+                  }}
                 >
                   Change
                 </Button>
@@ -429,7 +433,9 @@ const ButtonGroup = ({
           ) : questStartData.startStatus === 'completed' ? null : (
             <Button
               variant="submit"
-              onClick={showGuestSignUpToastWarning()}
+              onClick={() => {
+                showGuestSignUpToastWarning();
+              }}
               disabled={
                 loading === true
                   ? true
