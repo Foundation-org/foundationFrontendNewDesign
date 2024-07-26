@@ -45,16 +45,16 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
               </div>
             )}
           </div>
-          <div className="flex items-center gap-[15px]">
-            {/* <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
+          {/* <div className="flex items-center gap-[15px]">
+            <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
               {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
-            </h4> */}
+            </h4>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/hidden-eye.svg`}
               alt="popup logo"
               className="size-4 tablet:h-auto tablet:w-auto"
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px]">

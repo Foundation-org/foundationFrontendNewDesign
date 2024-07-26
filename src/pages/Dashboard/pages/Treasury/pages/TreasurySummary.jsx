@@ -4,7 +4,7 @@ import { Button } from '../../../../../components/ui/Button';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import SummaryCard from '../../../../../components/SummaryCard';
 
-const rewardAndFeesList = ['Post participation', 'Creating a post', 'My post engagement'];
+const rewardAndFeesList = ['Post participation', 'Giving Feedback', 'Creating a post', 'My post engagement'];
 
 const TreasurySummary = () => {
   const navigate = useNavigate();
@@ -67,6 +67,9 @@ const TreasurySummary = () => {
               ))}
             </div>
             <div className="space-y-2 text-end">
+              <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
+                +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
+              </p>
               <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
                 +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
               </p>

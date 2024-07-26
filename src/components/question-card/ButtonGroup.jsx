@@ -506,6 +506,9 @@ const ButtonGroup = ({
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
               </span>
             </Button>
+            <h1 className="my-2 text-center text-[10px] font-normal leading-[12.1px] text-[#707175] dark:text-white tablet:my-[15px] tablet:text-[20px] tablet:leading-[30px]">
+              -OR-
+            </h1>
             <Button
               id={`submit-${questStartData._id}`}
               variant="submit"

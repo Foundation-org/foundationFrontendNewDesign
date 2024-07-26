@@ -35,7 +35,7 @@ const SingleAnswer = (props) => {
             }`}
           >
             <div className="flex items-center gap-1 laptop:gap-[18px]">
-              {props?.postProperties !== 'sharedlink-results' && (
+              {props?.postProperties !== 'sharedlink-results' && props.postProperties !== 'actual-results' && (
                 <div id="custom-checkbox" className="flex h-full items-center">
                   <input
                     id="small-checkbox"
