@@ -90,9 +90,9 @@ export const EmbededVideo = ({
 
   return (
     <div className={`relative flex flex-col justify-start pb-2 pt-1 tablet:py-2`}>
-      <h2 className="mb-1 ml-2 text-[8px] font-medium text-[#7C7C7C] tablet:mb-2 tablet:ml-3 tablet:text-[14.692px]">
+      {/* <h2 className="mb-1 ml-2 text-[8px] font-medium text-[#7C7C7C] tablet:mb-2 tablet:ml-3 tablet:text-[14.692px]">
         {description}
-      </h2>
+      </h2> */}
       {loading && (
         <div
           className={`flex h-full w-full flex-col items-center justify-center ${identifyMediaUrl(url[0]) === 'YouTube' ? 'max-h-[180px] min-h-[180px] tablet:max-h-[371px] tablet:min-h-[371px]' : 'max-h-[126px] min-h-[126px] tablet:max-h-[180px] tablet:min-h-[180px]'}`}

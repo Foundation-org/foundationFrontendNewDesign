@@ -664,18 +664,18 @@ input[type='number'] {
 }
 
 .react-player {
-  padding-top: 0px !important;
+  @apply aspect-video !pt-0;
 }
 
 .react-player div iframe {
-  height: 371px !important;
+  height: 408.38px !important;
   width: 964px !important;
   margin-left: auto;
   margin-right: auto;
 }
 
 .react-player div iframe {
-  height: 180px !important;
+  height: 195.75px !important;
   width: 100% !important;
   margin-left: auto;
   margin-right: auto;
@@ -691,7 +691,7 @@ input[type='number'] {
 }
 
 .feed-react-player div iframe {
-  height: 371px !important;
+  height: 408.38px !important;
   width: 964px !important;
   margin-left: auto;
   margin-right: auto;
@@ -821,7 +821,7 @@ input[type='number'] {
 }
 
 .youtube-iframe {
-  height: 180px !important;
+  height: 195.75px !important;
   width: 100% !important;
 }
 
@@ -949,15 +949,15 @@ input[type='number'] {
   }
 
   .react-player div iframe {
-    @apply mx-auto !h-[371px] !w-full;
+    @apply mx-auto !h-[408.38px] !w-full;
   }
 
   .feed-react-player div iframe {
-    @apply mx-auto !h-[371px] !w-full;
+    @apply mx-auto !h-[408.38px] !w-full;
   }
 
   .react-player iframe {
-    @apply !h-[180px] !w-full;
+    @apply !h-[195.75px] !w-full;
   }
 
   .feed-react-player iframe {
@@ -965,7 +965,7 @@ input[type='number'] {
   }
 
   .youtube-iframe {
-    @apply !h-[371px] !w-full;
+    @apply !h-[408.38px] !w-full;
   }
 
   .soundcloud-iframe {
