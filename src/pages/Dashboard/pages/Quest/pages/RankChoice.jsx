@@ -151,7 +151,7 @@ const RankChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 

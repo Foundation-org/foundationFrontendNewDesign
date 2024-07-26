@@ -35,6 +35,7 @@ const LikeDislike = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
+  const getGifStates = useSelector(createQuestAction.getGif);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const getGifUrl = useSelector(createQuestAction.getGif);
@@ -88,7 +89,7 @@ const LikeDislike = () => {
       }
     }
   };
-
+  console.log(getGifUrl);
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));
     dispatch(setPlayingPlayerId(''));
@@ -142,7 +143,7 @@ const LikeDislike = () => {
       uuid: persistedUserInfo.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls ? getPictureUrls : getGifUrl.gifUrl,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 
@@ -172,6 +173,19 @@ const LikeDislike = () => {
       return true;
     }
   };
+  const checkGifHollow = () => {
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrlStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrl !== ''
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
 
   const checkPicMediaHollow = () => {
     if (
@@ -187,7 +201,7 @@ const LikeDislike = () => {
   };
 
   useEffect(() => {
-    if (getMediaStates.isMedia.isMedia) {
+    if (getMediaStates?.isMedia?.isMedia) {
       if (
         !checkMediaHollow() &&
         createQuestSlice.question !== '' &&
@@ -200,6 +214,12 @@ const LikeDislike = () => {
       }
     } else if (getPicsMediaStates.isPicMedia) {
       if (!checkPicMediaHollow()) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
+    } else if (getGifStates?.isGifMedia) {
+      if (!checkGifHollow()) {
         setHollow(false);
       } else {
         setHollow(true);
@@ -222,6 +242,9 @@ const LikeDislike = () => {
     getPicsMediaStates.isPicMedia,
     getPicsMediaStates.picUrlStatus,
     getPicsMediaStates.picUrl,
+    getGifStates.gifUrl,
+    getGifStates.gifUrlStatus,
+    getGifStates?.isGifMedia,
   ]);
 
   useEffect(() => {

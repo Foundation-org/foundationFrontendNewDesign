@@ -423,6 +423,12 @@ export const createQuestSlice = createSlice({
         media: initialState.media,
       };
     },
+    clearGif: (state = initialState, action) => {
+      return {
+        ...state,
+        gifMedia: initialState.gifMedia,
+      };
+    },
     clearPicsUrl: (state, action) => {
       state.pictureMedia.picUrl = '';
       state.pictureMedia.validatedPicUrl = '';
@@ -1595,6 +1601,7 @@ export const {
   handleChangeOption,
   clearUrl,
   clearMedia,
+  clearGif,
   clearPicsUrl,
   clearPicsMedia,
 } = createQuestSlice.actions;

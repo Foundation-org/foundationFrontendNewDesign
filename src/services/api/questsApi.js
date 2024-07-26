@@ -311,7 +311,7 @@ export const pictureUrlCheck = async ({ url }) => {
 export const gifUrlCheck = async ({ url }) => {
   try {
     const encodedUrl = encodeURIComponent(url);
-    const checkDuplicate = await api.get(`/infoquestions/checkGifDuplicateUrl/url=${encodedUrl}`);
+    const checkDuplicate = await api.get(`/infoquestions/checkGifDuplicateUrl/${encodedUrl}`);
 
     if (checkDuplicate.status === 200) {
       return { message: 'Success', errorMessage: null, url };

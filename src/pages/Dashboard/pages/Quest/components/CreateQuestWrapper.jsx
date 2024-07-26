@@ -44,7 +44,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         <h4 className="mt-1 text-center text-[8px] font-medium leading-normal text-gray-800 tablet:mt-[25px] tablet:text-[16px] tablet:leading-[16px]">
           {msg}
         </h4>
-        {getMediaStates?.isMedia.isMedia === false && getPicMediaStates.isPicMedia === false && (
+        {getMediaStates?.isMedia?.isMedia === false && getPicMediaStates?.isPicMedia === false && (
           // getPicMediaStates.isGifMedia === false &&
           <div className="mx-[30px] mt-3 flex items-center justify-between tablet:mx-[50px] tablet:mt-[25px] laptop:mx-4 desktop:mx-[50px]">
             <Button
