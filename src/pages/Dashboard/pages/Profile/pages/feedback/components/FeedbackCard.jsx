@@ -46,9 +46,9 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
             )}
           </div>
           <div className="flex items-center gap-[15px]">
-            <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
+            {/* <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
               {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
-            </h4>
+            </h4> */}
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/hidden-eye.svg`}
               alt="popup logo"
@@ -75,6 +75,11 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
             </p>
           );
         })}
+        <p
+          className={`${post?.hiddenCount === 0 ? 'text-[#BABABA] ' : 'text-[#4A8DBD]'} dark:text-gray-300' text-[10px] font-normal tablet:text-[18px]`}
+        >
+          {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
+        </p>
       </div>
       <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
         <Button
