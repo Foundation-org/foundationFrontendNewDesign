@@ -240,7 +240,9 @@ const ButtonGroup = ({
             {/* {getButtonText(questStartData.startStatus) !== 'Completed' ? ( */}
             <Button
               variant={'submit'}
-              onClick={startHiddenTest}
+              onClick={() =>
+                navigate('/post/isfullscreen', { state: { questId: questStartData._id, questType: 'feedback-given' } })
+              }
               className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
             >
               View
@@ -489,7 +491,7 @@ const ButtonGroup = ({
             <Button
               variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-submit' : 'submit'}
               className={
-                persistedUserInfo?.uuid !== questStartData?.uuid && 'to-green-200 from-green-200 bg-gradient-to-tr'
+                persistedUserInfo?.uuid !== questStartData?.uuid && 'bg-gradient-to-tr from-green-200 to-green-200'
               }
               onClick={openFeedbackAndVisiblePopup}
             >

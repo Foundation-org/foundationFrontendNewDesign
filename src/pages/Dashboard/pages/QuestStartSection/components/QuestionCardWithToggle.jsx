@@ -883,7 +883,7 @@ const QuestionCardWithToggle = (props) => {
         questType={props.questType}
       >
         {renderQuestContent()}
-        {props.questType !== 'feedback' ? (
+        {props.questType !== 'feedback' && props.questType !== 'feedback-given' ? (
           <ButtonGroup
             questStartData={questStartData}
             handleStartTest={handleStartTest}
@@ -904,7 +904,10 @@ const QuestionCardWithToggle = (props) => {
           />
         ) : (
           <div className="mr-[14.4px] flex justify-end tablet:mr-[3.44rem]">
-            <Button variant="cancel" onClick={() => navigate('/profile/feedback')}>
+            <Button
+              variant="cancel"
+              onClick={() => navigate(`/profile/${props.questType === 'feedback' ? 'feedback' : 'feedback-given'}`)}
+            >
               Go Back
             </Button>
           </div>

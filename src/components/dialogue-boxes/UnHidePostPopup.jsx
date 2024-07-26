@@ -84,7 +84,7 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
                   uuid: persistedUserInfo?.uuid,
                   questForeignKey: questStartData._id,
                   hidden: true,
-                  hiddenMessage: selectedTitle,
+                  hiddenMessage: questStartData.userQuestSetting.feedbackMessage,
                   Question: questStartData.Question,
                 });
               }
