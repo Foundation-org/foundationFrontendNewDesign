@@ -195,7 +195,7 @@ export default function AddOptions({
             }}
           >
             <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
-            Add Option
+            New Option
             <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
               (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
             </span>
