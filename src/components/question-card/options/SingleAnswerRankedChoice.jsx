@@ -247,30 +247,27 @@ const SingleAnswerRankedChoice = (props) => {
           &#x200B;
         </div>
       )}
+
       {/* =============== To Display Option */}
-      <div
-        className={`${
-          isDragging
-            ? 'border-blue-300 dark:bg-accent-100'
-            : 'dark:bg-green border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
-        } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
-      >
-        <div className="flex w-full items-center rounded-l-[4.734px] bg-white-500 dark:bg-gray-100">
+      <div className="flex w-full">
+        <div
+          className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'} flex w-[12.3px] min-w-[12.3px] items-center justify-center rounded-l-[4.734px] border-y border-l bg-white-500 dark:bg-gray-100 tablet:w-[25px] tablet:min-w-[25px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-l-[3px]`}
+        >
           {props.btnText !== 'Results' && (
-            <div
-              className={`${
-                isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
-              } flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[10px]`}
-              style={{
-                backgroundImage: `url(${
-                  persistedTheme === 'dark'
-                    ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
-                    : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
-                })`,
-              }}
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/${persistedTheme === 'dark' ? 'six-dots-dark.svg' : 'six-dots.svg'}`}
+              alt="six-dots"
+              className="w-[5.2px] tablet:w-[11.2px]"
             />
           )}
-
+        </div>
+        <div
+          className={`${
+            isDragging
+              ? 'border-blue-300 dark:bg-accent-100'
+              : 'dark:bg-green border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
+          } flex w-full items-center rounded-r-[4.7px] border-y border-r tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]`}
+        >
           <div
             className={`${
               isDragging ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100' : 'border-white-500 dark:border-gray-250'
@@ -308,13 +305,13 @@ const SingleAnswerRankedChoice = (props) => {
               </div>
             )}
           </div>
-        </div>
-        <div
-          className={`${
-            isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
-          } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-accent-100 tablet:h-full tablet:rounded-r-[10px]`}
-        >
-          <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
+          <div
+            className={`${
+              isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
+            } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-accent-100 tablet:h-full tablet:rounded-r-[10px]`}
+          >
+            <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
+          </div>
         </div>
       </div>
       {/* =============== To Display Contention and Trash Right of Option */}
