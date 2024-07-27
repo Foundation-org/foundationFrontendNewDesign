@@ -74,7 +74,7 @@ const TreasurySummary = () => {
                 +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
               </p>
               <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
-                -{persistedConstants?.QUEST_CREATED_AMOUNT} FDX
+                +{persistedConstants?.QUEST_CREATED_AMOUNT} FDX
               </p>
               <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
                 {persistedConstants?.MY_POST_ENGAGEMENT} FDX
