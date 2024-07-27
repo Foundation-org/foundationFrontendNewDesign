@@ -532,7 +532,7 @@ const ButtonGroup = ({
               onClick={openFeedbackAndVisiblePopup}
             >
               Feedback / Hide
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
               </span>
             </Button>
@@ -568,7 +568,7 @@ const ButtonGroup = ({
 
   /* Change */
   return (
-    <div className="px-[14.4px] tablet:px-[3.44rem]">
+    <div className="px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
       {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
         <div className="flex w-full justify-end">
           <Button

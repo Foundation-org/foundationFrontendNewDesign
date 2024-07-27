@@ -220,7 +220,9 @@ const QuestionCardWithToggle = (props) => {
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Yes'
             ? 'Yes'
-            : 'No'
+            : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'No'
+              ? 'No'
+              : ''
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Yes'
@@ -236,7 +238,10 @@ const QuestionCardWithToggle = (props) => {
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Agree'
             ? 'Agree'
-            : 'Disagree'
+            : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected ===
+                'Disagree'
+              ? 'Disagree'
+              : ''
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Agree'
