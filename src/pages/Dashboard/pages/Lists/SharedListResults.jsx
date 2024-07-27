@@ -13,7 +13,7 @@ import DashboardLayout from '../../components/DashboardLayout';
 export default function SharedListResults() {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [tab, setTab] = useState(persistedUserInfo.role === 'guest' ? 'All Results' : 'My List Results');
+  const [tab, setTab] = useState(persistedUserInfo.role === 'guest' ? 'All of Foundation' : 'My Group Only');
 
   const {
     data: sharedlistAllData,
@@ -48,29 +48,29 @@ export default function SharedListResults() {
                 <Button
                   variant={'topics'}
                   className={`${
-                    tab === 'All Results'
+                    tab === 'All of Foundation'
                       ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
                       : 'border-[#ACACAC] bg-white text-[#707175]'
                   }`}
-                  onClick={() => setTab('All Results')}
+                  onClick={() => setTab('All of Foundation')}
                 >
-                  All List Results
+                  All of Foundation
                 </Button>
                 <Button
                   variant={'topics'}
                   className={`${
-                    tab === 'My List Results'
+                    tab === 'My Group Only'
                       ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
                       : 'border-[#ACACAC] bg-white text-[#707175]'
                   }`}
-                  onClick={() => setTab('My List Results')}
+                  onClick={() => setTab('My Group Only')}
                 >
-                  My List Results
+                  My Group Only
                 </Button>
               </div>
             )}
 
-            {tab === 'All Results' ? (
+            {tab === 'All of Foundation' ? (
               allDataPending ? (
                 <Loader />
               ) : (
@@ -102,7 +102,7 @@ export default function SharedListResults() {
               )
             ) : null}
 
-            {tab === 'My List Results' ? (
+            {tab === 'My Group Only' ? (
               isPending ? (
                 <Loader />
               ) : (

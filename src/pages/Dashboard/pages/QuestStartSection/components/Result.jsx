@@ -129,13 +129,19 @@ const Result = (props) => {
   const getRankedAnswers = (props) => {
     const questAnswersCopy = [...props.questStartData.QuestAnswers];
     return questAnswersCopy.sort((a, b) => {
-      const indexA = props.questStartData?.startQuestData?.data[
-        props.questStartData?.startQuestData?.data.length - 1
-      ].selected.findIndex((item) => item.question === a.question);
+      const indexA =
+        props.questStartDat?.startQuestData.data.length >= 1
+          ? props.questStartData?.startQuestData?.data[
+              props.questStartData?.startQuestData?.data.length - 1
+            ].selected.findIndex((item) => item.question === a.question)
+          : [];
 
-      const indexB = props.questStartData?.startQuestData?.data[
-        props.questStartData?.startQuestData?.data.length - 1
-      ].selected.findIndex((item) => item.question === b.question);
+      const indexB =
+        props.questStartData?.startQuestData?.data.length >= 1
+          ? props.questStartData?.startQuestData?.data[
+              props.questStartData?.startQuestData?.data.length - 1
+            ].selected.findIndex((item) => item.question === b.question)
+          : [];
 
       return indexA !== -1 && indexB !== -1 ? indexA - indexB : 0;
     });
@@ -448,6 +454,7 @@ const Result = (props) => {
                 <div key={index + 1}>
                   <RankedResult
                     number={'#' + (index + 1)}
+                    originalOrder={props.questStartData.selectedPercentage}
                     answer={item.question}
                     addedAnswerUuid={item.uuid}
                     answersSelection={props.answersSelection}

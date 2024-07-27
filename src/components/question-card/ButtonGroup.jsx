@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import { getConstantsValues } from '../../features/constants/constantsSlice';
+import FeedbackAndVisibility from '../../pages/Dashboard/pages/Profile/pages/feedback-given/component/FeedbackAndVisibility';
 
 const ButtonGroup = ({
   questStartData,
@@ -35,8 +36,9 @@ const ButtonGroup = ({
   const navigate = useNavigate();
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const persistedContants = useSelector(getConstantsValues);
+  const feedbackAndVisibilityRef = useRef();
 
   let filterState;
 
@@ -45,6 +47,12 @@ const ButtonGroup = ({
   } else {
     filterState = useSelector(filterActions.getFilters);
   }
+
+  const openFeedbackAndVisiblePopup = () => {
+    if (feedbackAndVisibilityRef.current) {
+      feedbackAndVisibilityRef.current.showHidePostOpen();
+    }
+  };
 
   const showGuestSignUpToastWarning = () => {
     toast.warning(
@@ -197,8 +205,8 @@ const ButtonGroup = ({
     questStartData.usersChangeTheirAns,
   );
 
-  const showHidePostOpen = () => setModalVisible(true);
-  const showHidePostClose = () => setModalVisible(false);
+  const showHidePostOpen = (type) => setModalVisible({ state: true, type });
+  const showHidePostClose = () => setModalVisible({ state: false, type: '' });
 
   const showDisableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addDisabledPostId(null)),
@@ -229,18 +237,38 @@ const ButtonGroup = ({
       <div>
         {startTest !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-            {getButtonText(questStartData.startStatus) !== 'Completed' ? (
-              <Button
-                variant={'submit'}
-                onClick={startHiddenTest}
-                className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
-              >
-                View
-              </Button>
-            ) : null}
-            <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
-              Unhide
+            {/* {getButtonText(questStartData.startStatus) !== 'Completed' ? ( */}
+            <Button
+              variant={'submit'}
+              onClick={() =>
+                navigate('/post/isfullscreen', { state: { questId: questStartData._id, questType: 'feedback-given' } })
+              }
+              className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
+            >
+              View
             </Button>
+            {/* ) : null} */}
+            {questStartData.userQuestSetting.hidden ? (
+              <Button
+                variant="danger"
+                onClick={() => {
+                  showHidePostOpen('hidden');
+                }}
+                className={'bg-red-400'}
+              >
+                Unhide
+              </Button>
+            ) : (
+              <Button
+                variant="danger"
+                onClick={() => {
+                  showHidePostOpen('unhidden');
+                }}
+                className={'bg-red-400'}
+              >
+                Hide
+              </Button>
+            )}
             <UnHidePostPopup
               handleClose={showHidePostClose}
               modalVisible={modalVisible}
@@ -346,7 +374,21 @@ const ButtonGroup = ({
       return (
         <>
           {questStartData.startStatus === '' ? (
-            <div className="flex w-full justify-end pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+            <div className="flex w-full items-center justify-between pl-7 pr-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+              <Button
+                variant="hollow-feedback"
+                onClick={() => {
+                  showGuestSignUpToastWarning();
+                }}
+              >
+                Feedback / Hide
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                </span>
+              </Button>
+              <h1 className="text-center text-[10px] font-normal leading-[12.1px] text-[#707175] dark:text-white tablet:text-[20px] tablet:leading-[30px]">
+                -OR-
+              </h1>
               <Button
                 variant="submit"
                 onClick={() => handleSubmit()}
@@ -374,7 +416,9 @@ const ButtonGroup = ({
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  onClick={showGuestSignUpToastWarning}
+                  onClick={() => {
+                    showGuestSignUpToastWarning();
+                  }}
                 >
                   Change
                 </Button>
@@ -385,40 +429,60 @@ const ButtonGroup = ({
       );
     } else {
       return (
-        <div className="flex w-full justify-end pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+        <div className="flex w-full justify-end">
           {questStartData.startStatus === 'change answer' ? (
-            <div>
+            <div className="pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  onClick={showGuestSignUpToastWarning()}
+                  onClick={() => {
+                    showGuestSignUpToastWarning();
+                  }}
                 >
                   Change
                 </Button>
               ) : null}
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
-            <Button
-              variant="submit"
-              onClick={showGuestSignUpToastWarning()}
-              disabled={
-                loading === true
-                  ? true
-                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                      ? false
-                      : true
-                    : false
-              }
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
-              {questStartData.startStatus !== 'change answer' && (
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+            <div className="flex w-full items-center justify-between tablet:pl-[63.04px] tablet:pr-[100.08px]">
+              <Button
+                variant="hollow-feedback"
+                onClick={() => {
+                  showGuestSignUpToastWarning();
+                }}
+              >
+                Feedback / Hide
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
-              )}
-            </Button>
+              </Button>
+              <h1 className="text-center text-[10px] font-normal leading-[12.1px] text-[#707175] dark:text-white tablet:text-[20px] tablet:leading-[30px]">
+                -OR-
+              </h1>
+              <Button
+                variant="submit"
+                onClick={() => {
+                  showGuestSignUpToastWarning();
+                }}
+                disabled={
+                  loading === true
+                    ? true
+                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                        ? false
+                        : true
+                      : false
+                }
+              >
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
+                {questStartData.startStatus !== 'change answer' && (
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                  </span>
+                )}
+              </Button>
+            </div>
           )}
         </div>
       );
@@ -428,7 +492,8 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id) {
     return (
-      <div className="flex w-full justify-end gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
+      <div className="flex w-full justify-end gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+        <FeedbackAndVisibility ref={feedbackAndVisibilityRef} questStartData={questStartData} />
         {questStartData.startStatus === 'change answer' ? (
           <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
             <Button
@@ -458,7 +523,22 @@ const ButtonGroup = ({
             </Button>
           </div>
         ) : (
-          <div className="flex w-full justify-end">
+          <div className="flex w-full items-center justify-between">
+            <Button
+              variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-feedback' : 'submit'}
+              className={
+                persistedUserInfo?.uuid !== questStartData?.uuid && 'bg-gradient-to-tr from-green-200 to-green-200'
+              }
+              onClick={openFeedbackAndVisiblePopup}
+            >
+              Feedback / Hide
+              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+              </span>
+            </Button>
+            <h1 className="text-center text-[10px] font-normal leading-[12.1px] text-[#707175] dark:text-white tablet:text-[20px] tablet:leading-[30px]">
+              -OR-
+            </h1>
             <Button
               id={`submit-${questStartData._id}`}
               variant="submit"
@@ -488,7 +568,7 @@ const ButtonGroup = ({
 
   /* Change */
   return (
-    <div className="flex w-full justify-end px-[14.4px] tablet:px-[3.44rem]">
+    <div className="px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
       {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
         <div className="flex w-full justify-end">
           <Button

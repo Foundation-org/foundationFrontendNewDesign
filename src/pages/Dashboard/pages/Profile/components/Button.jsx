@@ -7,7 +7,7 @@ const Button = ({ children, type = 'button', color, onClick, disabled }) => {
       'text-white dark:bg-yellow-200 bg-[#FAD308]': color === 'yellow',
       'border-[1px] border-[#BABABA] text-[#949494] dark-bg-[#252D37] bg-[#fff]': color === 'gray-light',
       'bg-gray cursor-not-allowed border-[1px] border-[#BABABA] text-white': color === 'gray',
-      'bg-[#FF4057] dark:bg-[#C13232] text-white': color === 'red',
+      'bg-red-400 dark:bg-[#C13232] text-white': color === 'red',
       'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] dark:bg-[#252D37] dark:from-[#252D37] dark:to-[#252D37] text-white':
         color === 'blue',
     },

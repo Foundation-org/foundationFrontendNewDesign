@@ -28,7 +28,7 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
         ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-[#FAD308] px-[6.63px] text-[0.625rem] font-semibold text-white dark:bg-yellow-200 tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
       variant === 'verification-badge-remove'
-        ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-[#FF4057] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-red-400 px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
       variant === 'submit-hollow'
         ? 'h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] border-[1.428px] border-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-[#389CE3] tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem] laptop:px-[17px]'
@@ -102,6 +102,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'show-more-options'
         ? 'h-fit cursor-pointer text-[10px] font-semibold leading-normal tracking-[0.9px] text-blue-200 tablet:text-[18px]'
         : '',
+      variant === 'hollow-feedback'
+        ? 'border-accent-900 h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] px-[6.63px] text-[0.625rem] font-semibold text-accent-600 tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem] laptop:px-[17px]'
+        : '',
       className,
     )}
     {...props}
@@ -146,5 +149,6 @@ Button.propTypes = {
     'submit-fit',
     'addOption-fit',
     'show-more-options',
+    'hollow-feedback',
   ]),
 };

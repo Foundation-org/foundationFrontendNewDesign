@@ -221,7 +221,7 @@ export const printNoRecordsMessage = (
         className="h-[173px] w-[160px]"
       />
       {isBookmarked ? (
-        <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+        <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
           <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
             No bookmarks found!
           </p>
@@ -250,7 +250,7 @@ export const printNoRecordsMessage = (
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+        <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
           <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[4vw] laptop:text-[2.083vw]">
             No matching posts found!
           </p>
@@ -338,7 +338,7 @@ export const printEndMessage = (
             className="h-[173px] w-[160px]"
           />
           {isBookmarked ? (
-            <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+            <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
               <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                 No bookmarks found!
               </p>
@@ -376,7 +376,7 @@ export const printEndMessage = (
               </button>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+            <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
               <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
                 No matching posts found!
               </p>
@@ -420,7 +420,7 @@ export const printEndMessage = (
       ) : !filterStates.searchData ? (
         <div className="text-center text-[4vw] laptop:text-[2vw]">
           {isBookmarked ? (
-            <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+            <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
               <b>{!resultPreferencesForBookmark ? 'No more matching bookmarks found!' : 'No more bookmarks!'}</b>
               {(result === false || !resultPreferencesForBookmark) && (
                 <button
@@ -446,7 +446,7 @@ export const printEndMessage = (
               )}
             </div>
           ) : result === false || !resultPreferences ? (
-            <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+            <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
               <b>{!resultPreferences ? 'No more matching posts found!' : 'You are all caught up!'}</b>
               {(result === false || !resultPreferences) && (
                 <button
@@ -482,7 +482,7 @@ export const printEndMessage = (
       ) : (
         <div className="text-center text-[4vw] laptop:text-[2vw]">
           {isBookmarked ? (
-            <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+            <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
               <b>No more bookmarks!</b>{' '}
               {(result === false || !resultPreferencesForBookmark) && (
                 <button
@@ -518,7 +518,7 @@ export const printEndMessage = (
               </button>
             </div>
           ) : filterStates?.searchData ? (
-            <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+            <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
               {/* comment it out for infinite */}
               <b>You are all caught up!</b>
               <button

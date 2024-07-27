@@ -12,7 +12,7 @@ type Props = {
 const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) => {
   return (
     <div className="mx-4 mb-[15px] tablet:mx-6">
-      <div className="flex items-center justify-between rounded-t-[10px] bg-blue-200 px-5 py-[10px] dark:border-gray-100 dark:bg-accent-100 dark:border-x-[1.85px] dark:border-t-[1.85px]">
+      <div className="flex items-center justify-between rounded-t-[10px] bg-blue-200 px-5 py-[10px] dark:border-x-[1.85px] dark:border-t-[1.85px] dark:border-gray-100 dark:bg-accent-100">
         <div className="flex items-center gap-2">
           <div className="relative h-fit w-fit">
             <img
@@ -36,7 +36,7 @@ const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) =>
           </h1>
         )}
       </div>
-      <div className=" border-x-[1.85px]  border-b-[1.85px] border-gray-250 rounded-b-[10px] bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:py-[18.73px] dark:border-x-[1.85px] border-b-[1.85px]">
+      <div className="rounded-b-[10px] border-x-[1.85px] border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-x-[1.85px] dark:border-gray-100 dark:bg-gray-200 tablet:py-[18.73px]">
         {children}
       </div>
     </div>

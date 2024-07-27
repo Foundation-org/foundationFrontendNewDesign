@@ -427,7 +427,7 @@ const PersonalBadgesPopup = ({
                   className={`verification_badge_input ${edit ? (name ? '' : 'caret-hidden') : ''}`}
                 />
                 {isError && (
-                  <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+                  <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
                 )}
               </div>
             </div>
@@ -513,7 +513,7 @@ const PersonalBadgesPopup = ({
               className={`verification_badge_input ${edit ? (name ? '' : 'caret-hidden') : ''}`}
             />
             {isError && (
-              <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+              <p className="absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
@@ -567,7 +567,7 @@ const PersonalBadgesPopup = ({
             disabled={edit ? (selected?.name ? false : true) : false}
           />
           {isError && (
-            <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+            <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
@@ -615,7 +615,7 @@ const PersonalBadgesPopup = ({
             disabled={edit ? (selected?.name ? false : true) : false}
           />
           {isError && (
-            <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+            <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
@@ -655,7 +655,7 @@ const PersonalBadgesPopup = ({
               className="verification_badge_input"
             />
             {isError && (
-              <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+              <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
             <div className="mt-[10px] flex justify-end tablet:mt-5">
               <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>

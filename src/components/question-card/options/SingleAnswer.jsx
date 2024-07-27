@@ -1,11 +1,11 @@
 const SingleAnswer = (props) => {
   return (
     <div className="flex items-center pl-7 pr-12 tablet:pl-[3.94rem] tablet:pr-[6.3rem]">
-      <div className="bg-white-500 flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] dark:bg-gray-100 tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px]">
+      <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 dark:bg-gray-100 tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px]">
         &#x200B;
       </div>
       <div
-        className={`border-white-500 dark:bg-accent-100 flex w-full justify-between rounded-r-[4.73px] border-y border-r bg-white dark:border-gray-100 tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
+        className={`flex w-full justify-between rounded-r-[4.73px] border-y border-r border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100 tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
         onClick={() =>
           props.btnText === 'Results'
             ? null
@@ -19,7 +19,7 @@ const SingleAnswer = (props) => {
       >
         <div className="relative flex w-full items-center">
           <div
-            className="absolute top-0 block h-[5px] bg-[#4DD896] tablet:h-[10px]"
+            className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
             style={{
               width: props.percentage,
             }}
@@ -35,7 +35,7 @@ const SingleAnswer = (props) => {
             }`}
           >
             <div className="flex items-center gap-1 laptop:gap-[18px]">
-              {props?.postProperties !== 'sharedlink-results' && (
+              {props?.postProperties !== 'sharedlink-results' && props.postProperties !== 'actual-results' && (
                 <div id="custom-checkbox" className="flex h-full items-center">
                   <input
                     id="small-checkbox"

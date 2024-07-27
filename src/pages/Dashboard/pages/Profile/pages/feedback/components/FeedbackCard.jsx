@@ -45,7 +45,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
               </div>
             )}
           </div>
-          <div className="flex items-center gap-[15px]">
+          {/* <div className="flex items-center gap-[15px]">
             <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
               {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
             </h4>
@@ -54,7 +54,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
               alt="popup logo"
               className="size-4 tablet:h-auto tablet:w-auto"
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px]">
@@ -75,6 +75,11 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
             </p>
           );
         })}
+        <p
+          className={`${post?.hiddenCount === 0 ? 'text-[#BABABA] ' : 'text-[#4A8DBD]'} dark:text-gray-300' text-[10px] font-normal tablet:text-[18px]`}
+        >
+          {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
+        </p>
       </div>
       <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
         <Button

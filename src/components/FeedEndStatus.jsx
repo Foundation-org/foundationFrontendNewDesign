@@ -26,7 +26,7 @@ const FeedEndStatus = ({
             alt="no posts image"
             className="h-[173px] w-[160px]"
           />
-          <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+          <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
             <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
               {noMatchText}
             </p>
@@ -49,7 +49,7 @@ const FeedEndStatus = ({
           <b>{noMoreDataText}</b>
         </p>
       ) : (
-        <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+        <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
           <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[2.083vw]">
             You are all caught up!
           </p>

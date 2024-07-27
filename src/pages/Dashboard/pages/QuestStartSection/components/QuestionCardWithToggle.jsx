@@ -220,7 +220,9 @@ const QuestionCardWithToggle = (props) => {
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Yes'
             ? 'Yes'
-            : 'No'
+            : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'No'
+              ? 'No'
+              : ''
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Yes'
@@ -236,7 +238,10 @@ const QuestionCardWithToggle = (props) => {
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Agree'
             ? 'Agree'
-            : 'Disagree'
+            : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected ===
+                'Disagree'
+              ? 'Disagree'
+              : ''
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Agree'
@@ -253,8 +258,12 @@ const QuestionCardWithToggle = (props) => {
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Like'
             ? 'Like'
-            : 'Dislike'
+            : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected ===
+                'Dislike'
+              ? 'Dislike'
+              : ''
           : null,
+
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Like'
             ? true
@@ -879,7 +888,7 @@ const QuestionCardWithToggle = (props) => {
         questType={props.questType}
       >
         {renderQuestContent()}
-        {props.questType !== 'feedback' ? (
+        {props.questType !== 'feedback' && props.questType !== 'feedback-given' ? (
           <ButtonGroup
             questStartData={questStartData}
             handleStartTest={handleStartTest}
@@ -900,7 +909,10 @@ const QuestionCardWithToggle = (props) => {
           />
         ) : (
           <div className="mr-[14.4px] flex justify-end tablet:mr-[3.44rem]">
-            <Button variant="cancel" onClick={() => navigate('/profile/feedback')}>
+            <Button
+              variant="cancel"
+              onClick={() => navigate(`/profile/${props.questType === 'feedback' ? 'feedback' : 'feedback-given'}`)}
+            >
               Go Back
             </Button>
           </div>

@@ -4,6 +4,7 @@ import SummaryCard from '../../../../../components/SummaryCard';
 
 const rewardAndFeesList = [
   'Post participation',
+  'Giving Feedback',
   'Creating a post',
   'My post engagement',
   'Adding an option to a post',
@@ -85,6 +86,9 @@ const RewardSchedule = () => {
             ))}
           </div>
           <div className="space-y-2 text-end">
+            <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
+              +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
+            </p>
             <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
             </p>

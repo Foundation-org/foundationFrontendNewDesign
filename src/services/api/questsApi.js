@@ -204,7 +204,6 @@ async function checkVideoAgeRestriction(videoId) {
 async function getFullSoundcloudUrlFromShortUrl(url) {
   try {
     const response = await api.get(`infoquestions/getFullSoundcloudUrlFromShortUrl?shortUrl=${url}`);
-
     return response.data.finalUrl;
   } catch (error) {
     console.error('Error:', error);
@@ -377,6 +376,15 @@ const updateViolationCounterAPI = async () => {
 export default updateViolationCounterAPI;
 
 // HIDE POST API CALLS
+export const createFeedback = async (data) => {
+  return await api.post('/userQuestSetting/createFeedback', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    feedbackMessage: data.hiddenMessage,
+    Question: data.Question,
+  });
+};
+
 export const hideQuest = async (data) => {
   return await api.post('/userQuestSetting/create', {
     uuid: data.uuid,
@@ -396,7 +404,6 @@ export const updateHiddenQuest = async (data) => {
   });
 };
 
-// HIDE POST API CALLS
 export const createUpdateUniqueLink = async (data) => {
   return await api.post('/userQuestSetting/link', {
     uuid: data.uuid,

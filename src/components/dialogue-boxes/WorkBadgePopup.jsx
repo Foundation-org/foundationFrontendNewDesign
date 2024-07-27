@@ -536,7 +536,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                 disabled={edit ? (field2Data?.name ? false : true) : false}
               />
               {isError && (
-                <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
+                <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
               )}
             </div>
             <div className="flex items-center gap-[17.5px] tablet:gap-9">
