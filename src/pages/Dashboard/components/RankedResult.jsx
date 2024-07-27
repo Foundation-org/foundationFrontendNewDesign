@@ -12,7 +12,7 @@ const RankedResult = (props) => {
   const [checkState, setCheckState] = useState(props.contend);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const originalOrder = Object.values(props.originalOrder >= 1 ? props.originalOrder[0] : {});
+  const originalOrder = Object.values(props.originalOrder.length >= 1 ? props.originalOrder[0] : {});
 
   const handleEditOpen = () => setEditModal(true);
   const handleEditClose = () => setEditModal(false);
