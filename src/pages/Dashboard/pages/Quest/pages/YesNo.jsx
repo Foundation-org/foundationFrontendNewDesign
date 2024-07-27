@@ -35,6 +35,7 @@ const YesNo = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
+  const getGifStates = useSelector(createQuestAction.getGif);
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
@@ -142,7 +143,7 @@ const YesNo = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       // description: getMediaStates?.isMedia.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
@@ -166,6 +167,19 @@ const YesNo = () => {
       questionStatus.tooltipName === 'Question is Verified' &&
       // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
       getMediaStates.urlStatus.tooltipName === 'Question is Verified'
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
+  const checkGifHollow = () => {
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrlStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrl !== ''
     ) {
       return false;
     } else {
@@ -205,6 +219,12 @@ const YesNo = () => {
       } else {
         setHollow(true);
       }
+    } else if (getGifStates?.isGifMedia) {
+      if (!checkGifHollow()) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     } else {
       if (!checkHollow() && createQuestSlice.question !== '') {
         setHollow(false);
@@ -223,6 +243,9 @@ const YesNo = () => {
     getPicsMediaStates.isPicMedia,
     getPicsMediaStates.picUrlStatus,
     getPicsMediaStates.picUrl,
+    getGifStates.gifUrl,
+    getGifStates.gifUrlStatus,
+    getGifStates?.isGifMedia,
   ]);
 
   useEffect(() => {

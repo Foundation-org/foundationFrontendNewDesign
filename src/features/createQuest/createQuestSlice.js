@@ -36,6 +36,12 @@ export const checkAudioUrl = createAsyncThunk('createQuest/checkAudioUrl', async
   return result;
 });
 
+export const checkGifUrl = createAsyncThunk('createQuest/checkGifUrl', async (data) => {
+  const result = await questServices.gifUrlCheck(data);
+  console.log(result);
+  return result;
+});
+
 export const checkPictureUrl = createAsyncThunk('createQuest/checkPictureUrl', async (data) => {
   const result = await questServices.pictureUrlCheck(data);
   // console.log({ result });
@@ -108,6 +114,25 @@ const initialState = {
       ...defaultStatus,
     },
   },
+  gifMedia: {
+    isGifMedia: false,
+    gifDesc: '',
+    validatedGifDesc: '',
+    gifDescStatus: {
+      ...defaultStatus,
+    },
+    chatgptGifDescStatus: {
+      ...defaultStatus,
+    },
+    gifUrl: '',
+    validatedGifUrl: '',
+    gifUrlStatus: {
+      ...defaultStatus,
+    },
+    chatgptGifUrlStatus: {
+      ...defaultStatus,
+    },
+  },
   pictureMedia: {
     isPicMedia: false,
     picDesctiption: '',
@@ -170,6 +195,9 @@ export const createQuestSlice = createSlice({
     updateIsPicMedia: (state, action) => {
       state.pictureMedia.isPicMedia = action.payload;
     },
+    updateIsGifMedia: (state, action) => {
+      state.gifMedia.isGifMedia = action.payload;
+    },
     // Description
     addMediaDesc: (state, action) => {
       // state.media.desctiption = action.payload;
@@ -187,6 +215,15 @@ export const createQuestSlice = createSlice({
       if (action.payload === state.audio.validatedDescription) {
         state.audio.audioDescStatus = state.audio.chatgptAudioDescStatus;
         state.audio.audioDesc = state.audio.validatedAudioDesc;
+        return;
+      }
+      state.audio.audioDescStatus = { ...defaultStatus };
+      state.audio.audioDesc = action.payload;
+    },
+    addGifDesc: (state, action) => {
+      if (action.payload === state.gifMedia.validatedDescription) {
+        state.gifMedia.gifDescStatus = state.gifMedia.chatgptGifDescStatus;
+        state.gifMedia.gifDesc = state.gifMedia.validatedGifDesc;
         return;
       }
       state.audio.audioDescStatus = { ...defaultStatus };
@@ -220,6 +257,15 @@ export const createQuestSlice = createSlice({
       }
       state.audio.audioUrlStatus = { ...defaultStatus };
       state.audio.audioUrl = action.payload;
+    },
+    addGifUrl: (state, action) => {
+      if (action.payload === state.gifMedia.validatedGifUrl) {
+        state.gifMedia.gifUrlStatus = state.gifMedia.chatgptGifUrlStatus;
+        state.gifMedia.gifUrl = state.gifMedia.validatedGifUrl;
+        return;
+      }
+      state.gifMedia.gifUrlStatus = { ...defaultStatus };
+      state.gifMedia.gifUrl = action.payload;
     },
     addPicUrl: (state, action) => {
       if (action.payload === state.pictureMedia.validatedPicUrl) {
@@ -372,11 +418,24 @@ export const createQuestSlice = createSlice({
       state.media.urlStatus = { ...defaultStatus };
       state.media.chatgptUrlStatus = { ...defaultStatus };
     },
+
     clearMedia: (state = initialState, action) => {
       return {
         ...state,
         media: initialState.media,
       };
+    },
+    clearGif: (state = initialState, action) => {
+      return {
+        ...state,
+        gifMedia: initialState.gifMedia,
+      };
+    },
+    clearGifUrl: (state, action) => {
+      state.gifMedia.gifUrl = '';
+      state.gifMedia.validatedGifUrl = '';
+      state.gifMedia.gifUrlStatus = { ...defaultStatus };
+      state.gifMedia.chatgptGifUrlStatus = { ...defaultStatus };
     },
     clearPicsUrl: (state, action) => {
       state.pictureMedia.picUrl = '';
@@ -1041,6 +1100,97 @@ export const createQuestSlice = createSlice({
       }
     });
 
+    // check gif url status start
+    builder.addCase(checkGifUrl.pending, (state, action) => {
+      state.gifMedia.gifUrlStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      state.gifMedia.chatgptGifUrlStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      // state.questions.questionTyping = false;
+    });
+    builder.addCase(checkGifUrl.fulfilled, (state, action) => {
+      const { message, errorMessage, url } = action.payload;
+      if (state.gifMedia.gifUrl === '') {
+        state.gifMedia.gifUrlStatus = { ...defaultStatus };
+        state.gifMedia.chatgptGifUrlStatus = { ...defaultStatus };
+      } else {
+        if (errorMessage) {
+          if (errorMessage === 'DUPLICATION') {
+            state.gifMedia.validatedGifUrl = state.gifMedia.url;
+            // state.media.desctiption = message;
+            // state.media.validatedDescription = message;
+            // state.questions.questionTyping = false;
+            state.gifMedia.gifUrlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.gifMedia.chatgptGifUrlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
+          if (errorMessage === 'NOT FOUND') {
+            state.gifMedia.validatedGifUrl = state.gifMedia.gifUrl;
+            state.gifMedia.gifUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'Invalid Url',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.gifMedia.chatgptGifUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'InValid Url',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
+        } else {
+          state.gifMedia.gifUrl = url;
+          state.gifMedia.validatedGifUrl = url;
+          state.gifMedia.gifUrlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.gifMedia.chatgptGifUrlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+        }
+      }
+    });
+
     // check picture url status
     builder.addCase(checkPictureUrl.pending, (state, action) => {
       state.pictureMedia.picUrlStatus = {
@@ -1436,11 +1586,14 @@ export const {
   updateIsMedia,
   updateIsAudio,
   updateIsPicMedia,
+  updateIsGifMedia,
   addMediaDesc,
   addAudioDesc,
+  addGifDesc,
   addPicsMediaDesc,
   addMediaUrl,
   addAudioUrl,
+  addGifUrl,
   addPicUrl,
   addQuestion,
   updateQuestion,
@@ -1456,6 +1609,8 @@ export const {
   handleChangeOption,
   clearUrl,
   clearMedia,
+  clearGif,
+  clearGifUrl,
   clearPicsUrl,
   clearPicsMedia,
 } = createQuestSlice.actions;
@@ -1464,6 +1619,7 @@ export default createQuestSlice.reducer;
 
 export const getMedia = (state) => state.createQuest.media;
 export const getAudio = (state) => state.createQuest.audio;
+export const getGif = (state) => state.createQuest.gifMedia;
 export const getPicsMedia = (state) => state.createQuest.pictureMedia;
 export const getCreate = (state) => state.createQuest.questions;
 export const questionStatus = (state) => state.createQuest.questionReset;

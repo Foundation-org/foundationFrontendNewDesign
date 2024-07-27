@@ -308,6 +308,30 @@ export const pictureUrlCheck = async ({ url }) => {
   }
 };
 
+export const gifUrlCheck = async ({ url }) => {
+  try {
+    const id = url.split('/')[5];
+    const validateUrl = await fetch(`https://api.giphy.com/v1/gifs/${id}?api_key=UFrZUQj2dVxHik4uhHOootjGKW5gdpF2`);
+    if (validateUrl.status !== 200) {
+      return { message: 'NOT FOUND', errorMessage: 'NOT FOUND' };
+    }
+
+    const encodedUrl = encodeURIComponent(url);
+    const checkDuplicate = await api.get(`/infoquestions/checkGifDuplicateUrl/${encodedUrl}`);
+
+    if (checkDuplicate.status === 200) {
+      return { message: 'Success', errorMessage: null, url };
+    }
+  } catch (error) {
+    if (error.response.data.duplicate === true) {
+      return { message: error.response.data.error, errorMessage: 'DUPLICATION' };
+    }
+    if (error.response.status === 500) {
+      return { message: error.response.data.message, errorMessage: 'ERROR' };
+    }
+  }
+};
+
 export const moderationRating = async ({ validatedQuestion }) => {
   try {
     const response = await api.post(`/ai-validation/moderator?userMessage=${validatedQuestion}`);

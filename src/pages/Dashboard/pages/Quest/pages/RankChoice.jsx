@@ -41,6 +41,7 @@ const RankChoice = () => {
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
+  const getGifStates = useSelector(createQuestAction.getGif);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
@@ -151,7 +152,7 @@ const RankChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 
@@ -266,6 +267,19 @@ const RankChoice = () => {
       return true;
     }
   };
+  const checkGifHollow = () => {
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrlStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrl !== ''
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
 
   useEffect(() => {
     if (getMediaStates.isMedia.isMedia) {
@@ -289,6 +303,12 @@ const RankChoice = () => {
       } else {
         setHollow(true);
       }
+    } else if (getGifStates?.isGifMedia) {
+      if (!checkGifHollow()) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     } else {
       if (!checkHollow() && optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '')) {
         setHollow(false);
@@ -307,6 +327,9 @@ const RankChoice = () => {
     getPicsMediaStates.isPicMedia,
     getPicsMediaStates.picUrlStatus,
     getPicsMediaStates.picUrl,
+    getGifStates.gifUrl,
+    getGifStates.gifUrlStatus,
+    getGifStates?.isGifMedia,
   ]);
 
   const handleOnDragEnd = (event) => {

@@ -10,6 +10,7 @@ import AddPictureUrls from './AddPictureUrls';
 import { POST_QUESTION_CHAR_LIMIT } from '../../../../../constants/Values/constants';
 import { dyk } from '../../../../../constants/dyk';
 import SystemNotificationCard from '../../../../../components/posts/SystemNotificationCard';
+import AddGif from './AddGif';
 
 export default function CreateQuestWrapper({ quest, type, handleTab, msg, children }) {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicMediaStates = useSelector(pictureMediaAction.getPicsMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
+  const getGifStates = useSelector(createQuestAction.getGif);
 
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
@@ -43,60 +45,83 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         <h4 className="mt-1 text-center text-[8px] font-medium leading-normal text-gray-800 tablet:mt-[25px] tablet:text-[16px] tablet:leading-[16px]">
           {msg}
         </h4>
-        {getMediaStates?.isMedia.isMedia === false && getPicMediaStates.isPicMedia === false && (
-          <div className="mx-[30px] mt-3 flex items-center justify-between tablet:mx-[50px] tablet:mt-[25px] laptop:mx-4 desktop:mx-[50px]">
-            <Button
-              variant="addEmbeded"
-              className="px-2 tablet:px-3.5"
-              onClick={() => {
-                dispatch(createQuestAction.updateIsPicMedia(false));
-                dispatch(
-                  createQuestAction.updateIsMedia({
-                    isMedia: true,
-                    type: 'EmbedVideo',
-                  }),
-                );
-              }}
-            >
-              + Add YouTube
-            </Button>
-            {getMediaStates?.isMedia.isMedia === false && (
+        {getMediaStates?.isMedia?.isMedia === false &&
+          getPicMediaStates?.isPicMedia === false &&
+          getGifStates?.isGifMedia === false && (
+            // getPicMediaStates.isGifMedia === false &&
+            <div className="mx-[30px] mt-3 flex items-center justify-between tablet:mx-[50px] tablet:mt-[25px] laptop:mx-4 desktop:mx-[50px]">
               <Button
                 variant="addEmbeded"
                 className="px-2 tablet:px-3.5"
                 onClick={() => {
                   dispatch(createQuestAction.updateIsPicMedia(false));
+                  dispatch(createQuestAction.updateIsGifMedia(false));
+
                   dispatch(
                     createQuestAction.updateIsMedia({
                       isMedia: true,
-                      type: 'EmbedAudio',
+                      type: 'EmbedVideo',
                     }),
                   );
                 }}
               >
-                + Add Soundcloud
+                + YouTube
               </Button>
-            )}
-            <Button
-              variant="addEmbeded"
-              className="px-2 tablet:px-3.5"
-              onClick={() => {
-                dispatch(
-                  createQuestAction.updateIsMedia({
-                    isMedia: false,
-                    type: '',
-                  }),
-                );
-                dispatch(pictureMediaAction.updateIsPicMedia(true));
-              }}
-            >
-              + Add Flickr
-            </Button>
-          </div>
-        )}
+              {getMediaStates?.isMedia.isMedia === false && (
+                <Button
+                  variant="addEmbeded"
+                  className="px-2 tablet:px-3.5"
+                  onClick={() => {
+                    dispatch(createQuestAction.updateIsPicMedia(false));
+                    dispatch(createQuestAction.updateIsGifMedia(false));
+
+                    dispatch(
+                      createQuestAction.updateIsMedia({
+                        isMedia: true,
+                        type: 'EmbedAudio',
+                      }),
+                    );
+                  }}
+                >
+                  + Soundcloud
+                </Button>
+              )}
+              <Button
+                variant="addEmbeded"
+                className="px-2 tablet:px-3.5"
+                onClick={() => {
+                  dispatch(
+                    createQuestAction.updateIsMedia({
+                      isMedia: false,
+                      type: '',
+                    }),
+                  );
+                  dispatch(createQuestAction.updateIsGifMedia(false));
+                  dispatch(pictureMediaAction.updateIsPicMedia(true));
+                }}
+              >
+                + Flickr
+              </Button>
+              {getMediaStates?.isMedia.isMedia === false && (
+                <Button
+                  variant="addEmbeded"
+                  className="px-2 tablet:px-3.5"
+                  onClick={() => {
+                    dispatch(createQuestAction.updateIsPicMedia(false));
+                    dispatch(createQuestAction.updateIsGifMedia(true));
+                  }}
+                >
+                  + GIPHY
+                </Button>
+              )}
+            </div>
+          )}
+
+        {console.log(getGifStates)}
         <AddMedia handleTab={handleTab} />
         {/* <AddPictures /> */}
         <AddPictureUrls />
+        <AddGif />
         <div className="w-[calc(100%-51.75px] mx-[30px] mb-[10px] mt-3 flex tablet:mx-[50px] tablet:mb-7 tablet:mt-[15px]">
           <TextareaAutosize
             id="input-2"

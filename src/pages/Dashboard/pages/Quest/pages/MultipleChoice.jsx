@@ -42,6 +42,7 @@ const MultipleChoice = () => {
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedConstants = useSelector(getConstantsValues);
+  const getGifStates = useSelector(createQuestAction.getGif);
   const filterStates = useSelector(filtersActions.getFilters);
 
   const [multipleOption, setMultipleOption] = useState(false);
@@ -149,7 +150,7 @@ const MultipleChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 
@@ -237,6 +238,20 @@ const MultipleChoice = () => {
     }
   };
 
+  const checkGifHollow = () => {
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrlStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrl !== ''
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
+
   const checkHollow = () => {
     const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
     if (questionStatus.tooltipName === 'Question is Verified' && AllVerified) {
@@ -298,6 +313,12 @@ const MultipleChoice = () => {
       } else {
         setHollow(true);
       }
+    } else if (getGifStates?.isGifMedia) {
+      if (!checkGifHollow()) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     } else {
       if (!checkHollow() && optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '')) {
         setHollow(false);
@@ -316,6 +337,9 @@ const MultipleChoice = () => {
     getPicsMediaStates.isPicMedia,
     getPicsMediaStates.picUrlStatus,
     getPicsMediaStates.picUrl,
+    getGifStates.gifUrl,
+    getGifStates.gifUrlStatus,
+    getGifStates?.isGifMedia,
   ]);
 
   const handleOnDragEnd = (event) => {

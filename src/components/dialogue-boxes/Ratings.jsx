@@ -35,19 +35,23 @@ export const MediaFiltersList = [
   },
   {
     id: 2,
-    title: 'Images',
+    title: 'Flickr',
     val: 'Image',
   },
   {
     id: 3,
-    title: 'Video',
+    title: 'YouTube',
     val: 'Video',
   },
-
   {
     id: 4,
-    title: 'Audio',
+    title: 'Soundcloud',
     val: 'Music',
+  },
+  {
+    id: 5,
+    title: 'GIPHY',
+    val: 'Giphy',
   },
 ];
 
@@ -110,7 +114,7 @@ const FilterContainer = (props) => {
         </h1>
       </div>
       <div
-        className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} bg-white-900 flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-white-500 p-2 dark:border-gray-100 dark:bg-gray-200 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
+        className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-white-500 bg-white-900 p-2 dark:border-gray-100 dark:bg-gray-200 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
       >
         {list?.map((item, index) => (
           <div
