@@ -129,13 +129,15 @@ export default function ShowHidePostPopup({
                   hiddenMessage: selectedTitle,
                   Question: questStartData.Question,
                 });
-                hidePost({
-                  uuid: persistedUserInfo?.uuid,
-                  questForeignKey: questStartData._id,
-                  hidden: true,
-                  hiddenMessage: selectedTitle,
-                  Question: questStartData.Question,
-                });
+                setTimeout(() => {
+                  hidePost({
+                    uuid: persistedUserInfo?.uuid,
+                    questForeignKey: questStartData._id,
+                    hidden: true,
+                    hiddenMessage: selectedTitle,
+                    Question: questStartData.Question,
+                  });
+                }, 1000); // 3000 milliseconds = 3 seconds                
               }}
             >
               {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
