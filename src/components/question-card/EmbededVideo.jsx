@@ -95,7 +95,7 @@ export const EmbededVideo = ({
       </h2> */}
       {loading && (
         <div
-          className={`flex h-full w-full flex-col items-center justify-center ${identifyMediaUrl(url[0]) === 'YouTube' ? 'max-h-[180px] min-h-[180px] tablet:max-h-[371px] tablet:min-h-[371px]' : 'max-h-[126px] min-h-[126px] tablet:max-h-[180px] tablet:min-h-[180px]'}`}
+          className={`flex h-full w-full flex-col items-center justify-center ${identifyMediaUrl(url[0]) === 'YouTube' ? 'max-h-[195.75px] min-h-[195.75px] tablet:max-h-[408.38px] tablet:min-h-[408.38px]' : 'max-h-[126px] min-h-[126px] tablet:max-h-[180px] tablet:min-h-[180px]'}`}
         >
           <FaSpinner className="size-5 animate-spin tablet:size-6" />
           <h1>{identifyMediaUrl(url[0]) === 'YouTube' ? 'Loading video...' : 'Loading audio...'}</h1>
