@@ -184,7 +184,10 @@ export default function AddOptions({
 
   return (
     <>
-      {questStartData.usersAddTheirAns && addOptionField === 0 && !uuidExists ? (
+      {questStartData.usersAddTheirAns &&
+      addOptionField === 0 &&
+      !uuidExists &&
+      questStartData.startStatus !== 'completed' ? (
         <div className="pl-7 pt-[7.5px] tablet:pl-[66px] tablet:pt-[10px]">
           {getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
           getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
