@@ -226,7 +226,7 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-gray-200 tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-gray-200">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/yellowBadge.svg`}
               alt="yellow badge"
@@ -234,7 +234,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-gray-200 tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-gray-200">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/blueBadge.svg`}
               alt="blue badge"
@@ -243,7 +243,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-gray-200 tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-gray-200">
           &#x200B;
         </div>
       )}
@@ -251,11 +251,11 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Option */}
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div
-          className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-accent-100 tablet:rounded-l-[10px] ${props.btnText === 'Results' || props.postProperties === 'HiddenPosts' ? 'pointer-events-none' : 'cursor-pointer'}`}
+          className={`flex w-full items-center rounded-l-[5.387px] bg-white tablet:rounded-l-[10px] dark:bg-accent-100 ${props.btnText === 'Results' || props.postProperties === 'HiddenPosts' ? 'pointer-events-none' : 'cursor-pointer'}`}
           onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
-          <div className="flex h-full min-h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 dark:bg-gray-100 tablet:h-full tablet:min-h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
-          <div className="relative flex h-full min-h-[21.8px] w-full justify-between border-y border-y-white-500 dark:border-y-gray-100 tablet:h-full tablet:min-h-[49px] tablet:border-y-[3px]">
+          <div className="flex h-full min-h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 tablet:h-full tablet:min-h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-gray-100"></div>
+          <div className="relative flex h-full min-h-[21.8px] w-full justify-between border-y border-y-white-500 tablet:h-full tablet:min-h-[49px] tablet:border-y-[3px] dark:border-y-gray-100">
             <div
               className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
               style={{
@@ -274,16 +274,16 @@ const SingleAnswerMultipleChoice = (props) => {
                 value={answer}
                 autoFocus
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
-                className="w-full resize-none rounded-[4.73px] bg-white px-2 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-accent-600 outline-none dark:bg-accent-100 dark:text-white-600 tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
+                className="w-full resize-none rounded-[4.73px] bg-white px-2 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-accent-600 outline-none tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px] dark:bg-accent-100 dark:text-white-600"
               />
             ) : (
-              <h1 className="px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-accent-600 dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
+              <h1 className="px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-accent-600 tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}
             {props.deleteable && (
               <div
-                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-accent-100 tablet:text-[1rem] laptop:text-[1.25rem] ${props.checkOptionStatus.color}`}
+                className={`relative flex items-center bg-white text-[0.5rem] font-semibold tablet:text-[1rem] laptop:text-[1.25rem] dark:bg-accent-100 ${props.checkOptionStatus.color}`}
               >
                 <div className="flex h-[75%] w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span> {isTyping ? `${answer.length}/200` : props.checkOptionStatus.name}</span>
@@ -305,10 +305,10 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         {props?.postProperties === 'HiddenPosts' ? (
-          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px] text-[9.238px] dark:border-gray-100  dark:bg-accent-100 tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px]"></div>
+          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px] text-[9.238px] tablet:gap-[19px]  tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] dark:border-gray-100 dark:bg-accent-100"></div>
         ) : (
           <div
-            className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px]  text-[9.238px] dark:border-gray-100 dark:bg-accent-100 tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
+            className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px]  text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] dark:border-gray-100 dark:bg-accent-100 ${
               props.btnText === 'Results' ? 'pointer-events-none' : ''
             }`}
             onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
@@ -344,10 +344,10 @@ const SingleAnswerMultipleChoice = (props) => {
         {/* =============== To Display Contention and Trash Right of Option */}
 
         {props.postProperties === 'HiddenPosts' ? (
-          <div className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-gray-200 tablet:w-8 tablet:justify-center tablet:pl-[15px]"></div>
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px] dark:bg-gray-200"></div>
         ) : props.btnText !== 'Results' ? (
           <div
-            className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-gray-200 tablet:w-8 tablet:justify-center tablet:pl-[15px]"
+            className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px] dark:bg-gray-200"
             onClick={() => {
               !props.deleteable && handleContendPopup();
             }}
@@ -360,7 +360,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 onClick={() => handleDeleteOption(props.number)}
               />
             ) : (
-              <div className="flex items-center gap-1 laptop:gap-[18px]">
+              <div className="flex items-center gap-1 pl-1 laptop:gap-[18px]">
                 {props?.postProperties !== 'sharedlink-results' && (
                   <div id="custom-yello-checkbox" className="flex h-full items-center ">
                     <div className="cursor-pointer">
@@ -384,7 +384,7 @@ const SingleAnswerMultipleChoice = (props) => {
             </BasicModal>
           </div>
         ) : (
-          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-gray-200 tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-gray-200">
             {props.btnText === 'Results' ? (
               <>
                 {props.contendPercentages &&

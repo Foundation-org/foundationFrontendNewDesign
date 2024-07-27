@@ -376,19 +376,18 @@ const ButtonGroup = ({
           {questStartData.startStatus === '' ? (
             <div className="flex w-full items-center justify-between pl-7 pr-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
               <Button
-                variant="hollow-feedback"
+                variant={'submit'}
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
+                className={'from-green-200 to-green-200 bg-gradient-to-tr'}
               >
                 Feedback / Hide
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               </Button>
-              <h1 className="text-center text-[10px] font-normal leading-[12.1px] text-[#707175] dark:text-white tablet:text-[20px] tablet:leading-[30px]">
-                -OR-
-              </h1>
+
               <Button
                 variant="submit"
                 onClick={() => handleSubmit()}
@@ -447,19 +446,18 @@ const ButtonGroup = ({
           ) : questStartData.startStatus === 'completed' ? null : (
             <div className="flex w-full items-center justify-between tablet:pl-[63.04px] tablet:pr-[100.08px]">
               <Button
-                variant="hollow-feedback"
+                variant={'submit'}
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
+                className={'from-green-200 to-green-200 bg-gradient-to-tr'}
               >
                 Feedback / Hide
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               </Button>
-              <h1 className="text-center text-[10px] font-normal leading-[12.1px] text-[#707175] dark:text-white tablet:text-[20px] tablet:leading-[30px]">
-                -OR-
-              </h1>
+
               <Button
                 variant="submit"
                 onClick={() => {
@@ -525,10 +523,8 @@ const ButtonGroup = ({
         ) : (
           <div className="flex w-full items-center justify-between">
             <Button
-              variant={persistedUserInfo?.uuid === questStartData?.uuid ? 'hollow-feedback' : 'submit'}
-              className={
-                persistedUserInfo?.uuid !== questStartData?.uuid && 'bg-gradient-to-tr from-green-200 to-green-200'
-              }
+              variant={'submit'}
+              className={'from-green-200 to-green-200 bg-gradient-to-tr'}
               onClick={openFeedbackAndVisiblePopup}
             >
               Feedback / Hide
@@ -536,9 +532,6 @@ const ButtonGroup = ({
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
               </span>
             </Button>
-            <h1 className="text-center text-[10px] font-normal leading-[12.1px] text-[#707175] dark:text-white tablet:text-[20px] tablet:leading-[30px]">
-              -OR-
-            </h1>
             <Button
               id={`submit-${questStartData._id}`}
               variant="submit"
