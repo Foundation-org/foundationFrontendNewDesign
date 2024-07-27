@@ -183,25 +183,27 @@ export default function AddOptions({
   };
 
   return (
-    <div className="pl-7 pt-[7.5px] tablet:pl-[66px] tablet:pt-[10px]">
+    <>
       {questStartData.usersAddTheirAns && addOptionField === 0 && !uuidExists ? (
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Like/Dislike' ? null : (
-          <Button
-            variant={'addOption'}
-            onClick={() => {
-              handleAddOption(questStartData.startStatus);
-            }}
-          >
-            <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
-            Add Option
-            <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
-              (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
-            </span>
-          </Button>
-        )
+        <div className="pl-7 pt-[7.5px] tablet:pl-[66px] tablet:pt-[10px]">
+          {getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
+          getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
+          getQuestionTitle(questStartData.whichTypeQuestion) === 'Like/Dislike' ? null : (
+            <Button
+              variant={'addOption'}
+              onClick={() => {
+                handleAddOption(questStartData.startStatus);
+              }}
+            >
+              <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
+              Add Option
+              <span className="text-[7px] font-semibold leading-[1px] tablet:text-[13px]">
+                (+{persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX)
+              </span>
+            </Button>
+          )}
+        </div>
       ) : null}
-    </div>
+    </>
   );
 }

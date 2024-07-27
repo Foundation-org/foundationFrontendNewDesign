@@ -242,6 +242,7 @@ const QuestCardLayout = ({
   //   [imageGetter],
   // );
   const handleClose = () => setModalVisible(false);
+
   return (
     <div
       className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"

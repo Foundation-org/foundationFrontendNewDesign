@@ -23,6 +23,7 @@ export default {
       'accent-600': '#435059',
       'accent-700': '#5B5B5B',
       'accent-800': '#525252',
+      'accent-900': '#647785',
       'blue-100': '#389CE3',
       'blue-200': '#4A8DBD',
       'blue-300': '#5FA3D5',

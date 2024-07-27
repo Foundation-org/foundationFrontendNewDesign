@@ -69,7 +69,9 @@ const QuestBottombar = ({
             className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
           <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-600 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-            {questStartData?.userQuestSetting?.hiddenMessage}
+            {questStartData?.userQuestSetting?.feedbackMessage
+              ? questStartData.userQuestSetting.feedbackMessage
+              : questStartData.userQuestSetting.hiddenMessage}
           </h1>
         </div>
       ) : postProperties === 'SharedLinks' ? (
