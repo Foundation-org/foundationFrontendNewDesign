@@ -95,7 +95,7 @@ const RewardSchedule = () => {
               {persistedConstants?.MY_POST_ENGAGEMENT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
-              -{persistedConstants?.QUEST_OPTION_ADDED_AMOUNT} FDX
+              +{persistedConstants?.QUEST_OPTION_ADDED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               {persistedConstants?.POST_SHARE} FDX

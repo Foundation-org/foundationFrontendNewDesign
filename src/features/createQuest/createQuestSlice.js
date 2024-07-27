@@ -38,6 +38,7 @@ export const checkAudioUrl = createAsyncThunk('createQuest/checkAudioUrl', async
 
 export const checkGifUrl = createAsyncThunk('createQuest/checkGifUrl', async (data) => {
   const result = await questServices.gifUrlCheck(data);
+  console.log(result);
   return result;
 });
 
@@ -114,7 +115,7 @@ const initialState = {
     },
   },
   gifMedia: {
-    isGif: false,
+    isGifMedia: false,
     gifDesc: '',
     validatedGifDesc: '',
     gifDescStatus: {
@@ -417,6 +418,7 @@ export const createQuestSlice = createSlice({
       state.media.urlStatus = { ...defaultStatus };
       state.media.chatgptUrlStatus = { ...defaultStatus };
     },
+
     clearMedia: (state = initialState, action) => {
       return {
         ...state,
@@ -428,6 +430,12 @@ export const createQuestSlice = createSlice({
         ...state,
         gifMedia: initialState.gifMedia,
       };
+    },
+    clearGifUrl: (state, action) => {
+      state.gifMedia.gifUrl = '';
+      state.gifMedia.validatedGifUrl = '';
+      state.gifMedia.gifUrlStatus = { ...defaultStatus };
+      state.gifMedia.chatgptGifUrlStatus = { ...defaultStatus };
     },
     clearPicsUrl: (state, action) => {
       state.pictureMedia.picUrl = '';
@@ -1114,9 +1122,9 @@ export const createQuestSlice = createSlice({
     });
     builder.addCase(checkGifUrl.fulfilled, (state, action) => {
       const { message, errorMessage, url } = action.payload;
-      if (state.gifMedia.audioUrl === '') {
-        state.gifMedia.audioUrlStatus = { ...defaultStatus };
-        state.gifMedia.chatgptAudioUrlStatus = { ...defaultStatus };
+      if (state.gifMedia.gifUrl === '') {
+        state.gifMedia.gifUrlStatus = { ...defaultStatus };
+        state.gifMedia.chatgptGifUrlStatus = { ...defaultStatus };
       } else {
         if (errorMessage) {
           if (errorMessage === 'DUPLICATION') {
@@ -1141,12 +1149,12 @@ export const createQuestSlice = createSlice({
               showToolTipMsg: true,
             };
           }
-          if (errorMessage === 'ADULT') {
+          if (errorMessage === 'NOT FOUND') {
             state.gifMedia.validatedGifUrl = state.gifMedia.gifUrl;
             state.gifMedia.gifUrlStatus = {
               name: 'Rejected',
               color: 'text-[#b00f0f]',
-              tooltipName: 'It is an adult video',
+              tooltipName: 'Invalid Url',
               tooltipStyle: 'tooltip-error',
               duplication: true,
               showToolTipMsg: true,
@@ -1154,7 +1162,7 @@ export const createQuestSlice = createSlice({
             state.gifMedia.chatgptGifUrlStatus = {
               name: 'Rejected',
               color: 'text-[#b00f0f]',
-              tooltipName: 'It is an adult video',
+              tooltipName: 'InValid Url',
               tooltipStyle: 'tooltip-error',
               duplication: true,
               showToolTipMsg: true,
@@ -1602,6 +1610,7 @@ export const {
   clearUrl,
   clearMedia,
   clearGif,
+  clearGifUrl,
   clearPicsUrl,
   clearPicsMedia,
 } = createQuestSlice.actions;

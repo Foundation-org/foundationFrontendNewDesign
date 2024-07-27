@@ -36,6 +36,7 @@ const AgreeDisagree = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
+  const getGifStates = useSelector(createQuestAction.getGif);
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
@@ -160,6 +161,20 @@ const AgreeDisagree = () => {
     }
   };
 
+  const checkGifHollow = () => {
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrlStatus.tooltipName === 'Question is Verified' &&
+      getGifStates.gifUrl !== ''
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
+
   const checkMediaHollow = () => {
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
@@ -204,6 +219,12 @@ const AgreeDisagree = () => {
       } else {
         setHollow(true);
       }
+    } else if (getGifStates?.isGifMedia) {
+      if (!checkGifHollow()) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     } else {
       if (!checkHollow() && createQuestSlice.question !== '') {
         setHollow(false);
@@ -222,6 +243,9 @@ const AgreeDisagree = () => {
     getPicsMediaStates.isPicMedia,
     getPicsMediaStates.picUrlStatus,
     getPicsMediaStates.picUrl,
+    getGifStates.gifUrl,
+    getGifStates.gifUrlStatus,
+    getGifStates?.isGifMedia,
   ]);
 
   useEffect(() => {

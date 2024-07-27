@@ -98,21 +98,21 @@ export default function AddGif({ handleTab }) {
           )}
           {getMediaStates.gifUrlStatus.tooltipName === 'Question is Verified' && (
             <div className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]">
-              <>
+              <div className="flex justify-center">
                 <div
-                  className={`absolute -right-1 -top-[6px] z-20 tablet:-right-4 tablet:-top-4 ${getMediaStates.gifUrl ? 'block' : 'hidden'}`}
+                  className={`absolute -right-1 -top-[6px] z-20 tablet:-top-4 tablet:right-10  ${getMediaStates.gifUrl ? 'block' : 'hidden'}`}
                   onClick={() => {
-                    dispatch(createQuestAction.clearUrl());
+                    dispatch(createQuestAction.clearGifUrl());
                   }}
                 >
-                  {/* <img
+                  <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                     alt="mediaCloseIcon"
                     className="size-[15px] tablet:size-[41px]"
-                  /> */}
+                  />
                 </div>
                 <img src={getMediaStates.gifUrl} alt="create post gif" />
-              </>
+              </div>
             </div>
           )}
         </div>
