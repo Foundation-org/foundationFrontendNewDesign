@@ -314,10 +314,13 @@ export const gifUrlCheck = async ({ url }) => {
     // if (validateUrl.status !== 200) {
     //   return { message: 'NOT FOUND', errorMessage: 'NOT FOUND' };
     // }
-    const urlPattern =
-      /^https:\/\/(?:media3\.giphy\.com\/media\/[a-zA-Z0-9]+\/giphy\.gif\?.*|media\.giphy\.com\/media\/v1\.[a-zA-Z0-9_.]+\/[a-zA-Z0-9]+\/giphy\.gif)$/;
+    // const urlPattern =
+    //   /^https:\/\/(?:media3\.giphy\.com\/media\/[a-zA-Z0-9]+\/giphy\.gif\?.*|media\.giphy\.com\/media\/v1\.[a-zA-Z0-9_.]+\/[a-zA-Z0-9]+\/giphy\.gif)$/;
 
-    if (!urlPattern.test(url)) {
+    // if (!urlPattern.test(url)) {
+    //   return { message: 'NOT FOUND', errorMessage: 'NOT FOUND' };
+    // }
+    if (!url.includes('https://media.giphy.com/media')) {
       return { message: 'NOT FOUND', errorMessage: 'NOT FOUND' };
     }
     const encodedUrl = encodeURIComponent(url);
