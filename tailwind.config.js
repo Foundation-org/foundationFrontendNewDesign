@@ -86,5 +86,18 @@ export default {
       },
     },
   },
-  plugins: ['prettier-plugin-tailwindcss', require('daisyui')],
+  plugins: [
+    'prettier-plugin-tailwindcss',
+    require('daisyui'),
+    function ({ addUtilities }) {
+      addUtilities({
+        '.no-scrollbar': {
+          /* Hide scrollbar for Webkit, Firefox, IE and Edge */
+          '&::-webkit-scrollbar': { display: 'none' },
+          '-ms-overflow-style': 'none' /* IE and Edge */,
+          'scrollbar-width': 'none' /* Firefox */,
+        },
+      });
+    },
+  ],
 };

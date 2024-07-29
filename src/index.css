@@ -24,7 +24,7 @@
   }
 
   .verification_badge_input {
-    @apply w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px];
+    @apply w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px] dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300;
   }
 
   /* CREATE / PROFILE / HOME Slider */
@@ -42,12 +42,12 @@
   }
 
   .conditional-text {
-    @apply py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px];
+    @apply py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px] dark:text-accent-300;
   }
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-[12px] text-gray-650 dark:text-white-100 2xl:text-[30px] tablet:text-[18px] tablet:leading-[18px];
+  @apply text-[12px] font-semibold leading-[12px] text-gray-650 2xl:text-[30px] tablet:text-[18px] tablet:leading-[18px] dark:text-white-100;
 }
 
 .green-select {
@@ -75,11 +75,11 @@
 }
 
 .pagination-btn {
-  @apply flex h-[14.55px] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] dark:bg-gray-300 tablet:h-7 tablet:w-[27px] tablet:rounded-md;
+  @apply flex h-[14.55px] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] tablet:h-7 tablet:w-[27px] tablet:rounded-md dark:bg-gray-300;
 }
 
 .dragIconWrapper {
-  @apply flex w-[12.28px] min-w-[12.28px] items-center justify-center rounded-l-[5.387px] bg-white-500 py-[6.84px] dark:bg-gray-100 tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:w-[25.2px] laptop:min-w-[25.2px];
+  @apply flex w-[12.28px] min-w-[12.28px] items-center justify-center rounded-l-[5.387px] bg-white-500 py-[6.84px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:w-[25.2px] laptop:min-w-[25.2px] dark:bg-gray-100;
 }
 
 .term_policy_heading {
@@ -137,7 +137,9 @@ body {
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  @apply hidden;
+  scrollbar-color: unset;
+  display: none;
+  /* @apply hidden; */
 }
 
 #green-checkbox input[type='checkbox'] {

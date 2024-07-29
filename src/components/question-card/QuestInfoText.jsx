@@ -16,9 +16,10 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                 You can select <strong>multiple</strong> options
               </h4>
             ) : (
-              <h4 className="conditional-text">
-                You can select only <strong>one</strong> option
-              </h4>
+              <h4 className="conditional-text">&#x200B;</h4>
+              // <h4 className="conditional-text">
+              //   You can select only <strong>one</strong> option
+              // </h4>
             )
           ) : (
             <h4 className="conditional-text">&#x200B;</h4>
@@ -68,7 +69,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                       alt="clicks"
                       className="h-2 w-2 tablet:h-6 tablet:w-6"
                     />
-                    <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+                    <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px] dark:text-white-400">
                       {questStartData.userQuestSetting.questImpression} Impressions{' '}
                     </h2>
                   </div>
@@ -78,7 +79,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                       alt="participants"
                       className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                     />
-                    <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+                    <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px] dark:text-white-400">
                       {questStartData.userQuestSetting.questsCompleted} Completed{' '}
                     </h2>
                   </div>
