@@ -39,6 +39,6 @@ export function isImageUrl(urlArray) {
   const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg']; // Add more if needed
   return urlArray.some((url) => {
     const lowerCaseUrl = url.toLowerCase();
-    return imageExtensions.some((extension) => lowerCaseUrl.endsWith(extension));
+    return imageExtensions.some((extension) => lowerCaseUrl.endsWith(extension) || lowerCaseUrl.includes('giphy'));
   });
 }
