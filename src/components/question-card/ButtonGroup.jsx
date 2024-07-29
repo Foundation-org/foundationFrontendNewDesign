@@ -545,16 +545,16 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id) {
     return (
-      <div className="flex w-full justify-end gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+      <div className="flex w-full gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px]">
         <FeedbackAndVisibility
           ref={feedbackAndVisibilityRef}
           questStartData={questStartData}
           setFeedbackLoading={setFeedbackLoading}
         />
         {questStartData.startStatus === 'change answer' ? (
-          <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
+          <div className="flex w-full gap-[0.69rem] tablet:gap-[0.75rem]">
             <Button
-              variant="cancel"
+              variant="cancel-full"
               onClick={() => {
                 handleViewResults(questStartData._id);
                 handleRemoveItem();
@@ -564,7 +564,7 @@ const ButtonGroup = ({
             </Button>
             <Button
               id={`submit-${questStartData._id}`}
-              variant="submit"
+              variant="g-submit"
               onClick={() => handleSubmit()}
               disabled={
                 loading === true
@@ -580,12 +580,8 @@ const ButtonGroup = ({
             </Button>
           </div>
         ) : (
-          <div className="flex w-full items-center justify-between">
-            <Button
-              variant={'submit'}
-              className={'bg-gradient-to-tr from-green-200 to-green-200'}
-              onClick={openFeedbackAndVisiblePopup}
-            >
+          <div className="flex w-full items-center justify-between gap-4">
+            <Button variant={'submit'} className={'w-full'} onClick={openFeedbackAndVisiblePopup}>
               {feedbackLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Feedback / Hide'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
@@ -593,7 +589,7 @@ const ButtonGroup = ({
             </Button>
             <Button
               id={`submit-${questStartData._id}`}
-              variant="submit"
+              variant="g-submit"
               onClick={() => handleSubmit()}
               disabled={
                 loading === true

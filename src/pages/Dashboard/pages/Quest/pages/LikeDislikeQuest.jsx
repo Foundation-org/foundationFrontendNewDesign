@@ -279,7 +279,7 @@ const LikeDislike = () => {
         </div> */}
       <div className="flex w-full justify-end">
         {hollow ? (
-          <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
+          <div className="pt-2 tablet:pt-[25px]">
             <Button variant="hollow-submit" id="submitButton" disabled={true}>
               Create
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
@@ -288,7 +288,7 @@ const LikeDislike = () => {
             </Button>
           </div>
         ) : (
-          <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
+          <div className="pt-2 tablet:pt-[25px]">
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()} disabled={loading}>
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
