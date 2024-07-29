@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-
 import DeleteOption from './DeleteOption';
 import EditNewOption from './EditNewOption';
 import BasicModal from '../../../components/BasicModal';
@@ -54,17 +53,10 @@ const RankedResult = (props) => {
           </div>
           {props.btnText !== 'Results' && (
             <div className="h-full w-fit rounded-l-[10px] bg-white-500 px-[7px] pb-[13px] pt-[14px] dark:bg-accent-500">
-              {persistedTheme === 'dark' ? (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
-                  alt="six dots"
-                />
-              ) : (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-do ts.svg`}
-                  alt="six dots"
-                />
-              )}
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/${persistedTheme === 'dark' ? 'six-dots-dark.svg' : 'six-dots.svg'}`}
+                alt="six dots"
+              />
             </div>
           )}
           <div className="relative flex w-full justify-between">
@@ -111,12 +103,7 @@ const RankedResult = (props) => {
                 setAddOptionLimit={props.setAddOptionLimit}
               />
             </BasicModal>
-            {/* <div
-              className={`block h-[10px] absolute bottom-0 bg-[#FDD503B2]`}
-              style={{
-                width: props?.selectedPercentages[props?.answer.trim()],
-              }}
-            /> */}
+
             <div
               className={`absolute bottom-0 block h-[5px] bg-[#FDD503B2] tablet:h-[10px]`}
               style={{
@@ -152,7 +139,6 @@ const RankedResult = (props) => {
       </div>
 
       {/* =============== To Display Contention and Trash Right of Option */}
-
       <div className="flex w-12 min-w-12 items-center bg-white pl-1 text-[9.238px] dark:bg-gray-200 tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
         {props.btnText === 'Results' ? (
           <>

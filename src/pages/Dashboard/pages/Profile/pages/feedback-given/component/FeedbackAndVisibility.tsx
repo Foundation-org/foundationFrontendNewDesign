@@ -1,14 +1,15 @@
 import { useSelector } from 'react-redux';
 import showToast from '../../../../../../../components/ui/Toast';
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { feedBackAndHideOptions } from '../../../../../../../constants/feedbackAndHide';
 import ShowHidePostPopup from '../../../../../../../components/dialogue-boxes/ShowHidePostPopup';
 
 type FeedbackAndVisibilityProps = {
   questStartData: any;
+  setFeedbackLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const FeedbackAndVisibility = forwardRef(({ questStartData }: FeedbackAndVisibilityProps, ref) => {
+const FeedbackAndVisibility = forwardRef(({ questStartData, setFeedbackLoading }: FeedbackAndVisibilityProps, ref) => {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [modalVisible, setModalVisible] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(feedBackAndHideOptions.map(() => false));
@@ -40,6 +41,7 @@ const FeedbackAndVisibility = forwardRef(({ questStartData }: FeedbackAndVisibil
         data={feedBackAndHideOptions}
         modalVisible={modalVisible}
         questStartData={questStartData}
+        setFeedbackLoading={setFeedbackLoading}
       />
     </>
   );

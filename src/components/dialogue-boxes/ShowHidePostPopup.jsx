@@ -18,6 +18,7 @@ export default function ShowHidePostPopup({
   checkboxStates,
   setCheckboxStates,
   data,
+  setFeedbackLoading,
 }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -51,10 +52,12 @@ export default function ShowHidePostPopup({
           ),
         }));
         toast.success(resp.data.message);
+        setFeedbackLoading(false);
       }
     },
     onError: (err) => {
       toast.error(err.response.data.message);
+      setFeedbackLoading(false);
     },
   });
 
@@ -84,7 +87,6 @@ export default function ShowHidePostPopup({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       // dispatch(addHiddenPosts(resp.data.data.questForeignKey));
-      showToast('success', 'postHidden');
       queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
@@ -93,9 +95,12 @@ export default function ShowHidePostPopup({
         };
       });
 
+      showToast('success', 'postHidden');
+      setFeedbackLoading(false);
       handleClose();
     },
     onError: (err) => {
+      setFeedbackLoading(false);
       console.log(err);
     },
   });
@@ -123,6 +128,7 @@ export default function ShowHidePostPopup({
               variant={'submit'}
               disabled={isPending}
               onClick={() => {
+                setFeedbackLoading(true);
                 handleCreateFeedback({
                   uuid: persistedUserInfo?.uuid,
                   questForeignKey: questStartData._id,
@@ -137,7 +143,7 @@ export default function ShowHidePostPopup({
                     hiddenMessage: selectedTitle,
                     Question: questStartData.Question,
                   });
-                }, 1000); // 3000 milliseconds = 3 seconds                
+                }, 1000); // 3000 milliseconds = 3 seconds
               }}
             >
               {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
@@ -145,6 +151,7 @@ export default function ShowHidePostPopup({
             <Button
               variant={'cancel'}
               onClick={() => {
+                setFeedbackLoading(true);
                 handleCreateFeedback({
                   uuid: persistedUserInfo?.uuid,
                   questForeignKey: questStartData._id,

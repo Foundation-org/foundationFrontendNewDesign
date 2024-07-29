@@ -40,9 +40,10 @@ const ButtonGroup = ({
   const location = useLocation();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  // const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const persistedContants = useSelector(getConstantsValues);
+  // const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const feedbackAndVisibilityRef = useRef();
+  const [feedbackLoading, setFeedbackLoading] = useState(false);
 
   let filterState;
 
@@ -545,7 +546,11 @@ const ButtonGroup = ({
   if (startTest === questStartData._id) {
     return (
       <div className="flex w-full justify-end gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px]">
-        <FeedbackAndVisibility ref={feedbackAndVisibilityRef} questStartData={questStartData} />
+        <FeedbackAndVisibility
+          ref={feedbackAndVisibilityRef}
+          questStartData={questStartData}
+          setFeedbackLoading={setFeedbackLoading}
+        />
         {questStartData.startStatus === 'change answer' ? (
           <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
             <Button
@@ -581,7 +586,7 @@ const ButtonGroup = ({
               className={'bg-gradient-to-tr from-green-200 to-green-200'}
               onClick={openFeedbackAndVisiblePopup}
             >
-              Feedback / Hide
+              {feedbackLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Feedback / Hide'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
               </span>
