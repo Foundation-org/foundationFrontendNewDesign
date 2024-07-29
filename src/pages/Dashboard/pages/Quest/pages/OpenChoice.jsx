@@ -264,11 +264,13 @@ const OpenChoice = () => {
   };
 
   const checkGifHollow = () => {
+    const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
       // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
       getGifStates.gifUrlStatus.tooltipName === 'Question is Verified' &&
-      getGifStates.gifUrl !== ''
+      getGifStates.gifUrl !== '' &&
+      AllVerified
     ) {
       return false;
     } else {

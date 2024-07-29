@@ -7,9 +7,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
     if (show) {
       return (
         <>
-          {questStartData?.startQuestData?.isFeedback ? (
-            <h4 className="conditional-text text-red-500 font-semibold">Participation is closed</h4>
-          ) : questStartData.whichTypeQuestion === 'ranked choise' ? (
+          {questStartData.whichTypeQuestion === 'ranked choise' ? (
             <h4 className="conditional-text">Press and hold options to drag them into your preferred order</h4>
           ) : questStartData.whichTypeQuestion === 'multiple choise' ||
             questStartData.whichTypeQuestion === 'open choice' ? (

@@ -806,7 +806,7 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} />
+          <QuestInfoText questStartData={questStartData} show={true} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -835,13 +835,13 @@ const QuestionCardWithToggle = (props) => {
             handleViewResults={handleViewResults}
             answersSelection={answersSelection}
           />
-          <QuestInfoText questStartData={questStartData} show={true} />
+          <Spacing questStartData={questStartData} show={true} />
         </>
       );
     } else {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} />
+          <QuestInfoText questStartData={questStartData} show={false} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -873,7 +873,7 @@ const QuestionCardWithToggle = (props) => {
             handleViewResults={handleViewResults}
             answersSelection={answersSelection}
           />
-          <QuestInfoText questStartData={questStartData} show={true} />
+          <Spacing questStartData={questStartData} show={true} />
         </>
       );
     }
