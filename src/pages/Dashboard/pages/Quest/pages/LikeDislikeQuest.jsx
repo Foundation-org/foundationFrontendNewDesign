@@ -38,7 +38,6 @@ const LikeDislike = () => {
   const getGifStates = useSelector(createQuestAction.getGif);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
-  const getGifUrl = useSelector(createQuestAction.getGif);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,6 @@ const LikeDislike = () => {
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        // setTimeout(() => {
         if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
           dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           dispatch(addPlayerId(resp.data.questID));
@@ -60,7 +58,6 @@ const LikeDislike = () => {
         setChangeState(false);
         dispatch(createQuestAction.resetCreateQuest());
         dispatch(pictureMediaAction.resetToInitialState());
-        // }, 500);
       }
       queryClient.invalidateQueries('FeedData');
       queryClient.invalidateQueries('treasury');
@@ -89,7 +86,7 @@ const LikeDislike = () => {
       }
     }
   };
-  console.log(getGifUrl);
+
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));
     dispatch(setPlayingPlayerId(''));
@@ -143,7 +140,11 @@ const LikeDislike = () => {
       uuid: persistedUserInfo.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia
+        ? getMediaStates.url
+        : getGifStates.gifUrl
+          ? getGifStates.gifUrl
+          : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 

@@ -152,7 +152,11 @@ const RankChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia
+        ? getMediaStates.url
+        : getGifStates.gifUrl
+          ? getGifStates.gifUrl
+          : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 
@@ -241,7 +245,6 @@ const RankChoice = () => {
 
   const checkMediaHollow = () => {
     const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
-    console.log({ getMediaStates });
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
       // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&

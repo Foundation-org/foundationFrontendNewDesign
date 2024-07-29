@@ -171,7 +171,7 @@ export default function AddAudio({ handleTab }) {
                   className="size-[15px] tablet:size-[41px]"
                 />
               </div>
-              {console.log({ mediaURL })}
+
               <ReactPlayer
                 ref={playerRef}
                 url={getMediaStates.url}

@@ -18,14 +18,10 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
       showToast('success', 'postUnhidden');
       queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['hiddenPosts'], (oldData) => {
-        // if (oldData.pages[0].length <= 1) {
-        //   queryClient.invalidateQueries(['hiddenPosts']);
-        // } else {
         return {
           ...oldData,
           pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
         };
-        // }
       });
 
       handleClose();
@@ -39,7 +35,6 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
   const { mutateAsync: hidePost, isPending: hidePostLoading } = useMutation({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
-      // dispatch(addHiddenPosts(resp.data.data.questForeignKey));
       showToast('success', 'postHidden');
       queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {

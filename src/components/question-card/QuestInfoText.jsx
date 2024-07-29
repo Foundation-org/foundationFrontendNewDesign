@@ -8,24 +8,20 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
       return (
         <>
           {questStartData.whichTypeQuestion === 'ranked choise' ? (
-            <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
-              Press and hold options to drag them into your preferred order
-            </h4>
+            <h4 className="conditional-text">Press and hold options to drag them into your preferred order</h4>
           ) : questStartData.whichTypeQuestion === 'multiple choise' ||
             questStartData.whichTypeQuestion === 'open choice' ? (
             questStartData.userCanSelectMultiple ? (
-              <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
+              <h4 className="conditional-text">
                 You can select <strong>multiple</strong> options
               </h4>
             ) : (
-              <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
+              <h4 className="conditional-text">
                 You can select only <strong>one</strong> option
               </h4>
             )
           ) : (
-            <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
-              &#x200B;
-            </h4>
+            <h4 className="conditional-text">&#x200B;</h4>
           )}
         </>
       );
@@ -57,7 +53,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                 </div>
               </div>
             ) : (
-              <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
+              <h4 className="conditional-text">
                 &#x200B;
                 {/* You can select only one option */}
               </h4>
@@ -88,7 +84,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                   </div>
                 </div>
               ) : (
-                <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
+                <h4 className="conditional-text">
                   &#x200B;
                   {/* You can select only one option */}
                 </h4>

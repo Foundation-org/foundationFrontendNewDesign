@@ -251,7 +251,7 @@ const SingleAnswerRankedChoice = (props) => {
       {/* =============== To Display Option */}
       <div className="flex w-full">
         <div
-          className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'} flex w-[12.3px] min-w-[12.3px] items-center justify-center rounded-l-[4.734px] border-y border-l bg-white-500 dark:bg-gray-100 tablet:w-[25px] tablet:min-w-[25px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-l-[3px]`}
+          className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} flex w-[12.3px] min-w-[12.3px] items-center justify-center rounded-l-[4.734px] border-y border-l bg-white-500 dark:bg-gray-100 tablet:w-[25px] tablet:min-w-[25px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-l-[3px]`}
         >
           {props.btnText !== 'Results' && (
             <img

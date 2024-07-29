@@ -47,7 +47,6 @@ const AgreeDisagree = () => {
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        // setTimeout(() => {
         if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
           dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           dispatch(addPlayerId(resp.data.questID));
@@ -59,7 +58,6 @@ const AgreeDisagree = () => {
         setChangeState(false);
         dispatch(createQuestAction.resetCreateQuest());
         dispatch(pictureMediaAction.resetToInitialState());
-        // }, 500);
       }
       queryClient.invalidateQueries('FeedData');
       queryClient.invalidateQueries('treasury');
@@ -143,7 +141,11 @@ const AgreeDisagree = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getGifUrl.gifUrl ? getGifUrl.gifUrl : getPictureUrls,
+      url: getMediaStates?.isMedia.isMedia
+        ? getMediaStates.url
+        : getGifStates.gifUrl
+          ? getGifStates.gifUrl
+          : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 

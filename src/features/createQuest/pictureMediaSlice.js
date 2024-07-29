@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import * as questServices from '../../services/api/questsApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // import { checkAnswerExistCreateQuest } from '../../services/api/questsApi';
@@ -260,7 +261,6 @@ export const pictureMediaSlice = createSlice({
     });
     builder.addCase(checkPictureUrl.fulfilled, (state, action) => {
       const { id, result, index } = action.payload;
-      console.log('result', result);
       const validatedAnswer = result.url;
 
       if (result.errorMessage === 'DUPLICATION') {
@@ -384,8 +384,14 @@ export default pictureMediaSlice.reducer;
 export const getPicsMedia = (state) => state.pictureMedia.pictureMedia;
 export const pictureUrlValues = (state) => state.pictureMedia.optionsValue;
 // export const validatedPicUrls = (state) => state.pictureMedia.optionsValue.map((item) => item.validatedPicUrl);
-export const validatedPicUrls = (state) => {
-  return state.pictureMedia.optionsValue
+// export const validatedPicUrls = (state) => {
+//   return state.pictureMedia.optionsValue
+//     .filter((item) => item.validatedPicUrl.trim() !== '') // Filter out empty strings
+//     .map((item) => item.validatedPicUrl);
+// };
+const getPictureMediaOptions = (state) => state.pictureMedia.optionsValue;
+export const validatedPicUrls = createSelector([getPictureMediaOptions], (optionsValue) => {
+  return optionsValue
     .filter((item) => item.validatedPicUrl.trim() !== '') // Filter out empty strings
     .map((item) => item.validatedPicUrl);
-};
+});

@@ -13,6 +13,9 @@ import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSli
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import { getConstantsValues } from '../../features/constants/constantsSlice';
 import FeedbackAndVisibility from '../../pages/Dashboard/pages/Profile/pages/feedback-given/component/FeedbackAndVisibility';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
+import showToast from '../ui/Toast';
 
 const ButtonGroup = ({
   questStartData,
@@ -35,8 +38,9 @@ const ButtonGroup = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
+  // const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const persistedContants = useSelector(getConstantsValues);
   const feedbackAndVisibilityRef = useRef();
 
@@ -205,8 +209,8 @@ const ButtonGroup = ({
     questStartData.usersChangeTheirAns,
   );
 
-  const showHidePostOpen = (type) => setModalVisible({ state: true, type });
-  const showHidePostClose = () => setModalVisible({ state: false, type: '' });
+  // const showHidePostOpen = (type) => setModalVisible({ state: true, type });
+  // const showHidePostClose = () => setModalVisible({ state: false, type: '' });
 
   const showDisableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addDisabledPostId(null)),
@@ -233,11 +237,51 @@ const ButtonGroup = ({
   };
 
   if (postProperties === 'HiddenPosts') {
+    const { mutateAsync: unHidePost, isPending: unHidePostLoading } = useMutation({
+      mutationFn: updateHiddenQuest,
+      onSuccess: (resp) => {
+        showToast('success', 'postUnhidden');
+        queryClient.setQueriesData(['hiddenPosts'], (oldData) => {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) =>
+                item._id === resp.data.data.questForeignKey ? { ...item, userQuestSetting: resp.data.data } : item,
+              ),
+            ),
+          };
+        });
+      },
+      onError: (err) => {
+        console.log(err);
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+      },
+    });
+
+    const { mutateAsync: hidePost, isPending: hidePostLoading } = useMutation({
+      mutationFn: hideQuest,
+      onSuccess: (resp) => {
+        showToast('success', 'postHidden');
+        queryClient.setQueriesData(['hiddenPosts'], (oldData) => {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) =>
+                item._id === resp.data.data.questForeignKey ? { ...item, userQuestSetting: resp.data.data } : item,
+              ),
+            ),
+          };
+        });
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
+
     return (
       <div>
         {startTest !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-            {/* {getButtonText(questStartData.startStatus) !== 'Completed' ? ( */}
             <Button
               variant={'submit'}
               onClick={() =>
@@ -247,33 +291,43 @@ const ButtonGroup = ({
             >
               View
             </Button>
-            {/* ) : null} */}
             {questStartData.userQuestSetting.hidden ? (
               <Button
                 variant="danger"
                 onClick={() => {
-                  showHidePostOpen('hidden');
+                  unHidePost({
+                    uuid: persistedUserInfo?.uuid,
+                    questForeignKey: questStartData._id,
+                    hidden: false,
+                    hiddenMessage: '',
+                  });
                 }}
                 className={'bg-red-400'}
               >
-                Unhide
+                {unHidePostLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Unhide'}
               </Button>
             ) : (
               <Button
                 variant="danger"
                 onClick={() => {
-                  showHidePostOpen('unhidden');
+                  hidePost({
+                    uuid: persistedUserInfo?.uuid,
+                    questForeignKey: questStartData._id,
+                    hidden: true,
+                    hiddenMessage: questStartData.userQuestSetting.feedbackMessage,
+                    Question: questStartData.Question,
+                  });
                 }}
                 className={'bg-red-400'}
               >
-                Hide
+                {hidePostLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Hide'}
               </Button>
             )}
-            <UnHidePostPopup
+            {/* <UnHidePostPopup
               handleClose={showHidePostClose}
               modalVisible={modalVisible}
               questStartData={questStartData}
-            />
+            /> */}
           </div>
         ) : (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
@@ -380,7 +434,7 @@ const ButtonGroup = ({
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'from-green-200 to-green-200 bg-gradient-to-tr'}
+                className={'bg-gradient-to-tr from-green-200 to-green-200'}
               >
                 Feedback / Hide
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
@@ -450,7 +504,7 @@ const ButtonGroup = ({
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'from-green-200 to-green-200 bg-gradient-to-tr'}
+                className={'bg-gradient-to-tr from-green-200 to-green-200'}
               >
                 Feedback / Hide
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
@@ -524,7 +578,7 @@ const ButtonGroup = ({
           <div className="flex w-full items-center justify-between">
             <Button
               variant={'submit'}
-              className={'from-green-200 to-green-200 bg-gradient-to-tr'}
+              className={'bg-gradient-to-tr from-green-200 to-green-200'}
               onClick={openFeedbackAndVisiblePopup}
             >
               Feedback / Hide

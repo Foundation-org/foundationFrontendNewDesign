@@ -89,10 +89,10 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
   };
 
   const handleClose = () => setModalVisible(false);
-  console.log(questStartData.userQuestSetting.hiddenTime);
+
   return (
     <div
-      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white tablet:rounded-[15px] dark:border-gray-100 dark:bg-gray-200"
+      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
       ref={imageGetter}
     >
       <PostTopBar
@@ -116,7 +116,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         }
       />
       {questStartData?.suppressed && (
-        <div className="flex items-center justify-between rounded-t-[12.3px] border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px] dark:border-gray-100 dark:bg-red-300 dark:text-red-400">
+        <div className="flex items-center justify-between rounded-t-[12.3px] border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 dark:border-gray-100 dark:bg-red-300 dark:text-red-400 tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
           <h4 className="">SUPPRESSED</h4>
           {questStartData.uuid === localStorage.getItem('uuid') && (
             <Link to="/profile/feedback" className="underline">

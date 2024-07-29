@@ -44,7 +44,6 @@ export const checkGifUrl = createAsyncThunk('createQuest/checkGifUrl', async (da
 
 export const checkPictureUrl = createAsyncThunk('createQuest/checkPictureUrl', async (data) => {
   const result = await questServices.pictureUrlCheck(data);
-  // console.log({ result });
   return result;
 });
 
