@@ -583,8 +583,8 @@ const ButtonGroup = ({
         ) : (
           <>
             {feedbackLoading || loading ? (
-              <div className="flex w-full items-center justify-center">
-                <FaSpinner className="animate-spin text-center text-[30px] text-blue-100 dark:text-[#EAEAEA]" />
+              <div className="flex h-[22px] w-full items-center justify-center tablet:h-[50px]">
+                <FaSpinner className="animate-spin text-center text-[22px] text-blue-100 tablet:text-[30px] dark:text-[#EAEAEA]" />
               </div>
             ) : (
               <div className="flex w-full items-center justify-between gap-4">
