@@ -400,7 +400,7 @@ const MultipleChoice = () => {
       </DndContext>
       <Button
         variant="addOption"
-        className="mt-2 tablet:mt-[15px]"
+        className="my-2 tablet:my-[15px]"
         onClick={() => {
           if (optionsValue.length < POST_MAX_OPTION_LIMIT) {
             addNewOption();
@@ -415,7 +415,7 @@ const MultipleChoice = () => {
       {/* <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
         &#x200B;
       </p> */}
-      <div className="mt-2 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px] dark:border-gray-100 dark:bg-accent-100">
+      <div className="flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px] dark:border-gray-100 dark:bg-accent-100">
         <h5 className="text-center text-[10px] font-medium leading-normal text-[#435059] tablet:text-[19.35px] laptop:text-[25px] dark:text-white-600">
           Post Settings
         </h5>
@@ -440,7 +440,12 @@ const MultipleChoice = () => {
       </div>
       {hollow ? (
         <div className="mt-[10px] flex w-full justify-end tablet:mt-[25px]">
-          <Button variant="hollow-submit" id="submitButton" disabled={true}>
+          <Button
+            variant="hollow-submit"
+            id="submitButton"
+            disabled={true}
+            className={'w-[152.09px] tablet:w-[273.44px]'}
+          >
             Create
             <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
               (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
@@ -453,7 +458,7 @@ const MultipleChoice = () => {
             id="submitButton2"
             variant="submit"
             onClick={() => handleSubmit()}
-            className="mr-7 mt-[10px] tablet:mr-[50px] tablet:mt-[25px]"
+            className="mt-[10px] w-[152.09px] tablet:mt-[25px] tablet:w-[273.44px]"
             disabled={loading}
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}

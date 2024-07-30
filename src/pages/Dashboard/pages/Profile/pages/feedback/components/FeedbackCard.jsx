@@ -8,9 +8,9 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
   return (
     <div
       ref={innerRef}
-      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px] "
+      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white tablet:rounded-[15px] dark:border-gray-100 dark:bg-gray-200 "
     >
-      <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] dark:border-gray-100 tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
+      <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5 dark:border-gray-100">
         <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-[18px]">
           <div className="flex items-center gap-2 tablet:gap-4 ">
             {post.uuid === persistedUserInfo?.uuid ? (
@@ -57,7 +57,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
           </div> */}
         </div>
       </div>
-      <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px]">
+      <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px] dark:text-gray-300">
         {post.Question}
       </h1>
       <div className="mb-3 ml-7 mt-2 grid grid-cols-2 gap-x-[23px] gap-y-2 tablet:mb-[26px] tablet:ml-[60px] tablet:mt-[15px] tablet:gap-x-[50px] tablet:gap-y-[15px] ">
@@ -84,6 +84,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
       <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
         <Button
           variant="submit"
+          className={'w-[152.09px] tablet:w-[273.44px]'}
           onClick={() => navigate('/post/isfullscreen', { state: { questId: post._id, questType: 'feedback' } })}
         >
           View

@@ -282,14 +282,14 @@ const ButtonGroup = ({
     return (
       <div>
         {startTest !== questStartData._id ? (
-          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+          <div className="flex w-full justify-end gap-2 px-[14.4px] tablet:gap-4 tablet:px-[3.44rem]">
             <Button
               variant={hidePostLoading || unHidePostLoading ? 'submit-hollow' : 'submit'}
               onClick={() =>
                 navigate('/post/isfullscreen', { state: { questId: questStartData._id, questType: 'feedback-given' } })
               }
               disabled={hidePostLoading || unHidePostLoading}
-              className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
+              className={'w-full tablet:w-full tablet:px-[25px] laptop:px-[25px]'}
             >
               View
             </Button>
@@ -304,7 +304,7 @@ const ButtonGroup = ({
                     hiddenMessage: '',
                   });
                 }}
-                className={'bg-red-400'}
+                className={'w-full max-w-full bg-red-400 tablet:w-full laptop:w-full'}
               >
                 {unHidePostLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Unhide'}
               </Button>
@@ -320,7 +320,7 @@ const ButtonGroup = ({
                     Question: questStartData.Question,
                   });
                 }}
-                className={'bg-red-400'}
+                className={'w-full max-w-full bg-red-400 tablet:w-full laptop:w-full'}
               >
                 {hidePostLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Hide'}
               </Button>
@@ -350,24 +350,28 @@ const ButtonGroup = ({
 
   if (postProperties === 'SharedLinks') {
     return (
-      <div>
+      <div className="w-full px-[14.4px] tablet:px-[3.44rem]">
         {startTest !== questStartData._id ? (
-          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-            {getButtonText(questStartData.startStatus) !== 'Completed' ? (
-              <Button
-                variant={'submit-green'}
-                onClick={() => {
-                  navigate('/shared-links/result', {
-                    state: { questId: questStartData._id, link: questStartData.userQuestSetting.link },
-                  });
-                }}
-                className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
-              >
-                Show My Link Results
-              </Button>
-            ) : null}
+          <div className="flex w-full justify-end gap-2 tablet:gap-4">
+            {/* {getButtonText(questStartData.startStatus) !== 'Completed' ? ( */}
+            <Button
+              variant={'submit-green'}
+              onClick={() => {
+                navigate('/shared-links/result', {
+                  state: { questId: questStartData._id, link: questStartData.userQuestSetting.link },
+                });
+              }}
+              className={'w-full tablet:w-full tablet:px-[25px] laptop:px-[25px]'}
+            >
+              Show My Link Results
+            </Button>
+            {/* ) : null} */}
             {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
-              <Button variant="danger" onClick={showDisableSharedLinkPopup} className={'bg-[#DC1010]'}>
+              <Button
+                variant="danger"
+                onClick={showDisableSharedLinkPopup}
+                className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
+              >
                 Disable Link
               </Button>
             ) : (

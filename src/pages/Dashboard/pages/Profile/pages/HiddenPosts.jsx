@@ -139,7 +139,7 @@ export default function HiddenPosts() {
     <div>
       {/* Summary Section */}
       <div className="mx-4 mb-3 tablet:mx-6 tablet:mb-5">
-        <SummaryCard headerIcon="/assets/summary/hidden-post-logo.svg" headerTitle="Hidden Posts">
+        <SummaryCard headerIcon="/assets/summary/hidden-post-logo.svg" headerTitle="Feedback Given">
           <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
             Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
             with it.
@@ -165,14 +165,14 @@ export default function HiddenPosts() {
               <input
                 type="text"
                 id="floating_outlined"
-                className="peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-100 dark:text-[#707175] dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px]"
+                className="peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-100 dark:text-[#707175] dark:focus:border-blue-500"
                 value={hiddenSearch}
                 placeholder=""
                 onChange={handleHiddenPostSearch}
               />
               <label
                 htmlFor="floating_outlined"
-                className="absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2  peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                className="absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2  peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500"
               >
                 Search
               </label>
@@ -183,7 +183,7 @@ export default function HiddenPosts() {
                     dispatch(updateSearch(''));
                   }}
                 >
-                  <GrClose className="h-2 w-2 text-[#ACACAC] dark:text-white tablet:h-4 tablet:w-4" />
+                  <GrClose className="h-2 w-2 text-[#ACACAC] tablet:h-4 tablet:w-4 dark:text-white" />
                 </button>
               )}
               {!getHiddenPostFilters.searchData && (
@@ -198,7 +198,7 @@ export default function HiddenPosts() {
         </div>
       )}
 
-      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-black">
+      <div className="tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] no-scrollbar dark:bg-black">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
           {content}
           <FeedEndStatus

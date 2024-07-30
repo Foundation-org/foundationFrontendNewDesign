@@ -280,7 +280,12 @@ const LikeDislike = () => {
       <div className="flex w-full justify-end">
         {hollow ? (
           <div className="pt-2 tablet:pt-[25px]">
-            <Button variant="hollow-submit" id="submitButton" disabled={true}>
+            <Button
+              variant="hollow-submit"
+              id="submitButton"
+              disabled={true}
+              className={'w-[152.09px] tablet:w-[273.44px]'}
+            >
               Create
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
@@ -288,14 +293,18 @@ const LikeDislike = () => {
             </Button>
           </div>
         ) : (
-          <div className="pt-2 tablet:pt-[25px]">
-            <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()} disabled={loading}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
-              </span>
-            </Button>
-          </div>
+          <Button
+            id="submitButton2"
+            variant="submit"
+            onClick={() => handleSubmit()}
+            disabled={loading}
+            className="mt-[10px] w-[152.09px] tablet:mt-[25px] tablet:w-[273.44px]"
+          >
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
+            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+              (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
+            </span>
+          </Button>
         )}
       </div>
     </CreateQuestWrapper>
