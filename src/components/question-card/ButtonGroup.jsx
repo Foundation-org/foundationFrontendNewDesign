@@ -41,7 +41,7 @@ const ButtonGroup = ({
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
-  // const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
+  const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const feedbackAndVisibilityRef = useRef();
   const [feedbackLoading, setFeedbackLoading] = useState(false);
 
@@ -211,7 +211,7 @@ const ButtonGroup = ({
   );
 
   // const showHidePostOpen = (type) => setModalVisible({ state: true, type });
-  // const showHidePostClose = () => setModalVisible({ state: false, type: '' });
+  const showHidePostClose = () => setModalVisible({ state: false, type: '' });
 
   const showDisableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addDisabledPostId(null)),
@@ -484,7 +484,7 @@ const ButtonGroup = ({
       );
     } else {
       return (
-        <div className="flex w-full justify-end">
+        <div className="flex w-full justify-end ">
           {questStartData.startStatus === 'change answer' ? (
             <div className="pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
@@ -500,7 +500,7 @@ const ButtonGroup = ({
               ) : null}
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
-            <div className="flex w-full items-center justify-between tablet:pl-[63.04px] tablet:pr-[100.08px]">
+            <div className="flex w-full items-center justify-between pl-7 pr-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
               <Button
                 variant={'submit'}
                 onClick={() => {
