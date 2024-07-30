@@ -40,19 +40,18 @@ export default function PostTopBar({ questStartData, postProperties }) {
               {questStartData.QuestTopic}
             </h1>
           </div>
-        </div>
-      )}
-
-      {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
-        <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
-            alt="clock"
-            className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
-          />
-          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
-            {calculateTimeAgo(questStartData?.createdAt)}
-          </h4>
+          {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
+            <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
+                alt="clock"
+                className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
+              />
+              <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
+                {calculateTimeAgo(questStartData?.createdAt)}
+              </h4>
+            </div>
+          )}
         </div>
       )}
       {postProperties !== 'SharedLinks' && postProperties === 'HiddenPosts' && (
