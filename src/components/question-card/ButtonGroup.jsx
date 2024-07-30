@@ -465,11 +465,12 @@ const ButtonGroup = ({
               </Button>
             </div>
           ) : questStartData.startStatus === 'change answer' ? (
-            <div className="flex justify-end  pr-[14.4px] tablet:pr-[3.44rem]">
+            <div className="flex justify-end pr-[14.4px] tablet:pr-[100.08px]">
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
+                  className={'w-[152.09px] tablet:w-[273.44px]'}
                   onClick={() => {
                     showGuestSignUpToastWarning();
                   }}
@@ -485,11 +486,12 @@ const ButtonGroup = ({
       return (
         <div className="flex w-full justify-end ">
           {questStartData.startStatus === 'change answer' ? (
-            <div className="pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+            <div className="pl-7 pr-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
+                  className={'w-[152.09px] tablet:w-[273.44px]'}
                   onClick={() => {
                     showGuestSignUpToastWarning();
                   }}
@@ -629,6 +631,7 @@ const ButtonGroup = ({
           <Button
             variant={result === ', you are good to go' ? 'change' : 'change-outline'}
             disabled={result === ', you are good to go' ? false : true}
+            className={'w-[152.09px] tablet:w-[273.44px]'}
             onClick={handleStartChange}
           >
             Change
