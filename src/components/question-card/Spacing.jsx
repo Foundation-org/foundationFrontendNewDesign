@@ -4,7 +4,11 @@ const Spacing = ({ questStartData, show }) => {
       return (
         <>
           {questStartData?.startQuestData?.isFeedback ? (
-            <h4 className="conditional-text text-red-500 font-semibold">Participation is closed</h4>
+            <div className="flex h-[23px] items-end justify-center tablet:h-[50px]">
+              <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[1rem] dark:text-accent-300">
+                Participation is closed
+              </h4>{' '}
+            </div>
           ) : questStartData.whichTypeQuestion === 'ranked choise' ? (
             <h4 className="max-h-5 min-h-5 text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[40px] tablet:min-h-[40px] tablet:text-[1rem]">
               &#x200B;
@@ -26,7 +30,7 @@ const Spacing = ({ questStartData, show }) => {
       return (
         <>
           {questStartData?.startQuestData?.isFeedback ? (
-            <h4 className="conditional-text text-red-500 font-semibold">Participation is closed</h4>
+            <h4 className="conditional-text font-semibold text-red-500">Participation is closed</h4>
           ) : (
             <h4 className="py-[5px] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[9px] tablet:text-[1rem]">
               &#x200B;
