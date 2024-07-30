@@ -46,9 +46,7 @@ export default function ShowHidePostPopup({
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,
           pages: oldData?.pages?.map((page) =>
-            page.map((item) =>
-              item._id === resp.data.data.questForeignKey ? { ...item, startStatus: 'completed' } : item,
-            ),
+            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
           ),
         }));
         toast.success(resp.data.message);
@@ -78,6 +76,7 @@ export default function ShowHidePostPopup({
         showToast('warning', 'hiddenReason');
         return;
       } else {
+        setFeedbackLoading(true);
         setHidePostModal(true);
       }
     }
