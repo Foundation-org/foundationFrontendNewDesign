@@ -78,7 +78,7 @@ export default function PostTopBar({ questStartData, postProperties }) {
               </h4>
             </div>
           )}
-          {questStartData.userQuestSetting.hiddenTime && (
+          {questStartData.userQuestSetting.hidden && (
             <div className="flex items-center gap-1">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}

@@ -284,10 +284,11 @@ const ButtonGroup = ({
         {startTest !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
             <Button
-              variant={'submit'}
+              variant={hidePostLoading || unHidePostLoading ? 'submit-hollow' : 'submit'}
               onClick={() =>
                 navigate('/post/isfullscreen', { state: { questId: questStartData._id, questType: 'feedback-given' } })
               }
+              disabled={hidePostLoading || unHidePostLoading}
               className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
             >
               View
