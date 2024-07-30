@@ -206,7 +206,7 @@ const ButtonGroup = ({
 
   const result = calculateRemainingTime(
     questStartData?.updatedAt,
-    questStartData?.startQuestData && questStartData?.startQuestData.data.length,
+    questStartData?.startQuestData && questStartData?.startQuestData?.data.length,
     questStartData.usersChangeTheirAns,
   );
 
@@ -580,35 +580,43 @@ const ButtonGroup = ({
             </Button>
           </div>
         ) : (
-          <div className="flex w-full items-center justify-between gap-4">
-            <Button variant={'submit'} className={'w-full'} onClick={openFeedbackAndVisiblePopup}>
-              {feedbackLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Feedback / Hide'}
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-              </span>
-            </Button>
-            <Button
-              id={`submit-${questStartData._id}`}
-              variant="g-submit"
-              onClick={() => handleSubmit()}
-              disabled={
-                loading === true
-                  ? true
-                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                      ? false
-                      : true
-                    : false
-              }
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              {questStartData.startStatus !== 'change answer' && (
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-                </span>
-              )}
-            </Button>
-          </div>
+          <>
+            {feedbackLoading || loading ? (
+              <div className="flex w-full items-center justify-center">
+                <FaSpinner className="animate-spin text-center text-[30px] text-blue-100 dark:text-[#EAEAEA]" />
+              </div>
+            ) : (
+              <div className="flex w-full items-center justify-between gap-4">
+                <Button variant={'submit'} className={'w-full'} onClick={openFeedbackAndVisiblePopup}>
+                  Feedback / Hide
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                  </span>
+                </Button>
+                <Button
+                  id={`submit-${questStartData._id}`}
+                  variant="g-submit"
+                  onClick={() => handleSubmit()}
+                  // disabled={
+                  //   loading === true
+                  //     ? true
+                  //     : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                  //       ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                  //         ? false
+                  //         : true
+                  //       : false
+                  // }
+                >
+                  Submit
+                  {questStartData.startStatus !== 'change answer' && (
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                      (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                    </span>
+                  )}
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </div>
     );
