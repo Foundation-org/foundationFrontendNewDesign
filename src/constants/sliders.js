@@ -1,10 +1,10 @@
 export const createQuestItems = [
-  { id: 0, title: 'Like/Dislike', path: '/post' },
-  { id: 1, title: 'Agree/Disagree', path: '/post/agree-disagree' },
-  { id: 2, title: 'Yes/No', path: '/post/yes-no' },
-  { id: 3, title: 'Multiple Choice', path: '/post/multiple-choice' },
-  { id: 4, title: 'Open Choice', path: '/post/open-choice' },
-  { id: 5, title: 'Ranked Choice', path: '/post/ranked-choice' },
+  { id: 0, title: 'Multiple Choice', path: '/post' },
+  { id: 1, title: 'Open Choice', path: '/post/open-choice' },
+  { id: 2, title: 'Ranked Choice', path: '/post/ranked-choice' },
+  { id: 3, title: 'Like/Dislike', path: '/post/like-dislike' },
+  { id: 4, title: 'Agree/Disagree', path: '/post/agree-disagree' },
+  { id: 5, title: 'Yes/No', path: '/post/yes-no' },
 ];
 
 export const profileItems = [

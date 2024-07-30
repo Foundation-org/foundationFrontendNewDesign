@@ -42,7 +42,6 @@ import TermOfService from '../pages/Signup/pages/TermOfService';
 // QUESTS
 import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import YesNo from '../pages/Dashboard/pages/Quest/pages/YesNo';
-import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
 import OpenChoice from '../pages/Dashboard/pages/Quest/pages/OpenChoice';
 import RankChoice from '../pages/Dashboard/pages/Quest/pages/RankChoice';
 import AgreeDisagree from '../pages/Dashboard/pages/Quest/pages/AgreeDisagree';
@@ -119,7 +118,7 @@ export function Router() {
                 <Route path="" element={<LikeDislike />} />
                 <Route path="agree-disagree" element={<AgreeDisagree />} />
                 <Route path="yes-no" element={<YesNo />} />
-                <Route path="multiple-choice" element={<MultipleChoice />} />
+                <Route path="like-dislike" element={<LikeDislike />} />
                 <Route path="open-choice" element={<OpenChoice />} />
                 <Route path="ranked-choice" element={<RankChoice />} />
               </Route>
