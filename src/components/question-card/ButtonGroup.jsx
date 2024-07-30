@@ -430,7 +430,7 @@ const ButtonGroup = ({
       return (
         <>
           {questStartData.startStatus === '' ? (
-            <div className="flex w-full items-center justify-between gap-4 pl-7 pr-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
               <Button
                 variant={'submit'}
                 onClick={() => {
@@ -501,7 +501,7 @@ const ButtonGroup = ({
               ) : null}
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
-            <div className="flex w-full items-center justify-between gap-4 pl-7 pr-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
               <Button
                 variant={'submit'}
                 onClick={() => {

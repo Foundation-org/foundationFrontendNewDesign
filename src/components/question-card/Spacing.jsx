@@ -10,17 +10,17 @@ const Spacing = ({ questStartData, show }) => {
               </h4>{' '}
             </div>
           ) : questStartData.whichTypeQuestion === 'ranked choise' ? (
-            <h4 className="max-h-5 min-h-5 text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[40px] tablet:min-h-[40px] tablet:text-[1rem]">
+            <h4 className="max-h-[24.16px] min-h-[24.16px] text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[50px] tablet:min-h-[50px] tablet:text-[1rem]">
               &#x200B;
             </h4>
           ) : (questStartData.whichTypeQuestion === 'multiple choise' ||
               questStartData.whichTypeQuestion === 'open choice') &&
             questStartData.userCanSelectMultiple ? (
-            <h4 className="max-h-5 min-h-5 text-center text-[7.5px] font-normal text-[#85898C]  tablet:max-h-[40px] tablet:min-h-[40px] tablet:text-[1rem]">
+            <h4 className="max-h-[24.16px] min-h-[24.16px] text-center text-[7.5px] font-normal text-[#85898C]  tablet:max-h-[50px] tablet:min-h-[50px] tablet:text-[1rem]">
               &#x200B;
             </h4>
           ) : (
-            <h4 className="max-h-5 min-h-5 text-center text-[7.5px] font-normal text-[#85898C]  tablet:max-h-[40px] tablet:min-h-[40px] tablet:text-[1rem]">
+            <h4 className="max-h-[24.16px] min-h-[24.16px] text-center text-[7.5px] font-normal text-[#85898C]  tablet:max-h-[50px] tablet:min-h-[50px] tablet:text-[1rem]">
               &#x200B;
             </h4>
           )}
