@@ -203,9 +203,8 @@ async function checkVideoAgeRestriction(videoId) {
 
 async function getFullSoundcloudUrlFromShortUrl(url) {
   try {
-    // const response = await api.get(`infoquestions/getFullSoundcloudUrlFromShortUrl?shortUrl=${url}`);
-    // return response.data.finalUrl;
-    return url;
+    const response = await api.get(`infoquestions/getFullSoundcloudUrlFromShortUrl?shortUrl=${url}`);
+    return response.data.finalUrl;
   } catch (error) {
     console.error('Error:', error);
     throw error;
