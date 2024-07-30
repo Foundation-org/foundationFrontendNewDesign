@@ -57,6 +57,7 @@ import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
 import Test from '../components/Test';
 import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Authenticating from '../components/Authenticating';
+import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -115,7 +116,7 @@ export function Router() {
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
               <Route path="post" element={<Quest />}>
-                <Route path="" element={<LikeDislike />} />
+                <Route path="" element={<MultipleChoice />} />
                 <Route path="agree-disagree" element={<AgreeDisagree />} />
                 <Route path="yes-no" element={<YesNo />} />
                 <Route path="like-dislike" element={<LikeDislike />} />
