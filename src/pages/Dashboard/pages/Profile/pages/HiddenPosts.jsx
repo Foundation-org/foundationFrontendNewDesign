@@ -145,6 +145,14 @@ export default function HiddenPosts() {
             with it.
           </h1>
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
+            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-gray-300">
+                Posts you've given feedback
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+                {persistedUserInfo?.questsActivity?.feedbackGiven || 0}
+              </h5>
+            </div>
             <div className="max-w-28 pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve hidden
@@ -198,7 +206,7 @@ export default function HiddenPosts() {
         </div>
       )}
 
-      <div className="tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] no-scrollbar dark:bg-black">
+      <div className="tablet:w-fulls no-scrollbar mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-black">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
           {content}
           <FeedEndStatus

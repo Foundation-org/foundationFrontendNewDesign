@@ -16,7 +16,7 @@ const Summary = () => {
           Creating posts is a great way to earn FDX. Especially if others engage with them.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
-          <div className="max-w-28 border-r border-[#707175] pr-6 dark:border-gray-300 tablet:max-w-full">
+          <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full dark:border-gray-300">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Posts you've created
             </h1>
@@ -39,18 +39,26 @@ const Summary = () => {
           with it.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
-          <div className="">
+          <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full dark:border-gray-300">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Posts you've given feedback
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">
+              {persistedUserInfo?.questsActivity?.feedbackGiven || 0}
+            </h5>
+          </div>
+          <div className="max-w-24 tablet:max-w-full">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Posts you’ve hidden
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.questsActivity?.myHiddenQuestsCount}
-            </h5>
+            </h5>{' '}
           </div>
         </div>
         <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
           <Button variant={'submit'} onClick={() => navigate('/profile/feedback-given')}>
-            View hidden posts
+            View all feedback given
           </Button>
         </div>
       </SummaryCard>
@@ -60,7 +68,7 @@ const Summary = () => {
           hide and why.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Hidden posts
             </h1>
@@ -88,7 +96,7 @@ const Summary = () => {
           Sharing posts is a great way to earn FDX - especially if people engage with them.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Posts you’ve shared
             </h1>
@@ -96,7 +104,7 @@ const Summary = () => {
               {persistedUserInfo?.sharedQuestsStatistics.sharedQuests}
             </h5>
           </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Total shared link clicks
             </h1>
@@ -124,7 +132,7 @@ const Summary = () => {
           Sharing lists is a great way to earn FDX - especially if people engage with them.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Lists you’ve shared
             </h1>
@@ -132,7 +140,7 @@ const Summary = () => {
               {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
             </h5>
           </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Total shared list clicks
             </h1>
@@ -159,13 +167,13 @@ const Summary = () => {
       <div className="mt-[2px] flex w-full flex-col gap-3 tablet:gap-[15px]">
         <Link
           to="/profile/user-settings"
-          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:text-[16px]"
+          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px] dark:text-blue-600"
         >
           User Settings {'>'}
         </Link>
         <Link
           to="/profile/ledger"
-          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:text-[16px]"
+          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px] dark:text-blue-600"
         >
           My Activity {'>'}
         </Link>
