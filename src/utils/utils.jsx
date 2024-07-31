@@ -40,3 +40,8 @@ export const calculateTimeAgo = (time) => {
     return `${seconds} ${seconds === 1 ? 'second' : 'seconds'} ago`;
   }
 };
+
+export const capitalizeFirstLetter = (sentence) => {
+  if (!sentence) return sentence;
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+};

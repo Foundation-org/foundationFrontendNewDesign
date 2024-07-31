@@ -11,7 +11,14 @@ export default function SwiperSingleImage({ image }) {
   return (
     <>
       <FullScreenPictureViewer handleClose={closeDialogue} modalVisible={imageDialogue} content={image} />
-      <main className="slider-main-container">
+      <div className="h-[260px]" onClick={openDialogue}>
+        <img
+          src={image}
+          alt={`single img`}
+          className="mx-auto h-full max-h-[260px] w-fit rounded-[4.098px] object-contain tablet:rounded-[15px]"
+        />
+      </div>
+      {/* <main className="slider-main-container">
         <swiper-container centeredSlides="true">
           <swiper-slide>
             <div className="flex h-full items-center">
@@ -21,7 +28,7 @@ export default function SwiperSingleImage({ image }) {
             </div>
           </swiper-slide>
         </swiper-container>
-      </main>
+      </main> */}
     </>
   );
 }

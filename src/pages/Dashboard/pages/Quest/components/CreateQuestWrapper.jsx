@@ -162,7 +162,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
           </div>
         </div>
         <h1 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-white-400">
-          Create Options
+          Options
         </h1>
         <h4 className="my-2 text-[8px] font-medium leading-normal text-gray-800 tablet:my-3 tablet:text-[16px] tablet:leading-[16px]">
           Participants can select only one option from the list.

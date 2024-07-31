@@ -1,6 +1,7 @@
 // import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import BookmarkIcon from '../../pages/Dashboard/pages/QuestStartSection/components/BookmarkIcon';
+import { capitalizeFirstLetter } from '../../utils/utils';
 
 const CardTopbar = ({
   questStartData,
@@ -35,9 +36,12 @@ const CardTopbar = ({
   // if (moderationRatingCount === 0) {
   //   ratingImage = 'post-e.svg';
   // } else ratingImage = 'post-a.svg';
+  // flex w-full gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px] laptop:px-7 desktop:pl-[63.04px] desktop:pr-[100.08px]
+
+  // <div className="flex flex-col justify-between border-gray-250 px-2 pt-2 tablet:px-5 tablet:pt-4"></div>
 
   return (
-    <div className="flex flex-col justify-between border-gray-250 px-2 pt-2 tablet:px-5 tablet:pt-4">
+    <div className="flex flex-col justify-between border-gray-250 px-[0.87rem] pt-2 tablet:px-5 tablet:pt-4">
       <div className="flex items-start justify-between border-gray-250">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
           {/* <div className="flex items-start gap-2 tablet:gap-4 "> */}
@@ -70,7 +74,7 @@ const CardTopbar = ({
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
             </h4> */}
             <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 tablet:text-[1.25rem] tablet:leading-[23px] dark:text-white-400">
-              {questStartData.Question}
+              {capitalizeFirstLetter(questStartData.Question)}
             </h4>
           </div>
           {/* </div> */}

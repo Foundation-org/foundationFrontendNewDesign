@@ -111,7 +111,7 @@ const Options = ({
                   isDragging
                     ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100'
                     : 'border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
-                } w-5 min-w-5 border-y tablet:border-y-[3px]`}
+                } w-2 min-w-2 border-y tablet:w-5 tablet:min-w-5 tablet:border-y-[3px]`}
               ></div>
               <TextareaAutosize
                 id={`input-${number}`}
