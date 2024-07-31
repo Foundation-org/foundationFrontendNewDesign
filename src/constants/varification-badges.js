@@ -1,3 +1,5 @@
+import { IoAccessibility } from 'react-icons/io5';
+
 export const contacts = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Personal-Email-2xa.png`,
@@ -48,6 +50,7 @@ export const socials = [
     accountName: 'twitter',
     type: 'twitter',
     disabled: true,
+    email: true,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
@@ -59,18 +62,19 @@ export const socials = [
     accountName: 'linkedin',
     type: 'linkedin',
     disabled: true,
+    email: true,
   },
-  // {
-  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
-  //   title: 'Facebook',
-  //   ButtonColor: 'blue',
-  //   ButtonText: 'Add',
-  //   NoOfButton: 1,
-  //   link: '/auth/facebook',
-  //   accountName: 'facebook',
-  //   type: 'facebook',
-
-  // },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
+    title: 'Facebook',
+    ButtonColor: 'blue',
+    ButtonText: 'Add',
+    NoOfButton: 1,
+    link: '/auth/facebook',
+    accountName: 'facebook',
+    type: 'facebook',
+    email: 'test@foundation-IoAccessibility.com',
+  },
   // {
   //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
   //   title: 'Instagram',
@@ -92,6 +96,7 @@ export const socials = [
     accountName: 'github',
     type: 'github',
     disabled: false,
+    email: true,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
@@ -103,6 +108,7 @@ export const socials = [
     type: 'farcaster',
     accountName: 'Farcaster',
     badgeType: 'farcaster',
+    email: true,
   },
 ];
 
