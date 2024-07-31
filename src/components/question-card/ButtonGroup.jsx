@@ -282,7 +282,7 @@ const ButtonGroup = ({
     return (
       <div>
         {startTest !== questStartData._id ? (
-          <div className="flex w-full justify-end gap-2 px-[14.4px] tablet:gap-4 tablet:px-[3.44rem]">
+          <div className="flex w-full justify-end gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
             <Button
               variant={hidePostLoading || unHidePostLoading ? 'submit-hollow' : 'submit'}
               onClick={() =>
@@ -350,7 +350,7 @@ const ButtonGroup = ({
 
   if (postProperties === 'SharedLinks') {
     return (
-      <div className="w-full px-[14.4px] tablet:px-[3.44rem]">
+      <div className="w-full px-[0.87rem] tablet:px-10">
         {startTest !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 tablet:gap-4">
             {/* {getButtonText(questStartData.startStatus) !== 'Completed' ? ( */}
@@ -434,7 +434,7 @@ const ButtonGroup = ({
       return (
         <>
           {questStartData.startStatus === '' ? (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px] laptop:px-7 desktop:pl-[63.04px] desktop:pr-[100.08px]">
+            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
               <Button
                 variant={'submit'}
                 onClick={() => {
@@ -469,12 +469,13 @@ const ButtonGroup = ({
               </Button>
             </div>
           ) : questStartData.startStatus === 'change answer' ? (
-            <div className="flex justify-end pr-[14.4px] tablet:pr-[100.08px]">
+            <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+              <button className="w-full cursor-default">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  className={'!w-[158.08px] tablet:!w-[273.44px]'}
+                  className={'w-full tablet:w-full'}
                   onClick={() => {
                     showGuestSignUpToastWarning();
                   }}
@@ -490,12 +491,13 @@ const ButtonGroup = ({
       return (
         <div className="flex w-full justify-end ">
           {questStartData.startStatus === 'change answer' ? (
-            <div className="pl-7 pr-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+            <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+              <button className="w-full cursor-default">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  className={'!w-[158.08px] tablet:!w-[273.44px]'}
+                  className={'w-full tablet:w-full'}
                   onClick={() => {
                     showGuestSignUpToastWarning();
                   }}
@@ -505,7 +507,7 @@ const ButtonGroup = ({
               ) : null}
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px] laptop:px-7 desktop:pl-[63.04px] desktop:pr-[100.08px]">
+            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
               <Button
                 variant={'submit'}
                 onClick={() => {
@@ -550,7 +552,7 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id) {
     return (
-      <div className="flex w-full gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px] laptop:px-7 desktop:pl-[63.04px] desktop:pr-[100.08px]">
+      <div className="flex w-full gap-2 px-[0.87rem] tablet:gap-[0.75rem] tablet:px-10">
         <FeedbackAndVisibility
           ref={feedbackAndVisibilityRef}
           questStartData={questStartData}
@@ -626,16 +628,17 @@ const ButtonGroup = ({
       </div>
     );
   }
-
+  // flex w-full items-center justify-between gap-4
   /* Change */
   return (
-    <div className="px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+    <div className="px-[0.87rem] tablet:px-10">
       {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
-        <div className="flex w-full justify-end">
+        <div className="flex w-full justify-between gap-4">
+          <button className="w-full cursor-default">&#x200B;</button>
           <Button
             variant={result === ', you are good to go' ? 'change' : 'change-outline'}
             disabled={result === ', you are good to go' ? false : true}
-            className={'!w-[158.08px] tablet:!w-[273.44px]'}
+            className={'w-full tablet:w-full'}
             onClick={handleStartChange}
           >
             Change

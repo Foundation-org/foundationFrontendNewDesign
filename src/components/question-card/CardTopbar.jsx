@@ -41,7 +41,7 @@ const CardTopbar = ({
   // <div className="flex flex-col justify-between border-gray-250 px-2 pt-2 tablet:px-5 tablet:pt-4"></div>
 
   return (
-    <div className="flex flex-col justify-between border-gray-250 px-[0.87rem] pt-2 tablet:px-5 tablet:pt-4">
+    <div className="flex flex-col justify-between border-gray-250 px-[0.87rem] pt-2 tablet:px-10 tablet:pt-4">
       <div className="flex items-start justify-between border-gray-250">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
           {/* <div className="flex items-start gap-2 tablet:gap-4 "> */}
