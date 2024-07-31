@@ -4,15 +4,13 @@ import ImagePopUp from '../ui/ImagePopUp';
 import '../test.css';
 
 export default function SwiperMainCarousel({ images, id }) {
-  const [imageDialogue, setImageDialogue] = useState(false);
-  const [selectedImg, setSelectedImg] = useState('');
-
-  const closeDialogue = () => setImageDialogue(false);
-
-  const [activeSlideIndex1, setActiveSlideIndex1] = useState(0);
-
   const swiperRef = useRef(null);
   const thumbSwiperRef = useRef(null);
+  const [imageDialogue, setImageDialogue] = useState(false);
+  const [selectedImg, setSelectedImg] = useState('');
+  const [activeSlideIndex1, setActiveSlideIndex1] = useState(0);
+
+  const closeDialogue = () => setImageDialogue(false);
 
   useEffect(() => {
     const swiperEl = swiperRef.current;
@@ -31,7 +29,7 @@ export default function SwiperMainCarousel({ images, id }) {
   }, [activeSlideIndex1]);
 
   return (
-    <div className="">
+    <>
       {imageDialogue && (
         <ImagePopUp
           images={images}
@@ -106,6 +104,6 @@ export default function SwiperMainCarousel({ images, id }) {
           </swiper-slide>
         ))}
       </swiper-container>
-    </div>
+    </>
   );
 }

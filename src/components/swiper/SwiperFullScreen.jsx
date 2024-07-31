@@ -12,7 +12,7 @@ export default function SwiperFullScreen({ images, selectedImg, id }) {
   }, [index]);
 
   return (
-    <div>
+    <>
       <main className="slider-main-container slider-main-fullscreen">
         <swiper-container
           id="fullscreen-swiper-container"
@@ -73,6 +73,6 @@ export default function SwiperFullScreen({ images, selectedImg, id }) {
           </swiper-slide>
         ))}
       </swiper-container>
-    </div>
+    </>
   );
 }

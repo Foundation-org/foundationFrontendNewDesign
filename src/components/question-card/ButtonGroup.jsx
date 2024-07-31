@@ -474,7 +474,7 @@ const ButtonGroup = ({
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  className={'!w-[158.08px] tablet:w-[273.44px]'}
+                  className={'!w-[158.08px] tablet:!w-[273.44px]'}
                   onClick={() => {
                     showGuestSignUpToastWarning();
                   }}
@@ -495,7 +495,7 @@ const ButtonGroup = ({
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
-                  className={'!w-[158.08px] tablet:w-[273.44px]'}
+                  className={'!w-[158.08px] tablet:!w-[273.44px]'}
                   onClick={() => {
                     showGuestSignUpToastWarning();
                   }}
@@ -635,7 +635,7 @@ const ButtonGroup = ({
           <Button
             variant={result === ', you are good to go' ? 'change' : 'change-outline'}
             disabled={result === ', you are good to go' ? false : true}
-            className={'!w-[158.08px] tablet:w-[273.44px]'}
+            className={'!w-[158.08px] tablet:!w-[273.44px]'}
             onClick={handleStartChange}
           >
             Change
