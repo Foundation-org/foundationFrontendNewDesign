@@ -979,7 +979,7 @@ input[type='number'] {
   }
 
   .scrollable-tabs-container {
-    @apply px-6 py-[14.8px];
+    @apply max-w-[778px] px-6 py-[14.8px];
   }
 
   .scrollable-tabs-container img {

@@ -434,13 +434,13 @@ const ButtonGroup = ({
       return (
         <>
           {questStartData.startStatus === '' ? (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px] laptop:px-7 desktop:pl-[63.04px] desktop:pr-[100.08px]">
               <Button
                 variant={'submit'}
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'w-full'}
+                className={'w-full whitespace-nowrap'}
               >
                 Feedback / Hide
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
@@ -505,16 +505,16 @@ const ButtonGroup = ({
               ) : null}
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:pl-[63.04px] tablet:pr-[100.08px] laptop:px-7 desktop:pl-[63.04px] desktop:pr-[100.08px]">
               <Button
                 variant={'submit'}
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'w-full'}
+                className={'w-full whitespace-nowrap'}
               >
                 Feedback / Hide
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px] ">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               </Button>
@@ -550,7 +550,7 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id) {
     return (
-      <div className="flex w-full gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px]">
+      <div className="flex w-full gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[63.04px] tablet:pr-[100.08px] laptop:px-7 desktop:pl-[63.04px] desktop:pr-[100.08px]">
         <FeedbackAndVisibility
           ref={feedbackAndVisibilityRef}
           questStartData={questStartData}
@@ -592,7 +592,7 @@ const ButtonGroup = ({
               </div>
             ) : (
               <div className="flex w-full items-center justify-between gap-4">
-                <Button variant={'submit'} className={'w-full'} onClick={openFeedbackAndVisiblePopup}>
+                <Button variant={'submit'} className={'w-full whitespace-nowrap'} onClick={openFeedbackAndVisiblePopup}>
                   Feedback / Hide
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                     (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
