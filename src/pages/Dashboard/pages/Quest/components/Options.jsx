@@ -118,7 +118,6 @@ const Options = ({
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value)}
                 value={typedValue}
-                placeholder="Add your own option"
                 tabIndex={number + 2}
                 autoFocus={number >= 5 ? true : false}
                 onKeyDown={(e) =>

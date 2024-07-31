@@ -14,20 +14,20 @@ const CardTopbar = ({
   postProperties,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+  // const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const { protocol, host } = window.location;
-  let url = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
+  // const { protocol, host } = window.location;
+  // let url = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
 
-  const copyToClipboard = async () => {
-    const textToCopy = url;
+  // const copyToClipboard = async () => {
+  //   const textToCopy = url;
 
-    try {
-      await navigator.clipboard.writeText(textToCopy);
-    } catch (err) {
-      console.error('Unable to copy text to clipboard:', err);
-    }
-  };
+  //   try {
+  //     await navigator.clipboard.writeText(textToCopy);
+  //   } catch (err) {
+  //     console.error('Unable to copy text to clipboard:', err);
+  //   }
+  // };
 
   // const moderationRatingCount = questStartData?.moderationRatingCount;
   // let ratingImage = null;
@@ -40,8 +40,8 @@ const CardTopbar = ({
     <div className="flex flex-col justify-between border-gray-250 px-2 pt-2 tablet:px-5 tablet:pt-4">
       <div className="flex items-start justify-between border-gray-250">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
-          <div className="flex items-start gap-2 tablet:gap-4 ">
-            {createdBy === persistedUserInfo?.uuid ? (
+          {/* <div className="flex items-start gap-2 tablet:gap-4 "> */}
+          {/* {createdBy === persistedUserInfo?.uuid ? (
               <div className="relative h-fit w-fit">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
@@ -63,17 +63,17 @@ const CardTopbar = ({
                   {badgeCount}
                 </p>
               </div>
-            )}
+            )} */}
 
-            <div className="mt-[1.5px] flex gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
-              {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
+          <div className="mt-[1.5px] flex gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
+            {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
             </h4> */}
-              <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
-                {questStartData.Question}
-              </h4>
-            </div>
+            <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 tablet:text-[1.25rem] tablet:leading-[23px] dark:text-white-400">
+              {questStartData.Question}
+            </h4>
           </div>
+          {/* </div> */}
         </div>
 
         {postProperties === 'HiddenPosts' ? (
