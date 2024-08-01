@@ -733,8 +733,7 @@ input[type='number'] {
 
 /* carousel */
 .carouselContainer {
-  margin: 0 auto;
-  background-color: #ffffff;
+  @apply mx-auto my-0 bg-white dark:bg-gray-200;
 }
 
 .carousel {

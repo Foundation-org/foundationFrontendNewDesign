@@ -149,7 +149,12 @@ function App() {
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
       </Helmet>
       {isMaintenance ? <MaintenanceRouter /> : <Router />}
-      <Toaster position="top-right" expand={true} theme={persistedTheme === 'dark' ? 'dark' : 'light'} richColors />
+      <Toaster
+        position="top-right"
+        expand={true}
+        // theme={persistedTheme === 'dark' ? 'dark' : 'light'}
+        richColors
+      />
     </div>
   );
 }
