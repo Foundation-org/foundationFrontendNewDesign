@@ -46,6 +46,7 @@ import OpenChoice from '../pages/Dashboard/pages/Quest/pages/OpenChoice';
 import RankChoice from '../pages/Dashboard/pages/Quest/pages/RankChoice';
 import AgreeDisagree from '../pages/Dashboard/pages/Quest/pages/AgreeDisagree';
 import LikeDislike from '../pages/Dashboard/pages/Quest/pages/LikeDislikeQuest';
+import PreviewPost from '../pages/Dashboard/pages/Quest/pages/PreviewPost';
 // TREASURY
 import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
 import TreasurySummary from '../pages/Dashboard/pages/Treasury/pages/TreasurySummary';
@@ -153,6 +154,7 @@ export function Router() {
                 </Route>
               </Route>
             </Route>
+            <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
             <Route path="/shared-list-link/result" element={<SharedListResults />} />
             <Route path="/post/:isFullScreen" element={<Guests />} />

@@ -1,10 +1,10 @@
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+// import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   addAdultFilterPopup,
   addPlayerId,
@@ -12,7 +12,7 @@ import {
   setIsShowPlayer,
   setPlayingPlayerId,
 } from '../../../../../features/quest/utilsSlice';
-import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+// import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';
 import { updateMultipleChoice } from '../../../../../features/createQuest/createQuestSlice';
 import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT } from '../../../../../constants/Values/constants';
@@ -25,7 +25,7 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
-import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
+// import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
@@ -33,7 +33,8 @@ import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifi
 const MultipleChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
+  const location = useLocation();
+  // const queryClient = useQueryClient();
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
@@ -41,9 +42,9 @@ const MultipleChoice = () => {
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const persistedConstants = useSelector(getConstantsValues);
+  // const persistedConstants = useSelector(getConstantsValues);
   const getGifStates = useSelector(createQuestAction.getGif);
-  const filterStates = useSelector(filtersActions.getFilters);
+  // const filterStates = useSelector(filtersActions.getFilters);
 
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -60,38 +61,38 @@ const MultipleChoice = () => {
     },
   });
 
-  const { mutateAsync: createQuest } = useMutation({
-    mutationFn: createInfoQuest,
-    onSuccess: (resp) => {
-      if (resp.status === 201) {
-        if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
-          dispatch(addPlayerId(resp.data.questID));
-        }
-        navigate('/');
-        queryClient.invalidateQueries(['userInfo']);
+  // const { mutateAsync: createQuest } = useMutation({
+  //   mutationFn: createInfoQuest,
+  //   onSuccess: (resp) => {
+  //     if (resp.status === 201) {
+  //       if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
+  //         dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+  //         dispatch(addPlayerId(resp.data.questID));
+  //       }
+  //       navigate('/');
+  //       queryClient.invalidateQueries(['userInfo']);
 
-        dispatch(createQuestAction.resetCreateQuest());
-        dispatch(pictureMediaAction.resetToInitialState());
-      }
+  //       dispatch(createQuestAction.resetCreateQuest());
+  //       dispatch(pictureMediaAction.resetToInitialState());
+  //     }
 
-      setLoading(false);
-      queryClient.invalidateQueries('FeedData');
-      queryClient.invalidateQueries('treasury');
-    },
+  //     setLoading(false);
+  //     queryClient.invalidateQueries('FeedData');
+  //     queryClient.invalidateQueries('treasury');
+  //   },
 
-    onError: (err) => {
-      if (err.response) {
-        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
-      }
+  //   onError: (err) => {
+  //     if (err.response) {
+  //       showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+  //     }
 
-      setMultipleOption(false);
-      setAddOption(false);
-      setChangedOption('');
-      setChangeState(false);
-      setLoading(false);
-    },
-  });
+  //     setMultipleOption(false);
+  //     setAddOption(false);
+  //     setChangedOption('');
+  //     setChangeState(false);
+  //     setLoading(false);
+  //   },
+  // });
 
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));
@@ -151,7 +152,7 @@ const MultipleChoice = () => {
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
       url: getMediaStates?.isMedia.isMedia
-        ? getMediaStates.url
+        ? [getMediaStates.url]
         : getGifStates.gifUrl
           ? getGifStates.gifUrl
           : getPictureUrls,
@@ -164,8 +165,10 @@ const MultipleChoice = () => {
       setLoading(false);
       return showToast('warning', 'emptyOption');
     }
+
     if (!checkHollow()) {
-      createQuest(params);
+      navigate('/post-preview', { state: { state: params, path: location.pathname } });
+      // createQuest(params);
     }
   };
 
@@ -446,10 +449,10 @@ const MultipleChoice = () => {
             disabled={true}
             className={'w-[152.09px] tablet:w-[273.44px]'}
           >
-            Create
-            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+            Preview
+            {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
               (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
-            </span>
+            </span> */}
           </Button>
         </div>
       ) : (
@@ -461,10 +464,10 @@ const MultipleChoice = () => {
             className="mt-[10px] w-[152.09px] tablet:mt-[25px] tablet:w-[273.44px]"
             disabled={loading}
           >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
-            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Preview'}
+            {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
               (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
-            </span>
+            </span> */}
           </Button>
         </div>
       )}

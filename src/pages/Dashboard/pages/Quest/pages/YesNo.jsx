@@ -43,35 +43,35 @@ const YesNo = () => {
   const [hollow, setHollow] = useState(true);
   const persistedContants = useSelector(getConstantsValues);
 
-  const { mutateAsync: createQuest } = useMutation({
-    mutationFn: questServices.createInfoQuest,
-    onSuccess: (resp) => {
-      if (resp.status === 201) {
-        // setTimeout(() => {
-        if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
-        }
-        navigate('/');
+  // const { mutateAsync: createQuest } = useMutation({
+  //   mutationFn: questServices.createInfoQuest,
+  //   onSuccess: (resp) => {
+  //     if (resp.status === 201) {
+  //       // setTimeout(() => {
+  //       if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
+  //         dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+  //       }
+  //       navigate('/');
 
-        setChangedOption('');
-        setChangeState(false);
-        dispatch(createQuestAction.resetCreateQuest());
-        dispatch(pictureMediaAction.resetToInitialState());
-        dispatch(addPlayerId(resp.data.questID));
-        // }, 500);
-      }
-      setLoading(false);
-      queryClient.invalidateQueries(['userInfo', 'FeedData', 'treasury']);
-    },
-    onError: (err) => {
-      if (err.response) {
-        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
-        setChangedOption('');
-        setChangeState(false);
-      }
-      setLoading(false);
-    },
-  });
+  //       setChangedOption('');
+  //       setChangeState(false);
+  //       dispatch(createQuestAction.resetCreateQuest());
+  //       dispatch(pictureMediaAction.resetToInitialState());
+  //       dispatch(addPlayerId(resp.data.questID));
+  //       // }, 500);
+  //     }
+  //     setLoading(false);
+  //     queryClient.invalidateQueries(['userInfo', 'FeedData', 'treasury']);
+  //   },
+  //   onError: (err) => {
+  //     if (err.response) {
+  //       showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+  //       setChangedOption('');
+  //       setChangeState(false);
+  //     }
+  //     setLoading(false);
+  //   },
+  // });
 
   const handleTab = (index, key) => {
     console.log(index, key);
@@ -153,7 +153,8 @@ const YesNo = () => {
     };
 
     if (!checkHollow()) {
-      createQuest(params);
+      // createQuest(params);
+      navigate('/post-preview', { state: { state: params, path: location.pathname } });
     }
   };
 
@@ -275,10 +276,10 @@ const YesNo = () => {
               disabled={true}
               className={'w-[152.09px] tablet:w-[273.44px]'}
             >
-              Create
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+              Preview
+              {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
-              </span>
+              </span> */}
             </Button>
           </div>
         ) : (
@@ -289,10 +290,10 @@ const YesNo = () => {
             disabled={loading}
             className="mt-[10px] w-[152.09px] tablet:mt-[25px] tablet:w-[273.44px]"
           >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
-            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Preview'}
+            {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
               (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
-            </span>
+            </span> */}
           </Button>
         )}
       </div>

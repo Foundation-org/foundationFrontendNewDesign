@@ -58,36 +58,36 @@ const OpenChoice = () => {
     },
   });
 
-  const { mutateAsync: createQuest } = useMutation({
-    mutationFn: createInfoQuest,
-    onSuccess: (resp) => {
-      if (resp.status === 201) {
-        if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
-          dispatch(addPlayerId(resp.data.questID));
-        }
-        navigate('/');
-        queryClient.invalidateQueries(['userInfo']);
-        dispatch(createQuestAction.resetCreateQuest());
-        dispatch(pictureMediaAction.resetToInitialState());
-      }
+  // const { mutateAsync: createQuest } = useMutation({
+  //   mutationFn: createInfoQuest,
+  //   onSuccess: (resp) => {
+  //     if (resp.status === 201) {
+  //       if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
+  //         dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+  //         dispatch(addPlayerId(resp.data.questID));
+  //       }
+  //       navigate('/');
+  //       queryClient.invalidateQueries(['userInfo']);
+  //       dispatch(createQuestAction.resetCreateQuest());
+  //       dispatch(pictureMediaAction.resetToInitialState());
+  //     }
 
-      setLoading(false);
-      queryClient.invalidateQueries('FeedData');
-      queryClient.invalidateQueries('treasury');
-    },
+  //     setLoading(false);
+  //     queryClient.invalidateQueries('FeedData');
+  //     queryClient.invalidateQueries('treasury');
+  //   },
 
-    onError: (err) => {
-      if (err.response) {
-        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
-      }
-      setMultipleOption(false);
-      setAddOption(false);
-      setChangedOption('');
-      setChangeState(false);
-      setLoading(false);
-    },
-  });
+  //   onError: (err) => {
+  //     if (err.response) {
+  //       showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+  //     }
+  //     setMultipleOption(false);
+  //     setAddOption(false);
+  //     setChangedOption('');
+  //     setChangeState(false);
+  //     setLoading(false);
+  //   },
+  // });
 
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));
@@ -160,8 +160,10 @@ const OpenChoice = () => {
       setLoading(false);
       return showToast('warning', 'emptyOption');
     }
+
     if (!checkHollow()) {
-      createQuest(params);
+      navigate('/post-preview', { state: { state: params, path: location.pathname } });
+      // createQuest(params);
     }
   };
 
@@ -452,10 +454,10 @@ const OpenChoice = () => {
             disabled={true}
             className={'w-[152.09px] tablet:w-[273.44px]'}
           >
-            Create
-            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+            Preview
+            {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
               (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
-            </span>
+            </span> */}
           </Button>
         </div>
       ) : (
@@ -467,10 +469,10 @@ const OpenChoice = () => {
             className="mt-[10px] w-[152.09px] tablet:mt-[25px] tablet:w-[273.44px]"
             disabled={loading}
           >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
-            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Preview'}
+            {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
               (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
-            </span>
+            </span> */}
           </Button>
           {/* <button
               id="submitButton2"

@@ -61,36 +61,36 @@ const RankChoice = () => {
     },
   });
 
-  const { mutateAsync: createQuest } = useMutation({
-    mutationFn: createInfoQuest,
-    onSuccess: (resp) => {
-      if (resp.status === 201) {
-        // setTimeout(() => {
-        if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
-          dispatch(addPlayerId(resp.data.questID));
-        }
-        navigate('/');
-        queryClient.invalidateQueries(['userInfo']);
-        setAddOption(false);
-        setChangedOption('');
-        setChangeState(false);
-        dispatch(createQuestAction.resetCreateQuest());
-        dispatch(pictureMediaAction.resetToInitialState());
-        // }, 500);
-      }
-      setLoading(false);
-      queryClient.invalidateQueries('FeedData');
-      queryClient.invalidateQueries('treasury');
-    },
-    onError: (err) => {
-      console.log('Mutation Error', err);
-      setAddOption(false);
-      setChangedOption('');
-      setChangeState(false);
-      setLoading(false);
-    },
-  });
+  // const { mutateAsync: createQuest } = useMutation({
+  //   mutationFn: createInfoQuest,
+  //   onSuccess: (resp) => {
+  //     if (resp.status === 201) {
+  //       // setTimeout(() => {
+  //       if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
+  //         dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+  //         dispatch(addPlayerId(resp.data.questID));
+  //       }
+  //       navigate('/');
+  //       queryClient.invalidateQueries(['userInfo']);
+  //       setAddOption(false);
+  //       setChangedOption('');
+  //       setChangeState(false);
+  //       dispatch(createQuestAction.resetCreateQuest());
+  //       dispatch(pictureMediaAction.resetToInitialState());
+  //       // }, 500);
+  //     }
+  //     setLoading(false);
+  //     queryClient.invalidateQueries('FeedData');
+  //     queryClient.invalidateQueries('treasury');
+  //   },
+  //   onError: (err) => {
+  //     console.log('Mutation Error', err);
+  //     setAddOption(false);
+  //     setChangedOption('');
+  //     setChangeState(false);
+  //     setLoading(false);
+  //   },
+  // });
 
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));
@@ -166,7 +166,8 @@ const RankChoice = () => {
       return showToast('warning', 'emptyOption');
     }
     if (!checkHollow()) {
-      createQuest(params);
+      navigate('/post-preview', { state: { state: params, path: location.pathname } });
+      // createQuest(params);
     }
   };
 
@@ -442,10 +443,10 @@ const RankChoice = () => {
               disabled={true}
               className={'w-[152.09px] tablet:w-[273.44px]'}
             >
-              Create
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+              Preview
+              {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
-              </span>
+              </span> */}
             </Button>
           </div>
         ) : (
@@ -457,10 +458,10 @@ const RankChoice = () => {
               className="mt-[10px] w-[152.09px] tablet:mt-[25px] tablet:w-[273.44px]"
               disabled={loading}
             >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Preview'}
+              {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
-              </span>
+              </span> */}
             </Button>
             {/* <button
                 id="submitButton2"
