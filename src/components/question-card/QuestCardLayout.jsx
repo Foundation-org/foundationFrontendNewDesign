@@ -96,7 +96,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       ref={imageGetter}
     >
       <PostTopBar questStartData={questStartData} postProperties={postProperties} />
-      {questStartData?.suppressed && (
+      {questStartData?.suppressed && questStartData?.uuid === persistedUserInfo.uuid && (
         <div className="flex items-center justify-between border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px] dark:border-gray-100 dark:bg-red-300 dark:text-red-400">
           <h4 className="">SUPPRESSED</h4>
           {questStartData.uuid === localStorage.getItem('uuid') && (
