@@ -86,7 +86,7 @@ export default function ShowHidePostPopup({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       // dispatch(addHiddenPosts(resp.data.data.questForeignKey));
-      queryClient.invalidateQueries(['userInfo']);
+      queryClient.invalidateQueries(['userInfo', { exact: true }]);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
           ...oldData,

@@ -42,7 +42,7 @@
   }
 
   .conditional-text {
-    @apply py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-accent-400 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px] dark:text-accent-300;
+    @apply py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-accent-400 tablet:py-[10px] tablet:pl-[66px] tablet:text-[1rem] tablet:leading-[30px] dark:text-accent-300;
   }
 }
 
