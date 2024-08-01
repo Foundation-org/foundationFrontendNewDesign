@@ -594,26 +594,21 @@ const ButtonGroup = ({
               </div>
             ) : (
               <div className="flex w-full items-center justify-between gap-4">
-                <Button variant={'submit'} className={'w-full whitespace-nowrap'} onClick={openFeedbackAndVisiblePopup}>
-                  Feedback / Hide
-                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-                  </span>
-                </Button>
-                <Button
-                  id={`submit-${questStartData._id}`}
-                  variant="g-submit"
-                  onClick={() => handleSubmit()}
-                  // disabled={
-                  //   loading === true
-                  //     ? true
-                  //     : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                  //       ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                  //         ? false
-                  //         : true
-                  //       : false
-                  // }
-                >
+                {questStartData.startStatus !== 'continue' ? (
+                  <Button
+                    variant={'submit'}
+                    className={'w-full whitespace-nowrap'}
+                    onClick={openFeedbackAndVisiblePopup}
+                  >
+                    Feedback / Hide
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                      (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                    </span>
+                  </Button>
+                ) : (
+                  <button className="w-full cursor-default">&#x200B;</button>
+                )}
+                <Button id={`submit-${questStartData._id}`} variant="g-submit" onClick={() => handleSubmit()}>
                   Submit
                   {questStartData.startStatus !== 'change answer' && (
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
@@ -642,6 +637,19 @@ const ButtonGroup = ({
             onClick={handleStartChange}
           >
             Change
+          </Button>
+        </div>
+      )}
+      {questStartData.startStatus === 'continue' && (
+        <div className="flex w-full justify-between gap-4">
+          <button className="w-full cursor-default">&#x200B;</button>
+          <Button id={`submit-${questStartData._id}`} variant="g-submit" onClick={() => handleSubmit()}>
+            Submit
+            {questStartData.startStatus !== 'change answer' && (
+              <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+              </span>
+            )}
           </Button>
         </div>
       )}

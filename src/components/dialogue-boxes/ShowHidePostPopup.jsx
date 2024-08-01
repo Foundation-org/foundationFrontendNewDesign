@@ -177,7 +177,14 @@ export default function ShowHidePostPopup({
 
           <div className="flex flex-col gap-[5px] tablet:gap-3">
             {data
-              .filter((filterItem) => (questStartData.usersAddTheirAns ? ![4].includes(filterItem.id) : true))
+              .filter((filterItem) =>
+                questStartData.usersAddTheirAns ||
+                questStartData.whichTypeQuestion === 'like/dislike' ||
+                questStartData.whichTypeQuestion === 'agree/disagree' ||
+                questStartData.whichTypeQuestion === 'yes/no'
+                  ? ![4].includes(filterItem.id)
+                  : true,
+              )
               .map((item, index) => (
                 <div
                   key={index + 1}
