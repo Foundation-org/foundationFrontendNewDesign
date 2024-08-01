@@ -37,13 +37,20 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
               </div>
             )}
 
-            {post.feedback.some((item) => item.violated === true) && (
+            {post.suppressed === true && (
               <div className="mt-[1.5px] flex items-center gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
                 <h4 className="text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:text-[1.25rem] tablet:leading-[23px]">
                   SUPPRESSED
                 </h4>
               </div>
             )}
+            {/* {post.feedback.some((item) => item.violated === true) && (
+              <div className="mt-[1.5px] flex items-center gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
+                <h4 className="text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:text-[1.25rem] tablet:leading-[23px]">
+                  SUPPRESSED
+                </h4>
+              </div>
+            )} */}
           </div>
           {/* <div className="flex items-center gap-[15px]">
             <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
