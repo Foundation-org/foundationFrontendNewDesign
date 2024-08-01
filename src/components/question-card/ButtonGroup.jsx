@@ -623,7 +623,7 @@ const ButtonGroup = ({
       </div>
     );
   }
-  // flex w-full items-center justify-between gap-4
+
   /* Change */
   return (
     <div className="px-[0.87rem] tablet:px-10">
@@ -643,8 +643,13 @@ const ButtonGroup = ({
       {questStartData.startStatus === 'continue' && (
         <div className="flex w-full justify-between gap-4">
           <button className="w-full cursor-default">&#x200B;</button>
-          <Button id={`submit-${questStartData._id}`} variant="g-submit" onClick={() => handleSubmit()}>
-            Submit
+          <Button
+            id={`submit-${questStartData._id}`}
+            variant="g-submit"
+            disabled={loading}
+            onClick={() => handleSubmit()}
+          >
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
             {questStartData.startStatus !== 'change answer' && (
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
