@@ -586,7 +586,7 @@ export default function DashboardLayout({ children }) {
         </div>
         {children}
         {/* Desktop Right Side */}
-        <div className="right-0 top-0 hidden tablet:block laptop:absolute">
+        <div className="right-0 top-0 hidden h-[calc(100dvh-70px)] overflow-y-scroll no-scrollbar tablet:block tablet:pb-[15px] laptop:absolute">
           <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border-gray-100 dark:bg-gray-200 tablet:dark:border">
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
