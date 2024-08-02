@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 import { getConstantsValues } from '../../../features/constants/constantsSlice';
 import showToast from '../../ui/Toast';
+import EmbedPostDialogue from '../../../pages/Embed/EmbedPostDialogue';
 
 const CopyDialogue = ({ handleClose, questStartData }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
   const persistedContants = useSelector(getConstantsValues);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [embed, setEmbed] = useState(false);
   const { protocol, host } = window.location;
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
   let url = `${protocol}//${host}/p/`;
@@ -118,9 +120,14 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
       showToast('error', 'error', {}, error.response.data.message);
     },
   });
+  const handleEmbedClose = () => {
+    setEmbed(false);
+    handleClose();
+  };
 
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
+      <EmbedPostDialogue modalVisible={embed} handleClose={handleEmbedClose} postId={questStartData?._id} />
       <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] from-accent-100 to-accent-100 px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px] dark:border dark:border-gray-100 dark:bg-gradient-to-tr">
         <div className="w-fit rounded-full bg-white p-[5px] tablet:p-[10px]">
           <svg
@@ -229,7 +236,16 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         </div>
         <div className={'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
           {!createCustom ? (
-            <div className="flex items-center gap-[25px]">
+            <div className="flex items-center justify-between gap-3 ">
+              <Button
+                variant={'submit'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => {
+                  setEmbed(true);
+                }}
+              >
+                Embed
+              </Button>
               <Button
                 variant={'submit'}
                 className={'w-fit min-w-fit whitespace-nowrap'}

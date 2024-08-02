@@ -95,22 +95,23 @@ const CardTopbar = ({
         ) : postProperties === 'SharedLinks' ? (
           <></>
         ) : (
-          // <div
-          //   className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
-          //   onClick={() => {
-          //     copyToClipboard();
-          //     toast.success('Link Copied!');
-          //   }}
-          // >
-          //   <img
-          //     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
-          //     alt="eye-cut"
-          //     className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
-          //   />
-          //   <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
-          // </div>
-          <>
-            {/* <div className=" mr-[20.64px]  flex items-center gap-[5.64px] tablet:mr-[37.36px] tablet:gap-[14.36px]">
+          questStartData?.type !== 'embed' && (
+            // <div
+            //   className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
+            //   onClick={() => {
+            //     copyToClipboard();
+            //     toast.success('Link Copied!');
+            //   }}
+            // >
+            //   <img
+            //     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
+            //     alt="eye-cut"
+            //     className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
+            //   />
+            //   <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
+            // </div>
+            <>
+              {/* <div className=" mr-[20.64px]  flex items-center gap-[5.64px] tablet:mr-[37.36px] tablet:gap-[14.36px]">
               {ratingImage ? (
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/${ratingImage}`}
@@ -123,12 +124,13 @@ const CardTopbar = ({
               </h1>
             </div> */}
 
-            <BookmarkIcon
-              bookmarkStatus={bookmarkStatus}
-              persistedTheme={persistedTheme}
-              handleBookmark={handleBookmark}
-            />
-          </>
+              <BookmarkIcon
+                bookmarkStatus={bookmarkStatus}
+                persistedTheme={persistedTheme}
+                handleBookmark={handleBookmark}
+              />
+            </>
+          )
         )}
       </div>
     </div>

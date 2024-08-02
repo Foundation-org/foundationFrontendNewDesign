@@ -96,16 +96,18 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       ref={imageGetter}
     >
       <PostTopBar questStartData={questStartData} postProperties={postProperties} />
-      {questStartData?.suppressed && questStartData?.uuid === persistedUserInfo.uuid && (
-        <div className="flex items-center justify-between border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px] dark:border-gray-100 dark:bg-red-300 dark:text-red-400">
-          <h4 className="">SUPPRESSED</h4>
-          {questStartData.uuid === localStorage.getItem('uuid') && (
-            <Link to="/profile/feedback" className="underline">
-              See Why
-            </Link>
-          )}
-        </div>
-      )}
+      {questStartData?.suppressed &&
+        questStartData?.uuid === persistedUserInfo.uuid &&
+        questStartData?.type !== 'embed' && (
+          <div className="flex items-center justify-between border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px] dark:border-gray-100 dark:bg-red-300 dark:text-red-400">
+            <h4 className="">SUPPRESSED</h4>
+            {questStartData.uuid === localStorage.getItem('uuid') && (
+              <Link to="/profile/feedback" className="underline">
+                See Why
+              </Link>
+            )}
+          </div>
+        )}
 
       {questStartData.url &&
         questStartData.url.length !== 0 &&
@@ -142,20 +144,22 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
           id={questStartData._id}
         />
       )}
-      <QuestBottombar
-        time={
-          postProperties === 'HiddenPosts'
-            ? questStartData.userQuestSetting.feedbackTime
-            : postProperties === 'SharedLinks'
-              ? questStartData.userQuestSetting.sharedTime
-              : questStartData.createdAt
-        }
-        questStartData={questStartData}
-        postProperties={postProperties}
-        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
-        setDelModalVisible={setModalVisible}
-        createdBy={questStartData.uuid}
-      />
+      {questStartData?.type !== 'embed' && (
+        <QuestBottombar
+          time={
+            postProperties === 'HiddenPosts'
+              ? questStartData.userQuestSetting.feedbackTime
+              : postProperties === 'SharedLinks'
+                ? questStartData.userQuestSetting.sharedTime
+                : questStartData.createdAt
+          }
+          questStartData={questStartData}
+          postProperties={postProperties}
+          showDisableSharedLinkPopup={showDisableSharedLinkPopup}
+          setDelModalVisible={setModalVisible}
+          createdBy={questStartData.uuid}
+        />
+      )}
     </div>
   );
 };
