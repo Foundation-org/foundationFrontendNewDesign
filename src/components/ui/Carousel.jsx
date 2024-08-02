@@ -105,7 +105,7 @@ export default ({ data }) => {
         renderArrowNext={(onClickHandler, hasNext, label) => hasNext && <CustomRightArrow onClick={onClickHandler} />}
         statusFormatter={(currentItem, total) => ''}
         renderThumbs={(children) => renderThumbs(children)}
-
+        selectedItem={data?.length - 1}
         // onChange={onChange}
         // onClickItem={onClickItem}
         // onClickThumb={onClickThumb}
