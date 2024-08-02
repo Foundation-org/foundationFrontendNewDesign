@@ -320,7 +320,7 @@ export const gifUrlCheck = async ({ url }) => {
     // if (!urlPattern.test(url)) {
     //   return { message: 'NOT FOUND', errorMessage: 'NOT FOUND' };
     // }
-    if (!url.includes('giphy.com/media')) {
+    if (!url.includes('giphy.com')) {
       return { message: 'NOT FOUND', errorMessage: 'NOT FOUND' };
     }
     const encodedUrl = encodeURIComponent(url);
