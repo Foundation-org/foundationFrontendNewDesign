@@ -16,6 +16,7 @@ import { FaSpinner } from 'react-icons/fa';
 import Breadcrumb from '../../../../../components/Breadcrumb';
 import SystemNotificationCard from '../../../../../components/posts/SystemNotificationCard';
 import { dyk } from '../../../../../constants/dyk';
+import showToast from '../../../../../components/ui/Toast';
 
 export default function PreviewPost() {
   const { state } = useLocation();
@@ -70,7 +71,10 @@ export default function PreviewPost() {
           <div className="mx-auto flex h-[calc(100dvh-134px)] w-full max-w-[1440px] tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 desktop:mx-auto desktop:px-0">
             <div className="w-full overflow-y-auto py-2 no-scrollbar tablet:px-6 tablet:py-5 laptop:px-0">
               <div className="relative mx-auto max-w-[730px] px-4 tablet:px-0">
-                <div className="absolute left-0 top-0 z-20 size-full cursor-default" />
+                <div
+                  className="absolute left-0 top-0 z-20 size-full cursor-default"
+                  onClick={() => showToast('warning', 'youAreViewingPreview')}
+                />
                 <QuestionCardWithToggle questStartData={post} />
               </div>
               <div className="mx-auto my-[10px] flex w-full max-w-[730px] justify-between gap-4 px-8 tablet:my-[25px] tablet:px-10">
