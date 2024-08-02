@@ -115,8 +115,8 @@ const QuestStartSection = () => {
   );
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] dark:bg-black laptop:mx-[331px] desktop:mx-auto">
-      {filterStates?.moderationRatingFilter?.initial === 0 &&
+    <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] laptop:mx-[331px] desktop:mx-auto dark:bg-black">
+      {/* {filterStates?.moderationRatingFilter?.initial === 0 &&
         filterStates?.moderationRatingFilter?.final === 0 &&
         questUtils.adultFilterPopup.rating !== 0 && (
           <ShowAdultDisabledPopup
@@ -127,18 +127,18 @@ const QuestStartSection = () => {
             title={'Adult Post Warning'}
             image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/adult_icon.svg`}
           />
-        )}
+        )} */}
       <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
         <div className="block tablet:hidden">
           <SidebarLeft />
         </div>
-        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] dark:bg-black tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)]">
+        <div className="mx-auto flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] no-scrollbar tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-black">
           <div className="fixed left-auto right-auto max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>
           <div
             id="post-container"
-            className="no-scrollbar mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full"
+            className="mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full"
           >
             {content}
             {printEndMessage(data?.pages[0], filterStates.bookmarks, isFetching)}

@@ -32,6 +32,8 @@ export default function PreviewPost() {
     ...state.state,
   };
 
+  console.log(state.state);
+
   const { mutateAsync: createQuest, isPending } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
@@ -76,6 +78,10 @@ export default function PreviewPost() {
                   onClick={() => showToast('warning', 'youAreViewingPreview')}
                 />
                 <QuestionCardWithToggle questStartData={post} />
+                <p className="pb-3 pb-5 pt-5 text-[12px] italic tablet:pt-8 tablet:text-[30px]">
+                  Your post will show under the Adult content category. You can try rephrasing to make the post show to
+                  everyone, or continue as-is.
+                </p>
               </div>
               <div className="mx-auto my-[10px] flex w-full max-w-[730px] justify-between gap-4 px-8 tablet:my-[25px] tablet:px-10">
                 <Button
