@@ -235,9 +235,7 @@ const StartTest = ({
           </div>
         );
       }
-      {
-        console.log('rankedAnswers', rankedAnswers);
-      }
+
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
         return (
           <div className="flex flex-col overflow-auto">

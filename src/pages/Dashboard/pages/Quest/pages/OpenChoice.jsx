@@ -413,28 +413,30 @@ const OpenChoice = () => {
       {/* <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
         &#x200B;
       </p> */}
-      <h5 className="text-[10px] font-medium leading-normal text-[#435059] tablet:text-[19.35px] laptop:text-[25px] dark:text-white-600">
-        Post Settings
-      </h5>
-      <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px] dark:border-gray-100 dark:bg-accent-100">
-        {/* <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+      <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12">
+        <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-white-400">
+          Post Settings
+        </h5>
+        <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px] dark:border-gray-100 dark:bg-accent-100">
+          {/* <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Participants can select multiple options.
             </h5>
             <CustomSwitch enabled={multipleOption} setEnabled={setMultipleOption} />
           </div> */}
-        <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px] dark:border-gray-100 dark:bg-gray-200">
-          <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px] dark:text-white-600">
-            Participants can add their own options.
-          </h5>
-          <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
-        </div>
-        {/* <ChangeChoiceOption
+          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px] dark:border-gray-100 dark:bg-gray-200">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px] dark:text-white-600">
+              Participants can add their own options.
+            </h5>
+            <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
+          </div>
+          {/* <ChangeChoiceOption
             changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}
           /> */}
+        </div>
       </div>
       {hollow ? (
         // <div className="flex w-full justify-end">
@@ -447,7 +449,7 @@ const OpenChoice = () => {
 
         //   </button>
         // </div>
-        <div className="mt-[10px] flex w-full justify-end tablet:mt-[25px]">
+        <div className="flex w-full justify-end">
           <Button
             variant="hollow-submit"
             id="submitButton"
@@ -466,7 +468,7 @@ const OpenChoice = () => {
             id="submitButton2"
             variant="submit"
             onClick={() => handleSubmit()}
-            className="mt-[10px] w-[152.09px] tablet:mt-[25px] tablet:w-[273.44px]"
+            className="w-[152.09px] tablet:w-[273.44px]"
             disabled={loading}
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Preview'}

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { authSuccess } from '../services/api/authentication';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { addUser } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAskPassword } from '../features/profile/userSettingSlice';
@@ -10,16 +10,25 @@ import showToast from './ui/Toast';
 import LegacyConfirmationPopup from './dialogue-boxes/LegacyConfirmationPopup';
 import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
+import * as homeFilterActions from '../features/sidebar/filtersSlice';
+import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
 
 const Authenticating = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const legacyPromiseRef = useRef();
   const [uuid, setUuid] = useState();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
+
+  let filtersActions;
+  if (location.pathname === '/bookmark') {
+    filtersActions = bookmarkFiltersActions;
+  } else {
+    filtersActions = homeFilterActions;
+  }
 
   const redirectTo = localStorage.getItem('target-url');
   const url = new URL(redirectTo);
@@ -40,6 +49,27 @@ const Authenticating = () => {
     enabled: token !== null,
   });
 
+  const initializeFilters = (userData) => {
+    dispatch(filtersActions.setFilterByScope(userData?.States.filterByScope));
+    dispatch(filtersActions.setFilterBySort(userData?.States.filterBySort));
+    dispatch(filtersActions.setFilterByStatus(userData?.States.filterByStatus));
+    dispatch(filtersActions.setFilterByType(userData?.States.filterByType));
+    dispatch(filtersActions.setFilterByMedia(userData?.States.filterByMedia));
+    dispatch(filtersActions.setExpandedView(true));
+    dispatch(filtersActions.setBookmarks(userData?.States.bookmarks));
+    dispatch(filtersActions.setSearchData(userData?.States.searchData));
+    dispatch(filtersActions.setBlockTopics(userData?.States.topics?.Block.list));
+    dispatch(
+      filtersActions.setRatings({
+        initial: userData?.States.moderationRatingFilter?.initial
+          ? userData?.States.moderationRatingFilter?.initial
+          : 0,
+        final: userData?.States.moderationRatingFilter?.final ? userData?.States.moderationRatingFilter?.final : 0,
+      }),
+    );
+    localStorage.setItem('selectedButtonId', userData?.States.selectedBtnId);
+  };
+
   // Google
   const handleSignUpSocialGuest = async (data) => {
     if (persistedUserInfo?.role === 'user') return;
@@ -48,6 +78,7 @@ const Authenticating = () => {
       data.uuid = localStorage.getItem('uuid');
       const res = await api.post(`/user/signUpSocial/guestMode`, data);
       if (res.status === 200) {
+        initializeFilters(res.data);
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
@@ -81,6 +112,7 @@ const Authenticating = () => {
       data.type = provider;
       const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
       if (res.status === 200) {
+        initializeFilters(res.data);
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
@@ -110,6 +142,7 @@ const Authenticating = () => {
         await handleOpenPasswordConfirmation();
       } else {
         if (res.status === 200) {
+          initializeFilters(res.data);
           localStorage.setItem('uuid', res.data.uuid);
           localStorage.setItem('userData', JSON.stringify(res.data));
           localStorage.removeItem('isGuestMode');
@@ -161,7 +194,6 @@ const Authenticating = () => {
   };
 
   const handleAddBadge = async (data, provider) => {
-    console.log('came', provider, data);
     try {
       let id;
       if (provider === 'linkedin') {

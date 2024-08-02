@@ -258,7 +258,7 @@ const LikeDislike = () => {
       quest="Statement"
       handleTab={handleTab}
       type={'Post'}
-      msg={'Participants can "Like" or "Dislike" this post"'}
+      msg={'Participants can "Like" or "Dislike" this post'}
     >
       <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
         <YesNoOptions answer={'Like'} />
