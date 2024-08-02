@@ -232,7 +232,6 @@ const MultipleChoice = () => {
   ]);
 
   const handleTab = (index, key) => {
-    console.log('index', index, key);
     if (index === optionsValue.length + 2) {
       document.getElementById(`input-${index}`).blur();
     } else {
@@ -443,36 +442,17 @@ const MultipleChoice = () => {
           /> */}
         </div>
       </div>
-      {hollow ? (
-        <div className="flex w-full justify-end">
-          <Button
-            variant="hollow-submit"
-            id="submitButton"
-            disabled={true}
-            className={'w-[152.09px] tablet:w-[273.44px]'}
-          >
-            Preview
-            {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-              (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
-            </span> */}
-          </Button>
-        </div>
-      ) : (
-        <div className="flex w-full justify-end">
-          <Button
-            id="submitButton2"
-            variant="submit"
-            onClick={() => handleSubmit()}
-            className="w-[152.09px] tablet:w-[273.44px]"
-            disabled={loading}
-          >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Preview'}
-            {/* <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-              (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
-            </span> */}
-          </Button>
-        </div>
-      )}
+      <div className="flex w-full justify-end">
+        <Button
+          id={hollow ? 'submitButton' : 'submitButton2'}
+          variant={hollow ? 'hollow-submit' : 'submit'}
+          onClick={hollow ? null : handleSubmit}
+          className="w-[152.09px] tablet:w-[273.44px]"
+          disabled={hollow ? true : loading}
+        >
+          {loading && !hollow ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Preview'}
+        </Button>
+      </div>
     </CreateQuestWrapper>
   );
 };
