@@ -10,19 +10,20 @@ const About = () => {
     <div className="bg-white tablet:rounded-b-[0.86513rem] tablet:rounded-t-[0.86513rem] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border-[2.56px]">
       <div className="-mt-[2px] space-y-[0.63rem] bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:mt-0  tablet:space-y-2 tablet:rounded-t-[0.86513rem] tablet:px-16 tablet:py-6 dark:bg-silver-200 dark:text-gray-300">
         <h1 className="pb-3 text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:pb-[10px] tablet:text-[1.25rem] tablet:leading-[1.25rem] dark:text-gray-300">
-          Why we started Foundation
+          What Is Foundation?
         </h1>
         {/* <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
           Unlock the potential of your personal data.
         </p> */}
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
-          We all create and engage with content every single day for free, and that information is used by brands and
-          corporations alike.
+          Foundation is a new kind of anonymous social platform designed to help you figure out what's true. By
+          leveraging collective human intelligence and trusted data in a unique new way, when you benefit, we all
+          benefit.
         </p>
-        <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
+        {/* <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
           We wanted to create a rewards based platform that lets you own the content you create - putting the value of
           your data back in your hands.
-        </p>
+        </p> */}
       </div>
       {/* <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white dark:border-gray-100 dark:bg-silver-200 tablet:px-16 tablet:py-6 tablet:dark:border-y-[2.56px]">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
@@ -46,7 +47,8 @@ const About = () => {
               Step 1
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-              Build Your Profile - Build an anonymous profile on Foundation, adding valuable data as you choose.
+              Build Your Profile - Create an anonymous profile on Foundation. Give your profile trust by adding
+              verification badges. These will come in handy later.
             </p>
           </div>
           {/* </div> */}
@@ -61,8 +63,8 @@ const About = () => {
               Step 2
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
-              Participate in posts - Create posts, give feedback and share your thoughts safely while staying anonymous
-              and verified.
+              Participate - Respond to posts, create posts, give feedback and share your thoughts safely while staying
+              anonymous and verified.
             </p>
             {/* <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 Every post is anonymous, so the focus can stay on the conversation, not personal attacks.
@@ -89,7 +91,8 @@ const About = () => {
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Influence the Future - Your contributions help shape decisions by providing valuable insights to
-              businesses, policymakers, and researchers.
+              researchers, companies, and policymakers.In the future, businesses will be able to market to you directly
+              based on your data.
             </p>
           </div>
         </div>
@@ -106,7 +109,7 @@ const About = () => {
         </h5>
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
           Foundation does not own and cannot share any of the personal data you populate. You choose what data you want
-          to share and at what price.
+          to share and, in the future, at what price.
         </p>
       </div>
       {persistedUserInfo.role !== 'user' && (
