@@ -6,18 +6,30 @@ import { FaSpinner } from 'react-icons/fa';
 
 const EmbedPost = () => {
   let { id } = useParams();
+
   const { data: singleQuestData, isLoading } = useQuery({
     queryKey: ['emdedPost'],
     queryFn: () => fetchResults(id),
   });
-  console.log(singleQuestData);
-  console.log('coming', isLoading);
+
   return (
-    <div>
-      {singleQuestData &&
+    <div className="mx-auto w-full max-w-[730px]">
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <FaSpinner className="animate-spin text-[#EAEAEA]" />
+        </div>
+      ) : (
+        singleQuestData &&
         singleQuestData?.data?.map((item, index) => (
-          <QuestionCardWithToggle questStartData={item} isBookmarked={false} isSingleQuest={true} postLink={id} />
-        ))}
+          <QuestionCardWithToggle
+            key={index + 1}
+            questStartData={item}
+            isBookmarked={false}
+            isSingleQuest={true}
+            postLink={id}
+          />
+        ))
+      )}
     </div>
   );
 };
