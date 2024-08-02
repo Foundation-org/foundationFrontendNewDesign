@@ -14,6 +14,8 @@ import * as createQuestAction from '../../../../../features/createQuest/createQu
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import { FaSpinner } from 'react-icons/fa';
 import Breadcrumb from '../../../../../components/Breadcrumb';
+import SystemNotificationCard from '../../../../../components/posts/SystemNotificationCard';
+import { dyk } from '../../../../../constants/dyk';
 
 export default function PreviewPost() {
   const { state } = useLocation();
@@ -21,9 +23,8 @@ export default function PreviewPost() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const persistedConstants = useSelector(getConstantsValues);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(filtersActions.getFilters);
-
-  console.log(state.state);
 
   const post = {
     ...hardcodedValues,
@@ -66,16 +67,16 @@ export default function PreviewPost() {
       <div className="w-full bg-[#F2F3F5] dark:bg-black">
         <DashboardLayout>
           <Breadcrumb />
-          <div className="mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[1440px] tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 desktop:mx-auto desktop:px-0">
+          <div className="mx-auto flex h-[calc(100dvh-134px)] w-full max-w-[1440px] tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 desktop:mx-auto desktop:px-0">
             <div className="w-full overflow-y-auto py-2 no-scrollbar tablet:px-6 tablet:py-5 laptop:px-0">
               <div className="relative mx-auto max-w-[730px] px-4 tablet:px-0">
                 <div className="absolute left-0 top-0 z-20 size-full cursor-default" />
                 <QuestionCardWithToggle questStartData={post} />
               </div>
-              <div className="mx-auto flex w-full max-w-[730px] justify-between gap-4 px-8 tablet:px-10">
+              <div className="mx-auto my-[10px] flex w-full max-w-[730px] justify-between gap-4 px-8 tablet:my-[25px] tablet:px-10">
                 <Button
                   variant="cancel"
-                  className="mt-[10px] w-full max-w-full tablet:mt-[25px] tablet:w-full laptop:w-full"
+                  className="w-full max-w-full tablet:w-full laptop:w-full"
                   onClick={() => {
                     navigate(state.path);
                   }}
@@ -85,7 +86,7 @@ export default function PreviewPost() {
                 <Button
                   variant="submit"
                   onClick={() => createQuest(state.state)}
-                  className="mt-[10px] w-full tablet:mt-[25px] tablet:w-full"
+                  className="w-full tablet:w-full"
                   disabled={isPending}
                 >
                   {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
@@ -94,6 +95,11 @@ export default function PreviewPost() {
                   </span>
                 </Button>
               </div>
+              {persistedUserInfo?.notificationSettings?.systemNotifications ? (
+                <div className="mx-auto mb-4 max-w-[730px] px-4 tablet:px-0">
+                  <SystemNotificationCard post={dyk} />
+                </div>
+              ) : null}
             </div>
           </div>
         </DashboardLayout>
