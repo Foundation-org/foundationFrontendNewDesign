@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
 // import { Button } from '../../../../../components/ui/Button';
-// import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useDebounce } from '../../../../../utils/useDebounce';
 import { extractPartFromUrl, extractYouTubeVideoId } from '../../../../../utils/embeddedutils';
 import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addMedia';
@@ -14,17 +14,17 @@ import showToast from '../../../../../components/ui/Toast';
 
 export default function AddMedia({ handleTab }) {
   const playerRef = useRef(null);
-  const textareaRef = useRef(null);
+  // const textareaRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getMedia);
   let debouncedURL = useDebounce(getMediaStates.url, 1000);
   const [mediaURL, setMediaURL] = useState(debouncedURL);
 
-  const autoGrow = () => {
-    const element = textareaRef.current;
-    element.style.height = '5px';
-    element.style.height = `${element.scrollHeight}px`;
-  };
+  // const autoGrow = () => {
+  //   const element = textareaRef.current;
+  //   element.style.height = '5px';
+  //   element.style.height = `${element.scrollHeight}px`;
+  // };
 
   const handleVideoEnded = () => {
     if (playerRef.current) {
@@ -164,7 +164,7 @@ export default function AddMedia({ handleTab }) {
           </div> */}
           {getMediaStates.urlStatus.tooltipName !== 'Question is Verified' && (
             <div className="flex">
-              {/* <TextareaAutosize
+              <TextareaAutosize
                 id="input-1"
                 tabIndex={2}
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
@@ -181,12 +181,12 @@ export default function AddMedia({ handleTab }) {
                 value={getMediaStates.url}
                 placeholder={
                   getMediaStates.isMedia.type === 'EmbedVideo'
-                    ? 'Paste Youtube share link or url here...'
+                    ? 'Paste YouTube share link or url here...'
                     : 'Paste Soundcloud share link or url here...'
                 }
-                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
-              /> */}
-              <textarea
+                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400"
+              />
+              {/* <textarea
                 ref={textareaRef}
                 onInput={autoGrow}
                 id="input-1"
@@ -209,7 +209,7 @@ export default function AddMedia({ handleTab }) {
                     : 'Paste Soundcloud share link or url here...'
                 }
                 className="box-border flex h-[27px] min-h-[27px] w-full resize-none items-center overflow-hidden rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:min-h-[51px] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:text-[18px] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400"
-              />
+              /> */}
               <button
                 className={`relative rounded-r-[5.128px] border-y border-r border-white-500 bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-gray-100 dark:bg-accent-100 ${getMediaStates.urlStatus.color}`}
               >

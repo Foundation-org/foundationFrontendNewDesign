@@ -120,7 +120,6 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             </div>
           )}
         <AddMedia handleTab={handleTab} />
-        {/* <AddPictures /> */}
         <AddPictureUrls handleTab={handleTab} />
         <AddGif handleTab={handleTab} />
         <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12">

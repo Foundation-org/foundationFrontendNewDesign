@@ -78,7 +78,7 @@ export default function PreviewPost() {
                   onClick={() => showToast('warning', 'youAreViewingPreview')}
                 />
                 <QuestionCardWithToggle questStartData={post} />
-                <p className="pb-3 pb-5 pt-5 text-[12px] italic tablet:pt-8 tablet:text-[30px]">
+                <p className="pb-3 pt-5 text-[12px] italic text-gray-900 tablet:pb-5 tablet:pt-8 tablet:text-[24px] tablet:leading-[30px] dark:text-accent-300">
                   Your post will show under the Adult content category. You can try rephrasing to make the post show to
                   everyone, or continue as-is.
                 </p>

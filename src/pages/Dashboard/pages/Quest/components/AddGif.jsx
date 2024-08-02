@@ -1,28 +1,29 @@
 // import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
+// import { useEffect, useRef, useState } from 'react';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
 // import { Button } from '../../../../../components/ui/Button';
 // import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useDebounce } from '../../../../../utils/useDebounce';
-import { extractPartFromUrl, extractYouTubeVideoId } from '../../../../../utils/embeddedutils';
-import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addMedia';
+// import { extractPartFromUrl, extractYouTubeVideoId } from '../../../../../utils/embeddedutils';
+// import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addMedia';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import ReactPlayer from 'react-player/lazy';
+// import ReactPlayer from 'react-player/lazy';
 import './Player.css';
-import showToast from '../../../../../components/ui/Toast';
+// import showToast from '../../../../../components/ui/Toast';
 
 export default function AddGif({ handleTab }) {
-  const textareaRef = useRef(null);
+  // const textareaRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getGif);
   let debouncedURL = useDebounce(getMediaStates.url, 1000);
 
-  const autoGrow = () => {
-    const element = textareaRef.current;
-    element.style.height = '5px';
-    element.style.height = `${element.scrollHeight}px`;
-  };
+  // const autoGrow = () => {
+  //   const element = textareaRef.current;
+  //   element.style.height = '5px';
+  //   element.style.height = `${element.scrollHeight}px`;
+  // };
 
   // // To show and hide artwork on different screen sizes
   // useEffect(() => {
@@ -72,7 +73,7 @@ export default function AddGif({ handleTab }) {
 
           {getMediaStates.gifUrlStatus.tooltipName !== 'Question is Verified' && (
             <div className="flex">
-              <textarea
+              {/* <textarea
                 ref={textareaRef}
                 onInput={autoGrow}
                 id="input-1"
@@ -85,6 +86,18 @@ export default function AddGif({ handleTab }) {
                 value={getMediaStates.gifUrl}
                 placeholder={'Paste a GIPHY Sharelink or Url here'}
                 className="box-border flex h-[27px] min-h-[27px] w-full resize-none items-center overflow-hidden rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:min-h-[51px] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:text-[18px] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400"
+              /> */}
+              <TextareaAutosize
+                id="input-1"
+                tabIndex={2}
+                value={getMediaStates.gifUrl}
+                onChange={(e) => {
+                  dispatch(createQuestAction.addGifUrl(e.target.value));
+                }}
+                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
+                onBlur={(e) => e.target.value.trim() !== '' && urlVerification(e.target.value.trim())}
+                placeholder="Paste a GIPHY Sharelink or Url here"
+                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400"
               />
               <button
                 className={`relative rounded-r-[5.128px] border-y border-r border-white-500 bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-gray-100 dark:bg-accent-100 ${getMediaStates.gifUrlStatus.color}`}
