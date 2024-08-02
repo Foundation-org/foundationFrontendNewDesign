@@ -143,7 +143,12 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData.QuestAnswers, windowWidth]);
 
   useEffect(() => {
-    if (questStartData.url?.length > 0 && !questStartData.url[0]?.includes('flickr') && questStartData.url[0] !== '') {
+    if (
+      questStartData.url?.length > 0 &&
+      !questStartData.url[0]?.includes('flickr') &&
+      !questStartData.url[0]?.includes('giphy') &&
+      questStartData.url[0] !== ''
+    ) {
       dispatch(questUtilsActions.addPlayerId(questStartData._id));
     }
 
