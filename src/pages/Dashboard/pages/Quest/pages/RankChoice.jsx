@@ -153,9 +153,9 @@ const RankChoice = () => {
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
       url: getMediaStates?.isMedia.isMedia
-        ? getMediaStates.url
+        ? [getMediaStates.url]
         : getGifStates.gifUrl
-          ? getGifStates.gifUrl
+          ? [getGifStates.gifUrl]
           : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
