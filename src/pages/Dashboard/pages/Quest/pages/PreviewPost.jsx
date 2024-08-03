@@ -30,9 +30,10 @@ export default function PreviewPost() {
   const post = {
     ...hardcodedValues,
     ...state.state,
+    createdAt: new Date().getTime(),
   };
 
-  console.log(state.state);
+  console.log(post);
 
   const { mutateAsync: createQuest, isPending } = useMutation({
     mutationFn: createInfoQuest,
@@ -85,7 +86,7 @@ export default function PreviewPost() {
                   </p>
                 )}
               </div>
-              <div className="mx-auto my-[10px] flex w-full max-w-[730px] justify-between gap-4 px-8 tablet:my-[25px] tablet:px-10">
+              <div className="mx-auto my-6 flex w-full max-w-[730px] justify-between gap-4 px-8 tablet:my-10 tablet:px-10">
                 <Button
                   variant="cancel"
                   className="w-full max-w-full tablet:w-full laptop:w-full"

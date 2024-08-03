@@ -36,8 +36,10 @@ export const calculateTimeAgo = (time) => {
     return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
   } else if (minutes > 0) {
     return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
-  } else {
+  } else if (seconds > 0) {
     return `${seconds} ${seconds === 1 ? 'second' : 'seconds'} ago`;
+  } else {
+    return 'Just now';
   }
 };
 
