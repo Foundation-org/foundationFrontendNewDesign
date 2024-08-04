@@ -425,7 +425,7 @@ const ButtonGroup = ({
     );
   }
 
-  if (persistedUserInfo?.role === 'guest') {
+  if (persistedUserInfo?.role === 'guest' && !questStartData.isClosed) {
     if (
       location.pathname.includes('/p/') ||
       location.pathname.includes('/l/') ||
@@ -550,7 +550,7 @@ const ButtonGroup = ({
   }
 
   /* Participated => Go back - Submit / Not Participated => Submit*/
-  if (startTest === questStartData._id) {
+  if (startTest === questStartData._id && !questStartData.isClosed) {
     return (
       <div className="flex w-full gap-2 px-[0.87rem] tablet:gap-[0.75rem] tablet:px-10">
         <FeedbackAndVisibility
@@ -625,41 +625,43 @@ const ButtonGroup = ({
   }
 
   /* Change */
-  return (
-    <div className="px-[0.87rem] tablet:px-10">
-      {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
-        <div className="flex w-full justify-between gap-4">
-          <button className="w-full cursor-default">&#x200B;</button>
-          <Button
-            variant={result === ', you are good to go' ? 'change' : 'change-outline'}
-            disabled={result === ', you are good to go' ? false : true}
-            className={'w-full tablet:w-full'}
-            onClick={handleStartChange}
-          >
-            Change
-          </Button>
-        </div>
-      )}
-      {questStartData.startStatus === 'continue' && (
-        <div className="flex w-full justify-between gap-4">
-          <button className="w-full cursor-default">&#x200B;</button>
-          <Button
-            id={`submit-${questStartData._id}`}
-            variant="g-submit"
-            disabled={loading}
-            onClick={() => handleSubmit()}
-          >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-            {questStartData.startStatus !== 'change answer' && (
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-              </span>
-            )}
-          </Button>
-        </div>
-      )}
-    </div>
-  );
+  if (!questStartData.isClosed) {
+    return (
+      <div className="px-[0.87rem] tablet:px-10">
+        {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
+          <div className="flex w-full justify-between gap-4">
+            <button className="w-full cursor-default">&#x200B;</button>
+            <Button
+              variant={result === ', you are good to go' ? 'change' : 'change-outline'}
+              disabled={result === ', you are good to go' ? false : true}
+              className={'w-full tablet:w-full'}
+              onClick={handleStartChange}
+            >
+              Change
+            </Button>
+          </div>
+        )}
+        {questStartData.startStatus === 'continue' && (
+          <div className="flex w-full justify-between gap-4">
+            <button className="w-full cursor-default">&#x200B;</button>
+            <Button
+              id={`submit-${questStartData._id}`}
+              variant="g-submit"
+              disabled={loading}
+              onClick={() => handleSubmit()}
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+              {questStartData.startStatus !== 'change answer' && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                </span>
+              )}
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  }
 };
 
 export default ButtonGroup;

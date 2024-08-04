@@ -182,7 +182,7 @@ export default function ShowHidePostPopup({
                 questStartData.whichTypeQuestion === 'like/dislike' ||
                 questStartData.whichTypeQuestion === 'agree/disagree' ||
                 questStartData.whichTypeQuestion === 'yes/no'
-                  ? ![4].includes(filterItem.id)
+                  ? ![3].includes(filterItem.id)
                   : true,
               )
               .map((item, index) => (
@@ -190,14 +190,14 @@ export default function ShowHidePostPopup({
                   key={index + 1}
                   id={item.id}
                   className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-white-500 px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3 dark:border-gray-100 dark:bg-accent-100"
-                  onClick={() => handleCheckboxChange(index)}
+                  onClick={() => handleCheckboxChange(item.id)}
                 >
                   <div id="custom-checkbox-popup" className="flex h-full items-center">
                     <input
                       type="checkbox"
                       className="checkbox h-[12.63px] w-[12.63px] rounded-full after:mt-[-2px] tablet:h-[25px] tablet:w-[25px] tablet:after:mt-[1px]"
-                      checked={checkboxStates[index]}
-                      onChange={() => handleCheckboxChange(index)}
+                      checked={checkboxStates[item.id]}
+                      onChange={() => handleCheckboxChange(item.id)}
                     />
                   </div>
                   <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] tablet:text-[19px] tablet:leading-[23px] dark:text-gray-300">

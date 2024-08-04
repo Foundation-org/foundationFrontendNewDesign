@@ -3,9 +3,10 @@ const Spacing = ({ questStartData, show }) => {
     if (show) {
       return (
         <>
-          {questStartData?.startQuestData?.isFeedback &&
-          questStartData.startStatus !== 'continue' &&
-          questStartData.startStatus !== 'change answer' ? (
+          {(questStartData?.startQuestData?.isFeedback &&
+            questStartData.startStatus !== 'continue' &&
+            questStartData.startStatus !== 'change answer') ||
+          questStartData.isClosed ? (
             <div className="flex h-[23px] items-end justify-center tablet:h-[50px]">
               <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[1rem] dark:text-accent-300">
                 Participation is closed
