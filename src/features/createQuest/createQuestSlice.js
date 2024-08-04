@@ -1166,6 +1166,26 @@ export const createQuestSlice = createSlice({
               showToolTipMsg: true,
             };
           }
+
+          if (errorMessage === 'CLIPS') {
+            state.gifMedia.validatedGifUrl = state.gifMedia.gifUrl;
+            state.gifMedia.gifUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: ' GIPHY clips links are not supported, try a GIF link.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.gifMedia.chatgptGifUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: ' GIPHY clips links are not supported, try a GIF link.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
         } else {
           state.gifMedia.gifUrl = url;
           state.gifMedia.validatedGifUrl = url;
