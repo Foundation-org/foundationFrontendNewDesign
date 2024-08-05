@@ -61,10 +61,22 @@ export default function Signup() {
   // };
 
   const handleReferralOpen = (provider) => {
-    if (isWebview(window.navigator.userAgent)) {
+    const userAgent = window.navigator.userAgent;
+  
+    if (isWebview(userAgent)) {
       if (provider === 'google') {
         // Redirect to the current URL in the default browser
-        window.open(window.location.href, '_system'); // '_system' opens in the system's default browser
+        const url = window.location.href;
+  
+        // Use a workaround for opening the URL in the default browser
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          // For iOS devices
+          window.location.href = url; // Change the location to open in the browser
+        } else if (/android/i.test(userAgent)) {
+          // For Android devices
+          window.location.href = url; // Change the location to open in the browser
+        }
+  
         setIsLoadingSocial(false);
       } else {
         setIsReferral(true);

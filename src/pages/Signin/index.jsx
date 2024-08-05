@@ -42,10 +42,18 @@ export default function Signin() {
 
     switch (value) {
       case 'google':
-        if (isWebview()) {
+        const userAgent = window.navigator.userAgent;
+        if (isWebview(userAgent)) {
           // showToast('info', 'webViewLogin');
-          window.open(window.location.href, '_system'); // '_system' opens in the system's default browser
-          setIsLoadingSocial(false);
+        // Use a workaround for opening the URL in the default browser
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          // For iOS devices
+          window.location.href = url; // Change the location to open in the browser
+        } else if (/android/i.test(userAgent)) {
+          // For Android devices
+          window.location.href = url; // Change the location to open in the browser
+        }
+        setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
         }
