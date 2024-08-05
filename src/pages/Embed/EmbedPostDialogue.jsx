@@ -35,8 +35,10 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postId })
 
       if (targetElement) {
         const height = targetElement.scrollHeight;
+        console.log('height', height);
         // Set the iframe height to the target element's height
         iframe.style.height = `${height}px`;
+        iframe.style.minHeight = `${height}px`;
       } else {
         console.log('Target element not found.');
       }
@@ -47,8 +49,13 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postId })
   };
 
   return (
-    <PopUp logo={``} title={'Embed Post'} open={modalVisible} handleClose={() => handleClose()}>
-      <div className="flex max-h-[80dvh] flex-col items-center gap-3 overflow-y-scroll px-2 py-4 no-scrollbar tablet:gap-6 tablet:py-8">
+    <PopUp
+      logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/embedPostIcon.svg`}
+      title={'Embed Post'}
+      open={modalVisible}
+      handleClose={() => handleClose()}
+    >
+      <div className="flex h-full max-h-[80dvh] flex-col items-center gap-3 overflow-y-scroll py-4 no-scrollbar tablet:gap-6 tablet:py-8">
         <div className="relative size-full">
           {loading && (
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -65,8 +72,8 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postId })
             className={`${loading ? 'invisible' : ''}`}
           />
         </div>
-        <div className="flex w-full flex-col items-center px-4">
-          <p className="pb-3 text-[10px] tablet:pb-4 tablet:text-[20px]">{iframeCode}</p>
+        <div className="flex w-full flex-col items-center justify-center px-4">
+          <p className="mx-auto pb-3 text-[10px] tablet:px-5 tablet:pb-4 tablet:text-[20px]">{iframeCode}</p>
           <Button variant={'submit'} onClick={copyToClipboard}>
             Copy Code
           </Button>
