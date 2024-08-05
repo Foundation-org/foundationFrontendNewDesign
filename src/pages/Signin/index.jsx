@@ -43,21 +43,8 @@ export default function Signin() {
     switch (value) {
       case 'google':
         if (isWebview()) {
-          alert('Hi i am inside webview');
-          // Attempt to open the default browser
-          const url = `${import.meta.env.VITE_API_URL}/auth/google`;
-          const newWindow = window.open(url, '_blank');
-
-          // If window.open fails (newWindow is null), use a fallback
-          if (!newWindow) {
-            const link = document.createElement('a');
-            link.href = url;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          }
-
+          showToast('info', 'webViewLogin');
+          window.open(`${import.meta.env.VITE_FRONTEND_URL}/signin`, '_blank', 'noopener,noreferrer');
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
