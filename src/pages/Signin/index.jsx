@@ -44,18 +44,6 @@ export default function Signin() {
       case 'google':
         if (isWebview()) {
           showToast('info', 'webViewLogin');
-
-          const url = `${import.meta.env.VITE_FRONTEND_URL}/signin`;
-
-          // Create an anchor element and trigger click to open the link
-          const link = document.createElement('a');
-          link.href = url;
-          link.target = '_system'; // This target is for Cordova-based webviews
-
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
