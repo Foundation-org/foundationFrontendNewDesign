@@ -7,26 +7,21 @@ import SocialLogins from '../../components/SocialLogins';
 import '../../index.css';
 import showToast from '../../components/ui/Toast';
 
-// const isWebview = () => {
-//   const userAgent = window.navigator.userAgent.toLowerCase();
+const isWebview = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase();
 
-//   // Common webview identifiers or patterns
-//   const webviewIdentifiers = [
-//     'wv', // Common abbreviation for webview
-//     'webview', // Webview identifier
-//     'fbav', // Facebook App WebView
-//     'instagram', // Instagram WebView
-//     'twitter', // Twitter WebView
-//   ];
+  // Common webview identifiers or patterns
+  const webviewIdentifiers = [
+    'wv', // Common abbreviation for webview
+    'webview', // Webview identifier
+    'fbav', // Facebook App WebView
+    'instagram', // Instagram WebView
+    'twitter', // Twitter WebView
+  ];
 
-//   // Check if any of the webview identifiers exist in the userAgent string
-//   return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
-// };
-
-function isWebview() {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  return /FBAN|FBAV|Instagram|Twitter|WebView|wv/i.test(userAgent);
-}
+  // Check if any of the webview identifiers exist in the userAgent string
+  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
+};
 
 export default function Signin() {
   const location = useLocation();
