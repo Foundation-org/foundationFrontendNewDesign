@@ -47,36 +47,10 @@ export default function Signup() {
   const handlePopupOpen = () => setIspopup(true);
   const handlePopupClose = () => setIspopup(false);
 
-  // const handleReferralOpen = (provider) => {
-  //   if (isWebview(window.navigator.userAgent)) {
-  //     if (provider === 'google') {
-  //       showToast('info', 'webViewSignUp');
-  //       setIsLoadingSocial(false);
-  //     } else {
-  //       setIsReferral(true);
-  //     }
-  //   } else {
-  //     setIsReferral(true);
-  //   }
-  // };
-
   const handleReferralOpen = (provider) => {
-    const userAgent = window.navigator.userAgent;
-  
-    if (isWebview(userAgent)) {
+    if (isWebview(window.navigator.userAgent)) {
       if (provider === 'google') {
-        // Redirect to the current URL in the default browser
-        const url = window.location.href;
-  
-        // Use a workaround for opening the URL in the default browser
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-          // For iOS devices
-          window.location.href = url; // Change the location to open in the browser
-        } else if (/android/i.test(userAgent)) {
-          // For Android devices
-          window.location.href = url; // Change the location to open in the browser
-        }
-  
+        showToast('info', 'webViewSignUp');
         setIsLoadingSocial(false);
       } else {
         setIsReferral(true);
@@ -85,7 +59,6 @@ export default function Signup() {
       setIsReferral(true);
     }
   };
-
   const handleReferralClose = () => {
     setIsReferral(false);
     setIsLoading(false);
