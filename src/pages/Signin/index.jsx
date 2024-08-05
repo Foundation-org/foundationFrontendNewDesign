@@ -43,6 +43,7 @@ export default function Signin() {
     switch (value) {
       case 'google':
         if (isWebview()) {
+          alert('Hi i am inside webview');
           // Attempt to open the default browser
           const url = `${import.meta.env.VITE_API_URL}/auth/google`;
           const newWindow = window.open(url, '_blank');
