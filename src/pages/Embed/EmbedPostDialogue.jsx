@@ -1,10 +1,12 @@
-import { useRef, useState } from 'react';
-import PopUp from '../../components/ui/PopUp';
 import { toast } from 'sonner';
+import { useRef, useState } from 'react';
 import { Button } from '../../components/ui/Button';
+import PopUp from '../../components/ui/PopUp';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function EmbedPostDialogue({ handleClose, modalVisible, postId }) {
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
   const iframeRef = useRef();
   const iframeCode = `<iframe
   src="${import.meta.env.VITE_FRONTEND_URL}/embed/${postId}"
@@ -41,22 +43,30 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postId })
     } else {
       console.log('Iframe contentWindow or document is not accessible.');
     }
+    setLoading(false);
   };
 
   return (
     <PopUp logo={``} title={'Embed Post'} open={modalVisible} handleClose={() => handleClose()}>
-      <div className="flex max-h-[80dvh] flex-col items-center gap-6 overflow-y-scroll py-8 no-scrollbar">
-        <div className="flex w-full justify-center ">
+      <div className="flex max-h-[80dvh] flex-col items-center gap-3 overflow-y-scroll px-2 py-4 no-scrollbar tablet:gap-6 tablet:py-8">
+        <div className="relative size-full">
+          {loading && (
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <FaSpinner className="animate-spin text-[10vw] text-blue-100 tablet:text-[4vw]" />
+            </div>
+          )}
           <iframe
             ref={iframeRef}
             src={`${import.meta.env.VITE_FRONTEND_URL}/embed/${postId}`}
             title="Embedded Content"
             onLoad={handleLoad}
             style={{ width: '100%', border: 'none' }}
-          ></iframe>
+            loading="lazy"
+            className={`${loading ? 'invisible' : ''}`}
+          />
         </div>
-        <div className="flex w-full max-w-4xl flex-col items-center">
-          <code className="block w-full overflow-auto rounded-md p-4 text-gray-300">{iframeCode}</code>
+        <div className="flex w-full flex-col items-center px-4">
+          <p className="pb-3 text-[10px] tablet:pb-4 tablet:text-[20px]">{iframeCode}</p>
           <Button variant={'submit'} onClick={copyToClipboard}>
             Copy Code
           </Button>
