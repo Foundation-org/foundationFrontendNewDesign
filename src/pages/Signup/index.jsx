@@ -47,10 +47,24 @@ export default function Signup() {
   const handlePopupOpen = () => setIspopup(true);
   const handlePopupClose = () => setIspopup(false);
 
+  // const handleReferralOpen = (provider) => {
+  //   if (isWebview(window.navigator.userAgent)) {
+  //     if (provider === 'google') {
+  //       showToast('info', 'webViewSignUp');
+  //       setIsLoadingSocial(false);
+  //     } else {
+  //       setIsReferral(true);
+  //     }
+  //   } else {
+  //     setIsReferral(true);
+  //   }
+  // };
+
   const handleReferralOpen = (provider) => {
     if (isWebview(window.navigator.userAgent)) {
       if (provider === 'google') {
-        showToast('info', 'webViewSignUp');
+        // Redirect to the current URL in the default browser
+        window.open(window.location.href, '_system'); // '_system' opens in the system's default browser
         setIsLoadingSocial(false);
       } else {
         setIsReferral(true);
@@ -59,6 +73,7 @@ export default function Signup() {
       setIsReferral(true);
     }
   };
+
   const handleReferralClose = () => {
     setIsReferral(false);
     setIsLoading(false);

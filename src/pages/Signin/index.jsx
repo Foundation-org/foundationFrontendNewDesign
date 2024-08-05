@@ -43,7 +43,8 @@ export default function Signin() {
     switch (value) {
       case 'google':
         if (isWebview()) {
-          showToast('info', 'webViewLogin');
+          // showToast('info', 'webViewLogin');
+          window.open(window.location.href, '_system'); // '_system' opens in the system's default browser
           setIsLoadingSocial(false);
         } else {
           window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
