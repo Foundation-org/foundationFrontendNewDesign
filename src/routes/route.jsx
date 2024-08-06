@@ -59,6 +59,8 @@ import Test from '../components/Test';
 import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Authenticating from '../components/Authenticating';
 import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
+import EmbedPost from '../pages/Embed/EmbedPost';
+import Iframe from '../pages/Embed/Iframe';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -83,6 +85,8 @@ export function Router() {
             }
           />
           {/* <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} /> */}
+          <Route path="/iframe" element={<Iframe />} />
+          <Route path="/embed/:link" element={<EmbedPost />} />
           <Route path="/term-of-service" element={<TermOfService />} />
           <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
           <Route path="/signin/" element={<Signin />}>
@@ -102,6 +106,9 @@ export function Router() {
       ) : (
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
+            <Route path="/iframe" element={<Iframe />} />
+
+            <Route path="/embed/:link" element={<EmbedPost />} />
             <Route path="/authenticating" element={<Authenticating />} />
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />

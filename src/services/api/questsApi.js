@@ -85,6 +85,11 @@ export const getRankedQuestPercent = async (data) => {
   });
 };
 
+export const fetchResults = async (link, resultsMode) => {
+  const resp = await api.get(`/infoquestions/getEmbededPostByUniqueLink/${link}/${resultsMode}`);
+  return resp.data; // Ensure that the data from the response is returned
+};
+
 // Question Validation by GPT-Server
 export const getTopicOfValidatedQuestion = async ({ validatedQuestion }) => {
   try {
