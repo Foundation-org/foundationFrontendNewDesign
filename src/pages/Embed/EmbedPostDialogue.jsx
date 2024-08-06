@@ -7,7 +7,7 @@ import CustomSwitch from '../../components/CustomSwitch';
 export default function EmbedPostDialogue({ handleClose, modalVisible, postLink }) {
   const [copied, setCopied] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const [resultsMode, setResultsMode] = useState(false);
+  const [resultsMode, setResultsMode] = useState(true);
   const [widthMode, setWidthMode] = useState('full'); // New state for width mode
   const [dynamicHeight, setDynamicHeight] = useState('auto');
   const [loading, setLoading] = useState(true);
