@@ -85,8 +85,8 @@ export const getRankedQuestPercent = async (data) => {
   });
 };
 
-export const fetchResults = async (questId) => {
-  const resp = await api.get(`/infoquestions/getEmbededPostByUniqueId/${questId}`);
+export const fetchResults = async (link, resultsMode) => {
+  const resp = await api.get(`/infoquestions/getEmbededPostByUniqueLink/${link}/${resultsMode}`);
   return resp.data; // Ensure that the data from the response is returned
 };
 

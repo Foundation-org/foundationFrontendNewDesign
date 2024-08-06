@@ -3,13 +3,25 @@ import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/compone
 import { useQuery } from '@tanstack/react-query';
 import { fetchResults } from '../../services/api/questsApi';
 import { FaSpinner } from 'react-icons/fa';
+import { changeThemeTo } from '../../features/utils/utilsSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 const EmbedPost = () => {
-  let { id } = useParams();
+  let { link } = useParams();
+  const dispatch = useDispatch();
+  const [resultsMode, setResultsMode] = useState(true);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    setResultsMode(queryParams.get('resultsMode') == 'true' ? true : false);
+    dispatch(changeThemeTo(queryParams.get('darkMode') == 'true' ? 'dark' : 'light'));
+  }, [location.search]);
 
   const { data: singleQuestData, isLoading } = useQuery({
-    queryKey: ['emdedPost'],
-    queryFn: () => fetchResults(id),
+    queryKey: ['emdedPost', resultsMode],
+    queryFn: () => fetchResults(link, resultsMode),
   });
 
   return (
@@ -27,7 +39,7 @@ const EmbedPost = () => {
               questStartData={item}
               isBookmarked={false}
               isSingleQuest={true}
-              postLink={id}
+              postLink={link}
             />
           ))
         )}

@@ -85,7 +85,7 @@ export function Router() {
           />
           {/* <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} /> */}
           <Route path="/iframe" element={<Iframe />} />
-          <Route path="/embed/:id" element={<EmbedPost />} />
+          <Route path="/embed/:link" element={<EmbedPost />} />
           <Route path="/term-of-service" element={<TermOfService />} />
           <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
           <Route path="/signin/" element={<Signin />}>
@@ -107,7 +107,7 @@ export function Router() {
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
             <Route path="/iframe" element={<Iframe />} />
 
-            <Route path="/embed/:id" element={<EmbedPost />} />
+            <Route path="/embed/:link" element={<EmbedPost />} />
             <Route path="/authenticating" element={<Authenticating />} />
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />

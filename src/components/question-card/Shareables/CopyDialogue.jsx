@@ -127,7 +127,11 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
 
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
-      <EmbedPostDialogue modalVisible={embed} handleClose={handleEmbedClose} postId={questStartData?._id} />
+      <EmbedPostDialogue
+        modalVisible={embed}
+        handleClose={handleEmbedClose}
+        postLink={questStartData?.userQuestSetting?.link}
+      />
       <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] from-accent-100 to-accent-100 px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px] dark:border dark:border-gray-100 dark:bg-gradient-to-tr">
         <div className="w-fit rounded-full bg-white p-[5px] tablet:p-[10px]">
           <svg
