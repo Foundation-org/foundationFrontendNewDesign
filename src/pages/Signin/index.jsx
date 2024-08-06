@@ -7,21 +7,21 @@ import SocialLogins from '../../components/SocialLogins';
 import '../../index.css';
 import showToast from '../../components/ui/Toast';
 
-const isWebview = () => {
-  const userAgent = window.navigator.userAgent.toLowerCase();
+// const isWebview = () => {
+//   const userAgent = window.navigator.userAgent.toLowerCase();
 
-  // Common webview identifiers or patterns
-  const webviewIdentifiers = [
-    'wv', // Common abbreviation for webview
-    'webview', // Webview identifier
-    'fbav', // Facebook App WebView
-    'instagram', // Instagram WebView
-    'twitter', // Twitter WebView
-  ];
+//   // Common webview identifiers or patterns
+//   const webviewIdentifiers = [
+//     'wv', // Common abbreviation for webview
+//     'webview', // Webview identifier
+//     'fbav', // Facebook App WebView
+//     'instagram', // Instagram WebView
+//     'twitter', // Twitter WebView
+//   ];
 
-  // Check if any of the webview identifiers exist in the userAgent string
-  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
-};
+//   // Check if any of the webview identifiers exist in the userAgent string
+//   return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
+// };
 
 export default function Signin() {
   const location = useLocation();
@@ -42,12 +42,12 @@ export default function Signin() {
 
     switch (value) {
       case 'google':
-        if (isWebview()) {
-          showToast('info', 'webViewLogin');
-          setIsLoadingSocial(false);
-        } else {
-          window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
-        }
+        // if (isWebview()) {
+        //   showToast('info', 'webViewLogin');
+        //   setIsLoadingSocial(false);
+        // } else {
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+        // }
         break;
 
       case 'linkedin':

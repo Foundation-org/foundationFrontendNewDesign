@@ -2,13 +2,36 @@ import { Button } from './ui/Button';
 import { authMethods } from '../constants/authentication';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+const isWebview = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+
+  // Common webview identifiers or patterns
+  const webviewIdentifiers = [
+    'wv', // Common abbreviation for webview
+    'webview', // Webview identifier
+    'fbav', // Facebook App WebView
+    'instagram', // Instagram WebView
+    'twitter', // Twitter WebView
+  ];
+
+  // Check if any of the webview identifiers exist in the userAgent string
+  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
+};
 const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, triggerLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const filteredAuthMethods = authMethods.filter((item) => {
+    if (isWebview()) {
+      // If isWebview() is true, exclude items with title 'Google'
+      return item.title !== 'Google';
+    }
+    // If isWebview() is false, include all items
+    return true;
+  });
   return (
     <div className="mb-2 flex min-w-[145px] flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] tablet:min-w-[220px] laptop:mb-[1.56rem] laptop:min-w-[305px] laptop:justify-between laptop:gap-[1.56rem]">
-      {authMethods.map((item) => (
+      {filteredAuthMethods.map((item) => (
         <Button
           variant="auth"
           key={item.id}

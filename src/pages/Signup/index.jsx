@@ -10,21 +10,21 @@ import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 import Loader from './components/Loader';
 
-const isWebview = () => {
-  const userAgent = window.navigator.userAgent.toLowerCase();
+// const isWebview = () => {
+//   const userAgent = window.navigator.userAgent.toLowerCase();
 
-  // Common webview identifiers or patterns
-  const webviewIdentifiers = [
-    'wv', // Common abbreviation for webview
-    'webview', // Webview identifier
-    'fbav', // Facebook App WebView
-    'instagram', // Instagram WebView
-    'twitter', // Twitter WebView
-  ];
+//   // Common webview identifiers or patterns
+//   const webviewIdentifiers = [
+//     'wv', // Common abbreviation for webview
+//     'webview', // Webview identifier
+//     'fbav', // Facebook App WebView
+//     'instagram', // Instagram WebView
+//     'twitter', // Twitter WebView
+//   ];
 
-  // Check if any of the webview identifiers exist in the userAgent string
-  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
-};
+//   // Check if any of the webview identifiers exist in the userAgent string
+//   return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
+// };
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -48,16 +48,16 @@ export default function Signup() {
   const handlePopupClose = () => setIspopup(false);
 
   const handleReferralOpen = (provider) => {
-    if (isWebview(window.navigator.userAgent)) {
-      if (provider === 'google') {
-        showToast('info', 'webViewSignUp');
-        setIsLoadingSocial(false);
-      } else {
-        setIsReferral(true);
-      }
-    } else {
-      setIsReferral(true);
-    }
+    // if (isWebview(window.navigator.userAgent)) {
+    //   if (provider === 'google') {
+    //     showToast('info', 'webViewSignUp');
+    //     setIsLoadingSocial(false);
+    //   } else {
+    //     setIsReferral(true);
+    //   }
+    // } else {
+    setIsReferral(true);
+    // }
   };
   const handleReferralClose = () => {
     setIsReferral(false);
@@ -134,7 +134,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col bg-blue-100 text-white dark:bg-black lg:flex-row">
+    <div className="flex h-screen w-full flex-col bg-blue-100 text-white lg:flex-row dark:bg-black">
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       {/* Mobile Top Header */}
@@ -158,9 +158,9 @@ export default function Signup() {
         />
       </div>
       {/* Main Content */}
-      <div className="dark:bg-dark flex h-screen flex-col items-center bg-white dark:bg-gray-200 md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-bl-[65px] lg:rounded-tl-[65px]">
+      <div className="dark:bg-dark flex h-screen flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-gray-200">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
-          <h1 className="text-[18px] font-[700] text-black dark:text-white tablet:text-[35px] tablet:leading-[35px]">
+          <h1 className="text-[18px] font-[700] text-black tablet:text-[35px] tablet:leading-[35px] dark:text-white">
             {location.pathname === '/signup' || location.pathname === '/guest-signup'
               ? 'Create an Account'
               : 'Create Account with Email'}
@@ -172,7 +172,7 @@ export default function Signup() {
           )}
           <Outlet />
           <div className="mt-5 flex gap-3 tablet:mt-14">
-            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
+            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 tablet:text-[20px] laptop:text-[22px] dark:text-gray-300">
               Already have an account?
             </p>
             <Link to="/signin">
