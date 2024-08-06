@@ -28,6 +28,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
 
   useEffect(() => {
     setIframeCode(generateIframeCode());
+    setLoading(true);
   }, [darkMode, resultsMode, widthMode]);
 
   const copyToClipboard = () => {
