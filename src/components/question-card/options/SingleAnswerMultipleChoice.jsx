@@ -219,33 +219,31 @@ const SingleAnswerMultipleChoice = (props) => {
 
   return (
     <div
-      className={`flex items-center  tablet:gap-[10px] tablet:pl-[1.75rem] ${
-        props.btnText === 'Results' ? 'tablet:mr-[47.44px]' : 'tablet:mr-[52px]'
+      className={`flex items-center tablet:pl-[1.75rem] ${
+        props.btnText === 'Results' ? 'tablet:mr-[43px]' : 'tablet:mr-[52px]'
       }`}
     >
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-gray-200">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white tablet:w-[45.6px] dark:bg-gray-200">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/yellowBadge.svg`}
               alt="yellow badge"
-              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
+              className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-gray-200">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white tablet:w-[45.6px] dark:bg-gray-200">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/blueBadge.svg`}
               alt="blue badge"
-              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
+              className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         )
       ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-gray-200">
-          &#x200B;
-        </div>
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-white-700 tablet:w-[45.6px] dark:bg-accent-100"></div>
       )}
 
       {/* =============== To Display Option */}
@@ -340,80 +338,80 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           </div>
         )}
-
-        {/* =============== To Display Contention and Trash Right of Option */}
-
-        {props.postProperties === 'HiddenPosts' ? (
-          <div className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px] dark:bg-gray-200"></div>
-        ) : props.btnText !== 'Results' ? (
-          <div
-            className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px] dark:bg-gray-200"
-            onClick={() => {
-              !props.deleteable && handleContendPopup();
-            }}
-          >
-            {props.deleteable ? (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
-                alt="trash"
-                className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                onClick={() => handleDeleteOption(props.number)}
-              />
-            ) : (
-              <div className="flex items-center gap-1 pl-1 laptop:gap-[18px]">
-                {props?.postProperties !== 'sharedlink-results' && (
-                  <div id="custom-yello-checkbox" className="flex h-full items-center ">
-                    <div className="cursor-pointer">
-                      <ContentionIcon
-                        classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                        checked={contendState}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-            <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
-              <DeleteOption
-                answer={props.answer}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-                handleDeleteClose={handleDeleteClose}
-                handleEditClose={handleDeleteClose}
-              />
-            </BasicModal>
-          </div>
-        ) : (
-          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-gray-200">
-            {props.btnText === 'Results' ? (
-              <>
-                {props.contendPercentages &&
-                props.contendPercentages?.[props.answer.trim()] &&
-                props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
-                  <div className="flex items-center gap-1 tablet:gap-[10px]">
-                    {props?.postProperties !== 'sharedlink-results' && (
-                      <ContentionIcon
-                        classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                        checked={contendState}
-                      />
-                    )}
-                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                      {props.contendPercentages[props.answer.trim()]}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1 tablet:gap-[10px]">
-                    {props?.postProperties !== 'sharedlink-results' && (
-                      <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
-                    )}
-                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                  </div>
-                )}
-              </>
-            ) : null}
-          </div>
-        )}
       </div>
+
+      {/* =============== To Display Contention and Trash Right of Option */}
+
+      {props.postProperties === 'HiddenPosts' ? (
+        <div className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px] dark:bg-gray-200"></div>
+      ) : props.btnText !== 'Results' ? (
+        <div
+          className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px] dark:bg-gray-200"
+          onClick={() => {
+            !props.deleteable && handleContendPopup();
+          }}
+        >
+          {props.deleteable ? (
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
+              alt="trash"
+              className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+              onClick={() => handleDeleteOption(props.number)}
+            />
+          ) : (
+            <div className="flex items-center gap-1 pl-1 laptop:gap-[18px]">
+              {props?.postProperties !== 'sharedlink-results' && (
+                <div id="custom-yello-checkbox" className="flex h-full items-center ">
+                  <div className="cursor-pointer">
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={contendState}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
+            <DeleteOption
+              answer={props.answer}
+              answersSelection={props.answersSelection}
+              setAnswerSelection={props.setAnswerSelection}
+              handleDeleteClose={handleDeleteClose}
+              handleEditClose={handleDeleteClose}
+            />
+          </BasicModal>
+        </div>
+      ) : (
+        <div className="flex w-12 min-w-12 items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-gray-200">
+          {props.btnText === 'Results' ? (
+            <>
+              {props.contendPercentages &&
+              props.contendPercentages?.[props.answer.trim()] &&
+              props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
+                <div className="flex items-center gap-1 tablet:gap-[10px]">
+                  {props?.postProperties !== 'sharedlink-results' && (
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={contendState}
+                    />
+                  )}
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                    {props.contendPercentages[props.answer.trim()]}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 tablet:gap-[10px]">
+                  {props?.postProperties !== 'sharedlink-results' && (
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                  )}
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                </div>
+              )}
+            </>
+          ) : null}
+        </div>
+      )}
 
       {/* =============== Objection PopUp */}
       <ObjectionPopUp
