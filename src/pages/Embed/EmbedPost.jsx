@@ -11,10 +11,11 @@ const EmbedPost = () => {
   let { link } = useParams();
   const dispatch = useDispatch();
   const [resultsMode, setResultsMode] = useState(true);
+  const [maWidth, setMaxWidth] = useState('full');
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-
+    setMaxWidth(queryParams.get('widthMode'));
     setResultsMode(queryParams.get('resultsMode') == 'true' ? true : false);
     dispatch(changeThemeTo(queryParams.get('darkMode') == 'true' ? 'dark' : 'light'));
   }, [location.search]);
@@ -26,7 +27,7 @@ const EmbedPost = () => {
 
   return (
     <div className="mx-auto bg-white dark:bg-gray-200">
-      <div className="mx-auto w-full max-w-[730px] ">
+      <div className={`mx-auto w-full ${`${maWidth === 'square' ? 'max-w-[600px]' : 'max-w-[730px]'}`}`}>
         {isLoading ? (
           <div className="flex items-center justify-center">
             <FaSpinner className="animate-spin text-[#EAEAEA]" />

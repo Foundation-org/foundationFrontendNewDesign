@@ -2,10 +2,10 @@ const Iframe = () => {
   return (
     <>
       <iframe
-        src="https://localhost:5173/embed/66ac91424eaf485259be3450"
-        style="width: 100%; height: 600px; border: none;"
+        src="https://localhost:5173/embed/Gqabdqwz?darkMode=false&resultsMode=false"
+        style="width: 600px; min-width: 600px; max-width: 600px; height: 380px; border: none;"
         title="Embedded Content"
-      ></iframe>
+      />
     </>
   );
 };

@@ -2,31 +2,33 @@ import { toast } from 'sonner';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import PopUp from '../../components/ui/PopUp';
-import { FaSpinner } from 'react-icons/fa';
 import CustomSwitch from '../../components/CustomSwitch';
 
 export default function EmbedPostDialogue({ handleClose, modalVisible, postLink }) {
   const [copied, setCopied] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [resultsMode, setResultsMode] = useState(false);
+  const [widthMode, setWidthMode] = useState('full'); // New state for width mode
+  const [dynamicHeight, setDynamicHeight] = useState('auto');
   const [loading, setLoading] = useState(true);
   const iframeRef = useRef();
+
   // Function to generate iframe code based on current state
   const generateIframeCode = () => {
-    const url = `${import.meta.env.VITE_FRONTEND_URL}/embed/${postLink}?darkMode=${darkMode}&resultsMode=${resultsMode}`;
+    const url = `${import.meta.env.VITE_FRONTEND_URL}/embed/${postLink}?darkMode=${darkMode}&resultsMode=${resultsMode}&widthMode=${widthMode}`;
     return `<iframe
       src="${url}"
-      style="width: 100%; height: 600px; border: none;"
+      style="height: ${dynamicHeight}; border: none; width: 100%;"
       title="Embedded Content"
-    ></iframe>`;
+    />`;
   };
 
-  // Update iframeCode whenever darkMode or resultsMode changes
+  // Update iframeCode whenever darkMode, resultsMode, or widthMode changes
   const [iframeCode, setIframeCode] = useState(generateIframeCode());
 
   useEffect(() => {
     setIframeCode(generateIframeCode());
-  }, [darkMode, resultsMode]);
+  }, [darkMode, resultsMode, widthMode]);
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -49,7 +51,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
 
       if (targetElement) {
         const height = targetElement.scrollHeight;
-        console.log('height', height);
+        setDynamicHeight(`${height}px`);
         // Set the iframe height to the target element's height
         iframe.style.height = `${height}px`;
         iframe.style.minHeight = `${height}px`;
@@ -73,7 +75,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
         <div className="relative size-full">
           {loading && (
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <FaSpinner className="animate-spin text-[10vw] text-blue-100 tablet:text-[4vw]" />
+              <p className="text-[10px] text-blue-100 tablet:text-[20px]">Generating Preview...</p>
             </div>
           )}
           <iframe
@@ -109,6 +111,15 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
                 Results Mode
               </h5>
               <CustomSwitch enabled={resultsMode} setEnabled={setResultsMode} />
+            </div>
+            <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+                Full Width
+              </h5>
+              <CustomSwitch
+                enabled={widthMode === 'full'}
+                setEnabled={(enabled) => setWidthMode(enabled ? 'full' : 'square')}
+              />
             </div>
           </div>
         </div>
