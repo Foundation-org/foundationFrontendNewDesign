@@ -8,14 +8,13 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
   const [copied, setCopied] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [resultsMode, setResultsMode] = useState(true);
-  const [widthMode, setWidthMode] = useState('full'); // New state for width mode
   const [dynamicHeight, setDynamicHeight] = useState('auto');
   const [loading, setLoading] = useState(true);
   const iframeRef = useRef();
 
   // Function to generate iframe code based on current state
   const generateIframeCode = () => {
-    const url = `${import.meta.env.VITE_FRONTEND_URL}/embed/${postLink}?darkMode=${darkMode}&resultsMode=${resultsMode}&widthMode=${widthMode}`;
+    const url = `${import.meta.env.VITE_FRONTEND_URL}/embed/${postLink}?darkMode=${darkMode}&resultsMode=${resultsMode}`;
     return `<iframe
       src="${url}"
       style="height: ${dynamicHeight}; border: none; width: 100%;"
@@ -23,13 +22,16 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
     />`;
   };
 
-  // Update iframeCode whenever darkMode, resultsMode, or widthMode changes
+  // Update iframeCode whenever darkMode, resultsMode,  changes
   const [iframeCode, setIframeCode] = useState(generateIframeCode());
 
   useEffect(() => {
     setIframeCode(generateIframeCode());
+  }, [darkMode, resultsMode, dynamicHeight]);
+
+  useEffect(() => {
     setLoading(true);
-  }, [darkMode, resultsMode, widthMode]);
+  }, [darkMode, resultsMode]);
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -52,6 +54,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
 
       if (targetElement) {
         const height = targetElement.scrollHeight;
+
         setDynamicHeight(`${height}px`);
         // Set the iframe height to the target element's height
         iframe.style.height = `${height}px`;
@@ -89,14 +92,8 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
             className={`${loading ? 'invisible' : ''}`}
           />
         </div>
-        <div className="flex w-full flex-col items-center justify-center px-4">
-          <p className="mx-auto pb-3 text-[10px] tablet:px-5 tablet:pb-4 tablet:text-[20px]">{iframeCode}</p>
-          <Button variant={'submit'} onClick={copyToClipboard}>
-            Copy Code
-          </Button>
-        </div>
 
-        <div className="mb-[10px] mt-4 w-[85%] tablet:mb-7 tablet:mt-12">
+        <div className="w-full max-w-[730px]">
           <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-white-400">
             Embed Post Settings
           </h5>
@@ -113,16 +110,18 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
               </h5>
               <CustomSwitch enabled={resultsMode} setEnabled={setResultsMode} />
             </div>
-            <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
-              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
-                Full Width
-              </h5>
-              <CustomSwitch
-                enabled={widthMode === 'full'}
-                setEnabled={(enabled) => setWidthMode(enabled ? 'full' : 'square')}
-              />
-            </div>
           </div>
+        </div>
+
+        <div className="flex w-full max-w-[730px] flex-col items-center justify-center gap-6">
+          <div className="border-[3px] border-blue-500 tablet:rounded-[0.625rem]">
+            <p className="mx-auto py-3 text-[10px] text-[#7C7C7C] tablet:px-5 tablet:pb-4 tablet:text-[20px]">
+              {iframeCode}
+            </p>
+          </div>
+          <Button variant={'submit'} onClick={copyToClipboard}>
+            Copy Code
+          </Button>
         </div>
       </div>
     </PopUp>

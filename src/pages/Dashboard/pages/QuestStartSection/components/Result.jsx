@@ -322,7 +322,7 @@ const Result = (props) => {
   }, [props.questStartData]);
 
   useEffect(() => {
-    if (persistedUserInfo.userSettings.defaultSort) {
+    if (persistedUserInfo?.userSettings.defaultSort) {
       setSelectedOption(2);
     }
   }, [persistedUserInfo]);
