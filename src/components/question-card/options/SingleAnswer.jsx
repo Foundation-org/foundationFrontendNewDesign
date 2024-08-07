@@ -1,6 +1,8 @@
 const SingleAnswer = (props) => {
   return (
-    <div className="flex items-center pl-7 pr-12 tablet:pl-[3.94rem] tablet:pr-[6.3rem]">
+    <div
+      className={`flex items-center ${props.questStartData.type === 'embed' ? 'px-7 tablet:px-[3.94rem]' : 'pl-7 pr-12 tablet:pl-[3.94rem] tablet:pr-[6.3rem]'}`}
+    >
       <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px] dark:bg-gray-100">
         &#x200B;
       </div>

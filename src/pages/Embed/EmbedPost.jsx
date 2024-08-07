@@ -25,26 +25,24 @@ const EmbedPost = () => {
   });
 
   return (
-    <div className="mx-auto bg-white dark:bg-gray-200">
-      <div className="mx-auto w-full max-w-[600px]">
-        {isLoading ? (
-          <div className="flex items-center justify-center">
-            <FaSpinner className="animate-spin text-[#EAEAEA]" />
-          </div>
-        ) : (
-          singleQuestData &&
-          singleQuestData?.data?.map((item, index) => (
-            <QuestionCardWithToggle
-              key={index + 1}
-              questStartData={item}
-              isBookmarked={false}
-              isSingleQuest={true}
-              postLink={link}
-            />
-          ))
-        )}
-      </div>
-    </div>
+    <>
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <FaSpinner className="animate-spin text-[#EAEAEA]" />
+        </div>
+      ) : (
+        singleQuestData &&
+        singleQuestData?.data?.map((item, index) => (
+          <QuestionCardWithToggle
+            key={index + 1}
+            questStartData={item}
+            isBookmarked={false}
+            isSingleQuest={true}
+            postLink={link}
+          />
+        ))
+      )}
+    </>
   );
 };
 

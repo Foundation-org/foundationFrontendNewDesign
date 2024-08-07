@@ -334,7 +334,9 @@ const Result = (props) => {
           className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]"
           style={{ minHeight: `${props.cardSize}px ` }}
         >
-          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[135px]">
+          <div
+            className={`absolute -top-[21px] tablet:-top-7 ${props.questStartData.type === 'embed' ? 'right-[52px] tablet:right-[98px]' : 'right-[73px] tablet:right-[135px]'}`}
+          >
             <button onClick={handleSortSingleType}>
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
             </button>

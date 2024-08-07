@@ -887,7 +887,12 @@ input[type='number'] {
 /*//////////////////////////////////////////////////////////*/
 /*     🌟 Styles for Screens 744px and Up! 🌟              */
 /*//////////////////////////////////////////////////////////*/
-@media only screen and (min-width: 744px) {
+@media only screen and (min-width: 600px) {
+  .react-player iframe {
+    width: 100% !important;
+    height: 195.75px !important;
+  }
+
   .verification-badge-boxShadow {
     box-shadow: 0px 0px 6px 0px #00000040 inset;
   }

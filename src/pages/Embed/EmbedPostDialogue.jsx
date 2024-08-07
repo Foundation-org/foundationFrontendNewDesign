@@ -9,17 +9,25 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
   const [darkMode, setDarkMode] = useState(false);
   const [resultsMode, setResultsMode] = useState(true);
   const [dynamicHeight, setDynamicHeight] = useState('auto');
-  const [loading, setLoading] = useState(true);
+  const [dynamicHeight2, setDynamicHeight2] = useState('auto');
+  const [loading, setLoading] = useState(false);
   const iframeRef = useRef();
+  const iframeRef2 = useRef();
 
-  // Function to generate iframe code based on current state
   const generateIframeCode = () => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/embed/${postLink}?darkMode=${darkMode}&resultsMode=${resultsMode}`;
+
     return `<iframe
       src="${url}"
-      style="height: ${dynamicHeight}; border: none; width: 100%;"
+      style="border: none; width: 100%; max-width: 600px;"
+      onload="
+        this.style.height = window.innerWidth < 600 ? '${dynamicHeight2}' : '${dynamicHeight}';
+        window.addEventListener('resize', () => {
+          this.style.height = window.innerWidth < 600 ? '${dynamicHeight2}' : '${dynamicHeight}';
+        });
+      "
       title="Embedded Content"
-    />`;
+    ></iframe>`;
   };
 
   // Update iframeCode whenever darkMode, resultsMode,  changes
@@ -27,7 +35,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
 
   useEffect(() => {
     setIframeCode(generateIframeCode());
-  }, [darkMode, resultsMode, dynamicHeight]);
+  }, [darkMode, resultsMode, dynamicHeight, dynamicHeight2]);
 
   useEffect(() => {
     setLoading(true);
@@ -54,8 +62,34 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
 
       if (targetElement) {
         const height = targetElement.scrollHeight;
+        console.log('height', height);
 
         setDynamicHeight(`${height}px`);
+        // Set the iframe height to the target element's height
+        iframe.style.height = `${height}px`;
+        iframe.style.minHeight = `${height}px`;
+      } else {
+        console.log('Target element not found.');
+      }
+    } else {
+      console.log('Iframe contentWindow or document is not accessible.');
+    }
+    setLoading(false);
+  };
+
+  const handleLoad2 = () => {
+    const iframe = iframeRef2.current;
+    if (iframe && iframe.contentWindow) {
+      const contentDocument = iframe.contentWindow.document;
+      const body = contentDocument.body;
+
+      // Navigate to the deeply nested element
+      const targetElement = body.children[0]?.children[0]?.children[0]?.children[0];
+
+      if (targetElement) {
+        const height = targetElement.scrollHeight;
+
+        setDynamicHeight2(`${height}px`);
         // Set the iframe height to the target element's height
         iframe.style.height = `${height}px`;
         iframe.style.minHeight = `${height}px`;
@@ -75,8 +109,8 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
       open={modalVisible}
       handleClose={() => handleClose()}
     >
-      <div className="flex h-full max-h-[80dvh] flex-col items-center gap-3 overflow-y-scroll py-4 no-scrollbar tablet:gap-6 tablet:py-8">
-        <div className="relative size-full">
+      <div className="flex h-full max-h-[80dvh] flex-col items-center gap-3 overflow-y-scroll px-4 py-4 no-scrollbar tablet:gap-6 tablet:px-0 tablet:py-8">
+        <div className="relative size-full bg-white dark:bg-gray-200">
           {loading && (
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               <p className="text-[10px] text-blue-100 tablet:text-[20px]">Generating Preview...</p>
@@ -87,10 +121,19 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
             src={generateIframeCode().match(/src="([^"]+)"/)[1]}
             title="Embedded Content"
             onLoad={handleLoad}
-            style={{ width: '100%', border: 'none' }}
             loading="lazy"
-            className={`${loading ? 'invisible' : ''}`}
+            className={`${loading ? 'invisible' : ''} mx-auto w-full max-w-[600px] rounded-[15.5px] border-0 border-hidden border-white`}
           />
+          <div className="invisible absolute -left-[99999px] max-w-[599px]">
+            <iframe
+              ref={iframeRef2}
+              src={generateIframeCode().match(/src="([^"]+)"/)[1]}
+              title="Embedded Content"
+              onLoad={handleLoad2}
+              loading="eager"
+              className={`${loading ? 'invisible' : ''} w-full border-none`}
+            />
+          </div>
         </div>
 
         <div className="w-full max-w-[730px]">
@@ -114,8 +157,8 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
         </div>
 
         <div className="flex w-full max-w-[730px] flex-col items-center justify-center gap-6">
-          <div className="border-[3px] border-blue-500 tablet:rounded-[0.625rem]">
-            <p className="mx-auto py-3 text-[10px] text-[#7C7C7C] tablet:px-5 tablet:pb-4 tablet:text-[20px]">
+          <div className="rounded-[5.128px] border border-blue-500 tablet:rounded-[0.625rem] tablet:border-[3px]">
+            <p className="mx-auto p-2.5 text-[10px] text-[#7C7C7C] tablet:px-5 tablet:pb-4 tablet:text-[20px]">
               {iframeCode}
             </p>
           </div>
