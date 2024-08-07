@@ -62,12 +62,11 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
 
       if (targetElement) {
         const height = targetElement.scrollHeight;
-        console.log('height', height);
 
-        setDynamicHeight(`${height}px`);
+        setDynamicHeight(`${height + 4}px`);
         // Set the iframe height to the target element's height
-        iframe.style.height = `${height}px`;
-        iframe.style.minHeight = `${height}px`;
+        iframe.style.height = `${height + 4}px`;
+        iframe.style.minHeight = `${height + 4}px`;
       } else {
         console.log('Target element not found.');
       }
@@ -89,10 +88,10 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
       if (targetElement) {
         const height = targetElement.scrollHeight;
 
-        setDynamicHeight2(`${height}px`);
+        setDynamicHeight2(`${height + 4}px`);
         // Set the iframe height to the target element's height
-        iframe.style.height = `${height}px`;
-        iframe.style.minHeight = `${height}px`;
+        iframe.style.height = `${height + 4}px`;
+        iframe.style.minHeight = `${height + 4}px`;
       } else {
         console.log('Target element not found.');
       }
@@ -121,19 +120,17 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
             src={generateIframeCode().match(/src="([^"]+)"/)[1]}
             title="Embedded Content"
             onLoad={handleLoad}
-            loading="lazy"
-            className={`${loading ? 'invisible' : ''} mx-auto w-full max-w-[600px] rounded-[15.5px] border-0 border-hidden border-white`}
+            loading="eager"
+            className={`${loading ? 'invisible' : ''} ${window.innerWidth < 600 ? 'invisible absolute -left-[99999px] min-w-[600px] max-w-[600px]' : 'min-w-[600px] max-w-[600px]'} mx-auto w-full border-none tablet:rounded-[15.5px]`}
           />
-          <div className="invisible absolute -left-[99999px] max-w-[599px]">
-            <iframe
-              ref={iframeRef2}
-              src={generateIframeCode().match(/src="([^"]+)"/)[1]}
-              title="Embedded Content"
-              onLoad={handleLoad2}
-              loading="lazy"
-              className={`${loading ? 'invisible' : ''} w-full border-none`}
-            />
-          </div>
+          <iframe
+            ref={iframeRef2}
+            src={generateIframeCode().match(/src="([^"]+)"/)[1]}
+            title="Embedded Content"
+            onLoad={handleLoad2}
+            loading="eager"
+            className={`${loading ? 'invisible' : ''} ${window.innerWidth < 600 ? 'w-full max-w-[599px]' : 'invisible absolute -left-[99999px]'} border-none tablet:rounded-[15.5px]`}
+          />
         </div>
 
         <div className="w-full max-w-[730px]">
@@ -141,8 +138,8 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
             Embed Post Settings
           </h5>
           <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px] dark:border-gray-100 dark:bg-accent-100">
-            <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
-              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+            <div className="mx-[15px] flex cursor-not-allowed items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px] dark:border-gray-100 dark:bg-gray-200 ">
+              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px] dark:text-white-600">
                 Dark Mode
               </h5>
               <CustomSwitch enabled={darkMode} setEnabled={setDarkMode} />

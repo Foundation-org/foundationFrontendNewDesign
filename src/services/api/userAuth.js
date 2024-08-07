@@ -138,5 +138,5 @@ export const deleteAccount = async (uuid) => {
 };
 
 export const createGuestMode = async () => {
-  return (response = await api.post('/user/create/guestMode'));
+  return await api.post('/user/create/guestMode');
 };
