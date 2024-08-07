@@ -48,7 +48,12 @@ const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromi
           localStorage.setItem('userData', JSON.stringify(infoc.data.user));
           localStorage.removeItem('isGuestMode');
           dispatch(addUser(infoc.data.user));
-          navigate('/');
+          if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
+            navigate(localStorage.getItem('shared-post'));
+            localStorage.clearItem('shared-post');
+          } else {
+            navigate('/');
+          }
           if (legacyPromiseRef.current) {
             setIsPopup(false);
             setIsLoading(false);

@@ -26,14 +26,13 @@ const GuestRedirect = ({ redirectUrl }) => {
       }
     },
     onError: (err) => {
-      console.log('err', err);
+      localStorage.setItem('shared-post', location.pathname);
       navigate('/signin');
       toast.error(err?.response?.data?.message);
     },
   });
 
   useEffect(() => {
-    localStorage.setItem('shared-post', location.pathname);
     if (persistedUserInfo === null) {
       createGuest();
     } else {

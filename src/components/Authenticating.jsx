@@ -147,8 +147,9 @@ const Authenticating = () => {
           localStorage.setItem('userData', JSON.stringify(res.data));
           localStorage.removeItem('isGuestMode');
           dispatch(addUser(res.data));
-          if (localStorage.getItem('shared-post') !== '') {
+          if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
             navigate(localStorage.getItem('shared-post'));
+            localStorage.clearItem('shared-post');
           } else {
             navigate('/');
           }
