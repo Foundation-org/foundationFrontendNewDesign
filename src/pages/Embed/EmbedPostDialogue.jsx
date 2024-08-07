@@ -130,7 +130,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
               src={generateIframeCode().match(/src="([^"]+)"/)[1]}
               title="Embedded Content"
               onLoad={handleLoad2}
-              loading="eager"
+              loading="lazy"
               className={`${loading ? 'invisible' : ''} w-full border-none`}
             />
           </div>
