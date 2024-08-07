@@ -20,11 +20,9 @@ export const signIn = async (data) => {
 };
 
 export const signOut = async (uuid) => {
-  return await api.post('user/logout',
-    {
-      uuid
-    }
-  );
+  return await api.post('user/logout', {
+    uuid,
+  });
 };
 
 export const userInfo = async () => {
@@ -69,7 +67,6 @@ export const getConstants = async () => {
   const res = await api.get(`user/getConstants`);
   localStorage.setItem('Constants', res?.data);
   return res?.data;
-
 };
 
 export const updateUserSettings = async ({
@@ -141,10 +138,5 @@ export const deleteAccount = async (uuid) => {
 };
 
 export const createGuestMode = async () => {
-  try {
-    const response = await api.post('/user/create/guestMode');
-    return response;
-  } catch (err) {
-    console.log({ err });
-  }
+  return (response = await api.post('/user/create/guestMode'));
 };

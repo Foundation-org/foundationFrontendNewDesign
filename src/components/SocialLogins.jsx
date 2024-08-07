@@ -31,6 +31,28 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
   });
   return (
     <div className="mb-2 flex min-w-[145px] flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] tablet:min-w-[220px] laptop:mb-[1.56rem] laptop:min-w-[305px] laptop:justify-between laptop:gap-[1.56rem]">
+      {isWebview() && (
+        <Button
+          variant="auth"
+          onClick={() => {
+            if (location.pathname === '/signin') {
+              navigate('/signin/credentials');
+            } else if (location.pathname === '/signup') {
+              navigate('/signup/credentials');
+            } else {
+              navigate('/guest-signup/credentials');
+            }
+          }}
+        >
+          <div className="flex min-w-[67px] items-center whitespace-nowrap tablet:min-w-[115px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
+              className="mr-2 w-[22px] md:w-8 lg:mr-3"
+            />
+            Email
+          </div>
+        </Button>
+      )}
       {filteredAuthMethods.map((item) => (
         <Button
           variant="auth"
@@ -52,26 +74,28 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
           </div>
         </Button>
       ))}
-      <Button
-        variant="auth"
-        onClick={() => {
-          if (location.pathname === '/signin') {
-            navigate('/signin/credentials');
-          } else if (location.pathname === '/signup') {
-            navigate('/signup/credentials');
-          } else {
-            navigate('/guest-signup/credentials');
-          }
-        }}
-      >
-        <div className="flex min-w-[67px] items-center whitespace-nowrap tablet:min-w-[115px]">
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
-            className="mr-2 w-[22px] md:w-8 lg:mr-3"
-          />
-          Email
-        </div>
-      </Button>
+      {!isWebview() && (
+        <Button
+          variant="auth"
+          onClick={() => {
+            if (location.pathname === '/signin') {
+              navigate('/signin/credentials');
+            } else if (location.pathname === '/signup') {
+              navigate('/signup/credentials');
+            } else {
+              navigate('/guest-signup/credentials');
+            }
+          }}
+        >
+          <div className="flex min-w-[67px] items-center whitespace-nowrap tablet:min-w-[115px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
+              className="mr-2 w-[22px] md:w-8 lg:mr-3"
+            />
+            Email
+          </div>
+        </Button>
+      )}
     </div>
   );
 };

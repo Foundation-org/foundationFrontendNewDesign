@@ -276,4 +276,61 @@ export const personal = [
   },
 ];
 
+export const subscription = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/creditScore.svg`,
+    title: 'Credit Score',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'firstName',
+    disabled: false,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/employement.svg`,
+    title: 'Employment',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'lastName',
+    disabled: false,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/collageDegree.svg`,
+    title: 'College Degree',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'dateOfBirth',
+    disabled: false,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/income.svg`,
+    title: 'Income',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'dateOfBirth',
+    disabled: false,
+  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/checkpassed.svg`,
+  //   title: 'Check Passed',
+  //   ButtonColor: 'submit',
+  //   NoOfButton: 1,
+  //   ButtonText: 'Add',
+  //   type: 'dateOfBirth',
+  //   disabled: false,
+  // },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+    title: 'Identity',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'dateOfBirth',
+    disabled: false,
+  },
+];
+
 export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length;

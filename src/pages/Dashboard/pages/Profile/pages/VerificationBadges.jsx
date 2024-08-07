@@ -20,6 +20,7 @@ import Privacy from './verification-badges/Privacy';
 import Social from './verification-badges/Social';
 import ContentCard from '../../../../../components/ContentCard';
 import { MetaMaskProvider } from '@metamask/sdk-react';
+import Subscription from './verification-badges/Subscription';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -243,7 +244,7 @@ const VerificationBadges = () => {
         from={persistedUserInfo?.badges.length}
         outof={badgesTotalLength}
       >
-        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
           Boost your earnings now and in the future by adding more verified badges to your profile.
         </h1>
       </ContentCard>
@@ -305,6 +306,9 @@ const VerificationBadges = () => {
           handlePasskeyConfirmation={handlePasskeyConfirmation}
           getAskPassword={getAskPasswordFromRedux}
         />
+      </ContentCard>
+      <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
+        <Subscription />
       </ContentCard>
 
       {/* <VerificationBadgeScore isMobile={true}>
