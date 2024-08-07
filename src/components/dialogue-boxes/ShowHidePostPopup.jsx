@@ -110,11 +110,10 @@ export default function ShowHidePostPopup({
 
   return (
     <PopUp
-      logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-latest-cut.svg`}
+      logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/hidePost.svg`}
       title={'Give Feedback / Hide'}
       open={modalVisible}
       handleClose={handleClose}
-      isBackground={true}
       customStyle={{ width: hidePostModal ? '100%' : 'fit-content', minWidth: 'auto' }}
     >
       {hidePostModal ? (
