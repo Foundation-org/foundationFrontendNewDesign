@@ -25,7 +25,8 @@ const GuestRedirect = ({ redirectUrl }) => {
       }
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      navigate('/signin');
+      toast.error(err.response.data.message);
     },
   });
 
