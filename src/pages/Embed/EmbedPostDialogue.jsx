@@ -54,16 +54,23 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
   const handleLoad = () => {
     const iframe = iframeRef.current;
     if (iframe && iframe.contentWindow) {
-      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+      const observer = new MutationObserver((mutations) => {
+        const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+        if (targetElement) {
+          const height = targetElement.scrollHeight;
+          setDynamicHeight(`${height + 4}px`);
+          iframe.style.height = `${height + 4}px`;
+          iframe.style.minHeight = `${height + 4}px`;
+          observer.disconnect();
+        } else {
+          console.log('Target element not found.');
+        }
+      });
 
-      if (targetElement) {
-        const height = targetElement.scrollHeight;
-        setDynamicHeight(`${height + 4}px`);
-        iframe.style.height = `${height + 4}px`;
-        iframe.style.minHeight = `${height + 4}px`;
-      } else {
-        console.log('Target element not found.');
-      }
+      observer.observe(iframe.contentWindow.document, {
+        childList: true,
+        subtree: true,
+      });
     } else {
       console.log('Iframe contentWindow or document is not accessible.');
     }
@@ -73,17 +80,23 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
   const handleLoad2 = () => {
     const iframe = iframeRef2.current;
     if (iframe && iframe.contentWindow) {
-      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+      const observer = new MutationObserver((mutations) => {
+        const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+        if (targetElement) {
+          const height = targetElement.scrollHeight;
+          setDynamicHeight2(`${height + 4}px`);
+          iframe.style.height = `${height + 4}px`;
+          iframe.style.minHeight = `${height + 4}px`;
+          observer.disconnect();
+        } else {
+          console.log('Target2 element not found.');
+        }
+      });
 
-      if (targetElement) {
-        const height = targetElement.scrollHeight;
-
-        setDynamicHeight2(`${height + 4}px`);
-        iframe.style.height = `${height + 4}px`;
-        iframe.style.minHeight = `${height + 4}px`;
-      } else {
-        console.log('Target element not found.');
-      }
+      observer.observe(iframe.contentWindow.document, {
+        childList: true,
+        subtree: true,
+      });
     } else {
       console.log('Iframe contentWindow or document is not accessible.');
     }
