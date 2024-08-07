@@ -54,17 +54,11 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
   const handleLoad = () => {
     const iframe = iframeRef.current;
     if (iframe && iframe.contentWindow) {
-      const contentDocument = iframe.contentWindow.document;
-      const body = contentDocument.body;
-
-      // Navigate to the deeply nested element
-      const targetElement = body.children[0]?.children[0]?.children[0]?.children[0];
+      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
 
       if (targetElement) {
         const height = targetElement.scrollHeight;
-
         setDynamicHeight(`${height + 4}px`);
-        // Set the iframe height to the target element's height
         iframe.style.height = `${height + 4}px`;
         iframe.style.minHeight = `${height + 4}px`;
       } else {
@@ -79,17 +73,12 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
   const handleLoad2 = () => {
     const iframe = iframeRef2.current;
     if (iframe && iframe.contentWindow) {
-      const contentDocument = iframe.contentWindow.document;
-      const body = contentDocument.body;
-
-      // Navigate to the deeply nested element
-      const targetElement = body.children[0]?.children[0]?.children[0]?.children[0];
+      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
 
       if (targetElement) {
         const height = targetElement.scrollHeight;
 
         setDynamicHeight2(`${height + 4}px`);
-        // Set the iframe height to the target element's height
         iframe.style.height = `${height + 4}px`;
         iframe.style.minHeight = `${height + 4}px`;
       } else {
