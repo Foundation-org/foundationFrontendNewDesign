@@ -129,7 +129,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
             title="Embedded Content"
             onLoad={handleLoad2}
             loading="eager"
-            className={`${loading ? 'invisible' : ''} ${window.innerWidth < 600 ? 'w-full max-w-[599px]' : 'invisible absolute -left-[99999px]'} border-none tablet:rounded-[15.5px]`}
+            className={`${loading ? 'invisible' : ''} ${window.innerWidth < 600 ? 'w-full max-w-[599px]' : 'invisible absolute -left-[99999px]'} rounded-[12.3px] border-none tablet:rounded-[15.5px]`}
           />
         </div>
 
