@@ -26,7 +26,7 @@ const Subscription = () => {
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
-        Add Subscriptions Badge and get rewarded.{' '}
+        Invest in your verification to boost your credibility and earning potential.
       </h1>
       <div className="flex flex-col items-center justify-between gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">
         {subscription.map((item, index) => (

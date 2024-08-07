@@ -307,7 +307,7 @@ const VerificationBadges = () => {
           getAskPassword={getAskPasswordFromRedux}
         />
       </ContentCard>
-      <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscription">
+      <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
         <Subscription />
       </ContentCard>
 
