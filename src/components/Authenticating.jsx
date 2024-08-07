@@ -147,10 +147,15 @@ const Authenticating = () => {
           localStorage.setItem('userData', JSON.stringify(res.data));
           localStorage.removeItem('isGuestMode');
           dispatch(addUser(res.data));
-          navigate('/');
+          if (localStorage.getItem('shared-post') !== '') {
+            navigate(localStorage.getItem('shared-post'));
+          } else {
+            navigate('/');
+          }
         }
       }
     } catch (error) {
+      console.log(error);
       if (error.response.data.message.split(':')[1].trim() === 'User not Found') {
         toast.error(
           <p>
