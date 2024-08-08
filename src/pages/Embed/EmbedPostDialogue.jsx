@@ -62,6 +62,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
           iframe.style.height = `${height + 4}px`;
           iframe.style.minHeight = `${height + 4}px`;
           observer.disconnect();
+          setLoading(false);
         } else {
           console.log('Target element not found.');
         }
@@ -74,7 +75,6 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
     } else {
       console.log('Iframe contentWindow or document is not accessible.');
     }
-    setLoading(false);
   };
 
   const handleLoad2 = () => {
@@ -88,6 +88,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
           iframe.style.height = `${height + 4}px`;
           iframe.style.minHeight = `${height + 4}px`;
           observer.disconnect();
+          setLoading(false);
         } else {
           console.log('Target2 element not found.');
         }
@@ -100,7 +101,6 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
     } else {
       console.log('Iframe contentWindow or document is not accessible.');
     }
-    setLoading(false);
   };
 
   return (
