@@ -121,24 +121,20 @@ const QuestionCardWithToggle = (props) => {
       questStartData.whichTypeQuestion === 'like/dislike' ||
       questStartData.whichTypeQuestion === 'yes/no'
     ) {
-      return limit ? 108 : 49;
+      return limit ? 108 : 49.3;
     } else {
       let tempSize = 0;
+      const maxElements = 10;
+
       questStartData.QuestAnswers.forEach((item, index) => {
         tempSize += index === 0 ? (limit ? 49 : 24) : limit ? 59 : 29.7;
       });
 
-      // Adjust tempSize if the number of elements is greater than 6
-      const maxElements = 10;
       if (questStartData.QuestAnswers.length > maxElements) {
-        tempSize = maxElements * (limit ? 59 : 28.98);
+        tempSize = (limit ? 49 : 24) + (maxElements - 1) * (limit ? 59 : 29.7);
       }
 
-      if (limit) {
-        return tempSize > 336 ? tempSize : 336;
-      } else {
-        return tempSize > 187 ? tempSize : 187;
-      }
+      return tempSize;
     }
   }, [questStartData.QuestAnswers, windowWidth]);
 
