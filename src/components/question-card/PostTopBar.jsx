@@ -47,7 +47,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
             questStartData.uuid === persistedUserInfo.uuid &&
             questStartData.type !== 'embed' && (
               <button
-                className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-center tablet:gap-2"
+                className="flex min-w-[83px] items-center justify-center gap-1 tablet:min-w-[168px] tablet:gap-2"
                 onClick={() => setDelModalVisible(true)}
               >
                 <img
