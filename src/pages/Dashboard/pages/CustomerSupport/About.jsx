@@ -91,7 +91,7 @@ const About = () => {
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Influence the Future - Your contributions help shape decisions by providing valuable insights to
-              researchers, companies, and policymakers.In the future, businesses will be able to market to you directly
+              researchers, companies, and policymakers. In the future, businesses will be able to market to you directly
               based on your data.
             </p>
           </div>
