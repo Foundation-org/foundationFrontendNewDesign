@@ -115,7 +115,7 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData]);
 
   const cardSize = useMemo(() => {
-    const limit = windowWidth >= 744 ? true : false;
+    const limit = windowWidth >= 600 ? true : false;
     if (
       questStartData.whichTypeQuestion === 'agree/disagree' ||
       questStartData.whichTypeQuestion === 'like/dislike' ||
@@ -129,15 +129,15 @@ const QuestionCardWithToggle = (props) => {
       });
 
       // Adjust tempSize if the number of elements is greater than 6
-      const maxElements = 6;
+      const maxElements = 10;
       if (questStartData.QuestAnswers.length > maxElements) {
-        tempSize = maxElements * (limit ? 59 : 29.7);
+        tempSize = maxElements * (limit ? 59 : 28.98);
       }
 
       if (limit) {
         return tempSize > 336 ? 336 : tempSize;
       } else {
-        return tempSize > 187 ? 187 : tempSize;
+        return tempSize > 187 ? tempSize : 187;
       }
     }
   }, [questStartData.QuestAnswers, windowWidth]);
