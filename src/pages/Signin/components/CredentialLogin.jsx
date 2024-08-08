@@ -55,6 +55,8 @@ const CredentialLogin = () => {
       if (capthaToken === '') {
         const resp = await userSignin({ email, password });
         if (resp.status === 200) {
+          console.log(resp);
+
           if (resp.data.message?.includes('Sent a verification email')) {
             showToast('success', 'verificationEmailSent');
 
@@ -62,6 +64,12 @@ const CredentialLogin = () => {
             setPassword('');
             setIsLoading(false);
             return;
+          }
+
+          if (!resp.data.isLegacyEmailContactVerified && !resp.data.isGoogleEmail) {
+            localStorage.setItem('uuid', resp.data.uuid);
+            localStorage.setItem('email', resp.data.email);
+            navigate('/verify-phone');
           }
           if (resp.data.isPasswordEncryption) {
             setIsLoading(false);

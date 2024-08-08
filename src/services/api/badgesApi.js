@@ -14,6 +14,8 @@ export const verifyOtp = async (data) => {
   return await api.post('/verifyOtp', {
     phoneNumber: data.phone,
     otp: data.otpString,
+    userUuid: data.userUuid,
+    legacyEmail: data.legacyEmail,
   });
 };
 

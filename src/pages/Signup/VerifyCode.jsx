@@ -107,14 +107,20 @@ const VerifyCode = () => {
 
       if (response.status === 200) {
         showToast('success', 'emailVerified');
-
-        // await handleUserInfo();
-        dispatch(setAskPassword(false));
         const data = await response.json();
-        dispatch(addUser(data));
-        localStorage.setItem('userData', JSON.stringify(data));
-        localStorage.setItem('uuid', data.uuid);
-        navigate('/');
+        console.log(data);
+        if (!data.isLegacyEmailContactVerified && !data.isGoogleEmail) {
+          localStorage.setItem('uuid', data.uuid);
+          localStorage.setItem('email', data.email);
+          navigate('/verify-phone');
+        } else {
+          dispatch(setAskPassword(false));
+          const data = await response.json();
+          dispatch(addUser(data));
+          localStorage.setItem('userData', JSON.stringify(data));
+          localStorage.setItem('uuid', data.uuid);
+          navigate('/');
+        }
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
@@ -140,7 +146,7 @@ const VerifyCode = () => {
                 <div className="mx-auto flex w-full max-w-[25rem] flex-row items-center justify-between">
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="istBox"
@@ -149,7 +155,7 @@ const VerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="tablet:px-5outline-none focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg focus:ring-1"
+                      className="tablet:px-5outline-none focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg ring-blue-700 focus:ring-1"
                       type="text"
                       name=""
                       id="sndBox"
@@ -158,7 +164,7 @@ const VerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="trdBox"
@@ -167,7 +173,7 @@ const VerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="frtBox"
@@ -176,7 +182,7 @@ const VerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="fifBox"
@@ -185,7 +191,7 @@ const VerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="sixBox"

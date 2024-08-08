@@ -61,6 +61,7 @@ import Authenticating from '../components/Authenticating';
 import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
 import EmbedPost from '../pages/Embed/EmbedPost';
 import Iframe from '../pages/Embed/Iframe';
+import VerifyPhone from '../pages/Signup/VerifyPhone';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -96,6 +97,8 @@ export function Router() {
             <Route path="credentials" element={<CredentialRegister />} />
           </Route>
           <Route path="/verifycode" element={<VerifyCode />} />
+          <Route path="/verify-phone" element={<VerifyPhone />} />
+
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
           <Route path="/l/:id" element={<GuestRedirect />} />
@@ -176,6 +179,8 @@ export function Router() {
               <Route path="credentials" element={<CredentialLogin />} />
             </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
+            <Route path="/verify-phone" element={<VerifyPhone />} />
+
             <Route
               path="*"
               element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Navigate to={'/help/about'} />}

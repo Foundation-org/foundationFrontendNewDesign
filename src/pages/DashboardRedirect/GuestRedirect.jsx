@@ -28,7 +28,7 @@ const GuestRedirect = ({ redirectUrl }) => {
     onError: (err) => {
       localStorage.setItem('shared-post', location.pathname);
       navigate('/signin');
-      toast.error(err?.response?.data?.message);
+      // toast.error(err?.response?.data?.message);
     },
   });
 

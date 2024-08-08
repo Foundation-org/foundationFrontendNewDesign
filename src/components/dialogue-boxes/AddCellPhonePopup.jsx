@@ -8,8 +8,12 @@ import api from '../../services/api/Axios';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import showToast from '../ui/Toast';
+import { useNavigate } from 'react-router-dom';
+import { addUser } from '../../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import { setAskPassword } from '../../features/profile/userSettingSlice';
 
-const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
+const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verification }) => {
   const queryClient = useQueryClient();
   const [phone, setPhone] = useState();
   const [otpResp, setOtpResp] = useState();
@@ -18,7 +22,8 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const formattedTime = `${Math.floor(seconds / 60)
     .toString()
     .padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
@@ -60,11 +65,23 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
 
   const { mutateAsync: verifyOtpCode } = useMutation({
     mutationFn: verifyOtp,
-    onSuccess: (resp) => {
+    onSuccess: async (response) => {
       showToast('success', 'otpVerified');
-      handleAddContactBadge();
+      console.log(response);
+
+      if (verification) {
+        dispatch(setAskPassword(false));
+        dispatch(addUser(response.data.user));
+        localStorage.setItem('userData', JSON.stringify(response.data.user));
+        localStorage.setItem('uuid', response.data.user.uuid);
+        navigate('/');
+      } else {
+        handleAddContactBadge();
+      }
     },
     onError: (err) => {
+      console.log(err);
+
       setLoading(false);
       showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
     },
@@ -169,7 +186,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
                   <div key={index} className="size-[26.7px] tablet:size-[57px]">
                     <input
                       ref={refs[index]}
-                      className="border-white-500 flex h-full w-full flex-col items-center justify-center rounded-[6px] border bg-[#FBFBFB] text-center text-[14px] outline-none focus:ring-0 tablet:rounded-[15px] tablet:border-[3px] tablet:text-[26px]"
+                      className="flex h-full w-full flex-col items-center justify-center rounded-[6px] border border-white-500 bg-[#FBFBFB] text-center text-[14px] outline-none focus:ring-0 tablet:rounded-[15px] tablet:border-[3px] tablet:text-[26px]"
                       type="number"
                       maxLength={1}
                       value={digit}
@@ -207,7 +224,16 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
                   if (otpString.length === 6) {
                     if (seconds > 0) {
                       setLoading(true);
-                      verifyOtpCode({ phone: otpResp?.data?.data?.phoneNumber, otpString });
+
+                      const params = {
+                        phone: otpResp?.data?.data?.phoneNumber,
+                        otpString,
+                      };
+                      if (verification) {
+                        params.userUuid = localStorage.getItem('uuid');
+                        params.legacyEmail = localStorage.getItem('email');
+                      }
+                      verifyOtpCode(params);
                     } else {
                       showToast('error', 'otpExpired');
                     }
