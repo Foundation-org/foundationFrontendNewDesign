@@ -435,7 +435,7 @@ const Result = (props) => {
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
             </button>
           </div>
-          <div className="absolute -top-[21px] right-6 tablet:-top-7 tablet:right-[70px]">
+          <div className="absolute -top-[21px] right-8 tablet:-top-7 tablet:right-[70px]">
             <button onClick={handleContendedSortIconClick}>
               <SortIcon
                 type={'contended'}
