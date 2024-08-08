@@ -373,7 +373,7 @@ const Result = (props) => {
             </button>
           </div>
           <div
-            className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 ? '!h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]' : ''}`}
+            className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 ? 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]' : ''}`}
           >
             {sortedAnswers
               ?.slice(

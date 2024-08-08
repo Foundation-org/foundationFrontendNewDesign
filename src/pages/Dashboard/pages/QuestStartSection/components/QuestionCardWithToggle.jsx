@@ -135,7 +135,7 @@ const QuestionCardWithToggle = (props) => {
       }
 
       if (limit) {
-        return tempSize > 336 ? 336 : tempSize;
+        return tempSize > 336 ? tempSize : 336;
       } else {
         return tempSize > 187 ? tempSize : 187;
       }
