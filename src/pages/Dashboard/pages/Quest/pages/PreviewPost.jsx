@@ -33,8 +33,6 @@ export default function PreviewPost() {
     createdAt: new Date().getTime(),
   };
 
-  console.log(post);
-
   const { mutateAsync: createQuest, isPending } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
@@ -57,11 +55,6 @@ export default function PreviewPost() {
       if (err.response) {
         showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       }
-
-      //   setMultipleOption(false);
-      //   setAddOption(false);
-      //   setChangedOption('');
-      //   setChangeState(false);
     },
   });
 

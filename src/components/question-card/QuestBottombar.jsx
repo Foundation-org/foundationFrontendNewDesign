@@ -159,7 +159,6 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               Hide
             </h1>
           </button>
-
           {/* Share */}
           {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
             <>
@@ -184,7 +183,6 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               </BasicModal>{' '}
             </>
           )}
-
           {/* Add to list */}
           <button
             className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-end tablet:gap-2"
@@ -214,7 +212,6 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               Add to list
             </h1>
           </button>
-
           {/* Expand Post */}
           {/* <>
             {postProperties !== 'HiddenPosts' &&
