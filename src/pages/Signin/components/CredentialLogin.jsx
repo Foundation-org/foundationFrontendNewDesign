@@ -56,6 +56,7 @@ const CredentialLogin = () => {
         const resp = await userSignin({ email, password });
         if (resp.status === 200) {
           console.log(resp);
+          console.log(resp.data.isLegacyEmailContactVerified, email.includes('@gmail.com'));
 
           if (resp.data.message?.includes('Sent a verification email')) {
             showToast('success', 'verificationEmailSent');
@@ -66,10 +67,11 @@ const CredentialLogin = () => {
             return;
           }
 
-          if (!resp.data.isLegacyEmailContactVerified && !resp.data.isGoogleEmail) {
+          if (!resp.data.isLegacyEmailContactVerified && !email.includes('@gmail.com')) {
             localStorage.setItem('uuid', resp.data.uuid);
             localStorage.setItem('email', resp.data.email);
             navigate('/verify-phone');
+            return;
           }
           if (resp.data.isPasswordEncryption) {
             setIsLoading(false);

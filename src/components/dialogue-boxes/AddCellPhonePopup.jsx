@@ -74,6 +74,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
         dispatch(addUser(response.data.user));
         localStorage.setItem('userData', JSON.stringify(response.data.user));
         localStorage.setItem('uuid', response.data.user.uuid);
+        handleAddContactBadge();
         navigate('/');
       } else {
         handleAddContactBadge();
