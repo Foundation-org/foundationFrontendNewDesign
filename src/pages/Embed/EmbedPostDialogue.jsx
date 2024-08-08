@@ -84,9 +84,9 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
         const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
         if (targetElement) {
           const height = targetElement.scrollHeight;
-          setDynamicHeight2(`${height + 4}px`);
-          iframe.style.height = `${height + 4}px`;
-          iframe.style.minHeight = `${height + 4}px`;
+          setDynamicHeight2(`${height + 9}px`);
+          iframe.style.height = `${height + 9}px`;
+          iframe.style.minHeight = `${height + 9}px`;
           observer.disconnect();
           setLoading(false);
         } else {
