@@ -43,21 +43,23 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
             </h1>
           </div>
           {/* Delete */}
-          {!questStartData?.result?.length >= 1 && questStartData.uuid === persistedUserInfo.uuid && (
-            <button
-              className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-center tablet:gap-2"
-              onClick={() => setDelModalVisible(true)}
-            >
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/hiddenposts/unhide/deletePost.png'}`}
-                alt="eye-latest"
-                className="h-3 w-[9px] tablet:h-[22px] tablet:w-[17px]"
-              />
-              <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
-                Delete
-              </h1>
-            </button>
-          )}
+          {!questStartData?.result?.length >= 1 &&
+            questStartData.uuid === persistedUserInfo.uuid &&
+            questStartData.type !== 'embed' && (
+              <button
+                className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-center tablet:gap-2"
+                onClick={() => setDelModalVisible(true)}
+              >
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/hiddenposts/unhide/deletePost.png'}`}
+                  alt="eye-latest"
+                  className="h-3 w-[9px] tablet:h-[22px] tablet:w-[17px]"
+                />
+                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
+                  Delete
+                </h1>
+              </button>
+            )}
           {/* TimeStamp */}
           {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
             <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">

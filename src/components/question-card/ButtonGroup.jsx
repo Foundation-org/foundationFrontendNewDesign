@@ -442,7 +442,7 @@ const ButtonGroup = ({
                 }}
                 className={'w-full whitespace-nowrap'}
               >
-                Feedback / Hide
+                Feedback
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
@@ -515,7 +515,7 @@ const ButtonGroup = ({
                 }}
                 className={'w-full whitespace-nowrap'}
               >
-                Feedback / Hide
+                Feedback
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px] ">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
@@ -600,7 +600,7 @@ const ButtonGroup = ({
                     className={'w-full whitespace-nowrap'}
                     onClick={openFeedbackAndVisiblePopup}
                   >
-                    Feedback / Hide
+                    Feedback
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                       (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                     </span>

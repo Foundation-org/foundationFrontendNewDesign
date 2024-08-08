@@ -41,7 +41,7 @@ const FeedbackAndVisibility = forwardRef(({ questStartData, setFeedbackLoading }
         data={feedBackAndHideOptions}
         modalVisible={modalVisible}
         questStartData={questStartData}
-        setFeedbackLoading={setFeedbackLoading}
+        feature={'Feedback'}
       />
     </>
   );

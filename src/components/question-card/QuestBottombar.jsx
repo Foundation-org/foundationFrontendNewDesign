@@ -8,6 +8,8 @@ import CopyDialogue from '../question-card/Shareables/CopyDialogue';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 import showToast from '../ui/Toast';
 import { referralModalStyle } from '../../constants/styles';
+import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
+import { feedBackAndHideOptions } from '../../constants/feedbackAndHide';
 
 const QuestBottombar = ({ time, questStartData, postProperties, showDisableSharedLinkPopup }) => {
   const navigate = useNavigate();
@@ -18,6 +20,8 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   const [copyModal, setCopyModal] = useState(false);
   const [addToList, setAddToList] = useState(false);
   const [timeAgo, setTimeAgo] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [checkboxStates, setCheckboxStates] = useState(feedBackAndHideOptions.map(() => false));
 
   const handleCopyOpen = () => {
     if (persistedUserInfo?.role === 'guest') {
@@ -68,12 +72,38 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
     }
   };
 
+  const showHidePostOpen = () => {
+    if (questStartData.uuid === persistedUserInfo.uuid) {
+      showToast('warning', 'hidingOwnPost');
+      return;
+    }
+
+    setCheckboxStates(feedBackAndHideOptions.map(() => false));
+    setModalVisible(true);
+  };
+
+  const showHidePostClose = () => {
+    setModalVisible(false);
+  };
+
   useEffect(() => {
     calculateTimeAgo();
   }, [time]);
 
   return (
     <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
+      {modalVisible && (
+        <ShowHidePostPopup
+          handleClose={showHidePostClose}
+          setCheckboxStates={setCheckboxStates}
+          checkboxStates={checkboxStates}
+          data={feedBackAndHideOptions}
+          modalVisible={modalVisible}
+          questStartData={questStartData}
+          feature={'Hide'}
+        />
+      )}
+
       {addToList && (
         <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
       )}
@@ -115,6 +145,21 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
 
       {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
         <div className="flex w-full items-center justify-between gap-[8px] tablet:gap-[25px]">
+          {/* Hide Post */}
+          <button
+            className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
+            onClick={showHidePostOpen}
+          >
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
+              alt="eye-latest"
+              className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
+            />
+            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
+              Hide
+            </h1>
+          </button>
+
           {/* Share */}
           {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
             <>
