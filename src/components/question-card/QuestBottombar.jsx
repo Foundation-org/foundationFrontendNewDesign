@@ -7,24 +7,9 @@ import BasicModal from '../BasicModal';
 import CopyDialogue from '../question-card/Shareables/CopyDialogue';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 import showToast from '../ui/Toast';
+import { referralModalStyle } from '../../constants/styles';
 
-const customModalStyle = {
-  boxShadow: 'none',
-  border: '0px',
-  outline: 'none',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-};
-
-const QuestBottombar = ({
-  time,
-  createdBy,
-  questStartData,
-  postProperties,
-  showDisableSharedLinkPopup,
-  setDelModalVisible,
-}) => {
+const QuestBottombar = ({ time, questStartData, postProperties, showDisableSharedLinkPopup }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isFullScreen } = useParams();
@@ -88,7 +73,7 @@ const QuestBottombar = ({
   }, [time]);
 
   return (
-    <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
+    <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
       {addToList && (
         <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
       )}
@@ -100,7 +85,7 @@ const QuestBottombar = ({
             alt="eye-cut"
             className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
-          <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-600 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+          <h1 className="text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-600">
             {questStartData?.userQuestSetting?.feedbackMessage
               ? questStartData.userQuestSetting.feedbackMessage
               : questStartData.userQuestSetting.hiddenMessage}
@@ -120,7 +105,7 @@ const QuestBottombar = ({
               alt="clock"
               className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
             />
-            <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+            <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
               {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
               {timeAgo}
             </h4>
@@ -140,42 +125,20 @@ const QuestBottombar = ({
                 className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
               >
                 {persistedTheme === 'dark' ? <Copy /> : <Copy />}
-                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
                   Share
                 </h1>
               </button>
               <BasicModal
                 open={copyModal}
                 handleClose={handleCopyClose}
-                customStyle={customModalStyle}
+                customStyle={referralModalStyle}
                 customClasses="rounded-[10px] tablet:rounded-[26px]"
               >
                 <CopyDialogue handleClose={handleCopyClose} questStartData={questStartData} />
               </BasicModal>{' '}
             </>
           )}
-
-          {/* Delete */}
-          <>
-            {postProperties !== 'HiddenPosts' &&
-              postProperties !== 'SharedLinks' &&
-              !questStartData?.result?.length >= 1 &&
-              createdBy === localStorage.getItem('uuid') && (
-                <button
-                  className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-center tablet:gap-2"
-                  onClick={() => setDelModalVisible(true)}
-                >
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/hiddenposts/unhide/deletePost.png'}`}
-                    alt="eye-latest"
-                    className="h-3 w-[9px] tablet:h-[22px] tablet:w-[17px]"
-                  />
-                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
-                    Delete
-                  </h1>
-                </button>
-              )}
-          </>
 
           {/* Add to list */}
           <button
@@ -202,7 +165,7 @@ const QuestBottombar = ({
               alt="addToList"
               className="h-auto w-3 cursor-pointer tablet:w-[22px]"
             />
-            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
               Add to list
             </h1>
           </button>

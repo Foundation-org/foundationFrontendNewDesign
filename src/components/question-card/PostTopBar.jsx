@@ -2,8 +2,9 @@ import { useSelector } from 'react-redux';
 import { calculateTimeAgo } from '../../utils/utils';
 import showToast from '../ui/Toast';
 
-export default function PostTopBar({ questStartData, postProperties }) {
+export default function PostTopBar({ questStartData, postProperties, setDelModalVisible }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   let ratingImage = null;
 
@@ -28,6 +29,7 @@ export default function PostTopBar({ questStartData, postProperties }) {
     <>
       {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
         <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
+          {/* Topic */}
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
             {ratingImage ? (
               <img
@@ -40,6 +42,23 @@ export default function PostTopBar({ questStartData, postProperties }) {
               {questStartData.QuestTopic}
             </h1>
           </div>
+          {/* Delete */}
+          {!questStartData?.result?.length >= 1 && questStartData.uuid === persistedUserInfo.uuid && (
+            <button
+              className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-center tablet:gap-2"
+              onClick={() => setDelModalVisible(true)}
+            >
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/hiddenposts/unhide/deletePost.png'}`}
+                alt="eye-latest"
+                className="h-3 w-[9px] tablet:h-[22px] tablet:w-[17px]"
+              />
+              <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
+                Delete
+              </h1>
+            </button>
+          )}
+          {/* TimeStamp */}
           {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
             <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
               <img
