@@ -15,18 +15,20 @@ const Summary = () => {
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
           Creating posts is a great way to earn FDX. Especially if others engage with them.
         </h1>
-        <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
-          <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full dark:border-gray-300">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Posts you've created
-            </h1>
-            <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.questsCreated}</h5>
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center tablet:mt-5 dark:divide-gray-300">
+          <div className="flex w-full justify-end">
+            <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
+              <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                Posts you've created
+              </h1>
+              <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsCreated}</h5>
+            </div>
           </div>
-          <div className="max-w-24 tablet:max-w-full">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+          <div className="w-full max-w-28 pl-2 tablet:max-w-[200px] tablet:pl-4">
+            <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Engagements with your posts
             </h1>
-            <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.yourPostEngaged}</h5>
+            <h5 className="text-[18px] font-normal">{persistedUserInfo?.yourPostEngaged}</h5>
           </div>
         </div>
         <div className="my-3 flex w-full justify-center tablet:my-5 ">
@@ -38,22 +40,14 @@ const Summary = () => {
           Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
           with it.
         </h1>
-        <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
-          <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full dark:border-gray-300">
+        <div className="my-3 flex w-full justify-center tablet:my-5 ">
+          <div className="max-w-28 border-[#707175] tablet:max-w-full">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Posts you've given feedback
+              Posts I've engaged with
             </h1>
             <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.questsActivity?.feedbackGiven || 0}
+              {persistedUserInfo?.questsActivity?.myQuestsEngagementCount || 0}
             </h5>
-          </div>
-          <div className="max-w-24 tablet:max-w-full">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Posts you’ve hidden
-            </h1>
-            <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.questsActivity?.myHiddenQuestsCount}
-            </h5>{' '}
           </div>
         </div>
         <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
@@ -62,27 +56,54 @@ const Summary = () => {
           </Button>
         </div>
       </SummaryCard>
-      <SummaryCard headerIcon="/assets/summary/feedback-logo.svg" headerTitle="Feedback">
+      <SummaryCard headerIcon="/assets/summary/feedback-received.svg" headerTitle="Feedback Received">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
           Not everything you post may be everyone’s cup of tea. See what posts you’ve created others have decided to
           hide and why.
         </h1>
-        <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Hidden posts
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center tablet:mt-5 dark:divide-gray-300">
+          <div className="flex w-full justify-end">
+            <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
+              <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                Feedback on my posts
+              </h1>
+              <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.feedbackReceived}</h5>
+            </div>
+          </div>
+          <div className="w-full max-w-28 pl-2 tablet:max-w-[200px] tablet:pl-4">
+            <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Hidden Posts
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.feedBackQuestsStatistics?.otherHidingOurQuestsCount}
             </h5>
           </div>
-          <div>
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Supressed posts
+        </div>
+        <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
+          <Button variant={'submit'} onClick={() => navigate('/profile/feedback')}>
+            View all feedback received
+          </Button>
+        </div>
+      </SummaryCard>
+      <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
+        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+          Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
+          with it.
+        </h1>
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center tablet:mt-5 dark:divide-gray-300">
+          <div className="flex w-full justify-end">
+            <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
+              <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                Posts I have given feedback on
+              </h1>
+              <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.feedbackGiven}</h5>
+            </div>
+          </div>
+          <div className="w-full max-w-28 pl-2 tablet:max-w-[200px] tablet:pl-4">
+            <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Posts I have hidden
             </h1>
-            <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.feedBackQuestsStatistics?.suppressQuestsCount}
-            </h5>
+            <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.myHiddenQuestsCount}</h5>
           </div>
         </div>
         <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
