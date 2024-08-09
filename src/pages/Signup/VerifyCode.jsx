@@ -1,12 +1,11 @@
-import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { url } from '../../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
-import showToast from '../../components/ui/Toast';
 import { setAskPassword } from '../../features/profile/userSettingSlice';
+import showToast from '../../components/ui/Toast';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
@@ -110,67 +109,24 @@ const VerifyCode = () => {
               <div className="text-3xl font-semibold">
                 <p>Verify your account</p>
               </div>
-              <div className="flex flex-row text-sm font-medium text-gray-400">
+              <div className="flex flex-row text-sm font-medium text-gray-100">
                 <p>Please check the verification code</p>
               </div>
             </div>
             <div>
               <div className="flex flex-col space-y-16">
                 <div className="mx-auto flex w-full max-w-[25rem] flex-row items-center justify-between">
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
-                    <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
-                      type="text"
-                      name=""
-                      id="istBox"
-                      value={verificationCode[0]}
-                    />
-                  </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
-                    <input
-                      className="tablet:px-5outline-none focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg ring-blue-700 focus:ring-1"
-                      type="text"
-                      name=""
-                      id="sndBox"
-                      value={verificationCode[1]}
-                    />
-                  </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
-                    <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
-                      type="text"
-                      name=""
-                      id="trdBox"
-                      value={verificationCode[2]}
-                    />
-                  </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
-                    <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
-                      type="text"
-                      name=""
-                      id="frtBox"
-                      value={verificationCode[3]}
-                    />
-                  </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
-                    <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
-                      type="text"
-                      name=""
-                      id="fifBox"
-                      value={verificationCode[4]}
-                    />
-                  </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
-                    <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
-                      type="text"
-                      name=""
-                      id="sixBox"
-                      value={verificationCode[5]}
-                    />
-                  </div>
+                  {verificationCode.map((code, index) => (
+                    <div key={index} className="size-11 tablet:size-16">
+                      <input
+                        className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 !text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
+                        type="text"
+                        id={`box${index + 1}`}
+                        value={code}
+                        readOnly
+                      />
+                    </div>
+                  ))}
                 </div>
                 <div className="flex flex-col space-y-5">
                   <div>
