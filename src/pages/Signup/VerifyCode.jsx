@@ -64,33 +64,6 @@ const VerifyCode = () => {
     }
   };
 
-  // const { mutateAsync: handleVerify } = useMutation({
-  //   mutationFn: verifyCode,
-  //   onSuccess: (resp) => {
-  //     console.log({ resp });
-  //     toast.success('E-Mail Account Verified');
-
-  //     if (resp.status === 200) {
-  //       handleReferralOpen();
-  //     }
-
-  //     //   setTimeout(() => {
-  //     //     navigate('/AccountVerification');
-  //     //   }, 2000);
-  //   },
-  //   onError: (err) => {
-  //     if (err.response.data.message === 'Invalid Verification Code') {
-  //       toast.error('Wrong Verification code, open page from Gmail');
-  //     } else if (err.response.data.message === 'Missing Token') {
-  //       toast.error('Missing Token, open page from Gmail');
-  //     } else if (err.response.data.message.message === 'invalid token') {
-  //       toast.error('invalid token, open page from Gmail, or token is expired');
-  //     } else {
-  //       toast.error('Server Error');
-  //     }
-  //   },
-  // });
-
   const handleVerify = async (urlQuery) => {
     const apiUrl = `${url}/user/verify?${urlQuery}`;
     const verificationCode = urlQuery.substr(urlQuery.length - 6);

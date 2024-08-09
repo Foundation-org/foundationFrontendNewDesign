@@ -22,7 +22,7 @@ const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) =>
             />
             {badgeVal && (
               <p
-                className={`absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-gold-100  tablet:top-[40%] tablet:text-[13px] ${title === 'Your Posts' ? '' : title === 'Other Posts' ? 'dark:text-white' : ''}`}
+                className={`absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-gold-100  tablet:top-[40%] tablet:text-[13px] ${title === 'Your Posts' ? '' : title === 'Other Posts' ? 'text-white' : ''}`}
               >
                 {badgeVal}
               </p>
@@ -36,7 +36,7 @@ const ContentCard = ({ icon, title, badgeVal, from, outof, children }: Props) =>
           </h1>
         )}
       </div>
-      <div className="rounded-b-[10px] border-x-[1.85px] border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-x-[1.85px] dark:border-gray-100 dark:bg-gray-200 tablet:py-[18.73px]">
+      <div className="rounded-b-[10px] border-x-[1.85px] border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:py-[18.73px] dark:border-x-[1.85px] dark:border-gray-100 dark:bg-gray-200">
         {children}
       </div>
     </div>

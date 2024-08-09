@@ -80,7 +80,7 @@ export default function Contact({
   const ContactItem = ({ item, index, persistedTheme, checkContact, checkPrimary, handleClickContactBadgeEmail }) => {
     return (
       <div
-        className={`relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:justify-center laptop:gap-2 desktop:justify-start desktop:gap-5 ${item.disabled && 'opacity-[60%]'}`}
+        className={`relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:justify-center laptop:gap-5 desktop:justify-start ${item.disabled && 'opacity-[60%]'}`}
         key={index}
       >
         <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
@@ -96,9 +96,9 @@ export default function Contact({
         <div
           className={`${
             persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px] dark:border-gray-100 dark:bg-accent-100`}
         >
-          <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-gray-400 tablet:text-[20px]">
+          <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-gray-400">
             {item.title}
           </h1>
         </div>
@@ -207,7 +207,7 @@ export default function Contact({
         fetchUser={fetchUser}
         setIsPersonalPopup={setIsPersonalPopup}
       />
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
         Contact badges increase your verification status and give you more options for account recovery.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">

@@ -131,10 +131,7 @@ const Social = ({
       <div className="flex flex-col items-center justify-between rounded-[16.068px] pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
           {filteredSocials.map((item, index) => (
-            <div
-              className="relative flex items-center justify-between gap-[8.5px] laptop:gap-2 desktop:gap-5"
-              key={index}
-            >
+            <div className="flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5" key={index}>
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary(item.accountName) && (
                   <img
@@ -145,9 +142,7 @@ const Social = ({
                 )}
               </div>
               <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
-              <div
-                className={` flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px] dark:border-gray-100 dark:bg-accent-100`}
-              >
+              <div className="flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px] dark:border-gray-100 dark:bg-accent-100">
                 <h1 className="text-[2.11vw] font-medium leading-normal text-black tablet:text-[20px] dark:text-gray-400">
                   {item.title}
                 </h1>
