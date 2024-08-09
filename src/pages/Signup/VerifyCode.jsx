@@ -108,14 +108,12 @@ const VerifyCode = () => {
       if (response.status === 200) {
         showToast('success', 'emailVerified');
         const data = await response.json();
-        console.log(data);
         if (!data.isLegacyEmailContactVerified && !data.isGoogleEmail) {
           localStorage.setItem('uuid', data.uuid);
           localStorage.setItem('email', data.email);
           navigate('/verify-phone');
         } else {
           dispatch(setAskPassword(false));
-          const data = await response.json();
           dispatch(addUser(data));
           localStorage.setItem('userData', JSON.stringify(data));
           localStorage.setItem('uuid', data.uuid);
