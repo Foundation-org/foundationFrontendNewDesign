@@ -387,6 +387,7 @@ const Result = (props) => {
               .map((item, index) => (
                 <SingleAnswerMultipleChoice
                   key={index + 1}
+                  questStartData={props.questStartData}
                   number={'#' + (index + 1)}
                   answer={item.question}
                   addedAnswerUuid={item.uuid}
