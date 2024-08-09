@@ -124,7 +124,12 @@ export default function DashboardLayout({ children }) {
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);
         queryClient.invalidateQueries(['userInfo']);
-        navigate('/');
+        if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
+          navigate(localStorage.getItem('shared-post'));
+          localStorage.clearItem('shared-post');
+        } else {
+          navigate('/');
+        }
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
