@@ -16,7 +16,7 @@ const Button = ({
       'bg-dark-blue text-white': color === 'blue',
       'bg-white dark:bg-dark-gray text-black dark:text-white': color === 'gray',
       'bg-white dark:bg-gray-500 text-black dark:text-white': color === 'darkgray',
-      'bg-blue-200 dark:bg-[#2759A5]': color === 'blue-200',
+      'bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] dark:from-[#2759A5] dark:to-[#2759A5]': color === 'blue-200',
       'text-primary bg-white hover:bg-gray-200 border-[1px] border-gray-300': color === 'light',
       // 'disabled:bg-gray-300 disabled:cursor-not-allowed': disabled,
     },

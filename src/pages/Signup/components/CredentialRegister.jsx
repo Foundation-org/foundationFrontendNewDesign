@@ -107,13 +107,13 @@ const CredentialRegister = () => {
 
   return (
     <>
-      <form className="text-silver-600 mt-11 flex w-full flex-col gap-11 dark:text-white tablet:mt-16 5xl:gap-14 short:gap-[38px]">
+      <form className="mt-11 flex w-full flex-col gap-11 text-silver-600 tablet:mt-16 5xl:gap-14 short:gap-[38px] dark:text-white">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
             id="email"
             label="Email Address"
-            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white"
             autoComplete="sign-email"
             onChange={onEmailChange}
             value={email}
@@ -143,7 +143,7 @@ const CredentialRegister = () => {
                 type={inputType}
                 id="password"
                 label="Password"
-                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
+                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white "
                 autoComplete="new-password"
                 onChange={onPassChange}
               />
@@ -189,7 +189,7 @@ const CredentialRegister = () => {
                 type={cnfmPassInputType}
                 id="cnfmpassword"
                 label="Re-type Password"
-                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
+                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white "
                 autoComplete="new-password"
                 onChange={onReTypePassChange}
               />
@@ -249,18 +249,18 @@ const CredentialRegister = () => {
             />
           </label>
         </div>
-        <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
+        <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
           Creating an account means you have agreed with our{` `}
           <Link
             to="/term-of-service"
-            className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline md:text-[16px] tablet:leading-[22px] short:text-[12px] dark:text-white"
           >
             Terms of Service
           </Link>
           {` `}&{' '}
           <Link
             to="/privacy-policy"
-            className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline md:text-[16px] tablet:leading-[22px] short:text-[12px] dark:text-white"
           >
             Privacy Policy
           </Link>
@@ -307,17 +307,9 @@ const CredentialRegister = () => {
       >
         <div className="px-5 py-[14px] tablet:px-[60px] tablet:py-[25px]">
           <p className="text-[9px] font-medium text-black tablet:text-[20px]">{errorMessage}</p>
-          {/* {
-           <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
-              Continue
-            </UiButton> 
-
-            console.log(errorMessage)
-          } */}
           {errorMessage.trim() === 'Email Already Exists' ? (
             <div className="mt-[25px] flex w-full justify-end">
               <UiButton
-                className="mt-[25px] flex w-full justify-end"
                 onClick={() => {
                   navigate('/signin');
                 }}
