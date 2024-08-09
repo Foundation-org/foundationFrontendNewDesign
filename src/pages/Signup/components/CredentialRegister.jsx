@@ -226,7 +226,6 @@ const CredentialRegister = () => {
           setErrorMessage={setErrorMessage}
           setEmail={setEmail}
           setPassword={setPassword}
-          setReTypePassword={setReTypePassword}
           referralCode={referralCode}
           setReferralCode={setReferralCode}
           handlePopupOpen={handlePopupOpen}

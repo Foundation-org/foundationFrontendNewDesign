@@ -22,7 +22,6 @@ const ReferralCode = ({
   setIsLoadingSocial,
   triggerLogin,
   credential,
-  setReTypePassword,
 }) => {
   const [refLoading, setRefLoading] = useState(false);
 
@@ -43,7 +42,6 @@ const ReferralCode = ({
 
           setEmail('');
           setPassword('');
-          setReTypePassword('');
           setIsLoading(false);
         }
       } else {
@@ -76,7 +74,6 @@ const ReferralCode = ({
       setRefLoading(false);
       setEmail('');
       setPassword('');
-      setReTypePassword('');
       handleClose();
       if (!credential) {
         triggerLogin();
