@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const Input = ({ type, id, label, className, autoComplete, value, onChange }) => {
+const Input = ({ type, id, label, className, autoComplete, value = '', onChange }) => {
   const [inputValue, setInputValue] = useState(value);
 
   const handleChange = (event) => {

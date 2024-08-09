@@ -38,8 +38,6 @@ export default function SharedLinkResults() {
       setQuestData(response.data.data[0]);
     } catch (error) {
       console.error('API call failed:', error);
-    } finally {
-      // setLoading(false);
     }
   };
 
@@ -58,7 +56,7 @@ export default function SharedLinkResults() {
       <Topbar />
       <div className="bg-[#F2F3F5] dark:bg-[#242424]">
         <DashboardLayout>
-          <div className="no-scrollbar mx-auto h-[calc(100dvh-91px)] w-full max-w-[1440px] overflow-y-auto tablet:h-[calc(100vh-70px)] laptop:mx-[331px] laptop:px-4 desktop:mx-auto desktop:px-0">
+          <div className="mx-auto h-[calc(100dvh-91px)] w-full max-w-[1440px] overflow-y-auto no-scrollbar tablet:h-[calc(100vh-70px)] laptop:mx-[331px] laptop:px-4 desktop:mx-auto desktop:px-0">
             {persistedUserInfo?.role === 'user' && (
               <div className="my-2 flex justify-center gap-[15px] tablet:gap-5 laptop:my-[14.82px] laptop:gap-[35px]">
                 <Button

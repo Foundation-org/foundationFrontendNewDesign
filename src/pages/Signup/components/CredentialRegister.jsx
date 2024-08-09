@@ -1,22 +1,19 @@
-import { useDispatch, useSelector } from 'react-redux';
-import Input from '../../../components/Input';
-import PasswordStrengthBar from 'react-password-strength-bar';
 import { useState } from 'react';
-import Button from '../../../components/Button';
-import { useMutation } from '@tanstack/react-query';
-import { signUpGuest } from '../../../services/api/userAuth';
-import ReCAPTCHA from 'react-google-recaptcha';
-import BasicModal from '../../../components/BasicModal';
+import { useDispatch, useSelector } from 'react-redux';
 import { referralModalStyle } from '../../../constants/styles';
-import ReferralCode from '../../../components/ReferralCode';
-import { toast } from 'sonner';
-import showToast from '../../../components/ui/Toast';
 import { LoginSocialGoogle } from 'reactjs-social-login';
-import PopUp from '../../../components/ui/PopUp';
 import { Button as UiButton } from '../../../components/ui/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../../services/api/Axios';
 import { addUser } from '../../../features/auth/authSlice';
+import Input from '../../../components/Input';
+import api from '../../../services/api/Axios';
+import ReCAPTCHA from 'react-google-recaptcha';
+import Button from '../../../components/Button';
+import PopUp from '../../../components/ui/PopUp';
+import showToast from '../../../components/ui/Toast';
+import BasicModal from '../../../components/BasicModal';
+import ReferralCode from '../../../components/ReferralCode';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -29,7 +26,7 @@ const CredentialRegister = () => {
   const [captchaToken, setCaptchaToken] = useState('');
   const [isReferral, setIsReferral] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [referralCode, setReferralCode] = useState(null);
+  const [referralCode, setReferralCode] = useState('');
   const [isPopup, setIspopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const inputType = showPassword ? 'text' : 'password';
@@ -105,36 +102,44 @@ const CredentialRegister = () => {
     // }
   };
 
+  const getCancelIconSrc = () => {
+    return persistedTheme === 'dark'
+      ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/cancelDark.svg`
+      : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/cancelLight.svg`;
+  };
+
+  const getPasswordIconSrc = (isVisible) => {
+    if (!isVisible) {
+      return persistedTheme === 'dark'
+        ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/blind.svg`
+        : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`;
+    }
+    return persistedTheme === 'dark'
+      ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye.svg`
+      : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`;
+  };
+
   return (
     <>
-      <form className="text-silver-600 mt-11 flex w-full flex-col gap-11 dark:text-white tablet:mt-16 5xl:gap-14 short:gap-[38px]">
+      <form className="mt-11 flex w-full flex-col gap-11 text-silver-600 tablet:mt-16 5xl:gap-14 short:gap-[38px] dark:text-white">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
             id="email"
             label="Email Address"
-            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white"
             autoComplete="sign-email"
             onChange={onEmailChange}
             value={email}
           />
-          {email ? (
-            persistedTheme === 'dark' ? (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/cancelDark.svg`}
-                alt="blind"
-                className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px] "
-                onClick={handleCancel}
-              />
-            ) : (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/cancelLight.svg`}
-                alt="blind"
-                className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px] "
-                onClick={handleCancel}
-              />
-            )
-          ) : null}
+          {email && (
+            <img
+              src={getCancelIconSrc()}
+              alt="cancel"
+              className="absolute right-2 h-[17px] w-[17px] cursor-pointer 2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
+              onClick={handleCancel}
+            />
+          )}
         </div>
         <div className="flex flex-col gap-5">
           <div className="h-[50px] xl:h-[66px]">
@@ -143,41 +148,16 @@ const CredentialRegister = () => {
                 type={inputType}
                 id="password"
                 label="Password"
-                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
+                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white "
                 autoComplete="new-password"
                 onChange={onPassChange}
               />
-              {!showPassword ? (
-                persistedTheme === 'dark' ? (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/blind.svg`}
-                    alt="blind"
-                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                    onClick={togglePasswordVisibility}
-                  />
-                ) : (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
-                    alt="blind"
-                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                    onClick={togglePasswordVisibility}
-                  />
-                )
-              ) : persistedTheme === 'dark' ? (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye.svg`}
-                  alt="blind"
-                  className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={togglePasswordVisibility}
-                />
-              ) : (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
-                  alt="blind"
-                  className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={togglePasswordVisibility}
-                />
-              )}
+              <img
+                src={getPasswordIconSrc(showPassword)}
+                alt="password visibility toggle"
+                className="absolute right-2 h-[17px] w-[17px] cursor-pointer 2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
+                onClick={togglePasswordVisibility}
+              />
             </div>
             <div className="relative -top-1 mt-1 h-[19px]">
               {password && <PasswordStrengthBar password={password} />}
@@ -189,41 +169,16 @@ const CredentialRegister = () => {
                 type={cnfmPassInputType}
                 id="cnfmpassword"
                 label="Re-type Password"
-                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px] "
+                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white "
                 autoComplete="new-password"
                 onChange={onReTypePassChange}
               />
-              {!showCnfmPassword ? (
-                persistedTheme === 'dark' ? (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/blind.svg`}
-                    alt="blind"
-                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                    onClick={toggleCnfmPasswordVisibility}
-                  />
-                ) : (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
-                    alt="blind"
-                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                    onClick={toggleCnfmPasswordVisibility}
-                  />
-                )
-              ) : persistedTheme === 'dark' ? (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye.svg`}
-                  alt="blind"
-                  className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={toggleCnfmPasswordVisibility}
-                />
-              ) : (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
-                  alt="blind"
-                  className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={toggleCnfmPasswordVisibility}
-                />
-              )}
+              <img
+                src={getPasswordIconSrc(showCnfmPassword)}
+                alt="password visibility toggle"
+                className="absolute right-2 h-[17px] w-[17px] cursor-pointer 2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
+                onClick={toggleCnfmPasswordVisibility}
+              />
             </div>
             <div className="relative -top-1 mt-1 h-[19px]">
               {reTypePassword && <PasswordStrengthBar password={reTypePassword} />}
@@ -249,18 +204,18 @@ const CredentialRegister = () => {
             />
           </label>
         </div>
-        <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
+        <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
           Creating an account means you have agreed with our{` `}
           <Link
             to="/term-of-service"
-            className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline md:text-[16px] tablet:leading-[22px] short:text-[12px] dark:text-white"
           >
             Terms of Service
           </Link>
           {` `}&{' '}
           <Link
             to="/privacy-policy"
-            className="text-light-blue cursor-pointer text-[8.158px] font-normal leading-[8.158px] dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline md:text-[16px] tablet:leading-[22px] short:text-[12px] dark:text-white"
           >
             Privacy Policy
           </Link>
@@ -292,6 +247,7 @@ const CredentialRegister = () => {
           setErrorMessage={setErrorMessage}
           setEmail={setEmail}
           setPassword={setPassword}
+          setReTypePassword={setReTypePassword}
           referralCode={referralCode}
           setReferralCode={setReferralCode}
           handlePopupOpen={handlePopupOpen}
@@ -307,17 +263,9 @@ const CredentialRegister = () => {
       >
         <div className="px-5 py-[14px] tablet:px-[60px] tablet:py-[25px]">
           <p className="text-[9px] font-medium text-black tablet:text-[20px]">{errorMessage}</p>
-          {/* {
-           <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
-              Continue
-            </UiButton> 
-
-            console.log(errorMessage)
-          } */}
           {errorMessage.trim() === 'Email Already Exists' ? (
             <div className="mt-[25px] flex w-full justify-end">
               <UiButton
-                className="mt-[25px] flex w-full justify-end"
                 onClick={() => {
                   navigate('/signin');
                 }}
@@ -328,7 +276,6 @@ const CredentialRegister = () => {
             </div>
           ) : (
             <LoginSocialGoogle
-              // isOnlyGetToken
               client_id={import.meta.env.VITE_GG_APP_ID}
               redirect_uri={window.location.href}
               scope="openid profile email"

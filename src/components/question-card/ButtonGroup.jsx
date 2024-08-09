@@ -289,7 +289,7 @@ const ButtonGroup = ({
                 navigate('/post/isfullscreen', { state: { questId: questStartData._id, questType: 'feedback-given' } })
               }
               disabled={hidePostLoading || unHidePostLoading}
-              className={'w-full tablet:w-full tablet:px-[25px] laptop:px-[25px]'}
+              className={'w-full tablet:w-full'}
             >
               View
             </Button>
@@ -353,7 +353,6 @@ const ButtonGroup = ({
       <div className="w-full px-[0.87rem] tablet:px-10">
         {startTest !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 tablet:gap-4">
-            {/* {getButtonText(questStartData.startStatus) !== 'Completed' ? ( */}
             <Button
               variant={'submit-green'}
               onClick={() => {
@@ -361,11 +360,10 @@ const ButtonGroup = ({
                   state: { questId: questStartData._id, link: questStartData.userQuestSetting.link },
                 });
               }}
-              className={'w-full tablet:w-full tablet:px-[25px] laptop:px-[25px]'}
+              className={'w-full tablet:w-full'}
             >
               Show My Link Results
             </Button>
-            {/* ) : null} */}
             {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
               <Button
                 variant="danger"
@@ -375,7 +373,7 @@ const ButtonGroup = ({
                 Disable Link
               </Button>
             ) : (
-              <Button variant="submit" onClick={showEnableSharedLinkPopup}>
+              <Button variant="submit" className={'w-full !px-0 laptop:!px-0'} onClick={showEnableSharedLinkPopup}>
                 Enable Link
               </Button>
             )}
@@ -440,7 +438,7 @@ const ButtonGroup = ({
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'w-full whitespace-nowrap'}
+                className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
                 Feedback
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
@@ -513,7 +511,7 @@ const ButtonGroup = ({
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'w-full whitespace-nowrap'}
+                className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
                 Feedback
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px] ">
@@ -597,7 +595,7 @@ const ButtonGroup = ({
                 {questStartData.startStatus !== 'continue' ? (
                   <Button
                     variant={'submit'}
-                    className={'w-full whitespace-nowrap'}
+                    className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
                     onClick={openFeedbackAndVisiblePopup}
                   >
                     Feedback
