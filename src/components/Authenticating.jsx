@@ -84,7 +84,12 @@ const Authenticating = () => {
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
         dispatch(setAskPassword(false));
-        navigate('/');
+        if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
+          navigate(localStorage.getItem('shared-post'));
+          localStorage.clearItem('shared-post');
+        } else {
+          navigate('/');
+        }
       }
     } catch (error) {
       if (error.response.data.message.split(':')[1].trim() === 'Email Already Exist') {
@@ -118,7 +123,12 @@ const Authenticating = () => {
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
         dispatch(setAskPassword(false));
-        navigate('/');
+        if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
+          navigate(localStorage.getItem('shared-post'));
+          localStorage.clearItem('shared-post');
+        } else {
+          navigate('/');
+        }
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);

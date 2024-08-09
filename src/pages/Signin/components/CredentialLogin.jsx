@@ -85,7 +85,12 @@ const CredentialLogin = () => {
             localStorage.setItem('uuid', resp.data.uuid);
             dispatch(addUser(resp.data));
 
-            navigate('/');
+            if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
+              navigate(localStorage.getItem('shared-post'));
+              localStorage.clearItem('shared-post');
+            } else {
+              navigate('/');
+            }
           }
         }
       } else {

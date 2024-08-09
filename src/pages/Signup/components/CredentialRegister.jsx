@@ -69,13 +69,19 @@ const CredentialRegister = () => {
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
 
-        navigate('/');
+        if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
+          navigate(localStorage.getItem('shared-post'));
+          localStorage.clearItem('shared-post');
+        } else {
+          navigate('/');
+        }
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       setIsLoading(false);
     }
   };
+
   const handleSignup = async () => {
     if (!termConditionCheck) return showToast('warning', 'termsAndConditions');
     handleReferralOpen();
