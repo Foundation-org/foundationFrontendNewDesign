@@ -49,29 +49,14 @@ const CredentialRegister = () => {
     setCaptchaToken(value);
   }
 
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const onEmailChange = (e) => setEmail(e.target.value);
+  const onPassChange = (e) => setPassword(e.target.value);
+  const onReTypePassChange = (e) => setReTypePassword(e.target.value);
 
-  const onPassChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleCnfmPasswordVisibility = () => setShowCnfmPassword(!showCnfmPassword);
 
-  const onReTypePassChange = (e) => {
-    setReTypePassword(e.target.value);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleCnfmPasswordVisibility = () => {
-    setShowCnfmPassword(!showCnfmPassword);
-  };
-
-  const handleCancel = () => {
-    setEmail('');
-  };
+  const handleCancel = () => setEmail('');
 
   const handleSignUpSocialGuest = async (data) => {
     try {
@@ -93,13 +78,7 @@ const CredentialRegister = () => {
   };
   const handleSignup = async () => {
     if (!termConditionCheck) return showToast('warning', 'termsAndConditions');
-
-    // // setIsLoadingSocial(true);
-    // if (localStorage.getItem('isGuestMode')) {
-    //   handleGuestSignup();
-    // } else {
     handleReferralOpen();
-    // }
   };
 
   const getCancelIconSrc = () => {
