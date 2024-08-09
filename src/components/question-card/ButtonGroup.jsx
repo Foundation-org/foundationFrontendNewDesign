@@ -440,7 +440,7 @@ const ButtonGroup = ({
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'w-full whitespace-nowrap'}
+                className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
                 Feedback
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
@@ -513,7 +513,7 @@ const ButtonGroup = ({
                 onClick={() => {
                   showGuestSignUpToastWarning();
                 }}
-                className={'w-full whitespace-nowrap'}
+                className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
                 Feedback
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px] ">
@@ -597,7 +597,7 @@ const ButtonGroup = ({
                 {questStartData.startStatus !== 'continue' ? (
                   <Button
                     variant={'submit'}
-                    className={'w-full whitespace-nowrap'}
+                    className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
                     onClick={openFeedbackAndVisiblePopup}
                   >
                     Feedback
