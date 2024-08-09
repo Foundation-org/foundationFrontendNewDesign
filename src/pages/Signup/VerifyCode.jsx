@@ -15,7 +15,7 @@ const VerifyCode = () => {
   const [verificationCode, setVerificationCode] = useState([]);
   const [msg, setMsg] = useState('');
 
-  useEffect(() => {
+  const checkUrlQuery = () => {
     let urlQuery = window.location.search.slice(1);
     seturlQuery(urlQuery);
 
@@ -46,6 +46,7 @@ const VerifyCode = () => {
           };
         }
         if (data.message === 'jwt expired') {
+          setShowDialogBox(false);
           setMsg('It seems that your verification code has expired. Kindly log in to get a new verification code.');
         }
         if (data.message === 'Already Verified') {
@@ -55,6 +56,10 @@ const VerifyCode = () => {
       .catch((error) => {
         console.error('Error:', error.message);
       });
+  };
+
+  useEffect(() => {
+    checkUrlQuery();
   }, []);
 
   const handleKeyPress = (event) => {
@@ -76,7 +81,7 @@ const VerifyCode = () => {
         },
         body: JSON.stringify({ verificationCode }),
       });
-
+      console.log(response);
       if (response.status === 200) {
         showToast('success', 'emailVerified');
         const data = await response.json();
@@ -93,6 +98,10 @@ const VerifyCode = () => {
           localStorage.setItem('uuid', data.uuid);
           navigate('/');
         }
+      }
+
+      if (response.status === 401) {
+        checkUrlQuery();
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
