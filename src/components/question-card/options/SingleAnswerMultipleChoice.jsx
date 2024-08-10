@@ -219,7 +219,7 @@ const SingleAnswerMultipleChoice = (props) => {
         )}
         {/* To Display Contention and Trash Right of Option */}
         <div
-          className={`absolute top-1/2 -translate-y-1/2 ${props.postProperties !== 'HiddenPosts' && props.btnText === 'Results' ? '-right-9 tablet:-right-[72px]' : '-right-[9px] tablet:-right-7'}`}
+          className={`absolute top-1/2 -translate-y-1/2 ${props.postProperties !== 'HiddenPosts' && props.btnText === 'Results' ? '-right-9 tablet:-right-[72px]' : '-right-[12px] tablet:-right-7'}`}
         >
           {props.postProperties === 'HiddenPosts' ? (
             <div className="flex w-12 min-w-[48px] items-center bg-white pl-2 tablet:w-8 tablet:justify-center tablet:pl-[15px]"></div>

@@ -23,32 +23,50 @@ const RankedResult = (props) => {
   }, [props.contend]);
 
   return (
-    <div className="flex items-center tablet:mr-[43px] tablet:pl-[1.75rem]">
-      {/* =============== To Display Badges on Left of Option */}
-      {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white tablet:w-[45.6px] dark:bg-gray-200">
+    <div className="flex items-center pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]">
+      <div className="relative flex w-full justify-between rounded-r-[4.73px] rounded-s-[5.387px] border-l-0 border-r border-white-500 bg-white tablet:rounded-r-[10px] tablet:rounded-s-[10px] tablet:border-r-[3px] dark:border-gray-250 dark:bg-accent-100">
+        {/* To Display Badges on Left of Option */}
+        {props.addedAnswerUuid &&
+          (props.addedAnswerUuid === persistedUserInfo?.uuid ||
+          props.addedAnswerUuid === localStorage.getItem('uId') ? (
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/optionMeBadge.svg`}
-              alt="trash"
-              className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
+              alt="yellow-badge"
+              className="absolute -left-4 top-1/2 h-4 w-[12px] -translate-y-1/2 tablet:-left-8 tablet:h-[27px] tablet:w-[21px]"
             />
-          </div>
-        ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white tablet:w-[45.6px] dark:bg-gray-200">
-            {/* <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/bluebadge.svg`}
-              alt="trash"
-              className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
-            /> */}
-          </div>
-        )
-      ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-white-700 tablet:w-[45.6px] dark:bg-accent-100"></div>
-      )}
-
-      {/* =============== To Display Option */}
-      <div className="flex w-full justify-between rounded-r-[4.73px] rounded-s-[5.387px] border-l-0 border-r border-white-500 bg-white tablet:rounded-r-[10px] tablet:rounded-s-[10px] tablet:border-r-[3px] dark:border-gray-250 dark:bg-accent-100">
+          ) : null)}
+        {/* To Display Contention and Trash Right of Option */}
+        <div
+          className={`absolute top-1/2 -translate-y-1/2 text-[9.238px] tablet:text-[16px] ${props.postProperties !== 'sharedlink-results' && props.btnText === 'Results' ? '-right-[37px] tablet:-right-[75px]' : '-right-[9px] tablet:-right-7'}`}
+        >
+          {props.btnText === 'Results' ? (
+            <>
+              {props.contendPercentages &&
+              props.contendPercentages?.[props.answer.trim()] &&
+              props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
+                <div className="flex items-center gap-1 tablet:gap-[10px]">
+                  {props?.postProperties !== 'sharedlink-results' && (
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={checkState}
+                    />
+                  )}
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                    {props.contendPercentages[props.answer.trim()]}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 tablet:gap-[10px]">
+                  {props?.postProperties !== 'sharedlink-results' && (
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                  )}
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                </div>
+              )}
+            </>
+          ) : null}
+        </div>
+        {/* Options */}
         <div className="flex w-full items-center">
           <div className="flex h-full min-h-[24px] w-3 min-w-[12.5px] items-center justify-center rounded-l-[5.387px]  bg-white-500 tablet:min-h-[43px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px] dark:bg-gray-100">
             &#x200B;
@@ -138,36 +156,6 @@ const RankedResult = (props) => {
             </>
           ) : null}
         </div>
-      </div>
-
-      {/* =============== To Display Contention and Trash Right of Option */}
-      <div className="flex w-12 min-w-12 items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-gray-200">
-        {props.btnText === 'Results' ? (
-          <>
-            {props.contendPercentages &&
-            props.contendPercentages?.[props.answer.trim()] &&
-            props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
-              <div className="flex items-center gap-1 tablet:gap-[10px]">
-                {props?.postProperties !== 'sharedlink-results' && (
-                  <ContentionIcon
-                    classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                    checked={checkState}
-                  />
-                )}
-                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                  {props.contendPercentages[props.answer.trim()]}
-                </span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-1 tablet:gap-[10px]">
-                {props?.postProperties !== 'sharedlink-results' && (
-                  <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
-                )}
-                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-              </div>
-            )}
-          </>
-        ) : null}
       </div>
     </div>
   );

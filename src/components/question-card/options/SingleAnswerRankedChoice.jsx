@@ -182,14 +182,6 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   const handleContendChange = (state) => {
-    // setContendState((prevState) => {
-    //   if (checkState) {
-    //     handleCheckChange(false);
-    //     props.handleCheckChange(false);
-    //   }
-    //   props.handleContendChange(!prevState);
-    //   return !prevState;
-    // });
     if (checkState) {
       handleCheckChange(false);
       props.handleCheckChange(false);
@@ -221,46 +213,75 @@ const SingleAnswerRankedChoice = (props) => {
       style={style}
       {...attributes}
       {...listeners}
-      className={`${props.btnText === 'Results' ? 'tablet:mr-[39px]' : 'tablet:mr-[42px]'} flex items-center tablet:gap-[10px] tablet:pl-[1.75rem]`}
+      className="flex items-center pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]"
     >
-      {/* =============== To Display Badges on Left of Option */}
-      {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px]">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/yellowBadge.svg`}
-              alt="yellow badge"
-              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
-            />
-          </div>
-        ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px]">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/blueBadge.svg`}
-              alt="blue badge"
-              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
-            />
-          </div>
-        )
-      ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px]">
-          &#x200B;
+      <div className="relative flex w-full">
+        {/* To Display Badges on Left of Option */}
+        {props.addedAnswerUuid && (
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/${
+              props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId')
+                ? 'yellowBadge'
+                : 'blueBadge'
+            }.svg`}
+            alt={`${
+              props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId')
+                ? 'yellow'
+                : 'blue'
+            } badge`}
+            className="absolute -left-4 top-1/2 h-4 w-[12px] -translate-y-1/2 tablet:-left-8 tablet:h-[27px] tablet:w-[21px]"
+          />
+        )}
+        {/* To Display Contention and Trash Right of Option */}
+        <div
+          className={`absolute top-1/2 -translate-y-1/2 ${props.postProperties === 'HiddenPosts' ? '-right-9 tablet:-right-[72px]' : '-right-[12px] tablet:-right-7'}`}
+        >
+          {props.postProperties === 'HiddenPosts' ? (
+            <div className="flex w-12 min-w-12 items-center pl-3 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
+          ) : (
+            <div>
+              {props.deleteable ? (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
+                  alt="trash"
+                  className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                  onClick={() => handleDeleteOption(props.number)}
+                />
+              ) : (
+                <div
+                  id="custom-yello-checkbox"
+                  className="flex h-full w-[9px] cursor-pointer items-center justify-center tablet:w-[17.6px]"
+                  onClick={handleContendPopup}
+                >
+                  <ContentionIcon
+                    classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                    checked={contendState}
+                  />
+                </div>
+              )}
+              <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
+                <DeleteOption
+                  answer={props.answer}
+                  answersSelection={props.answersSelection}
+                  setAnswerSelection={props.setAnswerSelection}
+                  handleDeleteClose={handleDeleteClose}
+                  handleEditClose={handleDeleteClose}
+                />
+              </BasicModal>
+            </div>
+          )}
         </div>
-      )}
-
-      {/* =============== To Display Option */}
-      <div className="flex w-full">
+        {/* Six Dots */}
         <div
           className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} flex w-[12.3px] min-w-[12.3px] items-center justify-center rounded-l-[4.734px] border-y border-l bg-white-500 tablet:w-[25px] tablet:min-w-[25px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-l-[3px] dark:bg-gray-100`}
         >
-          {props.btnText !== 'Results' && (
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/${persistedTheme === 'dark' ? 'six-dots-dark.svg' : 'six-dots.svg'}`}
-              alt="six-dots"
-              className="w-[5.2px] tablet:w-[11.2px]"
-            />
-          )}
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/${persistedTheme === 'dark' ? 'six-dots-dark.svg' : 'six-dots.svg'}`}
+            alt="six-dots"
+            className="w-[5.2px] tablet:w-[11.2px]"
+          />
         </div>
+        {/* Option */}
         <div
           className={`${
             isDragging
@@ -314,68 +335,6 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         </div>
       </div>
-      {/* =============== To Display Contention and Trash Right of Option */}
-      {props.postProperties === 'HiddenPosts' ? (
-        <div className="flex w-12 min-w-12 items-center pl-3 tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
-      ) : props.btnText !== 'Results' ? (
-        <div className="flex w-12 min-w-12 items-center tablet:w-8 tablet:justify-center ">
-          {props.deleteable ? (
-            <div className="pl-2 tablet:pl-[5px]">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
-                alt="trash"
-                className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                onClick={() => handleDeleteOption(props.number)}
-              />
-            </div>
-          ) : (
-            <div
-              className="flex items-center gap-1 pl-3 tablet:pl-[5px] laptop:gap-[18px]"
-              onClick={handleContendPopup}
-            >
-              <div id="custom-yello-checkbox" className="flex h-full items-center ">
-                <div className="cursor-pointer">
-                  <ContentionIcon
-                    classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                    checked={contendState}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-          <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
-            <DeleteOption
-              answer={props.answer}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-              handleDeleteClose={handleDeleteClose}
-              handleEditClose={handleDeleteClose}
-            />
-          </BasicModal>
-        </div>
-      ) : (
-        <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-accent-100">
-          {props.btnText === 'Results' ? (
-            <>
-              {props.contendPercentages &&
-              props.contendPercentages?.[props.answer.trim()] &&
-              props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
-                <div className="flex items-center gap-1 tablet:gap-[10px]">
-                  <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                    {props.contendPercentages[props.answer.trim()]}
-                  </span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-1 tablet:gap-[10px]">
-                  <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                </div>
-              )}
-            </>
-          ) : null}
-        </div>
-      )}
 
       {/* =============== Objection PopUp */}
       <ObjectionPopUp
