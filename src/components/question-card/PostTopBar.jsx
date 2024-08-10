@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { calculateTimeAgo } from '../../utils/utils';
 import showToast from '../ui/Toast';
@@ -5,6 +6,7 @@ import showToast from '../ui/Toast';
 export default function PostTopBar({ questStartData, postProperties, setDelModalVisible }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const timeAgo = useMemo(() => calculateTimeAgo(questStartData?.createdAt), [questStartData?.createdAt]);
 
   let ratingImage = null;
 
@@ -44,7 +46,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
           </div>
           {/* Delete */}
           {!questStartData?.result?.length >= 1 &&
-            questStartData.uuid === persistedUserInfo.uuid &&
+            questStartData.uuid === persistedUserInfo?.uuid &&
             questStartData.type !== 'embed' && (
               <button
                 className="flex min-w-[83px] items-center justify-center gap-1 tablet:min-w-[168px] tablet:gap-2"
@@ -69,7 +71,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                 className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
               />
               <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
-                {calculateTimeAgo(questStartData?.createdAt)}
+                {timeAgo}
               </h4>
             </div>
           )}

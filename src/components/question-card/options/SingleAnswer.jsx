@@ -1,13 +1,10 @@
 const SingleAnswer = (props) => {
   return (
     <div
-      className={`flex items-center ${props.questStartData.type === 'embed' ? 'px-7 tablet:px-[3.94rem]' : 'pl-7 pr-12 tablet:pl-[3.94rem] tablet:pr-[6.3rem]'}`}
+      className={`flex items-center ${props.questStartData.type === 'embed' ? 'px-7 tablet:px-[3.94rem]' : 'pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]'}`}
     >
-      <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px] dark:bg-gray-100">
-        &#x200B;
-      </div>
       <div
-        className={`flex w-full justify-between rounded-r-[4.73px] border-y border-r border-white-500 bg-white tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] dark:border-gray-100 dark:bg-accent-100 ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
+        className={`flex w-full justify-between rounded-[5.387px] border border-white-500 bg-white tablet:rounded-[10px] tablet:border-[3px] dark:border-gray-100 dark:bg-accent-100 ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
         onClick={() =>
           props.btnText === 'Results'
             ? null
@@ -19,6 +16,9 @@ const SingleAnswer = (props) => {
               )
         }
       >
+        <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 tablet:h-[43px] tablet:w-5 tablet:min-w-5 dark:bg-gray-100">
+          &#x200B;
+        </div>
         <div className="relative flex w-full items-center">
           <div
             className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"

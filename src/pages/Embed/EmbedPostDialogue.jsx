@@ -19,7 +19,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
 
     return `<iframe
       src="${url}"
-      style="border: none; width: 100%; max-width: 600px;"
+      style="border: none; width: 100%; max-width: 600px; border-radius: 15px"
       onload="
         this.style.height = window.innerWidth < 600 ? '${dynamicHeight2}' : '${dynamicHeight}';
         window.addEventListener('resize', () => {
@@ -161,7 +161,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
               {iframeCode}
             </p>
           </div>
-          <Button variant={'submit'} onClick={copyToClipboard}>
+          <Button variant={loading ? 'hollow-submit' : 'submit'} disabled={loading} onClick={copyToClipboard}>
             Copy Code
           </Button>
         </div>

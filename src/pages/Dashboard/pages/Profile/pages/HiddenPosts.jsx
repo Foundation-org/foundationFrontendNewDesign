@@ -139,7 +139,7 @@ export default function HiddenPosts() {
     <div>
       {/* Summary Section */}
       <div className="mx-4 mb-3 tablet:mx-6 tablet:mb-5">
-        <SummaryCard headerIcon="/assets/summary/hidden-post-logo.svg" headerTitle="Feedback Given">
+        <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
           <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
             Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
             with it.

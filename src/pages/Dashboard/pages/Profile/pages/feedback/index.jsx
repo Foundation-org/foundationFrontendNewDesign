@@ -96,7 +96,7 @@ export default function Feedback() {
   return (
     <div>
       {/* Summary Section */}
-      <ContentCard icon="assets/summary/feedback-logo.svg" title="Feedback Received">
+      <ContentCard icon="assets/summary/feedback-received.svg" title="Feedback Received">
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-gray-300">
           Not everything you post may be everyone’s cup of tea. See what posts you’ve created others have decided to
           hide and why.
