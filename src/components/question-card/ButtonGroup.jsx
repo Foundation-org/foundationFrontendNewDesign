@@ -625,20 +625,22 @@ const ButtonGroup = ({
   /* Change */
   return (
     <>
-      {questStartData.startStatus === 'change answer' && viewResult === questStartData._id && (
-        <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
-          <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
-          <Button
-            variant={result === ', you are good to go' ? 'change' : 'change-outline'}
-            disabled={result === ', you are good to go' ? false : true}
-            className={'w-full tablet:w-full'}
-            onClick={handleStartChange}
-          >
-            Change
-          </Button>
-        </div>
-      )}
-      {questStartData.startStatus === 'continue' && (
+      {questStartData.startStatus === 'change answer' &&
+        viewResult === questStartData._id &&
+        !questStartData.isClosed && (
+          <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+            <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
+            <Button
+              variant={result === ', you are good to go' ? 'change' : 'change-outline'}
+              disabled={result === ', you are good to go' ? false : true}
+              className={'w-full tablet:w-full'}
+              onClick={handleStartChange}
+            >
+              Change
+            </Button>
+          </div>
+        )}
+      {questStartData.startStatus === 'continue' && !questStartData.isClosed && (
         <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
           <button className="w-full cursor-default">&#x200B;</button>
           <Button
