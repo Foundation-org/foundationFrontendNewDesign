@@ -232,6 +232,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                   copyToClipboard();
                   showToast('success', 'copyLink');
                 }}
+                disabled={isLoading}
               >
                 <Copy color={persistedTheme === 'dark' ? '#293138' : '#8BAAC0'} />
               </button>
@@ -241,15 +242,21 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         <div className={'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
           {!createCustom ? (
             <div className="flex items-center justify-between gap-3 ">
-              <Button
-                variant={'submit'}
-                className={'w-fit min-w-fit whitespace-nowrap'}
-                onClick={() => {
-                  setEmbed(true);
-                }}
-              >
-                Embed
-              </Button>
+              {isLoading ? (
+                <Button variant={'hollow-submit'} className={'w-fit min-w-fit whitespace-nowrap'} disabled={true}>
+                  Embed
+                </Button>
+              ) : (
+                <Button
+                  variant={'submit'}
+                  className={'w-fit min-w-fit whitespace-nowrap'}
+                  onClick={() => {
+                    setEmbed(true);
+                  }}
+                >
+                  Embed
+                </Button>
+              )}
               <Button
                 variant={'submit'}
                 className={'w-fit min-w-fit whitespace-nowrap'}
