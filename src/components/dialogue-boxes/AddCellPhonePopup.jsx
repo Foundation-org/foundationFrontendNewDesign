@@ -125,7 +125,9 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
       const addBadge = await api.post(`/addBadge/contact`, payload);
 
       if (addBadge.status === 200) {
-        showToast('success', 'badgeAdded');
+        if (!verification) {
+          showToast('success', 'badgeAdded');
+        }
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setLoading(false);
