@@ -10,6 +10,7 @@ import showToast from '../ui/Toast';
 import { referralModalStyle } from '../../constants/styles';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import { feedBackAndHideOptions } from '../../constants/feedbackAndHide';
+import AnalyzeDialogueBox from '../dialogue-boxes/AnalyzeDialogueBox';
 
 const QuestBottombar = ({ time, questStartData, postProperties, showDisableSharedLinkPopup }) => {
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   const [timeAgo, setTimeAgo] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(feedBackAndHideOptions.map(() => false));
+  const [analyzePopup, setAnalyzePopup] = useState(false);
+
+  const handleAnalyzeClose = () => setAnalyzePopup(false);
 
   const handleCopyOpen = () => {
     if (persistedUserInfo?.role === 'guest') {
@@ -213,7 +217,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             </h1>
           </button>
           {/* Expand Post */}
-          {/* <>
+          <>
             {postProperties !== 'HiddenPosts' &&
             postProperties !== 'SharedLinks' &&
             postProperties !== 'sharedlink-results' &&
@@ -222,13 +226,23 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             !location.pathname.includes('/l/') &&
             location.pathname !== '/post/isfullscreen' ? (
               <div className="flex justify-center tablet:min-w-[146px]">
+                {analyzePopup && (
+                  <AnalyzeDialogueBox
+                    handleClose={handleAnalyzeClose}
+                    modalVisible={analyzePopup}
+                    title={'Analyze'}
+                    image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
+                    questStartData={questStartData}
+                  />
+                )}
                 {isFullScreen === undefined ? (
                   <div
-                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
+                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
                     onClick={() => {
-                      navigate('/post/isfullscreen', {
-                        state: { questId: questStartData._id },
-                      });
+                      setAnalyzePopup(true);
+                      // navigate('/post/isfullscreen', {
+                      //   state: { questId: questStartData._id },
+                      // });
                     }}
                   >
                     <img
@@ -236,7 +250,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
                       alt="full-screen"
                       className="size-3 tablet:h-[23px] tablet:w-5"
                     />
-                    <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                    <h1 className="text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-200">
                       Expand Post
                     </h1>
                   </div>
@@ -245,7 +259,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
                 )}
               </div>
             ) : null}
-          </> */}
+          </>
         </div>
       )}
     </div>
