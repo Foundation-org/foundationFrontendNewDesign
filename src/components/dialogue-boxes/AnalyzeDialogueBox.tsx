@@ -1,12 +1,9 @@
-import PopUp from '../ui/PopUp';
-import { toast } from 'sonner';
-import { Button } from '../ui/Button';
-import { FaSpinner } from 'react-icons/fa';
-import { deleteList } from '../../services/api/listsApi';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import showToast from '../ui/Toast';
 import { useState } from 'react';
-import ListBox from '../ui/ListBox';
+import { Button } from '../ui/Button';
+import { useSelector } from 'react-redux';
+import { FaSpinner } from 'react-icons/fa';
+import { analyzePost } from '../../services/mutations/advance-analytics';
+import PopUp from '../ui/PopUp';
 
 interface Props {
   handleClose: () => void;
@@ -41,44 +38,14 @@ const headerButtons = [
 ];
 
 export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, image, questStartData }: Props) {
-  // console.log(questStartData?.QuestAnswers);
-  const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedBtn, setSelectedBtn] = useState('Hide');
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const { mutateAsync: handleAnalyzePost, isPending } = analyzePost();
 
-  console.log(selectedOptions);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const { mutateAsync: handleDeleteList, isPending } = useMutation({
-    mutationFn: deleteList,
-    onSuccess: (resp) => {
-      console.log('resp', resp);
-      console.log('Post deleted Successfully');
-
-      // if (resp.response.status === 500) {
-      //   toast.warning('Something goes wrong.');
-      //   return;
-      // }
-
-      showToast('success', 'deleteList');
-      // queryClient.setQueriesData(['lists'], (oldData) => {
-      //   console.log('old', oldData);
-      //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
-      // });
-
-      //   queryClient.invalidateQueries(['lists']);
-
-      handleClose();
-    },
-    onError: (error) => {
-      console.log(error);
-      // toast.warning(error.response.data.message);
-    },
-  });
+  // console.log(questStartData?.QuestAnswers);
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
     <PopUp
@@ -140,7 +107,11 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
                 className=""
                 rounded=""
                 onClick={() => {
-                  //   handleDeleteList(categoryId);
+                  handleAnalyzePost({
+                    userUuid: persistedUserInfo.uuid,
+                    questForeignKey: questStartData._id,
+                    hiddenOptionsArray: selectedOptions,
+                  });
                 }}
               >
                 {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Hide'}
@@ -152,19 +123,6 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
             Coming Soon!
           </h1>
         )}
-        {/* <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
-          <Button
-            variant={'submit'}
-            onClick={() => {
-              //   handleDeleteList(categoryId);
-            }}
-          >
-            {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
-          </Button>
-          <Button variant={'cancel'} onClick={handleClose}>
-            No
-          </Button>
-        </div> */}
       </div>
     </PopUp>
   );
