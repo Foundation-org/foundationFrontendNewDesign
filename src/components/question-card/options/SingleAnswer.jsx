@@ -16,7 +16,7 @@ const SingleAnswer = (props) => {
               )
         }
       >
-        <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 tablet:h-[43px] tablet:w-5 tablet:min-w-5 dark:bg-gray-100">
+        <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[4px] bg-white-500 tablet:h-[43px] tablet:w-5 tablet:min-w-5 dark:bg-gray-100">
           &#x200B;
         </div>
         <div className="relative flex w-full items-center">
