@@ -44,7 +44,9 @@ export default function Signup() {
   const [clickedButtonName, setClickedButtonName] = useState('');
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  const handlePopupOpen = () => setIspopup(true);
+  const handlePopupOpen = () => {
+    // setIspopup(true);
+  };
   const handlePopupClose = () => setIspopup(false);
 
   const handleReferralOpen = (provider) => {
@@ -56,15 +58,16 @@ export default function Signup() {
     //     setIsReferral(true);
     //   }
     // } else {
-    setIsReferral(true);
+    // setIsReferral(true);
     // }
+    triggerLogin(provider);
   };
   const handleReferralClose = () => {
     setIsReferral(false);
     setIsLoading(false);
   };
 
-  const triggerLogin = async () => {
+  const triggerLogin = async (clickedButtonName) => {
     setIsLoadingSocial(true);
 
     if (clickedButtonName === 'google') {

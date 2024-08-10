@@ -14,6 +14,9 @@ import showToast from '../../../components/ui/Toast';
 import BasicModal from '../../../components/BasicModal';
 import ReferralCode from '../../../components/ReferralCode';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import { signUpGuest } from '../../../services/api/userAuth';
+import { useMutation } from '@tanstack/react-query';
+import { FaSpinner } from 'react-icons/fa';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -38,7 +41,48 @@ const CredentialRegister = () => {
 
   const handlePopupOpen = () => setIspopup(true);
 
-  const handleReferralOpen = () => setIsReferral(true);
+  const { mutateAsync: guestSignup } = useMutation({
+    mutationFn: signUpGuest,
+  });
+
+  const handleGuestSignup = async () => {
+    setIsLoading(true);
+    try {
+      if (password === reTypePassword) {
+        const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
+        if (resp.status === 200) {
+          showToast('success', 'verificationEmailSent');
+
+          setEmail('');
+          setPassword('');
+          setIsLoading(false);
+        }
+      } else {
+        showToast('error', 'passwordMismatched');
+        setIsLoading(false);
+      }
+    } catch (e) {
+      setErrorMessage(e.response.data.message.split(':')[1]);
+      console.log(
+        e.response.data.message.split(':')[1],
+        e.response.data.message.split(':')[1] === 'Email Already Exists',
+      );
+      if (
+        e.response.data.message.split(':')[1].trim() === 'Email Already Exists' ||
+        e.response.data.message.split(':')[1].includes('We have detected that this is a Google hosted e-mail')
+      ) {
+        handlePopupOpen();
+      }
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleReferralOpen = () => {
+    // setIsReferral(true);
+    handleGuestSignup();
+  };
 
   const handleReferralClose = () => {
     setIsReferral(false);
@@ -214,7 +258,11 @@ const CredentialRegister = () => {
         }}
         disabled={(isLoading === true ? true : false) || !email || !password || !reTypePassword}
       >
-        Create Account
+        {isLoading ? (
+          <FaSpinner className="text-blue animate-spin text-[10vw] tablet:text-[4vw] dark:text-white" />
+        ) : (
+          'Create Account'
+        )}
       </Button>
       <BasicModal
         open={isReferral}
