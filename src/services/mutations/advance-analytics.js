@@ -12,7 +12,7 @@ export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray })
   });
 };
 
-export const analyzePost = () => {
+export const useAnalyzePostMutation = () => {
   //   const queryClient = useQueryClient();
   const navigate = useNavigate();
 

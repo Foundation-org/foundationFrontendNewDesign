@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { analyzePost } from '../../services/mutations/advance-analytics';
+import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
 import PopUp from '../ui/PopUp';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   handleClose: () => void;
@@ -42,9 +43,9 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
   const [selectedBtn, setSelectedBtn] = useState('Hide');
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const { mutateAsync: handleAnalyzePost, isPending } = analyzePost();
+  const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation();
+  const navigate = useNavigate();
 
-  // console.log(questStartData?.QuestAnswers);
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
@@ -65,7 +66,7 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
           {headerButtons?.map((item) => (
             <button
               key={item.id}
-              className={`${selectedBtn === item.title ? 'slider-link-active' : 'slider-inactive'} slider-link tablet:min-w-[120px]`}
+              className={`${selectedBtn === item.title ? 'slider-link-active' : 'slider-inactive'} slider-link min-w-[60px] tablet:min-w-[120px]`}
               onClick={() => setSelectedBtn(item.title)}
             >
               {item.title}
@@ -73,23 +74,28 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
           ))}
         </div>
         {selectedBtn === 'Hide' ? (
-          <div>
-            <h1 className="text-center text-[10px] font-normal leading-[12px] text-accent-400 tablet:my-4 tablet:text-[16px] tablet:leading-[16px] dark:text-gray-300">
+          <div className="flex flex-col">
+            <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 tablet:my-4 tablet:text-[16px] tablet:leading-[16px] dark:text-gray-300">
               You can Hide an option
             </h1>
             <div className="relative inline-block w-full">
               <button
                 onClick={toggleDropdown}
-                className="w-full rounded border-[3px] border-white-500 px-4 py-2 text-start text-accent-600 focus:outline-none tablet:rounded-[10px]"
+                className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px] dark:border-gray-100 dark:text-gray-300"
               >
                 {selectedOptions.length > 0 ? selectedOptions[0] : 'Select an option'}
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
+                  alt="arrow-right.svg"
+                  className={`size-[10px] transition-all duration-500 tablet:size-6 ${isOpen ? '-rotate-90' : 'rotate-90'}`}
+                />
               </button>
               {isOpen && (
-                <ul className="absolute z-10 mt-2 w-full min-w-[160px] rounded bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+                <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border bg-white text-[10px] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] tablet:max-h-48 tablet:border-[2px] tablet:text-[20px] dark:border-gray-100 dark:bg-gray-200">
                   {questStartData?.QuestAnswers.map((post: Post) => (
                     <li
                       key={post.id}
-                      className="block cursor-pointer px-4 py-2 text-accent-600 hover:bg-blue-300 hover:text-white"
+                      className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
                       onClick={() => {
                         setSelectedOptions([post.question]);
                         toggleDropdown();
@@ -101,17 +107,20 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
                 </ul>
               )}
             </div>
-            <div className="mt-4 flex w-full justify-end">
+            <div className="mt-2 flex w-full justify-end tablet:mt-4">
               <Button
                 variant={'submit'}
                 className=""
                 rounded=""
                 onClick={() => {
-                  handleAnalyzePost({
-                    userUuid: persistedUserInfo.uuid,
-                    questForeignKey: questStartData._id,
-                    hiddenOptionsArray: selectedOptions,
+                  navigate('/post/isfullscreen', {
+                    state: { questId: questStartData._id },
                   });
+                  // handleAnalyzePost({
+                  //   userUuid: persistedUserInfo.uuid,
+                  //   questForeignKey: questStartData._id,
+                  //   hiddenOptionsArray: selectedOptions,
+                  // });
                 }}
               >
                 {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Hide'}
@@ -119,7 +128,7 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
             </div>
           </div>
         ) : (
-          <h1 className="text-center text-[10px] font-semibold leading-[12px] text-accent-400 tablet:my-14 tablet:text-[22px] tablet:leading-[22px] dark:text-gray-300">
+          <h1 className="my-4 text-center text-[10px] font-semibold leading-[12px] text-accent-400 tablet:my-14 tablet:text-[22px] tablet:leading-[22px] dark:text-gray-300">
             Coming Soon!
           </h1>
         )}
