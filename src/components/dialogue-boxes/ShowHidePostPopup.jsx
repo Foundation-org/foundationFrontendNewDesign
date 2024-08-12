@@ -41,6 +41,7 @@ export default function ShowHidePostPopup({
             page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
           ),
         }));
+        queryClient.invalidateQueries(['userInfo', { exact: true }]);
         toast.success(resp.data.message);
       }
       handleClose();
