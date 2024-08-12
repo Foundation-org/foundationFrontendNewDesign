@@ -10,7 +10,6 @@ import showToast from '../ui/Toast';
 import { referralModalStyle } from '../../constants/styles';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import { feedBackAndHideOptions } from '../../constants/feedbackAndHide';
-import AnalyzeDialogueBox from '../dialogue-boxes/AnalyzeDialogueBox';
 
 const QuestBottombar = ({ time, questStartData, postProperties, showDisableSharedLinkPopup }) => {
   const navigate = useNavigate();
@@ -23,9 +22,6 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   const [timeAgo, setTimeAgo] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(feedBackAndHideOptions.map(() => false));
-  const [analyzePopup, setAnalyzePopup] = useState(false);
-
-  const handleAnalyzeClose = () => setAnalyzePopup(false);
 
   const handleCopyOpen = () => {
     if (persistedUserInfo?.role === 'guest') {
@@ -189,7 +185,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
           )}
           {/* Add to list */}
           <button
-            className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-end tablet:gap-2"
+            className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
             onClick={() => {
               if (persistedUserInfo?.role === 'guest') {
                 toast.warning(
@@ -226,23 +222,13 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             !location.pathname.includes('/l/') &&
             location.pathname !== '/post/isfullscreen' ? (
               <div className="flex justify-center tablet:min-w-[146px]">
-                {analyzePopup && (
-                  <AnalyzeDialogueBox
-                    handleClose={handleAnalyzeClose}
-                    modalVisible={analyzePopup}
-                    title={'Analyze'}
-                    image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
-                    questStartData={questStartData}
-                  />
-                )}
                 {isFullScreen === undefined ? (
                   <div
                     className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
                     onClick={() => {
-                      setAnalyzePopup(true);
-                      // navigate('/post/isfullscreen', {
-                      //   state: { questId: questStartData._id },
-                      // });
+                      navigate('/post/isfullscreen', {
+                        state: { questId: questStartData._id },
+                      });
                     }}
                   >
                     <img

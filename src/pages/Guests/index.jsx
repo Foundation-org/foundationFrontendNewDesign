@@ -119,7 +119,9 @@ const Guests = () => {
               ) : (
                 <Loader />
               )}
-              <AdvanceAnalytics />
+              <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
+                <AdvanceAnalytics questStartData={singleQuestResp} />
+              </div>
             </div>
           </div>
         </DashboardLayout>

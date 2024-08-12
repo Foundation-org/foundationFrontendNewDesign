@@ -1,44 +1,20 @@
+import PopUp from '../ui/PopUp';
 import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
-import PopUp from '../ui/PopUp';
 import { useNavigate } from 'react-router-dom';
+import { analyzeButtons } from '../../constants/advanceAnalytics';
+import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
+import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
 
-interface Props {
-  handleClose: () => void;
-  modalVisible: boolean;
-  title: string;
-  image: string;
-  questStartData: any;
-}
-
-type Post = {
-  id: number;
-  question: string;
-};
-
-const headerButtons = [
-  {
-    id: 1,
-    title: 'Hide',
-  },
-  {
-    id: 2,
-    title: 'Contributions',
-  },
-  {
-    id: 3,
-    title: 'Target',
-  },
-  {
-    id: 4,
-    title: 'Badge',
-  },
-];
-
-export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, image, questStartData }: Props) {
+export default function AnalyzeDialogueBox({
+  handleClose,
+  modalVisible,
+  title,
+  image,
+  questStartData,
+}: AnalyzeModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBtn, setSelectedBtn] = useState('Hide');
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -63,7 +39,7 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <div className="flex items-center justify-center gap-[15px]">
-          {headerButtons?.map((item) => (
+          {analyzeButtons?.map((item) => (
             <button
               key={item.id}
               className={`${selectedBtn === item.title ? 'slider-link-active' : 'slider-inactive'} slider-link min-w-[60px] tablet:min-w-[120px]`}
@@ -91,8 +67,8 @@ export default function AnalyzeDialogueBox({ handleClose, modalVisible, title, i
                 />
               </button>
               {isOpen && (
-                <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border bg-white text-[10px] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] tablet:max-h-48 tablet:border-[2px] tablet:text-[20px] dark:border-gray-100 dark:bg-gray-200">
-                  {questStartData?.QuestAnswers.map((post: Post) => (
+                <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] tablet:max-h-48 tablet:border-[2px] tablet:text-[20px] dark:border-gray-100 dark:bg-gray-200">
+                  {questStartData?.QuestAnswers.map((post: PostAnswer) => (
                     <li
                       key={post.id}
                       className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
