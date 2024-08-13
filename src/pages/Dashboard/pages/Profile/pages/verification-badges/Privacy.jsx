@@ -24,13 +24,16 @@ const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
         fetchUser={persistedUserInfo}
         setIsPersonalPopup={setIsPersonalPopup}
       />
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
         Add an extra layer of protection to your personal data so only you can access it.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
           {legacy.map((item, index) => (
-            <div className="flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5" key={index}>
+            <div
+              className="relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5"
+              key={index}
+            >
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkLegacyBadge() && (
                   <img
@@ -41,8 +44,8 @@ const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
                 )}
               </div>
               <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
-              <div className="flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px] dark:border-gray-100 dark:bg-accent-100">
-                <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-gray-400">
+              <div className="flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]">
+                <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-gray-400 tablet:text-[20px]">
                   {item.title}
                 </h1>
               </div>
