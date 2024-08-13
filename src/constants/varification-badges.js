@@ -64,17 +64,17 @@ export const socials = [
     disabled: true,
     email: true,
   },
-  // {
-  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
-  //   title: 'Facebook',
-  //   ButtonColor: 'blue',
-  //   ButtonText: 'Add',
-  //   NoOfButton: 1,
-  //   link: '/auth/facebook',
-  //   accountName: 'facebook',
-  //   type: 'facebook',
-  //   email: 'test@foundation-IoAccessibility.com',
-  // },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
+    title: 'Facebook',
+    ButtonColor: 'blue',
+    ButtonText: 'Add',
+    NoOfButton: 1,
+    link: '/auth/facebook',
+    accountName: 'facebook',
+    type: 'facebook',
+    email: 'test@foundation-IoAccessibility.com',
+  },
   // {
   //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
   //   title: 'Instagram',
@@ -333,4 +333,4 @@ export const subscription = [
   },
 ];
 
-export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length;
+export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length - 1;

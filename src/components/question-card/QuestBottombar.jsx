@@ -91,7 +91,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   }, [time]);
 
   return (
-    <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
+    <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
       {modalVisible && (
         <ShowHidePostPopup
           handleClose={showHidePostClose}
@@ -115,7 +115,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             alt="eye-cut"
             className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
-          <h1 className="text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-600">
+          <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-600 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {questStartData?.userQuestSetting?.feedbackMessage
               ? questStartData.userQuestSetting.feedbackMessage
               : questStartData.userQuestSetting.hiddenMessage}
@@ -135,7 +135,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               alt="clock"
               className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
             />
-            <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
+            <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
               {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
               {timeAgo}
             </h4>
@@ -155,7 +155,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               alt="eye-latest"
               className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
             />
-            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
+            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
               Hide
             </h1>
           </button>
@@ -169,7 +169,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
                 className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
               >
                 {persistedTheme === 'dark' ? <Copy /> : <Copy />}
-                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
+                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                   Share
                 </h1>
               </button>
@@ -208,7 +208,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               alt="addToList"
               className="h-auto w-3 cursor-pointer tablet:w-[22px]"
             />
-            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
+            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
               Add to list
             </h1>
           </button>
@@ -224,7 +224,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               <div className="flex justify-center tablet:min-w-[146px]">
                 {isFullScreen === undefined ? (
                   <div
-                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
+                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
                     onClick={() => {
                       navigate('/post/isfullscreen', {
                         state: { questId: questStartData._id },
@@ -236,8 +236,8 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
                       alt="full-screen"
                       className="size-3 tablet:h-[23px] tablet:w-5"
                     />
-                    <h1 className="text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-200">
-                      Expand Post
+                    <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                      Analyze
                     </h1>
                   </div>
                 ) : (

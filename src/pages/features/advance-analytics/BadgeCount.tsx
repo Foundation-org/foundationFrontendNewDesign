@@ -6,10 +6,10 @@ import { FaSpinner } from 'react-icons/fa';
 import { AddBadgeProps } from '../../../types/advanceAnalytics';
 import { comparisonOperators } from '../../../constants/advanceAnalytics';
 
-export default function AddBadge({ handleClose, questStartData }: AddBadgeProps) {
+export default function BadgeCount({ handleClose, questStartData }: AddBadgeProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<string>('');
-  const [badgeNumber, setBadgeNumber] = useState<number | null>(0);
+  const [badgeNumber, setBadgeNumber] = useState<number | null>(null);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
 
@@ -24,14 +24,14 @@ export default function AddBadge({ handleClose, questStartData }: AddBadgeProps)
 
   return (
     <div className="flex flex-col">
-      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 tablet:my-4 tablet:text-[16px] tablet:leading-[16px] dark:text-gray-300">
+      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
         You can check results by counts
       </h1>
       <div className="flex items-center justify-center gap-[15px]">
-        <div className="relative inline-block w-full tablet:max-w-[300px]">
+        <div className="relative inline-block w-full max-w-[120px] tablet:max-w-[230px]">
           <button
             onClick={toggleDropdown}
-            className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px] dark:border-gray-100 dark:text-gray-300"
+            className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
           >
             {selectedOptions ? selectedOptions : 'Select an option'}
             <img
@@ -41,11 +41,11 @@ export default function AddBadge({ handleClose, questStartData }: AddBadgeProps)
             />
           </button>
           {isOpen && (
-            <ul className="absolute z-10 mt-2 max-h-32 w-fit min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] tablet:max-h-48 tablet:border-[2px] tablet:text-[20px] dark:border-gray-100 dark:bg-gray-200">
+            <ul className="absolute z-10 mt-2 max-h-32 w-fit min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:max-h-48 tablet:border-[2px] tablet:text-[20px]">
               {comparisonOperators.map((operator) => (
                 <li
                   key={operator.id}
-                  className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
+                  className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                   onClick={() => {
                     setSelectedOptions(operator.name);
                     toggleDropdown();
@@ -60,7 +60,8 @@ export default function AddBadge({ handleClose, questStartData }: AddBadgeProps)
         <input
           type="number"
           value={badgeNumber ?? ''}
-          className="flex w-full items-center justify-between rounded border border-white-500 bg-transparent px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none tablet:max-w-[143px] tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px] dark:border-gray-100 dark:text-gray-300"
+          placeholder={`0 - 19`}
+          className="flex w-full max-w-14 items-center justify-between rounded border border-white-500 bg-transparent px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:max-w-[143px] tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
           onChange={handleBadgeNumber}
         />
       </div>

@@ -6,7 +6,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { analyzeButtons } from '../../constants/advanceAnalytics';
 import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
 import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
-import AddBadge from '../../pages/features/advance-analytics/AddBadge';
+import BadgeCount from '../../pages/features/advance-analytics/BadgeCount';
 
 export default function AnalyzeDialogueBox({
   handleClose,
@@ -50,13 +50,13 @@ export default function AnalyzeDialogueBox({
         </div>
         {selectedBtn === 'Hide' ? (
           <div className="flex flex-col">
-            <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 tablet:my-4 tablet:text-[16px] tablet:leading-[16px] dark:text-gray-300">
+            <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
               You can Hide an option
             </h1>
             <div className="relative inline-block w-full">
               <button
                 onClick={toggleDropdown}
-                className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px] dark:border-gray-100 dark:text-gray-300"
+                className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
               >
                 {selectedOptions.length > 0 ? selectedOptions[0] : 'Select an option'}
                 <img
@@ -66,11 +66,11 @@ export default function AnalyzeDialogueBox({
                 />
               </button>
               {isOpen && (
-                <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] tablet:max-h-48 tablet:border-[2px] tablet:text-[20px] dark:border-gray-100 dark:bg-gray-200">
+                <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:max-h-48 tablet:border-[2px] tablet:text-[20px]">
                   {questStartData?.QuestAnswers.map((post: PostAnswer) => (
                     <li
                       key={post.id}
-                      className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
+                      className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                       onClick={() => {
                         setSelectedOptions([post.question]);
                         toggleDropdown();
@@ -100,10 +100,10 @@ export default function AnalyzeDialogueBox({
               </Button>
             </div>
           </div>
-        ) : selectedBtn === 'Badge' ? (
-          <AddBadge handleClose={handleClose} questStartData={questStartData} />
+        ) : selectedBtn === 'Badge Count' ? (
+          <BadgeCount handleClose={handleClose} questStartData={questStartData} />
         ) : (
-          <h1 className="my-4 text-center text-[10px] font-semibold leading-[12px] text-accent-400 tablet:my-14 tablet:text-[22px] tablet:leading-[22px] dark:text-gray-300">
+          <h1 className="my-4 text-center text-[10px] font-semibold leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-14 tablet:text-[22px] tablet:leading-[22px]">
             Coming Soon!
           </h1>
         )}

@@ -5,7 +5,7 @@ export const analyzeButtons = [
   },
   {
     id: 2,
-    title: 'Badge',
+    title: 'Badge Count',
   },
   {
     id: 3,
@@ -13,13 +13,13 @@ export const analyzeButtons = [
   },
   {
     id: 4,
-    title: 'Contributions',
+    title: 'Activity',
   },
 ];
 
 export const comparisonOperators = [
   { id: 1, name: 'Greater than' },
   { id: 2, name: 'Less than' },
-  { id: 3, name: 'Greater than or equal to' },
-  { id: 4, name: 'Less than or equal to' },
+  { id: 3, name: 'Equal to' },
+  { id: 4, name: 'Not equal to' },
 ];
