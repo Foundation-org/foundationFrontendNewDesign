@@ -185,7 +185,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
           )}
           {/* Add to list */}
           <button
-            className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
+            className="flex min-w-[63px] items-center justify-center gap-1 tablet:min-w-[146px] tablet:gap-2"
             onClick={() => {
               if (persistedUserInfo?.role === 'guest') {
                 toast.warning(
@@ -221,7 +221,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             !window.location.href.includes('/p/') &&
             !location.pathname.includes('/l/') &&
             location.pathname !== '/post/isfullscreen' ? (
-              <div className="flex justify-center tablet:min-w-[146px]">
+              <div className="flex justify-end tablet:min-w-[146px]">
                 {isFullScreen === undefined ? (
                   <div
                     className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
