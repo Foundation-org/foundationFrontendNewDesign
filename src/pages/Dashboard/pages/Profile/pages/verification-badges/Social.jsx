@@ -52,6 +52,8 @@ const Social = ({
   }, [loading.state]);
 
   const handleFarcaster = async (title, type, value) => {
+    console.log('farcaster data', value);
+
     try {
       const payload = {
         uuid: persistedUserInfo.uuid,
