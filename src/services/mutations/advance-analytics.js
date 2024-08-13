@@ -1,40 +1,44 @@
-import { toast } from 'sonner';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import showToast from '../../components/ui/Toast';
 import api from '../api/Axios';
-import { useNavigate } from 'react-router-dom';
 
 export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray }) => {
-  return await api.post('/infoquestions/analyze', {
+  return await api.post(`/infoquestions/analyze?hide=${true}`, {
     userUuid,
     questForeignKey,
     hiddenOptionsArray,
   });
 };
 
-export const useAnalyzePostMutation = () => {
-  //   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+export const useAnalyzePostMutation = ({ handleClose }) => {
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: analyze,
-    onSuccess: (resp) => {
-      console.log('resp', resp);
+    mutationFn: async ({ userUuid, questForeignKey, hiddenOptionsArray }) => {
+      return analyze({ userUuid, questForeignKey, hiddenOptionsArray });
+    },
+    onSuccess: (resp, variables) => {
+      const { actionType } = variables;
 
-      showToast('success', 'deleteList');
+      if (resp.status === 200) {
+        if (actionType === 'create') {
+          showToast('success', 'hideOption');
+        } else if (actionType === 'delete') {
+          showToast('success', 'hideOptionDeleted');
+        }
 
-      // Optionally update the cache data or invalidate queries
-      // queryClient.setQueriesData(['lists'], (oldData) => {
-      //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
-      // });
+        // Pessimistic Update
+        queryClient.setQueryData(['SingleQuest'], (oldData) => {
+          if (resp.data && resp.data.result && resp.data.result.result[0]) {
+            return resp.data.result.result[0];
+          } else {
+            return oldData;
+          }
+        });
 
-      // queryClient.invalidateQueries(['lists']);
-
-      // Optionally close the modal or perform other UI updates
-      // handleClose();
-      navigate('/post/isfullscreen', {
-        state: { questId: resp.data.questForeignKey },
-      });
+        // Optionally close the modal or perform other UI updates
+        handleClose();
+      }
     },
     onError: (error) => {
       console.log(error);

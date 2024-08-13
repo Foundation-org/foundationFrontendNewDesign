@@ -17,7 +17,9 @@ export default function AdvanceAnalytics({ questStartData }) {
         Advanced Analytics
       </h1>
       <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
-        <HideOption />
+        {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
+          <HideOption questStartData={questStartData} />
+        )}
         <Button
           variant={'addOption'}
           onClick={() => {

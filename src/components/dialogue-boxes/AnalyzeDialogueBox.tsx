@@ -1,9 +1,8 @@
 import PopUp from '../ui/PopUp';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 import { analyzeButtons } from '../../constants/advanceAnalytics';
 import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
 import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
@@ -15,12 +14,11 @@ export default function AnalyzeDialogueBox({
   image,
   questStartData,
 }: AnalyzeModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedBtn, setSelectedBtn] = useState('Hide');
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation();
-  const navigate = useNavigate();
+  const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -87,16 +85,14 @@ export default function AnalyzeDialogueBox({
               <Button
                 variant={'submit'}
                 className=""
-                rounded=""
+                rounded={false}
                 onClick={() => {
-                  navigate('/post/isfullscreen', {
-                    state: { questId: questStartData._id },
-                  });
-                  // handleAnalyzePost({
-                  //   userUuid: persistedUserInfo.uuid,
-                  //   questForeignKey: questStartData._id,
-                  //   hiddenOptionsArray: selectedOptions,
-                  // });
+                  handleAnalyzePost({
+                    userUuid: persistedUserInfo.uuid,
+                    questForeignKey: questStartData._id,
+                    hiddenOptionsArray: selectedOptions,
+                    actionType: 'create',
+                  } as any);
                 }}
               >
                 {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Hide'}
