@@ -10,3 +10,8 @@ export type PostAnswer = {
   id: number;
   question: string;
 };
+
+export type AddBadgeProps = {
+  handleClose: () => void;
+  questStartData: any;
+};

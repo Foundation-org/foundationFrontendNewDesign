@@ -1,11 +1,12 @@
 import PopUp from '../ui/PopUp';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { analyzeButtons } from '../../constants/advanceAnalytics';
 import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
 import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
+import AddBadge from '../../pages/features/advance-analytics/AddBadge';
 
 export default function AnalyzeDialogueBox({
   handleClose,
@@ -99,6 +100,8 @@ export default function AnalyzeDialogueBox({
               </Button>
             </div>
           </div>
+        ) : selectedBtn === 'Badge' ? (
+          <AddBadge handleClose={handleClose} questStartData={questStartData} />
         ) : (
           <h1 className="my-4 text-center text-[10px] font-semibold leading-[12px] text-accent-400 tablet:my-14 tablet:text-[22px] tablet:leading-[22px] dark:text-gray-300">
             Coming Soon!
