@@ -333,4 +333,4 @@ export const subscription = [
   },
 ];
 
-export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length;
+export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length - 1;
