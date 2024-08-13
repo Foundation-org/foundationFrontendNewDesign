@@ -232,7 +232,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
                     }}
                   >
                     <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/fullscreen.svg' : 'assets/svgs/fullscreen-icon.svg'}`}
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/analyze-beaker.svg' : 'assets/svgs/analyze-beaker.svg'}`}
                       alt="full-screen"
                       className="size-3 tablet:h-[23px] tablet:w-5"
                     />
