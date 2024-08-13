@@ -8,7 +8,7 @@ import { comparisonOperators } from '../../../constants/advanceAnalytics';
 
 export default function BadgeCount({ handleClose, questStartData }: AddBadgeProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedOptions, setSelectedOptions] = useState<string>('');
+  const [selectedOptions, setSelectedOptions] = useState<string>('Greater than');
   const [badgeNumber, setBadgeNumber] = useState<number | null>(null);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
@@ -33,7 +33,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
             onClick={toggleDropdown}
             className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
           >
-            {selectedOptions ? selectedOptions : 'Select an option'}
+            {selectedOptions}
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
               alt="arrow-right.svg"
