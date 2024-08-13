@@ -10,6 +10,7 @@ import { useGetSingleQuest } from '../../services/queries/quest';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import Loader from '../../components/ui/Loader';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
+import AdvanceAnalytics from '../features/advance-analytics';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
@@ -118,6 +119,9 @@ const Guests = () => {
               ) : (
                 <Loader />
               )}
+              <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
+                <AdvanceAnalytics questStartData={singleQuestResp} />
+              </div>
             </div>
           </div>
         </DashboardLayout>

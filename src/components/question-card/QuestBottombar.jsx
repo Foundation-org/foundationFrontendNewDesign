@@ -185,7 +185,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
           )}
           {/* Add to list */}
           <button
-            className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:justify-end tablet:gap-2"
+            className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
             onClick={() => {
               if (persistedUserInfo?.role === 'guest') {
                 toast.warning(
@@ -213,7 +213,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             </h1>
           </button>
           {/* Expand Post */}
-          {/* <>
+          <>
             {postProperties !== 'HiddenPosts' &&
             postProperties !== 'SharedLinks' &&
             postProperties !== 'sharedlink-results' &&
@@ -224,7 +224,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               <div className="flex justify-center tablet:min-w-[146px]">
                 {isFullScreen === undefined ? (
                   <div
-                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
+                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
                     onClick={() => {
                       navigate('/post/isfullscreen', {
                         state: { questId: questStartData._id },
@@ -236,7 +236,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
                       alt="full-screen"
                       className="size-3 tablet:h-[23px] tablet:w-5"
                     />
-                    <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                    <h1 className="text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-200">
                       Expand Post
                     </h1>
                   </div>
@@ -245,7 +245,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
                 )}
               </div>
             ) : null}
-          </> */}
+          </>
         </div>
       )}
     </div>
