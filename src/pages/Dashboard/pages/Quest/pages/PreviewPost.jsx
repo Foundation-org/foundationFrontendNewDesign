@@ -73,7 +73,7 @@ export default function PreviewPost() {
                 />
                 <QuestionCardWithToggle questStartData={post} />
                 {state.state.moderationRatingCount !== 0 && (
-                  <p className="pb-3 pt-5 text-[12px] italic text-gray-900 tablet:pb-5 tablet:pt-8 tablet:text-[24px] tablet:leading-[30px] dark:text-accent-300">
+                  <p className="pb-3 pt-5 text-[12px] italic text-gray-900 dark:text-accent-300 tablet:pb-5 tablet:pt-8 tablet:text-[24px] tablet:leading-[30px]">
                     Your post will show under the Adult content category. You can try rephrasing to make the post show
                     to everyone, or continue as-is.
                   </p>
@@ -90,9 +90,9 @@ export default function PreviewPost() {
                   Continue Editing
                 </Button>
                 <Button
-                  variant="submit"
+                  variant={'submit'}
+                  className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
                   onClick={() => createQuest(state.state)}
-                  className="w-full tablet:w-full"
                   disabled={isPending}
                 >
                   {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}

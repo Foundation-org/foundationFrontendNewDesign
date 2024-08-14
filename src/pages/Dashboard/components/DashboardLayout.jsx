@@ -149,7 +149,7 @@ export default function DashboardLayout({ children }) {
         primary: true,
       });
       if (res.status === 200) {
-        if (localStorage.getItem('phoneNumber')) {
+        if (localStorage.getItem('phoneNo')) {
           handleAddContactBadge();
         }
         localStorage.setItem('uuid', res.data.uuid);
