@@ -55,8 +55,6 @@ const VerifyCode = () => {
         }
       })
       .catch((error) => {
-        toast.error({ error });
-        setMsg(error.message);
         console.error('Error:', error.message);
       });
   };
