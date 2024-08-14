@@ -14,7 +14,7 @@ const VerifyCode = () => {
   const [urlQuery, seturlQuery] = useState('');
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [verificationCode, setVerificationCode] = useState([]);
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState(null);
 
   const checkUrlQuery = () => {
     let urlQuery = window.location.search.slice(1);
