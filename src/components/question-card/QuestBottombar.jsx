@@ -135,7 +135,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               alt="clock"
               className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
             />
-            <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+            <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
               {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
               {timeAgo}
             </h4>
@@ -212,7 +212,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
               Add to list
             </h1>
           </button>
-          {/* Expand Post */}
+          {/* Analyze Post */}
           <>
             {postProperties !== 'HiddenPosts' &&
             postProperties !== 'SharedLinks' &&
@@ -220,11 +220,12 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             postProperties !== 'actual-results' &&
             !window.location.href.includes('/p/') &&
             !location.pathname.includes('/l/') &&
-            location.pathname !== '/post/isfullscreen' ? (
+            location.pathname !== '/post/isfullscreen' &&
+            questStartData?.startStatus !== '' ? (
               <div className="flex justify-end tablet:min-w-[146px]">
                 {isFullScreen === undefined ? (
                   <div
-                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
+                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem]"
                     onClick={() => {
                       navigate('/post/isfullscreen', {
                         state: { questId: questStartData._id },

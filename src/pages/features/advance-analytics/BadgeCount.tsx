@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { AddBadgeProps } from '../../../types/advanceAnalytics';
 import { comparisonOperators } from '../../../constants/advanceAnalytics';
+import { badgesTotalLength } from '../../../constants/varification-badges';
 
 export default function BadgeCount({ handleClose, questStartData }: AddBadgeProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -17,7 +18,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
 
   const handleBadgeNumber = (e: any) => {
     const value = e.target.value === '' ? null : Number(e.target.value);
-    if (value === null || (value >= 0 && value <= 20)) {
+    if (value === null || (value >= 0 && value <= badgesTotalLength)) {
       setBadgeNumber(value);
     }
   };
@@ -60,7 +61,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
         <input
           type="number"
           value={badgeNumber ?? ''}
-          placeholder={`0 - 19`}
+          placeholder={`0 - ${badgesTotalLength}`}
           className="flex w-full max-w-14 items-center justify-between rounded border border-white-500 bg-transparent px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:max-w-[143px] tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
           onChange={handleBadgeNumber}
         />
