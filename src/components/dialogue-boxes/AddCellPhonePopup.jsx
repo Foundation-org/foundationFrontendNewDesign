@@ -74,7 +74,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
         dispatch(addUser(response.data.user));
         localStorage.setItem('userData', JSON.stringify(response.data.user));
         localStorage.setItem('uuid', response.data.user.uuid);
-        handleAddContactBadge();
+        // handleAddContactBadge();
         navigate('/');
       } else {
         handleAddContactBadge();
@@ -92,6 +92,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
     mutationFn: sendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
+      localStorage.setItem('phoneNo', resp?.data?.data?.phoneNumber);
       showToast('success', 'otpSent');
       setIsRunning(true);
     },
