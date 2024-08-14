@@ -95,7 +95,7 @@ export const EmbededVideo = ({
       </h2> */}
       {loading && (
         <div
-          className={`flex h-full w-full flex-col items-center justify-center ${identifyMediaUrl(url[0]) === 'YouTube' ? 'max-h-[195.75px] min-h-[195.75px] tablet:max-h-[408.38px] tablet:min-h-[408.38px]' : 'max-h-[126px] min-h-[126px] tablet:max-h-[195.75px] tablet:min-h-[195.75px]'}`}
+          className={`flex h-full w-full flex-col items-center justify-center ${identifyMediaUrl(url[0]) === 'YouTube' ? 'max-h-[195.75px] min-h-[195.75px] tablet:max-h-[408.38px] tablet:min-h-[408.38px]' : 'max-h-[128px] min-h-[128px] tablet:max-h-[195.75px] tablet:min-h-[195.75px]'}`}
         >
           <FaSpinner className="size-5 animate-spin tablet:size-6" />
           <h1>{identifyMediaUrl(url[0]) === 'YouTube' ? 'Loading video...' : 'Loading audio...'}</h1>
@@ -106,7 +106,7 @@ export const EmbededVideo = ({
           ref={playerRef}
           url={mediaURL}
           onReady={() => setLoading(false)}
-          className={`react-player `}
+          className={`react-player`}
           onError={(e) => {
             console.log('hamza', e);
             // toast.error('Invalid URL');
