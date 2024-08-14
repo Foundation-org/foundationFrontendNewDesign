@@ -220,16 +220,19 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             postProperties !== 'actual-results' &&
             !window.location.href.includes('/p/') &&
             !location.pathname.includes('/l/') &&
-            location.pathname !== '/post/isfullscreen' &&
-            questStartData?.startStatus !== '' ? (
+            location.pathname !== '/post/isfullscreen' ? (
               <div className="flex justify-end tablet:min-w-[146px]">
                 {isFullScreen === undefined ? (
                   <div
                     className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem]"
                     onClick={() => {
-                      navigate('/post/isfullscreen', {
-                        state: { questId: questStartData._id },
-                      });
+                      if (questStartData?.startStatus === '') {
+                        showToast('warning', 'analyzeParticipatedPost');
+                      } else {
+                        navigate('/post/isfullscreen', {
+                          state: { questId: questStartData._id },
+                        });
+                      }
                     }}
                   >
                     <img

@@ -108,4 +108,5 @@ export const toastMessages = {
   youAreViewingPreview: 'You are viewing a preview',
   hideOption: 'Option hidden successfully',
   hideOptionDeleted: 'Option deleted successfully',
+  analyzeParticipatedPost: "You hasn't participated on post yet",
 } as const;
