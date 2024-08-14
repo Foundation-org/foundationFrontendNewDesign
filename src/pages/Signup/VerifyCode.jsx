@@ -6,6 +6,7 @@ import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
 import { setAskPassword } from '../../features/profile/userSettingSlice';
 import showToast from '../../components/ui/Toast';
+import { toast } from 'sonner';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
