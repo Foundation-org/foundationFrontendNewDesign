@@ -16,6 +16,7 @@ import FeedbackAndVisibility from '../../pages/Dashboard/pages/Profile/pages/fee
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import showToast from '../ui/Toast';
+import { formatParticipantsCount } from '../../utils/questionCard';
 
 const ButtonGroup = ({
   questStartData,
@@ -237,6 +238,14 @@ const ButtonGroup = ({
     );
   };
 
+  if (location.pathname === '/post/isfullscreen') {
+    return (
+      <h1 className="conditional-text px-0 text-center tablet:px-0">
+        {formatParticipantsCount(questStartData.submitCounter)}
+      </h1>
+    );
+  }
+
   if (postProperties === 'HiddenPosts') {
     const { mutateAsync: unHidePost, isPending: unHidePostLoading } = useMutation({
       mutationFn: updateHiddenQuest,
@@ -441,7 +450,7 @@ const ButtonGroup = ({
                 className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
                 Feedback
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               </Button>
@@ -487,7 +496,7 @@ const ButtonGroup = ({
       );
     } else {
       return (
-        <div className="flex w-full justify-end ">
+        <div className="flex w-full justify-end">
           {questStartData.startStatus === 'change answer' ? (
             <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
               <button className="w-full cursor-default">&#x200B;</button>
@@ -514,7 +523,7 @@ const ButtonGroup = ({
                 className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
                 Feedback
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px] ">
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               </Button>
@@ -588,7 +597,7 @@ const ButtonGroup = ({
           <>
             {feedbackLoading || loading ? (
               <div className="flex h-[22px] w-full items-center justify-center tablet:h-[50px]">
-                <FaSpinner className="animate-spin text-center text-[22px] text-blue-100 tablet:text-[30px] dark:text-[#EAEAEA]" />
+                <FaSpinner className="animate-spin text-center text-[22px] text-blue-100 dark:text-[#EAEAEA] tablet:text-[30px]" />
               </div>
             ) : (
               <div className="flex w-full items-center justify-between gap-4">
@@ -609,7 +618,7 @@ const ButtonGroup = ({
                 <Button id={`submit-${questStartData._id}`} variant="g-submit" onClick={() => handleSubmit()}>
                   Submit
                   {questStartData.startStatus !== 'change answer' && (
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                       (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                     </span>
                   )}
@@ -651,7 +660,7 @@ const ButtonGroup = ({
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
             {questStartData.startStatus !== 'change answer' && (
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
               </span>
             )}

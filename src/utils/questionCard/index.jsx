@@ -44,3 +44,14 @@ export const fetchDataByStatus = async (params, filterStates) => {
       return await HomepageAPIs.getAllQuestsWithDefaultStatus(params);
   }
 };
+
+export function formatParticipantsCount(count) {
+  if (count === 1) {
+    return '1 Participant';
+  } else if (count < 1000) {
+    return `${count} Participants`;
+  } else {
+    const formattedCount = (count / 1000).toFixed(2);
+    return `${formattedCount}k Participants`;
+  }
+}
