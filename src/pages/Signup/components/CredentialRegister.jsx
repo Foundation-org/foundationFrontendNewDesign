@@ -150,13 +150,13 @@ const CredentialRegister = () => {
 
   return (
     <>
-      <form className="mt-11 flex w-full flex-col gap-11 text-silver-600 tablet:mt-16 5xl:gap-14 short:gap-[38px] dark:text-white">
+      <form className="mt-11 flex w-full flex-col gap-11 text-silver-600 dark:text-white tablet:mt-16 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
             id="email"
             label="Email Address"
-            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white"
+            className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
             autoComplete="sign-email"
             onChange={onEmailChange}
             value={email}
@@ -177,7 +177,7 @@ const CredentialRegister = () => {
                 type={inputType}
                 id="password"
                 label="Password"
-                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white "
+                className="autofill_text_color dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
                 autoComplete="new-password"
                 onChange={onPassChange}
               />
@@ -198,7 +198,7 @@ const CredentialRegister = () => {
                 type={cnfmPassInputType}
                 id="cnfmpassword"
                 label="Re-type Password"
-                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white  py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-transparent dark:focus:border-white "
+                className="dark:bg-dark peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-transparent dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
                 autoComplete="new-password"
                 onChange={onReTypePassChange}
               />
@@ -229,22 +229,22 @@ const CredentialRegister = () => {
               type="checkbox"
               onChange={(e) => setTermConditionCheck(e.target.checked)}
               checked={termConditionCheck}
-              className="checkbox h-[11.725px] w-[11.725px] rounded-[2.9px] border-[1.437px] border-[#D6D6D6] md:h-[23px] md:w-[23px] md:rounded-[3.5px] "
+              className="checkbox h-[11.725px] w-[11.725px] rounded-[2.9px] border-[1.437px] border-[#D6D6D6] md:h-[23px] md:w-[23px] md:rounded-[3.5px]"
             />
           </label>
         </div>
-        <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
+        <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
           Creating an account means you have agreed with our{` `}
           <Link
             to="/term-of-service"
-            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline md:text-[16px] tablet:leading-[22px] short:text-[12px] dark:text-white"
+            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
           >
             Terms of Service
           </Link>
           {` `}&{' '}
           <Link
             to="/privacy-policy"
-            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline md:text-[16px] tablet:leading-[22px] short:text-[12px] dark:text-white"
+            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
           >
             Privacy Policy
           </Link>
@@ -259,7 +259,7 @@ const CredentialRegister = () => {
         disabled={(isLoading === true ? true : false) || !email || !password || !reTypePassword}
       >
         {isLoading ? (
-          <FaSpinner className="text-blue animate-spin text-[10vw] tablet:text-[4vw] dark:text-white" />
+          <FaSpinner className="text-blue animate-spin text-[5vw] dark:text-white tablet:text-[2vw]" />
         ) : (
           'Create Account'
         )}
@@ -325,7 +325,7 @@ const CredentialRegister = () => {
               <UiButton variant="social-btn">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
-                  className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
+                  className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px]"
                 />{' '}
                 Continue with Google
               </UiButton>
