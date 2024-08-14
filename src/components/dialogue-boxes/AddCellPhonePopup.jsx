@@ -118,6 +118,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
         uuid: localStorage.getItem('uuid'),
         type: type,
         data: otpResp?.data?.data?.phoneNumber,
+        legacyVerification: true
       };
       if (localStorage.getItem('legacyHash')) {
         payload.infoc = localStorage.getItem('legacyHash');
