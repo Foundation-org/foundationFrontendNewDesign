@@ -1,15 +1,24 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Router } from './routes/route';
 import { Toaster } from 'sonner';
 import SEO from './utils/SEO';
 import { MaintenanceRouter } from './routes/maintenance';
 import api from './services/api/Axios';
 import { Helmet } from 'react-helmet-async';
+import { signOut } from './services/api/userAuth';
+import { resetFilters } from './features/sidebar/filtersSlice';
+import { addUser } from './features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import showToast from './components/ui/Toast';
 // import SEO from './utils/SEO';
 
 function App() {
   // const [theme, setTheme] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [isMaintenance, setIsMaintenance] = useState(false);
 
@@ -126,6 +135,27 @@ function App() {
     },
   );
 
+  const { mutateAsync: handleSignout } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      dispatch(resetFilters());
+      dispatch(addUser(null));
+      localStorage.clear();
+      localStorage.setItem('userExist', 'true');
+      navigate('/signin');
+    },
+    onError: (error) => {
+      console.log(error);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+    },
+  });
+
+  useEffect(() => {
+    if (persistedUserInfo?.tempLogout) {
+      handleSignout(persistedUserInfo.uuid);
+    }
+  }, [persistedUserInfo]);
+
   return (
     <div className="h-dvh overflow-hidden">
       <Helmet>
@@ -148,6 +178,7 @@ function App() {
         />
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
       </Helmet>
+      {/* <MaintenanceRouter /> */}
       {isMaintenance ? <MaintenanceRouter /> : <Router />}
       <Toaster
         position="top-right"
