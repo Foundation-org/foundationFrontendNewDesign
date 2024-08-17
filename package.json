@@ -27,9 +27,9 @@
     "@simplewebauthn/browser": "^9.0.1",
     "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^3.5.0",
-    "@tanstack/react-query": "^5.4.3",
-    "@tanstack/react-table": "^8.11.0",
-    "axios": "^1.7.3",
+    "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-table": "^8.20.1",
+    "axios": "^1.7.4",
     "classnames": "^2.3.2",
     "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
@@ -44,15 +44,15 @@
     "react-intersection-observer": "^9.13.0",
     "react-password-strength-bar": "^0.4.1",
     "react-phone-number-input": "^3.4.5",
-    "react-player": "^2.15.1",
+    "react-player": "^2.16.0",
     "react-redux": "^9.1.2",
     "react-responsive-carousel": "^3.2.23",
-    "react-router-dom": "^6.26.0",
+    "react-router-dom": "^6.26.1",
     "reactjs-social-login": "^2.6.3",
     "redux-persist": "^6.0.0",
     "reselect": "^5.1.1",
     "sonner": "^1.5.0",
-    "swiper": "^11.1.4",
+    "swiper": "^11.1.9",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
@@ -69,7 +69,7 @@
     "postcss": "^8.4.31",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
-    "tailwindcss": "^3.4.9",
-    "vite": "^5.4.0"
+    "tailwindcss": "^3.4.10",
+    "vite": "^5.4.1"
   }
 }
