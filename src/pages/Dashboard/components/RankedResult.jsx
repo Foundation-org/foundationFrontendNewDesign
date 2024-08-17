@@ -24,7 +24,7 @@ const RankedResult = (props) => {
 
   return (
     <div className="flex items-center pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]">
-      <div className="relative flex w-full justify-between rounded-r-[4.73px] rounded-s-[5.387px] border-l-0 border-r border-white-500 bg-white tablet:rounded-r-[10px] tablet:rounded-s-[10px] tablet:border-r-[3px] dark:border-gray-250 dark:bg-accent-100">
+      <div className="relative flex w-full justify-between rounded-r-[4.73px] rounded-s-[5.387px] border-l-0 border-r border-white-500 bg-white dark:border-gray-250 dark:bg-accent-100 tablet:rounded-r-[10px] tablet:rounded-s-[10px] tablet:border-r-[3px]">
         {/* To Display Badges on Left of Option */}
         {props.addedAnswerUuid &&
           (props.addedAnswerUuid === persistedUserInfo?.uuid ||
@@ -37,7 +37,7 @@ const RankedResult = (props) => {
           ) : null)}
         {/* To Display Contention and Trash Right of Option */}
         <div
-          className={`absolute top-1/2 -translate-y-1/2 text-[9.238px] tablet:text-[16px] ${props.postProperties !== 'sharedlink-results' && props.btnText === 'Results' ? '-right-[37px] tablet:-right-[75px]' : '-right-[9px] tablet:-right-7'}`}
+          className={`absolute top-1/2 -translate-y-1/2 text-[9.238px] tablet:text-[16px] ${props.postProperties !== 'sharedlink-results' && props.btnText === 'Results' ? '-right-[37px] tablet:-right-[75px]' : '-right-9 tablet:-right-14'}`}
         >
           {props.btnText === 'Results' ? (
             <>
@@ -68,7 +68,7 @@ const RankedResult = (props) => {
         </div>
         {/* Options */}
         <div className="flex w-full items-center">
-          <div className="flex h-full min-h-[24px] w-3 min-w-[12.5px] items-center justify-center rounded-l-[5.387px]  bg-white-500 tablet:min-h-[43px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px] dark:bg-gray-100">
+          <div className="flex h-full min-h-[24px] w-3 min-w-[12.5px] items-center justify-center rounded-l-[5.387px] bg-white-500 dark:bg-gray-100 tablet:min-h-[43px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px]">
             &#x200B;
           </div>
           {props.btnText !== 'Results' && (
@@ -86,7 +86,7 @@ const RankedResult = (props) => {
                 width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
               }}
             />
-            <h1 className="w-full border-y border-white-500 px-2 py-[6px] text-[8.5px] font-normal leading-[10px] text-accent-600 tablet:border-y-[3px] tablet:py-3 tablet:pl-[18px] tablet:pr-5 tablet:text-[19px] tablet:leading-none laptop:pr-[34px] dark:border-gray-100 dark:text-white-600">
+            <h1 className="w-full border-y border-white-500 px-2 py-[6px] text-[8.5px] font-normal leading-[10px] text-accent-600 dark:border-gray-100 dark:text-white-600 tablet:border-y-[3px] tablet:py-3 tablet:pl-[18px] tablet:pr-5 tablet:text-[19px] tablet:leading-none laptop:pr-[34px]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
@@ -138,7 +138,7 @@ const RankedResult = (props) => {
           </div>
         </div>
         {/* to show rank number */}
-        <div className="flex items-center gap-[19px] rounded-e-[5.387px] border-y border-white-500 pr-[10.63px] text-[9.238px] tablet:border-y-[3px] tablet:pr-[11px] tablet:text-[16px] dark:border-gray-100">
+        <div className="flex items-center gap-[19px] rounded-e-[5.387px] border-y border-white-500 pr-[10.63px] text-[9.238px] dark:border-gray-100 tablet:border-y-[3px] tablet:pr-[11px] tablet:text-[16px]">
           {props.btnText === 'Results' ? (
             <>
               {props?.selectedPercentages && props.selectedPercentages[props.answer.trim()] ? (
