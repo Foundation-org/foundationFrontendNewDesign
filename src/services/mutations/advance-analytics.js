@@ -38,8 +38,8 @@ export const useAnalyzePostMutation = ({ handleClose }) => {
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
-          if (resp.data && resp.data.result && resp.data.result.result[0]) {
-            return resp.data.result.result[0];
+          if (resp.data && resp.data.result[0]) {
+            return resp.data.result[0];
           } else {
             return oldData;
           }
@@ -78,8 +78,8 @@ export const useAnalyzeBadgeMutation = ({ handleClose }) => {
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
-          if (resp.data && resp.data.result && resp.data.result.result[0]) {
-            return resp.data.result.result[0];
+          if (resp.data && resp.data.result[0]) {
+            return resp.data.result[0];
           } else {
             return oldData;
           }
