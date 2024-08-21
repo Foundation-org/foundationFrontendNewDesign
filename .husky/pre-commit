@@ -1,1 +1,1 @@
-node .git/hooks/pre-commit.js
+node .husky/pre-commit.js
