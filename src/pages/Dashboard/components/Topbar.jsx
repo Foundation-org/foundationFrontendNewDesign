@@ -13,6 +13,7 @@ import * as pictureMediaAction from '../../../features/createQuest/pictureMediaS
 import { useMutation } from '@tanstack/react-query';
 import { setFilterStates } from '../../../services/api/userAuth';
 import * as homeFilterActions from '../../../features/sidebar/filtersSlice';
+import { appVersion } from '../../../version';
 
 const Topbar = () => {
   const location = useLocation();
@@ -85,7 +86,7 @@ const Topbar = () => {
                   className="h-[10px] w-auto tablet:h-auto"
                 />
                 <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[13px] tablet:leading-[13px]">
-                  v 1.14.208
+                  v {appVersion}
                 </span>
               </div>
             </div>
