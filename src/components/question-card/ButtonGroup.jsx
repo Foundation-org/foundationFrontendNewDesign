@@ -16,7 +16,7 @@ import FeedbackAndVisibility from '../../pages/Dashboard/pages/Profile/pages/fee
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import showToast from '../ui/Toast';
-import { formatParticipantsCount } from '../../utils/questionCard';
+// import { formatParticipantsCount } from '../../utils/questionCard';
 
 const ButtonGroup = ({
   questStartData,
@@ -239,11 +239,12 @@ const ButtonGroup = ({
   };
 
   if (location.pathname === '/post/isfullscreen') {
-    return (
-      <h1 className="conditional-text px-0 text-center tablet:px-0">
-        {formatParticipantsCount(questStartData.submitCounter)}
-      </h1>
-    );
+    return null;
+    // return (
+    //   <h1 className="conditional-text px-0 text-center tablet:px-0">
+    //     {formatParticipantsCount(questStartData.submitCounter)}
+    //   </h1>
+    // );
   }
 
   if (postProperties === 'HiddenPosts') {

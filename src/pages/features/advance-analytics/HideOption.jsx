@@ -12,16 +12,16 @@ export default function HideOption({ questStartData }) {
   const handleDeleteConfirmClose = () => setDeleteConfirmPopup(false);
 
   return (
-    <>
+    <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
       {questStartData.hiddenAnswers.map((item, index) => (
         <div
           key={index + 1}
-          className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100 dark:text-gray-300"
+          className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 dark:border-gray-100 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3"
         >
-          <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-10 tablet:py-3 dark:border-gray-100">
+          <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-10 tablet:py-3">
             <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">Hide</h1>
           </div>
-          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100">
+          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
             <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">{item}</h1>
           </div>
           <img
@@ -56,8 +56,9 @@ export default function HideOption({ questStartData }) {
           title={'Delete Option'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
           questStartData={questStartData}
+          type="hideOption"
         />
       )}
-    </>
+    </div>
   );
 }

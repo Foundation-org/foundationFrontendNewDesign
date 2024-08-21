@@ -188,7 +188,8 @@ export default function AddOptions({
       addOptionField === 0 &&
       !uuidExists &&
       questStartData.startStatus !== 'completed' &&
-      location.pathname !== '/shared-links/result' ? (
+      location.pathname !== '/shared-links/result' &&
+      location.pathname !== '/post/isfullscreen' ? (
         <div className="pl-7 pt-[7.5px] tablet:pl-[66px] tablet:pt-[10px]">
           {getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
           getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
