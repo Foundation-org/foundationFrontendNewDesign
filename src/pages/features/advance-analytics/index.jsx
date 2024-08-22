@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '../../../components/ui/Button';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
 import HideOption from './HideOption';
+import BadgeCountOption from './BadgeCountOption';
 
 export default function AdvanceAnalytics({ questStartData }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -12,14 +13,15 @@ export default function AdvanceAnalytics({ questStartData }) {
   const handleAnalyzeClose = () => setAnalyzePopup(false);
 
   return (
-    <div className="mt-2 rounded-[12.3px] border-2 border-white-500 bg-white p-[10px] tablet:mt-[15px] tablet:rounded-[15px] tablet:py-[25px] dark:border-gray-100 dark:bg-gray-200">
-      <h1 className="text-center text-[0.75rem] font-semibold leading-[15px] text-accent-600 tablet:text-[1.25rem] tablet:leading-[1.25rem] dark:text-white-400">
+    <div className="mt-2 rounded-[12.3px] border-2 border-white-500 bg-white p-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:mt-[15px] tablet:rounded-[15px] tablet:py-[25px]">
+      <h1 className="text-center text-[0.75rem] font-semibold leading-[15px] text-accent-600 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Advanced Analytics
       </h1>
+      {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
+        <HideOption questStartData={questStartData} />
+      )}
+      {questStartData?.oprend >= 1 && questStartData?.range && <BadgeCountOption questStartData={questStartData} />}
       <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
-        {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
-          <HideOption questStartData={questStartData} />
-        )}
         <Button
           variant={'addOption'}
           onClick={() => {

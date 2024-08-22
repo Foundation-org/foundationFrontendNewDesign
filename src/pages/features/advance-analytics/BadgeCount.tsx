@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../../../components/ui/Button';
-import { useAnalyzePostMutation } from '../../../services/mutations/advance-analytics';
+import { useAnalyzeBadgeMutation } from '../../../services/mutations/advance-analytics';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { AddBadgeProps } from '../../../types/advanceAnalytics';
@@ -9,10 +9,10 @@ import { badgesTotalLength } from '../../../constants/varification-badges';
 
 export default function BadgeCount({ handleClose, questStartData }: AddBadgeProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedOptions, setSelectedOptions] = useState<string>('Greater than');
+  const [selectedOptions, setSelectedOptions] = useState({ id: 1, name: 'Greater than' });
   const [badgeNumber, setBadgeNumber] = useState<number | null>(null);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
+  const { mutateAsync: handleAnalyzeBadgeCount, isPending } = useAnalyzeBadgeMutation({ handleClose });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -34,7 +34,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
             onClick={toggleDropdown}
             className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
           >
-            {selectedOptions}
+            {selectedOptions.name}
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
               alt="arrow-right.svg"
@@ -48,7 +48,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
                   key={operator.id}
                   className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                   onClick={() => {
-                    setSelectedOptions(operator.name);
+                    setSelectedOptions({ id: operator.id, name: operator.name });
                     toggleDropdown();
                   }}
                 >
@@ -72,10 +72,11 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
           className=""
           rounded={false}
           onClick={() => {
-            handleAnalyzePost({
+            handleAnalyzeBadgeCount({
               userUuid: persistedUserInfo.uuid,
               questForeignKey: questStartData._id,
-              hiddenOptionsArray: selectedOptions,
+              operand: selectedOptions.id,
+              range: badgeNumber,
               actionType: 'addBadge',
             } as any);
           }}
