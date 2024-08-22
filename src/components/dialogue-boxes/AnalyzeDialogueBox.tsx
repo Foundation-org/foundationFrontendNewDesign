@@ -7,6 +7,7 @@ import { analyzeButtons, dualOptionsMap } from '../../constants/advanceAnalytics
 import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
 import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
 import BadgeCount from '../../pages/features/advance-analytics/BadgeCount';
+import showToast from '../ui/Toast';
 
 export default function AnalyzeDialogueBox({
   handleClose,
@@ -76,8 +77,9 @@ export default function AnalyzeDialogueBox({
                         <li
                           className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                           onClick={() => {
-                            setSelectedOptions([...(questStartData?.hiddenAnswers || []), item.name]);
+                            showToast('warning', 'cantHideLastTwoOptions');
                             toggleDropdown();
+                            // setSelectedOptions([...(questStartData?.hiddenAnswers || []), item.name]);
                           }}
                         >
                           {item.name}
@@ -88,7 +90,11 @@ export default function AnalyzeDialogueBox({
                           key={post.id}
                           className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                           onClick={() => {
-                            setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
+                            if (questStartData?.QuestAnswers.length <= 2) {
+                              showToast('warning', 'cantHideLastTwoOptions');
+                            } else {
+                              setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
+                            }
                             toggleDropdown();
                           }}
                         >
@@ -100,8 +106,11 @@ export default function AnalyzeDialogueBox({
             </div>
             <div className="mt-2 flex w-full justify-end tablet:mt-4">
               <Button
-                variant={'submit'}
+                variant={
+                  questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0 ? 'submit-hollow' : 'submit'
+                }
                 className=""
+                disabled={questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0}
                 rounded={false}
                 onClick={() => {
                   handleAnalyzePost({
