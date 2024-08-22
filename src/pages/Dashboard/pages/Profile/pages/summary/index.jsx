@@ -15,7 +15,7 @@ const Summary = () => {
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
           Creating posts is a great way to earn FDX. Especially if others engage with them.
         </h1>
-        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center tablet:mt-5 dark:divide-gray-300">
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
           <div className="flex w-full justify-end">
             <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
               <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
@@ -31,16 +31,16 @@ const Summary = () => {
             <h5 className="text-[18px] font-normal">{persistedUserInfo?.yourPostEngaged}</h5>
           </div>
         </div>
-        <div className="my-3 flex w-full justify-center tablet:my-5 ">
+        {/* <div className="my-3 flex w-full justify-center tablet:my-5">
           <Button variant={'submit'} onClick={() => navigate('/profile/post-activity')}>
             View all post activity
           </Button>
-        </div>
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        </div> */}
+        <h1 className="my-3 text-[12px] font-medium leading-[13.56px] tablet:my-5 tablet:text-[16px] tablet:leading-normal">
           Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
           with it.
         </h1>
-        <div className="my-3 flex w-full justify-center tablet:my-5 ">
+        <div className="my-3 flex w-full justify-center tablet:my-5">
           <div className="max-w-28 border-[#707175] tablet:max-w-full">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Posts I've engaged with
@@ -50,10 +50,13 @@ const Summary = () => {
             </h5>
           </div>
         </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-          <Button variant={'submit'} onClick={() => navigate('/profile/feedback-given')}>
-            View all feedback given
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
+          <Button variant={'submit'} onClick={() => navigate('/profile/post-activity')}>
+            View all post activity
           </Button>
+          {/* <Button variant={'submit'} onClick={() => navigate('/profile/feedback-given')}>
+            View all feedback given
+          </Button> */}
         </div>
       </SummaryCard>
       <SummaryCard headerIcon="/assets/summary/feedback-received.svg" headerTitle="Feedback Received">
@@ -61,7 +64,7 @@ const Summary = () => {
           Not everything you post may be everyone’s cup of tea. See what posts you’ve created others have decided to
           hide and why.
         </h1>
-        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center tablet:mt-5 dark:divide-gray-300">
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
           <div className="flex w-full justify-end">
             <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
               <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
@@ -79,7 +82,7 @@ const Summary = () => {
             </h5>
           </div>
         </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
           <Button variant={'submit'} onClick={() => navigate('/profile/feedback')}>
             View all feedback received
           </Button>
@@ -90,7 +93,7 @@ const Summary = () => {
           Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
           with it.
         </h1>
-        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center tablet:mt-5 dark:divide-gray-300">
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
           <div className="flex w-full justify-end">
             <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
               <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
@@ -106,9 +109,9 @@ const Summary = () => {
             <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.myHiddenQuestsCount}</h5>
           </div>
         </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-          <Button variant={'submit'} onClick={() => navigate('/profile/feedback')}>
-            View all feedback received
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
+          <Button variant={'submit'} onClick={() => navigate('/profile/feedback-given')}>
+            View all feedback given
           </Button>
         </div>
       </SummaryCard>
@@ -117,7 +120,7 @@ const Summary = () => {
           Sharing posts is a great way to earn FDX - especially if people engage with them.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Posts you’ve shared
             </h1>
@@ -125,7 +128,7 @@ const Summary = () => {
               {persistedUserInfo?.sharedQuestsStatistics.sharedQuests}
             </h5>
           </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Total shared link clicks
             </h1>
@@ -142,7 +145,7 @@ const Summary = () => {
             </h5>
           </div>
         </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
           <Button variant={'submit'} onClick={() => navigate('/profile/shared-links')}>
             View all shared posts
           </Button>
@@ -153,7 +156,7 @@ const Summary = () => {
           Sharing lists is a great way to earn FDX - especially if people engage with them.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Lists you’ve shared
             </h1>
@@ -161,7 +164,7 @@ const Summary = () => {
               {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
             </h5>
           </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Total shared list clicks
             </h1>
@@ -178,7 +181,7 @@ const Summary = () => {
             </h5>
           </div>
         </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
           <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
             View all shared lists
           </Button>
@@ -188,13 +191,13 @@ const Summary = () => {
       <div className="mt-[2px] flex w-full flex-col gap-3 tablet:gap-[15px]">
         <Link
           to="/profile/user-settings"
-          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px] dark:text-blue-600"
+          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:text-[16px]"
         >
           User Settings {'>'}
         </Link>
         <Link
           to="/profile/ledger"
-          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px] dark:text-blue-600"
+          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:text-[16px]"
         >
           My Activity {'>'}
         </Link>
