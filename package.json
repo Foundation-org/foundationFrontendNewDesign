@@ -1,7 +1,7 @@
 {
   "name": "foundation_app",
   "private": true,
-  "version": "1.14.210",
+  "version": "1.14.219",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
