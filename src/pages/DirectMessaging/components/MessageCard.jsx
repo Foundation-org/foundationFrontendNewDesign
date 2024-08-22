@@ -92,7 +92,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
       <div className="flex items-center justify-between rounded-t-[15px] bg-[#FFFCB8] px-4 py-[6px] tablet:px-7 tablet:py-2">
         <div className="flex items-center gap-1">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo-svg.svg`}
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/foundation-logo.svg`}
             alt="logo"
             className="size-[19.72px] tablet:size-8"
           />

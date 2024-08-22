@@ -35,10 +35,9 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }) {
         >
           Back
         </button>
-        {/* <div></div> */}
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo-svg.svg`}
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/foundation-logo.svg`}
             alt="logo"
             className="size-[15px] tablet:size-8"
           />
