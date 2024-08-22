@@ -6,6 +6,7 @@ import { addUser } from '../../features/auth/authSlice';
 import { createGuestMode } from '../../services/api/userAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import showToast from '../../components/ui/Toast';
+import FallbackLoading from '../../components/FallbackLoading';
 
 const GuestRedirect = ({ redirectUrl }) => {
   const dispatch = useDispatch();
@@ -40,11 +41,7 @@ const GuestRedirect = ({ redirectUrl }) => {
     }
   }, [persistedUserInfo, dispatch]);
 
-  return (
-    <div className="flex h-full min-h-screen justify-center bg-white pt-8 text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
-      Loading...
-    </div>
-  );
+  return <FallbackLoading />;
 };
 
 export default GuestRedirect;

@@ -12,6 +12,7 @@ import { addUser } from './features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import showToast from './components/ui/Toast';
+import FallbackLoading from './components/FallbackLoading';
 // import SEO from './utils/SEO';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [isMaintenance, setIsMaintenance] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Function to handle the event
@@ -156,6 +158,14 @@ function App() {
     }
   }, [persistedUserInfo]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="h-dvh overflow-hidden">
       <Helmet>
@@ -179,7 +189,8 @@ function App() {
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
       </Helmet>
       {/* <MaintenanceRouter /> */}
-      {isMaintenance ? <MaintenanceRouter /> : <Router />}
+      {isLoading ? <FallbackLoading /> : <Router />}
+      {/* {isMaintenance ? <MaintenanceRouter /> : <Router />} */}
       <Toaster
         position="top-right"
         expand={true}
