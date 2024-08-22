@@ -30,6 +30,12 @@ const relationshipData = [
   { id: 9, name: 'Divorced' },
 ];
 
+const sexOtpions = [
+  { id: 1, name: 'Male' },
+  { id: 2, name: 'Female' },
+  { id: 3, name: 'X' },
+];
+
 const PersonalBadgesPopup = ({
   isPopup,
   setIsPopup,
@@ -99,7 +105,7 @@ const PersonalBadgesPopup = ({
     if (type === 'dateOfBirth') {
       setDate(info?.data?.obj);
     }
-    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
       setSelected({ name: info?.data?.obj });
     }
     if (type === 'security-question') {
@@ -150,7 +156,7 @@ const PersonalBadgesPopup = ({
         } else {
           setHollow(true);
         }
-      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
         if (selected?.name && selected?.name !== prevInfo) {
           setHollow(false);
         } else {
@@ -182,7 +188,7 @@ const PersonalBadgesPopup = ({
         } else {
           setHollow(true);
         }
-      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
         if (selected?.name) {
           setHollow(false);
         } else {
@@ -261,7 +267,7 @@ const PersonalBadgesPopup = ({
         return;
       }
     }
-    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
       if (selected.name === prevInfo) {
         showToast('warning', 'infoAlreadySaved');
         return;
@@ -291,7 +297,12 @@ const PersonalBadgesPopup = ({
         setLoading(false);
         return;
       }
-    } else if (type.trim() === 'currentCity' || type.trim() === 'homeTown' || type.trim() === 'relationshipStatus') {
+    } else if (
+      type.trim() === 'currentCity' ||
+      type.trim() === 'homeTown' ||
+      type.trim() === 'relationshipStatus' ||
+      type === 'sex'
+    ) {
       value = selected?.name;
     } else {
       value = name;
@@ -344,7 +355,12 @@ const PersonalBadgesPopup = ({
         setLoading(false);
         return;
       }
-    } else if (type.trim() === 'currentCity' || type.trim() === 'homeTown' || type.trim() === 'relationshipStatus') {
+    } else if (
+      type.trim() === 'currentCity' ||
+      type.trim() === 'homeTown' ||
+      type.trim() === 'relationshipStatus' ||
+      type === 'sex'
+    ) {
       value = selected?.name;
     } else {
       value = name;
@@ -600,7 +616,7 @@ const PersonalBadgesPopup = ({
     );
   };
 
-  const renderRelationship = (title, name, handleNameChange, placeholder, apiResp, data) => {
+  const renderRelationship = (title, data, placeholder, apiResp) => {
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
@@ -608,7 +624,7 @@ const PersonalBadgesPopup = ({
           <> */}
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <Listbox
-            items={relationshipData}
+            items={data}
             selected={selected}
             setSelected={setSelected}
             placeholder={edit ? (selected?.name ? placeholder : 'Loading...') : placeholder}
@@ -736,7 +752,8 @@ const PersonalBadgesPopup = ({
         {title === 'Current City' && renderCurrentCity('Current City', name, handleNameChange, placeholder, apiResp)}
         {title === 'Home Town' && renderCurrentCity('Home Town', name, handleNameChange, placeholder, apiResp)}
         {title === 'Relationship Status' &&
-          renderRelationship('Relationship Status', name, handleNameChange, placeholder, apiResp)}
+          renderRelationship('Relationship Status', relationshipData, placeholder, apiResp)}
+        {title === 'Sex' && renderRelationship('Sex', sexOtpions, placeholder, apiResp)}
         {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
         {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
         {title === 'Security Question' &&

@@ -226,7 +226,7 @@ export const personal = [
     ButtonText: 'Add',
     NoOfButton: 1,
     type: 'sex',
-    disabled: true,
+    disabled: false,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`,
