@@ -112,7 +112,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         </div>
       </div>
       {/* body */}
-      <div className="rounded-b-[15px] border-x-[1.232px] border-y-[1.232px] border-[#D9D9D9] px-4 py-2 text-[#707175] tablet:border-x-2 tablet:border-y-2 tablet:px-7 tablet:py-3 ">
+      <div className="rounded-b-[15px] border-x-[1.232px] border-y-[1.232px] border-[#D9D9D9] px-4 py-2 text-[#707175] tablet:border-x-2 tablet:border-y-2 tablet:px-7 tablet:py-3">
         <h1 className="mb-[8.4px] text-[12.145px] font-semibold leading-[12.145px] tablet:mb-[11px] tablet:text-[22px] tablet:leading-[22px]">
           {item.subject}
         </h1>
@@ -145,7 +145,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             <Button
               variant={'submit'}
               onClick={() => {
-                handleDraftOpen(item.to, item.subject, item.message);
+                handleDraftOpen(item._id, item.to, item.subject, item.message);
               }}
             >
               {resloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Open'}

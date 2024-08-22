@@ -47,6 +47,7 @@ export default function DirectMessaging() {
   const [to, setTo] = useState();
   const [sub, setSub] = useState();
   const [msg, setMsg] = useState();
+  const [draftId, setDraftId] = useState('');
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
   const [isDraft, setIsDraft] = useState(false);
@@ -79,9 +80,11 @@ export default function DirectMessaging() {
 
   const handleViewMessage = (id, sender, receiver, item) => {
     if (item) {
+      setAddNewMsg(false);
       setViewMessageData(item);
       return;
     }
+
     const params = {
       id: id,
       sender: sender,
@@ -89,18 +92,22 @@ export default function DirectMessaging() {
     };
     ViewAMessage(params);
   };
+
   const handleDraft = () => {
     const params = {
       from: persistedUserInfo.email,
       to: to,
       subject: sub,
       message: msg,
+      id: draftId,
     };
+
     createDraft(params);
     setMsg();
     setTo();
     setSub();
   };
+
   useEffect(() => {
     if ((to !== undefined || sub !== undefined || msg !== undefined) && !addNewMsg) {
       handleDraft();
@@ -123,13 +130,15 @@ export default function DirectMessaging() {
     },
   });
 
-  const handleDraftOpen = (to, sub, msg) => {
+  const handleDraftOpen = (id, to, sub, msg) => {
+    setDraftId(id);
     setTo(to);
     setSub(sub);
     setMsg(msg);
     setAddNewMsg(true);
     setIsDraft(true);
   };
+
   return (
     <>
       <Topbar />
@@ -158,8 +167,9 @@ export default function DirectMessaging() {
               <button
                 onClick={() => {
                   setViewMsg(false);
-                  setAddNewMsg(true);
                   setIsDraft(false);
+                  setDraftId('');
+                  setAddNewMsg(true);
                 }}
                 className="rounded-[7px] bg-[#D9D9D9] px-[9px] py-2 text-[10.8px] font-normal leading-[10.8px] text-[#435059] [box-shadow:0px_0px_6.46px_0px_rgba(0,_0,_0,_0.15)_inset] tablet:py-[11px] tablet:text-[18.456px] tablet:leading-[22px]"
               >
@@ -171,19 +181,19 @@ export default function DirectMessaging() {
                 <input
                   type="text"
                   id="floating_outlined"
-                  className="peer block h-full w-full appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
+                  className="peer block h-full w-full appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px]"
                   value={search}
                   placeholder=""
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <label
                   htmlFor="floating_outlined"
-                  className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F3F3F3] px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
+                  className="te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F3F3F3] px-2 text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
                 >
                   Search
                 </label>
               </div>
-              <div className="no-scrollbar mt-[15px] flex h-[calc(100vh-320px)] flex-col gap-[10px] overflow-scroll">
+              <div className="mt-[15px] flex h-[calc(100vh-320px)] flex-col gap-[10px] overflow-scroll no-scrollbar">
                 {messages?.data?.data.length <= 0 ? (
                   <div className="flex h-[calc(100%-68px)] w-full items-center justify-center">
                     <p className="text-[24px] font-semibold text-[#BBB]">No Message Yet!</p>

@@ -23,6 +23,7 @@ export const createDraftMessage = async (data) => {
     to: data.to,
     subject: data.subject,
     message: data.message,
+    id: data.id,
   });
 };
 export const viewMessage = async (data) => {
