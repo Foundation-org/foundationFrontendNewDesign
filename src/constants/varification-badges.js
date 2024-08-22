@@ -221,6 +221,15 @@ export const personal = [
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`,
+    title: 'Sex',
+    ButtonColor: 'submit',
+    ButtonText: 'Add',
+    NoOfButton: 1,
+    type: 'sex',
+    disabled: true,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`,
     title: 'Relationship',
     ButtonColor: 'submit',
     ButtonText: 'Add',
@@ -333,4 +342,4 @@ export const subscription = [
   },
 ];
 
-export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length - 1;
+export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length - 2;

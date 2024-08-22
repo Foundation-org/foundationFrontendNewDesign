@@ -396,7 +396,7 @@ const PersonalBadgesPopup = ({
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-              <div className="my-[5px] w-full ">
+              <div className="my-[5px] w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   Security question
                 </p>

@@ -45,7 +45,6 @@ export default function Personal({
       if (timeRemaining === true) {
         if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
           await handleOpenPasswordConfirmation();
-        // if (await handlePasskeyConfirmation()) {
 
         if (edit) {
           setEdit(true);
@@ -57,8 +56,6 @@ export default function Personal({
       } else {
         toast.warning(`You need to wait just ${timeRemaining} more days before you can unlock this badge.`);
       }
-
-      // }
     }
   };
 
@@ -83,7 +80,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'lastName':
         return (
           <PersonalBadgesPopup
@@ -99,7 +95,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'dateOfBirth':
         return (
           <PersonalBadgesPopup
@@ -115,7 +110,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'currentCity':
         return (
           <PersonalBadgesPopup
@@ -131,7 +125,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'homeTown':
         return (
           <PersonalBadgesPopup
@@ -147,13 +140,12 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
-      case 'relationshipStatus':
+      case 'sex':
         return (
           <PersonalBadgesPopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
-            title="Relationship Status"
+            title="Sex"
             type={'relationshipStatus'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`}
             placeholder="Relationship Here"
@@ -163,7 +155,21 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
+      case 'relationshipStatus':
+        return (
+          <PersonalBadgesPopup
+            isPopup={isPersonalPopup}
+            setIsPopup={setIsPersonalPopup}
+            title="Relationship Status"
+            type={'relationshipStatus'}
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`}
+            placeholder="Relationship Here"
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
+          />
+        );
       case 'work':
         return (
           <WorkBadgePopup
@@ -177,7 +183,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'education':
         return (
           <EducationBadgePopup
@@ -191,7 +196,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'id-passport':
         return (
           <PersonalBadgesPopup
@@ -207,7 +211,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'geolocation':
         return (
           <PersonalBadgesPopup
@@ -223,7 +226,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       case 'security-question':
         return (
           <PersonalBadgesPopup
@@ -239,7 +241,6 @@ export default function Personal({
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
-
       default:
         return null;
     }
@@ -251,9 +252,9 @@ export default function Personal({
     >
       <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
       <div
-        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px] dark:border-gray-100 dark:bg-accent-100`}
+        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
       >
-        <h1 className="text-[2.11vw] font-medium leading-normal text-black tablet:text-[20px] dark:text-gray-400">
+        <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
           {item.title}
         </h1>
       </div>
@@ -277,7 +278,7 @@ export default function Personal({
 
   return (
     <>
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
         The more personal information you add, the stronger your data profile and the more FDX you earn.
       </h1>
       {renderPersonalBadgesPopup()}

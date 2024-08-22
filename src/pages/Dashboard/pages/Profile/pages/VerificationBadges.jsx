@@ -244,12 +244,10 @@ const VerificationBadges = () => {
         from={persistedUserInfo?.badges.length}
         outof={badgesTotalLength}
       >
-        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
+        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
           Boost your earnings now and in the future by adding more verified badges to your profile.
         </h1>
       </ContentCard>
-
-      {/* Contact */}
       <ContentCard icon="assets/verification-badges/contact.svg" title="Contact">
         <Contact
           fetchUser={persistedUserInfo}
@@ -259,13 +257,9 @@ const VerificationBadges = () => {
           getAskPassword={getAskPasswordFromRedux}
         />
       </ContentCard>
-
-      {/* Privacy */}
       <ContentCard icon="assets/verification-badges/privacy.svg" title="Privacy">
         <Privacy checkLegacyBadge={checkLegacyBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
       </ContentCard>
-
-      {/* Social */}
       <ContentCard icon="assets/verification-badges/social.svg" title="Social">
         <Social
           handleRemoveBadgePopup={handleRemoveBadgePopup}
@@ -275,8 +269,6 @@ const VerificationBadges = () => {
           checkPrimary={checkPrimary}
         />
       </ContentCard>
-
-      {/* Web3 */}
       <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
         <MetaMaskProvider
           debug={false}
@@ -296,8 +288,6 @@ const VerificationBadges = () => {
           />
         </MetaMaskProvider>
       </ContentCard>
-
-      {/* Personal */}
       <ContentCard icon="assets/verification-badges/personal_icon.svg" title="Personal">
         <Personal
           fetchUser={persistedUserInfo}
