@@ -7,9 +7,14 @@ export default function HideOption({ questStartData }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [analyzePopup, setAnalyzePopup] = useState(false);
   const [deleteConfirmPopup, setDeleteConfirmPopup] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleAnalyzeClose = () => setAnalyzePopup(false);
   const handleDeleteConfirmClose = () => setDeleteConfirmPopup(false);
+
+  const handleItemSelection = (item) => {
+    return questStartData.hiddenAnswers.filter((answer) => answer !== item);
+  };
 
   return (
     <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
@@ -36,6 +41,7 @@ export default function HideOption({ questStartData }) {
             className="h-[12.47px] w-[9px] cursor-pointer tablet:h-[30px] tablet:w-[25px]"
             onClick={() => {
               setDeleteConfirmPopup(true);
+              setSelectedItem(item);
             }}
           />
         </div>
@@ -57,6 +63,7 @@ export default function HideOption({ questStartData }) {
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
           questStartData={questStartData}
           type="hideOption"
+          hiddenItem={handleItemSelection(selectedItem)}
         />
       )}
     </div>

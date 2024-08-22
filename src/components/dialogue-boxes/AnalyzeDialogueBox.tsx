@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { analyzeButtons } from '../../constants/advanceAnalytics';
+import { analyzeButtons, dualOptionsMap } from '../../constants/advanceAnalytics';
 import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
 import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
 import BadgeCount from '../../pages/features/advance-analytics/BadgeCount';
@@ -58,7 +58,7 @@ export default function AnalyzeDialogueBox({
                 onClick={toggleDropdown}
                 className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
               >
-                {selectedOptions.length > 0 ? selectedOptions[0] : 'Select an option'}
+                {selectedOptions.length > 0 ? selectedOptions[selectedOptions.length - 1] : 'Select an option'}
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
                   alt="arrow-right.svg"
@@ -67,18 +67,34 @@ export default function AnalyzeDialogueBox({
               </button>
               {isOpen && (
                 <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:max-h-48 tablet:border-[2px] tablet:text-[20px]">
-                  {questStartData?.QuestAnswers.map((post: PostAnswer) => (
-                    <li
-                      key={post.id}
-                      className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
-                      onClick={() => {
-                        setSelectedOptions([post.question]);
-                        toggleDropdown();
-                      }}
-                    >
-                      {post.question}
-                    </li>
-                  ))}
+                  {questStartData?.whichTypeQuestion === 'yes/no' ||
+                  questStartData?.whichTypeQuestion === 'agree/disagree' ||
+                  questStartData?.whichTypeQuestion === 'like/dislike'
+                    ? dualOptionsMap[
+                        questStartData?.whichTypeQuestion as 'yes/no' | 'agree/disagree' | 'like/dislike'
+                      ].map((item) => (
+                        <li
+                          className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
+                          onClick={() => {
+                            setSelectedOptions([...(questStartData?.hiddenAnswers || []), item.name]);
+                            toggleDropdown();
+                          }}
+                        >
+                          {item.name}
+                        </li>
+                      ))
+                    : questStartData?.QuestAnswers.map((post: PostAnswer) => (
+                        <li
+                          key={post.id}
+                          className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
+                          onClick={() => {
+                            setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
+                            toggleDropdown();
+                          }}
+                        >
+                          {post.question}
+                        </li>
+                      ))}
                 </ul>
               )}
             </div>

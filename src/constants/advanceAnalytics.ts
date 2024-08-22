@@ -23,3 +23,18 @@ export const comparisonOperators = [
   { id: 3, name: 'Equal to' },
   { id: 4, name: 'Not equal to' },
 ];
+
+export const dualOptionsMap: Record<'yes/no' | 'agree/disagree' | 'like/dislike', { id: number; name: string }[]> = {
+  'yes/no': [
+    { id: 1, name: 'Yes' },
+    { id: 2, name: 'No' },
+  ],
+  'agree/disagree': [
+    { id: 1, name: 'Agree' },
+    { id: 2, name: 'Disagree' },
+  ],
+  'like/dislike': [
+    { id: 1, name: 'Like' },
+    { id: 2, name: 'Dislike' },
+  ],
+};

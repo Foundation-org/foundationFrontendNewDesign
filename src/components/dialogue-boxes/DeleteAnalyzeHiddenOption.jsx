@@ -4,7 +4,15 @@ import { FaSpinner } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useAnalyzeBadgeMutation, useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
 
-export default function DeleteAnalyzeHiddenOption({ handleClose, modalVisible, title, image, questStartData, type }) {
+export default function DeleteAnalyzeHiddenOption({
+  handleClose,
+  modalVisible,
+  title,
+  image,
+  questStartData,
+  type,
+  hiddenItem,
+}) {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
   const { mutateAsync: handleAnalyzeBadgeCount, isPending: badgeCountPending } = useAnalyzeBadgeMutation({
@@ -16,7 +24,7 @@ export default function DeleteAnalyzeHiddenOption({ handleClose, modalVisible, t
       handleAnalyzePost({
         userUuid: persistedUserInfo.uuid,
         questForeignKey: questStartData._id,
-        hiddenOptionsArray: [],
+        hiddenOptionsArray: hiddenItem,
         actionType: 'delete',
       });
     }

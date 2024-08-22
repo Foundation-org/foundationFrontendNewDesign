@@ -20,7 +20,7 @@ export default function AdvanceAnalytics({ questStartData }) {
       {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
         <HideOption questStartData={questStartData} />
       )}
-      {questStartData?.oprend && questStartData?.range && <BadgeCountOption questStartData={questStartData} />}
+      {questStartData?.oprend >= 1 && questStartData?.range && <BadgeCountOption questStartData={questStartData} />}
       <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
         <Button
           variant={'addOption'}
