@@ -9,6 +9,9 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
+
+  console.log(item);
+
   const calculateTimeAgo = (time) => {
     let timeAgo;
     const currentDate = new Date();
@@ -194,7 +197,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
               <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {item?.delete ? '1 Deleted' : '0 Deleted'}
+                {item?.deleteCount ? `${item?.deleteCount} Deleted` : '0 Deleted'}
               </p>
             </div>
             {/* <div className="flex items-center gap-1">
