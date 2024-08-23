@@ -176,16 +176,6 @@ const QuestionCardWithToggle = (props) => {
     setViewResult(testId);
   };
 
-  // const handleChange = () => {
-  //   setOpenResults(false);
-  //   // const data = {
-  //   //   questForeignKey: questStartData._id,
-  //   //   uuid: persistedUserInfo.uuid,
-  //   // };
-
-  //   handleStartTest(questStartData._id);
-  // };
-
   const handleAddOption = () => {
     const newOption = {
       label: '',
@@ -764,14 +754,8 @@ const QuestionCardWithToggle = (props) => {
         handleStartTest(questStartData._id);
       }
       if (questStartData.startStatus === 'change answer') {
-        // if (!guestResult) {
         setOpenResults(false);
         handleViewResults(questStartData._id);
-        // } else {
-        //   navigate('/shared-links/result', {
-        //     state: { questId: questStartData._id, link: location.pathname.split('/').pop() },
-        //   });
-        // }
       }
       if (questStartData.startStatus === 'completed') {
         setOpenResults(true);
@@ -779,29 +763,6 @@ const QuestionCardWithToggle = (props) => {
       }
     }
   }, [questStartData]);
-
-  // const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
-  //   const { option, label } = actionPayload;
-
-  //   const updatedAnswers = prevAnswers.map((answer) => {
-  //     // Check if the label matches the question
-  //     if (label.some((item) => item.question === answer.label)) {
-  //       return { ...answer, check: true };
-  //       return answer;
-  //     }
-  //   });
-
-  //   return updatedAnswers;
-  // };
-
-  // const handleRankedChoice = (option, label) => {
-  //   const actionPayload = {
-  //     option,
-  //     label,
-  //   };
-
-  //   setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
-  // };
 
   const renderQuestContent = () => {
     if (viewResult !== questStartData._id && openResults !== true) {

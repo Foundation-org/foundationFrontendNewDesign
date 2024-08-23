@@ -39,6 +39,7 @@ const EmbedPost = () => {
             isBookmarked={false}
             isSingleQuest={true}
             postLink={link}
+            postProperties="Embed"
           />
         ))
       )}

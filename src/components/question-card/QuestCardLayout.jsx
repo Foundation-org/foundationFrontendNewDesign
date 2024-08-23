@@ -12,6 +12,7 @@ import { EmbededImage } from './EmbededImage';
 import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 import showToast from '../ui/Toast';
 import PostTopBar from './PostTopBar';
+import EmbedStatusBar from '../../pages/Embed/EmbedStatusBar';
 
 const QuestCardLayout = ({ questStartData, playing, postProperties, questType, children }) => {
   const dispatch = useDispatch();
@@ -92,9 +93,10 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
 
   return (
     <div
-      className="card-iframe max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white tablet:rounded-[15px] dark:border-gray-100 dark:bg-gray-200"
+      className="card-iframe max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
       ref={imageGetter}
     >
+      {postProperties === 'Embed' && <EmbedStatusBar />}
       <PostTopBar
         questStartData={questStartData}
         postProperties={postProperties}
@@ -103,7 +105,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       {questStartData?.suppressed &&
         questStartData?.uuid === persistedUserInfo.uuid &&
         questStartData?.type !== 'embed' && (
-          <div className="flex items-center justify-between border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px] dark:border-gray-100 dark:bg-red-300 dark:text-red-400">
+          <div className="flex items-center justify-between border-b-2 border-gray-250 bg-white-300 px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-red-100 dark:border-gray-100 dark:bg-red-300 dark:text-red-400 tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
             <h4 className="">SUPPRESSED</h4>
             {questStartData.uuid === localStorage.getItem('uuid') && (
               <Link to="/profile/feedback" className="underline">
