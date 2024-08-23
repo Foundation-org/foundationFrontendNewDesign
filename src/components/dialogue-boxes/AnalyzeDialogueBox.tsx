@@ -8,6 +8,7 @@ import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
 import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
 import BadgeCount from '../../pages/features/advance-analytics/BadgeCount';
 import showToast from '../ui/Toast';
+import Target from '../../pages/features/advance-analytics/Target';
 
 export default function AnalyzeDialogueBox({
   handleClose,
@@ -127,6 +128,8 @@ export default function AnalyzeDialogueBox({
           </div>
         ) : selectedBtn === 'Badge Count' ? (
           <BadgeCount handleClose={handleClose} questStartData={questStartData} />
+        ) : selectedBtn === 'Target' ? (
+          <Target handleClose={handleClose} questStartData={questStartData} />
         ) : (
           <h1 className="my-4 text-center text-[10px] font-semibold leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-14 tablet:text-[22px] tablet:leading-[22px]">
             Coming Soon!
