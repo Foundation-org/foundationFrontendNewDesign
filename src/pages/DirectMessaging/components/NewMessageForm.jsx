@@ -7,7 +7,18 @@ import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 
-export default function NewMessageForm({ to, sub, msg, setTo, setMsg, setSub, setAddNewMsg, isDraft, setIsDraft }) {
+export default function NewMessageForm({
+  draftId,
+  to,
+  sub,
+  msg,
+  setTo,
+  setMsg,
+  setSub,
+  setAddNewMsg,
+  isDraft,
+  setIsDraft,
+}) {
   const queryClient = useQueryClient();
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -19,6 +30,7 @@ export default function NewMessageForm({ to, sub, msg, setTo, setMsg, setSub, se
       subject: sub,
       message: msg,
       type: isDraft ? 'draft' : 'new',
+      draftId: draftId,
     };
     createNewMessage(params);
   };

@@ -14,6 +14,7 @@ export const createMessage = async (data) => {
     subject: data.subject,
     message: data.message,
     type: data.type,
+    draftId: data.draftId,
   });
 };
 

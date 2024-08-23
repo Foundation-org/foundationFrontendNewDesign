@@ -222,6 +222,7 @@ export default function DirectMessaging() {
           {/* Right Side */}
           {addNewMsg && (
             <NewMessageForm
+              draftId={draftId}
               to={to}
               sub={sub}
               msg={msg}
