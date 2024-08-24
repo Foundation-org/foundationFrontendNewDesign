@@ -19,6 +19,15 @@ export const analyzeBadge = async ({ userUuid, questForeignKey, operand, range }
   });
 };
 
+export const analyzeTarget = async ({ userUuid, questForeignKey, hiddenOptionsArray, targetQuestForeignKey }) => {
+  return await api.post(`/infoquestions/analyze?target=${true}`, {
+    userUuid,
+    questForeignKey,
+    hiddenOptionsArray,
+    targetQuestForeignKey,
+  });
+};
+
 export const useAnalyzePostMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
@@ -65,6 +74,46 @@ export const useAnalyzeBadgeMutation = ({ handleClose }) => {
   const mutation = useMutation({
     mutationFn: async ({ userUuid, questForeignKey, operand, range }) => {
       return analyzeBadge({ userUuid, questForeignKey, operand, range });
+    },
+    onSuccess: (resp, variables) => {
+      const { actionType } = variables;
+
+      if (resp.status === 200) {
+        if (actionType === 'create') {
+          showToast('success', 'hideOption');
+        } else if (actionType === 'delete') {
+          showToast('success', 'hideOptionDeleted');
+        }
+
+        // Pessimistic Update
+        queryClient.setQueryData(['SingleQuest'], (oldData) => {
+          if (resp.data && resp.data.result[0]) {
+            return resp.data.result[0];
+          } else {
+            return oldData;
+          }
+        });
+
+        // Optionally close the modal or perform other UI updates
+        handleClose();
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+      // Show error message in a toast
+      // toast.warning(error.response.data.message);
+    },
+  });
+
+  return mutation;
+};
+
+export const useAnalyzeTargetMutation = ({ handleClose }) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async ({ userUuid, questForeignKey, hiddenOptionsArray, targetQuestForeignKey }) => {
+      return analyzeTarget({ userUuid, questForeignKey, hiddenOptionsArray, targetQuestForeignKey });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;
