@@ -5,13 +5,13 @@ export default function EmbedStatusBar() {
 
   return (
     <div className="rounded-t-[10.1px] border-blue-100 border-b-blue-100 bg-blue-100 p-2 dark:border-b-gray-100 dark:bg-gray-200 tablet:rounded-t-[14.5px] tablet:border-b-[1.85px] tablet:p-4">
-      <div className="relative flex items-center justify-between">
+      <div className="relative flex items-center justify-center">
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/foundation_logo.svg`}
           alt="foundation_logo"
           className="h-[10px] w-auto tablet:h-auto"
         />
-        <div className="dark:bg-gray-200">
+        {/* <div className="dark:bg-gray-200">
           {persistedUserInfo?.role !== 'user' ? (
             <div className="flex cursor-pointer items-center gap-[15px]">
               <div className="relative h-fit w-fit">
@@ -60,7 +60,7 @@ export default function EmbedStatusBar() {
               </div>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

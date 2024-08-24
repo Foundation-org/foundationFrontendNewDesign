@@ -136,18 +136,18 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
         </div>
 
         <div className="w-full max-w-[730px]">
-          <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-white-400">
+          <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
             Embed Post Settings
           </h5>
-          <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px] dark:border-gray-100 dark:bg-accent-100">
-            <div className="mx-[15px] flex cursor-not-allowed items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px] dark:border-gray-100 dark:bg-gray-200 ">
-              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px] dark:text-white-600">
+          <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px]">
+            <div className="mx-[15px] flex cursor-not-allowed items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
                 Dark Mode
               </h5>
               <CustomSwitch enabled={darkMode} setEnabled={setDarkMode} />
             </div>
-            <div className="pointer-events-none mx-[15px] flex cursor-not-allowed items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px] dark:border-gray-100 dark:bg-gray-200 ">
-              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px] dark:text-white-600">
+            <div className="pointer-events-none mx-[15px] flex cursor-not-allowed items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
                 Results Mode
               </h5>
               <CustomSwitch enabled={resultsMode} setEnabled={setResultsMode} />

@@ -20,6 +20,7 @@ import { Button } from '../../../../../components/ui/Button.jsx';
 import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 import showToast from '../../../../../components/ui/Toast';
 import AddOptions from '../../../../../components/question-card/AddOptions';
+import EmbedParticipate from '../../../../Embed/EmbedParticipate';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -850,6 +851,7 @@ const QuestionCardWithToggle = (props) => {
         questType={props.questType}
       >
         {renderQuestContent()}
+        <EmbedParticipate postProperties={postProperties} />
         {props.questType !== 'feedback' && props.questType !== 'feedback-given' ? (
           <ButtonGroup
             questStartData={questStartData}
