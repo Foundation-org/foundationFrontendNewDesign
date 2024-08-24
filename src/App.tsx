@@ -2,31 +2,30 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Router } from './routes/route';
 import { Toaster } from 'sonner';
-import SEO from './utils/SEO';
-import { MaintenanceRouter } from './routes/maintenance';
-import api from './services/api/Axios';
 import { Helmet } from 'react-helmet-async';
 import { signOut } from './services/api/userAuth';
 import { resetFilters } from './features/sidebar/filtersSlice';
 import { addUser } from './features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import showToast from './components/ui/Toast';
+import api from './services/api/Axios';
 import FallbackLoading from './components/FallbackLoading';
+import showToast from './components/ui/Toast';
+import { MaintenanceRouter } from './routes/maintenance';
 // import SEO from './utils/SEO';
 
 function App() {
   // const [theme, setTheme] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [isMaintenance, setIsMaintenance] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Function to handle the event
-    const handlePreloadError = (event) => {
+    const handlePreloadError = () => {
       // Perform the desired action on preload error
       window.location.reload(); // Correct method to reload the page
     };
@@ -148,7 +147,6 @@ function App() {
     },
     onError: (error) => {
       console.log(error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     },
   });
 
