@@ -7,7 +7,7 @@ export default function HideOption({ questStartData }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [analyzePopup, setAnalyzePopup] = useState(false);
   const [deleteConfirmPopup, setDeleteConfirmPopup] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState('');
 
   const handleAnalyzeClose = () => setAnalyzePopup(false);
   const handleDeleteConfirmClose = () => setDeleteConfirmPopup(false);
@@ -33,7 +33,10 @@ export default function HideOption({ questStartData }) {
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/edit.svg' : 'assets/svgs/edit.svg'}`}
             alt="trash"
             className="size-[12.47px] cursor-pointer tablet:h-[30px] tablet:w-[25px]"
-            onClick={() => setAnalyzePopup(true)}
+            onClick={() => {
+              setAnalyzePopup(true);
+              setSelectedItem(item);
+            }}
           />
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
@@ -53,6 +56,8 @@ export default function HideOption({ questStartData }) {
           title={'Analyze'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
           questStartData={questStartData}
+          update={true}
+          selectedItem={selectedItem}
         />
       )}
       {deleteConfirmPopup && (

@@ -15,6 +15,8 @@ export default function AnalyzeDialogueBox({
   title,
   image,
   questStartData,
+  update,
+  selectedItem,
 }: AnalyzeModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedBtn, setSelectedBtn] = useState('Hide');
@@ -75,6 +77,7 @@ export default function AnalyzeDialogueBox({
                         questStartData?.whichTypeQuestion as 'yes/no' | 'agree/disagree' | 'like/dislike'
                       ].map((item) => (
                         <li
+                          key={item.id}
                           className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                           onClick={() => {
                             showToast('warning', 'cantHideLastTwoOptions');
@@ -93,7 +96,15 @@ export default function AnalyzeDialogueBox({
                             if (questStartData?.QuestAnswers.length <= 2) {
                               showToast('warning', 'cantHideLastTwoOptions');
                             } else {
-                              setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
+                              if (update) {
+                                const updatedOptions = (questStartData?.hiddenAnswers || []).map((item: string) =>
+                                  item === selectedItem ? post.question : item,
+                                );
+
+                                setSelectedOptions([...updatedOptions]);
+                              } else {
+                                setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
+                              }
                             }
                             toggleDropdown();
                           }}

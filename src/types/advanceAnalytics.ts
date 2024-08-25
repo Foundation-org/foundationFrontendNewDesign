@@ -4,6 +4,8 @@ export interface AnalyzeModalProps {
   title: string;
   image: string;
   questStartData: any;
+  update: boolean;
+  selectedItem: string;
 }
 
 export type PostAnswer = {

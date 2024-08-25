@@ -41,6 +41,7 @@ export default function AdvanceAnalytics({ questStartData }) {
           title={'Analyze'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
           questStartData={questStartData}
+          update={false}
         />
       )}
     </div>
