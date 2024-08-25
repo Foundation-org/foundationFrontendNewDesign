@@ -8,6 +8,7 @@ import { AnalyzeModalProps, PostAnswer } from '../../types/advanceAnalytics';
 import { useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
 import BadgeCount from '../../pages/features/advance-analytics/BadgeCount';
 import showToast from '../ui/Toast';
+import { current } from '@reduxjs/toolkit';
 
 export default function AnalyzeDialogueBox({
   handleClose,
@@ -21,6 +22,7 @@ export default function AnalyzeDialogueBox({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedBtn, setSelectedBtn] = useState('Hide');
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [currentSelection, setCurrentSelection] = useState('');
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
 
@@ -61,7 +63,11 @@ export default function AnalyzeDialogueBox({
                 onClick={toggleDropdown}
                 className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
               >
-                {selectedOptions.length > 0 ? selectedOptions[selectedOptions.length - 1] : 'Select an option'}
+                {selectedOptions.length > 0
+                  ? update
+                    ? currentSelection
+                    : selectedOptions[selectedOptions.length - 1]
+                  : 'Select an option'}
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
                   alt="arrow-right.svg"
@@ -93,15 +99,15 @@ export default function AnalyzeDialogueBox({
                           key={post.id}
                           className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                           onClick={() => {
-                            if (questStartData?.QuestAnswers.length <= 2) {
-                              showToast('warning', 'cantHideLastTwoOptions');
+                            if (update) {
+                              const updatedOptions = (questStartData?.hiddenAnswers || []).map((item: string) =>
+                                item === selectedItem ? post.question : item,
+                              );
+                              setSelectedOptions([...updatedOptions]);
+                              setCurrentSelection(post.question);
                             } else {
-                              if (update) {
-                                const updatedOptions = (questStartData?.hiddenAnswers || []).map((item: string) =>
-                                  item === selectedItem ? post.question : item,
-                                );
-
-                                setSelectedOptions([...updatedOptions]);
+                              if (questStartData?.QuestAnswers.length <= 2) {
+                                showToast('warning', 'cantHideLastTwoOptions');
                               } else {
                                 setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
                               }
@@ -118,10 +124,14 @@ export default function AnalyzeDialogueBox({
             <div className="mt-2 flex w-full justify-end tablet:mt-4">
               <Button
                 variant={
-                  questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0 ? 'submit-hollow' : 'submit'
+                  update
+                    ? 'submit'
+                    : questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0
+                      ? 'submit-hollow'
+                      : 'submit'
                 }
                 className=""
-                disabled={questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0}
+                disabled={update ? false : questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0}
                 rounded={false}
                 onClick={() => {
                   handleAnalyzePost({
