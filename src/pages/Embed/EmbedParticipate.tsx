@@ -7,7 +7,7 @@ export default function EmbedParticipate({ postProperties }: { postProperties: s
   return (
     <>
       {postProperties === 'Embed' ? (
-        <div className="flex w-full justify-center">
+        <div className="absolute top-1/2 mt-1 flex w-full -translate-y-1/2 justify-center">
           {match && (
             <a
               href={`https://localhost:5173/p/${match[1]}`}
