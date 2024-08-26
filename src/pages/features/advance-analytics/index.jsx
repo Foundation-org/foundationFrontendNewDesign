@@ -20,7 +20,9 @@ export default function AdvanceAnalytics({ questStartData }) {
       {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
         <HideOption questStartData={questStartData} />
       )}
-      {questStartData?.oprend >= 1 && questStartData?.range && <BadgeCountOption questStartData={questStartData} />}
+      {questStartData?.oprend >= 1 && questStartData?.range >= 0 && (
+        <BadgeCountOption questStartData={questStartData} />
+      )}
       <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
         <Button
           variant={'addOption'}
@@ -39,6 +41,7 @@ export default function AdvanceAnalytics({ questStartData }) {
           title={'Analyze'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
           questStartData={questStartData}
+          update={false}
         />
       )}
     </div>
