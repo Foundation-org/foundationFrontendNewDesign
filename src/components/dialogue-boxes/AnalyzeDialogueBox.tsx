@@ -20,7 +20,7 @@ export default function AnalyzeDialogueBox({
   selectedItem,
 }: AnalyzeModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedBtn, setSelectedBtn] = useState('Hide');
+  const [selectedBtn, setSelectedBtn] = useState('Hide Option');
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [currentSelection, setCurrentSelection] = useState('');
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
@@ -53,7 +53,7 @@ export default function AnalyzeDialogueBox({
             </button>
           ))}
         </div>
-        {selectedBtn === 'Hide' ? (
+        {selectedBtn === 'Hide Option' ? (
           <div className="flex flex-col">
             <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
               You can Hide an option

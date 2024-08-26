@@ -1,7 +1,7 @@
 export const analyzeButtons = [
   {
     id: 1,
-    title: 'Hide',
+    title: 'Hide Option',
   },
   {
     id: 2,
