@@ -56,9 +56,9 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
               setSearchPost(e.target.value);
             }}
           />
-          <ul className="absolute z-10 h-fit max-h-56 w-full overflow-y-auto border text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:rounded-b-[10px] tablet:text-[15.7px]">
-            {searchPost !== '' &&
-              searchResult?.map((post: any) => (
+          {searchPost !== '' && (
+            <ul className="absolute z-10 h-fit max-h-56 w-full overflow-y-auto border text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:rounded-b-[10px] tablet:text-[15.7px]">
+              {searchResult?.map((post: any) => (
                 <li
                   key={post._id}
                   className="cursor-pointer border-b border-white-500 px-4 py-[6px] last:border-b-0 dark:border-gray-100 tablet:border-b-[3px] tablet:py-2"
@@ -71,10 +71,11 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
                   {post.Question}
                 </li>
               ))}
-          </ul>
+            </ul>
+          )}
         </div>
         {selectedPost?.Question && (
-          <ul className="flex w-full flex-col gap-[5.7px] tablet:gap-[10px]">
+          <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:h-[226px] tablet:gap-[10px]">
             {selectedPost?.QuestAnswers.map((post: any) => (
               <SelectionOption
                 key={post._id}
