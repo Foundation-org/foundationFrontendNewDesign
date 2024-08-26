@@ -23,7 +23,7 @@ export default function BadgeCountOption({ questStartData }) {
         //   key={index + 1}
         className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 dark:border-gray-100 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3"
       >
-        <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+        <div className="w-fit min-w-[76px] max-w-[76px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:min-w-[150px] tablet:max-w-[150px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
           <h1 className="whitespace-nowrap text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
             Badge Count
           </h1>

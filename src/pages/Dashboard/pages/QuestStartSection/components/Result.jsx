@@ -358,12 +358,12 @@ const Result = (props) => {
         </div>
       ) : props.title === 'Multiple Choice' || props.title === 'Open Choice' ? (
         <div className="relative">
-          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[135px]">
+          <div className="absolute -top-[21px] right-[70px] tablet:-top-7 tablet:right-[135px]">
             <button onClick={handleSortIconClick}>
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
             </button>
           </div>
-          <div className="absolute -top-[21px] right-7 tablet:-top-7 tablet:right-[64px]">
+          <div className="absolute -top-[21px] right-6 tablet:-top-7 tablet:right-[64px]">
             <button onClick={handleContendedSortIconClick}>
               <SortIcon
                 type={'contended'}
