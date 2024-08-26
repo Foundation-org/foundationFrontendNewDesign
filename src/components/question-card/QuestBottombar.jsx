@@ -1,15 +1,16 @@
 import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { calculateTimeAgo } from '../../utils/utils';
+import { referralModalStyle } from '../../constants/styles';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { feedBackAndHideOptions } from '../../constants/feedbackAndHide';
+import showToast from '../ui/Toast';
 import Copy from '../../assets/Copy';
 import BasicModal from '../BasicModal';
 import CopyDialogue from '../question-card/Shareables/CopyDialogue';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
-import showToast from '../ui/Toast';
-import { referralModalStyle } from '../../constants/styles';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
-import { feedBackAndHideOptions } from '../../constants/feedbackAndHide';
 
 const QuestBottombar = ({ time, questStartData, postProperties, showDisableSharedLinkPopup }) => {
   const navigate = useNavigate();
@@ -19,11 +20,24 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [copyModal, setCopyModal] = useState(false);
   const [addToList, setAddToList] = useState(false);
-  const [timeAgo, setTimeAgo] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(feedBackAndHideOptions.map(() => false));
 
-  const handleCopyOpen = () => {
+  const handleCopyClose = () => setCopyModal(false);
+  const addToListPopupClose = () => setAddToList(false);
+  const showHidePostClose = () => setModalVisible(false);
+
+  const handleHidePostClick = () => {
+    if (questStartData.uuid === persistedUserInfo.uuid) {
+      showToast('warning', 'hidingOwnPost');
+      return;
+    }
+
+    setCheckboxStates(feedBackAndHideOptions.map(() => false));
+    setModalVisible(true);
+  };
+
+  const handleSharePostClick = () => {
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>
@@ -42,72 +56,33 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
     }
   };
 
-  const handleCopyClose = () => setCopyModal(false);
-
-  const addToListPopupClose = () => setAddToList(false);
-
-  const calculateTimeAgo = () => {
-    const currentDate = new Date();
-    const createdAtDate = new Date(time);
-
-    if (isNaN(createdAtDate.getTime())) {
-      setTimeAgo('Invalid date');
+  const handleAddToListClick = () => {
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
       return;
-    }
-
-    const timeDifference = currentDate - createdAtDate;
-    const seconds = Math.floor(Math.max(timeDifference / 1000, 0));
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-      setTimeAgo(`${days} ${days === 1 ? 'day' : 'days'} ago`);
-    } else if (hours > 0) {
-      setTimeAgo(`${hours} ${hours === 1 ? 'hour' : 'hours'} ago`);
-    } else if (minutes > 0) {
-      setTimeAgo(`${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`);
     } else {
-      setTimeAgo(`${seconds} ${seconds === 1 ? 'second' : 'seconds'} ago`);
+      setAddToList(true);
     }
   };
 
-  const showHidePostOpen = () => {
-    if (questStartData.uuid === persistedUserInfo.uuid) {
-      showToast('warning', 'hidingOwnPost');
-      return;
+  const handleAnalyzeClick = () => {
+    if (questStartData?.startStatus === '') {
+      showToast('warning', 'analyzeParticipatedPost');
+    } else {
+      navigate('/post/isfullscreen', { state: { questId: questStartData._id } });
     }
-
-    setCheckboxStates(feedBackAndHideOptions.map(() => false));
-    setModalVisible(true);
   };
-
-  const showHidePostClose = () => {
-    setModalVisible(false);
-  };
-
-  useEffect(() => {
-    calculateTimeAgo();
-  }, [time]);
 
   return (
     <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
-      {modalVisible && (
-        <ShowHidePostPopup
-          handleClose={showHidePostClose}
-          setCheckboxStates={setCheckboxStates}
-          checkboxStates={checkboxStates}
-          data={feedBackAndHideOptions}
-          modalVisible={modalVisible}
-          questStartData={questStartData}
-          feature={'Hide'}
-        />
-      )}
-
-      {addToList && (
-        <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
-      )}
-
       {postProperties === 'HiddenPosts' ? (
         <div className="flex items-center gap-[2px] tablet:gap-2">
           <img
@@ -137,19 +112,26 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             />
             <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
               {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
-              {timeAgo}
+              {calculateTimeAgo(time)}
             </h4>
           </div>
         </div>
       ) : null}
 
       {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
-        <div className="flex w-full items-center justify-between gap-[8px] tablet:gap-[25px]">
+        <div
+          className={`grid w-full ${
+            postProperties !== 'sharedlink-results' &&
+            postProperties !== 'actual-results' &&
+            !location.pathname.includes('/p/') &&
+            !location.pathname.includes('/l/') &&
+            location.pathname !== '/post/isfullscreen'
+              ? 'grid-cols-4'
+              : 'grid-cols-3'
+          }`}
+        >
           {/* Hide Post */}
-          <button
-            className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
-            onClick={showHidePostOpen}
-          >
+          <button className="flex w-fit items-center gap-1 tablet:gap-2" onClick={handleHidePostClick}>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
               alt="eye-latest"
@@ -160,48 +142,35 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             </h1>
           </button>
           {/* Share */}
-          {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
-            <>
-              <button
-                onClick={() => {
-                  handleCopyOpen();
-                }}
-                className="flex min-w-[63px] items-center gap-1 tablet:min-w-[146px] tablet:gap-2"
-              >
-                {persistedTheme === 'dark' ? <Copy /> : <Copy />}
-                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
-                  Share
-                </h1>
-              </button>
-              <BasicModal
-                open={copyModal}
-                handleClose={handleCopyClose}
-                customStyle={referralModalStyle}
-                customClasses="rounded-[10px] tablet:rounded-[26px]"
-              >
-                <CopyDialogue handleClose={handleCopyClose} questStartData={questStartData} />
-              </BasicModal>{' '}
-            </>
-          )}
+          <button
+            className={`${
+              postProperties !== 'sharedlink-results' &&
+              postProperties !== 'actual-results' &&
+              !location.pathname.includes('/p/') &&
+              !location.pathname.includes('/l/') &&
+              location.pathname !== '/post/isfullscreen'
+                ? 'w-fit'
+                : 'w-full justify-center'
+            } flex items-center gap-1 tablet:gap-2`}
+            onClick={handleSharePostClick}
+          >
+            {persistedTheme === 'dark' ? <Copy /> : <Copy />}
+            <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+              Share
+            </h1>
+          </button>
           {/* Add to list */}
           <button
-            className="flex min-w-[63px] items-center justify-center gap-1 tablet:min-w-[146px] tablet:gap-2"
-            onClick={() => {
-              if (persistedUserInfo?.role === 'guest') {
-                toast.warning(
-                  <p>
-                    Please{' '}
-                    <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-                      Create an Account
-                    </span>{' '}
-                    to unlock this feature
-                  </p>,
-                );
-                return;
-              } else {
-                setAddToList(true);
-              }
-            }}
+            className={`${
+              postProperties !== 'sharedlink-results' &&
+              postProperties !== 'actual-results' &&
+              !location.pathname.includes('/p/') &&
+              !location.pathname.includes('/l/') &&
+              location.pathname !== '/post/isfullscreen'
+                ? 'justify-center'
+                : 'justify-end'
+            } flex items-center gap-1 tablet:gap-2`}
+            onClick={handleAddToListClick}
           >
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/list.svg' : 'assets/svgs/addToList.svg'}`}
@@ -214,26 +183,16 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
           </button>
           {/* Analyze Post */}
           <>
-            {postProperties !== 'HiddenPosts' &&
-            postProperties !== 'SharedLinks' &&
-            postProperties !== 'sharedlink-results' &&
+            {postProperties !== 'sharedlink-results' &&
             postProperties !== 'actual-results' &&
-            !window.location.href.includes('/p/') &&
+            !location.pathname.includes('/p/') &&
             !location.pathname.includes('/l/') &&
             location.pathname !== '/post/isfullscreen' ? (
-              <div className="flex justify-end tablet:min-w-[146px]">
+              <div className="flex w-full justify-end">
                 {isFullScreen === undefined ? (
                   <div
                     className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem]"
-                    onClick={() => {
-                      if (questStartData?.startStatus === '') {
-                        showToast('warning', 'analyzeParticipatedPost');
-                      } else {
-                        navigate('/post/isfullscreen', {
-                          state: { questId: questStartData._id },
-                        });
-                      }
-                    }}
+                    onClick={handleAnalyzeClick}
                   >
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/analyze-beaker.svg' : 'assets/svgs/analyze-beaker.svg'}`}
@@ -251,6 +210,33 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
             ) : null}
           </>
         </div>
+      )}
+
+      {modalVisible && (
+        <ShowHidePostPopup
+          handleClose={showHidePostClose}
+          setCheckboxStates={setCheckboxStates}
+          checkboxStates={checkboxStates}
+          data={feedBackAndHideOptions}
+          modalVisible={modalVisible}
+          questStartData={questStartData}
+          feature={'Hide'}
+        />
+      )}
+
+      {addToList && (
+        <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
+      )}
+
+      {copyModal && (
+        <BasicModal
+          open={copyModal}
+          handleClose={handleCopyClose}
+          customStyle={referralModalStyle}
+          customClasses="rounded-[10px] tablet:rounded-[26px]"
+        >
+          <CopyDialogue handleClose={handleCopyClose} questStartData={questStartData} />
+        </BasicModal>
       )}
     </div>
   );

@@ -268,7 +268,7 @@ export default function DashboardLayout({ children }) {
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
         <div>
-          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 dark:bg-silver-500 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 dark:bg-silver-500 tablet:h-[80px] tablet:px-5 laptop:hidden">
             <div className="h-fit rounded-[15px]" onClick={() => navigate('/treasury')}>
               {persistedUserInfo?.role !== 'user' ? (
                 <div className="flex cursor-pointer items-center gap-2">
@@ -358,10 +358,10 @@ export default function DashboardLayout({ children }) {
               location.pathname !== '/treasury/ledger' && (
                 <>
                   {persistedUserInfo?.role === 'user' ? (
-                    <div className="flex w-fit max-w-[18.75rem] items-center gap-1 tablet:ml-[31px] tablet:w-full tablet:justify-center tablet:gap-[15px] laptop:flex-col">
+                    <div className="flex w-fit items-center gap-1 tablet:ml-[31px] tablet:w-full tablet:justify-end tablet:gap-[15px] laptop:flex-col">
                       <Button
                         variant="hollow-submit2"
-                        className="bg-white tablet:w-full"
+                        className="bg-white tablet:w-fit"
                         onClick={() => navigate('/post')}
                       >
                         Create Post
@@ -371,7 +371,7 @@ export default function DashboardLayout({ children }) {
                       </Button>
                       <Button
                         variant="hollow-submit2"
-                        className="bg-white tablet:w-full"
+                        className="bg-white tablet:w-fit"
                         onClick={() => navigate('/profile/verification-badges')}
                       >
                         Add Badge

@@ -93,7 +93,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
 
   return (
     <div
-      className="card-iframe max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
+      className="card-iframe h-full max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
       ref={imageGetter}
     >
       {postProperties === 'Embed' && <EmbedStatusBar />}

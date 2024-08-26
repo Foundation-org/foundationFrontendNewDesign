@@ -841,8 +841,14 @@ const QuestionCardWithToggle = (props) => {
     }
   };
 
+  console.log();
+
   return (
-    <div ref={innerRef} id={questStartData._id === getQuestUtilsState.playerPlayingId ? 'playing-card' : ''}>
+    <div
+      ref={innerRef}
+      id={questStartData._id === getQuestUtilsState.playerPlayingId ? 'playing-card' : ''}
+      className={`${questStartData.type === 'embed' && 'h-full'}`}
+    >
       <QuestCardLayout
         questStartData={questStartData}
         playing={props.playing}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <iframe
+      src="https://localhost:5173/embed/ndsw83sD?darkMode=false"
+      style="border: none; width: 100%; max-width: 600px; border-radius: 15px"
+      onload="
+        this.style.height = window.innerWidth < 600 ? '488px' : '666px';
+        window.addEventListener('resize', () => {
+          this.style.height = window.innerWidth < 600 ? '488px' : '666px';
+        });
+      "
+      title="Embedded Content"
+    ></iframe>
+</body>
+</html>
