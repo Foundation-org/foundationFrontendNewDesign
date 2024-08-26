@@ -68,7 +68,8 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button
-          variant={'submit'}
+          variant={badgeNumber === null || badgeNumber <= 0 ? 'submit-hollow' : 'submit'}
+          disabled={badgeNumber === null || badgeNumber <= 0}
           className=""
           rounded={false}
           onClick={() => {

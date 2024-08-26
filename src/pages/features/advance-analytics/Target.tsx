@@ -93,11 +93,13 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
           disabled={isPending || selectedOption.length <= 0}
           rounded={false}
           onClick={() => {
+            const modifiedArray = selectedOption.map((item: { question: string }) => item.question);
+
             handleAnalyzePost({
               userUuid: persistedUserInfo.uuid,
               questForeignKey: questStartData._id,
-              hiddenOptionsArray: selectedOption,
-              targetQuestForeignKey: selectedPost._id,
+              targetedOptionsArray: modifiedArray,
+              targetedQuestForeignKey: selectedPost._id,
               actionType: 'create',
             } as any);
           }}
