@@ -841,8 +841,6 @@ const QuestionCardWithToggle = (props) => {
     }
   };
 
-  console.log();
-
   return (
     <div
       ref={innerRef}

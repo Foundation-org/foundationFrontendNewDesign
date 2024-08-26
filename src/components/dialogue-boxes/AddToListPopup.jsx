@@ -45,7 +45,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   const { mutateAsync: addPostInList, isPending: isLoading } = useMutation({
     mutationFn: addPostinAList,
     onSuccess: (resp) => {
-      console.log(resp);
       if (resp.response?.status === 409) {
         toast.warning(resp.response.data.message);
       }
@@ -117,13 +116,13 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               : 'Create List'}
           </p> */}
           {listData?.length === 0 && (
-            <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold dark:text-gray-300">
+            <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
               You currently have no lists created. Enter a list name below and the post will be added to it.
             </label>
           )}
           <input
             type="text"
-            className="peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-white-500 bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300"
+            className="peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-white-500 bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px]"
             value={listName}
             placeholder="List name"
             onChange={(e) => setListName(e.target.value)}
@@ -150,9 +149,9 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
 
         {listData?.length >= 1 && (
           <>
-            <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px] dark:bg-white" />
+            <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] dark:bg-white tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
             <div>
-              <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold dark:text-gray-300">
+              <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
                 My lists
               </h4>
               <div className="relative my-3 tablet:my-[25px]">
@@ -160,14 +159,14 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="peer block h-full w-full min-w-[280px] appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px] dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 dark:focus:border-blue-500"
+                    className="peer block h-full w-full min-w-[280px] appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 dark:focus:border-blue-500 tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px]"
                     value={search}
                     placeholder=""
                     onChange={handleSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
-                    className="te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[9px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2  peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-accent-100 dark:text-gray-300 peer-focus:dark:text-blue-500"
+                    className="te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[9px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-accent-100 dark:text-gray-300 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
                   >
                     Search
                   </label>
@@ -188,7 +187,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                   />
                 )}
               </div>
-              <div className="no-scrollbar mt-3 h-fit max-h-[160px] space-y-3 overflow-y-auto tablet:mt-[15px] tablet:max-h-[280px] tablet:space-y-[15px]">
+              <div className="mt-3 h-fit max-h-[160px] space-y-3 overflow-y-auto no-scrollbar tablet:mt-[15px] tablet:max-h-[280px] tablet:space-y-[15px]">
                 {listData
                   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                   ?.filter((list) => {
@@ -200,13 +199,13 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                   .map((item) => (
                     <div
                       key={item._id}
-                      className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5 dark:border-gray-100 dark:bg-accent-100"
+                      className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
                     >
                       <div className="w-fit space-y-2 tablet:space-y-5">
-                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px] dark:text-gray-300">
+                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
                           {item.category}
                         </h4>
-                        <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px] dark:text-gray-300">
+                        <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] dark:text-gray-300 tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
                           {item.post.length} Post{item.post.length > 1 ? 's' : ''}
                         </h4>
                       </div>

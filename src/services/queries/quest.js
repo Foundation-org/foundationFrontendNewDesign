@@ -64,6 +64,8 @@ export function useGetSingleQuest(uuid, id) {
       return (await HomepageAPIs.getQuestById(uuid, id)).data.data[0];
     },
     queryKey: ['SingleQuest'],
+    initialData: null,
+    staleTime: 0,
   });
 }
 

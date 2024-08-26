@@ -11,6 +11,8 @@ import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import Loader from '../../components/ui/Loader';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import AdvanceAnalytics from '../features/advance-analytics';
+import { useQuery } from '@tanstack/react-query';
+import { getQuestById } from '../../services/api/homepageApis';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
@@ -28,7 +30,7 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
-  const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
+  // const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
 
   const handleStartTest = useCallback(
     (testId) => {
@@ -45,6 +47,15 @@ const Guests = () => {
     },
     [setStartTest, setViewResult],
   );
+
+  const { data: singleQuestResp, isPending } = useQuery({
+    queryKey: ['SingleQuest', persistedUserInfo?.uuid, location.state.questId],
+    queryFn: async () => {
+      return (await getQuestById(persistedUserInfo?.uuid, location.state.questId)).data.data[0];
+    },
+    initialData: null,
+    staleTime: 0,
+  });
 
   return (
     <>
@@ -119,9 +130,11 @@ const Guests = () => {
               ) : (
                 <Loader />
               )}
-              <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
-                <AdvanceAnalytics questStartData={singleQuestResp} />
-              </div>
+              {location.state.questType === undefined && (
+                <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
+                  <AdvanceAnalytics questStartData={singleQuestResp} />
+                </div>
+              )}
             </div>
           </div>
         </DashboardLayout>
