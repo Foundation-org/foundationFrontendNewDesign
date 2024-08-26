@@ -10,18 +10,16 @@ import { useEffect, useState } from 'react';
 const EmbedPost = () => {
   let { link } = useParams();
   const dispatch = useDispatch();
-  const [resultsMode, setResultsMode] = useState(true);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    setResultsMode(queryParams.get('resultsMode') == 'true' ? true : false);
     dispatch(changeThemeTo(queryParams.get('darkMode') == 'true' ? 'dark' : 'light'));
   }, [location.search]);
 
   const { data: singleQuestData, isLoading } = useQuery({
-    queryKey: ['emdedPost', resultsMode],
-    queryFn: () => fetchResults(link, resultsMode),
+    queryKey: ['emdedPost'],
+    queryFn: () => fetchResults(link),
   });
 
   return (
