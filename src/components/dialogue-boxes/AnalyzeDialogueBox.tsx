@@ -5,6 +5,7 @@ import { AnalyzeModalProps } from '../../types/advanceAnalytics';
 import BadgeCount from '../../pages/features/advance-analytics/BadgeCount';
 import Target from '../../pages/features/advance-analytics/Target';
 import HideOption from '../../pages/features/advance-analytics/HideOption';
+import Activity from '../../pages/features/advance-analytics/Activity';
 
 export default function AnalyzeDialogueBox({
   handleClose,
@@ -32,6 +33,8 @@ export default function AnalyzeDialogueBox({
         return <BadgeCount handleClose={handleClose} questStartData={questStartData} />;
       // case 'Target':
       //   return <Target handleClose={handleClose} questStartData={questStartData} />;
+      // case 'Activity':
+      //   return <Activity handleClose={handleClose} questStartData={questStartData} />;
       default:
         return (
           <h1 className="my-4 text-center text-[10px] font-semibold leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-14 tablet:text-[22px] tablet:leading-[22px]">

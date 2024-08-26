@@ -38,3 +38,12 @@ export const dualOptionsMap: Record<'yes/no' | 'agree/disagree' | 'like/dislike'
     { id: 2, name: 'Dislike' },
   ],
 };
+
+export const activityList = [
+  { id: 1, name: 'Posts you’ve created' },
+  { id: 2, name: 'Post engaged' },
+  { id: 3, name: 'Your post engaged' },
+  { id: 4, name: 'Selection changed' },
+  { id: 5, name: 'Option added' },
+  { id: 6, name: 'agreement received' },
+];
