@@ -30,7 +30,7 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
-  // const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
+  const { data: singleQuestResp, isPending } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
 
   const handleStartTest = useCallback(
     (testId) => {
@@ -48,14 +48,16 @@ const Guests = () => {
     [setStartTest, setViewResult],
   );
 
-  const { data: singleQuestResp, isPending } = useQuery({
-    queryKey: ['SingleQuest', persistedUserInfo?.uuid, location.state.questId],
-    queryFn: async () => {
-      return (await getQuestById(persistedUserInfo?.uuid, location.state.questId)).data.data[0];
-    },
-    initialData: null,
-    staleTime: 0,
-  });
+  // const { data: singleQuestResp, isPending } = useQuery({
+  //   queryKey: ['SingleQuest'],
+  //   queryFn: async () => {
+  //     return (await getQuestById(persistedUserInfo?.uuid, location.state.questId)).data.data[0];
+  //   },
+  //   initialData: null,
+  //   staleTime: 0,
+  // });
+
+  // console.log(singleQuestResp);
 
   return (
     <>
@@ -81,7 +83,7 @@ const Guests = () => {
                 </div>
               )}
 
-              {singleQuestResp ? (
+              {!isPending && singleQuestResp ? (
                 <div>
                   {isFullScreen !== 'isfullscreen' ? (
                     <QuestionCard
@@ -130,7 +132,7 @@ const Guests = () => {
               ) : (
                 <Loader />
               )}
-              {location.state.questType === undefined && (
+              {!isPending && location.state.questType === undefined && (
                 <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
                   <AdvanceAnalytics questStartData={singleQuestResp} />
                 </div>
