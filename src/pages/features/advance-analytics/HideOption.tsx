@@ -68,16 +68,18 @@ export default function HideOption({ handleClose, questStartData, update, select
                     className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                     onClick={() => {
                       if (update) {
-                        const updatedOptions = (questStartData?.hiddenAnswers || []).map((item: string) =>
-                          item === selectedItem ? post.question : item,
-                        );
-                        setSelectedOptions([...updatedOptions]);
-                        setCurrentSelection(post.question);
+                        console.log('update', selectedItem, post.question);
+                        // const updatedOptions = (questStartData?.hiddenAnswers || []).map((item: string) =>
+                        //   item === selectedItem ? post.question : item,
+                        // );
+                        // setSelectedOptions([...updatedOptions]);
+                        // setCurrentSelection(post.question);
                       } else {
                         if (questStartData?.QuestAnswers.length <= 2) {
                           showToast('warning', 'cantHideLastTwoOptions');
                         } else {
-                          setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
+                          setSelectedOptions([post.question]);
+                          // setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
                         }
                       }
                       toggleDropdown();

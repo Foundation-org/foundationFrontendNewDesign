@@ -5,8 +5,9 @@ import { TextareaAutosize } from '@mui/material';
 import { Button } from '../../../components/ui/Button';
 import { searchPosts } from '../../../services/api/listsApi';
 import { AddBadgeProps } from '../../../types/advanceAnalytics';
-import SelectionOption from '../../../components/SelectionOption';
 import { useAnalyzeTargetMutation } from '../../../services/mutations/advance-analytics';
+import SelectionOption from '../../../components/SelectionOption';
+import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 
 export default function Target({ handleClose, questStartData }: AddBadgeProps) {
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -57,35 +58,39 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
             }}
           />
           {searchPost !== '' && (
-            <ul className="absolute z-10 h-fit max-h-56 w-full overflow-y-auto border bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:rounded-b-[10px] tablet:text-[15.7px]">
+            <ul className="absolute z-10 h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
               {searchResult?.map((post: any) => (
                 <li
                   key={post._id}
-                  className="cursor-pointer border-b border-white-500 px-4 py-[6px] last:border-b-0 dark:border-gray-100 tablet:border-b-[3px] tablet:py-2"
+                  className="cursor-pointer px-4 py-[6px] tablet:py-2"
                   onClick={() => {
                     setSearchPost('');
                     setSearchResult([]);
                     setSelectedPost(post);
                   }}
                 >
-                  {post.Question}
+                  <QuestionCardWithToggle questStartData={post} />
                 </li>
               ))}
             </ul>
           )}
         </div>
-        {selectedPost?.Question && (
-          <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:h-[226px] tablet:gap-[10px]">
-            {selectedPost?.QuestAnswers.map((post: any) => (
-              <SelectionOption
-                key={post._id}
-                data={post}
-                selected={selectedOption}
-                handleSelection={handleOptionSelection}
-              />
-            ))}
-          </ul>
-        )}
+
+        {/* {selectedPost?.Question && (
+          <div className="max-h-[40dvh] w-full overflow-y-auto">
+            <QuestionCardWithToggle questStartData={selectedPost} />
+          </div>
+        )} */}
+        <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
+          {selectedPost?.QuestAnswers.map((post: any) => (
+            <SelectionOption
+              key={post._id}
+              data={post}
+              selected={selectedOption}
+              handleSelection={handleOptionSelection}
+            />
+          ))}
+        </ul>
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button

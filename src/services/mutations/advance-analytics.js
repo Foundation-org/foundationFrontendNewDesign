@@ -2,30 +2,81 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import showToast from '../../components/ui/Toast';
 import api from '../api/Axios';
 
+// DELETE ANALYZE
+export const deleteAnalyze = async ({ userUuid, questForeignKey, type }) => {
+  return await api.post(`/infoquestions/deleteAdvanceAnalytics/${userUuid}/${questForeignKey}/${type}`);
+};
+
+// Hide Option POST_PATCH
 export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray }) => {
-  return await api.post(`/infoquestions/analyze?hide=${true}`, {
-    userUuid,
-    questForeignKey,
+  return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
+    type: 'hide',
+    order: 1,
+    createdAt: new Date(),
     hiddenOptionsArray,
   });
 };
 
+// Badge Count POST_PATCH
 export const analyzeBadge = async ({ userUuid, questForeignKey, operand, range }) => {
-  return await api.post(`/infoquestions/analyze?badgeCount=${true}`, {
-    userUuid,
-    questForeignKey,
+  return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
+    type: 'badgeCount',
+    order: 2,
+    createdAt: new Date(),
     oprend: operand,
     range,
   });
 };
 
+// Target Option POST_PATCH
 export const analyzeTarget = async ({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey }) => {
-  return await api.post(`/infoquestions/analyze?target=${true}`, {
-    userUuid,
-    questForeignKey,
+  return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
+    type: 'target',
+    order: 3,
+    createdAt: new Date(),
     targetedOptionsArray,
     targetedQuestForeignKey,
   });
+};
+
+export const useDeleteAnalyzeMutation = ({ handleClose }) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async ({ userUuid, questForeignKey, type }) => {
+      return deleteAnalyze({ userUuid, questForeignKey, type });
+    },
+    onSuccess: (resp, variables) => {
+      const { actionType } = variables;
+
+      if (resp.status === 200) {
+        if (actionType === 'delete') {
+          showToast('success', 'hideOptionDeleted');
+        }
+
+        // Pessimistic Update
+        // queryClient.setQueryData(['SingleQuest'], (oldData) => {
+        //   if (resp.data && resp.data.result[0]) {
+        //     return resp.data.result[0];
+        //   } else {
+        //     return oldData;
+        //   }
+        // });
+
+        queryClient.invalidateQueries({ queryKey: ['SingleQuest'] });
+
+        // Optionally close the modal or perform other UI updates
+        handleClose();
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+      // Show error message in a toast
+      // toast.warning(error.response.data.message);
+    },
+  });
+
+  return mutation;
 };
 
 export const useAnalyzePostMutation = ({ handleClose }) => {
@@ -46,13 +97,15 @@ export const useAnalyzePostMutation = ({ handleClose }) => {
         }
 
         // Pessimistic Update
-        queryClient.setQueryData(['SingleQuest'], (oldData) => {
-          if (resp.data && resp.data.result[0]) {
-            return resp.data.result[0];
-          } else {
-            return oldData;
-          }
-        });
+        // queryClient.setQueryData(['SingleQuest'], (oldData) => {
+        //   if (resp.data && resp.data.result[0]) {
+        //     return resp.data.result[0];
+        //   } else {
+        //     return oldData;
+        //   }
+        // });
+
+        queryClient.invalidateQueries({ queryKey: ['SingleQuest'] });
 
         // Optionally close the modal or perform other UI updates
         handleClose();
@@ -86,13 +139,14 @@ export const useAnalyzeBadgeMutation = ({ handleClose }) => {
         }
 
         // Pessimistic Update
-        queryClient.setQueryData(['SingleQuest'], (oldData) => {
-          if (resp.data && resp.data.result[0]) {
-            return resp.data.result[0];
-          } else {
-            return oldData;
-          }
-        });
+        // queryClient.setQueryData(['SingleQuest'], (oldData) => {
+        //   if (resp.data && resp.data.result[0]) {
+        //     return resp.data.result[0];
+        //   } else {
+        //     return oldData;
+        //   }
+        // });
+        queryClient.invalidateQueries({ queryKey: ['SingleQuest'] });
 
         // Optionally close the modal or perform other UI updates
         handleClose();
@@ -126,13 +180,14 @@ export const useAnalyzeTargetMutation = ({ handleClose }) => {
         }
 
         // Pessimistic Update
-        queryClient.setQueryData(['SingleQuest'], (oldData) => {
-          if (resp.data && resp.data.result[0]) {
-            return resp.data.result[0];
-          } else {
-            return oldData;
-          }
-        });
+        // queryClient.setQueryData(['SingleQuest'], (oldData) => {
+        //   if (resp.data && resp.data.result[0]) {
+        //     return resp.data.result[0];
+        //   } else {
+        //     return oldData;
+        //   }
+        // });
+        queryClient.invalidateQueries({ queryKey: ['SingleQuest'] });
 
         // Optionally close the modal or perform other UI updates
         handleClose();

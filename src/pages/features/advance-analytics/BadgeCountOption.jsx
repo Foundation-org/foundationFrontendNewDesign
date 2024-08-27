@@ -4,7 +4,7 @@ import { comparisonOperators } from '../../../constants/advanceAnalytics';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
 import DeleteAnalyzeHiddenOption from '../../../components/dialogue-boxes/DeleteAnalyzeHiddenOption';
 
-export default function BadgeCountOption({ questStartData }) {
+export default function BadgeCountOption({ item }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [analyzePopup, setAnalyzePopup] = useState(false);
   const [deleteConfirmPopup, setDeleteConfirmPopup] = useState(false);
@@ -18,11 +18,7 @@ export default function BadgeCountOption({ questStartData }) {
 
   return (
     <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
-      {/* {questStartData.hiddenAnswers.map((item, index) => ( */}
-      <div
-        //   key={index + 1}
-        className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 dark:border-gray-100 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3"
-      >
+      <div className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 dark:border-gray-100 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3">
         <div className="w-fit min-w-[76px] max-w-[76px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:min-w-[150px] tablet:max-w-[150px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
           <h1 className="whitespace-nowrap text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
             Badge Count
@@ -30,12 +26,12 @@ export default function BadgeCountOption({ questStartData }) {
         </div>
         <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
           <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
-            {findOperatorName(questStartData.oprend)}
+            {findOperatorName(item.oprend)}
           </h1>
         </div>
         <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
           <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
-            {questStartData.range}
+            {item.range}
           </h1>
         </div>
         <img
@@ -53,7 +49,7 @@ export default function BadgeCountOption({ questStartData }) {
           }}
         />
       </div>
-      {/* ))} */}
+
       {analyzePopup && (
         <AnalyzeDialogueBox
           handleClose={handleAnalyzeClose}

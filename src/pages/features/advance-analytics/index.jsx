@@ -17,12 +17,20 @@ export default function AdvanceAnalytics({ questStartData }) {
       <h1 className="text-center text-[0.75rem] font-semibold leading-[15px] text-accent-600 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Advanced Analytics
       </h1>
-      {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
+      {questStartData?.advanceAnalytics.length >= 1 &&
+        questStartData?.advanceAnalytics.map((item) =>
+          item.type === 'hide' || item.type === 'target' ? (
+            <HideOptionSelection item={item} questStartData={questStartData} />
+          ) : item.type === 'badgeCount' ? (
+            <BadgeCountOption item={item} questStartData={questStartData} />
+          ) : null,
+        )}
+      {/* {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
         <HideOptionSelection questStartData={questStartData} />
       )}
       {questStartData?.oprend >= 1 && questStartData?.range >= 0 && (
         <BadgeCountOption questStartData={questStartData} />
-      )}
+      )} */}
       <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
         <Button
           variant={'addOption'}
