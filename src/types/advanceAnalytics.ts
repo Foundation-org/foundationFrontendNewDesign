@@ -17,3 +17,13 @@ export type AddBadgeProps = {
   handleClose: () => void;
   questStartData: any;
 };
+
+export interface ActivityType {
+  id: number;
+  name: string;
+}
+
+export interface HideOptionProps extends AddBadgeProps {
+  update: boolean;
+  selectedItem: string;
+}
