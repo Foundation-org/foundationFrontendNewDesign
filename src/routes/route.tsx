@@ -64,7 +64,7 @@ import Iframe from '../pages/Embed/Iframe';
 import VerifyPhone from '../pages/Signup/VerifyPhone';
 
 export function Router() {
-  const persistedUser = useSelector((state) => state.auth.user);
+  const persistedUser = useSelector((state: any) => state.auth.user);
   const ROLES = {
     User: 'user',
     Guest: 'guest',
@@ -100,8 +100,8 @@ export function Router() {
           <Route path="/verify-phone" element={<VerifyPhone />} />
 
           <Route path="/auth0" element={<DashboardRedirect />} />
-          <Route path="/p/:id" element={<GuestRedirect />} />
-          <Route path="/l/:id" element={<GuestRedirect />} />
+          <Route path="/p/:id" element={<GuestRedirect redirectUrl={null} />} />
+          <Route path="/l/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="/authenticating" element={<Authenticating />} />
           <Route path="*" element={<Navigate to="/signin" />} />

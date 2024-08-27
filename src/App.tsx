@@ -12,6 +12,7 @@ import api from './services/api/Axios';
 import FallbackLoading from './components/FallbackLoading';
 import showToast from './components/ui/Toast';
 import { MaintenanceRouter } from './routes/maintenance';
+
 // import SEO from './utils/SEO';
 
 function App() {

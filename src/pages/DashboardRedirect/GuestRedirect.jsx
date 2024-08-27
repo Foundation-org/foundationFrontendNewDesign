@@ -1,11 +1,9 @@
-import { toast } from 'sonner';
 import { useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import { createGuestMode } from '../../services/api/userAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import showToast from '../../components/ui/Toast';
 import FallbackLoading from '../../components/FallbackLoading';
 
 const GuestRedirect = ({ redirectUrl }) => {
@@ -29,7 +27,6 @@ const GuestRedirect = ({ redirectUrl }) => {
     onError: (err) => {
       localStorage.setItem('shared-post', location.pathname);
       navigate('/signin');
-      // toast.error(err?.response?.data?.message);
     },
   });
 
