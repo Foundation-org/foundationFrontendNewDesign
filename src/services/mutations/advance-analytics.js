@@ -19,13 +19,14 @@ export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray, i
 };
 
 // Badge Count POST_PATCH
-export const analyzeBadge = async ({ userUuid, questForeignKey, operand, range }) => {
+export const analyzeBadge = async ({ userUuid, questForeignKey, operand, range, id }) => {
   return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
     type: 'badgeCount',
     order: 2,
     createdAt: new Date(),
     oprend: operand,
     range,
+    id,
   });
 };
 
@@ -126,8 +127,8 @@ export const useAnalyzeBadgeMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, operand, range }) => {
-      return analyzeBadge({ userUuid, questForeignKey, operand, range });
+    mutationFn: async ({ userUuid, questForeignKey, operand, range, id }) => {
+      return analyzeBadge({ userUuid, questForeignKey, operand, range, id });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;

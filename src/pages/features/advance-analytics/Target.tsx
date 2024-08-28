@@ -8,6 +8,7 @@ import { AddBadgeProps } from '../../../types/advanceAnalytics';
 import { useAnalyzeTargetMutation } from '../../../services/mutations/advance-analytics';
 import SelectionOption from '../../../components/SelectionOption';
 import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
+import { dualOptionsMap } from '../../../constants/advanceAnalytics';
 
 export default function Target({ handleClose, questStartData }: AddBadgeProps) {
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -40,6 +41,8 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
       }
     });
   };
+
+  console.log(selectedPost);
 
   return (
     <div className="flex flex-col">
@@ -81,16 +84,36 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
             <QuestionCardWithToggle questStartData={selectedPost} />
           </div>
         )} */}
-        <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
-          {selectedPost?.QuestAnswers.map((post: any) => (
-            <SelectionOption
-              key={post._id}
-              data={post}
-              selected={selectedOption}
-              handleSelection={handleOptionSelection}
-            />
-          ))}
-        </ul>
+
+        {selectedPost?.whichTypeQuestion === 'yes/no' ||
+        selectedPost?.whichTypeQuestion === 'agree/disagree' ||
+        selectedPost?.whichTypeQuestion === 'like/dislike' ? (
+          <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
+            {dualOptionsMap[selectedPost?.whichTypeQuestion as 'yes/no' | 'agree/disagree' | 'like/dislike']?.map(
+              (item) => (
+                <SelectionOption
+                  key={item.id}
+                  data={item}
+                  selected={selectedOption}
+                  handleSelection={handleOptionSelection}
+                />
+              ),
+            )}
+          </ul>
+        ) : (
+          selectedPost?.QuestAnswers.length > 0 && (
+            <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
+              {selectedPost?.QuestAnswers.map((post: any) => (
+                <SelectionOption
+                  key={post._id}
+                  data={post}
+                  selected={selectedOption}
+                  handleSelection={handleOptionSelection}
+                />
+              ))}
+            </ul>
+          )
+        )}
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button

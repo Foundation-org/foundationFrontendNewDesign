@@ -23,6 +23,11 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
     }
   };
 
+  const badgeCountId = questStartData.advanceAnalytics
+    .filter((item: any) => item.type === 'badgeCount')
+    .map((item: any) => item._id)
+    .join('');
+
   return (
     <div className="flex flex-col">
       <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
@@ -78,6 +83,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
               questForeignKey: questStartData._id,
               operand: selectedOptions.id,
               range: badgeNumber,
+              id: badgeCountId,
               actionType: 'addBadge',
             } as any);
           }}
