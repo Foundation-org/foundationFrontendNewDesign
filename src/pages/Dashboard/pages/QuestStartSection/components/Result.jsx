@@ -14,7 +14,9 @@ const Result = (props) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedOption, setSelectedOption] = useState(1);
   const [contendedOption, setCcontendedOption] = useState(1);
-  const [sortedAnswers, setSortedAnswers] = useState();
+  const [sortedAnswers, setSortedAnswers] = useState(
+    props.questStartData?.QuestAnswers ? props.questStartData?.QuestAnswers : null,
+  );
   const showOptions = useSelector(getSeeMoreOptions);
 
   const getAnswerData = (answer, type, index) => {
