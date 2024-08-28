@@ -16,6 +16,8 @@ export type PostAnswer = {
 export type AddBadgeProps = {
   handleClose: () => void;
   questStartData: any;
+  update?: boolean;
+  selectedItem?: any;
 };
 
 export interface ActivityType {

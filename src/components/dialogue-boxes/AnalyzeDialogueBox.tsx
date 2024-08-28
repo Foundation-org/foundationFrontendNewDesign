@@ -32,7 +32,14 @@ export default function AnalyzeDialogueBox({
       case 'Badge Count':
         return <BadgeCount handleClose={handleClose} questStartData={questStartData} />;
       case 'Target':
-        return <Target handleClose={handleClose} questStartData={questStartData} />;
+        return (
+          <Target
+            handleClose={handleClose}
+            questStartData={questStartData}
+            update={update}
+            selectedItem={selectedItem}
+          />
+        );
       case 'Activity':
         return (
           <Activity

@@ -34,14 +34,6 @@ export default function HideOptionSelection({ item, questStartData }) {
           </div>
         )}
 
-        {item.type === 'target' && (
-          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
-            <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
-              {item?.targetedOptionsArray[0]}
-            </h1>
-          </div>
-        )}
-
         {item.type === 'badgeCount' && (
           <>
             <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
@@ -55,6 +47,14 @@ export default function HideOptionSelection({ item, questStartData }) {
               </h1>
             </div>
           </>
+        )}
+
+        {item.type === 'target' && (
+          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+            <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+              {item?.targetedOptionsArray[0]}
+            </h1>
+          </div>
         )}
 
         <img

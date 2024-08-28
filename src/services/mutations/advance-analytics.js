@@ -31,13 +31,20 @@ export const analyzeBadge = async ({ userUuid, questForeignKey, operand, range, 
 };
 
 // Target Option POST_PATCH
-export const analyzeTarget = async ({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey }) => {
+export const analyzeTarget = async ({
+  userUuid,
+  questForeignKey,
+  targetedOptionsArray,
+  targetedQuestForeignKey,
+  id,
+}) => {
   return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
     type: 'target',
     order: 3,
     createdAt: new Date(),
     targetedOptionsArray,
     targetedQuestForeignKey,
+    id,
   });
 };
 
@@ -168,8 +175,8 @@ export const useAnalyzeTargetMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey }) => {
-      return analyzeTarget({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey });
+    mutationFn: async ({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id }) => {
+      return analyzeTarget({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;

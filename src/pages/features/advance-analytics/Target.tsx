@@ -10,7 +10,7 @@ import SelectionOption from '../../../components/SelectionOption';
 import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { dualOptionsMap } from '../../../constants/advanceAnalytics';
 
-export default function Target({ handleClose, questStartData }: AddBadgeProps) {
+export default function Target({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
   const [selectedPost, setSelectedPost] = useState<any>(null);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [searchPost, setSearchPost] = useState('');
@@ -42,7 +42,7 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
     });
   };
 
-  console.log(selectedPost);
+  console.log(update, selectedItem);
 
   return (
     <div className="flex flex-col">
@@ -54,7 +54,7 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
           <TextareaAutosize
             value={selectedPost?.Question ?? searchPost}
             placeholder="Search Post"
-            className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px]"
+            className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px]"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setSelectedPost(null);
               setSearchPost(e.target.value);
@@ -129,6 +129,7 @@ export default function Target({ handleClose, questStartData }: AddBadgeProps) {
               questForeignKey: questStartData._id,
               targetedOptionsArray: modifiedArray,
               targetedQuestForeignKey: selectedPost._id,
+              id: update ? selectedItem?._id : null,
               actionType: 'create',
             } as any);
           }}
