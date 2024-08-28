@@ -11,7 +11,7 @@ export default function SelectionOption({ data, selected, handleSelection }: any
       </div>
       <div className="flex w-full items-center">
         <h1 className="pb-[5.7px] pl-2 pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px]">
-          {data?.question ? data?.question : data?.name}
+          {data?.question}
         </h1>
       </div>
       <div className="flex items-center gap-[10.3px] pr-[10px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px]">

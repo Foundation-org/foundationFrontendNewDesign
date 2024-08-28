@@ -8,7 +8,7 @@ import { AddBadgeProps } from '../../../types/advanceAnalytics';
 import { useAnalyzeTargetMutation } from '../../../services/mutations/advance-analytics';
 import SelectionOption from '../../../components/SelectionOption';
 import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
-import { dualOptionsMap } from '../../../constants/advanceAnalytics';
+import { targetDualOptions } from '../../../constants/advanceAnalytics';
 
 export default function Target({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -42,7 +42,28 @@ export default function Target({ handleClose, questStartData, update, selectedIt
     });
   };
 
-  console.log(update, selectedItem);
+  function filterDualOptions(advanceAnalytics: any[], dualOptions: Record<string, any[]>): Record<string, any[]> {
+    return Object.keys(dualOptions).reduce((acc: any, key: string) => {
+      // Filter out options that match any item in the targetedOptionsArray
+      const filteredOptions = dualOptions[key].filter((option: any) => {
+        return !advanceAnalytics.some((analytic: any) => analytic.targetedOptionsArray.includes(option.question));
+      });
+
+      // Add the filtered options to the result object
+      if (filteredOptions.length > 0) {
+        acc[key] = filteredOptions;
+      }
+
+      return acc;
+    }, {});
+  }
+
+  function filterQuestAnswers(questAnswers: any[], advanceAnalytics: any[]): any[] {
+    return questAnswers.filter((answer: any) => {
+      // Check if the question in QuestAnswers does not exist in any targetedOptionsArray in advanceAnalytics
+      return !advanceAnalytics.some((analytic: any) => analytic.targetedOptionsArray.includes(answer.question));
+    });
+  }
 
   return (
     <div className="flex flex-col">
@@ -88,29 +109,40 @@ export default function Target({ handleClose, questStartData, update, selectedIt
         {selectedPost?.whichTypeQuestion === 'yes/no' ||
         selectedPost?.whichTypeQuestion === 'agree/disagree' ||
         selectedPost?.whichTypeQuestion === 'like/dislike' ? (
-          <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
-            {dualOptionsMap[selectedPost?.whichTypeQuestion as 'yes/no' | 'agree/disagree' | 'like/dislike']?.map(
-              (item) => (
+          <ul className="flex max-h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
+            {filterDualOptions(questStartData.advanceAnalytics, targetDualOptions)[selectedPost?.whichTypeQuestion]
+              ?.length > 0 ? (
+              filterDualOptions(questStartData.advanceAnalytics, targetDualOptions)[
+                selectedPost?.whichTypeQuestion
+              ]?.map((item) => (
                 <SelectionOption
                   key={item.id}
                   data={item}
                   selected={selectedOption}
                   handleSelection={handleOptionSelection}
                 />
-              ),
+              ))
+            ) : (
+              <p className="text-center text-[8px] tablet:text-[16px]">No options available to target</p>
             )}
           </ul>
         ) : (
           selectedPost?.QuestAnswers.length > 0 && (
-            <ul className="flex h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
-              {selectedPost?.QuestAnswers.map((post: any) => (
-                <SelectionOption
-                  key={post._id}
-                  data={post}
-                  selected={selectedOption}
-                  handleSelection={handleOptionSelection}
-                />
-              ))}
+            <ul className="flex max-h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
+              {filterQuestAnswers(selectedPost?.QuestAnswers || [], questStartData.advanceAnalytics).length > 0 ? (
+                filterQuestAnswers(selectedPost?.QuestAnswers || [], questStartData.advanceAnalytics).map(
+                  (post: any) => (
+                    <SelectionOption
+                      key={post._id}
+                      data={post}
+                      selected={selectedOption}
+                      handleSelection={handleOptionSelection}
+                    />
+                  ),
+                )
+              ) : (
+                <p className="text-center text-[8px] tablet:text-[16px]">No options available to target</p>
+              )}
             </ul>
           )
         )}
