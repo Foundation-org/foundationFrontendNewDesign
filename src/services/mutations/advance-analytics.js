@@ -3,17 +3,18 @@ import showToast from '../../components/ui/Toast';
 import api from '../api/Axios';
 
 // DELETE ANALYZE
-export const deleteAnalyze = async ({ userUuid, questForeignKey, type }) => {
-  return await api.post(`/infoquestions/deleteAdvanceAnalytics/${userUuid}/${questForeignKey}/${type}`);
+export const deleteAnalyze = async ({ userUuid, questForeignKey, type, id }) => {
+  return await api.delete(`/infoquestions/deleteAdvanceAnalytics/${userUuid}/${questForeignKey}/${type}/${id}`);
 };
 
 // Hide Option POST_PATCH
-export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray }) => {
+export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray, id }) => {
   return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
     type: 'hide',
     order: 1,
     createdAt: new Date(),
     hiddenOptionsArray,
+    id,
   });
 };
 
@@ -43,16 +44,16 @@ export const useDeleteAnalyzeMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, type }) => {
-      return deleteAnalyze({ userUuid, questForeignKey, type });
+    mutationFn: async ({ userUuid, questForeignKey, type, id }) => {
+      return deleteAnalyze({ userUuid, questForeignKey, type, id });
     },
     onSuccess: (resp, variables) => {
-      const { actionType } = variables;
+      // const { actionType } = variables;
 
       if (resp.status === 200) {
-        if (actionType === 'delete') {
-          showToast('success', 'hideOptionDeleted');
-        }
+        // if (actionType === 'delete') {
+        showToast('success', 'hideOptionDeleted');
+        // }
 
         // Pessimistic Update
         // queryClient.setQueryData(['SingleQuest'], (oldData) => {
@@ -83,8 +84,8 @@ export const useAnalyzePostMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, hiddenOptionsArray }) => {
-      return analyze({ userUuid, questForeignKey, hiddenOptionsArray });
+    mutationFn: async ({ userUuid, questForeignKey, hiddenOptionsArray, id }) => {
+      return analyze({ userUuid, questForeignKey, hiddenOptionsArray, id });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;

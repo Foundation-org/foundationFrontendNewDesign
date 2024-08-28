@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../components/ui/Button';
 import { AddBadgeProps, PostAnswer } from '../../../types/advanceAnalytics';
-import { useAnalyzePostMutation } from '../../../services/mutations/advance-analytics';
+import { useAnalyzePostMutation, useDeleteAnalyzeMutation } from '../../../services/mutations/advance-analytics';
 import { dualOptionsMap } from '../../../constants/advanceAnalytics';
 import showToast from '../../../components/ui/Toast';
 
 interface HideOptionProps extends AddBadgeProps {
   update: boolean;
-  selectedItem: string;
+  selectedItem: any;
 }
 
 export default function HideOption({ handleClose, questStartData, update, selectedItem }: HideOptionProps) {
@@ -20,6 +20,8 @@ export default function HideOption({ handleClose, questStartData, update, select
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  console.log(update, selectedItem?._id);
 
   return (
     <div className="flex flex-col">
@@ -67,20 +69,10 @@ export default function HideOption({ handleClose, questStartData, update, select
                     key={post.id}
                     className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                     onClick={() => {
-                      if (update) {
-                        console.log('update', selectedItem, post.question);
-                        // const updatedOptions = (questStartData?.hiddenAnswers || []).map((item: string) =>
-                        //   item === selectedItem ? post.question : item,
-                        // );
-                        // setSelectedOptions([...updatedOptions]);
-                        // setCurrentSelection(post.question);
+                      if (questStartData?.QuestAnswers.length <= 2) {
+                        showToast('warning', 'cantHideLastTwoOptions');
                       } else {
-                        if (questStartData?.QuestAnswers.length <= 2) {
-                          showToast('warning', 'cantHideLastTwoOptions');
-                        } else {
-                          setSelectedOptions([post.question]);
-                          // setSelectedOptions([...(questStartData?.hiddenAnswers || []), post.question]);
-                        }
+                        setSelectedOptions([post.question]);
                       }
                       toggleDropdown();
                     }}
@@ -108,6 +100,7 @@ export default function HideOption({ handleClose, questStartData, update, select
               userUuid: persistedUserInfo.uuid,
               questForeignKey: questStartData._id,
               hiddenOptionsArray: selectedOptions,
+              id: update ? selectedItem?._id : null,
               actionType: 'create',
             } as any);
           }}

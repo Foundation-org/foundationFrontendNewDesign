@@ -2,7 +2,11 @@ import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { useAnalyzeBadgeMutation, useAnalyzePostMutation } from '../../services/mutations/advance-analytics';
+import {
+  useAnalyzeBadgeMutation,
+  useAnalyzePostMutation,
+  useDeleteAnalyzeMutation,
+} from '../../services/mutations/advance-analytics';
 
 export default function DeleteAnalyzeHiddenOption({
   handleClose,
@@ -11,33 +15,34 @@ export default function DeleteAnalyzeHiddenOption({
   image,
   questStartData,
   type,
-  hiddenItem,
+  selectedItem,
 }) {
+  console.log(type, selectedItem);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
-  const { mutateAsync: handleAnalyzeBadgeCount, isPending: badgeCountPending } = useAnalyzeBadgeMutation({
-    handleClose,
-  });
+  const { mutateAsync: handleDeleteAnalyze, isPending } = useDeleteAnalyzeMutation({ handleClose });
+  // const { mutateAsync: handleAnalyzeBadgeCount, isPending: badgeCountPending } = useAnalyzeBadgeMutation({
+  //   handleClose,
+  // });
 
-  const handleDeleteAnalyze = () => {
-    if (type === 'hideOption') {
-      handleAnalyzePost({
-        userUuid: persistedUserInfo.uuid,
-        questForeignKey: questStartData._id,
-        hiddenOptionsArray: hiddenItem,
-        actionType: 'delete',
-      });
-    }
-    if (type === 'badgeCount') {
-      handleAnalyzeBadgeCount({
-        userUuid: persistedUserInfo.uuid,
-        questForeignKey: questStartData._id,
-        operand: 0,
-        range: 0,
-        actionType: 'delete',
-      });
-    }
-  };
+  // const handleDeleteAnalyze = () => {
+  //   if (type === 'hideOption') {
+  //     handleAnalyzePost({
+  //       userUuid: persistedUserInfo.uuid,
+  //       questForeignKey: questStartData._id,
+  //       hiddenOptionsArray: hiddenItem,
+  //       actionType: 'delete',
+  //     });
+  //   }
+  //   if (type === 'badgeCount') {
+  //     handleAnalyzeBadgeCount({
+  //       userUuid: persistedUserInfo.uuid,
+  //       questForeignKey: questStartData._id,
+  //       operand: 0,
+  //       range: 0,
+  //       actionType: 'delete',
+  //     });
+  //   }
+  // };
 
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
@@ -49,14 +54,15 @@ export default function DeleteAnalyzeHiddenOption({
           <Button
             variant="submit"
             onClick={() => {
-              handleDeleteAnalyze();
+              handleDeleteAnalyze({
+                userUuid: persistedUserInfo.uuid,
+                questForeignKey: questStartData._id,
+                type: selectedItem.type,
+                id: selectedItem._id,
+              });
             }}
           >
-            {isPending === true || badgeCountPending === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              'Yes'
-            )}
+            {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
             No

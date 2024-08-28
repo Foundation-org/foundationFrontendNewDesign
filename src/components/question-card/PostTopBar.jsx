@@ -30,17 +30,17 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
   return (
     <>
       {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
-        <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
+        <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           {/* Topic */}
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
             {ratingImage ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/${ratingImage}`}
                 alt={ratingImage.replace('.svg', '')}
-                className=" h-[15px] w-full tablet:h-[23px]"
+                className="h-[15px] w-full tablet:h-[23px]"
               />
             ) : null}
-            <h1 className="text-[0.6rem] font-medium text-accent-200 tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white-200 ">
+            <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
               {questStartData.QuestTopic}
             </h1>
           </div>
@@ -57,7 +57,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                   alt="eye-latest"
                   className="h-3 w-[9px] tablet:h-[22px] tablet:w-[17px]"
                 />
-                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem] dark:text-white-200">
+                <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                   Delete
                 </h1>
               </button>
@@ -70,7 +70,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                 alt="clock"
                 className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
               />
-              <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
+              <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
                 {timeAgo}
               </h4>
             </div>
@@ -78,7 +78,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
         </div>
       )}
       {postProperties !== 'SharedLinks' && postProperties === 'HiddenPosts' && (
-        <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
+        <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           <div className="flex h-4 w-full items-center justify-between gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
             {questStartData.userQuestSetting.feedbackTime && (
               <div className="flex items-center gap-1">
@@ -87,7 +87,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                   alt="clock"
                   className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
                 />
-                <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
+                <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
                   Feedback Given {calculateTimeAgo(questStartData.userQuestSetting.feedbackTime)}
                 </h4>
               </div>
@@ -99,7 +99,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                   alt="clock"
                   className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
                 />
-                <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
+                <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
                   Hidden {calculateTimeAgo(questStartData.userQuestSetting.hiddenTime)}
                 </h4>
               </div>
@@ -108,10 +108,10 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
         </div>
       )}
       {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
-        <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-[11px] dark:border-gray-100">
+        <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           <div className="flex w-full justify-between">
             <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
-              <h1 className="truncate text-wrap text-[10px] font-semibold text-gray-150 tablet:text-[20px] tablet:font-medium dark:text-white-200">
+              <h1 className="truncate text-wrap text-[10px] font-semibold text-gray-150 dark:text-white-200 tablet:text-[20px] tablet:font-medium">
                 {sharedPostUrl}
               </h1>
             </div>

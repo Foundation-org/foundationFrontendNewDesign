@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
-import { useState } from 'react';
 import DeleteAnalyzeHiddenOption from '../../../components/dialogue-boxes/DeleteAnalyzeHiddenOption';
 
 export default function HideOptionSelection({ item, questStartData }) {
@@ -11,10 +11,6 @@ export default function HideOptionSelection({ item, questStartData }) {
 
   const handleAnalyzeClose = () => setAnalyzePopup(false);
   const handleDeleteConfirmClose = () => setDeleteConfirmPopup(false);
-
-  const handleItemSelection = (item) => {
-    return questStartData.hiddenAnswers.filter((answer) => answer !== item);
-  };
 
   return (
     <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
@@ -72,7 +68,7 @@ export default function HideOptionSelection({ item, questStartData }) {
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
           questStartData={questStartData}
           type="hideOption"
-          hiddenItem={handleItemSelection(selectedItem)}
+          selectedItem={selectedItem}
         />
       )}
     </div>

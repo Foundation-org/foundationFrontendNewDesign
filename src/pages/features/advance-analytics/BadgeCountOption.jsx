@@ -4,7 +4,7 @@ import { comparisonOperators } from '../../../constants/advanceAnalytics';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
 import DeleteAnalyzeHiddenOption from '../../../components/dialogue-boxes/DeleteAnalyzeHiddenOption';
 
-export default function BadgeCountOption({ item }) {
+export default function BadgeCountOption({ item, questStartData }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [analyzePopup, setAnalyzePopup] = useState(false);
   const [deleteConfirmPopup, setDeleteConfirmPopup] = useState(false);

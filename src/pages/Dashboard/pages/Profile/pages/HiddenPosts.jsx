@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useDebounce } from '../../../../../utils/useDebounce';
 import { hiddenPostFilters, updateSearch } from '../../../../../features/profile/hiddenPosts';
 import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 import api from '../../../../../services/api/Axios';
@@ -11,6 +10,7 @@ import { setAreHiddenPosts } from '../../../../../features/quest/utilsSlice';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import SummaryCard from '../../../../../components/SummaryCard';
 import FeedEndStatus from '../../../../../components/FeedEndStatus';
+import { useDebounce } from '../../../../../utils/useDebounce';
 
 export default function HiddenPosts() {
   const { ref, inView } = useInView();
@@ -146,7 +146,7 @@ export default function HiddenPosts() {
           </h1>
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-gray-300">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
                 Posts I have given feedback on
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
@@ -173,25 +173,25 @@ export default function HiddenPosts() {
               <input
                 type="text"
                 id="floating_outlined"
-                className="peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-100 dark:text-[#707175] dark:focus:border-blue-500"
+                className="peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-100 dark:text-[#707175] dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px]"
                 value={hiddenSearch}
                 placeholder=""
                 onChange={handleHiddenPostSearch}
               />
               <label
                 htmlFor="floating_outlined"
-                className="absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2  peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500"
+                className="absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
               >
                 Search
               </label>
               {getHiddenPostFilters.searchData && (
                 <button
-                  className="absolute right-1.5 top-[55%] -translate-y-1/2 transform tablet:right-3 tablet:top-1/2 "
+                  className="absolute right-1.5 top-[55%] -translate-y-1/2 transform tablet:right-3 tablet:top-1/2"
                   onClick={() => {
                     dispatch(updateSearch(''));
                   }}
                 >
-                  <GrClose className="h-2 w-2 text-[#ACACAC] tablet:h-4 tablet:w-4 dark:text-white" />
+                  <GrClose className="h-2 w-2 text-[#ACACAC] dark:text-white tablet:h-4 tablet:w-4" />
                 </button>
               )}
               {!getHiddenPostFilters.searchData && (

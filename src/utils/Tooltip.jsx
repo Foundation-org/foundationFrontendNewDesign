@@ -3,16 +3,14 @@ import * as createQuestAction from '../features/createQuest/createQuestSlice';
 import { useDispatch } from 'react-redux';
 
 export const Tooltip = ({ optionStatus, id, type }) => {
-  // console.log('tooltip id', id)
   const dispatch = useDispatch();
   const [tooltipStatus, setTooltipStatusState] = useState(optionStatus);
-  // console.log('optionStatus', optionStatus)
+
   useEffect(() => {
     setTooltipStatusState(optionStatus);
   }, [optionStatus]);
 
   const hideTooltipMsg = () => {
-    // console.log('running')
     dispatch(createQuestAction.hideToolTipMessage({ id, type }));
   };
 
@@ -50,10 +48,10 @@ export const Tooltip = ({ optionStatus, id, type }) => {
                   </svg>
                 </div>
 
-                <div className="bottom-full right-0 w-[11rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.32rem] py-[0.2rem] text-[0.5rem] font-normal text-[#F34141] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem] dark:bg-[#3C1A20] dark:text-[#DB6262]">
+                <div className="bottom-full right-0 w-[11rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.32rem] py-[0.2rem] text-[0.5rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem]">
                   {tooltipStatus?.tooltipName}
                   <svg
-                    className="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FEDEDE] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px] dark:text-[#3C1A20]"
+                    className="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px]"
                     x="0px"
                     y="0px"
                     viewBox="0 0 255 255"
@@ -100,7 +98,7 @@ export const Tooltip = ({ optionStatus, id, type }) => {
                   </svg>
                 </div>
 
-                <div className="bottom-full right-0 w-fit rounded-md border-[0.533px] bg-[#FCF324] px-4 py-[0.2rem] text-[0.5rem] font-normal text-[#9B7A06] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem] dark:bg-[#FCF324] dark:text-[#9B7A06]">
+                <div className="bottom-full right-0 w-fit rounded-md border-[0.533px] bg-[#FCF324] px-4 py-[0.2rem] text-[0.5rem] font-normal text-[#9B7A06] dark:bg-[#FCF324] dark:text-[#9B7A06] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem]">
                   <div
                     className="tooltip-name"
                     style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
@@ -108,7 +106,7 @@ export const Tooltip = ({ optionStatus, id, type }) => {
                     {tooltipStatus?.tooltipName}
                   </div>
                   <svg
-                    className="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FCF324] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px] dark:text-[#FCF324]"
+                    className="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FCF324] dark:text-[#FCF324] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px]"
                     x="0px"
                     y="0px"
                     viewBox="0 0 255 255"
@@ -130,4 +128,3 @@ export const Tooltip = ({ optionStatus, id, type }) => {
     </>
   );
 };
-// FEDEDE
