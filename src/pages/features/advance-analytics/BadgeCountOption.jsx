@@ -66,7 +66,7 @@ export default function BadgeCountOption({ item, questStartData }) {
           title={'Delete Option'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
           questStartData={questStartData}
-          type={'badgeCount'}
+          type={'badgeCount'}selectedItem={selectedItem}
         />
       )}
     </div>

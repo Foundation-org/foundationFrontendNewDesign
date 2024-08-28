@@ -13,7 +13,7 @@ export default function ActivityWork({ query, setQuery, selected, setSelected, d
     <div className="relative inline-block w-full space-y-3">
       <button
         onClick={toggleDropdown}
-        className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px] dark:border-gray-100 dark:text-gray-300"
+        className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
       >
         {workType === '' ? 'Select Field' : workType}
         <img
@@ -23,9 +23,9 @@ export default function ActivityWork({ query, setQuery, selected, setSelected, d
         />
       </button>
       {isOpen && (
-        <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] tablet:max-h-48 tablet:border-[2px] tablet:text-[20px] dark:border-gray-100 dark:bg-gray-200">
+        <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:max-h-48 tablet:border-[2px] tablet:text-[20px]">
           <li
-            className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
+            className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
               setWorkType('Company');
@@ -34,7 +34,7 @@ export default function ActivityWork({ query, setQuery, selected, setSelected, d
             Company
           </li>
           <li
-            className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
+            className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
               setWorkType('Job Title');
@@ -43,7 +43,7 @@ export default function ActivityWork({ query, setQuery, selected, setSelected, d
             Job Title
           </li>
           <li
-            className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
+            className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
               setWorkType('Mode of Job');
@@ -62,6 +62,14 @@ export default function ActivityWork({ query, setQuery, selected, setSelected, d
           query={query}
           setQuery={setQuery}
           type={'city'}
+          disabled={null}
+          handleTab={null}
+          id={null}
+          isArrow={null}
+          verification={null}
+          verify={null}
+          wordsCheck={null}
+          key={null}
         />
       )}
     </div>

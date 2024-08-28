@@ -25,5 +25,5 @@ export interface ActivityType {
 
 export interface HideOptionProps extends AddBadgeProps {
   update: boolean;
-  selectedItem: string;
+  selectedItem: any;
 }

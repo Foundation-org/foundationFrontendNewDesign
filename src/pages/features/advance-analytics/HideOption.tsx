@@ -2,26 +2,18 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../components/ui/Button';
-import { AddBadgeProps, PostAnswer } from '../../../types/advanceAnalytics';
-import { useAnalyzePostMutation, useDeleteAnalyzeMutation } from '../../../services/mutations/advance-analytics';
+import { HideOptionProps, PostAnswer } from '../../../types/advanceAnalytics';
+import { useAnalyzePostMutation } from '../../../services/mutations/advance-analytics';
 import { dualOptionsMap } from '../../../constants/advanceAnalytics';
 import showToast from '../../../components/ui/Toast';
-
-interface HideOptionProps extends AddBadgeProps {
-  update: boolean;
-  selectedItem: any;
-}
 
 export default function HideOption({ handleClose, questStartData, update, selectedItem }: HideOptionProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [currentSelection, setCurrentSelection] = useState('');
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzePostMutation({ handleClose });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
-
-  console.log(update, selectedItem?._id);
 
   return (
     <div className="flex flex-col">
@@ -33,11 +25,7 @@ export default function HideOption({ handleClose, questStartData, update, select
           onClick={toggleDropdown}
           className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
         >
-          {selectedOptions.length > 0
-            ? update
-              ? currentSelection
-              : selectedOptions[selectedOptions.length - 1]
-            : 'Select an option'}
+          {selectedOptions.length > 0 ? selectedOptions[selectedOptions.length - 1] : 'Select an option'}
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
             alt="arrow-right.svg"
@@ -69,7 +57,7 @@ export default function HideOption({ handleClose, questStartData, update, select
                     key={post.id}
                     className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                     onClick={() => {
-                      if (questStartData?.QuestAnswers.length <= 2) {
+                      if (questStartData?.QuestAnswers.length <= 2 && !update) {
                         showToast('warning', 'cantHideLastTwoOptions');
                       } else {
                         setSelectedOptions([post.question]);
@@ -85,15 +73,13 @@ export default function HideOption({ handleClose, questStartData, update, select
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button
-          variant={
-            update
-              ? 'submit'
-              : questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0
-                ? 'submit-hollow'
-                : 'submit'
-          }
           className=""
-          disabled={update ? false : questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0}
+          variant={
+            (questStartData?.QuestAnswers.length <= 2 && !update) || selectedOptions.length <= 0
+              ? 'submit-hollow'
+              : 'submit'
+          }
+          disabled={(questStartData?.QuestAnswers.length <= 2 && !update) || selectedOptions.length <= 0}
           rounded={false}
           onClick={() => {
             handleAnalyzePost({

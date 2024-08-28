@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../../components/ui/Button';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
-import BadgeCountOption from './BadgeCountOption';
 import HideOptionSelection from './HideOptionSelection';
+// import BadgeCountOption from './BadgeCountOption';
 
 export default function AdvanceAnalytics({ questStartData }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -19,13 +19,9 @@ export default function AdvanceAnalytics({ questStartData }) {
       </h1>
       {questStartData?.advanceAnalytics &&
         questStartData?.advanceAnalytics.length >= 1 &&
-        questStartData?.advanceAnalytics.map((item) =>
-          item.type === 'hide' || item.type === 'target' ? (
-            <HideOptionSelection item={item} questStartData={questStartData} />
-          ) : item.type === 'badgeCount' ? (
-            <BadgeCountOption item={item} questStartData={questStartData} />
-          ) : null,
-        )}
+        questStartData?.advanceAnalytics.map((item) => (
+          <HideOptionSelection item={item} questStartData={questStartData} />
+        ))}
       {/* {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
         <HideOptionSelection questStartData={questStartData} />
       )}
