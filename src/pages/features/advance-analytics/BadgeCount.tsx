@@ -24,7 +24,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
   };
 
   const badgeCountId = questStartData.advanceAnalytics
-    .filter((item: any) => item.type === 'badgeCount')
+    ?.filter((item: any) => item.type === 'badgeCount')
     .map((item: any) => item._id)
     .join('');
 
