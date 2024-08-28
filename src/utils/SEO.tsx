@@ -1,6 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 
-export default function SEO({ title, description, type, url, image }) {
+interface SEOProps {
+  title: string;
+  description: string;
+  type?: string;
+  url?: string;
+  image?: string;
+}
+
+export default function SEO({ title, description, type, url, image }: SEOProps) {
   return (
     <Helmet>
       <script>

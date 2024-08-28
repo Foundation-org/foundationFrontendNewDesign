@@ -7,8 +7,8 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 
 // Redux
+import { store } from './app/store';
 import { Provider } from 'react-redux';
-import { store } from './app/store.js';
 
 // Redux Persist
 import { PersistGate } from 'redux-persist/integration/react';

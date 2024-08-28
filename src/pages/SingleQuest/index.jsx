@@ -8,7 +8,6 @@ import { getQuestByUniqueShareLink } from '../../services/api/homepageApis';
 import Topbar from '../Dashboard/components/Topbar';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
-import SEO from '../../utils/SEO';
 import SystemNotificationCard from '../../components/posts/SystemNotificationCard';
 
 const SingleQuest = () => {
@@ -92,7 +91,7 @@ const SingleQuest = () => {
       <Topbar />
       <div className="w-full bg-[#F2F3F5] dark:bg-black">
         <DashboardLayout>
-          <div className="no-scrollbar relative mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[1440px] flex-col gap-2 overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
+          <div className="relative mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[1440px] flex-col gap-2 overflow-y-auto py-2 no-scrollbar tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
             {isLoading ? (
               <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
                 Loading...

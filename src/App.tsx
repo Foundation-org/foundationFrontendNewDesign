@@ -13,8 +13,6 @@ import FallbackLoading from './components/FallbackLoading';
 import showToast from './components/ui/Toast';
 import { MaintenanceRouter } from './routes/maintenance';
 
-// import SEO from './utils/SEO';
-
 function App() {
   // const [theme, setTheme] = useState(null);
   const dispatch = useDispatch();
