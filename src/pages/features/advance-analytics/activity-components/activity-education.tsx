@@ -35,8 +35,8 @@ export default function ActivityEducation({ state, dispatch }: ActivityProps) {
   };
 
   useEffect(() => {
-    if (eduType === 'School') searchUniversities();
-    if (eduType === 'Degree Program' || eduType === 'Field of Study') searchDegreesAndFields();
+    if (eduType === 'school') searchUniversities();
+    if (eduType === 'degreeProgram' || eduType === 'fieldOfStudy') searchDegreesAndFields();
   }, [eduType, query]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function ActivityEducation({ state, dispatch }: ActivityProps) {
             className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
-              setEduType('School');
+              setEduType('school');
             }}
           >
             School
@@ -76,7 +76,7 @@ export default function ActivityEducation({ state, dispatch }: ActivityProps) {
             className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
-              setEduType('Degree Program');
+              setEduType('degreeProgram');
             }}
           >
             Degree Program
@@ -85,7 +85,7 @@ export default function ActivityEducation({ state, dispatch }: ActivityProps) {
             className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
-              setEduType('Field of Study');
+              setEduType('fieldOfStudy');
             }}
           >
             Field of Study

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { comparisonOperators } from '../../../constants/advanceAnalytics';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
 import DeleteAnalyzeHiddenOption from '../../../components/dialogue-boxes/DeleteAnalyzeHiddenOption';
-import { comparisonOperators } from '../../../constants/advanceAnalytics';
 
 export default function HideOptionSelection({ item, questStartData }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -62,6 +62,7 @@ export default function HideOptionSelection({ item, questStartData }) {
             </h1>
           </div>
         )}
+
         {item.type === 'activity' && (
           <>
             {item?.allParams.subtype === 'twitter' ? (
@@ -90,7 +91,7 @@ export default function HideOptionSelection({ item, questStartData }) {
                   </h1>
                 </div>
                 <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
-                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                  <h1 className="whitespace-nowrap text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
                     {item.allParams.from}
                   </h1>
                 </div>
@@ -103,7 +104,7 @@ export default function HideOptionSelection({ item, questStartData }) {
             ) : item?.allParams.subtype === 'currentCity' ? (
               <>
                 <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
-                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                  <h1 className="whitespace-nowrap text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
                     Current City
                   </h1>
                 </div>
@@ -177,9 +178,9 @@ export default function HideOptionSelection({ item, questStartData }) {
               </>
             ) : item?.allParams.subtype === 'sex' ? (
               <>
-                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
                   <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
-                    {item.allParams.subtype}
+                    Sex
                   </h1>
                 </div>
                 <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">

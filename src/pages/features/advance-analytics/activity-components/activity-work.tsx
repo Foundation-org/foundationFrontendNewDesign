@@ -33,11 +33,11 @@ export default function ActivityWork({ state, dispatch }: ActivityProps) {
   };
 
   useEffect(() => {
-    if (workType === 'Job Title') searchJobTitles();
+    if (workType === 'jobTitle') searchJobTitles();
 
-    if (workType === 'Company') searchCompanies();
+    if (workType === 'companyName') searchCompanies();
 
-    if (workType === 'Mode of Job')
+    if (workType === 'modeOfJob')
       setWorkData([
         { id: 1, name: 'Remote' },
         { id: 2, name: 'Hybrid' },
@@ -73,7 +73,7 @@ export default function ActivityWork({ state, dispatch }: ActivityProps) {
             className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
-              setWorkType('Company');
+              setWorkType('companyName');
             }}
           >
             Company
@@ -82,7 +82,7 @@ export default function ActivityWork({ state, dispatch }: ActivityProps) {
             className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
-              setWorkType('Job Title');
+              setWorkType('jobTitle');
             }}
           >
             Job Title
@@ -91,7 +91,7 @@ export default function ActivityWork({ state, dispatch }: ActivityProps) {
             className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
             onClick={() => {
               toggleDropdown();
-              setWorkType('Mode of Job');
+              setWorkType('modeOfJob');
             }}
           >
             Mode of Job
