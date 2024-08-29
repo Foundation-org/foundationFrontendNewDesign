@@ -75,6 +75,48 @@ export default function DashboardLayout({ children }) {
     };
   }, [location.pathname]);
 
+  // Add Meta Pixel script to the page head
+  useEffect(() => {
+    // Function to insert the script tag for Meta Pixel
+    const insertMetaPixelScript = () => {
+      // Check if the script is already added to avoid duplicate scripts
+      if (document.getElementById('meta-pixel-script')) return;
+
+      const script = document.createElement('script');
+      script.id = 'meta-pixel-script';
+      script.async = true;
+      script.innerHTML = `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '1534508323834469');
+          fbq('track', 'PageView');
+        `;
+      document.head.appendChild(script);
+
+      // Add the noscript fallback for users with JavaScript disabled
+      const noscript = document.createElement('noscript');
+      noscript.innerHTML = `
+          <img height="1" width="1" style="display:none"
+          src="https://www.facebook.com/tr?id=1534508323834469&ev=PageView&noscript=1" />
+        `;
+      document.body.appendChild(noscript);
+    };
+
+    insertMetaPixelScript();
+
+    // Cleanup to remove the script when the component unmounts
+    return () => {
+      const script = document.getElementById('meta-pixel-script');
+      if (script) document.head.removeChild(script);
+    };
+  }, []);
+
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
     queryFn: getConstants,
