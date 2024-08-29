@@ -19,15 +19,21 @@ export default function HideOptionSelection({ item, questStartData }) {
 
   return (
     <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
-      <div className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 dark:border-gray-100 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3">
-        <div className="w-fit min-w-[76px] max-w-[76px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:min-w-[150px] tablet:max-w-[150px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+      <div className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100 dark:text-gray-300">
+        <div className="w-fit min-w-[76px] max-w-[76px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:min-w-[150px] tablet:max-w-[150px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100">
           <h1 className="whitespace-nowrap text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
-            {item.type === 'target' ? 'Target Option' : item.type === 'badgeCount' ? 'Badge Count' : 'Hide Option'}
+            {item.type === 'target'
+              ? 'Target Option'
+              : item.type === 'badgeCount'
+                ? 'Badge Count'
+                : item.type === 'activity'
+                  ? 'Activity'
+                  : 'Hide Option'}
           </h1>
         </div>
 
         {item.type === 'hide' && (
-          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100">
             <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
               {item.hiddenOptionsArray[0]}
             </h1>
@@ -36,12 +42,12 @@ export default function HideOptionSelection({ item, questStartData }) {
 
         {item.type === 'badgeCount' && (
           <>
-            <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+            <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100">
               <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
                 {findOperatorName(item.oprend)}
               </h1>
             </div>
-            <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+            <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100">
               <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
                 {item.range}
               </h1>
@@ -50,10 +56,15 @@ export default function HideOptionSelection({ item, questStartData }) {
         )}
 
         {item.type === 'target' && (
-          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100">
             <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
               {item?.targetedOptionsArray[0]}
             </h1>
+          </div>
+        )}
+        {item.type === 'activity' && (
+          <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3 dark:border-gray-100">
+            <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">{}</h1>
           </div>
         )}
 

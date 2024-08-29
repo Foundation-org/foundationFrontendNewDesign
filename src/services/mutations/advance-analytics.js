@@ -48,6 +48,17 @@ export const analyzeTarget = async ({
   });
 };
 
+// Activity POST_PATCH
+export const analyzeActivity = async ({ userUuid, questForeignKey, allParams, id }) => {
+  return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
+    type: 'activity',
+    order: 4,
+    createdAt: new Date(),
+    allParams: allParams,
+    id,
+  });
+};
+
 export const useDeleteAnalyzeMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
@@ -196,6 +207,38 @@ export const useAnalyzeTargetMutation = ({ handleClose }) => {
         //     return oldData;
         //   }
         // });
+        queryClient.invalidateQueries({ queryKey: ['SingleQuest'] });
+
+        // Optionally close the modal or perform other UI updates
+        handleClose();
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+      // Show error message in a toast
+      // toast.warning(error.response.data.message);
+    },
+  });
+
+  return mutation;
+};
+
+export const useAnalyzeActivityMutation = ({ handleClose }) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async ({ userUuid, questForeignKey, allParams }) => {
+      return analyzeActivity({ userUuid, questForeignKey, allParams });
+    },
+    onSuccess: (resp, variables) => {
+      const { actionType } = variables;
+
+      if (resp.status === 200) {
+        if (actionType === 'create') {
+          showToast('success', 'hideOption');
+        } else if (actionType === 'delete') {
+          showToast('success', 'hideOptionDeleted');
+        }
         queryClient.invalidateQueries({ queryKey: ['SingleQuest'] });
 
         // Optionally close the modal or perform other UI updates
