@@ -17,8 +17,6 @@ export default function HideOptionSelection({ item, questStartData }) {
     return comparisonOperators.find((operator) => operator.id === id)?.name || 'Unknown Operator';
   };
 
-  console.log(item);
-
   return (
     <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
       <div className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 dark:border-gray-100 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-4 tablet:py-3">
@@ -81,6 +79,99 @@ export default function HideOptionSelection({ item, questStartData }) {
                 <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
                   <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
                     {item.allParams.name}
+                  </h1>
+                </div>
+              </>
+            ) : item?.allParams.subtype === 'dateOfBirth' ? (
+              <>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    DOB
+                  </h1>
+                </div>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.from}
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.to}
+                  </h1>
+                </div>
+              </>
+            ) : item?.allParams.subtype === 'currentCity' ? (
+              <>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    Current City
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.currentCity}
+                  </h1>
+                </div>
+              </>
+            ) : item?.allParams.subtype === 'homeTown' ? (
+              <>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    Hometown
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.homeTown}
+                  </h1>
+                </div>
+              </>
+            ) : item?.allParams.subtype === 'relationship' ? (
+              <>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    Relationship
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.relationshipStatus}
+                  </h1>
+                </div>
+              </>
+            ) : item?.allParams.subtype === 'work' ? (
+              <>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    Work
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.fieldName}
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.fieldValue}
+                  </h1>
+                </div>
+              </>
+            ) : item?.allParams.subtype === 'education' ? (
+              <>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    Education
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.fieldName}
+                  </h1>
+                </div>
+                <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-4 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.fieldValue}
                   </h1>
                 </div>
               </>

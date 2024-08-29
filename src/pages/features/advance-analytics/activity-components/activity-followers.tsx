@@ -26,7 +26,7 @@ export default function ActivityFollowers({ state, dispatch }: ActivityProps) {
           onClick={toggleDropdown}
           className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
         >
-          {state?.twitter.name ?? 'Select the operator'}
+          {state?.twitter.name || 'Select the operator'}
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
             alt="arrow-right.svg"
