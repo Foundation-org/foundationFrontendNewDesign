@@ -227,8 +227,8 @@ export const useAnalyzeActivityMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, allParams }) => {
-      return analyzeActivity({ userUuid, questForeignKey, allParams });
+    mutationFn: async ({ userUuid, questForeignKey, allParams, id }) => {
+      return analyzeActivity({ userUuid, questForeignKey, allParams, id });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;

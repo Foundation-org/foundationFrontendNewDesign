@@ -8,7 +8,7 @@ export default function HideOptionSelection({ item, questStartData }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [analyzePopup, setAnalyzePopup] = useState(false);
   const [deleteConfirmPopup, setDeleteConfirmPopup] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState();
 
   const handleAnalyzeClose = () => setAnalyzePopup(false);
   const handleDeleteConfirmClose = () => setDeleteConfirmPopup(false);

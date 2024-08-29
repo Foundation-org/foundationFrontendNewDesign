@@ -179,6 +179,7 @@ export default function Activity({ handleClose, questStartData, update, selected
                                 ? state.education
                                 : null,
               actionType: 'create',
+              id: update ? selectedItem._id : null,
             } as any);
           }}
         >
