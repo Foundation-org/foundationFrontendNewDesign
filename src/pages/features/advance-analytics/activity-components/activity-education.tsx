@@ -1,12 +1,52 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ActivityProps } from '../../../../types/advanceAnalytics';
 import CustomCombobox from '../../../../components/ui/Combobox';
+import api from '../../../../services/api/Axios';
 
-export default function ActivityEducation({ query, setQuery, selected, setSelected, data, eduType, setEduType }: any) {
+export default function ActivityEducation({ state, dispatch }: ActivityProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [eduType, setEduType] = useState('');
+  const [eduData, setEduData]: any[] = useState([]);
+  const [query, setQuery] = useState('');
+  const [selected, setSelected] = useState();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const searchUniversities = async () => {
+    try {
+      const universities = await api.post(`search/searchUniversities/?name=${query}`);
+      setEduData(universities.data);
+    } catch (err) {
+      setEduData([]);
+    }
+  };
+
+  const searchDegreesAndFields = async () => {
+    try {
+      const degreesAndFields = await api.post(
+        `search/searchDegreesAndFields/?name=${query}&type=${eduType === 'Degree Program' ? 'degreeProgram' : 'fieldOfStudy'}`,
+      );
+      setEduData(degreesAndFields.data);
+    } catch (err) {
+      setEduData([]);
+    }
+  };
+
+  useEffect(() => {
+    if (eduType === 'School') searchUniversities();
+    if (eduType === 'Degree Program' || eduType === 'Field of Study') searchDegreesAndFields();
+  }, [eduType, query]);
+
+  useEffect(() => {
+    if (selected) {
+      dispatch({ type: 'SET_EDUCATION_FIELD_VALUE', payload: selected });
+    }
+    if (eduType) {
+      dispatch({ type: 'SET_EDUCATION_FIELD_NAME', payload: eduType });
+    }
+  }, [selected, eduType]);
 
   return (
     <div className="relative inline-block w-full space-y-3">
@@ -55,7 +95,7 @@ export default function ActivityEducation({ query, setQuery, selected, setSelect
 
       {eduType !== '' && (
         <CustomCombobox
-          items={data}
+          items={eduData}
           selected={selected}
           setSelected={setSelected}
           placeholder={`Enter ${eduType} here`}

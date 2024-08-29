@@ -1,13 +1,58 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ActivityProps } from '../../../../types/advanceAnalytics';
 import CustomCombobox from '../../../../components/ui/Combobox';
+import api from '../../../../services/api/Axios';
 
-export default function ActivityWork({ query, setQuery, selected, setSelected, data, workType, setWorkType }: any) {
+export default function ActivityWork({ state, dispatch }: ActivityProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [field, setField] = useState('');
+  const [query, setQuery] = useState('');
+  const [workData, setWorkData]: any[] = useState([]);
+  const [workType, setWorkType] = useState('');
+  const [selected, setSelected] = useState();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const searchJobTitles = async () => {
+    try {
+      const jobs = await api.post(`search/searchJobTitles/?name=${query}`);
+      setWorkData(jobs.data);
+    } catch (err) {
+      setWorkData([]);
+    }
+  };
+
+  const searchCompanies = async () => {
+    try {
+      const companies = await api.post(`search/searchCompanies/?name=${query}`);
+      setWorkData(companies.data);
+    } catch (err) {
+      setWorkData([]);
+    }
+  };
+
+  useEffect(() => {
+    if (workType === 'Job Title') searchJobTitles();
+
+    if (workType === 'Company') searchCompanies();
+
+    if (workType === 'Mode of Job')
+      setWorkData([
+        { id: 1, name: 'Remote' },
+        { id: 2, name: 'Hybrid' },
+        { id: 3, name: 'Onsite' },
+      ]);
+  }, [query]);
+
+  useEffect(() => {
+    if (selected) {
+      dispatch({ type: 'SET_WORK_FIELD_VALUE', payload: selected });
+    }
+    if (workType) {
+      dispatch({ type: 'SET_WORK_FIELD_NAME', payload: workType });
+    }
+  }, [selected, workType]);
 
   return (
     <div className="relative inline-block w-full space-y-3">
@@ -55,7 +100,7 @@ export default function ActivityWork({ query, setQuery, selected, setSelected, d
       )}
       {workType !== '' && (
         <CustomCombobox
-          items={data}
+          items={workData}
           selected={selected}
           setSelected={setSelected}
           placeholder={`Enter ${workType} here`}

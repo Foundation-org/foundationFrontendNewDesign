@@ -54,7 +54,7 @@ export const activityList = [
   { id: 6, name: 'Relationship' }, // which relationship
   { id: 7, name: 'Work' }, // which one of them Company Name / Title / Mode of Job
   { id: 8, name: 'Education' }, // which one of them  School / Degree Program / Field of Study
-  { id: 9, name: 'Cell Phone' }, // Countries
+  // { id: 9, name: 'Cell Phone' }, // Countries
   // { id: 9, name: 'Personal Email' },
   // { id: 9, name: 'Work Email' },
   // { id: 9, name: 'Education Email' },
