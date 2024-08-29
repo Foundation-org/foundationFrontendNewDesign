@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { signOut } from './services/api/userAuth';
 import { resetFilters } from './features/sidebar/filtersSlice';
 import { addUser } from './features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import api from './services/api/Axios';
 import FallbackLoading from './components/FallbackLoading';
@@ -21,6 +21,7 @@ function App() {
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [isMaintenance, setIsMaintenance] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     // Function to handle the event
@@ -186,7 +187,7 @@ function App() {
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
       </Helmet>
       {/* <MaintenanceRouter /> */}
-      {isLoading ? <FallbackLoading /> : <Router />}
+      {isLoading && !location.pathname.includes('/embed') ? <FallbackLoading /> : <Router />}
       {/* {isMaintenance ? <MaintenanceRouter /> : <Router />} */}
       <Toaster
         position="top-right"

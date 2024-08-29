@@ -1,11 +1,11 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { useQuery } from '@tanstack/react-query';
 import { fetchResults } from '../../services/api/questsApi';
-import { FaSpinner } from 'react-icons/fa';
 import { changeThemeTo } from '../../features/utils/utilsSlice';
-import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
+import FallbackLoading from '../../components/FallbackLoading';
 
 const EmbedPost = () => {
   let { link } = useParams();
@@ -25,9 +25,7 @@ const EmbedPost = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex items-center justify-center">
-          <FaSpinner className="animate-spin text-[#EAEAEA]" />
-        </div>
+        <FallbackLoading />
       ) : (
         singleQuestData &&
         singleQuestData?.data?.map((item, index) => (

@@ -29,7 +29,9 @@ const Spacing = ({ questStartData, show, postProperties }) => {
               &#x200B;
             </h4>
           )}
-          <EmbedParticipate postProperties={postProperties} />
+          {!questStartData.isClosed && questStartData.type === 'embed' && (
+            <EmbedParticipate postProperties={postProperties} />
+          )}
         </div>
       );
     } else {
@@ -42,7 +44,9 @@ const Spacing = ({ questStartData, show, postProperties }) => {
               &#x200B;
             </h4>
           )}
-          <EmbedParticipate postProperties={postProperties} />
+          {!questStartData.isClosed && questStartData.type === 'embed' && (
+            <EmbedParticipate postProperties={postProperties} />
+          )}
         </div>
       );
     }
