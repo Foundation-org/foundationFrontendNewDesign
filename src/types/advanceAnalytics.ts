@@ -5,7 +5,7 @@ export interface AnalyzeModalProps {
   image: string;
   questStartData: any;
   update: boolean;
-  selectedItem: string;
+  selectedItem?: string | undefined;
 }
 
 export type PostAnswer = {

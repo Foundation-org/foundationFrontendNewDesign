@@ -85,7 +85,6 @@ export function Router() {
               )
             }
           />
-          {/* <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} /> */}
           <Route path="/iframe" element={<Iframe />} />
           <Route path="/embed/:link" element={<EmbedPost />} />
           <Route path="/term-of-service" element={<TermOfService />} />
@@ -98,7 +97,6 @@ export function Router() {
           </Route>
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/verify-phone" element={<VerifyPhone />} />
-
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/l/:id" element={<GuestRedirect redirectUrl={null} />} />
@@ -110,7 +108,6 @@ export function Router() {
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
             <Route path="/iframe" element={<Iframe />} />
-
             <Route path="/embed/:link" element={<EmbedPost />} />
             <Route path="/authenticating" element={<Authenticating />} />
             <Route path="/term-of-service" element={<TermOfService />} />
@@ -180,7 +177,6 @@ export function Router() {
             </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route path="/verify-phone" element={<VerifyPhone />} />
-
             <Route
               path="*"
               element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Navigate to={'/help/about'} />}

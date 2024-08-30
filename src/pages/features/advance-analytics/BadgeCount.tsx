@@ -7,7 +7,7 @@ import { AddBadgeProps } from '../../../types/advanceAnalytics';
 import { comparisonOperators } from '../../../constants/advanceAnalytics';
 import { badgesTotalLength } from '../../../constants/varification-badges';
 
-export default function BadgeCount({ handleClose, questStartData }: AddBadgeProps) {
+export default function BadgeCount({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState({ id: 1, name: 'Greater than' });
   const [badgeNumber, setBadgeNumber] = useState<number | null>(null);
@@ -84,6 +84,7 @@ export default function BadgeCount({ handleClose, questStartData }: AddBadgeProp
               operand: selectedOptions.id,
               range: badgeNumber,
               id: badgeCountId,
+              order: update ? selectedItem?.order : null,
               actionType: 'addBadge',
             } as any);
           }}

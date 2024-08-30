@@ -180,6 +180,7 @@ export default function Activity({ handleClose, questStartData, update, selected
                                 : null,
               actionType: 'create',
               id: update ? selectedItem._id : null,
+              order: update ? selectedItem?.order : null,
             } as any);
           }}
         >

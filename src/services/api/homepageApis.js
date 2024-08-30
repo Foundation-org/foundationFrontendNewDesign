@@ -43,6 +43,10 @@ export const getQuestById = async (id, qId, sharedLinkRes, link) => {
   }
 };
 
+export const getSingleQuest = async (id, qId) => {
+  return await api.get(`/infoquestions/getQuest/${id}/${qId}/advance-analytics`);
+};
+
 // Get Quest By uniqueShareLink
 // export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
 //   return await api.get(`/infoquestions/getQuest/${uniqueShareLink}`);

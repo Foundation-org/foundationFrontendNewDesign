@@ -150,7 +150,8 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
           id={questStartData._id}
         />
       )}
-      {questStartData?.type !== 'embed' && (
+
+      {questStartData?.type !== 'embed' && questStartData?.page !== 'advance-analytics' && (
         <QuestBottombar
           time={
             postProperties === 'HiddenPosts'

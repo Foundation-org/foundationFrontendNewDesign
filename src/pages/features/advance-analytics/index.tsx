@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../../components/ui/Button';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
-import HideOptionSelection from './HideOptionSelection';
-// import BadgeCountOption from './BadgeCountOption';
+import AnalyticResults from './AnalyticResults';
 
-export default function AdvanceAnalytics({ questStartData }) {
-  const persistedTheme = useSelector((state) => state.utils.theme);
+export default function AdvanceAnalytics({ questStartData }: any) {
+  const persistedTheme = useSelector((state: any) => state.utils.theme);
   const plusImg = `${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`;
   const [analyzePopup, setAnalyzePopup] = useState(false);
 
@@ -19,15 +18,9 @@ export default function AdvanceAnalytics({ questStartData }) {
       </h1>
       {questStartData?.advanceAnalytics &&
         questStartData?.advanceAnalytics.length >= 1 &&
-        questStartData?.advanceAnalytics.map((item) => (
-          <HideOptionSelection item={item} questStartData={questStartData} />
+        questStartData?.advanceAnalytics.map((item: any) => (
+          <AnalyticResults key={item._id} item={item} questStartData={questStartData} />
         ))}
-      {/* {questStartData?.hiddenAnswers && questStartData?.hiddenAnswers.length >= 1 && (
-        <HideOptionSelection questStartData={questStartData} />
-      )}
-      {questStartData?.oprend >= 1 && questStartData?.range >= 0 && (
-        <BadgeCountOption questStartData={questStartData} />
-      )} */}
       <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
         <Button
           variant={'addOption'}

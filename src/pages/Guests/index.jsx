@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 // components
 import Topbar from '../Dashboard/components/Topbar';
@@ -11,7 +12,6 @@ import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import Loader from '../../components/ui/Loader';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import AdvanceAnalytics from '../features/advance-analytics';
-import { useQueryClient } from '@tanstack/react-query';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
@@ -32,9 +32,9 @@ const Guests = () => {
 
   const { data: singleQuestResp, isFetching } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
 
-  useEffect(() => {
-    queryClient.invalidateQueries(['SingleQuest']);
-  }, [location.state.questId, queryClient]);
+  // useEffect(() => {
+  //   queryClient.invalidateQueries(['SingleQuest']);
+  // }, [location.state.questId, queryClient]);
 
   const handleStartTest = useCallback(
     (testId) => {

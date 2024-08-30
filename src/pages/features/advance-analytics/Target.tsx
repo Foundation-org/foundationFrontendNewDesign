@@ -67,22 +67,22 @@ export default function Target({ handleClose, questStartData, update, selectedIt
 
   return (
     <div className="flex flex-col">
-      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 tablet:my-4 tablet:text-[16px] tablet:leading-[16px] dark:text-gray-300">
+      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
         You can select a targeted option
       </h1>
       <div className="flex flex-col items-center justify-center gap-[15px]">
-        <div className="relative w-full rounded-[5.387px] border border-white-500 tablet:rounded-[10px] tablet:border-[3px] dark:border-gray-100">
+        <div className="relative w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[10px] tablet:border-[3px]">
           <TextareaAutosize
             value={selectedPost?.Question ?? searchPost}
             placeholder="Search Post"
-            className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px] dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300"
+            className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px]"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setSelectedPost(null);
               setSearchPost(e.target.value);
             }}
           />
           {searchPost !== '' && (
-            <ul className="absolute z-10 h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300">
+            <ul className="absolute z-10 h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
               {searchResult?.map((post: any) => (
                 <li
                   key={post._id}
@@ -162,6 +162,7 @@ export default function Target({ handleClose, questStartData, update, selectedIt
               targetedOptionsArray: modifiedArray,
               targetedQuestForeignKey: selectedPost._id,
               id: update ? selectedItem?._id : null,
+              order: update ? selectedItem?.order : null,
               actionType: 'create',
             } as any);
           }}

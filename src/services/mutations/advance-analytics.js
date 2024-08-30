@@ -8,10 +8,10 @@ export const deleteAnalyze = async ({ userUuid, questForeignKey, type, id }) => 
 };
 
 // Hide Option POST_PATCH
-export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray, id }) => {
+export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray, id, order }) => {
   return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
     type: 'hide',
-    order: 1,
+    order,
     createdAt: new Date(),
     hiddenOptionsArray,
     id,
@@ -19,10 +19,10 @@ export const analyze = async ({ userUuid, questForeignKey, hiddenOptionsArray, i
 };
 
 // Badge Count POST_PATCH
-export const analyzeBadge = async ({ userUuid, questForeignKey, operand, range, id }) => {
+export const analyzeBadge = async ({ userUuid, questForeignKey, operand, range, id, order }) => {
   return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
     type: 'badgeCount',
-    order: 2,
+    order,
     createdAt: new Date(),
     oprend: operand,
     range,
@@ -37,10 +37,11 @@ export const analyzeTarget = async ({
   targetedOptionsArray,
   targetedQuestForeignKey,
   id,
+  order,
 }) => {
   return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
     type: 'target',
-    order: 3,
+    order,
     createdAt: new Date(),
     targetedOptionsArray,
     targetedQuestForeignKey,
@@ -49,10 +50,10 @@ export const analyzeTarget = async ({
 };
 
 // Activity POST_PATCH
-export const analyzeActivity = async ({ userUuid, questForeignKey, allParams, id }) => {
+export const analyzeActivity = async ({ userUuid, questForeignKey, allParams, id, order }) => {
   return await api.post(`/infoquestions/advanceAnalytics/${userUuid}/${questForeignKey}`, {
     type: 'activity',
-    order: 4,
+    order,
     createdAt: new Date(),
     allParams: allParams,
     id,
@@ -103,8 +104,8 @@ export const useAnalyzePostMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, hiddenOptionsArray, id }) => {
-      return analyze({ userUuid, questForeignKey, hiddenOptionsArray, id });
+    mutationFn: async ({ userUuid, questForeignKey, hiddenOptionsArray, id, order }) => {
+      return analyze({ userUuid, questForeignKey, hiddenOptionsArray, id, order });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;
@@ -145,8 +146,8 @@ export const useAnalyzeBadgeMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, operand, range, id }) => {
-      return analyzeBadge({ userUuid, questForeignKey, operand, range, id });
+    mutationFn: async ({ userUuid, questForeignKey, operand, range, id, order }) => {
+      return analyzeBadge({ userUuid, questForeignKey, operand, range, id, order });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;
@@ -186,8 +187,8 @@ export const useAnalyzeTargetMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id }) => {
-      return analyzeTarget({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id });
+    mutationFn: async ({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id, order }) => {
+      return analyzeTarget({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id, order });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;
@@ -227,8 +228,8 @@ export const useAnalyzeActivityMutation = ({ handleClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, questForeignKey, allParams, id }) => {
-      return analyzeActivity({ userUuid, questForeignKey, allParams, id });
+    mutationFn: async ({ userUuid, questForeignKey, allParams, id, order }) => {
+      return analyzeActivity({ userUuid, questForeignKey, allParams, id, order });
     },
     onSuccess: (resp, variables) => {
       const { actionType } = variables;

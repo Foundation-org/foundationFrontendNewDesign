@@ -87,6 +87,7 @@ export default function HideOption({ handleClose, questStartData, update, select
               questForeignKey: questStartData._id,
               hiddenOptionsArray: selectedOptions,
               id: update ? selectedItem?._id : null,
+              order: update ? selectedItem?.order : null,
               actionType: 'create',
             } as any);
           }}

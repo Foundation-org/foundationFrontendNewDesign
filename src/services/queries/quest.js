@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { applyFilters, fetchDataByStatus } from '../../utils/questionCard';
 import * as HomepageAPIs from '../api/homepageApis';
+import api from '../api/Axios';
 
 // export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
 //   params = applyFilters(params, filterStates, columns);
@@ -61,7 +62,7 @@ export function useGetBookmarkFeedData(filterStates, debouncedSearch, pagination
 export function useGetSingleQuest(uuid, id) {
   return useQuery({
     queryFn: async () => {
-      return (await HomepageAPIs.getQuestById(uuid, id)).data.data[0];
+      return (await HomepageAPIs.getSingleQuest(uuid, id)).data.data[0];
     },
     queryKey: ['SingleQuest'],
     initialData: null,
