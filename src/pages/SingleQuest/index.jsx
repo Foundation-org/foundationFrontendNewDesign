@@ -70,11 +70,11 @@ const SingleQuest = () => {
         <meta property="og:video:height" content={seoMeta.videoHeight} />
         <meta property="og:video:type" content={seoMeta.videoType} /> */}
         {/* Show Image Meta Tags */}
-        <meta property="og:image" itemprop="image" content={`${import.meta.env.VITE_CLIENT_URL}/seo-logo-v2.png`} />
+        <meta property="og:image" itemprop="image" content={`https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png`} />
         <meta
           property="og:image:secure_url"
           itemprop="image"
-          content={`${import.meta.env.VITE_CLIENT_URL}/seo-logo-v2.png`}
+          content={`https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png`}
         />
         {/* <meta property="og:image:type" content="image/svg" /> */}
         {/* <meta property="og:audio" content={seoMeta.preview} />
@@ -85,7 +85,7 @@ const SingleQuest = () => {
         <meta property="twitter:title" content="Foundation" />
         <meta property="twitter:description" content={singleQuestData?.data?.data?.Question} />
         <meta property="twitter:domain" content="on.foundation" />
-        <meta property="twitter:image" content={`${import.meta.env.VITE_CLIENT_URL}/seo-logo-v2`} />
+        <meta property="twitter:image" content={`https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png`} />
         <meta name="google" content="notranslate"></meta>
       </Helmet>
       <Topbar />
