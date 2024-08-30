@@ -1,4 +1,4 @@
-import { useState, useReducer } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../components/ui/Button';
@@ -64,6 +64,17 @@ export default function Activity({ handleClose, questStartData, update, selected
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzeActivityMutation({ handleClose });
+
+  useEffect(() => {
+    if (update) {
+      if (selectedItem.allParams.subtype === 'twitter') {
+        setSelectedBadge('Twitter');
+        dispatch({ type: 'SET_TWITTER_FOLLOWERS', payload: selectedItem.allParams.followers });
+        dispatch({ type: 'SET_TWITTER_NAME', payload: selectedItem.allParams.name });
+        dispatch({ type: 'SET_TWITTER_OPERAND', payload: selectedItem.allParams.id });
+      }
+    }
+  }, [update, selectedItem]);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
