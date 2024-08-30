@@ -87,8 +87,8 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       listData &&
       listData
         ?.map((list) => {
-          if (Array.isArray(list.post)) {
-            const matchingPosts = list.post.filter((post) => post.questForeginKey._id === questStartData._id);
+          if (Array.isArray(list?.post)) {
+            const matchingPosts = list?.post.filter((post) => post?.questForeginKey?._id === questStartData?._id);
             return matchingPosts.length > 0 ? list._id : null;
           }
           return null;
