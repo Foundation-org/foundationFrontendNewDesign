@@ -15,9 +15,15 @@ export default function ActivityFollowers({ state, dispatch }: ActivityProps) {
         placeholder={`Enter no of followers here`}
         className="flex w-full items-center justify-between rounded border border-white-500 bg-transparent px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
         onChange={(e) => {
-          const followers = parseInt(e.target.value, 10);
-          if (!isNaN(followers)) {
-            dispatch({ type: 'SET_TWITTER_FOLLOWERS', payload: followers });
+          const value = e.target.value;
+
+          if (value === '') {
+            dispatch({ type: 'SET_TWITTER_FOLLOWERS', payload: 0 });
+          } else {
+            const followers = parseInt(value, 10);
+            if (!isNaN(followers)) {
+              dispatch({ type: 'SET_TWITTER_FOLLOWERS', payload: followers });
+            }
           }
         }}
       />

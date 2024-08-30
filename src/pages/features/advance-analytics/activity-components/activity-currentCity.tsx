@@ -3,7 +3,7 @@ import { ActivityProps } from '../../../../types/advanceAnalytics';
 import CustomCombobox from '../../../../components/ui/Combobox';
 import api from '../../../../services/api/Axios';
 
-export default function ActivityCurrentCity({ state, dispatch, type }: ActivityProps) {
+export default function ActivityCurrentCity({ dispatch, type }: ActivityProps) {
   const [cities, setCities] = useState([]);
   const [selected, setSelected] = useState();
   const [query, setQuery] = useState('');

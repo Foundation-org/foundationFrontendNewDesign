@@ -1,8 +1,8 @@
 export const analyzeButtons = [
-  { id: 1, title: 'Hide Option' },
-  { id: 2, title: 'Badge Count' },
-  { id: 3, title: 'Target' },
-  { id: 4, title: 'Activity' },
+  { id: 1, title: 'Hide Option', name: 'hide' },
+  { id: 2, title: 'Badge Count', name: 'badgeCount' },
+  { id: 3, title: 'Target', name: 'target' },
+  { id: 4, title: 'Activity', name: 'activity' },
 ];
 
 export const comparisonOperators = [

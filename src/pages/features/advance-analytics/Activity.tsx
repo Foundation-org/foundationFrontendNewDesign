@@ -72,19 +72,19 @@ export default function Activity({ handleClose, questStartData, update, selected
       case 'Twitter':
         return <ActivityFollowers state={state} dispatch={dispatch} />;
       case 'Date of Birth':
-        return <ActivityDob state={state} dispatch={dispatch} />;
+        return <ActivityDob dispatch={dispatch} />;
       case 'Current City':
-        return <ActivityCurrentCity state={state} dispatch={dispatch} type={'current-city'} />;
+        return <ActivityCurrentCity dispatch={dispatch} type={'current-city'} />;
       case 'Home Town':
-        return <ActivityCurrentCity state={state} dispatch={dispatch} type={'hometown'} />;
+        return <ActivityCurrentCity dispatch={dispatch} type={'hometown'} />;
       case 'Sex':
-        return <ActivitySex state={state} dispatch={dispatch} />;
+        return <ActivitySex state={state} dispatch={dispatch} parentDropdown={isOpen} />;
       case 'Relationship':
-        return <ActivityRelationShip state={state} dispatch={dispatch} />;
+        return <ActivityRelationShip state={state} dispatch={dispatch} parentDropdown={isOpen} />;
       case 'Work':
-        return <ActivityWork state={state} dispatch={dispatch} />;
+        return <ActivityWork dispatch={dispatch} parentDropdown={isOpen} />;
       case 'Education':
-        return <ActivityEducation state={state} dispatch={dispatch} />;
+        return <ActivityEducation dispatch={dispatch} parentDropdown={isOpen} />;
       default:
         return null;
     }
@@ -100,11 +100,6 @@ export default function Activity({ handleClose, questStartData, update, selected
           onClick={toggleDropdown}
           className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
         >
-          {/* {selectedOptions.length > 0
-            ? update
-              ? currentSelection
-              : selectedOptions[selectedOptions.length - 1]
-            : 'Select an option'} */}
           {selectedBadge === '' ? 'Select an option' : selectedBadge}
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
@@ -119,19 +114,6 @@ export default function Activity({ handleClose, questStartData, update, selected
                 key={activity.id}
                 className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                 onClick={() => {
-                  // if (update) {
-                  //   const updatedOptions = (questStartData?.hiddenAnswers || []).map((item: string) =>
-                  //     item === selectedItem ? activity.name : item,
-                  //   );
-                  //   setSelectedBadge(updatedOptions);
-                  //   setCurrentSelection(activity.name);
-                  // } else {
-                  //   if (questStartData?.QuestAnswers.length <= 2) {
-                  //     showToast('warning', 'cantHideLastTwoOptions');
-                  //   } else {
-                  //     setSelectedBadge(activity.name);
-                  //   }
-                  // }
                   setSelectedBadge(activity.name);
                   toggleDropdown();
                 }}
@@ -146,14 +128,6 @@ export default function Activity({ handleClose, questStartData, update, selected
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button
           variant="submit"
-          // variant={
-          //   update
-          //     ? 'submit'
-          //     : questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0
-          //       ? 'submit-hollow'
-          //       : 'submit'
-          // }
-          // disabled={update ? false : questStartData?.QuestAnswers.length <= 2 || selectedOptions.length <= 0}
           className=""
           rounded={false}
           onClick={() => {

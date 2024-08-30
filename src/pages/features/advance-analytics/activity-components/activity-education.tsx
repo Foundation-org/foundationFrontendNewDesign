@@ -3,7 +3,7 @@ import { ActivityProps } from '../../../../types/advanceAnalytics';
 import CustomCombobox from '../../../../components/ui/Combobox';
 import api from '../../../../services/api/Axios';
 
-export default function ActivityEducation({ state, dispatch }: ActivityProps) {
+export default function ActivityEducation({ dispatch, parentDropdown }: ActivityProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [eduType, setEduType] = useState('');
   const [eduData, setEduData]: any[] = useState([]);
@@ -61,7 +61,7 @@ export default function ActivityEducation({ state, dispatch }: ActivityProps) {
           className={`size-[10px] transition-all duration-500 tablet:size-6 ${isOpen ? '-rotate-90' : 'rotate-90'}`}
         />
       </button>
-      {isOpen && (
+      {!parentDropdown && isOpen && (
         <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:max-h-48 tablet:border-[2px] tablet:text-[20px]">
           <li
             className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"

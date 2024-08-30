@@ -16,11 +16,11 @@ export default function AnalyzeDialogueBox({
   update,
   selectedItem,
 }: AnalyzeModalProps) {
-  const [selectedBtn, setSelectedBtn] = useState('Hide Option');
+  const [selectedBtn, setSelectedBtn] = useState(update ? selectedItem.type : 'hide');
 
   const renderSelectedComponent = () => {
     switch (selectedBtn) {
-      case 'Hide Option':
+      case 'hide':
         return (
           <HideOption
             handleClose={handleClose}
@@ -29,7 +29,7 @@ export default function AnalyzeDialogueBox({
             selectedItem={selectedItem}
           />
         );
-      case 'Badge Count':
+      case 'badgeCount':
         return (
           <BadgeCount
             handleClose={handleClose}
@@ -38,7 +38,7 @@ export default function AnalyzeDialogueBox({
             selectedItem={selectedItem}
           />
         );
-      case 'Target':
+      case 'target':
         return (
           <Target
             handleClose={handleClose}
@@ -47,7 +47,7 @@ export default function AnalyzeDialogueBox({
             selectedItem={selectedItem}
           />
         );
-      case 'Activity':
+      case 'activity':
         return (
           <Activity
             handleClose={handleClose}
@@ -79,8 +79,8 @@ export default function AnalyzeDialogueBox({
           {analyzeButtons.map((item) => (
             <button
               key={item.id}
-              className={`slider-link min-w-[60px] tablet:min-w-[120px] ${selectedBtn === item.title ? 'slider-link-active' : 'slider-inactive'}`}
-              onClick={() => setSelectedBtn(item.title)}
+              className={`slider-link min-w-[60px] tablet:min-w-[120px] ${selectedBtn === item.name ? 'slider-link-active' : 'slider-inactive'}`}
+              onClick={() => setSelectedBtn(item.name)}
             >
               {item.title}
             </button>

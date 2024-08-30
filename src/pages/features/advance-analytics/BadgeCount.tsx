@@ -9,8 +9,8 @@ import { badgesTotalLength } from '../../../constants/varification-badges';
 
 export default function BadgeCount({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedOptions, setSelectedOptions] = useState({ id: 1, name: 'Greater than' });
-  const [badgeNumber, setBadgeNumber] = useState<number | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState(update ? { id: selectedItem?.oprend } : { id: 1 });
+  const [badgeNumber, setBadgeNumber] = useState<number | null>(update ? selectedItem?.range : null);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handleAnalyzeBadgeCount, isPending } = useAnalyzeBadgeMutation({ handleClose });
 
@@ -28,6 +28,11 @@ export default function BadgeCount({ handleClose, questStartData, update, select
     .map((item: any) => item._id)
     .join('');
 
+  function getOperatorNameById(id: number) {
+    const operator = comparisonOperators.find((op) => op.id === id);
+    return operator ? operator.name : null;
+  }
+
   return (
     <div className="flex flex-col">
       <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
@@ -39,7 +44,7 @@ export default function BadgeCount({ handleClose, questStartData, update, select
             onClick={toggleDropdown}
             className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
           >
-            {selectedOptions.name}
+            {getOperatorNameById(selectedOptions.id)}
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
               alt="arrow-right.svg"
@@ -53,7 +58,7 @@ export default function BadgeCount({ handleClose, questStartData, update, select
                   key={operator.id}
                   className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
                   onClick={() => {
-                    setSelectedOptions({ id: operator.id, name: operator.name });
+                    setSelectedOptions({ id: operator.id });
                     toggleDropdown();
                   }}
                 >

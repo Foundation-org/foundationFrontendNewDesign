@@ -5,7 +5,7 @@ export interface AnalyzeModalProps {
   image: string;
   questStartData: any;
   update: boolean;
-  selectedItem?: string | undefined;
+  selectedItem?: any | undefined;
 }
 
 export type PostAnswer = {
@@ -31,7 +31,8 @@ export interface HideOptionProps extends AddBadgeProps {
 }
 
 export interface ActivityProps {
-  state: any;
+  state?: any;
   dispatch: any;
   type?: any;
+  parentDropdown?: boolean;
 }

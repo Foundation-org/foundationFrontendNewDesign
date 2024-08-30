@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { DateInput } from '../../../../components/ui/DateInput';
 import { ActivityProps } from '../../../../types/advanceAnalytics';
 
-export default function ActivityDob({ state, dispatch }: ActivityProps) {
+export default function ActivityDob({ dispatch }: ActivityProps) {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
 
