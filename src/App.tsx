@@ -187,8 +187,16 @@ function App() {
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
       </Helmet>
       {/* <MaintenanceRouter /> */}
-      {isLoading && !location.pathname.includes('/embed') ? <FallbackLoading /> : <Router />}
+      {/* {isLoading && !location.pathname.includes('/embed') ? <FallbackLoading /> : <Router />} */}
       {/* {isMaintenance ? <MaintenanceRouter /> : <Router />} */}
+      <div className="relative">
+        <Router />
+        {isLoading && !location.pathname.includes('/embed') && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-75">
+            <FallbackLoading />
+          </div>
+        )}
+      </div>
       <Toaster
         position="top-right"
         expand={true}
