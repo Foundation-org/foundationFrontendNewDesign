@@ -290,7 +290,9 @@ export const useAnalyzeActivityMutation = ({ handleClose }) => {
       }
     },
     onError: (error) => {
-      console.log(error);
+      if (error?.response?.status === 409) {
+        showToast('warning', 'activityAlreadyExists');
+      }
       // Show error message in a toast
       // toast.warning(error.response.data.message);
     },

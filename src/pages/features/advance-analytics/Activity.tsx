@@ -39,7 +39,7 @@ function reducer(state: any, action: any) {
     case 'SET_DOB_TO':
       return { ...state, dob: { ...state.dob, to: action.payload } };
     case 'SET_CURRENT_CITY':
-      return { ...state, currentCity: { ...state.currentCity, currentCity: action.payload?.name } };
+      return { ...state, currentCity: { ...state.currentCity, currentCity: action.payload?.name ?? '' } };
     case 'SET_HOME_TOWN':
       return { ...state, homeTown: { ...state.homeTown, homeTown: action.payload?.name } };
     case 'SET_RELATIONSHIP_STATUS':
@@ -90,10 +90,33 @@ export default function Activity({ handleClose, questStartData, update, selected
     }
   };
 
+  function isFormValid() {
+    switch (selectedBadge) {
+      case 'Twitter':
+        return state.twitter.name !== '' && state.twitter.followers > 0;
+      case 'Date of Birth':
+        return state.dob.from !== '' && state.dob.to !== '';
+      case 'Current City':
+        return state.currentCity.currentCity !== '';
+      case 'Home Town':
+        return state.homeTown.homeTown !== '';
+      case 'Sex':
+        return state.sex.sex !== '';
+      case 'Relationship':
+        return state.relationship.relationshipStatus !== '';
+      case 'Work':
+        return state.work.fieldName !== '' && state.work.fieldValue !== '';
+      case 'Education':
+        return state.education.fieldName !== '' && state.education.fieldValue !== '';
+      default:
+        return false;
+    }
+  }
+
   return (
     <div className="flex flex-col">
       <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
-        You can Hide an option
+        Check results for users who added based on badges.
       </h1>
       <div className="relative inline-block w-full space-y-3">
         <button
@@ -127,7 +150,8 @@ export default function Activity({ handleClose, questStartData, update, selected
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button
-          variant="submit"
+          variant={!selectedBadge || !isFormValid() ? 'submit-hollow' : 'submit'}
+          disabled={!selectedBadge || !isFormValid()}
           className=""
           rounded={false}
           onClick={() => {
@@ -158,7 +182,7 @@ export default function Activity({ handleClose, questStartData, update, selected
             } as any);
           }}
         >
-          {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Hide'}
+          {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
         </Button>
       </div>
     </div>

@@ -18,13 +18,13 @@ export default function ActivityDob({ dispatch }: ActivityProps) {
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="w-full">
-        <label htmlFor="dateInput-from" className="text-[20px]">
+        <label htmlFor="dateInput-from" className="text-[10px] tablet:text-[20px]">
           From
         </label>
         <DateInput value={from} setVal={setFrom} id="dateInput-from" />
       </div>
       <div className="w-full">
-        <label htmlFor="dateInput-to" className="text-[20px]">
+        <label htmlFor="dateInput-to" className="text-[10px] tablet:text-[20px]">
           To
         </label>
         <DateInput value={to} setVal={setTo} id="dateInput-to" />

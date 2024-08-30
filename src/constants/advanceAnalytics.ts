@@ -54,16 +54,16 @@ export const activityList = [
   { id: 6, name: 'Relationship' }, // which relationship
   { id: 7, name: 'Work' }, // which one of them Company Name / Title / Mode of Job
   { id: 8, name: 'Education' }, // which one of them  School / Degree Program / Field of Study
-  // { id: 9, name: 'Cell Phone' }, // Countries
-  // { id: 9, name: 'Personal Email' },
-  // { id: 9, name: 'Work Email' },
-  // { id: 9, name: 'Education Email' },
-  // { id: 9, name: 'Data Encryption' },
-  // { id: 9, name: 'LinkedIn' },
-  // { id: 9, name: 'Github' },
-  // { id: 9, name: 'Farcaster' },
-  // { id: 9, name: 'Ethereum Wallet' },
-  // { id: 9, name: 'First Name' },
-  // { id: 9, name: 'Last Name' },
   // { id: 9, name: 'Security Question' },
+  // { id: 10, name: 'Cell Phone' }, // Countries
+  // { id: 11, name: 'Personal Email' },
+  // { id: 12, name: 'Work Email' },
+  // { id: 13, name: 'Education Email' },
+  // { id: 14, name: 'Data Encryption' },
+  // { id: 15, name: 'LinkedIn' },
+  // { id: 16, name: 'Github' },
+  // { id: 17, name: 'Farcaster' },
+  // { id: 18, name: 'Ethereum Wallet' },
+  // { id: 19, name: 'First Name' },
+  // { id: 20, name: 'Last Name' },
 ];

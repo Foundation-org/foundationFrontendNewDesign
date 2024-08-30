@@ -17,8 +17,14 @@ export const DateInput = ({
 
   return (
     <div className="relative w-full">
-      <input type="date" className="verification_badge_input" onChange={handleDateChange} value={value} id={id} />
-      <BsCalendar2Date className="pointer-events-none absolute right-3 top-1/2 size-5 -translate-y-1/2 transform text-gray-500 dark:text-gray-400" />
+      <input
+        type="date"
+        className="datep w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-transparent dark:text-gray-300 tablet:rounded-[15px] tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+        onChange={handleDateChange}
+        value={value}
+        id={id}
+      />
+      <BsCalendar2Date className="pointer-events-none absolute right-3 top-1/2 size-3 -translate-y-1/2 transform text-gray-500 dark:text-gray-400 tablet:size-5" />
     </div>
   );
 };

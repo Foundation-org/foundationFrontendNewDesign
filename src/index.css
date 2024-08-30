@@ -108,6 +108,14 @@ input[type='text'] {
   font-family: Arial, sans-serif;
 }
 
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: block;
+  width: 1.25rem; /* size-5 equivalent in Tailwind */
+  height: 1.25rem; /* size-5 equivalent in Tailwind */
+  background: url('${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/calendar.svg') no-repeat;
+  opacity: 1;
+}
+
 @supports (-webkit-touch-callout: none) {
   input {
     font-family: Arial, sans-serif;
