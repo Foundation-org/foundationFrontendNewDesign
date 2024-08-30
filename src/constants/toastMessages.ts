@@ -110,4 +110,5 @@ export const toastMessages = {
   hideOptionDeleted: 'Option deleted successfully',
   analyzeParticipatedPost: "You hasn't participated on post yet",
   cantHideLastTwoOptions: 'You cannot hide the last two options',
+  deleteAllAnalytics: 'Advance analytics cleared successfully',
 } as const;

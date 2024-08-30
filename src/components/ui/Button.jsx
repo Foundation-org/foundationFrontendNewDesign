@@ -81,6 +81,9 @@ export const Button = ({ className = '', children, rounded = false, variant = ''
       variant === 'danger'
         ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] rounded-[0.28688rem] bg-[#DC1010] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',
+      variant === 'remove'
+        ? 'addoption-boxShadow h-[1.375rem] rounded-[0.28688rem] bg-[#DC1010] px-2 text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:px-3 tablet:text-[1.25rem]'
+        : '',
       variant === 'badge-remove'
         ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] rounded-[0.28688rem] bg-[#FF2C2C] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',
@@ -153,5 +156,6 @@ Button.propTypes = {
     'addOption-fit',
     'show-more-options',
     'hollow-feedback',
+    'remove',
   ]),
 };

@@ -2,6 +2,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import showToast from '../../components/ui/Toast';
 import api from '../api/Axios';
 
+// DELETE All ANALYZE
+export const deleteAllAnalyze = async ({ userUuid, questForeignKey }) => {
+  return await api.delete(`/infoquestions/deleteAllAdvanceAnalytics/${userUuid}/${questForeignKey}`);
+};
+
 // DELETE ANALYZE
 export const deleteAnalyze = async ({ userUuid, questForeignKey, type, id }) => {
   return await api.delete(`/infoquestions/deleteAdvanceAnalytics/${userUuid}/${questForeignKey}/${type}/${id}`);
@@ -58,6 +63,44 @@ export const analyzeActivity = async ({ userUuid, questForeignKey, allParams, id
     allParams: allParams,
     id,
   });
+};
+
+export const useDeleteAllAnalyzeMutation = ({ handleClose }) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async ({ userUuid, questForeignKey }) => {
+      return deleteAllAnalyze({ userUuid, questForeignKey });
+    },
+    onSuccess: (resp, variables) => {
+      // const { actionType } = variables;
+
+      if (resp.status === 200) {
+        showToast('success', 'deleteAllAnalytics');
+
+        // Pessimistic Update
+        // queryClient.setQueryData(['SingleQuest'], (oldData) => {
+        //   if (resp.data && resp.data.result[0]) {
+        //     return resp.data.result[0];
+        //   } else {
+        //     return oldData;
+        //   }
+        // });
+
+        queryClient.invalidateQueries({ queryKey: ['SingleQuest'] });
+
+        // Optionally close the modal or perform other UI updates
+        handleClose();
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+      // Show error message in a toast
+      // toast.warning(error.response.data.message);
+    },
+  });
+
+  return mutation;
 };
 
 export const useDeleteAnalyzeMutation = ({ handleClose }) => {
