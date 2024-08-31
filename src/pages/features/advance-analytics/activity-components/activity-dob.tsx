@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { DateInput } from '../../../../components/ui/DateInput';
 import { ActivityProps } from '../../../../types/advanceAnalytics';
 
-export default function ActivityDob({ dispatch }: ActivityProps) {
+export default function ActivityDob({ state, dispatch }: ActivityProps) {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
 
@@ -21,13 +21,13 @@ export default function ActivityDob({ dispatch }: ActivityProps) {
         <label htmlFor="dateInput-from" className="text-[10px] tablet:text-[20px]">
           From
         </label>
-        <DateInput value={from} setVal={setFrom} id="dateInput-from" />
+        <DateInput value={state.dob.from} setVal={setFrom} id="dateInput-from" />
       </div>
       <div className="w-full">
         <label htmlFor="dateInput-to" className="text-[10px] tablet:text-[20px]">
           To
         </label>
-        <DateInput value={to} setVal={setTo} id="dateInput-to" />
+        <DateInput value={state.dob.to} setVal={setTo} id="dateInput-to" />
       </div>
     </div>
   );

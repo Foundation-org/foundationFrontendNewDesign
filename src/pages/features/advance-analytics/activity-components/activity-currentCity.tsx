@@ -3,9 +3,16 @@ import { ActivityProps } from '../../../../types/advanceAnalytics';
 import CustomCombobox from '../../../../components/ui/Combobox';
 import api from '../../../../services/api/Axios';
 
-export default function ActivityCurrentCity({ dispatch, type }: ActivityProps) {
+export default function ActivityCurrentCity({ dispatch, type, selectedItem, update }: ActivityProps) {
   const [cities, setCities] = useState([]);
-  const [selected, setSelected] = useState();
+
+  type SelectedItem = {
+    id?: string;
+    name: string;
+    country?: string;
+  };
+  const [selected, setSelected] = useState<SelectedItem | undefined>(undefined);
+
   const [query, setQuery] = useState('');
 
   const searchCities = async () => {
@@ -22,13 +29,22 @@ export default function ActivityCurrentCity({ dispatch, type }: ActivityProps) {
   }, [query]);
 
   useEffect(() => {
-    if (selected !== '' && type === 'current-city') {
+    if (selected?.name !== '' && type === 'current-city') {
       dispatch({ type: 'SET_CURRENT_CITY', payload: selected });
     }
-    if (selected !== '' && type === 'hometown') {
+    if (selected?.name !== '' && type === 'hometown') {
       dispatch({ type: 'SET_HOME_TOWN', payload: selected });
     }
   }, [selected]);
+
+  useEffect(() => {
+    if (update) {
+      setSelected((prev) => ({
+        ...prev,
+        name: selectedItem.allParams.currentCity || selectedItem.allParams.homeTown,
+      }));
+    }
+  }, []);
 
   return (
     <CustomCombobox

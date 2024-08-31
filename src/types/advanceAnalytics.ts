@@ -34,5 +34,7 @@ export interface ActivityProps {
   state?: any;
   dispatch: any;
   type?: any;
+  selectedItem?:any,
+  update?:any,
   parentDropdown?: boolean;
 }

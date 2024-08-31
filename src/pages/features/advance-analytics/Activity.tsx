@@ -64,6 +64,7 @@ export default function Activity({ handleClose, questStartData, update, selected
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzeActivityMutation({ handleClose });
+  console.log(selectedItem);
 
   useEffect(() => {
     if (update) {
@@ -72,9 +73,31 @@ export default function Activity({ handleClose, questStartData, update, selected
         dispatch({ type: 'SET_TWITTER_FOLLOWERS', payload: selectedItem.allParams.followers });
         dispatch({ type: 'SET_TWITTER_NAME', payload: selectedItem.allParams.name });
         dispatch({ type: 'SET_TWITTER_OPERAND', payload: selectedItem.allParams.id });
+      } else if (selectedItem.allParams.subtype === 'dateOfBirth') {
+        setSelectedBadge('Date of Birth');
+        dispatch({ type: 'SET_DOB_FROM', payload: selectedItem.allParams.from });
+        dispatch({ type: 'SET_DOB_TO', payload: selectedItem.allParams.to });
+      } else if (selectedItem.allParams.subtype === 'currentCity') {
+        setSelectedBadge('Current City');
+        dispatch({ type: 'SET_CURRENT_CITY', payload: selectedItem.allParams.currentCity });
+      } else if (selectedItem.allParams.subtype === 'homeTown') {
+        setSelectedBadge('Home Town');
+        dispatch({ type: 'SET_HOME_TOWN', payload: selectedItem.allParams.homeTown });
+      } else if (selectedItem.allParams.subtype === 'sex') {
+        setSelectedBadge('Sex');
+        dispatch({ type: 'SET_SEX', payload: selectedItem.allParams.sex });
+      } else if (selectedItem.allParams.subtype === 'relationship') {
+        setSelectedBadge('Relationship');
+        dispatch({ type: 'SET_RELATIONSHIP_STATUS', payload: selectedItem.allParams.relationshipStatus });
+      } else if (selectedItem.allParams.subtype === 'work') {
+        setSelectedBadge('Work');
+      } else if (selectedItem.allParams.subtype === 'education') {
+        setSelectedBadge('Education');
+        dispatch({ type: 'SET_EDUCATION_FIELD_NAME', payload: selectedItem.allParams.fieldName });
+        dispatch({ type: 'SET_EDUCATION_FIELD_VALUE', payload: selectedItem.allParams.fieldValue });
       }
     }
-  }, [update, selectedItem]);
+  }, []);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -83,19 +106,39 @@ export default function Activity({ handleClose, questStartData, update, selected
       case 'Twitter':
         return <ActivityFollowers state={state} dispatch={dispatch} />;
       case 'Date of Birth':
-        return <ActivityDob dispatch={dispatch} />;
+        return <ActivityDob state={state} dispatch={dispatch} />;
       case 'Current City':
-        return <ActivityCurrentCity dispatch={dispatch} type={'current-city'} />;
+        return (
+          <ActivityCurrentCity dispatch={dispatch} type={'current-city'} selectedItem={selectedItem} update={update} />
+        );
       case 'Home Town':
-        return <ActivityCurrentCity dispatch={dispatch} type={'hometown'} />;
+        return (
+          <ActivityCurrentCity dispatch={dispatch} type={'hometown'} selectedItem={selectedItem} update={update} />
+        );
       case 'Sex':
         return <ActivitySex state={state} dispatch={dispatch} parentDropdown={isOpen} />;
       case 'Relationship':
         return <ActivityRelationShip state={state} dispatch={dispatch} parentDropdown={isOpen} />;
       case 'Work':
-        return <ActivityWork dispatch={dispatch} parentDropdown={isOpen} />;
+        return (
+          <ActivityWork
+            state={state}
+            dispatch={dispatch}
+            parentDropdown={isOpen}
+            selectedItem={selectedItem}
+            update={update}
+          />
+        );
       case 'Education':
-        return <ActivityEducation dispatch={dispatch} parentDropdown={isOpen} />;
+        return (
+          <ActivityEducation
+            state={state}
+            dispatch={dispatch}
+            parentDropdown={isOpen}
+            selectedItem={selectedItem}
+            update={update}
+          />
+        );
       default:
         return null;
     }
@@ -126,13 +169,13 @@ export default function Activity({ handleClose, questStartData, update, selected
 
   return (
     <div className="flex flex-col">
-      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
+      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 tablet:my-4 tablet:text-[16px] tablet:leading-[16px] dark:text-gray-300">
         Check results for users who added based on badges.
       </h1>
       <div className="relative inline-block w-full space-y-3">
         <button
           onClick={toggleDropdown}
-          className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
+          className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px] dark:border-gray-100 dark:text-gray-300"
         >
           {selectedBadge === '' ? 'Select an option' : selectedBadge}
           <img
@@ -142,11 +185,11 @@ export default function Activity({ handleClose, questStartData, update, selected
           />
         </button>
         {isOpen && (
-          <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:max-h-48 tablet:border-[2px] tablet:text-[20px]">
+          <ul className="absolute z-10 mt-2 max-h-32 w-full min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] tablet:max-h-48 tablet:border-[2px] tablet:text-[20px] dark:border-gray-100 dark:bg-gray-200">
             {activityList?.map((activity: ActivityType) => (
               <li
                 key={activity.id}
-                className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white dark:text-gray-300 tablet:px-4 tablet:py-2"
+                className="block cursor-pointer px-2 py-1 text-accent-600 hover:bg-blue-300 hover:text-white tablet:px-4 tablet:py-2 dark:text-gray-300"
                 onClick={() => {
                   setSelectedBadge(activity.name);
                   toggleDropdown();
