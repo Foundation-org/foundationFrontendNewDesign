@@ -26,15 +26,18 @@ export default function AnalyticResults({ item, questStartData }: any) {
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]"
-    >
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="flex tablet:mx-[36px]">
       <div
-        className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] p-[6.24px] text-accent-600 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-3 tablet:py-3`}
+        className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} flex min-h-full w-[12.3px] min-w-[12.3px] items-center justify-center rounded-l-[4.734px] border-y border-l bg-white-500 dark:bg-gray-100 tablet:w-[25px] tablet:min-w-[25px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-l-[3px]`}
+      >
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/${persistedTheme === 'dark' ? 'six-dots-dark.svg' : 'six-dots.svg'}`}
+          alt="six-dots"
+          className="w-[5.2px] tablet:w-[11.2px]"
+        />
+      </div>
+      <div
+        className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} tablet:rounded-y-[16.068px] rounded-y-[6.683px] flex w-full items-center gap-[6.24px] rounded-r-[6.683px] border-y-[1.248px] border-r-[1.248px] p-[6.24px] text-accent-600 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-r-[16.068px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:px-3 tablet:py-3`}
       >
         <div className="w-fit min-w-[76px] max-w-[76px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:min-w-[150px] tablet:max-w-[150px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-3 tablet:py-3">
           <h1 className="whitespace-nowrap text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">

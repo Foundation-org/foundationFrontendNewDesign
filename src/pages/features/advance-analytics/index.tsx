@@ -62,7 +62,7 @@ export default function AdvanceAnalytics({ questStartData }: any) {
       <h1 className="text-center text-[0.75rem] font-semibold leading-[15px] text-accent-600 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Advanced Analytics
       </h1>
-      <div className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
+      <div className="relative mt-[10px] flex flex-col gap-[10px] tablet:mt-[15px] tablet:gap-[15px]">
         <DndContext
           sensors={[touchSensor, mouseSensor, keyboardSensor]}
           modifiers={[restrictToVerticalAxis, restrictToParentElement]}
