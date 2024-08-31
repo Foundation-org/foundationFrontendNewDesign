@@ -70,7 +70,6 @@ export function Router() {
     Guest: 'guest',
   };
 
-  // console.log({ persistedUser });
   return (
     <>
       {!persistedUser?.uuid ? (

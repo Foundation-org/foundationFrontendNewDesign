@@ -264,8 +264,6 @@ export const urlDuplicateCheck = async ({ id, url }) => {
 };
 
 export const pictureUrlCheck = async ({ url }) => {
-  // console.log('url', url);
-  // let linkId = id;
   try {
     // let apiResp;
     // if (url.includes(soundcloudUnique)) {
@@ -441,7 +439,6 @@ export const suppressPost = async (data) => {
 };
 // UPDATE SHAREDLINK STATUS
 export const updateSharedLinkStatus = async ({ link, data }) => {
-  console.log('api', link, data);
   return await api.post(`/linkStatus/${link}`, {
     status: data,
   });

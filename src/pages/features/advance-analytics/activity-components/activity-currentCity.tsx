@@ -47,6 +47,7 @@ export default function ActivityCurrentCity({ dispatch, type }: ActivityProps) {
       verify={null}
       wordsCheck={null}
       key={null}
+      page="advance-analytics"
     />
   );
 }

@@ -35,9 +35,7 @@ export default function BadgeCount({ handleClose, questStartData, update, select
 
   return (
     <div className="flex flex-col">
-      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
-        You can check results by counts
-      </h1>
+      <h1 className="summary-text my-2 text-center tablet:my-4">You can check results by counts</h1>
       <div className="flex items-center justify-center gap-[15px]">
         <div className="relative inline-block w-full max-w-[120px] tablet:max-w-[230px]">
           <button

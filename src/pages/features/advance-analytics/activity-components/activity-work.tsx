@@ -115,6 +115,7 @@ export default function ActivityWork({ dispatch, parentDropdown }: ActivityProps
           verify={null}
           wordsCheck={null}
           key={null}
+          page="advance-analytics"
         />
       )}
     </div>

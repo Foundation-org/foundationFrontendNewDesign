@@ -67,7 +67,6 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
     mutationFn: verifyOtp,
     onSuccess: async (response) => {
       showToast('success', 'otpVerified');
-      console.log(response);
 
       if (verification) {
         dispatch(setAskPassword(false));

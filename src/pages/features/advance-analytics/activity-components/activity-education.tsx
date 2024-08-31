@@ -110,6 +110,7 @@ export default function ActivityEducation({ dispatch, parentDropdown }: Activity
           verify={null}
           wordsCheck={null}
           key={null}
+          page="advance-analytics"
         />
       )}
     </div>

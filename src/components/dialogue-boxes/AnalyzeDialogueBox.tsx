@@ -81,6 +81,7 @@ export default function AnalyzeDialogueBox({
               key={item.id}
               className={`slider-link min-w-[60px] tablet:min-w-[120px] ${selectedBtn === item.name ? 'slider-link-active' : 'slider-inactive'}`}
               onClick={() => setSelectedBtn(item.name)}
+              disabled={update && selectedItem.type !== item.name}
             >
               {item.title}
             </button>

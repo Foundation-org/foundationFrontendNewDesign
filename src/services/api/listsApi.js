@@ -100,7 +100,6 @@ export const searchPosts = async (term, uuid) => {
 };
 
 export const generateCategoryShareLink = async (userUuid, categoryId, customizedLink) => {
-  console.log('first', userUuid, categoryId, customizedLink);
   try {
     const params = {
       customizedLink,
@@ -112,7 +111,6 @@ export const generateCategoryShareLink = async (userUuid, categoryId, customized
 
     return response;
   } catch (err) {
-    // console.log(err.response?.data?.message);
     showToast('error', 'error', {}, err.response?.data?.message.split(':')[1]);
   }
 };
