@@ -4,12 +4,19 @@ import { comparisonOperators } from '../../../constants/advanceAnalytics';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
 import DeleteAnalyzeHiddenOption from '../../../components/dialogue-boxes/DeleteAnalyzeHiddenOption';
 import { camelCaseToReadable } from '../../../utils/utils';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 export default function AnalyticResults({ item, questStartData }: any) {
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [analyzePopup, setAnalyzePopup] = useState(false);
   const [deleteConfirmPopup, setDeleteConfirmPopup] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
 
   const handleAnalyzeClose = () => setAnalyzePopup(false);
   const handleDeleteConfirmClose = () => setDeleteConfirmPopup(false);
@@ -19,8 +26,16 @@ export default function AnalyticResults({ item, questStartData }: any) {
   };
 
   return (
-    <div className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]">
-      <div className="flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6.24px] text-accent-600 dark:border-gray-100 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-3 tablet:py-3">
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="mt-[10px] space-y-[10px] tablet:mx-[36px] tablet:mt-[15px] tablet:space-y-[15px]"
+    >
+      <div
+        className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} flex items-center gap-[6.24px] rounded-[6.683px] border-[1.248px] p-[6.24px] text-accent-600 dark:text-gray-300 tablet:gap-[15px] tablet:rounded-[16.068px] tablet:border-[3px] tablet:px-3 tablet:py-3`}
+      >
         <div className="w-fit min-w-[76px] max-w-[76px] rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:min-w-[150px] tablet:max-w-[150px] tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-3 tablet:py-3">
           <h1 className="whitespace-nowrap text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
             {item.type === 'target'

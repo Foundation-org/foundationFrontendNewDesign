@@ -17,7 +17,6 @@ export default function DeleteAnalyzeHiddenOption({
   type,
   selectedItem,
 }) {
-  console.log(type, selectedItem);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { mutateAsync: handleDeleteAnalyze, isPending } = useDeleteAnalyzeMutation({ handleClose });
   // const { mutateAsync: handleAnalyzeBadgeCount, isPending: badgeCountPending } = useAnalyzeBadgeMutation({

@@ -64,7 +64,6 @@ export default function Activity({ handleClose, questStartData, update, selected
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzeActivityMutation({ handleClose });
-  console.log(selectedItem);
 
   useEffect(() => {
     if (update) {
