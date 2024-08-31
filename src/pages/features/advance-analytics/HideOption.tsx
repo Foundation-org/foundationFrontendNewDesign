@@ -17,9 +17,7 @@ export default function HideOption({ handleClose, questStartData, update, select
 
   return (
     <div className="flex flex-col">
-      <h1 className="my-2 text-center text-[10px] font-normal leading-[12px] text-accent-400 dark:text-gray-300 tablet:my-4 tablet:text-[16px] tablet:leading-[16px]">
-        You can Hide an option
-      </h1>
+      <h1 className="summary-text my-2 text-center tablet:my-4">You can Hide an option</h1>
       <div className="relative inline-block w-full">
         <button
           onClick={toggleDropdown}

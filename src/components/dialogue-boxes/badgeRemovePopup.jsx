@@ -19,7 +19,7 @@ export default function BadgeRemovePopup({
   loading,
 }) {
   const queryClient = useQueryClient();
-  console.log(accountName);
+
   const handleRemoveBadge = async () => {
     setIsLoading(true);
     try {
@@ -68,7 +68,7 @@ export default function BadgeRemovePopup({
             return item;
           }
         });
-        console.log(findBadge[0]);
+
         removeBadge = await api.post(`/removeBadge`, {
           badgeAccountId: findBadge[0].accountId,
           uuid: fetchUser.uuid,

@@ -82,7 +82,7 @@ const VerifyCode = () => {
         },
         body: JSON.stringify({ verificationCode }),
       });
-      console.log(response);
+
       if (response.status === 200) {
         showToast('success', 'emailVerified');
         const data = await response.json();

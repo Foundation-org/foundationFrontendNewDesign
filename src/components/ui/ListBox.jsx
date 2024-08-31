@@ -2,7 +2,6 @@ import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 
 export default function ListBox({ items, selected, setSelected, placeholder, disabled }) {
-  // console.log(selected);
   return (
     <Listbox value={selected} onChange={setSelected} disabled={disabled}>
       <div className="relative">
@@ -14,7 +13,7 @@ export default function ListBox({ items, selected, setSelected, placeholder, dis
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/downArrow.svg`}
               alt="down-arrow"
-              className={`h-[6.3px] w-[10.3px] tablet:h-[10px] tablet:w-[16px] `}
+              className={`h-[6.3px] w-[10.3px] tablet:h-[10px] tablet:w-[16px]`}
             />
           </span>
         </Listbox.Button>

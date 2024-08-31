@@ -23,6 +23,10 @@
     @apply pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5;
   }
 
+  .summary-text {
+    @apply text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal;
+  }
+
   .verification_badge_input {
     @apply w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px];
   }

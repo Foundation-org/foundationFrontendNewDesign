@@ -63,6 +63,7 @@ export default function ActivityCurrentCity({ dispatch, type, selectedItem, upda
       verify={null}
       wordsCheck={null}
       key={null}
+      page="advance-analytics"
     />
   );
 }

@@ -137,6 +137,7 @@ export default function ActivityWork({ state, dispatch, parentDropdown, selected
           verify={null}
           wordsCheck={null}
           key={null}
+          page="advance-analytics"
         />
       )}
     </div>
