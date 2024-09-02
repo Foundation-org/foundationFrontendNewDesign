@@ -17,7 +17,7 @@ const isWebview = () => {
   // Check if any of the webview identifiers exist in the userAgent string
   return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
 };
-const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, triggerLogin, allowSignUp }) => {
+const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, triggerLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
 

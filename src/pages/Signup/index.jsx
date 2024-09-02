@@ -186,11 +186,7 @@ export default function Signup({ allowSignUp }) {
             </h1>
           )}
           {(location.pathname === '/signup' || location.pathname === '/guest-signup' || allowSignUp) && (
-            <SocialLogins
-              handleReferralOpen={handleReferralOpen}
-              setClickedButtonName={setClickedButtonName}
-              allowSignUp={allowSignUp}
-            />
+            <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
           )}
           <Outlet />
           <div

@@ -5,12 +5,12 @@ export const authMethods = [
     img: 'assets/svgs/google.svg',
     provider: 'google',
   },
-  // {
-  //   id: 2,
-  //   title: 'Facebook',
-  //   img: 'assets/profile/Facebook-2x.png',
-  //   provider: 'facebook',
-  // },
+  {
+    id: 2,
+    title: 'Facebook',
+    img: 'assets/profile/Facebook-2x.png',
+    provider: 'facebook',
+  },
   // {
   //   id: 3,
   //   title: 'Instagram',

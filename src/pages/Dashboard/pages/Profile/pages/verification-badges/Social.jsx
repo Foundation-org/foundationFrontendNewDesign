@@ -126,7 +126,7 @@ const Social = ({
       </AuthKitProvider>
       <div className="flex flex-col items-center justify-between rounded-[16.068px] pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
-          {filteredSocials.map((item, index) => (
+          {socials.map((item, index) => (
             <div
               className="relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5"
               key={index}

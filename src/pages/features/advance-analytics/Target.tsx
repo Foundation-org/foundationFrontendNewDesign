@@ -38,10 +38,14 @@ export default function Target({ handleClose, questStartData, update, selectedIt
     setSelectedOption((prevSelected: any[]) => {
       const isSelected = prevSelected.some((optionId: any) => optionId.id === data.id);
 
-      if (isSelected) {
-        return prevSelected.filter((optionId: any) => optionId.id !== data.id);
+      if (update) {
+        return isSelected ? [] : [data];
       } else {
-        return [...prevSelected, data];
+        if (isSelected) {
+          return prevSelected.filter((optionId: any) => optionId.id !== data.id);
+        } else {
+          return [...prevSelected, data];
+        }
       }
     });
   };
