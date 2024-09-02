@@ -30,7 +30,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
   return (
     <>
       {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
-        <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
+        <div className="relative flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           {/* Topic */}
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
             {ratingImage ? (
@@ -49,7 +49,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
             questStartData.uuid === persistedUserInfo?.uuid &&
             questStartData.type !== 'embed' && (
               <button
-                className="flex min-w-[83px] items-center justify-center gap-1 tablet:min-w-[168px] tablet:gap-2"
+                className="absolute left-1/2 flex min-w-[83px] -translate-x-1/2 items-center justify-center gap-1 tablet:gap-2"
                 onClick={() => setDelModalVisible(true)}
               >
                 <img
