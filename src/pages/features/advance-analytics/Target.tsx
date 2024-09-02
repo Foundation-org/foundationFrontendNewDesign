@@ -9,6 +9,7 @@ import { useAnalyzeTargetMutation } from '../../../services/mutations/advance-an
 import SelectionOption from '../../../components/SelectionOption';
 import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { targetDualOptions } from '../../../constants/advanceAnalytics';
+import { useDebounce } from '../../../utils/useDebounce';
 
 export default function Target({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -16,19 +17,19 @@ export default function Target({ handleClose, questStartData, update, selectedIt
   const [searchPost, setSearchPost] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [selectedOption, setSelectedOption] = useState<any>([]);
-
+  const debouncedSearch = useDebounce(searchPost, 1000);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzeTargetMutation({ handleClose });
 
   useEffect(() => {
     const handleSearchPost = async () => {
-      if (searchPost) {
-        const resp = await searchPosts(searchPost, persistedUserInfo.uuid);
+      if (debouncedSearch) {
+        const resp = await searchPosts(debouncedSearch, persistedUserInfo.uuid);
         setSearchResult(resp?.data);
       }
     };
 
     handleSearchPost();
-  }, [searchPost]);
+  }, [debouncedSearch]);
 
   const handleOptionSelection = (data: any) => {
     setSelectedOption((prevSelected: any[]) => {

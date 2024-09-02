@@ -288,7 +288,7 @@ export const useAnalyzeOrderMutation = () => {
     },
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'hideOption');
+        showToast('success', 'analyticOrderChanged');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {

@@ -112,4 +112,5 @@ export const toastMessages = {
   cantHideLastTwoOptions: 'You cannot hide the last two options',
   deleteAllAnalytics: 'Advance analytics cleared successfully',
   activityAlreadyExists: 'Activity already exists',
+  analyticOrderChanged: "Order changed Successfully"
 } as const;
