@@ -16,16 +16,19 @@ export default function Target({ handleClose, questStartData, update, selectedIt
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [searchPost, setSearchPost] = useState('');
   const [searchResult, setSearchResult] = useState([]);
+  const [searchPostLoad, setSearchPostLoad] = useState(false);
   const [selectedOption, setSelectedOption] = useState<any>([]);
   const debouncedSearch = useDebounce(searchPost, 1000);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzeTargetMutation({ handleClose });
 
   useEffect(() => {
     const handleSearchPost = async () => {
+      setSearchPostLoad(true);
       if (debouncedSearch) {
         const resp = await searchPosts(debouncedSearch, persistedUserInfo.uuid);
         setSearchResult(resp?.data);
       }
+      setSearchPostLoad(false);
     };
 
     handleSearchPost();
@@ -80,23 +83,28 @@ export default function Target({ handleClose, questStartData, update, selectedIt
               setSearchPost(e.target.value);
             }}
           />
-          {searchPost !== '' && (
-            <ul className="absolute z-10 h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
-              {searchResult?.map((post: any) => (
-                <li
-                  key={post._id}
-                  className="cursor-pointer px-4 py-[6px] tablet:py-2"
-                  onClick={() => {
-                    setSearchPost('');
-                    setSearchResult([]);
-                    setSelectedPost(post);
-                  }}
-                >
-                  <QuestionCardWithToggle questStartData={post} />
-                </li>
-              ))}
-            </ul>
-          )}
+          {searchPost !== '' &&
+            (searchPostLoad ? (
+              <div className="flex w-full items-center justify-center py-6">
+                <FaSpinner className="size-6 animate-spin text-blue-200 tablet:size-16" />
+              </div>
+            ) : (
+              <ul className="absolute z-10 h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
+                {searchResult?.map((post: any) => (
+                  <li
+                    key={post._id}
+                    className="cursor-pointer px-4 py-[6px] tablet:py-2"
+                    onClick={() => {
+                      setSearchPost('');
+                      setSearchResult([]);
+                      setSelectedPost(post);
+                    }}
+                  >
+                    <QuestionCardWithToggle questStartData={post} />
+                  </li>
+                ))}
+              </ul>
+            ))}
         </div>
 
         {/* {selectedPost?.Question && (
