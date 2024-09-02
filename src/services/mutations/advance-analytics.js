@@ -78,11 +78,9 @@ export const useDeleteAllAnalyzeMutation = ({ handleClose }) => {
     mutationFn: async ({ userUuid, questForeignKey }) => {
       return deleteAllAnalyze({ userUuid, questForeignKey });
     },
-    onSuccess: (resp, variables) => {
-      // const { actionType } = variables;
-
+    onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'deleteAllAnalytics');
+        showToast('success', 'resultsUpdatedSuccess');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
@@ -112,7 +110,7 @@ export const useDeleteAnalyzeMutation = ({ handleClose }) => {
     },
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'hideOptionDeleted');
+        showToast('success', 'resultsUpdatedSuccess');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
@@ -140,15 +138,9 @@ export const useAnalyzePostMutation = ({ handleClose }) => {
     mutationFn: async ({ userUuid, questForeignKey, hiddenOptionsArray, id, order }) => {
       return analyze({ userUuid, questForeignKey, hiddenOptionsArray, id, order });
     },
-    onSuccess: (resp, variables) => {
-      const { actionType } = variables;
-
+    onSuccess: (resp) => {
       if (resp.status === 200) {
-        if (actionType === 'create') {
-          showToast('success', 'hideOption');
-        } else if (actionType === 'delete') {
-          showToast('success', 'hideOptionDeleted');
-        }
+        showToast('success', 'resultsUpdatedSuccess');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
@@ -176,15 +168,9 @@ export const useAnalyzeBadgeMutation = ({ handleClose }) => {
     mutationFn: async ({ userUuid, questForeignKey, operand, range, id, order }) => {
       return analyzeBadge({ userUuid, questForeignKey, operand, range, id, order });
     },
-    onSuccess: (resp, variables) => {
-      const { actionType } = variables;
-
+    onSuccess: (resp) => {
       if (resp.status === 200) {
-        if (actionType === 'create') {
-          showToast('success', 'hideOption');
-        } else if (actionType === 'delete') {
-          showToast('success', 'hideOptionDeleted');
-        }
+        showToast('success', 'resultsUpdatedSuccess');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
@@ -212,15 +198,9 @@ export const useAnalyzeTargetMutation = ({ handleClose }) => {
     mutationFn: async ({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id, order }) => {
       return analyzeTarget({ userUuid, questForeignKey, targetedOptionsArray, targetedQuestForeignKey, id, order });
     },
-    onSuccess: (resp, variables) => {
-      const { actionType } = variables;
-
+    onSuccess: (resp) => {
       if (resp.status === 200) {
-        if (actionType === 'create') {
-          showToast('success', 'hideOption');
-        } else if (actionType === 'delete') {
-          showToast('success', 'hideOptionDeleted');
-        }
+        showToast('success', 'resultsUpdatedSuccess');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
@@ -248,15 +228,9 @@ export const useAnalyzeActivityMutation = ({ handleClose }) => {
     mutationFn: async ({ userUuid, questForeignKey, allParams, id, order }) => {
       return analyzeActivity({ userUuid, questForeignKey, allParams, id, order });
     },
-    onSuccess: (resp, variables) => {
-      const { actionType } = variables;
-
+    onSuccess: (resp) => {
       if (resp.status === 200) {
-        if (actionType === 'create') {
-          showToast('success', 'hideOption');
-        } else if (actionType === 'delete') {
-          showToast('success', 'hideOptionDeleted');
-        }
+        showToast('success', 'resultsUpdatedSuccess');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
@@ -288,7 +262,7 @@ export const useAnalyzeOrderMutation = () => {
     },
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'analyticOrderChanged');
+        showToast('success', 'resultsUpdatedSuccess');
 
         // Pessimistic Update
         queryClient.setQueryData(['SingleQuest'], (oldData) => {

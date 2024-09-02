@@ -76,8 +76,8 @@ export default function BadgeCount({ handleClose, questStartData, update, select
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button
-          variant={badgeNumber === null || badgeNumber <= 0 ? 'submit-hollow' : 'submit'}
-          disabled={badgeNumber === null || badgeNumber <= 0 || isPending}
+          variant={badgeNumber === null || badgeNumber < 0 ? 'submit-hollow' : 'submit'}
+          disabled={badgeNumber === null || badgeNumber < 0 || isPending}
           className=""
           rounded={false}
           onClick={() => {
@@ -92,7 +92,7 @@ export default function BadgeCount({ handleClose, questStartData, update, select
             } as any);
           }}
         >
-          {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+          {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : update ? 'Save' : 'Add'}
         </Button>
       </div>
     </div>

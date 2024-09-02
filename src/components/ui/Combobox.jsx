@@ -50,12 +50,10 @@ const CustomCombobox = ({
     >
       <div className="relative">
         <div
-          // className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-white-500 bg-white text-left focus-visible:outline-none sm:text-sm tablet:rounded-[10px] tablet:border-[3px]"
-          className={`w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${page === 'advance-analytics' ? 'dark:bg-transparent' : ''}`}
+          className={`w-full border border-white-500 bg-[#FBFBFB] text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${page === 'advance-analytics' ? 'rounded px-2 py-[6px] dark:bg-transparent tablet:rounded-[10px] tablet:px-4' : 'rounded-[8.62px] px-[16px] py-2 tablet:rounded-[15px]'}`}
         >
           <Combobox.Input
             id={`input-${id}`}
-            // className="w-full bg-transparent py-2 pl-3 pr-4 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus-visible:outline-none tablet:py-3 tablet:pl-7 tablet:pr-10 tablet:text-[18px] tablet:leading-[21.78px]"
             className="w-full bg-transparent focus-visible:outline-none"
             displayValue={(item) => item.name}
             onChange={(event) => setQuery(event.target.value)}

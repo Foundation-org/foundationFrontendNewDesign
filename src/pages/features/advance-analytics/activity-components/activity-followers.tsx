@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { ActivityProps } from '../../../../types/advanceAnalytics';
 import { comparisonOperators } from '../../../../constants/advanceAnalytics';
 
-export default function ActivityFollowers({ state, dispatch }: ActivityProps) {
+export default function ActivityFollowers({ state, dispatch, parentDropdown }: ActivityProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
-    <div className="tablet:space-y-[10px]">
+    <div className="space-y-2 tablet:space-y-[10px]">
       <input
         type="number"
         value={state.twitter.followers || ''}
@@ -39,7 +39,7 @@ export default function ActivityFollowers({ state, dispatch }: ActivityProps) {
             className={`size-[10px] transition-all duration-500 tablet:size-6 ${isOpen ? '-rotate-90' : 'rotate-90'}`}
           />
         </button>
-        {isOpen && (
+        {!parentDropdown && isOpen && (
           <ul className="absolute z-10 mt-2 max-h-32 w-fit min-w-[160px] overflow-y-scroll rounded border border-white-500 bg-white text-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:max-h-48 tablet:border-[2px] tablet:text-[20px]">
             {comparisonOperators.map((operator) => (
               <li

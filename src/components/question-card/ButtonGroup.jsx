@@ -431,7 +431,7 @@ const ButtonGroup = ({
         <>
           {questStartData.startStatus === '' ? (
             <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
-              <Button
+              {/* <Button
                 variant={'submit'}
                 onClick={() => {
                   dispatch(setGuestSignUpDialogue(true));
@@ -442,7 +442,8 @@ const ButtonGroup = ({
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
-              </Button>
+              </Button> */}
+              <button className="w-full cursor-default">&#x200B;</button>
               <Button
                 variant="g-submit"
                 onClick={() => handleSubmit()}
@@ -504,18 +505,22 @@ const ButtonGroup = ({
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
             <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
-              <Button
-                variant={'submit'}
-                onClick={() => {
-                  dispatch(setGuestSignUpDialogue(true));
-                }}
-                className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
-              >
-                Feedback
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-                </span>
-              </Button>
+              {persistedUserInfo?.role === 'guest' ? (
+                <button className="w-full cursor-default">&#x200B;</button>
+              ) : (
+                <Button
+                  variant={'submit'}
+                  onClick={() => {
+                    dispatch(setGuestSignUpDialogue(true));
+                  }}
+                  className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
+                >
+                  Feedback
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                  </span>
+                </Button>
+              )}
               <Button
                 variant="g-submit"
                 onClick={() => {

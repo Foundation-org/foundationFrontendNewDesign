@@ -103,7 +103,7 @@ export default function Activity({ handleClose, questStartData, update, selected
   const showSelectedBadge = (data: string) => {
     switch (data) {
       case 'Twitter':
-        return <ActivityFollowers state={state} dispatch={dispatch} />;
+        return <ActivityFollowers state={state} dispatch={dispatch} parentDropdown={isOpen} />;
       case 'Date of Birth':
         return <ActivityDob state={state} dispatch={dispatch} />;
       case 'Current City':
@@ -169,7 +169,7 @@ export default function Activity({ handleClose, questStartData, update, selected
   return (
     <div className="flex flex-col">
       <h1 className="summary-text my-2 text-center tablet:my-4">Check results for users who added based on badges.</h1>
-      <div className="relative inline-block w-full space-y-3">
+      <div className="relative inline-block w-full space-y-2 tablet:space-y-3">
         <button
           onClick={toggleDropdown}
           className="flex w-full items-center justify-between rounded border border-white-500 px-2 py-1 text-start text-[10px] text-accent-600 focus:outline-none dark:border-gray-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-4 tablet:py-2 tablet:text-[20px]"
@@ -233,7 +233,7 @@ export default function Activity({ handleClose, questStartData, update, selected
             } as any);
           }}
         >
-          {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+          {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : update ? 'Save' : 'Add'}
         </Button>
       </div>
     </div>
