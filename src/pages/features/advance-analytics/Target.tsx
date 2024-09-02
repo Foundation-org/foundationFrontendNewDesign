@@ -54,7 +54,11 @@ export default function Target({ handleClose, questStartData, update, selectedIt
     return Object.keys(dualOptions)?.reduce((acc: any, key: string) => {
       // Filter out options that match any item in the targetedOptionsArray
       const filteredOptions = dualOptions[key].filter((option: any) => {
-        return !advanceAnalytics?.some((analytic: any) => analytic?.targetedOptionsArray?.includes(option.question));
+        return !advanceAnalytics?.some(
+          (analytic: any) =>
+            analytic?.targetedQuestForeignKey === selectedPost?._id &&
+            analytic?.targetedOptionsArray?.includes(option.question),
+        );
       });
 
       // Add the filtered options to the result object
@@ -69,7 +73,11 @@ export default function Target({ handleClose, questStartData, update, selectedIt
   function filterQuestAnswers(questAnswers: any[], advanceAnalytics: any[]): any[] {
     return questAnswers?.filter((answer: any) => {
       // Check if the question in QuestAnswers does not exist in any targetedOptionsArray in advanceAnalytics
-      return !advanceAnalytics?.some((analytic: any) => analytic?.targetedOptionsArray?.includes(answer.question));
+      return !advanceAnalytics?.some(
+        (analytic: any) =>
+          analytic?.targetedQuestForeignKey === selectedPost?._id &&
+          analytic?.targetedOptionsArray?.includes(answer.question),
+      );
     });
   }
 
