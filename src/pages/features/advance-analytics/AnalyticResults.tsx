@@ -88,17 +88,17 @@ export default function AnalyticResults({ item, questStartData }: any) {
               <>
                 <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-3 tablet:py-3">
                   <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
-                    {item.allParams.subtype}
-                  </h1>
-                </div>
-                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-3 tablet:py-3">
-                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
-                    {item.allParams.followers}
+                    Twitter
                   </h1>
                 </div>
                 <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-3 tablet:py-3">
                   <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
                     {item.allParams.name}
+                  </h1>
+                </div>
+                <div className="w-fit rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-3 tablet:py-3">
+                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                    {item.allParams.followers}
                   </h1>
                 </div>
               </>
@@ -190,7 +190,7 @@ export default function AnalyticResults({ item, questStartData }: any) {
                   </h1>
                 </div>
                 <div className="w-full rounded-[6.683px] border-[1.248px] border-white-500 p-[6px] dark:border-gray-100 tablet:rounded-[9.23px] tablet:border-[3px] tablet:px-3 tablet:py-3">
-                  <h1 className="text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
+                  <h1 className="break-words text-[10px] font-medium leading-[10px] tablet:text-[18px] tablet:leading-[18px]">
                     {item.allParams.fieldValue}
                   </h1>
                 </div>
