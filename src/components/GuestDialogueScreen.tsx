@@ -17,7 +17,7 @@ export default function GuestDialogueScreen() {
           handleClose={handleClose}
           modalVisible={guestSignUpDialogue}
           title={'Create an Account'}
-          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/signup-icon.svg`}
         />
       )}
     </>
