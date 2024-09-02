@@ -43,7 +43,6 @@ export default function HideOption({ handleClose, questStartData, update, select
                       onClick={() => {
                         showToast('warning', 'cantHideLastTwoOptions');
                         toggleDropdown();
-                        // setSelectedOptions([...(questStartData?.hiddenAnswers || []), item.name]);
                       }}
                     >
                       {item.name}
@@ -77,7 +76,7 @@ export default function HideOption({ handleClose, questStartData, update, select
               ? 'submit-hollow'
               : 'submit'
           }
-          disabled={(questStartData?.QuestAnswers.length <= 2 && !update) || selectedOptions.length <= 0}
+          disabled={(questStartData?.QuestAnswers.length <= 2 && !update) || selectedOptions.length <= 0 || isPending}
           rounded={false}
           onClick={() => {
             handleAnalyzePost({

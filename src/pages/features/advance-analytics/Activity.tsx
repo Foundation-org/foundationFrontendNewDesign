@@ -202,7 +202,7 @@ export default function Activity({ handleClose, questStartData, update, selected
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button
           variant={!selectedBadge || !isFormValid() ? 'submit-hollow' : 'submit'}
-          disabled={!selectedBadge || !isFormValid()}
+          disabled={!selectedBadge || !isFormValid() || isPending}
           className=""
           rounded={false}
           onClick={() => {
