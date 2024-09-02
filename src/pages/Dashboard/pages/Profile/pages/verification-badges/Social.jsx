@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { socials } from '../../../../../../constants/varification-badges';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { getAskPassword } from '../../../../../../features/profile/userSettingSlice';
@@ -11,6 +11,7 @@ import showToast from '../../../../../../components/ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { CanAdd } from './badgeUtils';
+import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 
 const Social = ({
   handleRemoveBadgePopup,
@@ -19,6 +20,7 @@ const Social = ({
   checkSocial,
   checkPrimary,
 }) => {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
@@ -95,15 +97,7 @@ const Social = ({
   };
 
   const handleGuestBadgeAdd = () => {
-    toast.warning(
-      <p>
-        Please{' '}
-        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-          Create an Account
-        </span>{' '}
-        to unlock this feature
-      </p>,
-    );
+    dispatch(setGuestSignUpDialogue(true));
     return;
   };
 

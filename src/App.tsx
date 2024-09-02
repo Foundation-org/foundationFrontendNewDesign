@@ -12,6 +12,7 @@ import api from './services/api/Axios';
 import FallbackLoading from './components/FallbackLoading';
 import showToast from './components/ui/Toast';
 import { MaintenanceRouter } from './routes/maintenance';
+import GuestDialogueScreen from './components/GuestDialogueScreen';
 
 function App() {
   // const [theme, setTheme] = useState(null);
@@ -197,6 +198,7 @@ function App() {
           </div>
         )}
       </div>
+      <GuestDialogueScreen />
       <Toaster
         position="top-right"
         expand={true}

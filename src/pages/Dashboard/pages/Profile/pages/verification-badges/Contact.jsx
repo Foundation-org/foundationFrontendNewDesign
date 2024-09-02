@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { contacts, legacy } from '../../../../../../constants/varification-badges';
 import VerificationPopups from '../../components/VerificationPopups';
 
@@ -9,6 +9,7 @@ import { getConstantsValues } from '../../../../../../features/constants/constan
 import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
 import { Button } from '../../../../../../components/ui/Button';
 import { CanAdd } from './badgeUtils';
+import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 
 export default function Contact({
   fetchUser,
@@ -20,9 +21,9 @@ export default function Contact({
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
   checkLegacyBadge();
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedContants = useSelector(getConstantsValues);
-
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPopup, setIsPopup] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
@@ -34,15 +35,7 @@ export default function Contact({
   const checkPrimary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.primary === true);
 
   const handleGuestBadgeAdd = () => {
-    toast.warning(
-      <p>
-        Please{' '}
-        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-          Create an Account
-        </span>{' '}
-        to unlock this feature
-      </p>,
-    );
+    dispatch(setGuestSignUpDialogue(true));
     return;
   };
   const handleClickContactBadgeEmail = async (type, title, image) => {
@@ -96,9 +89,9 @@ export default function Contact({
         <div
           className={`${
             persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px] dark:border-gray-100 dark:bg-accent-100`}
+          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
         >
-          <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-gray-400">
+          <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-gray-400 tablet:text-[20px]">
             {item.title}
           </h1>
         </div>
@@ -207,7 +200,7 @@ export default function Contact({
         fetchUser={fetchUser}
         setIsPersonalPopup={setIsPersonalPopup}
       />
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
         Contact badges increase your verification status and give you more options for account recovery.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">

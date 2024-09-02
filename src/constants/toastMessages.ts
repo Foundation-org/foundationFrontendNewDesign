@@ -1,13 +1,6 @@
 export const toastMessages = {
   error: '',
   verificationEmailSent: 'A verification email has been sent to your email address. Please check your inbox.',
-  pleaseSignUp: `<p>
-                    Please{' '}
-                    <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-                      Create an Account
-                    </span>{' '}
-                    to unlock this feature
-                  </p>`,
   passwordMismatched: 'Passwords do not match. Please make sure your new password and retype password match.',
   wrongPassword: 'Wrong Password',
   referalVerified: 'Referral code verified',
@@ -112,5 +105,5 @@ export const toastMessages = {
   cantHideLastTwoOptions: 'You cannot hide the last two options',
   deleteAllAnalytics: 'Advance analytics cleared successfully',
   activityAlreadyExists: 'Activity already exists',
-  analyticOrderChanged: "Order changed Successfully"
+  analyticOrderChanged: 'Order changed Successfully',
 } as const;

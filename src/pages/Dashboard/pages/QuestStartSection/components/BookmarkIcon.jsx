@@ -1,7 +1,8 @@
-import { useSelector } from 'react-redux';
-import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
+import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 
 const BookmarkIcon = ({ bookmarkStatus, persistedTheme, handleBookmark }) => {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const getBookmarkIcon = () => {
@@ -20,15 +21,7 @@ const BookmarkIcon = ({ bookmarkStatus, persistedTheme, handleBookmark }) => {
     <div
       onClick={() => {
         if (persistedUserInfo?.role === 'guest') {
-          toast.warning(
-            <p>
-              Please{' '}
-              <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-                Create an Account
-              </span>{' '}
-              to unlock this feature
-            </p>,
-          );
+          dispatch(setGuestSignUpDialogue(true));
           return;
         } else {
           handleBookmark();

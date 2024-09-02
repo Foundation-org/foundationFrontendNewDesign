@@ -7,6 +7,7 @@ import showToast from '../../../../../components/ui/Toast';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
+import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 
 const BuyBalance = ({ triggerPulse }) => {
   const location = useLocation();
@@ -45,15 +46,7 @@ const BuyBalance = ({ triggerPulse }) => {
 
   const handleCreate = () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     }
     if (dollar < 0.5) return toast.warning(`Minimum amount is 0.5$`);
@@ -137,7 +130,7 @@ const BuyBalance = ({ triggerPulse }) => {
               />
             </div>
           </div>
-          <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6">
             {/* <Button variant={'submit'} onClick={handleCreate}>
               Buy More FDX
             </Button> */}

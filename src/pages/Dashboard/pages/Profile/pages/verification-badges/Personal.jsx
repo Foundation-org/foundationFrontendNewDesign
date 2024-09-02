@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { personal } from '../../../../../../constants/varification-badges';
 import PersonalBadgesPopup from '../../../../../../components/dialogue-boxes/PersonalBadgesPopup';
 import { toast } from 'sonner';
@@ -9,6 +9,7 @@ import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadg
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { Button } from '../../../../../../components/ui/Button';
 import { CanAdd } from './badgeUtils';
+import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 
 export default function Personal({
   fetchUser,
@@ -17,6 +18,7 @@ export default function Personal({
   handlePasskeyConfirmation,
   getAskPassword,
 }) {
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
@@ -30,15 +32,7 @@ export default function Personal({
 
   const handleClickPesonalBadges = async (type, edit) => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
       const timeRemaining = CanAdd(persistedUserInfo, type, 'personal');
@@ -252,9 +246,9 @@ export default function Personal({
     >
       <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
       <div
-        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px] dark:border-gray-100 dark:bg-accent-100`}
+        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
       >
-        <h1 className="text-[2.11vw] font-medium leading-normal text-black tablet:text-[20px] dark:text-gray-400">
+        <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
           {item.title}
         </h1>
       </div>
@@ -278,7 +272,7 @@ export default function Personal({
 
   return (
     <>
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
         The more personal information you add, the stronger your data profile and the more FDX you earn.
       </h1>
       {renderPersonalBadgesPopup()}

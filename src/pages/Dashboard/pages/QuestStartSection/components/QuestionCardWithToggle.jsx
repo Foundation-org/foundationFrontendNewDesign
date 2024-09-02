@@ -20,6 +20,7 @@ import { Button } from '../../../../../components/ui/Button.jsx';
 import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 import showToast from '../../../../../components/ui/Toast';
 import AddOptions from '../../../../../components/question-card/AddOptions';
+import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -407,15 +408,7 @@ const QuestionCardWithToggle = (props) => {
       !location.pathname.startsWith('/p') &&
       !location.pathname.startsWith('/l')
     ) {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     }
 

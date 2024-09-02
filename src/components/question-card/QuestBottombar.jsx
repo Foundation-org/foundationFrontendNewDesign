@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { calculateTimeAgo } from '../../utils/utils';
 import { referralModalStyle } from '../../constants/styles';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
@@ -11,9 +11,11 @@ import BasicModal from '../BasicModal';
 import CopyDialogue from '../question-card/Shareables/CopyDialogue';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
+import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 
 const QuestBottombar = ({ time, questStartData, postProperties, showDisableSharedLinkPopup }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -39,15 +41,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
 
   const handleSharePostClick = () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     } else if (questStartData?.moderationRatingCount >= 1) {
       showToast('warning', 'AdultPost');
@@ -58,15 +52,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
 
   const handleAddToListClick = () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
       setAddToList(true);
@@ -74,10 +60,15 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   };
 
   const handleAnalyzeClick = () => {
-    if (questStartData?.startStatus === '') {
-      showToast('warning', 'analyzeParticipatedPost');
+    if (persistedUserInfo?.role === 'guest') {
+      dispatch(setGuestSignUpDialogue(true));
+      return;
     } else {
-      navigate('/post/isfullscreen', { state: { questId: questStartData._id } });
+      if (questStartData?.startStatus === '') {
+        showToast('warning', 'analyzeParticipatedPost');
+      } else {
+        navigate('/post/isfullscreen', { state: { questId: questStartData._id } });
+      }
     }
   };
 

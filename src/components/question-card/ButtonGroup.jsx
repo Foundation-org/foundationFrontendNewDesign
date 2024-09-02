@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { calculateRemainingTime } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetQuests } from '../../features/quest/questsSlice';
-import { getButtonText } from '../../utils/questionCard/SingleQuestCard';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
@@ -16,6 +15,7 @@ import FeedbackAndVisibility from '../../pages/Dashboard/pages/Profile/pages/fee
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import showToast from '../ui/Toast';
+import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 // import { formatParticipantsCount } from '../../utils/questionCard';
 
 const ButtonGroup = ({
@@ -58,18 +58,6 @@ const ButtonGroup = ({
     if (feedbackAndVisibilityRef.current) {
       feedbackAndVisibilityRef.current.showHidePostOpen();
     }
-  };
-
-  const showGuestSignUpToastWarning = () => {
-    toast.warning(
-      <p>
-        Please{' '}
-        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-          Create an Account
-        </span>{' '}
-        to unlock this feature
-      </p>,
-    );
   };
 
   function updateAnswerSelection(apiResponse, answerSelectionArray, type) {
@@ -417,7 +405,7 @@ const ButtonGroup = ({
           variant="cancel"
           onClick={() => {
             if (persistedUserInfo?.role === 'guest') {
-              showGuestSignUpToastWarning();
+              dispatch(setGuestSignUpDialogue(true));
             } else {
               if (location.pathname === '/shared-list-link/result') {
                 navigate('/profile/lists');
@@ -446,7 +434,7 @@ const ButtonGroup = ({
               <Button
                 variant={'submit'}
                 onClick={() => {
-                  showGuestSignUpToastWarning();
+                  dispatch(setGuestSignUpDialogue(true));
                 }}
                 className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
@@ -485,7 +473,7 @@ const ButtonGroup = ({
                   disabled={result === ', you are good to go' ? false : true}
                   className={'w-full tablet:w-full'}
                   onClick={() => {
-                    showGuestSignUpToastWarning();
+                    dispatch(setGuestSignUpDialogue(true));
                   }}
                 >
                   Change
@@ -507,7 +495,7 @@ const ButtonGroup = ({
                   disabled={result === ', you are good to go' ? false : true}
                   className={'w-full tablet:w-full'}
                   onClick={() => {
-                    showGuestSignUpToastWarning();
+                    dispatch(setGuestSignUpDialogue(true));
                   }}
                 >
                   Change
@@ -519,7 +507,7 @@ const ButtonGroup = ({
               <Button
                 variant={'submit'}
                 onClick={() => {
-                  showGuestSignUpToastWarning();
+                  dispatch(setGuestSignUpDialogue(true));
                 }}
                 className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
@@ -531,7 +519,7 @@ const ButtonGroup = ({
               <Button
                 variant="g-submit"
                 onClick={() => {
-                  showGuestSignUpToastWarning();
+                  dispatch(setGuestSignUpDialogue(true));
                 }}
                 disabled={
                   loading === true

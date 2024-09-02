@@ -1,7 +1,7 @@
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { Button } from '../../../../../components/ui/Button';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   addRedeemCode,
@@ -9,15 +9,16 @@ import {
   getHistoryData,
   getUnredeemedData,
 } from '../../../../../services/api/redemptionApi';
-import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../../components/dialogue-boxes/deleteHistoryPopup';
 import showToast from '../../../../../components/ui/Toast';
 import { formatDate } from '../../../../../utils/utils';
 import usePulse from '../../../../../hooks/usePulse';
+import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [fdx, setFdx] = useState(0);
   const [description, setDescription] = useState('');
@@ -127,15 +128,7 @@ export default function RedemptionCenter() {
 
   const handleAdd = () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
       if (code === '') return showToast('warning', 'enterCode');
@@ -162,15 +155,7 @@ export default function RedemptionCenter() {
 
   const handleCreate = () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
       if (fdx === 0) return showToast('warning', 'selectAmount');
@@ -407,7 +392,7 @@ export default function RedemptionCenter() {
                           <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
                             {item.code}
                           </p>
-                          <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[16px]">
+                          <div className="flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[16px]">
                             <div className="tooltip text-start" data-tip={item.description}>
                               <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[140px] tablet:max-w-[140px]">
                                 {item.description}

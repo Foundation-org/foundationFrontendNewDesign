@@ -21,6 +21,7 @@ import feedbackReducer from '../features/profile/feedbackSlice';
 import systemConstantsReducer from '../features/constants/constantsSlice';
 import userSettingsReducer from '../features/profile/userSettingSlice';
 import seeMoreOptionsReducer from '../features/quest/seeMoreOptionsSlice';
+import extrasReducer from '../features/extras/extrasSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -47,6 +48,7 @@ const reducer = combineReducers({
   feedback: feedbackReducer,
   userSettings: userSettingsReducer,
   seeMoreOptionsUtils: seeMoreOptionsReducer,
+  extras: extrasReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);
