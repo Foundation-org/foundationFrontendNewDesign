@@ -5,8 +5,7 @@ import { getConstantsValues } from '../../features/constants/constantsSlice';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import { resetaddOptionLimit, updateaddOptionLimit } from '../../features/quest/utilsSlice';
 import { resetQuests } from '../../features/quest/questsSlice';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
+import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 
 export default function AddOptions({
   questStartData,
@@ -22,7 +21,6 @@ export default function AddOptions({
   answersSelection,
 }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const persistedContants = useSelector(getConstantsValues);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -35,15 +33,7 @@ export default function AddOptions({
     : false;
 
   const showGuestSignUpToastWarning = () => {
-    toast.warning(
-      <p>
-        Please{' '}
-        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-          Create an Account
-        </span>{' '}
-        to unlock this feature
-      </p>,
-    );
+    dispatch(setGuestSignUpDialogue(true));
   };
 
   function updateAnswerSelection(apiResponse, answerSelectionArray, type) {
@@ -188,7 +178,9 @@ export default function AddOptions({
       addOptionField === 0 &&
       !uuidExists &&
       questStartData.startStatus !== 'completed' &&
-      location.pathname !== '/shared-links/result' ? (
+      location.pathname !== '/shared-links/result' &&
+      location.pathname !== '/shared-list-link/result' &&
+      location.pathname !== '/post/isfullscreen' ? (
         <div className="pl-7 pt-[7.5px] tablet:pl-[66px] tablet:pt-[10px]">
           {getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
           getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||

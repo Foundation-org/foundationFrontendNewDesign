@@ -1,13 +1,6 @@
 export const toastMessages = {
   error: '',
   verificationEmailSent: 'A verification email has been sent to your email address. Please check your inbox.',
-  pleaseSignUp: `<p>
-                    Please{' '}
-                    <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-                      Create an Account
-                    </span>{' '}
-                    to unlock this feature
-                  </p>`,
   passwordMismatched: 'Passwords do not match. Please make sure your new password and retype password match.',
   wrongPassword: 'Wrong Password',
   referalVerified: 'Referral code verified',
@@ -106,4 +99,12 @@ export const toastMessages = {
   webViewSignUp:
     'This web view within your application is not secure. To create an account, please copy and paste the link into Chrome, Safari or your stand alone browser of choice.',
   youAreViewingPreview: 'You are viewing a preview',
+  // hideOption: 'Option hidden successfully',
+  // hideOptionDeleted: 'Option deleted successfully',
+  // deleteAllAnalytics: 'Advance analytics cleared successfully',
+  // analyticOrderChanged: 'Order changed Successfully',
+  analyzeParticipatedPost: 'Please participate in the post first',
+  cantHideLastTwoOptions: 'You cannot hide the last two options',
+  activityAlreadyExists: 'Activity already exists',
+  resultsUpdatedSuccess: 'Results updated Successfully',
 } as const;

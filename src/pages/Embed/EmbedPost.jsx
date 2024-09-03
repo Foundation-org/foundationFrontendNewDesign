@@ -1,35 +1,31 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { useQuery } from '@tanstack/react-query';
 import { fetchResults } from '../../services/api/questsApi';
-import { FaSpinner } from 'react-icons/fa';
 import { changeThemeTo } from '../../features/utils/utilsSlice';
-import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
+import FallbackLoading from '../../components/FallbackLoading';
 
 const EmbedPost = () => {
   let { link } = useParams();
   const dispatch = useDispatch();
-  const [resultsMode, setResultsMode] = useState(true);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    setResultsMode(queryParams.get('resultsMode') == 'true' ? true : false);
     dispatch(changeThemeTo(queryParams.get('darkMode') == 'true' ? 'dark' : 'light'));
   }, [location.search]);
 
   const { data: singleQuestData, isLoading } = useQuery({
-    queryKey: ['emdedPost', resultsMode],
-    queryFn: () => fetchResults(link, resultsMode),
+    queryKey: ['emdedPost'],
+    queryFn: () => fetchResults(link),
   });
 
   return (
     <>
       {isLoading ? (
-        <div className="flex items-center justify-center">
-          <FaSpinner className="animate-spin text-[#EAEAEA]" />
-        </div>
+        <FallbackLoading />
       ) : (
         singleQuestData &&
         singleQuestData?.data?.map((item, index) => (
@@ -39,6 +35,7 @@ const EmbedPost = () => {
             isBookmarked={false}
             isSingleQuest={true}
             postLink={link}
+            postProperties="Embed"
           />
         ))
       )}

@@ -69,16 +69,16 @@ const CardTopbar = ({
               </div>
             )} */}
 
-          <div className="mt-[1.5px] flex gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
-            {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
+          {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
             </h4> */}
-            <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 tablet:text-[1.25rem] tablet:leading-[23px] dark:text-white-400">
+          <div className="mt-[1.5px] flex gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
+            <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
               {capitalizeFirstLetter(questStartData.Question)}
             </h4>
           </div>
-          {/* </div> */}
         </div>
+        {/* </div> */}
 
         {postProperties === 'HiddenPosts' ? (
           // <div className="flex items-center gap-2">
@@ -95,7 +95,8 @@ const CardTopbar = ({
         ) : postProperties === 'SharedLinks' ? (
           <></>
         ) : (
-          questStartData?.type !== 'embed' && (
+          questStartData?.type !== 'embed' &&
+          questStartData?.page !== 'advance-analytics' && (
             // <div
             //   className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
             //   onClick={() => {

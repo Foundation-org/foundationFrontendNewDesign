@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { socials } from '../../../../../../constants/varification-badges';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { getAskPassword } from '../../../../../../features/profile/userSettingSlice';
@@ -11,6 +11,7 @@ import showToast from '../../../../../../components/ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { CanAdd } from './badgeUtils';
+import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 
 const Social = ({
   handleRemoveBadgePopup,
@@ -19,6 +20,7 @@ const Social = ({
   checkSocial,
   checkPrimary,
 }) => {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
@@ -52,6 +54,8 @@ const Social = ({
   }, [loading.state]);
 
   const handleFarcaster = async (title, type, value) => {
+    console.log('farcaster data', value);
+
     try {
       const payload = {
         uuid: persistedUserInfo.uuid,
@@ -93,15 +97,7 @@ const Social = ({
   };
 
   const handleGuestBadgeAdd = () => {
-    toast.warning(
-      <p>
-        Please{' '}
-        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-          Create an Account
-        </span>{' '}
-        to unlock this feature
-      </p>,
-    );
+    dispatch(setGuestSignUpDialogue(true));
     return;
   };
 
@@ -130,7 +126,7 @@ const Social = ({
       </AuthKitProvider>
       <div className="flex flex-col items-center justify-between rounded-[16.068px] pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
-          {filteredSocials.map((item, index) => (
+          {socials.map((item, index) => (
             <div
               className="relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5"
               key={index}

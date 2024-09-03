@@ -1,7 +1,6 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
-import { combineReducers } from '@reduxjs/toolkit';
+
 import storage from 'redux-persist/lib/storage';
 
 // reducers
@@ -22,6 +21,7 @@ import feedbackReducer from '../features/profile/feedbackSlice';
 import systemConstantsReducer from '../features/constants/constantsSlice';
 import userSettingsReducer from '../features/profile/userSettingSlice';
 import seeMoreOptionsReducer from '../features/quest/seeMoreOptionsSlice';
+import extrasReducer from '../features/extras/extrasSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -48,13 +48,12 @@ const reducer = combineReducers({
   feedback: feedbackReducer,
   userSettings: userSettingsReducer,
   seeMoreOptionsUtils: seeMoreOptionsReducer,
+  extras: extrasReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
   reducer: persistedReducers,
-  middleware: getDefaultMiddleware({
-    serializableCheck: false,
-  }),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });

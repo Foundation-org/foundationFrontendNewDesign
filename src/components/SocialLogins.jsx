@@ -29,8 +29,9 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
     // If isWebview() is false, include all items
     return true;
   });
+
   return (
-    <div className="mb-2 flex min-w-[145px] flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] tablet:min-w-[220px] laptop:mb-[1.56rem] laptop:min-w-[305px] laptop:justify-between laptop:gap-[1.56rem]">
+    <div className="my-5 flex min-w-[145px] flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] tablet:my-11 tablet:min-w-[220px] laptop:min-w-[305px] laptop:justify-between laptop:gap-[1.56rem]">
       {isWebview() && (
         <Button
           variant="auth"

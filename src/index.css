@@ -23,8 +23,12 @@
     @apply pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5;
   }
 
+  .summary-text {
+    @apply text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal;
+  }
+
   .verification_badge_input {
-    @apply w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px] dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300;
+    @apply w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:border-[3px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px];
   }
 
   /* CREATE / PROFILE / HOME Slider */
@@ -42,12 +46,12 @@
   }
 
   .conditional-text {
-    @apply py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-accent-400 tablet:py-[10px] tablet:pl-[66px] tablet:text-[1rem] tablet:leading-[30px] dark:text-accent-300;
+    @apply py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:pl-[66px] tablet:text-[1rem] tablet:leading-[30px];
   }
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-[12px] text-gray-650 2xl:text-[30px] tablet:text-[18px] tablet:leading-[18px] dark:text-white-100;
+  @apply text-[12px] font-semibold leading-[12px] text-gray-650 dark:text-white-100 2xl:text-[30px] tablet:text-[18px] tablet:leading-[18px];
 }
 
 .green-select {
@@ -75,11 +79,11 @@
 }
 
 .pagination-btn {
-  @apply flex h-[14.55px] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] tablet:h-7 tablet:w-[27px] tablet:rounded-md dark:bg-gray-300;
+  @apply flex h-[14.55px] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] dark:bg-gray-300 tablet:h-7 tablet:w-[27px] tablet:rounded-md;
 }
 
 .dragIconWrapper {
-  @apply flex w-[12.28px] min-w-[12.28px] items-center justify-center rounded-l-[5.387px] bg-white-500 py-[6.84px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:w-[25.2px] laptop:min-w-[25.2px] dark:bg-gray-100;
+  @apply flex w-[12.28px] min-w-[12.28px] items-center justify-center rounded-l-[5.387px] bg-white-500 py-[6.84px] dark:bg-gray-100 tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:w-[25.2px] laptop:min-w-[25.2px];
 }
 
 .term_policy_heading {
@@ -106,6 +110,14 @@ input[type='text'] {
   box-sizing: border-box;
   text-align: left;
   font-family: Arial, sans-serif;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: block;
+  width: 1.25rem; /* size-5 equivalent in Tailwind */
+  height: 1.25rem; /* size-5 equivalent in Tailwind */
+  background: url('${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/calendar.svg') no-repeat;
+  opacity: 1;
 }
 
 @supports (-webkit-touch-callout: none) {

@@ -18,7 +18,7 @@ import showToast from '../ui/Toast';
 export default function ManagePostInListPopup({ handleClose, modalVisible, title, image, categoryId, selectedItem }) {
   console.log('🚀 ~ ManagePostInListPopup ~ selectedItem:', selectedItem);
   const queryClient = useQueryClient();
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   // const [categoryName, setCategoryName] = useState('');
   const [searchPost, setSearchPost] = useState('');

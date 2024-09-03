@@ -1,13 +1,13 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { Button } from '../ui/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createFeedback, hideQuest } from '../../services/api/questsApi';
 import PopUp from '../ui/PopUp';
 import showToast from '../ui/Toast';
+import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 
 export default function ShowHidePostPopup({
   handleClose,
@@ -18,7 +18,7 @@ export default function ShowHidePostPopup({
   data,
   feature,
 }) {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedTitle, setSelectedTitle] = useState('');
@@ -41,6 +41,7 @@ export default function ShowHidePostPopup({
             page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
           ),
         }));
+        queryClient.invalidateQueries(['userInfo', { exact: true }]);
         toast.success(resp.data.message);
       }
       handleClose();
@@ -71,15 +72,7 @@ export default function ShowHidePostPopup({
 
   const handleHiddenPostApiCall = () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
       if (selectedTitle === '') {
@@ -136,7 +129,7 @@ export default function ShowHidePostPopup({
       questStartData?.userQuestSetting &&
       questStartData.userQuestSetting.feedbackMessage !== '' ? (
         <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-          <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 tablet:text-[20px] tablet:leading-[24.2px] dark:text-gray-300">
+          <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
             Are you sure you want to hide this post?
           </h1>
           <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
@@ -181,7 +174,7 @@ export default function ShowHidePostPopup({
                 <div
                   key={index + 1}
                   id={item.id}
-                  className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-white-500 px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3 dark:border-gray-100 dark:bg-accent-100"
+                  className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-white-500 px-[10px] py-[5px] dark:border-gray-100 dark:bg-accent-100 tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
                   onClick={() => handleCheckboxChange(item.id)}
                 >
                   <div id="custom-checkbox-popup" className="flex h-full items-center">
@@ -192,7 +185,7 @@ export default function ShowHidePostPopup({
                       onChange={() => handleCheckboxChange(item.id)}
                     />
                   </div>
-                  <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] tablet:text-[19px] tablet:leading-[23px] dark:text-gray-300">
+                  <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] dark:text-gray-300 tablet:text-[19px] tablet:leading-[23px]">
                     {item.title}
                   </p>
                 </div>

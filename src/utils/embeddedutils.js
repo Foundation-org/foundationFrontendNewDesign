@@ -28,13 +28,6 @@ export const extractPartFromUrl = (url) => {
   }
 };
 
-// export function isImageUrl(url) {
-//   console.log({ url });
-//   const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg']; // Add more if needed
-//   const lowerCaseUrl = url.toLowerCase();
-//   return imageExtensions.some((extension) => lowerCaseUrl.endsWith(extension));
-// }
-
 export function isImageUrl(urlArray) {
   const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg']; // Add more if needed
   return urlArray.some((url) => {

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 // components
 import Topbar from '../Dashboard/components/Topbar';
@@ -10,6 +11,7 @@ import { useGetSingleQuest } from '../../services/queries/quest';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import Loader from '../../components/ui/Loader';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
+import AdvanceAnalytics from '../features/advance-analytics';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
@@ -19,6 +21,7 @@ const Guests = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [submitResponse, setSubmitResponse] = useState();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (isFullScreen !== 'isfullscreen') {
@@ -27,7 +30,11 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
-  const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
+  const { data: singleQuestResp, isFetching } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
+
+  // useEffect(() => {
+  //   queryClient.invalidateQueries(['SingleQuest']);
+  // }, [location.state.questId, queryClient]);
 
   const handleStartTest = useCallback(
     (testId) => {
@@ -51,74 +58,83 @@ const Guests = () => {
       <div className="w-full bg-[#F2F3F5] dark:bg-black">
         <DashboardLayout>
           <div className="mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[1440px] tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 desktop:mx-auto desktop:px-0">
-            <div className="w-full overflow-y-auto py-2 no-scrollbar tablet:px-6 tablet:py-5 laptop:px-0">
-              {isFullScreen !== 'isfullscreen' && (
-                <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
-                  <button
-                    className="w-[81.8px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:w-[250px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[23.63px]"
-                    onClick={() => setTab('Participate')}
-                  >
-                    Participate
-                  </button>
-                  <button
-                    className="w-[81.8px] rounded-[7.1px] bg-[#0FB063] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:w-[250px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[23.63px]"
-                    onClick={() => setTab('Result')}
-                  >
-                    Result
-                  </button>
-                </div>
-              )}
+            {isFetching ? (
+              <div className="mt-10 flex h-fit w-full justify-center">
+                <Loader />
+              </div>
+            ) : (
+              <div className="w-full overflow-y-auto py-2 no-scrollbar tablet:px-6 tablet:py-5 laptop:px-0">
+                {isFullScreen !== 'isfullscreen' && (
+                  <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
+                    <button
+                      className="w-[81.8px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:w-[250px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[23.63px]"
+                      onClick={() => setTab('Participate')}
+                    >
+                      Participate
+                    </button>
+                    <button
+                      className="w-[81.8px] rounded-[7.1px] bg-[#0FB063] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:w-[250px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[23.63px]"
+                      onClick={() => setTab('Result')}
+                    >
+                      Result
+                    </button>
+                  </div>
+                )}
 
-              {singleQuestResp ? (
-                <div>
-                  {isFullScreen !== 'isfullscreen' ? (
-                    <QuestionCard
-                      tab={tab}
-                      questStartData={singleQuestResp}
-                      id={singleQuestResp?._id}
-                      img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
-                      alt="badge"
-                      badgeCount={singleQuestResp.getUserBadge?.badges?.length}
-                      time={singleQuestResp?.createdAt}
-                      title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
-                      question={singleQuestResp?.Question}
-                      answers={singleQuestResp?.QuestAnswers}
-                      usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
-                      whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
-                      btnText={singleQuestResp?.startStatus}
-                      startStatus={singleQuestResp?.startStatus}
-                      viewResult={viewResult}
-                      handleViewResults={handleViewResults}
-                      multipleOption={singleQuestResp?.userCanSelectMultiple}
-                      QuestTopic={singleQuestResp?.QuestTopic}
-                      createdBy={singleQuestResp?.uuid}
-                      lastInteractedAt={singleQuestResp?.lastInteractedAt}
-                      usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
-                      setSubmitResponse={setSubmitResponse}
-                    />
-                  ) : (
-                    <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
-                      <QuestionCardWithToggle
-                        questStartData={submitResponse ? submitResponse : singleQuestResp}
+                {singleQuestResp && (
+                  <div>
+                    {isFullScreen !== 'isfullscreen' ? (
+                      <QuestionCard
+                        tab={tab}
+                        questStartData={singleQuestResp}
+                        id={singleQuestResp?._id}
                         img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
                         alt="badge"
-                        startTest={startTest}
-                        setStartTest={setStartTest}
+                        badgeCount={singleQuestResp.getUserBadge?.badges?.length}
+                        time={singleQuestResp?.createdAt}
+                        title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
+                        question={singleQuestResp?.Question}
+                        answers={singleQuestResp?.QuestAnswers}
+                        usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
+                        whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
+                        btnText={singleQuestResp?.startStatus}
+                        startStatus={singleQuestResp?.startStatus}
                         viewResult={viewResult}
-                        setViewResult={setViewResult}
                         handleViewResults={handleViewResults}
-                        handleStartTest={handleStartTest}
-                        expandedView={true}
+                        multipleOption={singleQuestResp?.userCanSelectMultiple}
+                        QuestTopic={singleQuestResp?.QuestTopic}
+                        createdBy={singleQuestResp?.uuid}
+                        lastInteractedAt={singleQuestResp?.lastInteractedAt}
+                        usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
                         setSubmitResponse={setSubmitResponse}
-                        questType={location.state.questType}
                       />
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Loader />
-              )}
-            </div>
+                    ) : (
+                      <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
+                        <QuestionCardWithToggle
+                          questStartData={submitResponse ? submitResponse : singleQuestResp}
+                          img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
+                          alt="badge"
+                          startTest={startTest}
+                          setStartTest={setStartTest}
+                          viewResult={viewResult}
+                          setViewResult={setViewResult}
+                          handleViewResults={handleViewResults}
+                          handleStartTest={handleStartTest}
+                          expandedView={true}
+                          setSubmitResponse={setSubmitResponse}
+                          questType={location.state.questType}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+                {location.state.questType === undefined && (
+                  <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
+                    <AdvanceAnalytics questStartData={singleQuestResp} />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </DashboardLayout>
       </div>

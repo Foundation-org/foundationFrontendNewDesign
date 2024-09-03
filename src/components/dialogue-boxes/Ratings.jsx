@@ -7,7 +7,7 @@ import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSl
 import { useLocation } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { setIsShowPlayer, setPlayingPlayerId, resetPlayingIds } from '../../features/quest/utilsSlice';
-import { toast } from 'sonner';
+import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 
 export const StatusFiltersList = [
   {
@@ -52,6 +52,11 @@ export const MediaFiltersList = [
     id: 5,
     title: 'GIPHY',
     val: 'Giphy',
+  },
+  {
+    id: 6,
+    title: 'None',
+    val: 'None',
   },
 ];
 
@@ -132,7 +137,7 @@ const FilterContainer = (props) => {
               }
             }}
           >
-            <div className="flex size-4 min-h-4 min-w-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:min-h-6 dark:border-gray-300 tablet:size-6 tablet:min-w-6">
+            <div className="flex size-4 min-h-4 min-w-4 items-center justify-center rounded-full border-2 border-[#525252] dark:border-gray-300 tablet:size-6 tablet:min-h-6 tablet:min-w-6">
               {heading === 'Status' && props.filterValues.status === item.title ? (
                 <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] dark:bg-gray-300 tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : heading === 'Type' && props.filterValues.type === item.val ? (
@@ -444,18 +449,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 checked={selectedOptions.includes('adult')}
                 onChange={() => {
                   if (persistedUserInfo?.role === 'guest') {
-                    toast.warning(
-                      <p>
-                        Please{' '}
-                        <span
-                          className="cursor-pointer text-[#389CE3] underline"
-                          onClick={() => navigate('/guest-signup')}
-                        >
-                          Create an Account
-                        </span>{' '}
-                        to unlock this feature
-                      </p>,
-                    );
+                    dispatch(setGuestSignUpDialogue(true));
                     return;
                   }
                   handleCheckboxChange('adult');

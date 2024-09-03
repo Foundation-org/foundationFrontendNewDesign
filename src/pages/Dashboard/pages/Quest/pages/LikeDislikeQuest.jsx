@@ -24,6 +24,7 @@ import {
   setIsShowPlayer,
   setPlayingPlayerId,
 } from '../../../../../features/quest/utilsSlice';
+import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 
 const LikeDislike = () => {
   const navigate = useNavigate();
@@ -92,15 +93,7 @@ const LikeDislike = () => {
     dispatch(setPlayingPlayerId(''));
     dispatch(resetPlayingIds());
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     }
 

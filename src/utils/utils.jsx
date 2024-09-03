@@ -47,3 +47,9 @@ export const capitalizeFirstLetter = (sentence) => {
   if (!sentence) return sentence;
   return sentence.charAt(0).toUpperCase() + sentence.slice(1);
 };
+
+export function camelCaseToReadable(text) {
+  return text
+    .replace(/([a-z])([A-Z])/g, '$1 $2') // Insert space before each uppercase letter
+    .replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
+}

@@ -2,29 +2,31 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Router } from './routes/route';
 import { Toaster } from 'sonner';
-import SEO from './utils/SEO';
-import { MaintenanceRouter } from './routes/maintenance';
-import api from './services/api/Axios';
 import { Helmet } from 'react-helmet-async';
 import { signOut } from './services/api/userAuth';
 import { resetFilters } from './features/sidebar/filtersSlice';
 import { addUser } from './features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import api from './services/api/Axios';
+import FallbackLoading from './components/FallbackLoading';
 import showToast from './components/ui/Toast';
-// import SEO from './utils/SEO';
+import { MaintenanceRouter } from './routes/maintenance';
+import GuestDialogueScreen from './components/GuestDialogueScreen';
 
 function App() {
   // const [theme, setTheme] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [isMaintenance, setIsMaintenance] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     // Function to handle the event
-    const handlePreloadError = (event) => {
+    const handlePreloadError = () => {
       // Perform the desired action on preload error
       window.location.reload(); // Correct method to reload the page
     };
@@ -146,7 +148,6 @@ function App() {
     },
     onError: (error) => {
       console.log(error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     },
   });
 
@@ -155,6 +156,14 @@ function App() {
       handleSignout(persistedUserInfo.uuid);
     }
   }, [persistedUserInfo]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="h-dvh overflow-hidden">
@@ -179,7 +188,17 @@ function App() {
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
       </Helmet>
       {/* <MaintenanceRouter /> */}
-      {isMaintenance ? <MaintenanceRouter /> : <Router />}
+      {/* {isLoading && !location.pathname.includes('/embed') ? <FallbackLoading /> : <Router />} */}
+      {/* {isMaintenance ? <MaintenanceRouter /> : <Router />} */}
+      <div className="relative">
+        <Router />
+        {isLoading && !location.pathname.includes('/embed') && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-75">
+            <FallbackLoading />
+          </div>
+        )}
+      </div>
+      <GuestDialogueScreen />
       <Toaster
         position="top-right"
         expand={true}

@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { calculateRemainingTime } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetQuests } from '../../features/quest/questsSlice';
-import { getButtonText } from '../../utils/questionCard/SingleQuestCard';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
@@ -16,6 +15,8 @@ import FeedbackAndVisibility from '../../pages/Dashboard/pages/Profile/pages/fee
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import showToast from '../ui/Toast';
+import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
+// import { formatParticipantsCount } from '../../utils/questionCard';
 
 const ButtonGroup = ({
   questStartData,
@@ -57,18 +58,6 @@ const ButtonGroup = ({
     if (feedbackAndVisibilityRef.current) {
       feedbackAndVisibilityRef.current.showHidePostOpen();
     }
-  };
-
-  const showGuestSignUpToastWarning = () => {
-    toast.warning(
-      <p>
-        Please{' '}
-        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-          Create an Account
-        </span>{' '}
-        to unlock this feature
-      </p>,
-    );
   };
 
   function updateAnswerSelection(apiResponse, answerSelectionArray, type) {
@@ -236,6 +225,15 @@ const ButtonGroup = ({
       }),
     );
   };
+
+  if (location.pathname === '/post/isfullscreen') {
+    return null;
+    // return (
+    //   <h1 className="conditional-text px-0 text-center tablet:px-0">
+    //     {formatParticipantsCount(questStartData.submitCounter)}
+    //   </h1>
+    // );
+  }
 
   if (postProperties === 'HiddenPosts') {
     const { mutateAsync: unHidePost, isPending: unHidePostLoading } = useMutation({
@@ -407,7 +405,7 @@ const ButtonGroup = ({
           variant="cancel"
           onClick={() => {
             if (persistedUserInfo?.role === 'guest') {
-              showGuestSignUpToastWarning();
+              dispatch(setGuestSignUpDialogue(true));
             } else {
               if (location.pathname === '/shared-list-link/result') {
                 navigate('/profile/lists');
@@ -433,18 +431,19 @@ const ButtonGroup = ({
         <>
           {questStartData.startStatus === '' ? (
             <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
-              <Button
+              {/* <Button
                 variant={'submit'}
                 onClick={() => {
-                  showGuestSignUpToastWarning();
+                  dispatch(setGuestSignUpDialogue(true));
                 }}
                 className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
               >
                 Feedback
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
-              </Button>
+              </Button> */}
+              <button className="w-full cursor-default">&#x200B;</button>
               <Button
                 variant="g-submit"
                 onClick={() => handleSubmit()}
@@ -475,7 +474,7 @@ const ButtonGroup = ({
                   disabled={result === ', you are good to go' ? false : true}
                   className={'w-full tablet:w-full'}
                   onClick={() => {
-                    showGuestSignUpToastWarning();
+                    dispatch(setGuestSignUpDialogue(true));
                   }}
                 >
                   Change
@@ -487,7 +486,7 @@ const ButtonGroup = ({
       );
     } else {
       return (
-        <div className="flex w-full justify-end ">
+        <div className="flex w-full justify-end">
           {questStartData.startStatus === 'change answer' ? (
             <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
               <button className="w-full cursor-default">&#x200B;</button>
@@ -497,7 +496,7 @@ const ButtonGroup = ({
                   disabled={result === ', you are good to go' ? false : true}
                   className={'w-full tablet:w-full'}
                   onClick={() => {
-                    showGuestSignUpToastWarning();
+                    dispatch(setGuestSignUpDialogue(true));
                   }}
                 >
                   Change
@@ -506,22 +505,26 @@ const ButtonGroup = ({
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
             <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
-              <Button
-                variant={'submit'}
-                onClick={() => {
-                  showGuestSignUpToastWarning();
-                }}
-                className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
-              >
-                Feedback
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px] ">
-                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
-                </span>
-              </Button>
+              {persistedUserInfo?.role === 'guest' ? (
+                <button className="w-full cursor-default">&#x200B;</button>
+              ) : (
+                <Button
+                  variant={'submit'}
+                  onClick={() => {
+                    dispatch(setGuestSignUpDialogue(true));
+                  }}
+                  className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
+                >
+                  Feedback
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
+                  </span>
+                </Button>
+              )}
               <Button
                 variant="g-submit"
                 onClick={() => {
-                  showGuestSignUpToastWarning();
+                  dispatch(setGuestSignUpDialogue(true));
                 }}
                 disabled={
                   loading === true
@@ -588,7 +591,7 @@ const ButtonGroup = ({
           <>
             {feedbackLoading || loading ? (
               <div className="flex h-[22px] w-full items-center justify-center tablet:h-[50px]">
-                <FaSpinner className="animate-spin text-center text-[22px] text-blue-100 tablet:text-[30px] dark:text-[#EAEAEA]" />
+                <FaSpinner className="animate-spin text-center text-[22px] text-blue-100 dark:text-[#EAEAEA] tablet:text-[30px]" />
               </div>
             ) : (
               <div className="flex w-full items-center justify-between gap-4">
@@ -609,7 +612,7 @@ const ButtonGroup = ({
                 <Button id={`submit-${questStartData._id}`} variant="g-submit" onClick={() => handleSubmit()}>
                   Submit
                   {questStartData.startStatus !== 'change answer' && (
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                       (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                     </span>
                   )}
@@ -651,7 +654,7 @@ const ButtonGroup = ({
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
             {questStartData.startStatus !== 'change answer' && (
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
               </span>
             )}

@@ -1,12 +1,11 @@
-import { toast } from 'sonner';
 import { Button } from './ui/Button';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PopUp from './ui/PopUp';
 import { getConstantsValues } from '../features/constants/constantsSlice';
+import { setGuestSignUpDialogue } from '../features/extras/extrasSlice';
 
 export default function ObjectionPopUp({ modalVisible, handleClose, handleContendChange, option }) {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
 
@@ -29,15 +28,7 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
             variant="submit"
             onClick={() => {
               if (persistedUserInfo?.role === 'guest') {
-                toast.warning(
-                  <p>
-                    Please{' '}
-                    <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-                      Create an Account
-                    </span>{' '}
-                    to unlock this feature
-                  </p>,
-                );
+                dispatch(setGuestSignUpDialogue(true));
                 return;
               } else {
                 handleContendChange(true);
@@ -46,7 +37,7 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
             }}
           >
             Object{' '}
-            <span className="pl-1 text-[6px] leading-[0px] tablet:pl-2 tablet:text-[15px] ">
+            <span className="pl-1 text-[6px] leading-[0px] tablet:pl-2 tablet:text-[15px]">
               (-{persistedContants?.QUEST_OPTION_CONTENTION_GIVEN_AMOUNT} FDX)
             </span>
           </Button>

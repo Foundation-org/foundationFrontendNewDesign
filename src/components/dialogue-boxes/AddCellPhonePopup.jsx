@@ -67,7 +67,6 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
     mutationFn: verifyOtp,
     onSuccess: async (response) => {
       showToast('success', 'otpVerified');
-      console.log(response);
 
       if (verification) {
         dispatch(setAskPassword(false));
@@ -146,7 +145,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       {!otpResp ? (
         <div className="pb-[15px] pt-2 tablet:py-[25px]">
-          <div className=" px-5 tablet:px-[60px] laptop:px-[80px]">
+          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
             <p
               htmlFor="email"
               className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[24.2px]"
@@ -176,7 +175,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
         </div>
       ) : (
         <div className="pb-[15px] pt-2 tablet:py-[25px]">
-          <div className=" px-5 tablet:px-[60px] laptop:px-[80px]">
+          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
             <h1 className="text-[9.278px] font-medium leading-[9.278px] text-[#707175] tablet:text-[20px] tablet:font-semibold tablet:leading-[20px]">
               OTP Verification
             </h1>

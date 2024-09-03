@@ -1,7 +1,9 @@
 import { toast } from 'sonner';
 import { createStartQuest, updateChangeAnsStartQuest } from '../api/questsApi';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import showToast from '../../components/ui/Toast';
+import api from '../api/Axios';
+import { searchPosts } from '../api/listsApi';
 
 export function useStartQuest() {
   const queryClient = useQueryClient();
@@ -28,8 +30,7 @@ export function useChangeAnswer() {
 
     onSettled: async (_, error) => {
       if (error) {
-        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
-
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       } else {
         // toast.success('Successfully Completed');
         await queryClient.invalidateQueries({ queryKey: ['FeedData'] });
@@ -37,3 +38,9 @@ export function useChangeAnswer() {
     },
   });
 }
+
+export const useSearchPosts = (term, uuid) => {
+  return useMutation({
+    mutationFn: () => searchPosts(term, uuid),
+  });
+};

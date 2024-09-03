@@ -6,6 +6,7 @@ import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
 import { setAskPassword } from '../../features/profile/userSettingSlice';
 import showToast from '../../components/ui/Toast';
+import { toast } from 'sonner';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const VerifyCode = () => {
   const [urlQuery, seturlQuery] = useState('');
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [verificationCode, setVerificationCode] = useState([]);
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState(null);
 
   const checkUrlQuery = () => {
     let urlQuery = window.location.search.slice(1);
@@ -81,7 +82,7 @@ const VerifyCode = () => {
         },
         body: JSON.stringify({ verificationCode }),
       });
-      console.log(response);
+
       if (response.status === 200) {
         showToast('success', 'emailVerified');
         const data = await response.json();

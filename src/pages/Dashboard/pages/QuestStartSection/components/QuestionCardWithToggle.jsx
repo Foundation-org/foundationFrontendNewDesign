@@ -20,6 +20,7 @@ import { Button } from '../../../../../components/ui/Button.jsx';
 import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 import showToast from '../../../../../components/ui/Toast';
 import AddOptions from '../../../../../components/question-card/AddOptions';
+import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -175,16 +176,6 @@ const QuestionCardWithToggle = (props) => {
     setStartTest('');
     setViewResult(testId);
   };
-
-  // const handleChange = () => {
-  //   setOpenResults(false);
-  //   // const data = {
-  //   //   questForeignKey: questStartData._id,
-  //   //   uuid: persistedUserInfo.uuid,
-  //   // };
-
-  //   handleStartTest(questStartData._id);
-  // };
 
   const handleAddOption = () => {
     const newOption = {
@@ -417,15 +408,7 @@ const QuestionCardWithToggle = (props) => {
       !location.pathname.startsWith('/p') &&
       !location.pathname.startsWith('/l')
     ) {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
+      dispatch(setGuestSignUpDialogue(true));
       return;
     }
 
@@ -764,14 +747,8 @@ const QuestionCardWithToggle = (props) => {
         handleStartTest(questStartData._id);
       }
       if (questStartData.startStatus === 'change answer') {
-        // if (!guestResult) {
         setOpenResults(false);
         handleViewResults(questStartData._id);
-        // } else {
-        //   navigate('/shared-links/result', {
-        //     state: { questId: questStartData._id, link: location.pathname.split('/').pop() },
-        //   });
-        // }
       }
       if (questStartData.startStatus === 'completed') {
         setOpenResults(true);
@@ -779,29 +756,6 @@ const QuestionCardWithToggle = (props) => {
       }
     }
   }, [questStartData]);
-
-  // const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
-  //   const { option, label } = actionPayload;
-
-  //   const updatedAnswers = prevAnswers.map((answer) => {
-  //     // Check if the label matches the question
-  //     if (label.some((item) => item.question === answer.label)) {
-  //       return { ...answer, check: true };
-  //       return answer;
-  //     }
-  //   });
-
-  //   return updatedAnswers;
-  // };
-
-  // const handleRankedChoice = (option, label) => {
-  //   const actionPayload = {
-  //     option,
-  //     label,
-  //   };
-
-  //   setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
-  // };
 
   const renderQuestContent = () => {
     if (viewResult !== questStartData._id && openResults !== true) {
@@ -836,7 +790,7 @@ const QuestionCardWithToggle = (props) => {
             handleViewResults={handleViewResults}
             answersSelection={answersSelection}
           />
-          <Spacing questStartData={questStartData} show={true} />
+          <Spacing questStartData={questStartData} show={true} postProperties={postProperties} />
         </>
       );
     } else {
@@ -874,14 +828,18 @@ const QuestionCardWithToggle = (props) => {
             handleViewResults={handleViewResults}
             answersSelection={answersSelection}
           />
-          <Spacing questStartData={questStartData} show={true} />
+          <Spacing questStartData={questStartData} show={true} postProperties={postProperties} />
         </>
       );
     }
   };
 
   return (
-    <div ref={innerRef} id={questStartData._id === getQuestUtilsState.playerPlayingId ? 'playing-card' : ''}>
+    <div
+      ref={innerRef}
+      id={questStartData._id === getQuestUtilsState.playerPlayingId ? 'playing-card' : ''}
+      className={`${questStartData.type === 'embed' && 'h-full'}`}
+    >
       <QuestCardLayout
         questStartData={questStartData}
         playing={props.playing}
