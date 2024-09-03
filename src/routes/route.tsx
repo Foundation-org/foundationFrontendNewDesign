@@ -62,7 +62,7 @@ import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice'
 import EmbedPost from '../pages/Embed/EmbedPost';
 import Iframe from '../pages/Embed/Iframe';
 import VerifyPhone from '../pages/Signup/VerifyPhone';
-import DirectMessaging from '../pages/DirectMessaging';
+import DirectMessaging from '../pages/features/DirectMessaging';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);

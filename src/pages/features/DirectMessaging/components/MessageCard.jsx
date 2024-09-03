@@ -1,5 +1,5 @@
-import { Button } from '../../../components/ui/Button';
-import api from '../../../services/api/Axios';
+import { Button } from '../../../../components/ui/Button';
+import api from '../../../../services/api/Axios';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';

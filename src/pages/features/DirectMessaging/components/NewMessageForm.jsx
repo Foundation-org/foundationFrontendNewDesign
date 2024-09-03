@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Button } from '../../../components/ui/Button';
-import { createMessage } from '../../../services/api/directMessagingApi';
-import { useSelector } from 'react-redux';
-import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Switch } from '@headlessui/react';
 import { FaSpinner } from 'react-icons/fa';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Button } from '../../../../components/ui/Button';
+import { createMessage } from '../../../../services/api/directMessagingApi';
 
 export default function NewMessageForm({
   draftId,
@@ -20,20 +20,8 @@ export default function NewMessageForm({
   setIsDraft,
 }) {
   const queryClient = useQueryClient();
-
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-  const handleNewMessage = () => {
-    const params = {
-      from: persistedUserInfo.email,
-      to: to,
-      subject: sub,
-      message: msg,
-      type: isDraft ? 'draft' : 'new',
-      draftId: draftId,
-    };
-    createNewMessage(params);
-  };
+  const [isAll, setIsAll] = useState(false);
 
   const { mutateAsync: createNewMessage, isPending } = useMutation({
     mutationFn: createMessage,
@@ -51,9 +39,23 @@ export default function NewMessageForm({
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
+
   const handleFormSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    handleNewMessage();
+    e.preventDefault();
+
+    const params = {
+      from: persistedUserInfo.email,
+      subject: sub,
+      message: msg,
+      type: isDraft ? 'draft' : 'new',
+      draftId: draftId,
+    };
+
+    if (!isAll) {
+      params.to = to;
+    }
+
+    createNewMessage(params);
   };
 
   return (
@@ -65,19 +67,41 @@ export default function NewMessageForm({
         onClick={() => setAddNewMsg(false)}
       />
       <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
-        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+        <div className="flex items-center gap-4">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-            To:
+            Send to All Users :
           </p>
-          <input
-            type="text"
-            value={to}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+          <Switch
+            checked={isAll}
             onChange={(e) => {
-              setTo(e.target.value);
+              setIsAll(!isAll);
             }}
-          />
+            className={`${isAll ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+          >
+            <span className="sr-only">Use setting</span>
+            <span
+              aria-hidden="true"
+              className={`switch_base ${
+                isAll ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+              }`}
+            />
+          </Switch>
         </div>
+        {!isAll && (
+          <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+            <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+              To:
+            </p>
+            <input
+              type="text"
+              value={to}
+              className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+              onChange={(e) => {
+                setTo(e.target.value);
+              }}
+            />
+          </div>
+        )}
         <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
             Subject:

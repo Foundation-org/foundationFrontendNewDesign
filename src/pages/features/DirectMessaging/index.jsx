@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Topbar from '../Dashboard/components/Topbar';
+import Topbar from '../../Dashboard/components/Topbar';
 import MessageCard from './components/MessageCard';
 import NewMessageForm from './components/NewMessageForm';
 import ViewMessage from './components/ViewMessage';
@@ -11,7 +11,7 @@ import {
   getRecievedMessages,
   getSentMessages,
   viewMessage,
-} from '../../services/api/directMessagingApi';
+} from '../../../services/api/directMessagingApi';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 
