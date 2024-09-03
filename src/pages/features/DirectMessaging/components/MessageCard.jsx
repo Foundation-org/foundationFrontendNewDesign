@@ -10,8 +10,6 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
 
-  console.log(item);
-
   const calculateTimeAgo = (time) => {
     let timeAgo;
     const currentDate = new Date();

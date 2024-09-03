@@ -49,6 +49,7 @@ export default function NewMessageForm({
       message: msg,
       type: isDraft ? 'draft' : 'new',
       draftId: draftId,
+      to: 'All',
     };
 
     if (!isAll) {
@@ -67,41 +68,41 @@ export default function NewMessageForm({
         onClick={() => setAddNewMsg(false)}
       />
       <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
-        <div className="flex items-center gap-4">
-          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-            Send to All Users :
-          </p>
-          <Switch
-            checked={isAll}
-            onChange={(e) => {
-              setIsAll(!isAll);
-            }}
-            className={`${isAll ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-          >
-            <span className="sr-only">Use setting</span>
-            <span
-              aria-hidden="true"
-              className={`switch_base ${
-                isAll ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-              }`}
-            />
-          </Switch>
-        </div>
-        {!isAll && (
-          <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+        {persistedUserInfo.email.includes('@foundation-io.com') && (
+          <div className="flex items-center gap-4">
             <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-              To:
+              Send to All Users :
             </p>
-            <input
-              type="text"
-              value={to}
-              className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+            <Switch
+              checked={isAll}
               onChange={(e) => {
-                setTo(e.target.value);
+                setIsAll(!isAll);
               }}
-            />
+              className={`${isAll ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+            >
+              <span className="sr-only">Use setting</span>
+              <span
+                aria-hidden="true"
+                className={`switch_base ${
+                  isAll ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+                }`}
+              />
+            </Switch>
           </div>
         )}
+        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+            To:
+          </p>
+          <input
+            type="text"
+            value={!isAll ? to : 'All'}
+            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+            onChange={(e) => {
+              setTo(e.target.value);
+            }}
+          />
+        </div>
         <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
             Subject:

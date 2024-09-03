@@ -40,7 +40,7 @@ const Spacing = ({ questStartData, show, postProperties }) => {
           questStartData.isClosed ? (
             <div className="flex h-[23px] items-end justify-center tablet:h-[50px]">
               <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[1rem]">
-                Participation is closed
+                Participation is closed {questStartData?.isClosed && '- Historical / Past Event'}
               </h4>
             </div>
           ) : (
