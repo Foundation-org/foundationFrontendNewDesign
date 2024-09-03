@@ -1,9 +1,9 @@
-export default function SelectionOption({ data, selected, handleSelection }: any) {
+export default function SelectionOption({ data, selected, handleSelection, isDisabled }: any) {
   const isSelected = selected?.some((optionId: any) => optionId.id === data.id || false);
 
   return (
     <li
-      className="flex w-full cursor-pointer justify-between rounded-[5.387px] border border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px]"
+      className={`${isDisabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'} flex w-full justify-between rounded-[5.387px] border border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px]`}
       onClick={() => handleSelection(data)}
     >
       <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[4px] bg-white-500 dark:bg-gray-100 tablet:h-[43px] tablet:w-5 tablet:min-w-5">

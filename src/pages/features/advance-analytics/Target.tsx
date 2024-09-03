@@ -8,12 +8,14 @@ import { AddBadgeProps } from '../../../types/advanceAnalytics';
 import { useAnalyzeTargetMutation } from '../../../services/mutations/advance-analytics';
 import SelectionOption from '../../../components/SelectionOption';
 import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
-import { targetDualOptions } from '../../../constants/advanceAnalytics';
+import { DualOptions } from '../../../constants/advanceAnalytics';
 import { useDebounce } from '../../../utils/useDebounce';
+import { useQuery } from '@tanstack/react-query';
+import { getSingleQuest } from '../../../services/api/homepageApis';
 
 export default function Target({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
-  const [selectedPost, setSelectedPost] = useState<any>(null);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const [selectedPost, setSelectedPost] = useState<any>(null);
   const [searchPost, setSearchPost] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [searchPostLoad, setSearchPostLoad] = useState(false);
@@ -50,36 +52,50 @@ export default function Target({ handleClose, questStartData, update, selectedIt
     });
   };
 
-  function filterDualOptions(advanceAnalytics: any[], dualOptions: Record<string, any[]>): Record<string, any[]> {
-    return Object.keys(dualOptions)?.reduce((acc: any, key: string) => {
-      // Filter out options that match any item in the targetedOptionsArray
-      const filteredOptions = dualOptions[key].filter((option: any) => {
-        return !advanceAnalytics?.some(
-          (analytic: any) =>
-            analytic?.targetedQuestForeignKey === selectedPost?._id &&
-            analytic?.targetedOptionsArray?.includes(option.question),
-        );
-      });
-
-      // Add the filtered options to the result object
-      if (filteredOptions.length > 0) {
-        acc[key] = filteredOptions;
-      }
-
-      return acc;
-    }, {});
-  }
-
-  function filterQuestAnswers(questAnswers: any[], advanceAnalytics: any[]): any[] {
-    return questAnswers?.filter((answer: any) => {
-      // Check if the question in QuestAnswers does not exist in any targetedOptionsArray in advanceAnalytics
-      return !advanceAnalytics?.some(
+  function filterDualOptions(advanceAnalytics: any[], dualOptions: any[]) {
+    return dualOptions.map((answer: any) => {
+      const isMatched = advanceAnalytics?.some(
         (analytic: any) =>
           analytic?.targetedQuestForeignKey === selectedPost?._id &&
           analytic?.targetedOptionsArray?.includes(answer.question),
       );
+
+      if (isMatched) {
+        return { ...answer, isMatched: [{ id: answer.id, question: answer.question }] };
+      }
+
+      return answer;
     });
   }
+
+  function filterQuestAnswers(questAnswers: any[], advanceAnalytics: any[]): any[] {
+    return questAnswers.map((answer: any) => {
+      const isMatched = advanceAnalytics?.some(
+        (analytic: any) =>
+          analytic?.targetedQuestForeignKey === selectedPost?._id &&
+          analytic?.targetedOptionsArray?.includes(answer.question),
+      );
+
+      if (isMatched) {
+        return { ...answer, isMatched: [{ id: answer.id, question: answer.question }] };
+      }
+
+      return answer;
+    });
+  }
+
+  const { data: targetPost, isFetching } = useQuery({
+    queryFn: async () => {
+      return (await getSingleQuest(persistedUserInfo.uuid, selectedItem?.targetedQuestForeignKey)).data.data[0];
+    },
+    queryKey: ['editTargetPost', selectedItem?.targetedQuestForeignKey],
+  });
+
+  useEffect(() => {
+    if (targetPost) {
+      setSelectedPost(targetPost);
+    }
+  }, [targetPost, isFetching]);
 
   return (
     <div className="flex flex-col">
@@ -119,25 +135,23 @@ export default function Target({ handleClose, questStartData, update, selectedIt
             ))}
         </div>
 
-        {/* {selectedPost?.Question && (
-          <div className="max-h-[40dvh] w-full overflow-y-auto">
-            <QuestionCardWithToggle questStartData={selectedPost} />
-          </div>
-        )} */}
-
         {selectedPost?.whichTypeQuestion === 'yes/no' ||
         selectedPost?.whichTypeQuestion === 'agree/disagree' ||
         selectedPost?.whichTypeQuestion === 'like/dislike' ? (
           <ul className="flex max-h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
-            {filterDualOptions(questStartData.advanceAnalytics, targetDualOptions)[selectedPost?.whichTypeQuestion]
-              ?.length > 0 ? (
-              filterDualOptions(questStartData.advanceAnalytics, targetDualOptions)[
-                selectedPost?.whichTypeQuestion
-              ]?.map((item) => (
+            {filterDualOptions(
+              questStartData.advanceAnalytics,
+              DualOptions[selectedPost?.whichTypeQuestion as keyof typeof DualOptions],
+            )?.length > 0 ? (
+              filterDualOptions(
+                questStartData.advanceAnalytics,
+                DualOptions[selectedPost?.whichTypeQuestion as keyof typeof DualOptions],
+              )?.map((item) => (
                 <SelectionOption
                   key={item.id}
                   data={item}
-                  selected={selectedOption}
+                  isDisabled={item.isMatched ? true : false}
+                  selected={item.isMatched || selectedOption}
                   handleSelection={handleOptionSelection}
                 />
               ))
@@ -147,14 +161,15 @@ export default function Target({ handleClose, questStartData, update, selectedIt
           </ul>
         ) : (
           selectedPost?.QuestAnswers.length > 0 && (
-            <ul className="flex max-h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
+            <ul className="flex max-h-[82.77px] min-h-[53.28px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[167px] tablet:min-h-[112px] tablet:gap-[10px]">
               {filterQuestAnswers(selectedPost?.QuestAnswers || [], questStartData.advanceAnalytics).length > 0 ? (
                 filterQuestAnswers(selectedPost?.QuestAnswers || [], questStartData.advanceAnalytics).map(
                   (post: any) => (
                     <SelectionOption
                       key={post._id}
                       data={post}
-                      selected={selectedOption}
+                      isDisabled={post.isMatched ? true : false}
+                      selected={post.isMatched || selectedOption}
                       handleSelection={handleOptionSelection}
                     />
                   ),

@@ -45,6 +45,21 @@ export const targetDualOptions: Record<
   ],
 };
 
+export const DualOptions = {
+  'yes/no': [
+    { id: 1, question: 'Yes' },
+    { id: 2, question: 'No' },
+  ],
+  'agree/disagree': [
+    { id: 1, question: 'Agree' },
+    { id: 2, question: 'Disagree' },
+  ],
+  'like/dislike': [
+    { id: 1, question: 'Like' },
+    { id: 2, question: 'Dislike' },
+  ],
+};
+
 export const activityList = [
   { id: 1, name: 'Twitter' }, // followers > no
   { id: 2, name: 'Date of Birth' }, // from this date to this date
