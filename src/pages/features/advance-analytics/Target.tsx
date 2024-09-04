@@ -90,18 +90,19 @@ export default function Target({ handleClose, questStartData, update, selectedIt
     });
   };
 
-  const { data: targetPost } = useQuery({
+  const { data: targetPost, isFetching } = useQuery({
     queryFn: async () => {
       return (await getSingleQuest(persistedUserInfo.uuid, selectedItem?.targetedQuestForeignKey)).data.data[0];
     },
     queryKey: ['editTargetPost', selectedItem?.targetedQuestForeignKey],
+    enabled: update,
   });
 
   useEffect(() => {
-    if (targetPost) {
+    if (update && targetPost) {
       transformSelectedPost(targetPost);
     }
-  }, [targetPost]);
+  }, [update, targetPost]);
 
   return (
     <div className="flex flex-col">
@@ -140,16 +141,17 @@ export default function Target({ handleClose, questStartData, update, selectedIt
               </ul>
             ))}
         </div>
-        {selectedPost && (
-          <ul className="flex max-h-[82.77px] min-h-[53.28px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[167px] tablet:min-h-[112px] tablet:gap-[10px]">
-            {selectedPost.length > 0 ? (
-              selectedPost.map((post: any) => (
+        {!isFetching ? (
+          <ul className="flex h-full max-h-[82.77px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[167px] tablet:gap-[10px]">
+            {selectedPost?.length > 0 &&
+              selectedPost?.map((post: any) => (
                 <SelectionOption key={post.id} data={post} handleSelection={handleOptionSelection} />
-              ))
-            ) : (
-              <p className="text-center text-[8px] tablet:text-[16px]">No options available to target</p>
-            )}
+              ))}
           </ul>
+        ) : (
+          <div className="flex w-full items-center justify-center py-6">
+            <FaSpinner className="size-6 animate-spin text-blue-200 tablet:size-16" />
+          </div>
         )}
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
