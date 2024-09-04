@@ -107,4 +107,5 @@ export const toastMessages = {
   cantHideLastTwoOptions: 'You cannot hide the last two options',
   activityAlreadyExists: 'Activity already exists',
   resultsUpdatedSuccess: 'Results updated Successfully',
+  optionAlreadyExists: 'Option already exists',
 } as const;

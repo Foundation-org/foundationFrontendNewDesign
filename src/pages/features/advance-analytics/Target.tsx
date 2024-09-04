@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query';
 import { TextareaAutosize } from '@mui/material';
 import { Button } from '../../../components/ui/Button';
+import { useDebounce } from '../../../utils/useDebounce';
 import { searchPosts } from '../../../services/api/listsApi';
 import { AddBadgeProps } from '../../../types/advanceAnalytics';
+import { getSingleQuest } from '../../../services/api/homepageApis';
 import { useAnalyzeTargetMutation } from '../../../services/mutations/advance-analytics';
 import SelectionOption from '../../../components/SelectionOption';
 import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
-import { DualOptions } from '../../../constants/advanceAnalytics';
-import { useDebounce } from '../../../utils/useDebounce';
-import { useQuery } from '@tanstack/react-query';
-import { getSingleQuest } from '../../../services/api/homepageApis';
 
 export default function Target({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
@@ -19,9 +18,50 @@ export default function Target({ handleClose, questStartData, update, selectedIt
   const [searchPost, setSearchPost] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [searchPostLoad, setSearchPostLoad] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<any>([]);
   const debouncedSearch = useDebounce(searchPost, 1000);
   const { mutateAsync: handleAnalyzePost, isPending } = useAnalyzeTargetMutation({ handleClose });
+
+  function filterQuestAnswers(selectedPost: any[], advanceAnalytics: any[]): any[] {
+    return selectedPost.map((item: any) => ({
+      ...item,
+      selected: advanceAnalytics?.some(
+        (analytic: any) =>
+          analytic.targetedQuestForeignKey === item.questForeignKey &&
+          analytic.targetedOptionsArray.includes(item.option),
+      ),
+    }));
+  }
+
+  const transformSelectedPost = (selectedPost: any) => {
+    let options;
+
+    switch (selectedPost?.whichTypeQuestion) {
+      case 'yes/no':
+        options = ['Yes', 'No'];
+        break;
+      case 'agree/disagree':
+        options = ['Agree', 'Disagree'];
+        break;
+      case 'like/dislike':
+        options = ['Like', 'Dislike'];
+        break;
+      default:
+        options = selectedPost.QuestAnswers?.map((option: any) => option.question) || [];
+        break;
+    }
+
+    let transformedPost = options.map((option: any, index: number) => ({
+      id: index + 1,
+      question: selectedPost?.Question,
+      option: option,
+      questForeignKey: selectedPost._id,
+      selected: false,
+    }));
+
+    transformedPost = filterQuestAnswers(transformedPost, questStartData?.advanceAnalytics);
+
+    setSelectedPost(transformedPost);
+  };
 
   useEffect(() => {
     const handleSearchPost = async () => {
@@ -37,54 +77,20 @@ export default function Target({ handleClose, questStartData, update, selectedIt
   }, [debouncedSearch]);
 
   const handleOptionSelection = (data: any) => {
-    setSelectedOption((prevSelected: any[]) => {
-      const isSelected = prevSelected.some((optionId: any) => optionId.id === data.id);
-
+    setSelectedPost((prevSelected: any[]) => {
       if (update) {
-        return isSelected ? [] : [data];
+        return prevSelected.map((option: any) =>
+          option.id === data.id ? { ...option, selected: true } : { ...option, selected: false },
+        );
       } else {
-        if (isSelected) {
-          return prevSelected.filter((optionId: any) => optionId.id !== data.id);
-        } else {
-          return [...prevSelected, data];
-        }
+        return prevSelected.map((option: any) =>
+          option.id === data.id ? { ...option, selected: !option.selected } : option,
+        );
       }
     });
   };
 
-  function filterDualOptions(advanceAnalytics: any[], dualOptions: any[]) {
-    return dualOptions.map((answer: any) => {
-      const isMatched = advanceAnalytics?.some(
-        (analytic: any) =>
-          analytic?.targetedQuestForeignKey === selectedPost?._id &&
-          analytic?.targetedOptionsArray?.includes(answer.question),
-      );
-
-      if (isMatched) {
-        return { ...answer, isMatched: [{ id: answer.id, question: answer.question }] };
-      }
-
-      return answer;
-    });
-  }
-
-  function filterQuestAnswers(questAnswers: any[], advanceAnalytics: any[]): any[] {
-    return questAnswers.map((answer: any) => {
-      const isMatched = advanceAnalytics?.some(
-        (analytic: any) =>
-          analytic?.targetedQuestForeignKey === selectedPost?._id &&
-          analytic?.targetedOptionsArray?.includes(answer.question),
-      );
-
-      if (isMatched) {
-        return { ...answer, isMatched: [{ id: answer.id, question: answer.question }] };
-      }
-
-      return answer;
-    });
-  }
-
-  const { data: targetPost, isFetching } = useQuery({
+  const { data: targetPost } = useQuery({
     queryFn: async () => {
       return (await getSingleQuest(persistedUserInfo.uuid, selectedItem?.targetedQuestForeignKey)).data.data[0];
     },
@@ -93,9 +99,9 @@ export default function Target({ handleClose, questStartData, update, selectedIt
 
   useEffect(() => {
     if (targetPost) {
-      setSelectedPost(targetPost);
+      transformSelectedPost(targetPost);
     }
-  }, [targetPost, isFetching]);
+  }, [targetPost]);
 
   return (
     <div className="flex flex-col">
@@ -103,7 +109,7 @@ export default function Target({ handleClose, questStartData, update, selectedIt
       <div className="flex flex-col items-center justify-center gap-[15px]">
         <div className="relative w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[10px] tablet:border-[3px]">
           <TextareaAutosize
-            value={selectedPost?.Question ?? searchPost}
+            value={(selectedPost && selectedPost[0]?.question) ?? searchPost}
             placeholder="Search Post"
             className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none dark:border-gray-100 dark:bg-transparent dark:text-gray-300 tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px]"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -125,7 +131,7 @@ export default function Target({ handleClose, questStartData, update, selectedIt
                     onClick={() => {
                       setSearchPost('');
                       setSearchResult([]);
-                      setSelectedPost(post);
+                      transformSelectedPost(post);
                     }}
                   >
                     <QuestionCardWithToggle questStartData={post} />
@@ -134,70 +140,36 @@ export default function Target({ handleClose, questStartData, update, selectedIt
               </ul>
             ))}
         </div>
-
-        {selectedPost?.whichTypeQuestion === 'yes/no' ||
-        selectedPost?.whichTypeQuestion === 'agree/disagree' ||
-        selectedPost?.whichTypeQuestion === 'like/dislike' ? (
-          <ul className="flex max-h-[112px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:gap-[10px]">
-            {filterDualOptions(
-              questStartData.advanceAnalytics,
-              DualOptions[selectedPost?.whichTypeQuestion as keyof typeof DualOptions],
-            )?.length > 0 ? (
-              filterDualOptions(
-                questStartData.advanceAnalytics,
-                DualOptions[selectedPost?.whichTypeQuestion as keyof typeof DualOptions],
-              )?.map((item) => (
-                <SelectionOption
-                  key={item.id}
-                  data={item}
-                  isDisabled={item.isMatched ? true : false}
-                  selected={item.isMatched || selectedOption}
-                  handleSelection={handleOptionSelection}
-                />
+        {selectedPost && (
+          <ul className="flex max-h-[82.77px] min-h-[53.28px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[167px] tablet:min-h-[112px] tablet:gap-[10px]">
+            {selectedPost.length > 0 ? (
+              selectedPost.map((post: any) => (
+                <SelectionOption key={post.id} data={post} handleSelection={handleOptionSelection} />
               ))
             ) : (
               <p className="text-center text-[8px] tablet:text-[16px]">No options available to target</p>
             )}
           </ul>
-        ) : (
-          selectedPost?.QuestAnswers.length > 0 && (
-            <ul className="flex max-h-[82.77px] min-h-[53.28px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[167px] tablet:min-h-[112px] tablet:gap-[10px]">
-              {filterQuestAnswers(selectedPost?.QuestAnswers || [], questStartData.advanceAnalytics).length > 0 ? (
-                filterQuestAnswers(selectedPost?.QuestAnswers || [], questStartData.advanceAnalytics).map(
-                  (post: any) => (
-                    <SelectionOption
-                      key={post._id}
-                      data={post}
-                      isDisabled={post.isMatched ? true : false}
-                      selected={post.isMatched || selectedOption}
-                      handleSelection={handleOptionSelection}
-                    />
-                  ),
-                )
-              ) : (
-                <p className="text-center text-[8px] tablet:text-[16px]">No options available to target</p>
-              )}
-            </ul>
-          )
         )}
       </div>
       <div className="mt-2 flex w-full justify-end tablet:mt-4">
         <Button
-          variant={selectedOption.length <= 0 ? 'submit-hollow' : 'submit'}
+          variant={selectedPost?.some((option: any) => option.selected) ? 'submit' : 'submit-hollow'}
           className=""
-          disabled={isPending || selectedOption.length <= 0}
+          disabled={isPending || !selectedPost?.some((option: any) => option.selected)}
           rounded={false}
           onClick={() => {
-            const modifiedArray = selectedOption.map((item: { question: string }) => item.question);
+            const modifiedArray = selectedPost
+              ?.filter((item: { selected: boolean }) => item.selected)
+              .map((item: { option: string }) => item.option);
 
             handleAnalyzePost({
               userUuid: persistedUserInfo.uuid,
               questForeignKey: questStartData._id,
               targetedOptionsArray: modifiedArray,
-              targetedQuestForeignKey: selectedPost._id,
+              targetedQuestForeignKey: selectedPost[0].questForeignKey,
               id: update ? selectedItem?._id : null,
               order: update ? selectedItem?.order : null,
-              actionType: 'create',
             } as any);
           }}
         >
