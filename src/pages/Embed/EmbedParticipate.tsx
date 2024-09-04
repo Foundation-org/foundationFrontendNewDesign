@@ -7,7 +7,7 @@ export default function EmbedParticipate({ postProperties }: { postProperties: s
   return (
     <>
       {postProperties === 'Embed' ? (
-        <div className="absolute top-1/2 mt-1 flex w-full -translate-y-1/2 justify-center">
+        <div className="absolute top-1/2 flex w-full -translate-y-1/2 justify-center">
           {match && (
             <a
               href={`${import.meta.env.VITE_FRONTEND_URL}/p/${match[1]}`}

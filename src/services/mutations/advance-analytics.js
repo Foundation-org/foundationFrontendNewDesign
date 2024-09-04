@@ -213,6 +213,9 @@ export const useAnalyzeTargetMutation = ({ handleClose }) => {
     },
     onError: (error) => {
       console.log(error);
+      if (error.response.status === 409) {
+        showToast('warning', 'optionAlreadyExists');
+      }
       // Show error message in a toast
       // toast.warning(error.response.data.message);
     },

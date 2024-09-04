@@ -140,7 +140,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         postProperties={postProperties}
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
-      <div className="pb-[0.94rem] tablet:pb-6">{children}</div>
+      <div className={`${questStartData.type !== 'embed' && 'pb-[0.94rem] tablet:pb-6'}`}>{children}</div>
       {modalVisible && (
         <DeletePostPopup
           handleClose={handleClose}

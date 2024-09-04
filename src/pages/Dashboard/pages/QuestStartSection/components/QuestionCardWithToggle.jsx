@@ -402,6 +402,10 @@ const QuestionCardWithToggle = (props) => {
     },
   });
 
+  // const { startGuestListPost } = useStartGuestListPost(setLoading);
+  // const { startPost } = useStartPost(setLoading, props.setSubmitResponse, handleViewResults, questStartData);
+  // const { changePost } = useChangePost(setLoading, props.setSubmitResponse, handleViewResults, questStartData);
+
   const handleSubmit = () => {
     if (
       persistedUserInfo.role === 'guest' &&
