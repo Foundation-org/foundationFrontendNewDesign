@@ -307,7 +307,19 @@ function Slider() {
         />
       </div>
       <ul ref={tabsListRef} onMouseDown={() => setDragging(true)} onMouseMove={drag}>
-        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] dark:border-[#CECDCD]">
+        {/* <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] dark:border-[#CECDCD] tablet:gap-[13.82px] tablet:pr-[13.82px]"> */}
+        {/* <Link
+            className={`${filterStates.filterBySort === 'Wow' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
+            to={''}
+            onClick={() => {
+              handleButtonSelection('wow', null, 'wowButton');
+            }}
+            id={'wowButton'}
+          >
+            Wow!
+          </Link> */}
+        {/* </div> */}
+        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] dark:border-[#CECDCD] tablet:gap-[13.82px] tablet:pr-[13.82px]">
           <Link
             className={`${filterStates.filterBySort === 'Newest First' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
             to={''}
@@ -338,18 +350,6 @@ function Slider() {
           >
             Trending!
           </Link>
-          <Link
-            className={`${filterStates.filterBySort === 'Wow' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
-            to={''}
-            onClick={() => {
-              handleButtonSelection('wow', null, 'wowButton');
-            }}
-            id={'wowButton'}
-          >
-            Wow!
-          </Link>
-        </div>
-        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] dark:border-[#CECDCD]">
           <Link
             className={`${filterStates.filterByScope === 'Me' ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
             to={''}
