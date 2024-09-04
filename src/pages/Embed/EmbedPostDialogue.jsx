@@ -1,8 +1,9 @@
 import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import PopUp from '../../components/ui/PopUp';
 import CustomSwitch from '../../components/CustomSwitch';
+import { debounce } from 'lodash';
 
 export default function EmbedPostDialogue({ handleClose, modalVisible, postLink }) {
   const [copied, setCopied] = useState(false);
@@ -50,57 +51,79 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
       .catch((err) => console.error('Failed to copy:', err));
   };
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     const iframe = iframeRef.current;
+
     if (iframe && iframe.contentWindow) {
-      const observer = new MutationObserver((mutations) => {
-        const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
-        if (targetElement) {
+      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+
+      if (targetElement) {
+        const updateHeight = debounce(() => {
           const height = targetElement.scrollHeight;
-          setDynamicHeight(`${height + 4}px`);
-          iframe.style.height = `${height + 4}px`;
-          iframe.style.minHeight = `${height + 4}px`;
+          if (height !== iframe.style.height) {
+            setDynamicHeight(`${height + 4}px`);
+            iframe.style.height = `${height + 4}px`;
+            iframe.style.minHeight = `${height + 4}px`;
+          }
+        }, 100);
+
+        const observer = new MutationObserver(() => {
+          updateHeight();
           observer.disconnect();
           setLoading(false);
-        } else {
-          console.log('Target element not found.');
-        }
-      });
+        });
 
-      observer.observe(iframe.contentWindow.document, {
-        childList: true,
-        subtree: true,
-      });
+        observer.observe(iframe.contentWindow.document, {
+          childList: true,
+          subtree: true,
+        });
+
+        // Trigger initial height update
+        updateHeight();
+      } else {
+        console.log('Target element not found.');
+      }
     } else {
       console.log('Iframe contentWindow or document is not accessible.');
     }
-  };
+  }, [iframeRef]);
 
-  const handleLoad2 = () => {
+  const handleLoad2 = useCallback(() => {
     const iframe = iframeRef2.current;
+
     if (iframe && iframe.contentWindow) {
-      const observer = new MutationObserver((mutations) => {
-        const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
-        if (targetElement) {
+      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+
+      if (targetElement) {
+        const updateHeight = debounce(() => {
           const height = targetElement.scrollHeight;
-          setDynamicHeight2(`${height + 4}px`);
-          iframe.style.height = `${height + 4}px`;
-          iframe.style.minHeight = `${height + 4}px`;
+          if (height !== iframe.style.height) {
+            setDynamicHeight2(`${height + 4}px`);
+            iframe.style.height = `${height + 4}px`;
+            iframe.style.minHeight = `${height + 4}px`;
+          }
+        }, 100);
+
+        const observer = new MutationObserver(() => {
+          updateHeight();
           observer.disconnect();
           setLoading(false);
-        } else {
-          console.log('Target2 element not found.');
-        }
-      });
+        });
 
-      observer.observe(iframe.contentWindow.document, {
-        childList: true,
-        subtree: true,
-      });
+        observer.observe(iframe.contentWindow.document, {
+          childList: true,
+          subtree: true,
+        });
+
+        // Trigger initial height update
+        updateHeight();
+      } else {
+        console.log('Target2 element not found.');
+      }
     } else {
       console.log('Iframe contentWindow or document is not accessible.');
     }
-  };
+  }, [iframeRef2]);
 
   return (
     <PopUp
