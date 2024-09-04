@@ -142,12 +142,13 @@ export default function Target({ handleClose, questStartData, update, selectedIt
             ))}
         </div>
         {!isFetching ? (
-          <ul className="flex h-full max-h-[82.77px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[167px] tablet:gap-[10px]">
-            {selectedPost?.length > 0 &&
-              selectedPost?.map((post: any) => (
+          selectedPost?.length > 0 && (
+            <ul className="flex h-full max-h-[82.77px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[167px] tablet:gap-[10px]">
+              {selectedPost?.map((post: any) => (
                 <SelectionOption key={post.id} data={post} handleSelection={handleOptionSelection} />
               ))}
-          </ul>
+            </ul>
+          )
         ) : (
           <div className="flex w-full items-center justify-center py-6">
             <FaSpinner className="size-6 animate-spin text-blue-200 tablet:size-16" />
