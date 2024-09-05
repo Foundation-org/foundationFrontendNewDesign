@@ -99,7 +99,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
               {generateIframeCode()}
             </p>
           </div>
-          <Button variant={'submit'} onClick={copyToClipboard}>
+          <Button variant={loading ? 'hollow-submit' : 'submit'} disabled={loading} onClick={copyToClipboard}>
             Copy Code
           </Button>
         </div>
