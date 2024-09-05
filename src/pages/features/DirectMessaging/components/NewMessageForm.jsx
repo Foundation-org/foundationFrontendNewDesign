@@ -18,10 +18,12 @@ export default function NewMessageForm({
   setAddNewMsg,
   isDraft,
   setIsDraft,
+  readReward,
+  setReadReward,
+  questStartData,
 }) {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [isAll, setIsAll] = useState(false);
 
   const { mutateAsync: createNewMessage, isPending } = useMutation({
     mutationFn: createMessage,
@@ -43,18 +45,16 @@ export default function NewMessageForm({
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
+    const formattedTo = to.toLowerCase() === 'all' ? 'All' : to.toLowerCase() === 'list' ? 'List' : to;
+
     const params = {
       from: persistedUserInfo.email,
+      to: formattedTo,
       subject: sub,
       message: msg,
       type: isDraft ? 'draft' : 'new',
       draftId: draftId,
-      to: 'All',
     };
-
-    if (!isAll) {
-      params.to = to;
-    }
 
     createNewMessage(params);
   };
@@ -68,35 +68,13 @@ export default function NewMessageForm({
         onClick={() => setAddNewMsg(false)}
       />
       <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
-        {persistedUserInfo.email.includes('@foundation-io.com') && (
-          <div className="flex items-center gap-4">
-            <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-              Send to All Users :
-            </p>
-            <Switch
-              checked={isAll}
-              onChange={(e) => {
-                setIsAll(!isAll);
-              }}
-              className={`${isAll ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={`switch_base ${
-                  isAll ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-                }`}
-              />
-            </Switch>
-          </div>
-        )}
         <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
             To:
           </p>
           <input
             type="text"
-            value={!isAll ? to : 'All'}
+            value={to}
             className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
               setTo(e.target.value);
@@ -130,6 +108,30 @@ export default function NewMessageForm({
             }}
           />
         </div>
+        {/* <div className="flex justify-end gap-4"> */}
+        <div className="flex justify-between rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+            You will reach {questStartData?.participantsCount ?? questStartData?.submitCounter} Users
+          </p>
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+            {questStartData?.participantsCount ?? questStartData?.submitCounter} * 0.002FDX ={' '}
+            {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * 0.002}FDX
+          </p>
+        </div>
+        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+            Read Reward:
+          </p>
+          <input
+            type="number"
+            value={readReward}
+            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+            onChange={(e) => {
+              setReadReward(e.target.value);
+            }}
+          />
+        </div>
+        {/* </div> */}
         <div className="flex justify-end pt-[2px] tablet:pt-[10px]">
           <Button variant={'submit'}>
             {' '}

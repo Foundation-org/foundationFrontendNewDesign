@@ -14,6 +14,7 @@ import {
 } from '../../../services/api/directMessagingApi';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 const dmTabs = [
   {
@@ -39,6 +40,7 @@ const dmTabs = [
 ];
 
 export default function DirectMessaging() {
+  const location = useLocation();
   const [selectedTab, setSelectedTab] = useState('received');
   const [addNewMsg, setAddNewMsg] = useState(false);
   const [viewMsg, setViewMsg] = useState(false);
@@ -51,6 +53,7 @@ export default function DirectMessaging() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
   const [isDraft, setIsDraft] = useState(false);
+  const [readReward, setReadReward] = useState();
 
   const { mutateAsync: ViewAMessage } = useMutation({
     mutationFn: viewMessage,
@@ -232,6 +235,9 @@ export default function DirectMessaging() {
               setAddNewMsg={setAddNewMsg}
               isDraft={isDraft}
               setIsDraft={setIsDraft}
+              readReward={readReward}
+              setReadReward={setReadReward}
+              questStartData={location?.state}
             />
           )}
           {viewMsg && <ViewMessage setViewMsg={setViewMsg} viewMessageData={viewMessageData} filter={selectedTab} />}

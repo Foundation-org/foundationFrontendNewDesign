@@ -150,6 +150,7 @@ const MultipleChoice = () => {
           ? [getGifStates.gifUrl]
           : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
+      type: 'choice',
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');

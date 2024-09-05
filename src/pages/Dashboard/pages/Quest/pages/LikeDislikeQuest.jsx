@@ -139,6 +139,7 @@ const LikeDislike = () => {
           ? [getGifStates.gifUrl]
           : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
+      type: 'binary',
     };
 
     if (!checkHollow()) {

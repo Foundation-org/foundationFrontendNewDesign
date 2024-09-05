@@ -56,4 +56,12 @@ export const TopbarItems = [
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq-filled.svg`,
   },
+  {
+    id: 5,
+    title: 'Chat',
+    path: '/direct-messaging',
+    activePaths: ['/direct-messaging'],
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/chat.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/chat-active.svg`,
+  },
 ];

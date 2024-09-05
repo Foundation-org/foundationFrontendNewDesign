@@ -10,10 +10,11 @@ import {
 } from '../../../features/quest/utilsSlice';
 import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../features/createQuest/pictureMediaSlice';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { setFilterStates } from '../../../services/api/userAuth';
 import * as homeFilterActions from '../../../features/sidebar/filtersSlice';
 import { appVersion } from '../../../version';
+import { getRecievedMessages } from '../../../services/api/directMessagingApi';
 
 const Topbar = () => {
   const location = useLocation();
@@ -28,6 +29,11 @@ const Topbar = () => {
     onError: (err) => {
       console.log(err);
     },
+  });
+
+  const { data: receivedMsg } = useQuery({
+    queryKey: ['receivedMsg'],
+    queryFn: () => getRecievedMessages(persistedUserInfo.uuid),
   });
 
   return (
@@ -110,6 +116,11 @@ const Topbar = () => {
                     dispatch(addSharedLinkPost(null));
                   }}
                 >
+                  {item.id === 5 && (
+                    <div className="bg-red-600 absolute right-1 top-[7px] flex size-4 items-center justify-center rounded-full">
+                      <p className="text-[10px] leading-[10px] text-white">5</p>
+                    </div>
+                  )}
                   <img
                     src={
                       persistedUserInfo.role === 'guest' && item.id === 1
@@ -140,13 +151,18 @@ const Topbar = () => {
                   : persistedTheme === 'dark'
                     ? 'text-[#92959D]'
                     : 'text-[#BEDEF4]'
-              } flex h-full items-center`}
+              } relative flex h-full items-center`}
               onClick={() => {
                 dispatch(createQuestActions.resetCreateQuest());
                 dispatch(pictureMediaAction.resetToInitialState());
                 dispatch(addSharedLinkPost(null));
               }}
             >
+              {item.id === 5 && receivedMsg?.data?.data?.length > 0 && (
+                <div className="bg-red-600 absolute -right-3 top-3 flex size-5 items-center justify-center rounded-full">
+                  <p className="text-[16px] leading-[15px] text-white">{receivedMsg?.data.data.length}</p>
+                </div>
+              )}
               <img
                 src={
                   persistedUserInfo.role === 'guest' && item.id === 1
