@@ -1,11 +1,10 @@
 import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import PopUp from '../../components/ui/PopUp';
 import CustomSwitch from '../../components/CustomSwitch';
 
 export default function EmbedPostDialogue({ handleClose, modalVisible, postLink }) {
-  const [copied, setCopied] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [dynamicHeight, setDynamicHeight] = useState('auto');
   const [dynamicHeight2, setDynamicHeight2] = useState('auto');
@@ -45,62 +44,65 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
       .writeText(iframeCode)
       .then(() => {
         toast.success('Code copied successfully');
-        setCopied(true);
       })
       .catch((err) => console.error('Failed to copy:', err));
   };
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     const iframe = iframeRef.current;
-    if (iframe && iframe.contentWindow) {
-      const observer = new MutationObserver((mutations) => {
-        const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
-        if (targetElement) {
-          const height = targetElement.scrollHeight;
-          setDynamicHeight(`${height + 4}px`);
-          iframe.style.height = `${height + 4}px`;
-          iframe.style.minHeight = `${height + 4}px`;
-          observer.disconnect();
-          setLoading(false);
-        } else {
-          console.log('Target element not found.');
-        }
-      });
 
-      observer.observe(iframe.contentWindow.document, {
-        childList: true,
-        subtree: true,
-      });
-    } else {
-      console.log('Iframe contentWindow or document is not accessible.');
+    if (!iframe || !iframe.contentWindow) {
+      console.warn('Iframe contentWindow or document is not accessible.');
+      return;
     }
-  };
 
-  const handleLoad2 = () => {
+    const observer = new MutationObserver((mutations) => {
+      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+
+      if (targetElement) {
+        const height = targetElement.scrollHeight + 4;
+        setDynamicHeight(`${height}px`);
+        iframe.style.height = `${height}px`;
+        observer.disconnect();
+        setLoading(false);
+      }
+    });
+
+    observer.observe(iframe.contentWindow.document, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleLoad2 = useCallback(() => {
     const iframe = iframeRef2.current;
-    if (iframe && iframe.contentWindow) {
-      const observer = new MutationObserver((mutations) => {
-        const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
-        if (targetElement) {
-          const height = targetElement.scrollHeight;
-          setDynamicHeight2(`${height + 4}px`);
-          iframe.style.height = `${height + 4}px`;
-          iframe.style.minHeight = `${height + 4}px`;
-          observer.disconnect();
-          setLoading(false);
-        } else {
-          console.log('Target2 element not found.');
-        }
-      });
 
-      observer.observe(iframe.contentWindow.document, {
-        childList: true,
-        subtree: true,
-      });
-    } else {
-      console.log('Iframe contentWindow or document is not accessible.');
+    if (!iframe || !iframe.contentWindow) {
+      console.warn('Iframe contentWindow or document is not accessible.');
+      return;
     }
-  };
+
+    const observer = new MutationObserver((mutations) => {
+      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
+
+      if (targetElement) {
+        const height = targetElement.scrollHeight + 4;
+        setDynamicHeight2(`${height}px`);
+        iframe.style.height = `${height + 4}px`;
+        observer.disconnect();
+        setLoading(false);
+      }
+    });
+
+    observer.observe(iframe.contentWindow.document, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <PopUp
