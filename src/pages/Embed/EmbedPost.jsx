@@ -17,7 +17,7 @@ const EmbedPost = () => {
     dispatch(changeThemeTo(queryParams.get('darkMode') == 'true' ? 'dark' : 'light'));
   }, [location.search]);
 
-  const { data: singleQuestData, isLoading } = useQuery({
+  const { data: singleQuestData, isFetching } = useQuery({
     queryKey: ['emdedPost'],
     queryFn: () => fetchResults(link),
   });
@@ -38,7 +38,7 @@ const EmbedPost = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isFetching ? (
         <FallbackLoading />
       ) : (
         singleQuestData &&
