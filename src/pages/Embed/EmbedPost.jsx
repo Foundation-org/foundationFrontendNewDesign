@@ -22,6 +22,20 @@ const EmbedPost = () => {
     queryFn: () => fetchResults(link),
   });
 
+  const resize = () => {
+    setInterval(() => {
+      const appHeight = document.querySelector('.card-iframe').clientHeight;
+
+      if (appHeight) {
+        window.parent.postMessage({ height: appHeight + 4.25 }, '*');
+      }
+    }, 100); // 10 updates per second
+  };
+
+  useEffect(() => {
+    resize();
+  }, []);
+
   return (
     <>
       {isLoading ? (

@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import PopUp from '../../components/ui/PopUp';
 import CustomSwitch from '../../components/CustomSwitch';
@@ -7,39 +7,27 @@ import CustomSwitch from '../../components/CustomSwitch';
 export default function EmbedPostDialogue({ handleClose, modalVisible, postLink }) {
   const [darkMode, setDarkMode] = useState(false);
   const [dynamicHeight, setDynamicHeight] = useState('auto');
-  const [dynamicHeight2, setDynamicHeight2] = useState('auto');
-  const [loading, setLoading] = useState(false);
-  const iframeRef = useRef();
-  const iframeRef2 = useRef();
+  const [loading, setLoading] = useState(true);
+  const iframeRef = useRef(null);
 
   const generateIframeCode = () => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/embed/${postLink}?darkMode=${darkMode}`;
 
-    return `<iframe
+    return `
+    <iframe
       src="${url}"
-      style="border: none; width: 100%; max-width: 600px; border-radius: 15px"
-      onload="
-        this.style.height = window.innerWidth < 600 ? '${dynamicHeight2}' : '${dynamicHeight}';
-        window.addEventListener('resize', () => {
-          this.style.height = window.innerWidth < 600 ? '${dynamicHeight2}' : '${dynamicHeight}';
-        });
-      "
+      style="border: none; width: 100%; max-width: 600px; border-radius: 15px;"
       title="Embedded Content"
+      onload="window.addEventListener('message', e => {
+        if (e.data.height) {
+          document.querySelector('iframe').style.height = e.data.height + 'px';
+        }
+      });"
     ></iframe>`;
   };
 
-  // Update iframeCode whenever darkMode,  changes
-  const [iframeCode, setIframeCode] = useState(generateIframeCode());
-
-  useEffect(() => {
-    setIframeCode(generateIframeCode());
-  }, [darkMode, dynamicHeight, dynamicHeight2]);
-
-  useEffect(() => {
-    setLoading(true);
-  }, [darkMode]);
-
   const copyToClipboard = () => {
+    const iframeCode = generateIframeCode();
     navigator.clipboard
       .writeText(iframeCode)
       .then(() => {
@@ -48,61 +36,26 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
       .catch((err) => console.error('Failed to copy:', err));
   };
 
-  const handleLoad = useCallback(() => {
-    const iframe = iframeRef.current;
+  useEffect(() => {
+    const handleResizeMessage = (e) => {
+      const message = e.data;
 
-    if (!iframe || !iframe.contentWindow) {
-      console.warn('Iframe contentWindow or document is not accessible.');
-      return;
-    }
-
-    const observer = new MutationObserver((mutations) => {
-      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
-
-      if (targetElement) {
-        const height = targetElement.scrollHeight + 4;
-        setDynamicHeight(`${height}px`);
-        iframe.style.height = `${height}px`;
-        observer.disconnect();
-        setLoading(false);
+      // Check if message has height and it's different from the current one
+      if (message.height && message.height !== dynamicHeight && message.height !== 150) {
+        setDynamicHeight(message.height);
       }
-    });
+    };
 
-    observer.observe(iframe.contentWindow.document, {
-      childList: true,
-      subtree: true,
-    });
+    window.addEventListener('message', handleResizeMessage);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      window.removeEventListener('message', handleResizeMessage);
+    };
+  }, [dynamicHeight]);
 
-  const handleLoad2 = useCallback(() => {
-    const iframe = iframeRef2.current;
-
-    if (!iframe || !iframe.contentWindow) {
-      console.warn('Iframe contentWindow or document is not accessible.');
-      return;
-    }
-
-    const observer = new MutationObserver((mutations) => {
-      const targetElement = iframe.contentWindow.document.querySelector('.card-iframe');
-
-      if (targetElement) {
-        const height = targetElement.scrollHeight + 4;
-        setDynamicHeight2(`${height}px`);
-        iframe.style.height = `${height + 4}px`;
-        observer.disconnect();
-        setLoading(false);
-      }
-    });
-
-    observer.observe(iframe.contentWindow.document, {
-      childList: true,
-      subtree: true,
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const handleIframeLoad = () => {
+    setLoading(false);
+  };
 
   return (
     <PopUp
@@ -112,7 +65,7 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
       handleClose={() => handleClose()}
     >
       <div className="flex h-full max-h-[80dvh] flex-col items-center gap-3 overflow-y-scroll p-4 no-scrollbar tablet:gap-6 tablet:p-8">
-        <div className="relative size-full bg-white dark:bg-gray-200">
+        <div className="relative mx-auto size-full w-fit bg-white dark:bg-gray-200">
           {loading && (
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               <p className="text-[10px] text-blue-100 tablet:text-[20px]">Generating Preview...</p>
@@ -121,21 +74,12 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
           <iframe
             ref={iframeRef}
             src={generateIframeCode().match(/src="([^"]+)"/)[1]}
-            title="Embedded Content"
-            onLoad={handleLoad}
-            loading="eager"
-            className={`${loading ? 'invisible' : ''} ${window.innerWidth < 600 ? 'invisible absolute -left-[99999px] min-w-[600px] max-w-[600px]' : 'min-w-[600px] max-w-[600px]'} mx-auto w-full border-none tablet:rounded-[15.5px]`}
-          />
-          <iframe
-            ref={iframeRef2}
-            src={generateIframeCode().match(/src="([^"]+)"/)[1]}
-            title="Embedded Content"
-            onLoad={handleLoad2}
-            loading="eager"
-            className={`${loading ? 'invisible' : ''} ${window.innerWidth < 600 ? '' : 'absolute -left-[99999px]'} w-full max-w-[599px] rounded-[12.3px] border-none tablet:rounded-[15.5px]`}
+            height={dynamicHeight}
+            title="Embedded iframe"
+            className={`${loading ? 'invisible' : ''} w-full max-w-[599px] rounded-[12.3px] border-0 tablet:w-full tablet:min-w-[600px] tablet:max-w-[600px] tablet:rounded-[15.5px]`}
+            onLoad={handleIframeLoad}
           />
         </div>
-
         <div className="w-full max-w-[730px]">
           <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
             Embed Post Settings
@@ -147,22 +91,15 @@ export default function EmbedPostDialogue({ handleClose, modalVisible, postLink 
               </h5>
               <CustomSwitch enabled={darkMode} setEnabled={setDarkMode} />
             </div>
-            {/* <div className="pointer-events-none mx-[15px] flex cursor-not-allowed items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px] dark:border-gray-100 dark:bg-gray-200">
-              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px] dark:text-white-600">
-                Results Mode
-              </h5>
-              <CustomSwitch enabled={resultsMode} setEnabled={setResultsMode} />
-            </div> */}
           </div>
         </div>
-
         <div className="flex w-full max-w-[730px] flex-col items-center justify-center gap-6">
           <div className="rounded-[5.128px] border border-blue-500 tablet:rounded-[0.625rem] tablet:border-[3px]">
             <p className="mx-auto p-2.5 text-[10px] text-[#7C7C7C] tablet:px-5 tablet:pb-4 tablet:text-[20px]">
-              {iframeCode}
+              {generateIframeCode()}
             </p>
           </div>
-          <Button variant={loading ? 'hollow-submit' : 'submit'} disabled={loading} onClick={copyToClipboard}>
+          <Button variant={'submit'} onClick={copyToClipboard}>
             Copy Code
           </Button>
         </div>
