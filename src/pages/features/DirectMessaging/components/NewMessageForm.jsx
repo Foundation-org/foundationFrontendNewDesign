@@ -60,7 +60,7 @@ export default function NewMessageForm({
     if (questStartData?.page === 'advance-analytics') {
       params.questForeignKey = questStartData._id;
       params.uuid = persistedUserInfo.uuid;
-      params.to = questStartData?.participantsCount ?? questStartData?.submitCounter;
+      params.to = 'Participants';
     }
 
     createNewMessage(params);
