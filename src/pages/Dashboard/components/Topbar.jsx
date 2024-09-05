@@ -34,6 +34,7 @@ const Topbar = () => {
   const { data: receivedMsg } = useQuery({
     queryKey: ['receivedMsg'],
     queryFn: () => getRecievedMessages(persistedUserInfo.uuid),
+    refetchInterval: 300000,
   });
 
   return (

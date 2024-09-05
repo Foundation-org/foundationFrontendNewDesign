@@ -54,7 +54,14 @@ export default function NewMessageForm({
       message: msg,
       type: isDraft ? 'draft' : 'new',
       draftId: draftId,
+      readReward,
     };
+
+    if (questStartData?.page === 'advance-analytics') {
+      params.questForeignKey = questStartData._id;
+      params.uuid = persistedUserInfo.uuid;
+      params.to = questStartData?.participantsCount ?? questStartData?.submitCounter;
+    }
 
     createNewMessage(params);
   };
@@ -74,7 +81,11 @@ export default function NewMessageForm({
           </p>
           <input
             type="text"
-            value={to}
+            value={
+              questStartData?.page === 'advance-analytics'
+                ? `${questStartData?.participantsCount ?? questStartData?.submitCounter} Participants`
+                : to
+            }
             className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
               setTo(e.target.value);

@@ -8,14 +8,19 @@ export const deleteMessage = async (data) => {
 };
 
 export const createMessage = async (data) => {
-  return await api.post('/directMessage/send', {
+  const payload = {
     from: data.from,
     to: data.to,
     subject: data.subject,
     message: data.message,
     type: data.type,
     draftId: data.draftId,
-  });
+    readReward: data.readReward,
+    ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
+    ...(data.uuid && { uuid: data.uuid }),
+  };
+
+  return await api.post('/directMessage/send', payload);
 };
 
 export const createDraftMessage = async (data) => {
