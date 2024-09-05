@@ -1,6 +1,16 @@
+import { useSelector } from 'react-redux';
 import EmbedParticipate from '../../pages/Embed/EmbedParticipate';
 
+function findIdByUuid(data, givenUuid) {
+  // Find the object where the uuids array includes the given UUID
+  const result = data?.find((item) => item.uuids?.includes(givenUuid));
+
+  // Return the id if found, otherwise return null or handle it as needed
+  return result ? result.id : null;
+}
+
 const Spacing = ({ questStartData, show, postProperties }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const renderQuestInfoText = () => {
     if (show) {
       return (
@@ -38,9 +48,14 @@ const Spacing = ({ questStartData, show, postProperties }) => {
             questStartData.startStatus !== 'continue' &&
             questStartData.startStatus !== 'change answer') ||
           questStartData.isClosed ? (
-            <div className="flex h-[23px] items-end justify-center tablet:h-[50px]">
+            <div
+              className={`${questStartData?.type === 'embed' ? 'items-center' : 'items-end'} flex h-[23px] justify-center tablet:h-[50px]`}
+            >
               <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[1rem]">
-                Participation is closed {questStartData?.isClosed && '- Historical / Past Event'}
+                Participation is closed{' '}
+                {questStartData?.isClosed
+                  ? '- Historical / Past Event'
+                  : `- ${findIdByUuid(questStartData.feedback, persistedUserInfo?.uuid)}`}
               </h4>
             </div>
           ) : (

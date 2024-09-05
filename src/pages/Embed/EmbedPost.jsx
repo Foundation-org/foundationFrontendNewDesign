@@ -17,14 +17,28 @@ const EmbedPost = () => {
     dispatch(changeThemeTo(queryParams.get('darkMode') == 'true' ? 'dark' : 'light'));
   }, [location.search]);
 
-  const { data: singleQuestData, isLoading } = useQuery({
+  const { data: singleQuestData, isFetching } = useQuery({
     queryKey: ['emdedPost'],
     queryFn: () => fetchResults(link),
   });
 
+  const resize = () => {
+    setInterval(() => {
+      const appHeight = document.querySelector('.card-iframe').clientHeight;
+
+      if (appHeight) {
+        window.parent.postMessage({ height: appHeight + 4.25 }, '*');
+      }
+    }, 100); // 10 updates per second
+  };
+
+  useEffect(() => {
+    resize();
+  }, []);
+
   return (
     <>
-      {isLoading ? (
+      {isFetching ? (
         <FallbackLoading />
       ) : (
         singleQuestData &&
