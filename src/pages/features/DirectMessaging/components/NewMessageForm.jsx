@@ -45,11 +45,17 @@ export default function NewMessageForm({
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const formattedTo = to.toLowerCase() === 'all' ? 'All' : to.toLowerCase() === 'list' ? 'List' : to;
+    const formattedTo =
+      to?.trim().toLowerCase() === 'all'
+        ? 'All'
+        : to?.trim().toLowerCase() === 'list'
+          ? 'List'
+          : to?.trim()
+            ? to
+            : undefined;
 
     const params = {
       from: persistedUserInfo.email,
-      to: formattedTo,
       subject: sub,
       message: msg,
       type: isDraft ? 'draft' : 'new',
@@ -57,10 +63,16 @@ export default function NewMessageForm({
       readReward,
     };
 
+    // Only include 'to' if it's not empty or undefined
+    if (formattedTo) {
+      params.to = formattedTo;
+    }
+
+    // Add additional fields for 'advance-analytics' page
     if (questStartData?.page === 'advance-analytics') {
       params.questForeignKey = questStartData._id;
       params.uuid = persistedUserInfo.uuid;
-      params.to = 'Participants';
+      params.to = 'Participants'; // Override 'to' if on 'advance-analytics' page
     }
 
     createNewMessage(params);
