@@ -16,8 +16,8 @@ export const createMessage = async (data) => {
     type: data.type,
     draftId: data.draftId,
     readReward: data.readReward,
+    uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
-    ...(data.uuid && { uuid: data.uuid }),
   };
 
   return await api.post('/directMessage/send', payload);

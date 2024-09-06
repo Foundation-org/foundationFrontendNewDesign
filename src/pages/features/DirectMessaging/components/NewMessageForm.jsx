@@ -61,6 +61,7 @@ export default function NewMessageForm({
       type: isDraft ? 'draft' : 'new',
       draftId: draftId,
       readReward,
+      uuid: persistedUserInfo.uuid,
     };
 
     // Only include 'to' if it's not empty or undefined
@@ -71,7 +72,6 @@ export default function NewMessageForm({
     // Add additional fields for 'advance-analytics' page
     if (questStartData?.page === 'advance-analytics') {
       params.questForeignKey = questStartData._id;
-      params.uuid = persistedUserInfo.uuid;
       params.to = 'Participants'; // Override 'to' if on 'advance-analytics' page
     }
 
