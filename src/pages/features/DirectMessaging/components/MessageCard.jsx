@@ -1,14 +1,17 @@
 import { Button } from '../../../../components/ui/Button';
 import api from '../../../../services/api/Axios';
 import { toast } from 'sonner';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
+import { cancelAllSendMessages } from '../../../../services/api/directMessagingApi';
+import { useSelector } from 'react-redux';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage, handleDraftOpen }) {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const calculateTimeAgo = (time) => {
     let timeAgo;
@@ -55,6 +58,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         setLoading(false);
       });
   };
+
   const handleTrash = (id, type) => {
     api
       .post(`/directMessage/trash`, {
@@ -71,6 +75,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         setLoading(false);
       });
   };
+
   const handleRestore = (id, type) => {
     api
       .post(`/directMessage/restore`, {
@@ -87,6 +92,17 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         setResLoading(false);
       });
   };
+
+  const { mutateAsync: handleCancelAllSendMessages, isPending: loadingCancelAllSendMessages } = useMutation({
+    mutationFn: cancelAllSendMessages,
+    onSuccess: () => {
+      toast.success('All messages cancelled successfully');
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
   return (
     <div className="rounded-[15px] bg-white">
       {/* header */}
@@ -121,6 +137,21 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
           {filter === 'sent' ? item.message : item.shortMessage}
         </h2>
         <div className="flex justify-end gap-2">
+          {item?.type === 'sent' && item?.to === 'Participants' && (
+            <Button
+              variant={'danger'}
+              onClick={() => {
+                handleCancelAllSendMessages({ uuid: persistedUserInfo.uuid, id: item._id });
+              }}
+              disabled={loadingCancelAllSendMessages}
+            >
+              {loadingCancelAllSendMessages === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : (
+                'Cancel All'
+              )}
+            </Button>
+          )}
           {filter !== 'sent' && filter !== 'draft' && (
             <Button
               variant={'danger'}

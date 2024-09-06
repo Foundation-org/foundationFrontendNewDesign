@@ -74,3 +74,7 @@ export const getDraftdMessages = async (uuid) => {
     toast.error(error.response.data.message.split(':')[1]);
   }
 };
+
+export const cancelAllSendMessages = async ({ uuid, id }) => {
+  return await api.post(`/directMessage/cancleMessage/${uuid}/${id}`);
+};

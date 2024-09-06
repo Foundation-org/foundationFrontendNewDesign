@@ -1,11 +1,10 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Switch } from '@headlessui/react';
 import { FaSpinner } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../../components/ui/Button';
 import { createMessage } from '../../../../services/api/directMessagingApi';
+import { getConstantsValues } from '../../../../features/constants/constantsSlice';
 
 export default function NewMessageForm({
   draftId,
@@ -24,7 +23,8 @@ export default function NewMessageForm({
 }) {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
+  const persistedConstants = useSelector(getConstantsValues);
+  const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const { mutateAsync: createNewMessage, isPending } = useMutation({
     mutationFn: createMessage,
     onSuccess: () => {
@@ -131,14 +131,14 @@ export default function NewMessageForm({
             }}
           />
         </div>
-        {/* <div className="flex justify-end gap-4"> */}
+
         <div className="flex justify-between rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
             You will reach {questStartData?.participantsCount ?? questStartData?.submitCounter} Users
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-            {questStartData?.participantsCount ?? questStartData?.submitCounter} * 0.002FDX ={' '}
-            {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * 0.002}FDX
+            {(questStartData?.participantsCount ?? questStartData?.submitCounter) || 0} * {sendAmount} FDX ={' '}
+            {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * sendAmount}FDX
           </p>
         </div>
         <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
@@ -154,11 +154,15 @@ export default function NewMessageForm({
             }}
           />
         </div>
-        {/* </div> */}
+
         <div className="flex justify-end pt-[2px] tablet:pt-[10px]">
           <Button variant={'submit'}>
             {' '}
-            {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Send (+ 0.002FDX)'}
+            {isPending === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              `Send (+ ${((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount}FDX`
+            )}
           </Button>
         </div>
       </form>

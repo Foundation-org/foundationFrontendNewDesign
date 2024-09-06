@@ -118,7 +118,7 @@ const Topbar = () => {
                   }}
                 >
                   {item.id === 5 && (
-                    <div className="bg-red-600 absolute right-1 top-[7px] flex size-4 items-center justify-center rounded-full">
+                    <div className="absolute right-1 top-[7px] flex size-4 items-center justify-center rounded-full bg-red-600">
                       <p className="text-[10px] leading-[10px] text-white">5</p>
                     </div>
                   )}
@@ -159,8 +159,8 @@ const Topbar = () => {
                 dispatch(addSharedLinkPost(null));
               }}
             >
-              {item.id === 5 && receivedMsg?.data?.data?.length > 0 && (
-                <div className="bg-red-600 absolute -right-3 top-3 flex size-5 items-center justify-center rounded-full">
+              {item.id === 5 && receivedMsg?.data?.data?.filter((notification) => !notification.viewed).length > 0 && (
+                <div className="absolute -right-3 top-3 flex size-5 items-center justify-center rounded-full bg-red-600">
                   <p className="text-[16px] leading-[15px] text-white">{receivedMsg?.data.data.length}</p>
                 </div>
               )}
