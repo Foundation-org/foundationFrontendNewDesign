@@ -1,11 +1,10 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Switch } from '@headlessui/react';
 import { FaSpinner } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../../components/ui/Button';
 import { createMessage } from '../../../../services/api/directMessagingApi';
+import { getConstantsValues } from '../../../../features/constants/constantsSlice';
 
 export default function NewMessageForm({
   draftId,
@@ -18,11 +17,14 @@ export default function NewMessageForm({
   setAddNewMsg,
   isDraft,
   setIsDraft,
+  readReward,
+  setReadReward,
+  questStartData,
 }) {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [isAll, setIsAll] = useState(false);
-
+  const persistedConstants = useSelector(getConstantsValues);
+  const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const { mutateAsync: createNewMessage, isPending } = useMutation({
     mutationFn: createMessage,
     onSuccess: () => {
@@ -43,17 +45,34 @@ export default function NewMessageForm({
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
+    const formattedTo =
+      to?.trim().toLowerCase() === 'all'
+        ? 'All'
+        : to?.trim().toLowerCase() === 'list'
+          ? 'List'
+          : to?.trim()
+            ? to
+            : undefined;
+
     const params = {
       from: persistedUserInfo.email,
       subject: sub,
       message: msg,
       type: isDraft ? 'draft' : 'new',
       draftId: draftId,
-      to: 'All',
+      readReward,
+      uuid: persistedUserInfo.uuid,
     };
 
-    if (!isAll) {
-      params.to = to;
+    // Only include 'to' if it's not empty or undefined
+    if (formattedTo) {
+      params.to = formattedTo;
+    }
+
+    // Add additional fields for 'advance-analytics' page
+    if (questStartData?.page === 'advance-analytics') {
+      params.questForeignKey = questStartData._id;
+      params.to = 'Participants'; // Override 'to' if on 'advance-analytics' page
     }
 
     createNewMessage(params);
@@ -68,35 +87,17 @@ export default function NewMessageForm({
         onClick={() => setAddNewMsg(false)}
       />
       <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
-        {persistedUserInfo.email.includes('@foundation-io.com') && (
-          <div className="flex items-center gap-4">
-            <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-              Send to All Users :
-            </p>
-            <Switch
-              checked={isAll}
-              onChange={(e) => {
-                setIsAll(!isAll);
-              }}
-              className={`${isAll ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={`switch_base ${
-                  isAll ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-                }`}
-              />
-            </Switch>
-          </div>
-        )}
         <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
             To:
           </p>
           <input
             type="text"
-            value={!isAll ? to : 'All'}
+            value={
+              questStartData?.page === 'advance-analytics'
+                ? `${questStartData?.participantsCount ?? questStartData?.submitCounter} Participants`
+                : to
+            }
             className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
               setTo(e.target.value);
@@ -130,10 +131,38 @@ export default function NewMessageForm({
             }}
           />
         </div>
+
+        <div className="flex justify-between rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+            You will reach {questStartData?.participantsCount ?? questStartData?.submitCounter} Users
+          </p>
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+            {(questStartData?.participantsCount ?? questStartData?.submitCounter) || 0} * {sendAmount} FDX ={' '}
+            {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * sendAmount}FDX
+          </p>
+        </div>
+        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+            Read Reward:
+          </p>
+          <input
+            type="number"
+            value={readReward}
+            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+            onChange={(e) => {
+              setReadReward(e.target.value);
+            }}
+          />
+        </div>
+
         <div className="flex justify-end pt-[2px] tablet:pt-[10px]">
           <Button variant={'submit'}>
             {' '}
-            {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Send (+ 0.002FDX)'}
+            {isPending === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              `Send (+ ${((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount}FDX`
+            )}
           </Button>
         </div>
       </form>

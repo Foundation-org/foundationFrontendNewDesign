@@ -4,11 +4,13 @@ import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage, handleDraftOpen }) {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const calculateTimeAgo = (time) => {
     let timeAgo;
@@ -55,6 +57,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         setLoading(false);
       });
   };
+
   const handleTrash = (id, type) => {
     api
       .post(`/directMessage/trash`, {
@@ -71,6 +74,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         setLoading(false);
       });
   };
+
   const handleRestore = (id, type) => {
     api
       .post(`/directMessage/restore`, {
@@ -87,6 +91,21 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         setResLoading(false);
       });
   };
+
+  const handleCancelAllSendMessages = (uuid, id) => {
+    api
+      .get(`/directMessage/cancleMessage/${uuid}/${id}`)
+      .then(() => {
+        queryClient.invalidateQueries('messages');
+        toast.success('All messages cancelled successfully');
+        setResLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error deleting message:', error);
+        setResLoading(false);
+      });
+  };
+
   return (
     <div className="rounded-[15px] bg-white">
       {/* header */}
@@ -121,6 +140,17 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
           {filter === 'sent' ? item.message : item.shortMessage}
         </h2>
         <div className="flex justify-end gap-2">
+          {item?.type === 'sent' && item?.to === 'Participants' && (
+            <Button
+              variant={'danger'}
+              onClick={() => {
+                handleCancelAllSendMessages(persistedUserInfo.uuid, item._id);
+              }}
+              disabled={loading}
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Cancel All'}
+            </Button>
+          )}
           {filter !== 'sent' && filter !== 'draft' && (
             <Button
               variant={'danger'}

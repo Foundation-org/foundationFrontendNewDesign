@@ -142,6 +142,7 @@ const YesNo = () => {
           ? [getGifStates.gifUrl]
           : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
+      type: 'binary',
       // description: getMediaStates?.isMedia.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
 
@@ -172,6 +173,7 @@ const YesNo = () => {
       return true;
     }
   };
+
   const checkGifHollow = () => {
     if (
       questionStatus.tooltipName === 'Question is Verified' &&

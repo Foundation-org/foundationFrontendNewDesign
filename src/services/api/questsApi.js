@@ -48,6 +48,7 @@ export const createInfoQuest = async (data) => {
       moderationRatingCount: data.moderationRatingCount,
       url: data.url,
       description: data.description,
+      type: data.type,
     });
   } catch (error) {
     showToast('error', 'error', {}, error.response.data.message.split(':')[1]);

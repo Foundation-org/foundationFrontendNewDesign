@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import EmbedParticipate from '../../pages/Embed/EmbedParticipate';
+import AAParticipate from '../../pages/features/advance-analytics/AAParticipate';
 
 function findIdByUuid(data, givenUuid) {
   // Find the object where the uuids array includes the given UUID
@@ -14,35 +15,6 @@ const Spacing = ({ questStartData, show, postProperties }) => {
   const renderQuestInfoText = () => {
     if (show) {
       return (
-        // <div className="relative">
-        //   {(questStartData?.startQuestData?.isFeedback &&
-        //     questStartData.startStatus !== 'continue' &&
-        //     questStartData.startStatus !== 'change answer') ||
-        //   questStartData.isClosed ? (
-        //     <div className="flex h-[23px] items-end justify-center tablet:h-[50px]">
-        //       <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[1rem]">
-        //         Participation is closed
-        //       </h4>{' '}
-        //     </div>
-        //   ) : questStartData.whichTypeQuestion === 'ranked choise' ? (
-        //     <h4 className="max-h-[24.16px] min-h-[24.16px] text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[50px] tablet:min-h-[50px] tablet:text-[1rem]">
-        //       &#x200B;
-        //     </h4>
-        //   ) : (questStartData.whichTypeQuestion === 'multiple choise' ||
-        //       questStartData.whichTypeQuestion === 'open choice') &&
-        //     questStartData.userCanSelectMultiple ? (
-        //     <h4 className="max-h-[24.16px] min-h-[24.16px] text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[50px] tablet:min-h-[50px] tablet:text-[1rem]">
-        //       &#x200B;
-        //     </h4>
-        //   ) : (
-        //     <h4 className="max-h-[24.16px] min-h-[24.16px] text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[50px] tablet:min-h-[50px] tablet:text-[1rem]">
-        //       &#x200B;
-        //     </h4>
-        //   )}
-        //   {!questStartData.isClosed && questStartData.type === 'embed' && (
-        //     <EmbedParticipate postProperties={postProperties} />
-        //   )}
-        // </div>
         <div className="relative">
           {(questStartData?.startQuestData?.isFeedback &&
             questStartData.startStatus !== 'continue' &&
@@ -65,6 +37,8 @@ const Spacing = ({ questStartData, show, postProperties }) => {
               &#x200B;
             </h4>
           )}
+
+          {/* {questStartData?.page === 'advance-analytics' && <AAParticipate questStartData={questStartData} />} */}
 
           {!questStartData.isClosed && questStartData.type === 'embed' && (
             <EmbedParticipate postProperties={postProperties} />

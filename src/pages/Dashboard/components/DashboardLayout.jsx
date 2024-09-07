@@ -340,8 +340,7 @@ export default function DashboardLayout({ children }) {
                 </>
               )}
             </div>
-            {!location.pathname.startsWith('/help/') &&
-              location.pathname !== '/profile' &&
+            {location.pathname !== '/profile' &&
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
               location.pathname !== '/profile/shared-links' &&

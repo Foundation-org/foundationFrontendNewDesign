@@ -115,7 +115,7 @@ const About = () => {
       {persistedUserInfo.role !== 'user' && (
         <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-5 tablet:gap-[1.56rem] tablet:rounded tablet:py-[1.92rem] dark:border-gray-100 dark:bg-silver-200 tablet:dark:border-t-[2.56px]">
           <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
-            Join Foundation BETA
+            Join Foundation
           </h1>
           <button
             className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#156DB4] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
