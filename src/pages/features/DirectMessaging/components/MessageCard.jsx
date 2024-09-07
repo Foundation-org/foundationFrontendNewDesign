@@ -1,10 +1,9 @@
 import { Button } from '../../../../components/ui/Button';
 import api from '../../../../services/api/Axios';
 import { toast } from 'sonner';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { cancelAllSendMessages } from '../../../../services/api/directMessagingApi';
 import { useSelector } from 'react-redux';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage, handleDraftOpen }) {
@@ -93,15 +92,19 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
       });
   };
 
-  const { mutateAsync: handleCancelAllSendMessages, isPending: loadingCancelAllSendMessages } = useMutation({
-    mutationFn: cancelAllSendMessages,
-    onSuccess: () => {
-      toast.success('All messages cancelled successfully');
-    },
-    onError: (e) => {
-      console.log(e);
-    },
-  });
+  const handleCancelAllSendMessages = (uuid, id) => {
+    api
+      .get(`/directMessage/cancleMessage/${uuid}/${id}`)
+      .then(() => {
+        queryClient.invalidateQueries('messages');
+        toast.success('All messages cancelled successfully');
+        setResLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error deleting message:', error);
+        setResLoading(false);
+      });
+  };
 
   return (
     <div className="rounded-[15px] bg-white">
@@ -141,15 +144,11 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             <Button
               variant={'danger'}
               onClick={() => {
-                handleCancelAllSendMessages({ uuid: persistedUserInfo.uuid, id: item._id });
+                handleCancelAllSendMessages(persistedUserInfo.uuid, item._id);
               }}
-              disabled={loadingCancelAllSendMessages}
+              disabled={loading}
             >
-              {loadingCancelAllSendMessages === true ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : (
-                'Cancel All'
-              )}
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Cancel All'}
             </Button>
           )}
           {filter !== 'sent' && filter !== 'draft' && (
