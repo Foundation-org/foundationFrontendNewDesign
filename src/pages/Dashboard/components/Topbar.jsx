@@ -159,9 +159,9 @@ const Topbar = () => {
                 dispatch(addSharedLinkPost(null));
               }}
             >
-              {item.id === 5 && receivedMsg?.data?.data?.filter((notification) => !notification.viewed).length > 0 && (
+              {item.id === 5 && receivedMsg?.data?.count > 0 && (
                 <div className="absolute -right-3 top-3 flex size-5 items-center justify-center rounded-full bg-red-600">
-                  <p className="text-[16px] leading-[15px] text-white">{receivedMsg?.data.data.length}</p>
+                  <p className="text-[16px] leading-[15px] text-white">{receivedMsg?.data?.count}</p>
                 </div>
               )}
               <img
