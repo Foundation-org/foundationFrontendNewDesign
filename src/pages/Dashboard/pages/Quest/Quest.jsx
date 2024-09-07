@@ -21,7 +21,7 @@ const Quest = () => {
       </div>
       <div
         ref={scrollRef}
-        className="no-scrollbar mt-10 h-[calc(100dvh-174px)] overflow-y-auto tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.6px)]"
+        className="mt-10 h-[calc(100dvh-174px)] overflow-y-auto no-scrollbar tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.6px)]"
       >
         <Outlet />
       </div>

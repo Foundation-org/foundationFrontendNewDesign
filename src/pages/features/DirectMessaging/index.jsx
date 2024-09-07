@@ -14,33 +14,14 @@ import {
 } from '../../../services/api/directMessagingApi';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-
-const dmTabs = [
-  {
-    id: 1,
-    text: 'Received',
-    val: 'received',
-  },
-  {
-    id: 2,
-    text: 'Sent',
-    val: 'sent',
-  },
-  {
-    id: 3,
-    text: 'Deleted',
-    val: 'deleted',
-  },
-  {
-    id: 4,
-    val: 'draft',
-    text: 'Draft',
-  },
-];
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/ui/Button';
+import DMSlider from './components/DMSlider';
+import Breadcrumb from '../../../components/Breadcrumb';
 
 export default function DirectMessaging() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState('received');
   const [addNewMsg, setAddNewMsg] = useState(false);
   const [viewMsg, setViewMsg] = useState(false);
@@ -142,31 +123,58 @@ export default function DirectMessaging() {
     setIsDraft(true);
   };
 
+  useEffect(() => {
+    if (location.pathname === '/direct-messaging') {
+      setSelectedTab('received');
+      setViewMsg(false);
+      setAddNewMsg(false);
+    }
+    if (location.pathname === '/direct-messaging/sent') {
+      setSelectedTab('sent');
+      setViewMsg(false);
+      setAddNewMsg(false);
+    }
+    if (location.pathname === '/direct-messaging/deleted') {
+      setSelectedTab('deleted');
+      setViewMsg(false);
+      setAddNewMsg(false);
+    }
+    if (location.pathname === '/direct-messaging/draft') {
+      setSelectedTab('draft');
+      setViewMsg(false);
+      setAddNewMsg(false);
+    }
+    if (location.pathname === '/direct-messaging/new-message') {
+      setViewMsg(false);
+      setIsDraft(false);
+      setDraftId('');
+      setAddNewMsg(true);
+    }
+  }, [location.pathname]);
+
   return (
-    <>
+    <div className="bg-white dark:bg-black">
       <Topbar />
-      <div className="h-full max-h-[calc(100vh-58px)] min-h-[calc(100vh-58px)] bg-[#F2F3F5] tablet:max-h-[calc(100vh-155.5px)] tablet:min-h-[calc(100vh-70px)]">
-        <div className="mx-auto flex w-full max-w-[1378px] gap-6">
+      <div className="flex h-[43px] min-h-[43px] items-center justify-end bg-white-500 px-4 dark:bg-silver-500 tablet:h-[80px] tablet:px-5 laptop:hidden">
+        <Button
+          variant="hollow-submit2"
+          className="bg-white tablet:w-fit"
+          onClick={() => navigate('/direct-messaging/new-message')}
+        >
+          + New Message
+        </Button>
+      </div>
+      <Breadcrumb />
+      <div className="flex h-[calc(100dvh-48px)] justify-between bg-gray-400 dark:bg-black tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
+        <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
+          <DMSlider />
+        </div>
+        <div className="mt-10 flex h-[calc(100dvh-174px)] w-full gap-6 overflow-y-auto no-scrollbar tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.6px)]">
           {/* Left Side */}
           <div
-            className={`h-full w-full max-w-[582px] rounded-[15px] border-[#BABABA] bg-[#F3F3F3] tablet:mt-5 tablet:h-[calc(100vh-140px)] tablet:border tablet:[box-shadow:0px_0px_8px_0px_rgba(0,_0,_0,_0.20)_inset] ${addNewMsg || viewMsg ? 'hidden tablet:block' : 'block'}`}
+            className={`w-full max-w-[582px] border-[#BABABA] bg-[#F3F3F3] tablet:rounded-[15px] tablet:border tablet:[box-shadow:0px_0px_8px_0px_rgba(0,_0,_0,_0.20)_inset] ${addNewMsg || viewMsg ? 'hidden tablet:block' : 'block'}`}
           >
-            <div className="flex justify-between border-b-4 border-[#D9D9D9] px-1 py-3 tablet:px-5 tablet:py-3">
-              <div className="flex gap-[10px]">
-                {dmTabs?.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setSelectedTab(item.val);
-                      setViewMsg(false);
-                    }}
-                    className={`${selectedTab === item.val ? 'bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'} rounded-[7px] border-[1.86px] px-[9px] py-2 text-[10.8px] font-semibold leading-[10.8px] tablet:rounded-[13.579px] tablet:py-3 tablet:text-[18.84px] tablet:leading-[22px]`}
-                  >
-                    {item.text}
-                  </button>
-                ))}
-              </div>
-
+            <div className="flex w-full justify-end pr-4 pt-4">
               <button
                 onClick={() => {
                   setViewMsg(false);
@@ -179,7 +187,7 @@ export default function DirectMessaging() {
                 + New Message
               </button>
             </div>
-            <div className="px-[13px] py-2 tablet:px-5 tablet:py-7">
+            <div className="h-full px-[13px] py-2 tablet:px-5 tablet:py-7">
               <div className="relative h-[30px] tablet:h-[42px]">
                 <input
                   type="text"
@@ -243,6 +251,6 @@ export default function DirectMessaging() {
           {viewMsg && <ViewMessage setViewMsg={setViewMsg} viewMessageData={viewMessageData} filter={selectedTab} />}
         </div>
       </div>
-    </>
+    </div>
   );
 }

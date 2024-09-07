@@ -27,7 +27,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }) {
   };
 
   return (
-    <div className="mx-[13px] mt-5 h-fit w-full rounded-[15px] border-2 border-[#D9D9D9] bg-white tablet:mx-[0px] tablet:mt-5 ">
+    <div className="mx-[13px] h-fit w-full rounded-[15px] border-2 border-[#D9D9D9] bg-white tablet:mx-0">
       <div className="relative flex items-center justify-between gap-2 border-b-2 border-[#D9D9D9] p-2 tablet:border-b-4 tablet:px-8 tablet:py-4">
         <button
           className="cursor-pointer text-[10px] font-semibold leading-[10px] text-[#9A9A9A] tablet:text-[20px] tablet:leading-[32px]"

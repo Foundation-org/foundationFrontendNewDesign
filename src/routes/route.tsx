@@ -63,6 +63,8 @@ import EmbedPost from '../pages/Embed/EmbedPost';
 import Iframe from '../pages/Embed/Iframe';
 import VerifyPhone from '../pages/Signup/VerifyPhone';
 import DirectMessaging from '../pages/features/DirectMessaging';
+import Messages from '../pages/features/DirectMessaging/pages/Messages';
+import NewMessage from '../pages/features/DirectMessaging/pages/NewMessage';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);
@@ -107,7 +109,6 @@ export function Router() {
       ) : (
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
-            <Route path="/direct-messaging" element={<DirectMessaging />} />
             <Route path="/iframe" element={<Iframe />} />
             <Route path="/embed/:link" element={<EmbedPost />} />
             <Route path="/authenticating" element={<Authenticating />} />
@@ -161,6 +162,11 @@ export function Router() {
                   <Route path="change-password" element={<ChangePassword />} />
                 </Route>
               </Route>
+            </Route>
+            <Route path="/direct-messaging/" element={<DirectMessaging />}>
+              <Route path="*" element={<DirectMessaging />} />
+              {/* <Route path="" element={<Messages />} /> */}
+              {/* <Route path="new-message" element={<NewMessage />} /> */}
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />

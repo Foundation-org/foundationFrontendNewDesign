@@ -2,42 +2,17 @@ import { Button } from '../../../../components/ui/Button';
 import api from '../../../../services/api/Axios';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { calculateTimeAgo } from '../../../../utils/utils';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage, handleDraftOpen }) {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-  const calculateTimeAgo = (time) => {
-    let timeAgo;
-    const currentDate = new Date();
-    const createdAtDate = new Date(time);
-
-    if (isNaN(createdAtDate.getTime())) {
-      return (timeAgo = 'Invalid date');
-    }
-
-    const timeDifference = currentDate - createdAtDate;
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-      timeAgo = `${days} ${days === 1 ? 'day' : 'days'} ago`;
-    } else if (hours > 0) {
-      timeAgo = `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
-    } else if (minutes > 0) {
-      timeAgo = `${minutes} ${minutes === 1 ? 'min' : 'mins'} ago`;
-    } else {
-      timeAgo = `${seconds} ${seconds === 1 ? 'sec' : 'secs'} ago`;
-    }
-    return timeAgo;
-  };
+  const timeAgo = useMemo(() => calculateTimeAgo(item.createdAt), [item.createdAt]);
 
   const handleDelete = (id, type) => {
     api
@@ -127,7 +102,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             className="size-[13.56px] tablet:size-[22px]"
           />
           <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-[#9C9C9C] tablet:text-[21.211px] tablet:leading-[13.071px]">
-            {calculateTimeAgo(item.createdAt)}
+            {timeAgo}
           </h2>
         </div>
       </div>

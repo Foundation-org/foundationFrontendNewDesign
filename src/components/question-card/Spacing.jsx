@@ -38,7 +38,7 @@ const Spacing = ({ questStartData, show, postProperties }) => {
             </h4>
           )}
 
-          {/* {questStartData?.page === 'advance-analytics' && <AAParticipate questStartData={questStartData} />} */}
+          {questStartData?.page === 'advance-analytics' && <AAParticipate questStartData={questStartData} />}
 
           {!questStartData.isClosed && questStartData.type === 'embed' && (
             <EmbedParticipate postProperties={postProperties} />

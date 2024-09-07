@@ -38,7 +38,7 @@ export default function NewMessageForm({
     },
     onError: (err) => {
       console.log(err);
-      toast.error(err.response.data.message.split(':')[1]);
+      toast.error(err.response.data.message);
     },
   });
 
@@ -79,7 +79,7 @@ export default function NewMessageForm({
   };
 
   return (
-    <div className="relative mx-[13px] mt-5 h-fit max-h-[calc(100vh-140px)] w-full rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] pb-[15px] pt-[37px] tablet:mx-0 tablet:px-5 tablet:pb-6 tablet:pt-[50px]">
+    <div className="relative mx-[13px] h-fit max-h-[calc(100vh-140px)] w-full rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] pb-[15px] pt-[37px] tablet:mx-0 tablet:px-5 tablet:pb-6 tablet:pt-[50px]">
       <img
         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/darkCross.svg`}
         alt="msgNotViewed"
