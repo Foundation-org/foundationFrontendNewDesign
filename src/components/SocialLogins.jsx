@@ -1,22 +1,8 @@
 import { Button } from './ui/Button';
 import { authMethods } from '../constants/authentication';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { isWebview } from '../utils/helper';
 
-const isWebview = () => {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-
-  // Common webview identifiers or patterns
-  const webviewIdentifiers = [
-    'wv', // Common abbreviation for webview
-    'webview', // Webview identifier
-    'fbav', // Facebook App WebView
-    'instagram', // Instagram WebView
-    'twitter', // Twitter WebView
-  ];
-
-  // Check if any of the webview identifiers exist in the userAgent string
-  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
-};
 const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, triggerLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
