@@ -142,7 +142,7 @@ const Result = (props) => {
         props.questStartData?.startQuestData?.data.length >= 1
           ? props.questStartData?.startQuestData?.data[
               props.questStartData?.startQuestData?.data.length - 1
-            ].selected.findIndex((item) => item.question === b.question)
+            ].selected.findIndex((item) => item.question === b?.question)
           : [];
 
       return indexA !== -1 && indexB !== -1 ? indexA - indexB : 0;
@@ -248,7 +248,8 @@ const Result = (props) => {
         props.questStartData?.whichTypeQuestion === 'open choice'
       ) {
         setSortedAnswers(props?.questStartData?.QuestAnswers);
-      } else {
+      }
+      if (props.questStartData?.whichTypeQuestion === 'ranked choise') {
         const rankedNewData = getRankedAnswers(props);
         setSortedAnswers(rankedNewData);
       }
@@ -275,7 +276,8 @@ const Result = (props) => {
         props.questStartData?.whichTypeQuestion === 'open choice'
       ) {
         setSortedAnswers(props?.questStartData?.QuestAnswers);
-      } else {
+      }
+      if (props.questStartData?.whichTypeQuestion === 'ranked choise') {
         const rankedNewData = getRankedAnswers(props);
         setSortedAnswers(rankedNewData);
       }
