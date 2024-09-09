@@ -803,12 +803,7 @@ const QuestionCardWithToggle = (props) => {
           <QuestInfoText questStartData={questStartData} show={false} />
           <Result
             questStartData={questStartData}
-            id={questStartData._id}
-            title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleToggleCheck={handleToggleCheck}
-            answers={questStartData.QuestAnswers}
-            btnText={questStartData.startStatus}
-            whichTypeQuestion={questStartData.whichTypeQuestion}
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
             answersSelection={answersSelection}
             addOptionField={addOptionField}

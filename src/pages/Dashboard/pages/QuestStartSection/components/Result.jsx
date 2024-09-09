@@ -62,11 +62,13 @@ const Result = (props) => {
   }, [persistedUserInfo?.userSettings?.defaultSort]);
 
   return (
-    <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px ` }}>
-      {props.title === 'Yes/No' || props.title === 'Agree/Disagree' || props.title === 'Like/Dislike' ? (
+    <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px` }}>
+      {props.questStartData?.whichTypeQuestion === 'yes/no' ||
+      props.questStartData?.whichTypeQuestion === 'like/dislike' ||
+      props.questStartData?.whichTypeQuestion === 'agree/disagree' ? (
         <div
           className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]"
-          style={{ minHeight: `${props.cardSize}px ` }}
+          style={{ minHeight: `${props.cardSize}px` }}
         >
           <div
             className={`absolute -top-[21px] tablet:-top-7 ${props.questStartData.type === 'embed' ? 'right-[52px] tablet:right-[98px]' : 'right-[73px] tablet:right-[135px]'}`}
@@ -109,7 +111,8 @@ const Result = (props) => {
             />
           ))}
         </div>
-      ) : props.title === 'Multiple Choice' || props.title === 'Open Choice' ? (
+      ) : props.questStartData?.whichTypeQuestion === 'multiple choise' ||
+        props.questStartData?.whichTypeQuestion === 'open choice' ? (
         <div className="relative">
           <div className="absolute -top-[21px] right-[70px] tablet:-top-7 tablet:right-[135px]">
             <button
@@ -152,7 +155,7 @@ const Result = (props) => {
                   number={'#' + (index + 1)}
                   answer={item.question}
                   addedAnswerUuid={item.uuid}
-                  title={props.title}
+                  title={props.questStartData?.whichTypeQuestion}
                   checkInfo={true}
                   selectedPercentages={
                     props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
@@ -190,7 +193,7 @@ const Result = (props) => {
               !location.pathname.startsWith('/p') && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
         </div>
-      ) : props.title === 'Ranked Choice' ? (
+      ) : props.questStartData?.whichTypeQuestion === 'ranked choise' ? (
         <div className="relative">
           <div className="absolute -top-[21px] right-[69px] tablet:-top-7 tablet:right-[145px]">
             <button
@@ -235,7 +238,7 @@ const Result = (props) => {
                     addedAnswerUuid={item.uuid}
                     answersSelection={props.answersSelection}
                     setAnswerSelection={props.setAnswerSelection}
-                    title={props.title}
+                    title={props.questStartData?.whichTypeQuestion}
                     selectedPercentages={
                       props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
                         ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
