@@ -183,50 +183,49 @@ const StartTest = ({
         return (
           <div className="flex flex-col overflow-auto">
             <div ref={listContainerRef} className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
-              {answersSelection &&
-                [...answersSelection]
-                  ?.slice(
-                    0,
-                    showOptions.isShow && showOptions.id === questStartData._id
+              {answersSelection
+                ?.slice(
+                  0,
+                  showOptions.isShow && showOptions.id === questStartData._id
+                    ? rankedAnswers.length
+                    : isFullScreen || location.pathname.startsWith('/p')
                       ? rankedAnswers.length
-                      : isFullScreen || location.pathname.startsWith('/p')
-                        ? rankedAnswers.length
-                        : 10,
-                  )
-                  .map((item, index) => (
-                    <SingleAnswerMultipleChoice
-                      questStartData={questStartData}
-                      id={index}
-                      key={index}
-                      number={'#' + (index + 1)}
-                      answer={item.label}
-                      addedAnswerUuid={item.uuid}
-                      editable={item.edit}
-                      deleteable={item.delete}
-                      title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                      multipleOption={questStartData.userCanSelectMultiple}
-                      answersSelection={answersSelection}
-                      setAnswerSelection={setAnswerSelection}
-                      checkInfo={true}
-                      check={findLabelChecked(answersSelection, item.label)}
-                      contend={findLabelContend(answersSelection, item.label)}
-                      whichTypeQuestion={questStartData.whichTypeQuestion}
-                      handleCheckChange={
-                        questStartData.userCanSelectMultiple === true
-                          ? (check) => handleCheckChange(index, check)
-                          : (check) => handleCheckChangeSingle(index, check)
-                      }
-                      handleContendChange={
-                        questStartData.userCanSelectMultiple === true
-                          ? (contend) => handleContendChange(index, contend)
-                          : (contend) => handleContendChangeSingle(index, contend)
-                      }
-                      setAddOptionField={setAddOptionField}
-                      checkOptionStatus={checkOptionStatus}
-                      setCheckOptionStatus={setCheckOptionStatus}
-                      postProperties={postProperties}
-                    />
-                  ))}
+                      : 10,
+                )
+                .map((item, index) => (
+                  <SingleAnswerMultipleChoice
+                    questStartData={questStartData}
+                    id={index}
+                    key={index}
+                    number={'#' + (index + 1)}
+                    answer={item.label}
+                    addedAnswerUuid={item.uuid}
+                    editable={item.edit}
+                    deleteable={item.delete}
+                    title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                    multipleOption={questStartData.userCanSelectMultiple}
+                    answersSelection={answersSelection}
+                    setAnswerSelection={setAnswerSelection}
+                    checkInfo={true}
+                    check={findLabelChecked(answersSelection, item.label)}
+                    contend={findLabelContend(answersSelection, item.label)}
+                    whichTypeQuestion={questStartData.whichTypeQuestion}
+                    handleCheckChange={
+                      questStartData.userCanSelectMultiple === true
+                        ? (check) => handleCheckChange(index, check)
+                        : (check) => handleCheckChangeSingle(index, check)
+                    }
+                    handleContendChange={
+                      questStartData.userCanSelectMultiple === true
+                        ? (contend) => handleContendChange(index, contend)
+                        : (contend) => handleContendChangeSingle(index, contend)
+                    }
+                    setAddOptionField={setAddOptionField}
+                    checkOptionStatus={checkOptionStatus}
+                    setCheckOptionStatus={setCheckOptionStatus}
+                    postProperties={postProperties}
+                  />
+                ))}
               {showOptions.id !== questStartData._id &&
                 rankedAnswers?.length >= 10 &&
                 isFullScreen === undefined &&
