@@ -141,20 +141,21 @@ export default function NewMessageForm({
             {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * sendAmount}FDX
           </p>
         </div>
-        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-            Read Reward:
-          </p>
-          <input
-            type="number"
-            value={readReward}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
-            onChange={(e) => {
-              setReadReward(e.target.value);
-            }}
-          />
-        </div>
-
+        {(to === 'all' || questStartData?.page === 'advance-analytics') && (
+          <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+            <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+              Read Reward:
+            </p>
+            <input
+              type="number"
+              value={readReward}
+              className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+              onChange={(e) => {
+                setReadReward(e.target.value);
+              }}
+            />
+          </div>
+        )}
         <div className="flex justify-end pt-[2px] tablet:pt-[10px]">
           <Button variant={'submit'}>
             {' '}

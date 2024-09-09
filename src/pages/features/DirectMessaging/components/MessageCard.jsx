@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { calculateTimeAgo } from '../../../../utils/utils';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage, handleDraftOpen }) {
+  console.log(item);
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
@@ -164,9 +165,9 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 handleViewMessage(item._id, item.sender, item.receiver, filter === 'sent' ? item : false);
               }}
             >
-              View{' '}
+              {item?.viewed ? 'Read Again' : 'Read'}{' '}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                (+0.1 FDX)
+                {!item?.viewed && item?.type === 'received' && `(+${item?.readReward} FDX)`}
               </span>
             </Button>
           )}

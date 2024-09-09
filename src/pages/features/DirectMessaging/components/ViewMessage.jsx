@@ -1,30 +1,8 @@
+import { useMemo } from 'react';
+import { calculateTimeAgo } from '../../../../utils/utils';
+
 export default function ViewMessage({ setViewMsg, viewMessageData, filter }) {
-  const calculateTimeAgo = (time) => {
-    let timeAgo;
-    const currentDate = new Date();
-    const createdAtDate = new Date(time);
-
-    if (isNaN(createdAtDate.getTime())) {
-      return (timeAgo = 'Invalid date');
-    }
-    console.log(viewMessageData, filter);
-    const timeDifference = currentDate - createdAtDate;
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-      timeAgo = `${days} ${days === 1 ? 'day' : 'days'} ago`;
-    } else if (hours > 0) {
-      timeAgo = `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
-    } else if (minutes > 0) {
-      timeAgo = `${minutes} ${minutes === 1 ? 'min' : 'mins'} ago`;
-    } else {
-      timeAgo = `${seconds} ${seconds === 1 ? 'sec' : 'secs'} ago`;
-    }
-    return timeAgo;
-  };
+  const timeAgo = useMemo(() => calculateTimeAgo(viewMessageData?.createdAt), [viewMessageData?.createdAt]);
 
   return (
     <div className="mx-[13px] h-fit w-full rounded-[15px] border-2 border-[#D9D9D9] bg-white tablet:mx-0">
@@ -52,7 +30,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }) {
             className="size-[13.56px] tablet:size-[22px]"
           />
           <h2 className="text-[8.835px] font-normal leading-[8.835px] text-[#9C9C9C] tablet:text-[21.211px] tablet:leading-[21.211px]">
-            {calculateTimeAgo(viewMessageData?.createdAt)}
+            {timeAgo}
           </h2>
         </div>
       </div>
