@@ -43,7 +43,7 @@ const OpenChoice = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
   const filterStates = useSelector(filtersActions.getFilters);
-
+  const [optionsArray, setOptionsArray] = useState(optionsValue || []);
   const [multipleOption, setMultipleOption] = useState(true);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
@@ -51,7 +51,7 @@ const OpenChoice = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
   const mouseSensor = useSensor(MouseSensor);
-  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { delay: 200, tolerance: 10 } });
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
       delay: 500,
@@ -289,6 +289,8 @@ const OpenChoice = () => {
   };
 
   useEffect(() => {
+    setOptionsArray(optionsValue);
+
     if (getMediaStates.isMedia.isMedia) {
       if (
         !checkMediaHollow() &&
@@ -346,6 +348,7 @@ const OpenChoice = () => {
       const oldIndex = optionsValue.findIndex((item) => item.id === active.id);
       const newIndex = optionsValue.findIndex((item) => item.id === over.id);
       const newData = arrayMove(optionsValue, oldIndex, newIndex);
+      setOptionsArray(newData);
       dispatch(createQuestAction.drapAddDrop({ newTypedValues: newData }));
     }
   };
@@ -364,8 +367,8 @@ const OpenChoice = () => {
         onDragEnd={handleOnDragEnd}
       >
         <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
-          <SortableContext items={optionsValue}>
-            {optionsValue.map((item, index) => (
+          <SortableContext items={optionsArray}>
+            {optionsArray.map((item, index) => (
               <Options
                 key={item.id}
                 id={item.id}
@@ -375,14 +378,14 @@ const OpenChoice = () => {
                 trash={true}
                 options={false}
                 dragable={true}
-                handleChange={(value) => handleChange(index, value, optionsValue)}
+                handleChange={(value) => handleChange(index, value, optionsArray)}
                 typedValue={item.question}
                 isTyping={item?.isTyping}
                 isSelected={item.selected}
-                optionsCount={optionsValue.length}
+                optionsCount={optionsArray.length}
                 removeOption={removeOption}
                 number={index + 3}
-                optionStatus={optionsValue[index].optionStatus}
+                optionStatus={optionsArray[index].optionStatus}
                 answerVerification={(value) => answerVerification(item.id, index, value)}
                 handleTab={handleTab}
               />
