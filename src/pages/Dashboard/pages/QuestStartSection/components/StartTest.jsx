@@ -187,9 +187,9 @@ const StartTest = ({
                 ?.slice(
                   0,
                   showOptions.isShow && showOptions.id === questStartData._id
-                    ? rankedAnswers.length
+                    ? answersSelection.length
                     : isFullScreen || location.pathname.startsWith('/p')
-                      ? rankedAnswers.length
+                      ? answersSelection.length
                       : 10,
                 )
                 .map((item, index) => (
