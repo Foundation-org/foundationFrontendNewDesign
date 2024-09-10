@@ -94,6 +94,7 @@ export default function DirectMessaging() {
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] border-[1.85px] border-gray-250 bg-white px-3 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-5 tablet:py-[18.73px]">
       <div className={`${addNewMsg || viewMsg ? 'hidden' : 'block'}`}>
+        {/* {persistedUserInfo.email.includes('foundation-io.com') && ( */}
         <div className="hidden justify-end pb-[18.73px] tablet:flex">
           <Button
             variant="addOption"
@@ -104,6 +105,7 @@ export default function DirectMessaging() {
             + New Message
           </Button>
         </div>
+        {/* )} */}
         <div className="relative h-[30px] tablet:h-[42px]">
           <input
             type="text"

@@ -84,6 +84,8 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
       });
   };
 
+  console.log(item);
+
   return (
     <div className="rounded-[15px] bg-white dark:bg-gray-200">
       {/* header */}
@@ -171,7 +173,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             >
               {item?.viewed ? 'Read Again' : 'Read'}{' '}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                {!item?.viewed && item?.type === 'received' && `(+${item?.readReward} FDX)`}
+                {!item?.viewed && `(+${item?.readReward} FDX)`}
               </span>
             </Button>
           )}

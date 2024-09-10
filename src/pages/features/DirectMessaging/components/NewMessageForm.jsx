@@ -112,6 +112,30 @@ export default function NewMessageForm() {
     }
   };
 
+  const handleBalance = () => {
+    if (to === 'advance-analytics') {
+      return ((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount;
+    } else if (formatRecipient(to) === 'All') {
+      return persistedUserInfo?.allCount * sendAmount;
+    } else if (formatRecipient(to) === 'List') {
+      return persistedUserInfo?.mailCount * sendAmount;
+    } else {
+      return sendAmount;
+    }
+  };
+
+  const handleNoOfUsers = () => {
+    if (to === 'advance-analytics') {
+      return ((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount;
+    } else if (formatRecipient(to) === 'All') {
+      return persistedUserInfo?.allCount;
+    } else if (formatRecipient(to) === 'List') {
+      return persistedUserInfo?.mailCount;
+    } else {
+      return 0;
+    }
+  };
+
   return (
     <div className="relative h-fit max-h-[calc(100vh-140px)] w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
       <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
@@ -161,11 +185,10 @@ export default function NewMessageForm() {
         </div>
         <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[#707175] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            You will reach {questStartData?.participantsCount ?? questStartData?.submitCounter} Users
+            You will reach {handleNoOfUsers()} Users
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {(questStartData?.participantsCount ?? questStartData?.submitCounter) || 0} * {sendAmount} FDX ={' '}
-            {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * sendAmount}FDX
+            {handleNoOfUsers()} * {sendAmount} FDX
           </p>
         </div>
         <div
@@ -198,7 +221,7 @@ export default function NewMessageForm() {
             {isPending === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              `Send (+ ${((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount}FDX`
+              `Send (+${handleBalance()}FDX)`
             )}
           </Button>
         </div>
