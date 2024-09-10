@@ -32,7 +32,7 @@ const Spacing = ({ questStartData, show, postProperties }) => {
             </div>
           ) : (
             <h4
-              className={`${questStartData.type === 'embed' ? 'max-h-[35px] min-h-[35px] tablet:max-h-[65px] tablet:min-h-[65px]' : 'max-h-[24.16px] min-h-[24.16px] tablet:max-h-[50px] tablet:min-h-[50px]'} text-center text-[7.5px] font-normal text-[#85898C] tablet:text-[1rem]`}
+              className={`${questStartData.type === 'embed' || questStartData?.page === 'advance-analytics' ? 'max-h-[35px] min-h-[35px] tablet:max-h-[65px] tablet:min-h-[65px]' : 'max-h-[24.16px] min-h-[24.16px] tablet:max-h-[50px] tablet:min-h-[50px]'} text-center text-[7.5px] font-normal text-[#85898C] tablet:text-[1rem]`}
             >
               &#x200B;
             </h4>

@@ -16,11 +16,25 @@ export default function NewMessageForm() {
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const { draft } = location?.state || {};
-  const [to, setTo] = useState(draft?.to || '');
+  const { questStartData } = useOutletContext();
+  const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || '');
   const [sub, setSub] = useState(draft?.subject || '');
   const [msg, setMsg] = useState(draft?.message || '');
   const [readReward, setReadReward] = useState();
-  const { questStartData } = useOutletContext();
+
+  function formatRecipient(to) {
+    const trimmedTo = to?.trim().toLowerCase();
+
+    if (trimmedTo === 'all') {
+      return 'All';
+    } else if (trimmedTo === 'list') {
+      return 'List';
+    } else if (trimmedTo) {
+      return to;
+    } else {
+      return undefined;
+    }
+  }
 
   const { mutateAsync: createNewMessage, isPending } = useMutation({
     mutationFn: createMessage,
@@ -41,15 +55,6 @@ export default function NewMessageForm() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const formattedTo =
-      to?.trim().toLowerCase() === 'all'
-        ? 'All'
-        : to?.trim().toLowerCase() === 'list'
-          ? 'List'
-          : to?.trim()
-            ? to
-            : undefined;
-
     const params = {
       from: persistedUserInfo.email,
       subject: sub,
@@ -62,8 +67,8 @@ export default function NewMessageForm() {
     };
 
     // Only include 'to' if it's not empty or undefined
-    if (formattedTo) {
-      params.to = formattedTo;
+    if (formatRecipient(to)) {
+      params.to = formatRecipient(to);
     }
 
     // Add additional fields for 'advance-analytics' page
@@ -163,21 +168,22 @@ export default function NewMessageForm() {
             {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * sendAmount}FDX
           </p>
         </div>
-        {(to === 'all' || questStartData?.page === 'advance-analytics') && (
-          <div className="flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
-            <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
-              Read Reward:
-            </p>
-            <input
-              type="number"
-              value={readReward}
-              className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
-              onChange={(e) => {
-                setReadReward(e.target.value);
-              }}
-            />
-          </div>
-        )}
+        <div
+          className={`${formatRecipient(to) === 'All' || to === 'advance-analytics' ? '' : 'opacity-50'} flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3`}
+        >
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
+            Read Reward:
+          </p>
+          <input
+            type="number"
+            value={readReward}
+            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
+            onChange={(e) => {
+              setReadReward(e.target.value);
+            }}
+            disabled={to !== 'advance-analytics' && formatRecipient(to) !== 'All'}
+          />
+        </div>
         <div className="flex justify-end gap-4 pt-[2px] tablet:pt-[10px]">
           <Button
             variant="cancel"
