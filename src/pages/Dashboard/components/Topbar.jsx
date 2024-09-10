@@ -117,9 +117,9 @@ const Topbar = () => {
                     dispatch(addSharedLinkPost(null));
                   }}
                 >
-                  {item.id === 5 && (
+                  {item.id === 5 && receivedMsg?.data?.count > 0 && (
                     <div className="absolute right-1 top-[7px] flex size-4 items-center justify-center rounded-full bg-red-600">
-                      <p className="text-[10px] leading-[10px] text-white">5</p>
+                      <p className="text-[10px] leading-[10px] text-white">{receivedMsg?.data?.count}</p>
                     </div>
                   )}
                   <img

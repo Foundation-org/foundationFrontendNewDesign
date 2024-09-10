@@ -6,13 +6,15 @@ import { useMemo, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { calculateTimeAgo } from '../../../../utils/utils';
+import { useNavigate } from 'react-router-dom';
 
-export default function MessageCard({ setViewMsg, item, filter, handleViewMessage, handleDraftOpen }) {
-  console.log(item);
+export default function MessageCard({ setViewMsg, item, filter, handleViewMessage }) {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(item.createdAt), [item.createdAt]);
 
   const handleDelete = (id, type) => {
@@ -83,32 +85,32 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
   };
 
   return (
-    <div className="rounded-[15px] bg-white">
+    <div className="rounded-[15px] bg-white dark:bg-gray-200">
       {/* header */}
-      <div className="flex items-center justify-between rounded-t-[15px] bg-[#FFFCB8] px-4 py-[6px] tablet:px-7 tablet:py-2">
+      <div className="flex items-center justify-between rounded-t-[15px] bg-[#FFFCB8] px-4 py-[6px] dark:bg-accent-100 tablet:px-7 tablet:py-3">
         <div className="flex items-center gap-1">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/foundation-logo.svg`}
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/F.svg`}
             alt="logo"
-            className="size-[19.72px] tablet:size-8"
+            className="size-[12.325px] tablet:size-5"
           />
-          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
             {filter === 'sent' ? item.to : 'Foundation-IO.com'}
           </h1>
         </div>
         <div className="flex items-center gap-1">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/clock.svg`}
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
             alt="clock"
-            className="size-[13.56px] tablet:size-[22px]"
+            className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-[#9C9C9C] tablet:text-[21.211px] tablet:leading-[13.071px]">
+          <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-[#9C9C9C] dark:text-white tablet:text-[21.211px] tablet:leading-[13.071px]">
             {timeAgo}
           </h2>
         </div>
       </div>
       {/* body */}
-      <div className="rounded-b-[15px] border-x-[1.232px] border-y-[1.232px] border-[#D9D9D9] px-4 py-2 text-[#707175] tablet:border-x-2 tablet:border-y-2 tablet:px-7 tablet:py-3">
+      <div className="rounded-b-[15px] border-x-[1.232px] border-y-[1.232px] border-[#D9D9D9] px-4 py-2 text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:border-x-2 tablet:border-y-2 tablet:px-7 tablet:py-3">
         <h1 className="mb-[8.4px] text-[12.145px] font-semibold leading-[12.145px] tablet:mb-[11px] tablet:text-[22px] tablet:leading-[22px]">
           {item.subject}
         </h1>
@@ -152,7 +154,9 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             <Button
               variant={'submit'}
               onClick={() => {
-                handleDraftOpen(item._id, item.to, item.subject, item.message);
+                navigate('/direct-messaging/new-message', {
+                  state: { draft: { id: item._id, to: item.to, subject: item.subject, message: item.message } },
+                });
               }}
             >
               {resloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Open'}

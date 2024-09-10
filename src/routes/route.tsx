@@ -65,6 +65,8 @@ import VerifyPhone from '../pages/Signup/VerifyPhone';
 import DirectMessaging from '../pages/features/DirectMessaging';
 import Messages from '../pages/features/DirectMessaging/pages/Messages';
 import NewMessage from '../pages/features/DirectMessaging/pages/NewMessage';
+import DirectMessageLayout from '../pages/features/DirectMessaging/DirectMessageLayout';
+import NewMessageForm from '../pages/features/DirectMessaging/components/NewMessageForm';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);
@@ -162,11 +164,12 @@ export function Router() {
                   <Route path="change-password" element={<ChangePassword />} />
                 </Route>
               </Route>
-            </Route>
-            <Route path="/direct-messaging/" element={<DirectMessaging />}>
-              <Route path="*" element={<DirectMessaging />} />
-              {/* <Route path="" element={<Messages />} /> */}
-              {/* <Route path="new-message" element={<NewMessage />} /> */}
+              <Route path="/direct-messaging/" element={<DirectMessageLayout />}>
+                <Route path="" element={<DirectMessaging />} />
+                <Route path="new-message" element={<NewMessageForm />} />
+                <Route path="*" element={<DirectMessaging />} />
+                {/* <Route path="" element={<Messages />} /> */}
+              </Route>
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />

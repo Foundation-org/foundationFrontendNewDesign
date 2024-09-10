@@ -1,23 +1,18 @@
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import Topbar from '../../Dashboard/components/Topbar';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import MessageCard from './components/MessageCard';
-import NewMessageForm from './components/NewMessageForm';
 import ViewMessage from './components/ViewMessage';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  createDraftMessage,
   getDeletedMessages,
   getDraftdMessages,
   getRecievedMessages,
   getSentMessages,
   viewMessage,
 } from '../../../services/api/directMessagingApi';
-import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/ui/Button';
-import DMSlider from './components/DMSlider';
-import Breadcrumb from '../../../components/Breadcrumb';
 
 export default function DirectMessaging() {
   const location = useLocation();
@@ -27,19 +22,11 @@ export default function DirectMessaging() {
   const [viewMsg, setViewMsg] = useState(false);
   const [viewMessageData, setViewMessageData] = useState();
   const [search, setSearch] = useState('');
-  const [to, setTo] = useState();
-  const [sub, setSub] = useState();
-  const [msg, setMsg] = useState();
-  const [draftId, setDraftId] = useState('');
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const queryClient = useQueryClient();
-  const [isDraft, setIsDraft] = useState(false);
-  const [readReward, setReadReward] = useState();
 
   const { mutateAsync: ViewAMessage } = useMutation({
     mutationFn: viewMessage,
     onSuccess: (resp) => {
-      console.log(resp);
       setViewMessageData(resp.data.data);
     },
     onError: (err) => {
@@ -77,52 +64,6 @@ export default function DirectMessaging() {
     ViewAMessage(params);
   };
 
-  const handleDraft = () => {
-    const params = {
-      from: persistedUserInfo.email,
-      to: to,
-      subject: sub,
-      message: msg,
-      id: draftId,
-    };
-
-    createDraft(params);
-    setMsg();
-    setTo();
-    setSub();
-  };
-
-  useEffect(() => {
-    if ((to !== undefined || sub !== undefined || msg !== undefined) && !addNewMsg) {
-      handleDraft();
-    }
-  }, [addNewMsg]);
-
-  const { mutateAsync: createDraft } = useMutation({
-    mutationFn: createDraftMessage,
-    onSuccess: () => {
-      queryClient.invalidateQueries('messages');
-      toast.success('Message saved to Draft');
-      setMsg('');
-      setTo('');
-      setSub('');
-      setAddNewMsg(false);
-    },
-    onError: (err) => {
-      console.log(err);
-      toast.error(err.response.data.message.split(':')[1]);
-    },
-  });
-
-  const handleDraftOpen = (id, to, sub, msg) => {
-    setDraftId(id);
-    setTo(to);
-    setSub(sub);
-    setMsg(msg);
-    setAddNewMsg(true);
-    setIsDraft(true);
-  };
-
   useEffect(() => {
     if (location.pathname === '/direct-messaging') {
       setSelectedTab('received');
@@ -146,111 +87,64 @@ export default function DirectMessaging() {
     }
     if (location.pathname === '/direct-messaging/new-message') {
       setViewMsg(false);
-      setIsDraft(false);
-      setDraftId('');
       setAddNewMsg(true);
     }
   }, [location.pathname]);
 
   return (
-    <div className="bg-white dark:bg-black">
-      <Topbar />
-      <div className="flex h-[43px] min-h-[43px] items-center justify-end bg-white-500 px-4 dark:bg-silver-500 tablet:h-[80px] tablet:px-5 laptop:hidden">
-        <Button
-          variant="hollow-submit2"
-          className="bg-white tablet:w-fit"
-          onClick={() => navigate('/direct-messaging/new-message')}
-        >
-          + New Message
-        </Button>
-      </div>
-      <Breadcrumb />
-      <div className="flex h-[calc(100dvh-48px)] justify-between bg-gray-400 dark:bg-black tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
-        <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
-          <DMSlider />
-        </div>
-        <div className="mt-10 flex h-[calc(100dvh-174px)] w-full gap-6 overflow-y-auto no-scrollbar tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.6px)]">
-          {/* Left Side */}
-          <div
-            className={`w-full max-w-[582px] border-[#BABABA] bg-[#F3F3F3] tablet:rounded-[15px] tablet:border tablet:[box-shadow:0px_0px_8px_0px_rgba(0,_0,_0,_0.20)_inset] ${addNewMsg || viewMsg ? 'hidden tablet:block' : 'block'}`}
+    <div className="mx-auto mb-[10px] rounded-[10px] border-[1.85px] border-gray-250 bg-white px-3 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-5 tablet:py-[18.73px]">
+      <div className={`${addNewMsg || viewMsg ? 'hidden' : 'block'}`}>
+        <div className="hidden justify-end pb-[18.73px] tablet:flex">
+          <Button
+            variant="addOption"
+            onClick={() => {
+              navigate('/direct-messaging/new-message');
+            }}
           >
-            <div className="flex w-full justify-end pr-4 pt-4">
-              <button
-                onClick={() => {
-                  setViewMsg(false);
-                  setIsDraft(false);
-                  setDraftId('');
-                  setAddNewMsg(true);
-                }}
-                className="rounded-[7px] bg-[#D9D9D9] px-[9px] py-2 text-[10.8px] font-normal leading-[10.8px] text-[#435059] [box-shadow:0px_0px_6.46px_0px_rgba(0,_0,_0,_0.15)_inset] tablet:py-[11px] tablet:text-[18.456px] tablet:leading-[22px]"
-              >
-                + New Message
-              </button>
+            + New Message
+          </Button>
+        </div>
+        <div className="relative h-[30px] tablet:h-[42px]">
+          <input
+            type="text"
+            id="floating_outlined"
+            className="peer block h-full w-full appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px]"
+            value={search}
+            placeholder=""
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <label
+            htmlFor="floating_outlined"
+            className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 dark:bg-gray-200 dark:text-white tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+          >
+            Search
+          </label>
+        </div>
+        <div className="mt-[15px] flex flex-col gap-2 tablet:gap-5">
+          {messages?.data?.data.length <= 0 ? (
+            <div className="flex h-[calc(100%-68px)] w-full items-center justify-center">
+              <p className="text-[12px] font-semibold text-[#BBB] tablet:text-[24px]">No Message Yet!</p>
             </div>
-            <div className="h-full px-[13px] py-2 tablet:px-5 tablet:py-7">
-              <div className="relative h-[30px] tablet:h-[42px]">
-                <input
-                  type="text"
-                  id="floating_outlined"
-                  className="peer block h-full w-full appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px]"
-                  value={search}
-                  placeholder=""
-                  onChange={(e) => setSearch(e.target.value)}
+          ) : (
+            messages?.data?.data
+              .filter(
+                (data) =>
+                  data.subject?.toLowerCase().includes(search?.toLowerCase()) ||
+                  data.shortMessage?.toLowerCase().includes(search?.toLowerCase()),
+              )
+              .map((item, index) => (
+                <MessageCard
+                  setViewMsg={setViewMsg}
+                  item={item}
+                  key={index}
+                  handleViewMessage={handleViewMessage}
+                  filter={selectedTab}
                 />
-                <label
-                  htmlFor="floating_outlined"
-                  className="te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F3F3F3] px-2 text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
-                >
-                  Search
-                </label>
-              </div>
-              <div className="mt-[15px] flex h-[calc(100vh-320px)] flex-col gap-[10px] overflow-scroll no-scrollbar">
-                {messages?.data?.data.length <= 0 ? (
-                  <div className="flex h-[calc(100%-68px)] w-full items-center justify-center">
-                    <p className="text-[24px] font-semibold text-[#BBB]">No Message Yet!</p>
-                  </div>
-                ) : (
-                  messages?.data?.data
-                    .filter(
-                      (data) =>
-                        data.subject?.toLowerCase().includes(search?.toLowerCase()) ||
-                        data.shortMessage?.toLowerCase().includes(search?.toLowerCase()),
-                    )
-                    .map((item, index) => (
-                      <MessageCard
-                        setViewMsg={setViewMsg}
-                        item={item}
-                        key={index}
-                        handleViewMessage={handleViewMessage}
-                        filter={selectedTab}
-                        handleDraftOpen={handleDraftOpen}
-                      />
-                    ))
-                )}
-              </div>
-            </div>
-          </div>
-          {/* Right Side */}
-          {addNewMsg && (
-            <NewMessageForm
-              draftId={draftId}
-              to={to}
-              sub={sub}
-              msg={msg}
-              setTo={setTo}
-              setSub={setSub}
-              setMsg={setMsg}
-              setAddNewMsg={setAddNewMsg}
-              isDraft={isDraft}
-              setIsDraft={setIsDraft}
-              readReward={readReward}
-              setReadReward={setReadReward}
-              questStartData={location?.state}
-            />
+              ))
           )}
-          {viewMsg && <ViewMessage setViewMsg={setViewMsg} viewMessageData={viewMessageData} filter={selectedTab} />}
         </div>
       </div>
+      {viewMsg && <ViewMessage setViewMsg={setViewMsg} viewMessageData={viewMessageData} filter={selectedTab} />}
     </div>
   );
 }

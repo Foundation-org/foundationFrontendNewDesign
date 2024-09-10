@@ -9,6 +9,7 @@ export default function DMSlider() {
   const tabsListRef = useRef(null);
   const tabRefs = useRef([]);
   const [dragging, setDragging] = useState(false);
+  const screenWidth = window.innerWidth;
 
   const manageIcons = () => {
     if (tabsListRef.current.scrollLeft >= 20) {
@@ -83,7 +84,9 @@ export default function DMSlider() {
         {DMItems.map((tab, index) => (
           <li key={index} ref={(el) => (tabRefs.current[tab.id] = el)}>
             <Link
-              className={`${location.pathname === tab.path ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
+              className={`${
+                location.pathname === tab.path ? 'slider-link-active' : 'slider-link-inactive'
+              } slider-link`}
               to={tab.path}
             >
               {tab.title}
