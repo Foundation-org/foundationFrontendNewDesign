@@ -7,7 +7,7 @@ import SingleAnswer from '../../../../../components/question-card/options/Single
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
 import SeeMoreOptions from '../../../../../components/see-more-options';
 import RankedResult from '../../../components/RankedResult';
-import SortIcon from '../../../../../assets/SortIcon';
+import ResultSortIcons from './ResultSortIcons';
 
 const Result = (props) => {
   const showOptions = useSelector(getSeeMoreOptions);
@@ -70,17 +70,11 @@ const Result = (props) => {
           className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]"
           style={{ minHeight: `${props.cardSize}px` }}
         >
-          <div
-            className={`absolute -top-[21px] tablet:-top-7 ${props.questStartData.type === 'embed' ? 'right-[52px] tablet:right-[98px]' : 'right-[73px] tablet:right-[135px]'}`}
-          >
-            <button
-              onClick={() => {
-                handleSortIconClick(true);
-              }}
-            >
-              <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
-            </button>
-          </div>
+          <ResultSortIcons
+            questStartData={props.questStartData}
+            handleSortIconClick={handleSortIconClick}
+            selectedOption={selectedOption}
+          />
           {sortedAnswers?.map((item) => (
             <SingleAnswer
               key={item._id}
@@ -114,28 +108,12 @@ const Result = (props) => {
       ) : props.questStartData?.whichTypeQuestion === 'multiple choise' ||
         props.questStartData?.whichTypeQuestion === 'open choice' ? (
         <div className="relative">
-          <div className="absolute -top-[21px] right-[70px] tablet:-top-7 tablet:right-[135px]">
-            <button
-              onClick={() => {
-                handleSortIconClick(true);
-              }}
-            >
-              <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
-            </button>
-          </div>
-          <div className="absolute -top-[21px] right-6 tablet:-top-7 tablet:right-[64px]">
-            <button
-              onClick={() => {
-                handleSortIconClick(false);
-              }}
-            >
-              <SortIcon
-                type={'contended'}
-                ass={contendedOption === 3 ? true : false}
-                des={contendedOption === 2 ? true : false}
-              />
-            </button>
-          </div>
+          <ResultSortIcons
+            questStartData={props.questStartData}
+            handleSortIconClick={handleSortIconClick}
+            selectedOption={selectedOption}
+            contendedOption={contendedOption}
+          />
           <div
             className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 ? 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]' : ''}`}
           >
@@ -195,28 +173,12 @@ const Result = (props) => {
         </div>
       ) : props.questStartData?.whichTypeQuestion === 'ranked choise' ? (
         <div className="relative">
-          <div className="absolute -top-[21px] right-[69px] tablet:-top-7 tablet:right-[145px]">
-            <button
-              onClick={() => {
-                handleSortIconClick(true);
-              }}
-            >
-              <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
-            </button>
-          </div>
-          <div className="absolute -top-[21px] right-7 tablet:-top-7 tablet:right-[70px]">
-            <button
-              onClick={() => {
-                handleSortIconClick(false);
-              }}
-            >
-              <SortIcon
-                type={'contended'}
-                ass={contendedOption === 3 ? true : false}
-                des={contendedOption === 2 ? true : false}
-              />
-            </button>
-          </div>
+          <ResultSortIcons
+            questStartData={props.questStartData}
+            handleSortIconClick={handleSortIconClick}
+            selectedOption={selectedOption}
+            contendedOption={contendedOption}
+          />
           <div
             className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 && 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]'}`}
           >
