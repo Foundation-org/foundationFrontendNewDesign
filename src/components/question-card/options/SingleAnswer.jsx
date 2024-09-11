@@ -51,7 +51,7 @@ const SingleAnswer = (props) => {
                   </div>
                 )}
               {props.btnText === 'Results' ? (
-                props.percentage === undefined ? (
+                props.percentage === undefined || props.percentage === null ? (
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
                 ) : (
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">{props.percentage}</span>

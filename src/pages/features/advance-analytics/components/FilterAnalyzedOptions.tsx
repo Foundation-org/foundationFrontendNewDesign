@@ -25,13 +25,7 @@ export default function FilterAnalyzedOptions({
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [participants, setParticipants] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState<any>(() => {
-    const initialOptions = questStartData?.QuestAnswers || [];
-    if (initialOptions.length > 0) {
-      initialOptions[0].selected = true;
-    }
-    return initialOptions;
-  });
+  const [selectedOptions, setSelectedOptions] = useState<any>(questStartData?.QuestAnswers || []);
 
   const handleOptionSelection = (data: any) => {
     setSelectedOptions((prevSelected: any[]) => {
@@ -100,7 +94,7 @@ export default function FilterAnalyzedOptions({
           <Button
             variant={'submit'}
             onClick={() => {
-              navigate('/direct-messaging', { state: { questStartData, selectedOptions } });
+              navigate('/direct-messaging/new-message', { state: { questStartData, selectedOptions } });
             }}
           >
             Yes

@@ -18,6 +18,7 @@ const Spacing = ({ questStartData, show, postProperties }) => {
         <div className="relative">
           {(questStartData?.startQuestData?.isFeedback &&
             questStartData.startStatus !== 'continue' &&
+            questStartData?.page !== 'advance-analytics' &&
             questStartData.startStatus !== 'change answer') ||
           questStartData.isClosed ? (
             <div
