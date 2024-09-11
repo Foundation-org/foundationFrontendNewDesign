@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../../components/ui/Button';
 import PopUp from '../../../../components/ui/PopUp';
 import SelectionOption from '../../../../components/SelectionOption';
+import { useMutation } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { fetchOptionParticipants } from '../../../../services/api/directMessagingApi';
 
 type ClearAllAnalyticsProps = {
   handleClose: () => void;
@@ -20,7 +23,15 @@ export default function FilterAnalyzedOptions({
   questStartData,
 }: ClearAllAnalyticsProps) {
   const navigate = useNavigate();
-  const [selectedOptions, setSelectedOptions] = useState<any>(questStartData?.QuestAnswers || []);
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const [participants, setParticipants] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState<any>(() => {
+    const initialOptions = questStartData?.QuestAnswers || [];
+    if (initialOptions.length > 0) {
+      initialOptions[0].selected = true;
+    }
+    return initialOptions;
+  });
 
   const handleOptionSelection = (data: any) => {
     setSelectedOptions((prevSelected: any[]) => {
@@ -29,6 +40,30 @@ export default function FilterAnalyzedOptions({
       );
     });
   };
+
+  const { mutateAsync: fetchParticipants } = useMutation({
+    mutationFn: fetchOptionParticipants,
+    onSuccess: (resp) => {
+      setParticipants(resp?.data.dynamicParticipantsCount);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  useEffect(() => {
+    const selectedQuestions = selectedOptions
+      ?.filter((option: any) => option.selected)
+      .map((option: any) => option.question);
+
+    const params = {
+      questForeignKey: questStartData?._id,
+      uuid: persistedUserInfo.uuid,
+      options: selectedQuestions,
+    };
+
+    fetchParticipants(params);
+  }, [selectedOptions]);
 
   return (
     <PopUp
@@ -45,10 +80,10 @@ export default function FilterAnalyzedOptions({
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
-          Are you sure you want to delete all analytics for this post?
+          Select one or more options to message their participants.
         </h1>
         <div className="flex flex-col items-center justify-center gap-[15px]">
-          <ul className="flex h-full max-h-[82.77px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:mt-[25px] tablet:max-h-[167px] tablet:gap-[10px]">
+          <ul className="mt-[10px] flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:mt-[25px] tablet:max-h-[472px] tablet:gap-[10px]">
             {selectedOptions?.map((post: any) => (
               <SelectionOption
                 key={post.id}
@@ -60,6 +95,7 @@ export default function FilterAnalyzedOptions({
             ))}
           </ul>
         </div>
+        <p className="summary-text mt-[10px] text-center tablet:mt-[25px]">{participants} Participants </p>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button
             variant={'submit'}
