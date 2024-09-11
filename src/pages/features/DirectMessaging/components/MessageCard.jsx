@@ -84,8 +84,6 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
       });
   };
 
-  console.log(item);
-
   return (
     <div className="rounded-[15px] bg-white dark:bg-gray-200">
       {/* header */}

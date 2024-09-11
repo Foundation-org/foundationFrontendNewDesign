@@ -1,12 +1,16 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../components/ui/Button';
 import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getConstantsValues } from '../../../../features/constants/constantsSlice';
-import { createDraftMessage, createMessage } from '../../../../services/api/directMessagingApi';
+import {
+  createDraftMessage,
+  createMessage,
+  fetchOptionParticipants,
+} from '../../../../services/api/directMessagingApi';
 
 export default function NewMessageForm() {
   const location = useLocation();
@@ -16,11 +20,12 @@ export default function NewMessageForm() {
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const { draft } = location?.state || {};
-  const { questStartData } = useOutletContext();
+  const { questStartData, selectedOptions } = useOutletContext();
   const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || '');
   const [sub, setSub] = useState(draft?.subject || '');
   const [msg, setMsg] = useState(draft?.message || '');
   const [readReward, setReadReward] = useState();
+  const [participants, setParticipants] = useState(0);
 
   function formatRecipient(to) {
     const trimmedTo = to?.trim().toLowerCase();
@@ -35,6 +40,17 @@ export default function NewMessageForm() {
       return undefined;
     }
   }
+
+  const { mutateAsync: fetchParticipants } = useMutation({
+    mutationFn: fetchOptionParticipants,
+    onSuccess: (resp) => {
+      setParticipants(resp?.data.dynamicParticipantsCount);
+    },
+    onError: (err) => {
+      console.log(err);
+      toast.error(err.response.data.message);
+    },
+  });
 
   const { mutateAsync: createNewMessage, isPending } = useMutation({
     mutationFn: createMessage,
@@ -73,8 +89,11 @@ export default function NewMessageForm() {
 
     // Add additional fields for 'advance-analytics' page
     if (questStartData?.page === 'advance-analytics') {
+      const selectedQuestions = selectedOptions.filter((option) => option.selected).map((option) => option.question);
+
       params.questForeignKey = questStartData._id;
       params.to = 'Participants'; // Override 'to' if on 'advance-analytics' page
+      params.options = selectedQuestions;
     }
 
     createNewMessage(params);
@@ -96,7 +115,7 @@ export default function NewMessageForm() {
   });
 
   const handleDraft = () => {
-    if (to !== '' || sub !== '' || msg !== '') {
+    if (sub !== '' || msg !== '') {
       const params = {
         from: persistedUserInfo.email,
         to: to,
@@ -112,25 +131,28 @@ export default function NewMessageForm() {
     }
   };
 
-  const handleBalance = () => {
-    if (to === 'advance-analytics') {
-      return ((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount;
-    } else if (formatRecipient(to) === 'All') {
-      return persistedUserInfo?.allCount * sendAmount;
-    } else if (formatRecipient(to) === 'List') {
-      return persistedUserInfo?.mailCount * sendAmount;
-    } else {
-      return sendAmount;
-    }
-  };
+  useEffect(() => {
+    const selectedQuestions = selectedOptions?.filter((option) => option.selected).map((option) => option.question);
+    const params = {
+      questForeignKey: questStartData?._id,
+      uuid: persistedUserInfo.uuid,
+      options: selectedQuestions,
+    };
+
+    fetchParticipants(params);
+  }, []);
 
   const handleNoOfUsers = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     if (to === 'advance-analytics') {
-      return ((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount;
+      return participants * sendAmount;
     } else if (formatRecipient(to) === 'All') {
       return persistedUserInfo?.allCount;
     } else if (formatRecipient(to) === 'List') {
       return persistedUserInfo?.mailCount;
+    } else if (emailRegex.test(to)) {
+      return sendAmount;
     } else {
       return 0;
     }
@@ -145,11 +167,7 @@ export default function NewMessageForm() {
           </p>
           <input
             type="text"
-            value={
-              questStartData?.page === 'advance-analytics'
-                ? `${questStartData?.participantsCount ?? questStartData?.submitCounter} Participants`
-                : to
-            }
+            value={questStartData?.page === 'advance-analytics' ? `${participants} Participants` : to}
             className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
               setTo(e.target.value);
@@ -221,7 +239,7 @@ export default function NewMessageForm() {
             {isPending === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              `Send (+${handleBalance()}FDX)`
+              `Send (+${handleNoOfUsers() * sendAmount}FDX)`
             )}
           </Button>
         </div>

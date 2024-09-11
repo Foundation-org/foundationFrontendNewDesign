@@ -88,28 +88,6 @@
       });
     </script>
 
-    <script>
-      window.onload = () => {
-        fetch('https://api-v2-development.on.foundation/devscript/fetchheaders', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((response) => {
-            // Log headers
-            let headers = [...response.headers.entries()];
-            console.log('Headers: ', headers);
-
-            // Display headers in the console (pre tag)
-            document.getElementById('apiConsole').textContent = JSON.stringify(headers, null, 2);
-          })
-          .catch((error) => {
-            console.error('Error fetching API:', error);
-          });
-      };
-    </script>
-
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

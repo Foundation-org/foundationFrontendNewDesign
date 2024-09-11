@@ -1,4 +1,4 @@
-export default function SelectionOption({ data, handleSelection }: any) {
+export default function SelectionOption({ data, handleSelection, page, questStartData }: any) {
   return (
     <li
       className="flex w-full cursor-pointer justify-between rounded-[5.387px] border border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px]"
@@ -9,9 +9,22 @@ export default function SelectionOption({ data, handleSelection }: any) {
       </div>
       <div className="flex w-full items-center">
         <h1 className="pb-[5.7px] pl-2 pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px]">
-          {data?.option}
+          {page === 'filterAnalyzedOptions' ? data?.question : data?.option}
         </h1>
       </div>
+      {page === 'filterAnalyzedOptions' && (
+        <div className="flex w-fit items-center">
+          <h1 className="whitespace-nowrap px-2 py-[5.7px] text-[8.52px] font-normal italic leading-none text-[#435059] dark:text-[#D3D3D3] tablet:px-[18px] tablet:py-3 tablet:text-[19px]">
+            {(() => {
+              const totalParticipants =
+                (questStartData?.result[0].selected[data?.question] || 0) +
+                (questStartData?.result[0]?.contended?.[data?.question] || 0);
+
+              return `${totalParticipants} ${totalParticipants === 1 ? 'Participant' : 'Participants'}`;
+            })()}
+          </h1>
+        </div>
+      )}
       <div className="flex items-center gap-[10.3px] pr-[10px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px]">
         <div className="flex items-center gap-1 laptop:gap-[18px]">
           <div id="custom-checkbox" className="flex h-full items-center">

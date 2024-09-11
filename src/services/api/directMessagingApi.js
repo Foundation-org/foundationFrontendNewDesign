@@ -18,6 +18,7 @@ export const createMessage = async (data) => {
     readReward: data.readReward,
     uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
+    ...(data.options.length > 0 && { options: data.options }),
   };
 
   return await api.post('/directMessage/send', payload);
@@ -73,4 +74,14 @@ export const getDraftdMessages = async (uuid) => {
     console.log(err);
     toast.error(error.response.data.message.split(':')[1]);
   }
+};
+
+export const fetchOptionParticipants = async (data) => {
+  const payload = {
+    uuid: data.uuid,
+    ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
+    ...(data.options.length > 0 && { options: data.options }),
+  };
+
+  return await api.post('/directMessage/getCountForOptions', payload);
 };
