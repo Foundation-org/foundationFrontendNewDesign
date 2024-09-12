@@ -75,6 +75,7 @@ export default function AnalyzeDialogueBox({
       autoSize=""
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
+        <h1 className="summary-text mb-2 tablet:mb-4">Filter by:</h1>
         <div className="flex items-center justify-center gap-[15px]">
           {analyzeButtons.map((item) => (
             <button

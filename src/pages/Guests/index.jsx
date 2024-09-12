@@ -12,6 +12,7 @@ import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import Loader from '../../components/ui/Loader';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import AdvanceAnalytics from '../features/advance-analytics';
+import AAParticipate from '../features/advance-analytics/AAParticipate';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
@@ -129,9 +130,14 @@ const Guests = () => {
                   </div>
                 )}
                 {location.state.questType === undefined && (
-                  <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
-                    <AdvanceAnalytics questStartData={singleQuestResp} />
-                  </div>
+                  <>
+                    <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
+                      <AAParticipate questStartData={singleQuestResp} />
+                    </div>
+                    <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
+                      <AdvanceAnalytics questStartData={singleQuestResp} />
+                    </div>
+                  </>
                 )}
               </div>
             )}
