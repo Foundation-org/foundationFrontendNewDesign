@@ -171,7 +171,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             >
               {item?.viewed ? 'Read Again' : 'Read'}{' '}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                {!item?.viewed && `(+${item?.readReward} FDX)`}
+                {(item?.to === 'Participants' || item.to === 'All') && !item?.viewed && `(+${item?.readReward} FDX)`}
               </span>
             </Button>
           )}

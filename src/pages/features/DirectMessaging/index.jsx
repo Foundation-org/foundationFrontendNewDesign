@@ -2,7 +2,7 @@ import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import MessageCard from './components/MessageCard';
 import ViewMessage from './components/ViewMessage';
 import {
@@ -17,6 +17,7 @@ import { Button } from '../../../components/ui/Button';
 export default function DirectMessaging() {
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [selectedTab, setSelectedTab] = useState('received');
   const [addNewMsg, setAddNewMsg] = useState(false);
   const [viewMsg, setViewMsg] = useState(false);
@@ -27,6 +28,8 @@ export default function DirectMessaging() {
   const { mutateAsync: ViewAMessage } = useMutation({
     mutationFn: viewMessage,
     onSuccess: (resp) => {
+      queryClient.invalidateQueries(['messages', selectedTab]);
+      queryClient.invalidateQueries(['userInfo']);
       setViewMessageData(resp.data.data);
     },
     onError: (err) => {
@@ -95,7 +98,7 @@ export default function DirectMessaging() {
     <div className="mx-auto mb-[10px] rounded-[10px] border-[1.85px] border-gray-250 bg-white px-3 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-5 tablet:py-[18.73px]">
       <div className={`${addNewMsg || viewMsg ? 'hidden' : 'block'}`}>
         {/* {persistedUserInfo.email.includes('foundation-io.com') && ( */}
-        <div className="hidden justify-end pb-[18.73px] tablet:flex">
+        <div className="hidden justify-end pb-5 tablet:flex">
           <Button
             variant="addOption"
             onClick={() => {
@@ -106,7 +109,7 @@ export default function DirectMessaging() {
           </Button>
         </div>
         {/* )} */}
-        <div className="relative h-[30px] tablet:h-[42px]">
+        <div className="relative h-6 tablet:h-[42px]">
           <input
             type="text"
             id="floating_outlined"
@@ -122,7 +125,7 @@ export default function DirectMessaging() {
             Search
           </label>
         </div>
-        <div className="mt-[15px] flex flex-col gap-2 tablet:gap-5">
+        <div className="mt-5 flex flex-col gap-2 tablet:gap-5">
           {messages?.data?.data.length <= 0 ? (
             <div className="flex h-[calc(100%-68px)] w-full items-center justify-center">
               <p className="text-[12px] font-semibold text-[#BBB] tablet:text-[24px]">No Message Yet!</p>

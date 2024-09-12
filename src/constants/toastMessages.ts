@@ -108,4 +108,5 @@ export const toastMessages = {
   activityAlreadyExists: 'Activity already exists',
   resultsUpdatedSuccess: 'Results updated Successfully',
   optionAlreadyExists: 'Option already exists',
+  noParticipants: 'There is no participants to send message to',
 } as const;

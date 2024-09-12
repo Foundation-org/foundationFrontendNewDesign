@@ -76,7 +76,7 @@ export default function NewMessageForm() {
       subject: sub,
       message: msg,
       type: location.state?.draft ? 'draft' : 'new',
-      draftId: location.state?.draft.id ? location.state?.draft.id : '',
+      draftId: location.state?.draft?.id ? location.state?.draft.id : '',
       sendAmount,
       readReward,
       uuid: persistedUserInfo.uuid,
@@ -239,7 +239,12 @@ export default function NewMessageForm() {
             {isPending === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              `Send (+${handleNoOfUsers() * sendAmount}FDX)`
+              <>
+                Send
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                  (+{handleNoOfUsers() * sendAmount} FDX)
+                </span>
+              </>
             )}
           </Button>
         </div>

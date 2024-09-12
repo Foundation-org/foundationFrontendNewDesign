@@ -1,4 +1,3 @@
-import { version } from '../../../../package.json';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { TopbarItems } from '../../../constants/topbar';

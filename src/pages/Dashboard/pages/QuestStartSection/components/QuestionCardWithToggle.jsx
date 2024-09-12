@@ -800,7 +800,7 @@ const QuestionCardWithToggle = (props) => {
     } else {
       return (
         <>
-          <QuestInfoText questStartData={questStartData} show={false} />
+          <QuestInfoText questStartData={questStartData} show={true} />
           <Result
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}

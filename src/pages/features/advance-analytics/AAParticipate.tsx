@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FilterAnalyzedOptions from './components/FilterAnalyzedOptions';
+import showToast from '../../../components/ui/Toast';
 
 export default function AAParticipate({ questStartData }: { questStartData: any }) {
   const [showModal, setShowModal] = useState(false);
@@ -18,8 +19,17 @@ export default function AAParticipate({ questStartData }: { questStartData: any 
         />
       )}
       <p className="summary-text">
-        {questStartData?.participantsCount ?? questStartData?.submitCounter} Participants -{' '}
-        <button onClick={() => setShowModal(true)} className="border-b border-blue-100 text-blue-100">
+        {questStartData?.participantsCount} Participants -{' '}
+        <button
+          onClick={() => {
+            if (questStartData?.participantsCount > 0) {
+              setShowModal(true);
+            } else {
+              showToast('warning', 'noParticipants');
+            }
+          }}
+          className="border-b border-blue-100 text-blue-100"
+        >
           Direct Message these Users
         </button>
       </p>

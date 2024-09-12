@@ -89,10 +89,20 @@ export default function FilterAnalyzedOptions({
             ))}
           </ul>
         </div>
-        <p className="summary-text mt-[10px] text-center tablet:mt-[25px]">{participants} Participants </p>
+        <p className="summary-text mt-[10px] text-center tablet:mt-[25px]">
+          Total participants selected{' '}
+          {selectedOptions?.filter((option: any) => option.selected).length === 0 ? 0 : participants}
+        </p>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button
-            variant={'submit'}
+            variant={
+              selectedOptions?.filter((option: any) => option.selected).length > 0 && participants > 0
+                ? 'submit'
+                : 'hollow-submit'
+            }
+            disabled={
+              selectedOptions?.filter((option: any) => option.selected).length > 0 && participants > 0 ? false : true
+            }
             onClick={() => {
               navigate('/direct-messaging/new-message', { state: { questStartData, selectedOptions } });
             }}

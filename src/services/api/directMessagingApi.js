@@ -18,7 +18,7 @@ export const createMessage = async (data) => {
     readReward: data.readReward,
     uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
-    ...(data.options.length > 0 && { options: data.options }),
+    ...(data?.options?.length > 0 && { options: data.options }),
   };
 
   return await api.post('/directMessage/send', payload);
@@ -33,6 +33,7 @@ export const createDraftMessage = async (data) => {
     id: data.id,
   });
 };
+
 export const viewMessage = async (data) => {
   return await api.post('/directMessage/view', {
     _id: data.id,
@@ -40,6 +41,7 @@ export const viewMessage = async (data) => {
     receiver: data.receiver,
   });
 };
+
 export const getSentMessages = async (uuid) => {
   try {
     return await api.get(`/directMessage/getAllSend/${uuid}`);
@@ -80,7 +82,7 @@ export const fetchOptionParticipants = async (data) => {
   const payload = {
     uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
-    ...(data.options.length > 0 && { options: data.options }),
+    ...(data?.options?.length > 0 && { options: data.options }),
   };
 
   return await api.post('/directMessage/getCountForOptions', payload);
