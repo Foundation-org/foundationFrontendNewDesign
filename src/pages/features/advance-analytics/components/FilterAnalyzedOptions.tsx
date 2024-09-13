@@ -36,7 +36,7 @@ export default function FilterAnalyzedOptions({
   const handleOptionSelection = (data: any) => {
     setSelectedOptions((prevSelected: any[]) => {
       return prevSelected.map((option: any) =>
-        option.id === data.id ? { ...option, selected: !option.selected } : option,
+        option._id === data._id ? { ...option, selected: !option.selected } : option,
       );
     });
   };
