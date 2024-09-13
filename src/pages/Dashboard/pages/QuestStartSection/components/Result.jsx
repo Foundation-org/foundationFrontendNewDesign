@@ -19,6 +19,12 @@ const Result = (props) => {
     props.questStartData?.QuestAnswers ? props.questStartData?.QuestAnswers : null,
   );
 
+  useEffect(() => {
+    if (props.questStartData?.QuestAnswers) {
+      setSortedAnswers(props.questStartData?.QuestAnswers);
+    }
+  }, [props.questStartData?.QuestAnswers]);
+
   function findSelectionContentionCheck(array, labelToFind) {
     const foundObject = array.find((obj) => obj.question === labelToFind);
     return !!foundObject;
