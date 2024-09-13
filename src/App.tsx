@@ -13,9 +13,13 @@ import FallbackLoading from './components/FallbackLoading';
 import showToast from './components/ui/Toast';
 import { MaintenanceRouter } from './routes/maintenance';
 import GuestDialogueScreen from './components/GuestDialogueScreen';
+import ReactGA from 'react-ga';
+import { initFacebookPixel } from './utils/facebookPixel';
+import ReactPixel from 'react-facebook-pixel';
+
+ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
 
 function App() {
-  // const [theme, setTheme] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
@@ -23,6 +27,15 @@ function App() {
   const [isMaintenance, setIsMaintenance] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+
+  useEffect(() => {
+    initFacebookPixel();
+  }, []);
+
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+    ReactPixel.pageView();
+  }, [location]);
 
   useEffect(() => {
     // Function to handle the event
