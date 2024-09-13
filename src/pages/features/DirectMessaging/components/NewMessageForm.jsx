@@ -78,7 +78,7 @@ export default function NewMessageForm() {
       type: location.state?.draft ? 'draft' : 'new',
       draftId: location.state?.draft?.id ? location.state?.draft.id : '',
       sendAmount,
-      readReward,
+      readReward: readReward || 0,
       uuid: persistedUserInfo.uuid,
     };
 
@@ -218,6 +218,7 @@ export default function NewMessageForm() {
           <input
             type="number"
             value={readReward}
+            placeholder="0"
             className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
               setReadReward(e.target.value);

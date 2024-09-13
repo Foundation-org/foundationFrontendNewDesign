@@ -25,7 +25,13 @@ export default function FilterAnalyzedOptions({
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [participants, setParticipants] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState<any>(questStartData?.QuestAnswers || []);
+  const [selectedOptions, setSelectedOptions] = useState<any>(() => {
+    const initialOptions = questStartData?.QuestAnswers || [];
+    return initialOptions.map((option: any) => ({
+      ...option,
+      selected: false,
+    }));
+  });
 
   const handleOptionSelection = (data: any) => {
     setSelectedOptions((prevSelected: any[]) => {
@@ -56,7 +62,9 @@ export default function FilterAnalyzedOptions({
       options: selectedQuestions,
     };
 
-    fetchParticipants(params);
+    if (selectedOptions?.filter((option: any) => option.selected).length !== 0) {
+      fetchParticipants(params);
+    }
   }, [selectedOptions]);
 
   return (
