@@ -15,10 +15,10 @@ export const createMessage = async (data) => {
     message: data.message,
     type: data.type,
     draftId: data.draftId,
-    readReward: data.readReward,
     uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
     ...(data?.options?.length > 0 && { options: data.options }),
+    ...(data.to === 'Participants' || data.to === 'All' ? { readReward: data.readReward } : {}),
   };
 
   return await api.post('/directMessage/send', payload);
