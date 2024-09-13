@@ -17,7 +17,7 @@ import ReactGA from 'react-ga';
 import { initFacebookPixel } from './utils/facebookPixel';
 import ReactPixel from 'react-facebook-pixel';
 
-ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
+ReactGA.initialize('AW-16685473482');
 
 function App() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import ReactPixel from 'react-facebook-pixel';
 
-const PIXEL_ID = import.meta.env.VITE_FACEBOOK_PIXEL_TRACKING_ID;
+const PIXEL_ID = '559414460877702';
 
 export const initFacebookPixel = () => {
   ReactPixel.init(PIXEL_ID);
