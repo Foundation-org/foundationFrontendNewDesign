@@ -311,8 +311,8 @@ export default function DashboardLayout({ children }) {
                         </p>
                       </div>
                       <div className="flex h-7 flex-col justify-between tablet:h-9 laptop:h-7">
-                        <h4 className="heading w-fit border-b">My Balance</h4>
-                        <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] dark:text-[#D2D2D2] tablet:text-[16px]">
+                        <h4 className="heading w-fit whitespace-nowrap border-b">My Balance</h4>
+                        <p className="font-inter whitespace-nowrap text-[11px] font-medium leading-[11px] text-[#616161] dark:text-[#D2D2D2] tablet:text-[16px]">
                           {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
                         </p>
                       </div>
@@ -361,7 +361,7 @@ export default function DashboardLayout({ children }) {
                       {location.pathname === '/direct-messaging/new-message' ? null : location.pathname.startsWith(
                           '/direct-messaging',
                         ) ? (
-                        <div className="flex w-fit items-center gap-1 tablet:ml-[31px] tablet:w-full tablet:justify-end tablet:gap-[15px] laptop:flex-col">
+                        <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
                           <Button
                             variant="hollow-submit2"
                             className="bg-white tablet:w-fit"
@@ -371,7 +371,7 @@ export default function DashboardLayout({ children }) {
                           </Button>
                         </div>
                       ) : (
-                        <div className="flex w-fit items-center gap-1 tablet:ml-[31px] tablet:w-full tablet:justify-end tablet:gap-[15px] laptop:flex-col">
+                        <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
                           <Button
                             variant="hollow-submit2"
                             className="bg-white tablet:w-fit"

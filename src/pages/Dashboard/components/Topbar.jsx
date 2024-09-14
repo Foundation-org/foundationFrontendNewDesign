@@ -97,7 +97,7 @@ const Topbar = () => {
               </div>
             </div>
             {/* Mobile */}
-            <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
+            <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[14rem] tablet:min-w-[14rem] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
               {TopbarItems.map((item) => (
                 <Link
                   key={item.id}
@@ -117,7 +117,7 @@ const Topbar = () => {
                   }}
                 >
                   {item.id === 5 && receivedMsg?.data?.count > 0 && (
-                    <div className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600">
+                    <div className="absolute -top-2 right-2 flex size-4 items-center justify-center rounded-full bg-red-600">
                       <p className="text-[10px] leading-[10px] text-white">{receivedMsg?.data?.count}</p>
                     </div>
                   )}
