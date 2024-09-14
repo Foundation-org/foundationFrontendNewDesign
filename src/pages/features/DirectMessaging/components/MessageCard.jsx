@@ -1,12 +1,12 @@
-import { Button } from '../../../../components/ui/Button';
-import api from '../../../../services/api/Axios';
 import { toast } from 'sonner';
-import { useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-import { calculateTimeAgo } from '../../../../utils/utils';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { Button } from '../../../../components/ui/Button';
+import { calculateTimeAgo } from '../../../../utils/utils';
+import api from '../../../../services/api/Axios';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage }) {
   const navigate = useNavigate();
@@ -85,9 +85,9 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
   };
 
   return (
-    <div className="rounded-[15px] bg-white dark:bg-gray-200">
+    <div className="h-fit w-full rounded-[8px] border-[1.232px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200 tablet:mx-0 tablet:rounded-[15px] tablet:border-2">
       {/* header */}
-      <div className="flex items-center justify-between rounded-t-[15px] bg-[#FFFCB8] px-4 py-[6px] dark:bg-accent-100 tablet:px-7 tablet:py-3">
+      <div className="flex items-center justify-between rounded-t-[8px] bg-[#FFFCB8] px-3 py-[6px] dark:bg-accent-100 tablet:rounded-t-[15px] tablet:px-5 tablet:py-3">
         <div className="flex items-center gap-1">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/F.svg`}
@@ -109,12 +109,12 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
           </h2>
         </div>
       </div>
-      {/* body */}
-      <div className="rounded-b-[15px] border-x-[1.232px] border-y-[1.232px] border-[#D9D9D9] px-4 py-2 text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:border-x-2 tablet:border-y-2 tablet:px-7 tablet:py-3">
-        <h1 className="mb-[8.4px] text-[12.145px] font-semibold leading-[12.145px] tablet:mb-[11px] tablet:text-[22px] tablet:leading-[22px]">
+      {/* Body */}
+      <div className="m-3 flex flex-col gap-3 tablet:m-5 tablet:gap-5">
+        <h1 className="text-[12.145px] font-semibold leading-[12.145px] tablet:text-[22px] tablet:leading-[22px]">
           {item.subject}
         </h1>
-        <h2 className="mb-2 truncate text-[8.097px] font-medium leading-[8.097px] tablet:mb-7 tablet:text-[20px] tablet:leading-normal">
+        <h2 className="truncate pl-3 text-[8.097px] font-medium leading-[8.097px] tablet:pl-7 tablet:text-[20px] tablet:leading-normal">
           {filter === 'sent' ? item.message : item.shortMessage}
         </h2>
         <div className="flex justify-end gap-2">
@@ -170,14 +170,16 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               }}
             >
               {item?.viewed ? 'Read Again' : 'Read'}{' '}
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                {item.readReward != null && item.readReward >= 0 && !item?.viewed && `(+${item?.readReward} FDX)`}
-              </span>
+              {item.readReward != null && item.readReward >= 0 && !item?.viewed && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                  {`(+${item?.readReward} FDX)`}
+                </span>
+              )}
             </Button>
           )}
         </div>
         {filter === 'sent' && (
-          <div className="mt-4 flex items-center justify-between gap-[15px]">
+          <div className="flex items-center justify-between gap-[15px]">
             <div className="flex items-center gap-1">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgSends.svg`}

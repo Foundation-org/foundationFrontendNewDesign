@@ -109,7 +109,7 @@ const Topbar = () => {
                       : persistedTheme === 'dark'
                         ? 'text-[#92959D]'
                         : 'text-[#BEDEF4]'
-                  } flex h-full items-center`}
+                  } relative flex h-full items-center`}
                   onClick={() => {
                     dispatch(createQuestActions.resetCreateQuest());
                     dispatch(pictureMediaAction.resetToInitialState());
@@ -117,7 +117,7 @@ const Topbar = () => {
                   }}
                 >
                   {item.id === 5 && receivedMsg?.data?.count > 0 && (
-                    <div className="absolute right-1 top-[7px] flex size-4 items-center justify-center rounded-full bg-red-600">
+                    <div className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600">
                       <p className="text-[10px] leading-[10px] text-white">{receivedMsg?.data?.count}</p>
                     </div>
                   )}
