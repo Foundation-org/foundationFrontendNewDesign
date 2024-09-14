@@ -186,7 +186,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 alt="msgSends"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {item.send ? '1 Messages Sent' : '0 Messages Sent'}
               </p>
             </div>
@@ -206,7 +206,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 alt="msgFails"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {item?.deleteCount ? `${item?.deleteCount} Deleted` : '0 Deleted'}
               </p>
             </div>
@@ -226,7 +226,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 alt="msgViewd"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {`${item.view} Viewed`}
               </p>
             </div>
