@@ -117,7 +117,7 @@ const Topbar = () => {
                   }}
                 >
                   {item.id === 5 && receivedMsg?.data?.count > 0 && (
-                    <div className="absolute -top-2 right-2 flex size-4 items-center justify-center rounded-full bg-red-600">
+                    <div className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600 tablet:size-5">
                       <p className="text-[10px] leading-[10px] text-white">{receivedMsg?.data?.count}</p>
                     </div>
                   )}
