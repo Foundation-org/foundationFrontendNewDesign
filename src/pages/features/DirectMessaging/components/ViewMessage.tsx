@@ -13,9 +13,6 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }: Vie
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(viewMessageData?.createdAt), [viewMessageData?.createdAt]);
 
-  console.log('viewMessageData', viewMessageData);
-  console.log('filter', filter);
-
   return (
     <div className="h-fit w-full rounded-[8px] border-[1.232px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200 tablet:mx-0 tablet:rounded-[15px] tablet:border-2">
       {/* Header */}

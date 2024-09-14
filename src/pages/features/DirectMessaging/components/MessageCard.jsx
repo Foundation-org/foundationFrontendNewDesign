@@ -129,7 +129,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Cancel All'}
             </Button>
           )}
-          {filter !== 'sent' && filter !== 'draft' && (
+          {filter !== 'sent' && (
             <Button
               variant={'danger'}
               onClick={() => {
