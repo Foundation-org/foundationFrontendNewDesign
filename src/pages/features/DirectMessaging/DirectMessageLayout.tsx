@@ -25,7 +25,7 @@ const DirectMessageLayout = () => {
       )}
       <div
         ref={scrollRef}
-        className={`${location.pathname === '/direct-messaging/new-message' ? 'mt-3 tablet:mt-[15px]' : 'mt-10 tablet:mt-[77.63px]'} h-[calc(100dvh-174px)] overflow-y-auto px-4 no-scrollbar tablet:h-[calc(100dvh-173.63px)] tablet:px-0 laptop:h-[calc(100dvh-147.6px)]`}
+        className={`${location.pathname === '/direct-messaging/new-message' ? 'mt-3 tablet:mt-[15px]' : 'mt-10 tablet:mt-[77.63px]'} h-[calc(100dvh-174px)] overflow-y-auto px-4 no-scrollbar tablet:h-[calc(100dvh-173.63px)] tablet:px-6 laptop:h-[calc(100dvh-147.6px)]`}
       >
         <Outlet
           context={{ questStartData: questStartData?.questStartData, selectedOptions: questStartData?.selectedOptions }}
