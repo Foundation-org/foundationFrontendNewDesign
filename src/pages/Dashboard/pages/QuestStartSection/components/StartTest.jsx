@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
-import Loader from '../../../../../components/ui/Loader';
 import SingleAnswer from '../../../../../components/question-card/options/SingleAnswer';
 import SingleAnswerRankedChoice from '../../../../../components/question-card/options/SingleAnswerRankedChoice';
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
@@ -19,7 +18,6 @@ const StartTest = ({
   setAnswerSelection,
   rankedAnswers,
   setRankedAnswers,
-  loadingDetail,
   setAddOptionField,
   questSelection,
   cardSize,
@@ -101,199 +99,196 @@ const StartTest = ({
       }
     }, [answersSelection]);
 
-    if (!loadingDetail) {
-      if (
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Like/Dislike'
-      ) {
-        return (
-          <>
-            {getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ? (
-              <>
-                <SingleAnswer
-                  number={'#1'}
-                  answer={'Yes'}
-                  check={questSelection['yes/no'].yes.check}
-                  contend={questSelection['yes/no'].yes.check}
-                  handleToggleCheck={handleToggleCheck}
-                  questStartData={questStartData}
-                  postProperties={postProperties}
-                />
-                <SingleAnswer
-                  number={'#2'}
-                  answer={'No'}
-                  check={questSelection['yes/no'].no.check}
-                  contend={questSelection['yes/no'].no.check}
-                  handleToggleCheck={handleToggleCheck}
-                  questStartData={questStartData}
-                  postProperties={postProperties}
-                />
-              </>
-            ) : getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ? (
-              <>
-                <SingleAnswer
-                  number={'#1'}
-                  answer={'Agree'}
-                  check={questSelection['agree/disagree'].agree.check}
-                  contend={questSelection['agree/disagree'].agree.check}
-                  handleToggleCheck={handleToggleCheck}
-                  questStartData={questStartData}
-                  postProperties={postProperties}
-                />
-                <SingleAnswer
-                  number={'#2'}
-                  answer={'Disagree'}
-                  check={questSelection['agree/disagree'].disagree.check}
-                  contend={questSelection['agree/disagree'].disagree.check}
-                  handleToggleCheck={handleToggleCheck}
-                  questStartData={questStartData}
-                  postProperties={postProperties}
-                />
-              </>
-            ) : (
-              <>
-                <SingleAnswer
-                  number={'#1'}
-                  answer={'Like'}
-                  check={questSelection['like/dislike'].like.check}
-                  contend={questSelection['like/dislike'].like.check}
-                  handleToggleCheck={handleToggleCheck}
-                  questStartData={questStartData}
-                  postProperties={postProperties}
-                />
-                <SingleAnswer
-                  number={'#2'}
-                  answer={'Dislike'}
-                  check={questSelection['like/dislike'].dislike.check}
-                  contend={questSelection['like/dislike'].dislike.check}
-                  handleToggleCheck={handleToggleCheck}
-                  questStartData={questStartData}
-                  postProperties={postProperties}
-                />
-              </>
-            )}
-          </>
-        );
-      }
-      if (
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice' ||
-        getQuestionTitle(questStartData.whichTypeQuestion) === 'Open Choice'
-      ) {
-        return (
-          <div className="flex flex-col overflow-auto">
-            <div ref={listContainerRef} className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
-              {answersSelection
-                ?.slice(
-                  0,
-                  showOptions.isShow && showOptions.id === questStartData._id
-                    ? answersSelection.length
-                    : isFullScreen || location.pathname.startsWith('/p')
-                      ? answersSelection.length
-                      : 10,
-                )
-                .map((item, index) => (
-                  <SingleAnswerMultipleChoice
-                    questStartData={questStartData}
-                    id={index}
-                    key={index}
-                    number={'#' + (index + 1)}
-                    answer={item.label}
-                    addedAnswerUuid={item.uuid}
-                    editable={item.edit}
-                    deleteable={item.delete}
-                    title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                    multipleOption={questStartData.userCanSelectMultiple}
-                    answersSelection={answersSelection}
-                    setAnswerSelection={setAnswerSelection}
-                    checkInfo={true}
-                    check={findLabelChecked(answersSelection, item.label)}
-                    contend={findLabelContend(answersSelection, item.label)}
-                    whichTypeQuestion={questStartData.whichTypeQuestion}
-                    handleCheckChange={
-                      questStartData.userCanSelectMultiple === true
-                        ? (check) => handleCheckChange(index, check)
-                        : (check) => handleCheckChangeSingle(index, check)
-                    }
-                    handleContendChange={
-                      questStartData.userCanSelectMultiple === true
-                        ? (contend) => handleContendChange(index, contend)
-                        : (contend) => handleContendChangeSingle(index, contend)
-                    }
-                    setAddOptionField={setAddOptionField}
-                    checkOptionStatus={checkOptionStatus}
-                    setCheckOptionStatus={setCheckOptionStatus}
-                    postProperties={postProperties}
-                  />
-                ))}
-              {showOptions.id !== questStartData._id &&
-                rankedAnswers?.length >= 10 &&
-                isFullScreen === undefined &&
-                !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
-            </div>
-          </div>
-        );
-      }
+    if (
+      getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
+      getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
+      getQuestionTitle(questStartData.whichTypeQuestion) === 'Like/Dislike'
+    ) {
+      return (
+        <>
+          {getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ? (
+            <>
+              <SingleAnswer
+                number={'#1'}
+                answer={'Yes'}
+                check={questSelection['yes/no'].yes.check}
+                contend={questSelection['yes/no'].yes.check}
+                handleToggleCheck={handleToggleCheck}
+                questStartData={questStartData}
+                postProperties={postProperties}
+              />
+              <SingleAnswer
+                number={'#2'}
+                answer={'No'}
+                check={questSelection['yes/no'].no.check}
+                contend={questSelection['yes/no'].no.check}
+                handleToggleCheck={handleToggleCheck}
+                questStartData={questStartData}
+                postProperties={postProperties}
+              />
+            </>
+          ) : getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ? (
+            <>
+              <SingleAnswer
+                number={'#1'}
+                answer={'Agree'}
+                check={questSelection['agree/disagree'].agree.check}
+                contend={questSelection['agree/disagree'].agree.check}
+                handleToggleCheck={handleToggleCheck}
+                questStartData={questStartData}
+                postProperties={postProperties}
+              />
+              <SingleAnswer
+                number={'#2'}
+                answer={'Disagree'}
+                check={questSelection['agree/disagree'].disagree.check}
+                contend={questSelection['agree/disagree'].disagree.check}
+                handleToggleCheck={handleToggleCheck}
+                questStartData={questStartData}
+                postProperties={postProperties}
+              />
+            </>
+          ) : (
+            <>
+              <SingleAnswer
+                number={'#1'}
+                answer={'Like'}
+                check={questSelection['like/dislike'].like.check}
+                contend={questSelection['like/dislike'].like.check}
+                handleToggleCheck={handleToggleCheck}
+                questStartData={questStartData}
+                postProperties={postProperties}
+              />
+              <SingleAnswer
+                number={'#2'}
+                answer={'Dislike'}
+                check={questSelection['like/dislike'].dislike.check}
+                contend={questSelection['like/dislike'].dislike.check}
+                handleToggleCheck={handleToggleCheck}
+                questStartData={questStartData}
+                postProperties={postProperties}
+              />
+            </>
+          )}
+        </>
+      );
+    }
 
-      if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
-        return (
-          <div className="flex flex-col overflow-auto">
-            <div className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
-              <DndContext
-                sensors={[touchSensor, mouseSensor, keyboardSensor]}
-                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-                collisionDetection={closestCorners}
-                onDragEnd={handleOnDragEnd}
-              >
-                <SortableContext items={rankedAnswers}>
-                  {rankedAnswers
-                    ?.slice(
-                      0,
-                      showOptions.isShow && showOptions.id === questStartData._id
-                        ? rankedAnswers.length
-                        : isFullScreen || location.pathname.startsWith('/p')
-                          ? rankedAnswers.length
-                          : 10,
-                    )
-                    .map((item, index) => (
-                      <SingleAnswerRankedChoice
-                        key={item.id}
-                        dragId={item.id}
-                        questStartData={questStartData}
-                        id={index}
-                        item={item}
-                        number={index + 1}
-                        editable={item.edit}
-                        deleteable={item.delete}
-                        answer={item.label}
-                        addedAnswerUuid={item.uuid}
-                        answersSelection={answersSelection}
-                        setAnswerSelection={setAnswerSelection}
-                        rankedAnswers={rankedAnswers}
-                        title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                        checkInfo={false}
-                        check={findLabelChecked(rankedAnswers, item.label)}
-                        contend={findLabelContend(rankedAnswers, item.label)}
-                        handleCheckChange={(check) => handleCheckChange(index, check)}
-                        handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-                        setAddOptionField={setAddOptionField}
-                        checkOptionStatus={checkOptionStatus}
-                        setCheckOptionStatus={setCheckOptionStatus}
-                        postProperties={postProperties}
-                      />
-                    ))}
-                </SortableContext>
-              </DndContext>
-              {showOptions.id !== questStartData._id &&
-                rankedAnswers?.length >= 10 &&
-                isFullScreen === undefined &&
-                !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
-            </div>
+    if (
+      getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice' ||
+      getQuestionTitle(questStartData.whichTypeQuestion) === 'Open Choice'
+    ) {
+      return (
+        <div className="flex flex-col overflow-auto">
+          <div ref={listContainerRef} className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
+            {answersSelection
+              ?.slice(
+                0,
+                showOptions.isShow && showOptions.id === questStartData._id
+                  ? answersSelection.length
+                  : isFullScreen || location.pathname.startsWith('/p')
+                    ? answersSelection.length
+                    : 10,
+              )
+              .map((item, index) => (
+                <SingleAnswerMultipleChoice
+                  questStartData={questStartData}
+                  id={index}
+                  key={index}
+                  number={'#' + (index + 1)}
+                  answer={item.label}
+                  addedAnswerUuid={item.uuid}
+                  editable={item.edit}
+                  deleteable={item.delete}
+                  title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                  multipleOption={questStartData.userCanSelectMultiple}
+                  answersSelection={answersSelection}
+                  setAnswerSelection={setAnswerSelection}
+                  checkInfo={true}
+                  check={findLabelChecked(answersSelection, item.label)}
+                  contend={findLabelContend(answersSelection, item.label)}
+                  whichTypeQuestion={questStartData.whichTypeQuestion}
+                  handleCheckChange={
+                    questStartData.userCanSelectMultiple === true
+                      ? (check) => handleCheckChange(index, check)
+                      : (check) => handleCheckChangeSingle(index, check)
+                  }
+                  handleContendChange={
+                    questStartData.userCanSelectMultiple === true
+                      ? (contend) => handleContendChange(index, contend)
+                      : (contend) => handleContendChangeSingle(index, contend)
+                  }
+                  setAddOptionField={setAddOptionField}
+                  checkOptionStatus={checkOptionStatus}
+                  setCheckOptionStatus={setCheckOptionStatus}
+                  postProperties={postProperties}
+                />
+              ))}
+            {showOptions.id !== questStartData._id &&
+              rankedAnswers?.length >= 10 &&
+              isFullScreen === undefined &&
+              !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
           </div>
-        );
-      }
-    } else {
-      <Loader />;
+        </div>
+      );
+    }
+
+    if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
+      return (
+        <div className="flex flex-col overflow-auto">
+          <div className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]">
+            <DndContext
+              sensors={[touchSensor, mouseSensor, keyboardSensor]}
+              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+              collisionDetection={closestCorners}
+              onDragEnd={handleOnDragEnd}
+            >
+              <SortableContext items={rankedAnswers}>
+                {rankedAnswers
+                  ?.slice(
+                    0,
+                    showOptions.isShow && showOptions.id === questStartData._id
+                      ? rankedAnswers.length
+                      : isFullScreen || location.pathname.startsWith('/p')
+                        ? rankedAnswers.length
+                        : 10,
+                  )
+                  .map((item, index) => (
+                    <SingleAnswerRankedChoice
+                      key={item.id}
+                      dragId={item.id}
+                      questStartData={questStartData}
+                      id={index}
+                      item={item}
+                      number={index + 1}
+                      editable={item.edit}
+                      deleteable={item.delete}
+                      answer={item.label}
+                      addedAnswerUuid={item.uuid}
+                      answersSelection={answersSelection}
+                      setAnswerSelection={setAnswerSelection}
+                      rankedAnswers={rankedAnswers}
+                      title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                      checkInfo={false}
+                      check={findLabelChecked(rankedAnswers, item.label)}
+                      contend={findLabelContend(rankedAnswers, item.label)}
+                      handleCheckChange={(check) => handleCheckChange(index, check)}
+                      handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
+                      setAddOptionField={setAddOptionField}
+                      checkOptionStatus={checkOptionStatus}
+                      setCheckOptionStatus={setCheckOptionStatus}
+                      postProperties={postProperties}
+                    />
+                  ))}
+              </SortableContext>
+            </DndContext>
+            {showOptions.id !== questStartData._id &&
+              rankedAnswers?.length >= 10 &&
+              isFullScreen === undefined &&
+              !location.pathname.startsWith('/p') && <SeeMoreOptions id={questStartData._id} />}
+          </div>
+        </div>
+      );
     }
   };
 

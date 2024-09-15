@@ -70,7 +70,11 @@ const SingleQuest = () => {
         <meta property="og:video:height" content={seoMeta.videoHeight} />
         <meta property="og:video:type" content={seoMeta.videoType} /> */}
         {/* Show Image Meta Tags */}
-        <meta property="og:image" itemprop="image" content={`https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png`} />
+        <meta
+          property="og:image"
+          itemprop="image"
+          content={`https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png`}
+        />
         <meta
           property="og:image:secure_url"
           itemprop="image"
@@ -91,7 +95,7 @@ const SingleQuest = () => {
       <Topbar />
       <div className="w-full bg-[#F2F3F5] dark:bg-black">
         <DashboardLayout>
-          <div className="relative mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[1440px] flex-col gap-2 overflow-y-auto py-2 no-scrollbar tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
+          <div className="relative mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[778px] flex-col gap-2 overflow-y-auto py-2 no-scrollbar tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:py-5">
             {isLoading ? (
               <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
                 Loading...
@@ -106,11 +110,11 @@ const SingleQuest = () => {
             {singleQuestData &&
               singleQuestData?.data.data?.map((item, index) =>
                 item.id === 'guest_notification' ? (
-                  <div key={index + 1} className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
+                  <div key={index + 1} className="mx-auto w-full max-w-[778px] px-4 tablet:px-6">
                     <SystemNotificationCard post={item} />
                   </div>
                 ) : (
-                  <div key={index + 1} className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
+                  <div key={index + 1} className="mx-auto w-full max-w-[778px] px-4 tablet:px-6">
                     <QuestionCardWithToggle
                       questStartData={item}
                       isBookmarked={false}

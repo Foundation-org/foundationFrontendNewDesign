@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { createStartQuest } from '../api/questsApi';
+import { createStartQuest, updateChangeAnsStartQuest } from '../api/questsApi';
 import { resetaddOptionLimit } from '../../features/quest/utilsSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { submitListResponse, updateCategoryParticipentsCount } from '../api/listsApi';
@@ -124,7 +124,7 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   const dispatch = useDispatch();
 
   const { mutateAsync: changePost } = useMutation({
-    mutationFn: questServices.updateChangeAnsStartQuest,
+    mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
@@ -149,6 +149,21 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
             page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
           ),
         }));
+
+        if (location.pathname.startsWith('/p/')) {
+          queryClient.setQueryData(['questByShareLink'], (oldData) => {
+            const newData = resp.data.data;
+
+            // Keep the oldData format, but replace data.data[0]
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                data: [newData], // Replace the first item of data.data
+              },
+            };
+          });
+        }
       }
       dispatch(resetaddOptionLimit());
     },
