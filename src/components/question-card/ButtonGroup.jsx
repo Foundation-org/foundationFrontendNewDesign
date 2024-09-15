@@ -35,6 +35,7 @@ const ButtonGroup = ({
   checkOptionStatus,
   postProperties,
   SharedLinkButton,
+  questType,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -225,6 +226,19 @@ const ButtonGroup = ({
       }),
     );
   };
+
+  if (questType === 'feedback' || questType === 'feedback-given') {
+    return (
+      <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
+        <Button
+          variant="cancel"
+          onClick={() => navigate(`/profile/${questType === 'feedback' ? 'feedback' : 'feedback-given'}`)}
+        >
+          Go Back
+        </Button>
+      </div>
+    );
+  }
 
   if (location.pathname === '/post/isfullscreen') {
     return null;

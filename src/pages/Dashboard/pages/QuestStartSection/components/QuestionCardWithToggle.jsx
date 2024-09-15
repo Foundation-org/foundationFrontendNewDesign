@@ -1,23 +1,17 @@
 import { toast } from 'sonner';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { validateInterval } from '../../../../../utils';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
-import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 import Result from './Result';
 import StartTest from './StartTest';
 import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
 import QuestInfoText from '../../../../../components/question-card/QuestInfoText';
 import Spacing from '../../../../../components/question-card/Spacing.jsx';
 import QuestCardLayout from '../../../../../components/question-card/QuestCardLayout';
-
-import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '../../../../../components/ui/Button.jsx';
-import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 import showToast from '../../../../../components/ui/Toast';
 import AddOptions from '../../../../../components/question-card/AddOptions';
 import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
@@ -26,9 +20,7 @@ import { useChangePost, useStartGuestListPost, useStartPost } from '../../../../
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
-  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
@@ -704,35 +696,25 @@ const QuestionCardWithToggle = (props) => {
         questType={props.questType}
       >
         {renderQuestContent()}
-        {props.questType !== 'feedback' && props.questType !== 'feedback-given' ? (
-          <ButtonGroup
-            questStartData={questStartData}
-            handleStartTest={handleStartTest}
-            viewResult={viewResult}
-            handleViewResults={handleViewResults}
-            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-            handleToggleCheck={handleToggleCheck}
-            setRankedAnswers={setRankedAnswers}
-            answersSelection={answersSelection}
-            setAnswerSelection={setAnswerSelection}
-            handleSubmit={handleSubmit}
-            loading={loading}
-            startTest={startTest}
-            setAddOptionField={setAddOptionField}
-            checkOptionStatus={checkOptionStatus}
-            postProperties={postProperties}
-            SharedLinkButton={SharedLinkButton}
-          />
-        ) : (
-          <div className="mr-[14.4px] flex justify-end tablet:mr-[3.44rem]">
-            <Button
-              variant="cancel"
-              onClick={() => navigate(`/profile/${props.questType === 'feedback' ? 'feedback' : 'feedback-given'}`)}
-            >
-              Go Back
-            </Button>
-          </div>
-        )}
+        <ButtonGroup
+          questStartData={questStartData}
+          handleStartTest={handleStartTest}
+          viewResult={viewResult}
+          handleViewResults={handleViewResults}
+          setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+          handleToggleCheck={handleToggleCheck}
+          setRankedAnswers={setRankedAnswers}
+          answersSelection={answersSelection}
+          setAnswerSelection={setAnswerSelection}
+          handleSubmit={handleSubmit}
+          loading={loading}
+          startTest={startTest}
+          setAddOptionField={setAddOptionField}
+          checkOptionStatus={checkOptionStatus}
+          postProperties={postProperties}
+          SharedLinkButton={SharedLinkButton}
+          questType={props.questType}
+        />
       </QuestCardLayout>
     </div>
   );
