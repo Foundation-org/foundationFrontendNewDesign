@@ -10,7 +10,7 @@ import SeldonInputs from './components/SeldonInputs';
 export default function SeldonAi() {
   const dispatch = useDispatch();
   const seldonState = useSelector(getSeldonState);
-  const [promptResponse, setPromptResponse] = useState('');
+  const [promptResponse, setPromptResponse] = useState(localStorage.getItem('seldomResp') || '');
 
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
@@ -23,12 +23,13 @@ export default function SeldonAi() {
       } as any);
 
       if (response?.status === 200) {
+        localStorage.setItem('seldomResp', response.data);
         setPromptResponse(response.data);
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
     }
-    dispatch(handleSeldonInput({ name: 'question', value: '' }));
+    // dispatch(handleSeldonInput({ name: 'question', value: '' }));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
