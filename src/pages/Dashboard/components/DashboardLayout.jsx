@@ -342,6 +342,7 @@ export default function DashboardLayout({ children }) {
               )}
             </div>
             {location.pathname !== '/profile' &&
+              !location.pathname.startsWith('/seldon-ai') &&
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
               location.pathname !== '/profile/shared-links' &&

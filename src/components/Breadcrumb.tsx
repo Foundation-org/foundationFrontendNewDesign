@@ -16,6 +16,7 @@ const Breadcrumb = () => {
         {location.pathname === '/direct-messaging/draft' && 'Direct Messaging'}
         {location.pathname === '/post-preview' && 'Preview Post'}
         {location.pathname !== '/post-preview' && location.pathname.startsWith('/post') && 'Create a Post'}
+        {location.pathname.startsWith('/seldon-ai') && 'Seldon'}
       </h1>
     </div>
   );

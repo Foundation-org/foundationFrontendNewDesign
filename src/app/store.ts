@@ -28,7 +28,7 @@ const persistConfig = {
   key: 'persist-store',
   version: 1,
   storage,
-  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters', 'systemConstants', 'userSettings', 'ledger'],
+  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters', 'systemConstants', 'userSettings', 'ledger', 'seldon'],
 };
 
 const reducer = combineReducers({

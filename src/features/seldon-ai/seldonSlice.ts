@@ -29,10 +29,11 @@ export const seldonSlice = createSlice({
       const { name, value } = action.payload;
       (state[name] as string | number) = value;
     },
+    resetSeldonState: () => initialState,
   },
 });
 
-export const { handleSeldonInput } = seldonSlice.actions;
+export const { handleSeldonInput, resetSeldonState } = seldonSlice.actions;
 
 export default seldonSlice.reducer;
 

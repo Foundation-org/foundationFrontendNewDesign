@@ -55,4 +55,12 @@ export const TopbarItems = [
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq-filled.svg`,
   },
+  {
+    id: 6,
+    title: 'Seldon',
+    path: '/seldon-ai',
+    activePaths: ['/seldon-ai'],
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/seldon.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/seldon.svg`,
+  },
 ];

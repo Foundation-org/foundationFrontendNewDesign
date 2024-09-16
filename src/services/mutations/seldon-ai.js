@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import showToast from '../../components/ui/Toast';
 import api from '../api/Axios';
 
 export const chatGptData = async ({ params }) => {
@@ -16,8 +15,6 @@ export const useChatGptDataMutation = () => {
     },
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'resultsUpdatedSuccess');
-
         // Pessimistic Update
         // queryClient.setQueryData(['SingleQuest'], (oldData) => {
         //   return resp.data?.data[0] || oldData;

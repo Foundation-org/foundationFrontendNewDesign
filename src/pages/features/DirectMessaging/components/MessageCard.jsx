@@ -133,6 +133,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 setLoading(true);
                 filter === 'deleted' ? handleDelete(item._id, filter) : handleTrash(item._id, filter);
               }}
+              className="bg-[#FDD503]"
             >
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Delete'}
             </Button>
