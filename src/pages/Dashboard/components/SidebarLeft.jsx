@@ -94,7 +94,7 @@ const SidebarLeft = () => {
   }, [ratingsDialogue]);
 
   return (
-    <div className={'block'}>
+    <div className="block">
       <Ratings
         modalVisible={ratingsDialogue}
         handleClose={hideRatingDialogue}
@@ -102,20 +102,20 @@ const SidebarLeft = () => {
         setSelectedOptions={setSelectedOptions}
         setFilters={setFilters}
       />
-      <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:border-gray-100 dark:bg-gray-200">
+      <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
         <div className="relative">
           <div className="relative h-[45px] w-full">
             <input
               type="text"
               id="floating_outlined"
-              className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-white-100 dark:text-white-100 dark:focus:border-blue-500"
+              className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-white-100 dark:text-white-100 dark:focus:border-blue-500 tablet:text-[18.23px]"
               value={search}
               placeholder=""
               onChange={handleSearch}
             />
             <label
               htmlFor="floating_outlined"
-              className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500"
+              className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Search
             </label>
@@ -140,7 +140,7 @@ const SidebarLeft = () => {
           )}
         </div>
       </div>
-      <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:bg-gray-200">
+      <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:bg-gray-200 laptop:block">
         <div className="flex w-full flex-col items-center justify-center gap-[25px]">
           <button
             onClick={() => {
@@ -171,10 +171,10 @@ const SidebarLeft = () => {
           </div>
         )} */}
         {/* sidebar mobile */}
-        <div className="block bg-white px-4 py-[10px] tablet:px-[37px] tablet:py-5 laptop:hidden laptop:py-[26px] dark:bg-[#0A0A0C]">
+        <div className="block bg-white px-4 py-[10px] dark:bg-[#0A0A0C] tablet:px-[37px] tablet:py-5 laptop:hidden laptop:py-[26px]">
           <div className="flex h-[23px] w-full items-center justify-between gap-2 tablet:h-[36px]">
             <button
-              className="inset-0 h-full w-[75px] min-w-[75px] max-w-[75px] text-nowrap rounded-[0.375rem] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-[192px] tablet:min-w-[192px] tablet:max-w-[192px] tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:from-gray-300 dark:to-gray-300 dark:text-gray-150"
+              className="inset-0 h-full w-[75px] min-w-[75px] max-w-[75px] text-nowrap rounded-[0.375rem] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner dark:from-gray-300 dark:to-gray-300 dark:text-gray-150 tablet:w-[192px] tablet:min-w-[192px] tablet:max-w-[192px] tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]"
               onClick={() => {
                 showRatingDialogue();
               }}
@@ -185,7 +185,7 @@ const SidebarLeft = () => {
               <input
                 type="text"
                 placeholder="Search here...."
-                className="h-[23px] w-full rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] pl-[10px] pr-6 text-[9px] font-normal text-[#858585] focus:outline-none tablet:h-[36px] tablet:pr-10 tablet:text-[16px] tablet:leading-[16px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300"
+                className="h-[23px] w-full rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] pl-[10px] pr-6 text-[9px] font-normal text-[#858585] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:h-[36px] tablet:pr-10 tablet:text-[16px] tablet:leading-[16px]"
                 value={search}
                 onChange={handleSearch}
               />
@@ -197,7 +197,7 @@ const SidebarLeft = () => {
                     setSearch('');
                   }}
                 >
-                  <GrClose className="size-2 text-black tablet:size-4 dark:text-white" />
+                  <GrClose className="size-2 text-black dark:text-white tablet:size-4" />
                 </button>
               )}
               {!search && (

@@ -44,7 +44,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }: Vie
           {viewMessageData?.subject}
         </h1>
         <p className="pl-3 text-[10px] font-medium leading-[16px] text-[#9A9A9A] dark:text-gray-300 tablet:pl-7 tablet:text-[20px] tablet:leading-[32px]">
-          {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}aaaaaaaaa
+          {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
         </p>
         <div className="flex justify-end">
           <Button variant="cancel" onClick={() => setViewMsg(false)}>

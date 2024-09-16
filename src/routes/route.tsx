@@ -67,6 +67,8 @@ import Messages from '../pages/features/DirectMessaging/pages/Messages';
 import NewMessage from '../pages/features/DirectMessaging/pages/NewMessage';
 import DirectMessageLayout from '../pages/features/DirectMessaging/DirectMessageLayout';
 import NewMessageForm from '../pages/features/DirectMessaging/components/NewMessageForm';
+import SeldonAi from '../pages/features/seldon-ai';
+import SeldonAiLayout from '../pages/features/seldon-ai/SeldonAiLayout';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);
@@ -168,7 +170,9 @@ export function Router() {
                 <Route path="" element={<DirectMessaging />} />
                 <Route path="new-message" element={<NewMessageForm />} />
                 <Route path="*" element={<DirectMessaging />} />
-                {/* <Route path="" element={<Messages />} /> */}
+              </Route>
+              <Route path="/seldon-ai/" element={<SeldonAiLayout />}>
+                <Route path="" element={<SeldonAi />} />
               </Route>
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />

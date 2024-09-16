@@ -26,6 +26,7 @@ import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 import { getConstantsValues, saveConstants } from '../../../features/constants/constantsSlice';
 import showToast from '../../../components/ui/Toast';
 import { changeThemeTo } from '../../../features/utils/utilsSlice';
+import SeldonInputs from '../../features/seldon-ai/components/SeldonInputs';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -431,7 +432,7 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Desktop Left Side */}
-        <div className="left-0 top-0 hidden tablet:block laptop:absolute">
+        <div className="left-0 top-0 hidden h-[calc(100dvh-70px)] overflow-y-scroll no-scrollbar tablet:block tablet:pb-[15px] laptop:absolute">
           <div
             className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:bg-gray-200 laptop:block"
             onClick={() => navigate('/treasury')}
@@ -452,6 +453,7 @@ export default function DashboardLayout({ children }) {
           </div>
 
           {!location.pathname.startsWith('/post') &&
+            !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/feedback-given' &&
@@ -479,6 +481,7 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/direct-messaging') && <SidebarLeft />}
 
           {location.pathname !== '/treasury' &&
+            !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/treasury/reward-schedule' &&
             location.pathname !== '/treasury/buy-fdx' &&
             location.pathname !== '/treasury/redemption-center' &&
@@ -497,6 +500,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/profile/verification-badges' &&
             !location.pathname.startsWith('/direct-messaging') &&
             location.pathname !== '/profile/lists' && <SideNavbar />}
+
+          {location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}
 
           {questUtilsState.isShowPlayer && location.pathname === '/' && (
             <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
@@ -693,6 +698,7 @@ export default function DashboardLayout({ children }) {
           </div>
 
           {!location.pathname.startsWith('/post') &&
+            !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/post-activity' &&
             location.pathname !== '/treasury' &&
