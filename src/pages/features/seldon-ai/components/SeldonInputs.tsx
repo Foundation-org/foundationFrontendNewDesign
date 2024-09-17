@@ -1,6 +1,11 @@
 import { GrClose } from 'react-icons/gr';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSeldonState, handleSeldonInput, resetSeldonState } from '../../../../features/seldon-ai/seldonSlice';
+import {
+  getSeldonState,
+  handleSeldonInput,
+  resetSeldonProperty,
+  resetSeldonState,
+} from '../../../../features/seldon-ai/seldonSlice';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { Button } from '../../../../components/ui/Button';
 
@@ -33,7 +38,7 @@ export default function SeldonInputs() {
           <button
             className="absolute right-3 top-1/2 -translate-y-1/2"
             onClick={() => {
-              dispatch(handleSeldonInput({ name: 'temperature', value: 0 }));
+              dispatch(resetSeldonProperty('temperature'));
             }}
           >
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
@@ -63,7 +68,7 @@ export default function SeldonInputs() {
           <button
             className="absolute right-3 top-1/2 -translate-y-1/2"
             onClick={() => {
-              dispatch(handleSeldonInput({ name: 'max_tokens', value: 256 }));
+              dispatch(resetSeldonProperty('max_tokens'));
             }}
           >
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
@@ -93,7 +98,7 @@ export default function SeldonInputs() {
           <button
             className="absolute right-3 top-1/2 -translate-y-1/2"
             onClick={() => {
-              dispatch(handleSeldonInput({ name: 'top_p', value: 0.001 }));
+              dispatch(resetSeldonProperty('top_p'));
             }}
           >
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
@@ -123,7 +128,7 @@ export default function SeldonInputs() {
           <button
             className="absolute right-3 top-1/2 -translate-y-1/2"
             onClick={() => {
-              dispatch(handleSeldonInput({ name: 'frequency_penalty', value: 0 }));
+              dispatch(resetSeldonProperty('frequency_penalty'));
             }}
           >
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
@@ -153,7 +158,7 @@ export default function SeldonInputs() {
           <button
             className="absolute right-3 top-1/2 -translate-y-1/2"
             onClick={() => {
-              dispatch(handleSeldonInput({ name: 'presence_penalty', value: 0 }));
+              dispatch(resetSeldonProperty('presence_penalty'));
             }}
           >
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
@@ -183,13 +188,7 @@ export default function SeldonInputs() {
           <button
             className="absolute right-3 top-1/2 -translate-y-1/2"
             onClick={() => {
-              dispatch(
-                handleSeldonInput({
-                  name: 'system',
-                  value:
-                    "You are a very enthusiastic Foundation representative who loves to help people! Given the following sections from the Foundation documentation, answer the question using only that information, outputted in markdown format. If you are unsure and the answer is not explicitly written in the documentation, say 'Sorry, I don't know how to help with that.",
-                }),
-              );
+              dispatch(resetSeldonProperty('system'));
             }}
           >
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />

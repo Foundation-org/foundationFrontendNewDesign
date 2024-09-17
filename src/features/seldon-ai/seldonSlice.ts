@@ -30,16 +30,19 @@ export const seldonSlice = createSlice({
       (state[name] as string | number) = value;
     },
     resetSeldonState: (state) => {
-      // Keep the question value while resetting other fields
       return {
         ...initialState,
         question: state.question,
       };
     },
+    resetSeldonProperty: (state, action: PayloadAction<keyof SeldonState>) => {
+      const propertyToReset = action.payload;
+      (state[propertyToReset] as string | number) = initialState[propertyToReset]; // Reset the specific property to its initial value
+    },
   },
 });
 
-export const { handleSeldonInput, resetSeldonState } = seldonSlice.actions;
+export const { handleSeldonInput, resetSeldonState, resetSeldonProperty } = seldonSlice.actions;
 
 export default seldonSlice.reducer;
 
