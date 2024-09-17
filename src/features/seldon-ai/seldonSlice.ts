@@ -12,11 +12,11 @@ interface SeldonState {
 
 const initialState: SeldonState = {
   system:
-    "You are a very enthusiastic Foundation representative who loves to help people! Given the following sections from the Foundation documentation, answer the question using only that information, outputted in markdown format. If you are unsure and the answer is not explicitly written in the documentation, say 'Sorry, I don't know how to help with that.",
+    'Only use Foundation post data. Find correlations. Make ground breaking conclusions and discoveries. Never mention vote/respondent counts. Always respond with a title, abstract and up to 5 findings only. at the end, give additional new poll suggestions with options in one parentheses.',
   question: '',
   temperature: 0,
-  max_tokens: 256,
-  top_p: 0.001,
+  max_tokens: 1024,
+  top_p: 1,
   frequency_penalty: 0,
   presence_penalty: 0,
 };

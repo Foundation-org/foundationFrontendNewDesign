@@ -75,12 +75,11 @@ export default function SeldonInputs() {
           <input
             type="number"
             id="floating_outlined"
-            step="0.001"
             className="peer block h-full w-full appearance-none rounded-lg border border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-white-100 dark:bg-gray-200 dark:text-white-100 dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:text-[18.23px]"
             value={seldonState.top_p}
             placeholder=""
             onChange={(e) => {
-              dispatch(handleSeldonInput({ name: 'top_p', value: parseFloat(e.target.value) }));
+              dispatch(handleSeldonInput({ name: 'top_p', value: e.target.value }));
             }}
           />
           <label
