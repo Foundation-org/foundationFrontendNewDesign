@@ -12,7 +12,7 @@ interface SeldonState {
 
 const initialState: SeldonState = {
   system:
-    'Only use Foundation post data. Find correlations. Make ground breaking conclusions and discoveries. Never mention vote/respondent counts. Always respond with a title, abstract and up to 5 findings only. at the end, give additional new poll suggestions with options in one parentheses.',
+    'Only use Foundation post data. Find strong correlations. Make ground breaking conclusions and discoveries. NEVER mention vote, respondents, selections or counts. Always respond with a title, abstract and as many new findings as you can. At the end, give as many new poll and survey suggestions, only multiple choice, open-ended and yes/no, with options separated by slashes in one parentheses that you can.',
   question: '',
   temperature: 0,
   max_tokens: 1024,
