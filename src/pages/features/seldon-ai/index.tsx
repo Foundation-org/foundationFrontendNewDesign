@@ -39,6 +39,10 @@ export default function SeldonAi() {
     }
   };
 
+  const parts = promptResponse.split('Survey Suggestions:');
+  const beforeSuggestions = parts[0];
+  const afterSuggestions = parts[1] ? `Survey Suggestions:${parts[1]}` : '';
+
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
       <div className="mb-3 block tablet:hidden">
@@ -71,8 +75,13 @@ export default function SeldonAi() {
         </div>
       ) : (
         promptResponse && (
-          <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
-            <Markdown>{promptResponse}</Markdown>
+          <div className="flex flex-col gap-4">
+            <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
+              <Markdown>{beforeSuggestions}</Markdown>
+            </div>
+            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+              <Markdown>{afterSuggestions}</Markdown>
+            </div>
           </div>
         )
       )}
