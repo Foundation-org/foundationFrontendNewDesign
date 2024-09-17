@@ -29,7 +29,13 @@ export const seldonSlice = createSlice({
       const { name, value } = action.payload;
       (state[name] as string | number) = value;
     },
-    resetSeldonState: () => initialState,
+    resetSeldonState: (state) => {
+      // Keep the question value while resetting other fields
+      return {
+        ...initialState,
+        question: state.question,
+      };
+    },
   },
 });
 

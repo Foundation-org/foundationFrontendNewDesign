@@ -9,7 +9,7 @@ export default function SeldonInputs() {
   const seldonState = useSelector(getSeldonState);
 
   return (
-    <div className="mt-2 flex h-fit flex-col gap-3 dark:border dark:border-gray-100 tablet:my-[15px] tablet:ml-[31px] tablet:w-[18.75rem] tablet:min-w-[18.75rem] tablet:gap-8 tablet:rounded-[15px] tablet:bg-white tablet:py-[23px] tablet:pl-[1.3rem] tablet:pr-[2.1rem]">
+    <div className="mt-2 flex h-fit flex-col gap-3 dark:border dark:border-gray-100 dark:bg-gray-200 tablet:my-[15px] tablet:ml-[31px] tablet:w-[18.75rem] tablet:min-w-[18.75rem] tablet:gap-8 tablet:rounded-[15px] tablet:bg-white tablet:py-[23px] tablet:pl-[1.3rem] tablet:pr-[2.1rem]">
       <div className="relative">
         <div className="relative h-[29px] w-full tablet:h-[45px]">
           <input
