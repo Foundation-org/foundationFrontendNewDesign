@@ -45,7 +45,7 @@ export default function SeldonAi() {
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
-      <div className="mb-3 block tablet:hidden">
+      <div className="mb-3 block laptop:hidden">
         <SeldonInputs />
       </div>
       <form className="relative flex gap-4" onSubmit={handleFormSubmit}>

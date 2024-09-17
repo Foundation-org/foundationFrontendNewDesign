@@ -433,7 +433,7 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Desktop Left Side */}
-        <div className="left-0 top-0 hidden h-[calc(100dvh-70px)] overflow-y-scroll no-scrollbar tablet:block tablet:pb-[15px] laptop:absolute">
+        <div className="left-0 top-0 hidden tablet:block laptop:absolute">
           <div
             className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:bg-gray-200 laptop:block"
             onClick={() => navigate('/treasury')}
@@ -502,7 +502,7 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/direct-messaging') &&
             location.pathname !== '/profile/lists' && <SideNavbar />}
 
-          {location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}
+          <div className="hidden laptop:block">{location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}</div>
 
           {questUtilsState.isShowPlayer && location.pathname === '/' && (
             <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">

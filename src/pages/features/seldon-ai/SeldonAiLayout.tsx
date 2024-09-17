@@ -18,13 +18,13 @@ const SeldonAiLayout = () => {
       <Breadcrumb />
       <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
         {/* <CreateSlider /> */}
-        <div className="hidden items-center justify-center tablet:flex tablet:h-[78px]">
+        <div className="hidden items-center justify-center tablet:h-[78px] laptop:flex">
           <h1 className="text-[24px] font-semibold leading-[24px] text-[#707175]">Seldon</h1>
         </div>
       </div>
       <div
         ref={scrollRef}
-        className="h-[calc(100dvh-134px)] overflow-y-auto no-scrollbar tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.6px)]"
+        className="h-[calc(100dvh-134px)] overflow-y-auto no-scrollbar tablet:mx-6 tablet:mt-3 tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.6px)]"
       >
         <Outlet />
       </div>
