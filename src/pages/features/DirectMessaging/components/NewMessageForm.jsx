@@ -19,12 +19,13 @@ export default function NewMessageForm() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
+  const defaultReadReward = persistedConstants?.MINIMUM_READ_REWARD;
   const { draft } = location?.state || {};
   const { questStartData, selectedOptions } = useOutletContext();
   const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || '');
   const [sub, setSub] = useState(draft?.subject || '');
   const [msg, setMsg] = useState(draft?.message || '');
-  const [readReward, setReadReward] = useState();
+  const [readReward, setReadReward] = useState(defaultReadReward);
   const [participants, setParticipants] = useState(0);
 
   function formatRecipient(to) {
@@ -70,7 +71,14 @@ export default function NewMessageForm() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
+    if (readReward < defaultReadReward) {
+      toast.error(`Read Reward must be at least ${defaultReadReward}`);
+      return;
+    }
+    if (sub === '' || msg === '') {
+      toast.error(`Subject and message cannot be empty`);
+      return;
+    }
     const params = {
       from: persistedUserInfo.email,
       subject: sub,
@@ -78,7 +86,7 @@ export default function NewMessageForm() {
       type: location.state?.draft ? 'draft' : 'new',
       draftId: location.state?.draft?.id ? location.state?.draft.id : '',
       sendAmount,
-      readReward: readReward || 0,
+      readReward: readReward,
       uuid: persistedUserInfo.uuid,
     };
 
@@ -203,7 +211,7 @@ export default function NewMessageForm() {
         </div>
         <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[#707175] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            You will reach {handleNoOfUsers()} Users
+            You will reach {participants} Users
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
             {handleNoOfUsers()} * {sendAmount} FDX
@@ -218,7 +226,7 @@ export default function NewMessageForm() {
           <input
             type="number"
             value={readReward}
-            placeholder="0"
+            placeholder={defaultReadReward}
             className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
               setReadReward(e.target.value);
