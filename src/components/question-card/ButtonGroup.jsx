@@ -16,6 +16,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import showToast from '../ui/Toast';
 import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
+import { findFeedbackByUuid } from '../../utils/extras';
+import { useUndoFeedBackMutation } from '../../services/mutations/post';
 // import { formatParticipantsCount } from '../../utils/questionCard';
 
 const ButtonGroup = ({
@@ -46,6 +48,8 @@ const ButtonGroup = ({
   const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const feedbackAndVisibilityRef = useRef();
   const [feedbackLoading, setFeedbackLoading] = useState(false);
+
+  const { useUndoFeedback, isUndoFeedbackPending } = useUndoFeedBackMutation();
 
   let filterState;
 
@@ -226,6 +230,32 @@ const ButtonGroup = ({
       }),
     );
   };
+
+  if (
+    findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
+    findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested'
+  ) {
+    return (
+      <div className="mt-[0.94rem] flex w-full items-center justify-end gap-4 px-[0.87rem] tablet:mt-5 tablet:px-10">
+        <Button
+          variant={'submit'}
+          disabled={isUndoFeedbackPending}
+          className={'whitespace-nowrap'}
+          onClick={() => {
+            useUndoFeedback({ questForeignKey: questStartData._id, uuid: persistedUserInfo?.uuid });
+          }}
+        >
+          {isUndoFeedbackPending === true ? (
+            <FaSpinner className="animate-spin text-[#EAEAEA]" />
+          ) : findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ? (
+            'It applies to me now'
+          ) : (
+            'I am interested now'
+          )}
+        </Button>
+      </div>
+    );
+  }
 
   if (questType === 'feedback' || questType === 'feedback-given') {
     return (

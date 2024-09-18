@@ -24,7 +24,7 @@ const SeldonAiLayout = () => {
       </div>
       <div
         ref={scrollRef}
-        className="h-[calc(100dvh-134px)] overflow-y-auto no-scrollbar tablet:mx-6 tablet:mt-3 tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.6px)]"
+        className="h-[calc(100dvh-134px)] overflow-y-auto no-scrollbar tablet:mx-6 tablet:mt-3 tablet:h-[calc(100dvh-173.63px)] laptop:mt-[77.63px] laptop:h-[calc(100dvh-147.6px)]"
       >
         <Outlet />
       </div>

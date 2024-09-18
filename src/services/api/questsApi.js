@@ -459,3 +459,10 @@ export const createCustomLink = async ({ questStartData, uuid, link }) => {
     link,
   });
 };
+
+export const undoFeedback = async ({ questForeignKey, uuid }) => {
+  return await api.post(`/userQuestSetting/undoFeedback`, {
+    questForeignKey,
+    uuid,
+  });
+};

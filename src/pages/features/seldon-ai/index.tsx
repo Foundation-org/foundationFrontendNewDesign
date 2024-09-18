@@ -22,9 +22,10 @@ export default function SeldonAi() {
         params: seldonState,
       } as any);
 
+      console.log(response.data);
       if (response?.status === 200) {
-        localStorage.setItem('seldomResp', response.data);
-        setPromptResponse(response.data);
+        localStorage.setItem('seldomResp', response.data.response);
+        setPromptResponse(response.data.response);
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
@@ -39,9 +40,10 @@ export default function SeldonAi() {
     }
   };
 
-  const parts = promptResponse.split('Survey Suggestions:');
+  const regex = /\**\s*survey suggestions[:\-]*\s*\**/i;
+  const parts = promptResponse.split(regex);
   const beforeSuggestions = parts[0];
-  const afterSuggestions = parts[1] ? `Survey Suggestions:${parts[1]}` : '';
+  const afterSuggestions = parts[1] ? parts[1].trim() : '';
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -80,6 +82,7 @@ export default function SeldonAi() {
               <Markdown>{beforeSuggestions}</Markdown>
             </div>
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+              <h1 className="text-[16px] font-bold">New Post Suggestions:</h1>
               <Markdown>{afterSuggestions}</Markdown>
             </div>
           </div>

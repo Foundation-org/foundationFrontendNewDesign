@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { createStartQuest, updateChangeAnsStartQuest } from '../api/questsApi';
+import { createStartQuest, undoFeedback, updateChangeAnsStartQuest } from '../api/questsApi';
 import { resetaddOptionLimit } from '../../features/quest/utilsSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { submitListResponse, updateCategoryParticipentsCount } from '../api/listsApi';
@@ -175,4 +175,28 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   });
 
   return { changePost };
+};
+
+export const useUndoFeedBackMutation = () => {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: useUndoFeedback, isPending: isUndoFeedbackPending } = useMutation({
+    mutationFn: undoFeedback,
+    onSuccess: (resp) => {
+      if (resp.status === 200) {
+        queryClient.setQueriesData(['posts'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) => (item._id === resp.data.data[0]._id ? resp.data.data[0] : item)),
+          ),
+        }));
+      }
+    },
+    onError: (err) => {
+      console.log({ err });
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+    },
+  });
+
+  return { useUndoFeedback, isUndoFeedbackPending };
 };

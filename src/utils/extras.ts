@@ -4,3 +4,9 @@ export const tooltipDefaultStatus = {
   tooltipName: 'Please write something...',
   tooltipStyle: 'tooltip-info',
 };
+
+export function findFeedbackByUuid(data: any, givenUuid: string) {
+  const result = data?.find((item: any) => item.uuids?.includes(givenUuid));
+
+  return result ? result.id : null;
+}
