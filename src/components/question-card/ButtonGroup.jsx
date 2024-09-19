@@ -237,11 +237,12 @@ const ButtonGroup = ({
     findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested'
   ) {
     return (
-      <div className="mt-[0.94rem] flex w-full items-center justify-end gap-4 px-[0.87rem] tablet:mt-5 tablet:px-10">
+      <div className="mt-[0.94rem] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mt-5 tablet:px-10">
+        <button className="w-full cursor-default">&#x200B;</button>
         <Button
-          variant={'submit'}
+          variant={'g-submit'}
           disabled={isUndoFeedbackPending}
-          className={'whitespace-nowrap'}
+          className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
           onClick={() => {
             useUndoFeedback({ questForeignKey: questStartData._id, uuid: persistedUserInfo?.uuid });
           }}
