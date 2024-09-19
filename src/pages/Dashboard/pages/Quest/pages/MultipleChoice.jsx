@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -188,7 +188,7 @@ const MultipleChoice = () => {
     dispatch(createQuestAction.addNewOption());
   };
 
-  const removeOption = (id, number) => {
+  const removeOption = (id) => {
     dispatch(createQuestAction.delOption({ id }));
 
     if (optionsValue.length - 1 === parseInt(id.split('-')[1])) return;
@@ -356,6 +356,19 @@ const MultipleChoice = () => {
       dispatch(createQuestAction.drapAddDrop({ newTypedValues: newData }));
     }
   };
+
+  useEffect(() => {
+    if (location.state?.postData.options) {
+      optionsArray.forEach((element, index) => {
+        answerVerification(element.id, index, element.question);
+      });
+    }
+    if (location.state?.postData.userCanAddOption) {
+      setAddOption(true);
+    } else {
+      setAddOption(false);
+    }
+  }, [location.state?.postData.options]);
 
   return (
     <CreateQuestWrapper

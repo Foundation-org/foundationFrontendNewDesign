@@ -56,12 +56,18 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
       queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
 
-      queryClient.setQueriesData(['posts'], (oldData) => ({
-        ...oldData,
-        pages: oldData?.pages?.map((page) =>
-          page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
-        ),
-      }));
+      if (location.pathname.startsWith('/seldon-ai')) {
+        queryClient.setQueryData(['sourcePosts'], (oldData) => {
+          return oldData.map((item) => (item._id === resp.data.data._id ? resp.data.data : item));
+        });
+      } else {
+        queryClient.setQueriesData(['posts'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+          ),
+        }));
+      }
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
@@ -143,12 +149,18 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
           setSubmitResponse(resp.data.data);
         }
 
-        queryClient.setQueriesData(['posts'], (oldData) => ({
-          ...oldData,
-          pages: oldData?.pages?.map((page) =>
-            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
-          ),
-        }));
+        if (location.pathname.startsWith('/seldon-ai')) {
+          queryClient.setQueryData(['sourcePosts'], (oldData) => {
+            return oldData.map((item) => (item._id === resp.data.data._id ? resp.data.data : item));
+          });
+        } else {
+          queryClient.setQueriesData(['posts'], (oldData) => ({
+            ...oldData,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+            ),
+          }));
+        }
 
         if (location.pathname.startsWith('/p/')) {
           queryClient.setQueryData(['questByShareLink'], (oldData) => {

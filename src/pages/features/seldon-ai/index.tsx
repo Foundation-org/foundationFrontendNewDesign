@@ -1,16 +1,21 @@
+import { useState } from 'react';
 import { FaCircleArrowUp } from 'react-icons/fa6';
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useDispatch, useSelector } from 'react-redux';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { processPromptResponse } from '../../../utils/seldon';
 import { getSeldonState, handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
 import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
-import { useState } from 'react';
 import Markdown from 'react-markdown';
 import SeldonInputs from './components/SeldonInputs';
+import SuggestedPosts from './components/SuggestedPosts';
+import ThreeDotsLoading from '../../../components/ui/threedotsLoading';
+import SourcePosts from './components/SourcePosts';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
   const seldonState = useSelector(getSeldonState);
   const [promptResponse, setPromptResponse] = useState(localStorage.getItem('seldomResp') || '');
+  const [promptSources, setPromptSources] = useState([]);
 
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
@@ -22,15 +27,20 @@ export default function SeldonAi() {
         params: seldonState,
       } as any);
 
-      console.log(response.data);
+      // console.log(response.data);
       if (response?.status === 200) {
         localStorage.setItem('seldomResp', response.data.response);
         setPromptResponse(response.data.response);
+
+        const ids = response.data?.source
+          .filter((fileName: string) => fileName.startsWith('post_'))
+          .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]); // Extract the ID from the filename
+
+        setPromptSources(ids);
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
     }
-    // dispatch(handleSeldonInput({ name: 'question', value: '' }));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -40,10 +50,12 @@ export default function SeldonAi() {
     }
   };
 
-  const regex = /\**\s*survey suggestions[:\-]*\s*\**/i;
-  const parts = promptResponse.split(regex);
-  const beforeSuggestions = parts[0];
-  const afterSuggestions = parts[1] ? parts[1].trim() : '';
+  // const regex = /\**\s*survey suggestions[:\-]*\s*\**/i;
+  // const parts = promptResponse.split(regex);
+  // const beforeSuggestions = parts[0];
+  // const afterSuggestions = parts[1] ? parts[1].trim() : '';
+
+  // console.log('promptSources', promptSources);
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -69,22 +81,16 @@ export default function SeldonAi() {
       </form>
 
       {isPending ? (
-        <div className="mt-8 flex items-center justify-center space-x-2 dark:invert">
-          <span className="sr-only">Loading...</span>
-          <div className="size-2 animate-bounce rounded-full bg-gray-900 [animation-delay:-0.3s]"></div>
-          <div className="size-2 animate-bounce rounded-full bg-gray-900 [animation-delay:-0.15s]"></div>
-          <div className="size-2 animate-bounce rounded-full bg-gray-900"></div>
-        </div>
+        <ThreeDotsLoading />
       ) : (
         promptResponse && (
           <div className="flex flex-col gap-4">
             <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
-              <Markdown>{beforeSuggestions}</Markdown>
+              <Markdown>{processPromptResponse(promptResponse).before}</Markdown>
             </div>
-            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-              <h1 className="text-[16px] font-bold">New Post Suggestions:</h1>
-              <Markdown>{afterSuggestions}</Markdown>
-            </div>
+            <SuggestedPosts afterSuggestions={processPromptResponse(promptResponse).after} />
+            <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
+            <SourcePosts />
           </div>
         )
       )}

@@ -466,3 +466,12 @@ export const undoFeedback = async ({ questForeignKey, uuid }) => {
     uuid,
   });
 };
+
+export const getQuestsCustom = async ({ ids, uuid }) => {
+  const queryParams = new URLSearchParams({
+    ids,
+    uuid,
+  }).toString();
+
+  return (await api.get(`/infoquestions/getQuestsCustom?${queryParams}`)).data.data;
+};
