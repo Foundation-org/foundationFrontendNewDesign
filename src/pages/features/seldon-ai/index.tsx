@@ -8,8 +8,8 @@ import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
 import Markdown from 'react-markdown';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
-import ThreeDotsLoading from '../../../components/ui/threedotsLoading';
 import SourcePosts from './components/SourcePosts';
+import DotsLoading from '../../../components/ui/DotsLoading';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
@@ -81,16 +81,16 @@ export default function SeldonAi() {
       </form>
 
       {isPending ? (
-        <ThreeDotsLoading />
+        <DotsLoading />
       ) : (
         promptResponse && (
           <div className="flex flex-col gap-4">
             <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
               <Markdown>{processPromptResponse(promptResponse).before}</Markdown>
             </div>
-            <SuggestedPosts afterSuggestions={processPromptResponse(promptResponse).after} />
             <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
             <SourcePosts />
+            <SuggestedPosts afterSuggestions={processPromptResponse(promptResponse).after} />
           </div>
         )
       )}

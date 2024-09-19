@@ -1,6 +1,11 @@
 export const parseQuestionsAndOptions = (afterSuggestions: string) => {
   const questionsArray = afterSuggestions.trim().split('\n');
-  const cleanedQuestionsArray = questionsArray.map((question) => question.trim().replace(/^\d+\.\s*/, '')); // Remove leading numbers and dots
+  const cleanedQuestionsArray = questionsArray.map((question) =>
+    question
+      .trim()
+      .replace(/^-*\s*/, '')
+      .replace(/^\d+\.\s*/, ''),
+  ); // Remove leading hyphens, spaces, and numbers with dots
 
   // Function to check if an option is related to "Others"
   const isOtherOption = (option: string) => /^(others?|other)$/i.test(option);

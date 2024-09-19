@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { parseQuestionsAndOptions } from '../../../../utils/seldon';
 import { questionValidation } from '../../../../services/api/questsApi';
 import { addNewOption, addQuestion, setOptionsByArray } from '../../../../features/createQuest/createQuestSlice';
-import ThreeDotsLoading from '../../../../components/ui/threedotsLoading';
+import DotsLoading from '../../../../components/ui/DotsLoading';
 
 interface Post {
   question: string;
@@ -65,7 +65,7 @@ export default function SuggestedPosts({ afterSuggestions }: { afterSuggestions:
       <h1 className="text-[16px] font-bold">New Post Suggestions:</h1>
       <div className="mt-4 flex flex-col gap-4">
         {loading ? (
-          <ThreeDotsLoading />
+          <DotsLoading />
         ) : (
           suggestedPosts?.map((item, index) => (
             <div key={index} className="grid grid-cols-4 gap-4 tablet:gap-8">

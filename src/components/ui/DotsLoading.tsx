@@ -1,4 +1,4 @@
-export default function ThreeDotsLoading() {
+export default function DotsLoading() {
   return (
     <div className="mt-8 flex items-center justify-center space-x-2 dark:invert">
       <span className="sr-only">Loading...</span>
