@@ -230,6 +230,7 @@ const ButtonGroup = ({
       }),
     );
   };
+  console.log(questStartData);
 
   if (
     findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
@@ -639,7 +640,7 @@ const ButtonGroup = ({
               </div>
             ) : (
               <div className="flex w-full items-center justify-between gap-4">
-                {questStartData.startStatus !== 'continue' ? (
+                {questStartData.startStatus !== 'continue' && !questStartData?.startQuestData?.feedbackReverted ? (
                   <Button
                     variant={'submit'}
                     className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
