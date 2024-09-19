@@ -238,7 +238,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               {selectedOption.length !== 0 ? (
                 <Button
                   variant={'submit'}
-                  className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
                   onClick={() => {
                     addPostInList({
                       userUuid: persistedUserInfo.uuid,
@@ -252,7 +251,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               ) : (
                 <Button
                   variant="hollow-submit"
-                  className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
                   onClick={() => {
                     showToast('warning', 'emptyPostList');
                   }}
