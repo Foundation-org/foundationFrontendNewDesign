@@ -10,6 +10,7 @@ import PopUp from '../ui/PopUp';
 import { useEffect } from 'react';
 import { useDebounce } from '../../utils/useDebounce';
 import showToast from '../ui/Toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const queryClient = useQueryClient();
@@ -18,6 +19,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   const [search, setSearch] = useState('');
   const [selectedOption, setSelectedOption] = useState([]);
   const debouncedSearch = useDebounce(search, 1000);
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -224,6 +226,15 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               </div>
             </div>
             <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
+              <Button
+                variant="submit"
+                className={'bg-[#7C7C7C]'}
+                onClick={() => {
+                  navigate('/profile/lists');
+                }}
+              >
+                Manage My Lists
+              </Button>
               {selectedOption.length !== 0 ? (
                 <Button
                   variant={'submit'}
