@@ -258,6 +258,10 @@ const QuestionCardWithToggle = (props) => {
   const { changePost } = useChangePost(setLoading, props.setSubmitResponse, handleViewResults, questStartData);
 
   const handleSubmit = () => {
+    if (persistedUserInfo?.role === 'visitor') {
+      dispatch(setGuestSignUpDialogue(true));
+      return;
+    }
     if (
       persistedUserInfo.role === 'guest' &&
       !location.pathname.startsWith('/p') &&

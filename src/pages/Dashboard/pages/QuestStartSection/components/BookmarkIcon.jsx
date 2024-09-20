@@ -20,7 +20,7 @@ const BookmarkIcon = ({ bookmarkStatus, persistedTheme, handleBookmark }) => {
   return (
     <div
       onClick={() => {
-        if (persistedUserInfo?.role === 'guest') {
+        if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
           dispatch(setGuestSignUpDialogue(true));
           return;
         } else {

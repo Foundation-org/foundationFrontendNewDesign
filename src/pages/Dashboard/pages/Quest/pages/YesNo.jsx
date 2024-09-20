@@ -92,7 +92,7 @@ const YesNo = () => {
     dispatch(setIsShowPlayer(false));
     dispatch(setPlayingPlayerId(''));
     dispatch(resetPlayingIds());
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     }

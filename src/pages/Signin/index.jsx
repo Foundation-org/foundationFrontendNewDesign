@@ -139,7 +139,13 @@ export default function Signin() {
             <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
               Don’t have an account?
             </p>
-            <Link to={persistedUserInfo && persistedUserInfo.role === 'guest' ? '/guest-signup' : '/signup'}>
+            <Link
+              to={
+                persistedUserInfo && (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor')
+                  ? '/guest-signup'
+                  : '/signup'
+              }
+            >
               <p className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]">Sign up</p>
             </Link>
           </div>

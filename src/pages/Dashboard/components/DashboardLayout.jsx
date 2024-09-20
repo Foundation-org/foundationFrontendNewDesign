@@ -271,7 +271,7 @@ export default function DashboardLayout({ children }) {
         <div>
           <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 dark:bg-silver-500 tablet:h-[80px] tablet:px-5 laptop:hidden">
             <div className="h-fit rounded-[15px]" onClick={() => navigate('/treasury')}>
-              {persistedUserInfo?.role !== 'user' ? (
+              {persistedUserInfo?.role === 'guest' ? (
                 <div className="flex cursor-pointer items-center gap-2">
                   <div className="relative h-fit w-fit">
                     <img
@@ -285,6 +285,27 @@ export default function DashboardLayout({ children }) {
                   </div>
                   <div className="flex flex-col gap-1">
                     <h4 className="heading w-fit border-b">My Balance (Guest)</h4>
+                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                      <p>
+                        {userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX
+                      </p>
+                    </p>
+                  </div>
+                </div>
+              ) : persistedUserInfo?.role === 'visitor' ? (
+                <div className="flex cursor-pointer items-center gap-2">
+                  <div className="relative h-fit w-fit">
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
+                      alt="badge"
+                      className="h-[25px] w-5 tablet:size-[36px]"
+                    />
+                    <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
+                      V
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h4 className="heading w-fit border-b">My Balance (Visitor)</h4>
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
                       <p>
                         {userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX
@@ -650,7 +671,7 @@ export default function DashboardLayout({ children }) {
         {/* Desktop Right Side */}
         <div className="right-0 top-0 hidden h-[calc(100dvh-70px)] overflow-y-scroll no-scrollbar tablet:block tablet:pb-[15px] laptop:absolute">
           <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border laptop:block">
-            {persistedUserInfo?.role !== 'user' ? (
+            {persistedUserInfo?.role === 'guest' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
                 <div className="relative h-fit w-fit">
                   <img
@@ -664,6 +685,25 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance (Guest)</h4>
+                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                    <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
+                  </div>
+                </div>
+              </div>
+            ) : persistedUserInfo?.role === 'visitor' ? (
+              <div className="flex cursor-pointer items-center gap-[15px]">
+                <div className="relative h-fit w-fit">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
+                    alt="badge"
+                    className="tablet:h-[47px] tablet:w-[38px]"
+                  />
+                  <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-white">
+                    V
+                  </p>
+                </div>
+                <div className="flex h-[47px] flex-col justify-between">
+                  <h4 className="heading w-fit border-b-2">My Balance (Visitor)</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
                     <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>

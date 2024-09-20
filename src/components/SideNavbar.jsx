@@ -10,7 +10,7 @@ const SideNavbar = () => {
   const persistedConstants = useSelector(getConstantsValues);
   return (
     <div
-      className={`${persistedUserInfo.role === 'user' ? 'hidden flex-col laptop:flex' : 'hidden'} ml-[31px] w-full max-w-[18.75rem] items-center justify-center gap-[15px] rounded-[15px] bg-white px-[38px] py-[22px] dark:border dark:border-gray-100 dark:bg-gray-200`}
+      className={`${persistedUserInfo.role === 'user' || persistedUserInfo?.role === 'visitor' ? 'hidden flex-col laptop:flex' : 'hidden'} ml-[31px] w-full max-w-[18.75rem] items-center justify-center gap-[15px] rounded-[15px] bg-white px-[38px] py-[22px] dark:border dark:border-gray-100 dark:bg-gray-200`}
     >
       <Button
         variant={location.pathname === '/post' ? 'submit2' : 'hollow-submit2'}

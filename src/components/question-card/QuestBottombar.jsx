@@ -40,7 +40,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   };
 
   const handleSharePostClick = () => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else if (questStartData?.moderationRatingCount >= 1) {
@@ -51,7 +51,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   };
 
   const handleAddToListClick = () => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
@@ -60,7 +60,7 @@ const QuestBottombar = ({ time, questStartData, postProperties, showDisableShare
   };
 
   const handleAnalyzeClick = () => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {

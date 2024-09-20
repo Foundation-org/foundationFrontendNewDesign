@@ -27,7 +27,7 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
           <Button
             variant="submit"
             onClick={() => {
-              if (persistedUserInfo?.role === 'guest') {
+              if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
                 dispatch(setGuestSignUpDialogue(true));
                 return;
               } else {

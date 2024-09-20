@@ -449,7 +449,7 @@ const ButtonGroup = ({
         <Button
           variant="cancel"
           onClick={() => {
-            if (persistedUserInfo?.role === 'guest') {
+            if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
               dispatch(setGuestSignUpDialogue(true));
             } else {
               if (location.pathname === '/shared-list-link/result') {
@@ -466,7 +466,7 @@ const ButtonGroup = ({
     );
   }
 
-  if (persistedUserInfo?.role === 'guest' && !questStartData.isClosed) {
+  if ((persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') && !questStartData.isClosed) {
     if (
       location.pathname.includes('/p/') ||
       location.pathname.includes('/l/') ||
@@ -550,7 +550,7 @@ const ButtonGroup = ({
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
             <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
-              {persistedUserInfo?.role === 'guest' ? (
+              {persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor' ? (
                 <button className="w-full cursor-default">&#x200B;</button>
               ) : (
                 <Button

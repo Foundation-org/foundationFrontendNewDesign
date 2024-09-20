@@ -13,7 +13,9 @@ import DashboardLayout from '../../components/DashboardLayout';
 export default function SharedListResults() {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [tab, setTab] = useState(persistedUserInfo.role === 'guest' ? 'All of Foundation' : 'My Group Only');
+  const [tab, setTab] = useState(
+    persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor' ? 'All of Foundation' : 'My Group Only',
+  );
 
   const {
     data: sharedlistAllData,
@@ -42,7 +44,7 @@ export default function SharedListResults() {
       <Topbar />
       <div className="bg-[#F2F3F5] dark:bg-[#242424]">
         <DashboardLayout>
-          <div className="no-scrollbar mx-auto h-[calc(100dvh-91px)] w-full max-w-[1440px] tablet:h-[calc(100vh-70px)] laptop:mx-[331px] laptop:px-4 desktop:mx-auto desktop:px-0">
+          <div className="mx-auto h-[calc(100dvh-91px)] w-full max-w-[1440px] no-scrollbar tablet:h-[calc(100vh-70px)] laptop:mx-[331px] laptop:px-4 desktop:mx-auto desktop:px-0">
             {persistedUserInfo?.role === 'user' && (
               <div className="my-2 flex justify-center gap-[15px] tablet:gap-5 laptop:my-[14.82px] laptop:gap-[35px]">
                 <Button
@@ -82,7 +84,7 @@ export default function SharedListResults() {
                       </p>
                     </div>
                   ) : (
-                    <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
+                    <div className="mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 no-scrollbar tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
                       {allDataSuccess &&
                         sharedlistAllData.data.category.post.map((item) => (
                           <div
@@ -114,7 +116,7 @@ export default function SharedListResults() {
                       </p>
                     </div>
                   ) : (
-                    <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
+                    <div className="mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 no-scrollbar tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
                       {isSuccess &&
                         sharedlistData.data.category.post.map((item) => (
                           <div

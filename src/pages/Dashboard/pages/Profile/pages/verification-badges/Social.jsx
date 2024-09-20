@@ -156,7 +156,7 @@ const Social = ({
                     : 'submit'
                 }
                 onClick={async () => {
-                  if (persistedUserInfo?.role === 'guest') {
+                  if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
                     handleGuestBadgeAdd();
                     return;
                   }

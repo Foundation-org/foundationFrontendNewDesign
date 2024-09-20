@@ -160,7 +160,7 @@ export default function AddOptions({
   const handleAddOption = () => {
     dispatch(setOptionState({ id: questStartData._id, isShow: true }));
 
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       showGuestSignUpToastWarning();
       return;
     }

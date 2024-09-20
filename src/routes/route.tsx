@@ -75,6 +75,7 @@ export function Router() {
   const ROLES = {
     User: 'user',
     Guest: 'guest',
+    Visitor: 'visitor',
   };
 
   return (
@@ -112,7 +113,7 @@ export function Router() {
         </Routes>
       ) : (
         <Routes>
-          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest, ROLES.Visitor]} />}>
             <Route path="/iframe" element={<Iframe />} />
             <Route path="/embed/:link" element={<EmbedPost />} />
             <Route path="/authenticating" element={<Authenticating />} />

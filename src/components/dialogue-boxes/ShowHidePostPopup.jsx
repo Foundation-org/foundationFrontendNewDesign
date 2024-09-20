@@ -71,7 +71,7 @@ export default function ShowHidePostPopup({
   });
 
   const handleHiddenPostApiCall = () => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {

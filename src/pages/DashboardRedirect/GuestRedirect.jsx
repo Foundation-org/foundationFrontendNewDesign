@@ -25,8 +25,15 @@ const GuestRedirect = ({ redirectUrl }) => {
       }
     },
     onError: (err) => {
+      console.log('user', err?.response?.data?.user);
+
       localStorage.setItem('shared-post', location.pathname);
-      navigate('/signin');
+      localStorage.setItem('uuid', err?.response?.data?.user?.uuid);
+
+      dispatch(addUser(err?.response?.data?.user));
+      if (redirectUrl) {
+        navigate(redirectUrl);
+      }
     },
   });
 

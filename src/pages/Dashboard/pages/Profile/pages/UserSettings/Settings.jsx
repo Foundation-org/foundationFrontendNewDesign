@@ -67,10 +67,10 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/display-settings.svg" headerTitle="Display Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div>
-              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px] dark:text-gray-300">
+              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
                 Dark Mode
               </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px] dark:text-gray-300">
+              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
                 Switch to Dark Mode
               </p>
             </div>
@@ -92,10 +92,10 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/feed-settings.svg" headerTitle="Feed Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
-              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px] dark:text-gray-300">
+              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
                 Default Sort
               </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px] dark:text-gray-300">
+              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
                 Automatically sort results from highest to lowest
               </p>
             </div>
@@ -118,10 +118,10 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/encrypt.svg" headerTitle="Encryption Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
-              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px] dark:text-gray-300">
+              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
                 Ask Password
               </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px] dark:text-gray-300">
+              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
                 Ask for your password every time when encrypting or decrypting.
               </p>
             </div>
@@ -147,7 +147,7 @@ export const Settings = () => {
         </SummaryCard>
       </div>
       {/* Logout */}
-      {persistedUserInfo.role === 'user' && (
+      {(persistedUserInfo.role === 'user' || persistedUserInfo?.role === 'visitor') && (
         <Button
           variant="submit"
           className="mt-3 flex w-fit items-center gap-[5px] tablet:mt-4 tablet:gap-[10px]"

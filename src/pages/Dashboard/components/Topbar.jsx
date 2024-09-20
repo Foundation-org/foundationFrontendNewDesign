@@ -101,7 +101,11 @@ const Topbar = () => {
               {TopbarItems.map((item) => (
                 <Link
                   key={item.id}
-                  to={persistedUserInfo.role === 'guest' && item.id === 1 ? item.signupPath : item.path}
+                  to={
+                    (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1
+                      ? item.signupPath
+                      : item.path
+                  }
                   className={`${
                     item.activePaths?.some((path) => location.pathname === path) ||
                     location.pathname === `${item.path}/`
@@ -123,7 +127,7 @@ const Topbar = () => {
                   )}
                   <img
                     src={
-                      persistedUserInfo.role === 'guest' && item.id === 1
+                      (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1
                         ? item.signupIcon
                         : item.activePaths?.some((path) => location.pathname === path) ||
                             location.pathname === `${item.path}/`
@@ -144,7 +148,11 @@ const Topbar = () => {
           {TopbarItems.map((item) => (
             <Link
               key={item.id}
-              to={persistedUserInfo.role === 'guest' && item.id === 1 ? item.signupPath : item.path}
+              to={
+                (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1
+                  ? item.signupPath
+                  : item.path
+              }
               className={`${
                 item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
                   ? 'text-white'
@@ -165,7 +173,7 @@ const Topbar = () => {
               )}
               <img
                 src={
-                  persistedUserInfo.role === 'guest' && item.id === 1
+                  (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1
                     ? item.signupIcon
                     : item.activePaths?.some((path) => location.pathname === path) ||
                         location.pathname === `${item.path}/`

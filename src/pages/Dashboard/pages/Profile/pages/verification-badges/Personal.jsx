@@ -31,7 +31,7 @@ export default function Personal({
     fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
 
   const handleClickPesonalBadges = async (type, edit) => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
