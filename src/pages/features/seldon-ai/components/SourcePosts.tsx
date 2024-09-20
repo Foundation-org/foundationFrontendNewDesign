@@ -5,8 +5,7 @@ import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/c
 import { getQuestUtils } from '../../../../features/quest/utilsSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
 
-export default function SourcePosts() {
-  const promptSources = ['66ec2b3bdf30699ee78d76a9', '66ec1fb96f851190e172e5b5', '66ec002bd88ca345606e45b7'];
+export default function SourcePosts({ promptSources }: { promptSources: string[] }) {
   const questUtils = useSelector(getQuestUtils);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
 
@@ -14,7 +13,6 @@ export default function SourcePosts() {
     data: sourcePosts,
     isFetching,
     isError,
-    error,
   } = useQuery({
     queryKey: ['sourcePosts'],
     queryFn: () => getQuestsCustom({ ids: promptSources, uuid: persistedUserInfo.uuid }),

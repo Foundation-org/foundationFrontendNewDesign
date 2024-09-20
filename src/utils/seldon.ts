@@ -90,3 +90,25 @@ export const processPromptResponse = (promptResponse: string) => {
     after: afterText,
   };
 };
+
+export function extractSections(markdown: string) {
+  const titlePattern = /^(.*?(Title|TITLE|title)\s*:\s*)(.*?)(\*\*|$)/im;
+  const abstractPattern = /\*\*Abstract:\s*([\s\S]*?)(?=\n\*\*Findings:)/;
+  const findingsPattern = /\*\*Findings:\s*([\s\S]*)/;
+
+  const titleMatch = markdown.match(titlePattern);
+  const abstractMatch = markdown.match(abstractPattern);
+  const findingsMatch = markdown.match(findingsPattern);
+
+  const title = titleMatch ? titleMatch[3].trim() : null;
+  let abstract = abstractMatch ? abstractMatch[1].trim() : null;
+  abstract = abstract ? abstract.replace(/^\**\s*/, '').trim() : null;
+  let findings = findingsMatch ? findingsMatch[1].trim() : null;
+  findings = findings ? findings.replace(/^\**\s*/, '').trim() : null;
+
+  return {
+    title,
+    abstract,
+    findings,
+  };
+}

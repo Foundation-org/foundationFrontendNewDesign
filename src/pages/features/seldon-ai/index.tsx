@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaCircleArrowUp } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
-import { processPromptResponse } from '../../../utils/seldon';
+import { extractSections, processPromptResponse } from '../../../utils/seldon';
 import { getSeldonState, handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
 import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
 import Markdown from 'react-markdown';
@@ -10,6 +10,7 @@ import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import SourcePosts from './components/SourcePosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
+import { Button } from '../../../components/ui/Button';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
@@ -50,12 +51,7 @@ export default function SeldonAi() {
     }
   };
 
-  // const regex = /\**\s*survey suggestions[:\-]*\s*\**/i;
-  // const parts = promptResponse.split(regex);
-  // const beforeSuggestions = parts[0];
-  // const afterSuggestions = parts[1] ? parts[1].trim() : '';
-
-  // console.log('promptSources', promptSources);
+  const { title, abstract, findings } = extractSections(processPromptResponse(promptResponse).before);
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -84,12 +80,27 @@ export default function SeldonAi() {
         <DotsLoading />
       ) : (
         promptResponse && (
-          <div className="flex flex-col gap-4">
-            <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
-              <Markdown>{processPromptResponse(promptResponse).before}</Markdown>
+          <div className="flex flex-col gap-4 pt-4 tablet:pt-8">
+            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+              <h1 className="text-[16px] font-bold">Title:</h1>
+              <p className="text-[12px] tablet:text-[16px]">{title}</p>
+            </div>
+            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+              <h1 className="text-[16px] font-bold">Abstract:</h1>
+              <p className="text-[12px] tablet:text-[16px]">{abstract}</p>
+            </div>
+            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+              <h1 className="text-[16px] font-bold">Findings:</h1>
+              <Markdown>{findings}</Markdown>
             </div>
             <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
-            <SourcePosts />
+            <SourcePosts promptSources={promptSources} />
+            <div className="flex w-full items-center justify-between gap-4">
+              <button className="w-full cursor-default">&#x200B;</button>
+              <Button variant="submit" className="w-full" rounded>
+                Publish Article
+              </Button>
+            </div>
             <SuggestedPosts afterSuggestions={processPromptResponse(promptResponse).after} />
           </div>
         )

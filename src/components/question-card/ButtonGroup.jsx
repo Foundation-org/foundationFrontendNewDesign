@@ -230,7 +230,6 @@ const ButtonGroup = ({
       }),
     );
   };
-  console.log(questStartData);
 
   if (
     findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
