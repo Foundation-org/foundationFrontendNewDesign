@@ -13,6 +13,7 @@ import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 import showToast from '../ui/Toast';
 import PostTopBar from './PostTopBar';
 import EmbedStatusBar from '../../pages/Embed/EmbedStatusBar';
+import PostArticlesCard from '../../pages/features/seldon-ai/components/PostArticlesCard';
 
 const QuestCardLayout = ({ questStartData, playing, postProperties, questType, children }) => {
   const dispatch = useDispatch();
@@ -169,6 +170,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
           showDisableSharedLinkPopup={showDisableSharedLinkPopup}
         />
       )}
+      <PostArticlesCard questStartData={questStartData} />
     </div>
   );
 };

@@ -92,7 +92,7 @@ export const processPromptResponse = (promptResponse: string) => {
 };
 
 export function extractSections(markdown: string) {
-  const titlePattern = /^(.*?(Title|TITLE|title)\s*:\s*)(.*?)(\*\*|$)/im;
+  const titlePattern = /\*\*Title:\s*(.*?)(\n|$)/i;
   const abstractPattern = /\*\*Abstract:\s*([\s\S]*?)(?=\n\*\*Findings:)/;
   const findingsPattern = /\*\*Findings:\s*([\s\S]*)/;
 
@@ -100,7 +100,13 @@ export function extractSections(markdown: string) {
   const abstractMatch = markdown.match(abstractPattern);
   const findingsMatch = markdown.match(findingsPattern);
 
-  const title = titleMatch ? titleMatch[3].trim() : null;
+  let title = titleMatch ? titleMatch[1].trim() : null;
+  title = title
+    ? title
+        .replace(/^\**\s*/, '')
+        .replace(/\**\s*$/, '')
+        .trim()
+    : null;
   let abstract = abstractMatch ? abstractMatch[1].trim() : null;
   abstract = abstract ? abstract.replace(/^\**\s*/, '').trim() : null;
   let findings = findingsMatch ? findingsMatch[1].trim() : null;

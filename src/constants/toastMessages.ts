@@ -99,14 +99,11 @@ export const toastMessages = {
   webViewSignUp:
     'This web view within your application is not secure. To create an account, please copy and paste the link into Chrome, Safari or your stand alone browser of choice.',
   youAreViewingPreview: 'You are viewing a preview',
-  // hideOption: 'Option hidden successfully',
-  // hideOptionDeleted: 'Option deleted successfully',
-  // deleteAllAnalytics: 'Advance analytics cleared successfully',
-  // analyticOrderChanged: 'Order changed Successfully',
   analyzeParticipatedPost: 'Please participate in the post first',
   cantHideLastTwoOptions: 'You cannot hide the last two options',
   activityAlreadyExists: 'Activity already exists',
   resultsUpdatedSuccess: 'Results updated Successfully',
   optionAlreadyExists: 'Option already exists',
   noParticipants: 'There is no participants to send message to',
+  articlePublished: 'Article published successfully',
 } as const;

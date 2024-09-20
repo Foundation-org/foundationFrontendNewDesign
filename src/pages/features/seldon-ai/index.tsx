@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCircleArrowUp } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
@@ -10,10 +10,11 @@ import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import SourcePosts from './components/SourcePosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
-import { Button } from '../../../components/ui/Button';
+import { useLocation } from 'react-router-dom';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
+  const location = useLocation();
   const seldonState = useSelector(getSeldonState);
   const [promptResponse, setPromptResponse] = useState(localStorage.getItem('seldomResp') || '');
   const [promptSources, setPromptSources] = useState([]);
@@ -28,15 +29,15 @@ export default function SeldonAi() {
         params: seldonState,
       } as any);
 
-      // console.log(response.data);
       if (response?.status === 200) {
         localStorage.setItem('seldomResp', response.data.response);
-        setPromptResponse(response.data.response);
+        localStorage.setItem('seldonIds', JSON.stringify(response.data?.source));
 
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
           .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]); // Extract the ID from the filename
 
+        setPromptResponse(response.data.response);
         setPromptSources(ids);
       }
     } catch (error) {
@@ -52,6 +53,13 @@ export default function SeldonAi() {
   };
 
   const { title, abstract, findings } = extractSections(processPromptResponse(promptResponse).before);
+
+  useEffect(() => {
+    const ids = JSON.parse(localStorage.getItem('seldonIds') || '[]')
+      .filter((fileName: string) => fileName.startsWith('post_'))
+      .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
+    setPromptSources(ids);
+  }, [localStorage.getItem('seldonIds')]);
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -82,8 +90,7 @@ export default function SeldonAi() {
         promptResponse && (
           <div className="flex flex-col gap-4 pt-4 tablet:pt-8">
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-              <h1 className="text-[16px] font-bold">Title:</h1>
-              <p className="text-[12px] tablet:text-[16px]">{title}</p>
+              <h1 className="text-[16px] font-bold">{title}</h1>
             </div>
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Abstract:</h1>
@@ -95,13 +102,11 @@ export default function SeldonAi() {
             </div>
             <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
             <SourcePosts promptSources={promptSources} />
-            <div className="flex w-full items-center justify-between gap-4">
-              <button className="w-full cursor-default">&#x200B;</button>
-              <Button variant="submit" className="w-full" rounded>
-                Publish Article
-              </Button>
-            </div>
-            <SuggestedPosts afterSuggestions={processPromptResponse(promptResponse).after} />
+            <SuggestedPosts
+              afterSuggestions={processPromptResponse(promptResponse).after}
+              promptResponse={promptResponse}
+              promptSources={promptSources}
+            />
           </div>
         )
       )}

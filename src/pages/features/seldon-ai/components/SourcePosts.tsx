@@ -14,7 +14,7 @@ export default function SourcePosts({ promptSources }: { promptSources: string[]
     isFetching,
     isError,
   } = useQuery({
-    queryKey: ['sourcePosts'],
+    queryKey: ['sourcePosts', promptSources],
     queryFn: () => getQuestsCustom({ ids: promptSources, uuid: persistedUserInfo.uuid }),
   });
 
