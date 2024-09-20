@@ -47,7 +47,7 @@ export const usePublishArticleMutation = () => {
       return publishArticle({ userUuid, body, source, suggestion });
     },
     onSuccess: (resp) => {
-      if (resp.status === 200) {
+      if (resp.status === 201) {
         showToast('success', 'articlePublished');
       }
     },
