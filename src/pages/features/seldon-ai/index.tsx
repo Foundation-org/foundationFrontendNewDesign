@@ -106,6 +106,7 @@ export default function SeldonAi() {
               afterSuggestions={processPromptResponse(promptResponse).after}
               promptResponse={promptResponse}
               promptSources={promptSources}
+              title={title}
             />
           </div>
         )

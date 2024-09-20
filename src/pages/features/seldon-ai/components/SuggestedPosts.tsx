@@ -21,9 +21,10 @@ interface PropsType {
   afterSuggestions: string;
   promptResponse: string;
   promptSources: string[];
+  title: String;
 }
 
-export default function SuggestedPosts({ afterSuggestions, promptResponse, promptSources }: PropsType) {
+export default function SuggestedPosts({ afterSuggestions, promptResponse, promptSources, title }: PropsType) {
   const dispatch = useDispatch();
   const [suggestedPosts, setSuggestedPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
@@ -129,6 +130,7 @@ export default function SuggestedPosts({ afterSuggestions, promptResponse, promp
               body: promptResponse,
               source: promptSources,
               suggestion: suggestedPosts,
+              title,
             } as any);
           }}
         >

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api/Axios';
 import showToast from '../../components/ui/Toast';
+import { toast } from 'sonner';
 
 export const chatGptData = async ({ params }) => {
   const queryString = new URLSearchParams(params).toString();
@@ -32,19 +33,20 @@ export const useChatGptDataMutation = () => {
   return mutation;
 };
 
-export const publishArticle = async ({ userUuid, body, source, suggestion }) => {
+export const publishArticle = async ({ userUuid, body, source, suggestion, title }) => {
   return await api.post(`/article/create`, {
     userUuid,
     body,
     source,
     suggestion,
+    title,
   });
 };
 
 export const usePublishArticleMutation = () => {
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, body, source, suggestion }) => {
-      return publishArticle({ userUuid, body, source, suggestion });
+    mutationFn: async ({ userUuid, body, source, suggestion, title }) => {
+      return publishArticle({ userUuid, body, source, suggestion, title });
     },
     onSuccess: (resp) => {
       if (resp.status === 201) {
@@ -54,7 +56,7 @@ export const usePublishArticleMutation = () => {
     onError: (error) => {
       console.log(error);
       // Show error message in a toast
-      // toast.warning(error.response.data.message);
+      toast.warning(error.response.data.message);
     },
   });
 
