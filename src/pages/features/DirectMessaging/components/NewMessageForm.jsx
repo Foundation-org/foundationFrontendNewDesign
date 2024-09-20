@@ -214,7 +214,7 @@ export default function NewMessageForm() {
             You will reach {participants} Users
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {handleNoOfUsers()} * {sendAmount} FDX
+            {participants} * {sendAmount} FDX
           </p>
         </div>
         <div
@@ -251,7 +251,7 @@ export default function NewMessageForm() {
               <>
                 Send
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (+{handleNoOfUsers() * sendAmount} FDX)
+                  (+{handleNoOfUsers()} FDX)
                 </span>
               </>
             )}
