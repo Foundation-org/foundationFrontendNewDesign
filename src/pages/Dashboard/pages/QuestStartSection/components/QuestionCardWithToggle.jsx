@@ -122,7 +122,7 @@ const QuestionCardWithToggle = (props) => {
         tempSize = (limit ? 49 : 24) + (maxElements - 1) * (limit ? 59 : 29.7);
       }
 
-      return tempSize;
+      return limit ? tempSize : tempSize - 5.7;
     }
   }, [questStartData.QuestAnswers, windowWidth]);
 
