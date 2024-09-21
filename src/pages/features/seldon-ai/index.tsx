@@ -90,7 +90,7 @@ export default function SeldonAi() {
         promptResponse && (
           <div className="flex flex-col gap-4 pt-4 tablet:pt-8">
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-              <h1 className="text-[16px] font-bold">{title}</h1>
+              <h1 className="text-[12px] font-bold tablet:text-[16px]">{title}</h1>
             </div>
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Abstract:</h1>

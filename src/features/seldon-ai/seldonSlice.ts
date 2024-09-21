@@ -8,6 +8,9 @@ interface SeldonState {
   top_p: number;
   frequency_penalty: number;
   presence_penalty: number;
+  fetchK: number;
+  lambda: number;
+  knowledgebase: string[];
 }
 
 const initialState: SeldonState = {
@@ -19,6 +22,9 @@ const initialState: SeldonState = {
   top_p: 1,
   frequency_penalty: 0,
   presence_penalty: 0,
+  fetchK: 5,
+  lambda: 0.1,
+  knowledgebase: ['user', 'about', 'knowledgebaseone'],
 };
 
 export const seldonSlice = createSlice({
@@ -29,6 +35,17 @@ export const seldonSlice = createSlice({
       const { name, value } = action.payload;
       (state[name] as string | number) = value;
     },
+    handleKnowledgebase: (state, action: PayloadAction<string>) => {
+      const itemIndex = state.knowledgebase.indexOf(action.payload);
+
+      if (itemIndex === -1) {
+        // Item not found, add it
+        state.knowledgebase.push(action.payload);
+      } else {
+        // Item found, remove it (toggle behavior)
+        state.knowledgebase.splice(itemIndex, 1);
+      }
+    },
     resetSeldonState: (state) => {
       return {
         ...initialState,
@@ -37,12 +54,16 @@ export const seldonSlice = createSlice({
     },
     resetSeldonProperty: (state, action: PayloadAction<keyof SeldonState>) => {
       const propertyToReset = action.payload;
-      (state[propertyToReset] as string | number) = initialState[propertyToReset]; // Reset the specific property to its initial value
+      if (propertyToReset === 'knowledgebase') {
+        state[propertyToReset] = [];
+      } else {
+        (state[propertyToReset] as string | number) = initialState[propertyToReset]; // Reset the specific property to its initial value
+      }
     },
   },
 });
 
-export const { handleSeldonInput, resetSeldonState, resetSeldonProperty } = seldonSlice.actions;
+export const { handleSeldonInput, handleKnowledgebase, resetSeldonState, resetSeldonProperty } = seldonSlice.actions;
 
 export default seldonSlice.reducer;
 

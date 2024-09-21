@@ -2,6 +2,7 @@ import { GrClose } from 'react-icons/gr';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getSeldonState,
+  handleKnowledgebase,
   handleSeldonInput,
   resetSeldonProperty,
   resetSeldonState,
@@ -9,9 +10,31 @@ import {
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { Button } from '../../../../components/ui/Button';
 
+const ragCollections = [
+  {
+    id: 1,
+    title: 'User',
+    val: 'user',
+  },
+  {
+    id: 2,
+    title: 'About',
+    val: 'about',
+  },
+  {
+    id: 3,
+    title: 'Post',
+    val: 'knowledgebaseone',
+  },
+];
+
 export default function SeldonInputs() {
   const dispatch = useDispatch();
   const seldonState = useSelector(getSeldonState);
+
+  const handleCheckboxChange = (item: string) => {
+    dispatch(handleKnowledgebase(item));
+  };
 
   return (
     <div className="mt-2 flex h-fit flex-col gap-3 dark:border dark:border-gray-100 dark:bg-gray-200 laptop:my-[15px] laptop:ml-[31px] laptop:w-[18.75rem] laptop:min-w-[18.75rem] laptop:gap-8 laptop:rounded-[15px] laptop:bg-white laptop:py-[23px] laptop:pl-[1.3rem] laptop:pr-[2.1rem]">
@@ -166,6 +189,66 @@ export default function SeldonInputs() {
         )}
       </div>
       <div className="relative">
+        <div className="relative h-[29px] w-full tablet:h-[45px]">
+          <input
+            type="number"
+            id="floating_outlined"
+            className="peer block h-full w-full appearance-none rounded-lg border border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-white-100 dark:bg-gray-200 dark:text-white-100 dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:text-[18.23px]"
+            value={seldonState.fetchK}
+            placeholder=""
+            onChange={(e) => {
+              dispatch(handleSeldonInput({ name: 'fetchK', value: e.target.value }));
+            }}
+          />
+          <label
+            htmlFor="floating_outlined"
+            className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-gray-400 px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:bg-white tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+          >
+            Fetch K
+          </label>
+        </div>
+        {seldonState.fetchK >= 0 && (
+          <button
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={() => {
+              dispatch(resetSeldonProperty('fetchK'));
+            }}
+          >
+            <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+          </button>
+        )}
+      </div>
+      <div className="relative">
+        <div className="relative h-[29px] w-full tablet:h-[45px]">
+          <input
+            type="number"
+            id="floating_outlined"
+            className="peer block h-full w-full appearance-none rounded-lg border border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-white-100 dark:bg-gray-200 dark:text-white-100 dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:text-[18.23px]"
+            value={seldonState.lambda}
+            placeholder=""
+            onChange={(e) => {
+              dispatch(handleSeldonInput({ name: 'lambda', value: e.target.value }));
+            }}
+          />
+          <label
+            htmlFor="floating_outlined"
+            className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-gray-400 px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:bg-white tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+          >
+            Lamda
+          </label>
+        </div>
+        {seldonState.lambda >= 0 && (
+          <button
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={() => {
+              dispatch(resetSeldonProperty('lambda'));
+            }}
+          >
+            <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+          </button>
+        )}
+      </div>
+      <div className="relative">
         <div className="relative w-full">
           <TextareaAutosize
             id="floating_outlined"
@@ -194,6 +277,22 @@ export default function SeldonInputs() {
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
           </button>
         )}
+      </div>
+      <div className="flex gap-3 tablet:gap-4">
+        {ragCollections.map((item) => (
+          <div className="flex items-center gap-1 laptop:gap-[18px]">
+            <div id="custom-checkbox" className="flex h-full items-center gap-2">
+              <input
+                id="small-checkbox"
+                type="checkbox"
+                className="checkbox size-3 rounded-full tablet:h-[25px] tablet:w-[25px]"
+                checked={seldonState.knowledgebase?.includes(item.val)}
+                onChange={() => handleCheckboxChange(item.val)}
+              />
+              <h5>{item.title}</h5>
+            </div>
+          </div>
+        ))}
       </div>
       <Button
         variant="submit"

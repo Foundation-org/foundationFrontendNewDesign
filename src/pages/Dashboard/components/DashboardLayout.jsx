@@ -523,7 +523,9 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/direct-messaging') &&
             location.pathname !== '/profile/lists' && <SideNavbar />}
 
-          <div className="hidden laptop:block">{location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}</div>
+          <div className="hidden h-[calc(100dvh-162px)] overflow-y-scroll no-scrollbar laptop:block">
+            {location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}
+          </div>
 
           {questUtilsState.isShowPlayer && location.pathname === '/' && (
             <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
