@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { parseQuestionsAndOptions } from '../../../../utils/seldon';
@@ -8,6 +8,7 @@ import DotsLoading from '../../../../components/ui/DotsLoading';
 import { Button } from '../../../../components/ui/Button';
 import { usePublishArticleMutation } from '../../../../services/mutations/seldon-ai';
 import { FaSpinner } from 'react-icons/fa';
+import showToast from '../../../../components/ui/Toast';
 
 interface Post {
   question: string;
@@ -21,15 +22,16 @@ interface PropsType {
   afterSuggestions: string;
   promptResponse: string;
   promptSources: string[];
-  title: String;
+  title: String | null;
 }
 
 export default function SuggestedPosts({ afterSuggestions, promptResponse, promptSources, title }: PropsType) {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { protocol, host } = window.location;
   const [suggestedPosts, setSuggestedPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();
 
   const checkDuplicatePost = async (value: string) => {
@@ -72,6 +74,14 @@ export default function SuggestedPosts({ afterSuggestions, promptResponse, promp
   useEffect(() => {
     processQuestions();
   }, [afterSuggestions]);
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(`${protocol}//${host}${location.pathname}`);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
+  };
 
   return (
     <>
@@ -125,16 +135,27 @@ export default function SuggestedPosts({ afterSuggestions, promptResponse, promp
           rounded
           disabled={isPublishPending}
           onClick={() => {
-            handlePublishArticle({
-              userUuid: persistedUserInfo.uuid,
-              body: promptResponse,
-              source: promptSources,
-              suggestion: suggestedPosts,
-              title,
-            } as any);
+            if (location.pathname.startsWith('/r/')) {
+              copyToClipboard();
+              showToast('success', 'copyLink');
+            } else {
+              handlePublishArticle({
+                userUuid: persistedUserInfo.uuid,
+                body: promptResponse,
+                source: promptSources,
+                suggestion: suggestedPosts,
+                title,
+              } as any);
+            }
           }}
         >
-          {isPublishPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Publish Article'}
+          {location.pathname.startsWith('/r/') ? (
+            'Share Article'
+          ) : isPublishPending ? (
+            <FaSpinner className="animate-spin text-[#EAEAEA]" />
+          ) : (
+            'Publish Article'
+          )}
         </Button>
       </div>
     </>

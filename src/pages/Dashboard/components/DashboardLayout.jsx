@@ -496,6 +496,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/help/contact-us' &&
             !location.pathname.startsWith('/p/') &&
             !location.pathname.startsWith('/l/') &&
+            !location.pathname.startsWith('/r/') &&
             !location.pathname.startsWith('/profile/postsbylist/') &&
             location.pathname !== '/shared-list-link/result' &&
             location.pathname !== '/profile/verification-badges' &&

@@ -24,7 +24,7 @@ const initialState: SeldonState = {
   presence_penalty: 0,
   fetchK: 5,
   lambda: 0.1,
-  knowledgebase: ['user', 'about', 'knowledgebaseone'],
+  knowledgebase: ['user', 'about', 'knowladgebaseone'],
 };
 
 export const seldonSlice = createSlice({
@@ -42,8 +42,10 @@ export const seldonSlice = createSlice({
         // Item not found, add it
         state.knowledgebase.push(action.payload);
       } else {
-        // Item found, remove it (toggle behavior)
-        state.knowledgebase.splice(itemIndex, 1);
+        // Item found, remove it only if there's more than 1 item selected
+        if (state.knowledgebase.length > 1) {
+          state.knowledgebase.splice(itemIndex, 1);
+        }
       }
     },
     resetSeldonState: (state) => {

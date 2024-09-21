@@ -24,7 +24,7 @@ const ragCollections = [
   {
     id: 3,
     title: 'Post',
-    val: 'knowledgebaseone',
+    val: 'knowladgebaseone',
   },
 ];
 
@@ -281,16 +281,15 @@ export default function SeldonInputs() {
       <div className="flex gap-3 tablet:gap-4">
         {ragCollections.map((item) => (
           <div className="flex items-center gap-1 laptop:gap-[18px]">
-            <div id="custom-checkbox" className="flex h-full items-center gap-2">
+            <label>
               <input
-                id="small-checkbox"
                 type="checkbox"
-                className="checkbox size-3 rounded-full tablet:h-[25px] tablet:w-[25px]"
+                className="accent-green-100"
                 checked={seldonState.knowledgebase?.includes(item.val)}
                 onChange={() => handleCheckboxChange(item.val)}
-              />
-              <h5>{item.title}</h5>
-            </div>
+              />{' '}
+              {item.title}
+            </label>
           </div>
         ))}
       </div>

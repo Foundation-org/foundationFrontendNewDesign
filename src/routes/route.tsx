@@ -173,7 +173,7 @@ export function Router() {
               </Route>
               <Route path="/seldon-ai/" element={<SeldonAiLayout />}>
                 <Route path="" element={<SeldonAi />} />
-                <Route path="r/:id" element={<SeldonView />} />
+                {/* <Route path="r/:id" element={<SeldonView />} /> */}
               </Route>
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />
@@ -181,8 +181,8 @@ export function Router() {
             <Route path="/shared-list-link/result" element={<SharedListResults />} />
             <Route path="/post/:isFullScreen" element={<Guests />} />
             <Route path="/p/:id" element={<SingleQuest />} />
-            <Route path="/r/:id" element={<SeldonView />} />
             <Route path="/l/:id" element={<PostsByList />} />
+            <Route path="/r/:id" element={<SeldonView />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/guest-signup" element={<Signup />}>
