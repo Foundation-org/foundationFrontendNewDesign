@@ -35,13 +35,13 @@ export default function PostArticlesCard({ questStartData }: PropsType) {
                   {getTruncatedAbstract(article.body)}
                 </p>
                 <Link
-                  to={'/'}
+                  to={`seldon-ai/r/${article._id}`}
                   state={{ articleId: article._id }}
                   className="text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toast.warning('Feature coming soon');
-                  }}
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   toast.warning('Feature coming soon');
+                  // }}
                 >
                   View Article
                 </Link>

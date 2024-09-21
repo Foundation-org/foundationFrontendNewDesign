@@ -63,12 +63,11 @@ import EmbedPost from '../pages/Embed/EmbedPost';
 import Iframe from '../pages/Embed/Iframe';
 import VerifyPhone from '../pages/Signup/VerifyPhone';
 import DirectMessaging from '../pages/features/DirectMessaging';
-import Messages from '../pages/features/DirectMessaging/pages/Messages';
-import NewMessage from '../pages/features/DirectMessaging/pages/NewMessage';
 import DirectMessageLayout from '../pages/features/DirectMessaging/DirectMessageLayout';
 import NewMessageForm from '../pages/features/DirectMessaging/components/NewMessageForm';
 import SeldonAi from '../pages/features/seldon-ai';
 import SeldonAiLayout from '../pages/features/seldon-ai/SeldonAiLayout';
+import SeldonView from '../pages/features/seldon-ai/SeldonView';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);
@@ -174,6 +173,7 @@ export function Router() {
               </Route>
               <Route path="/seldon-ai/" element={<SeldonAiLayout />}>
                 <Route path="" element={<SeldonAi />} />
+                <Route path="r/:id" element={<SeldonView />} />
               </Route>
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />
@@ -181,6 +181,7 @@ export function Router() {
             <Route path="/shared-list-link/result" element={<SharedListResults />} />
             <Route path="/post/:isFullScreen" element={<Guests />} />
             <Route path="/p/:id" element={<SingleQuest />} />
+            <Route path="/r/:id" element={<SeldonView />} />
             <Route path="/l/:id" element={<PostsByList />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
