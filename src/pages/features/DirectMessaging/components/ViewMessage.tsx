@@ -64,15 +64,25 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }: Vie
               <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
                 And Selected
               </h1>
-              <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                {viewMessageData?.opinion?.selected.length > 0 && (
-                  <ul className="space-y-2">
-                    {viewMessageData?.opinion.selected.map((item: any, index: number) => (
-                      <li key={index}>- {item.question}</li>
-                    ))}
-                  </ul>
-                )}
-              </p>
+              {viewMessageData?.whichTypeQuestion === 'yes/no' ||
+              viewMessageData?.whichTypeQuestion === 'agree/disagree' ||
+              viewMessageData?.whichTypeQuestion === 'like/dislike' ? (
+                <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                  {viewMessageData?.opinion?.selected && (
+                    <ul className="space-y-2">{viewMessageData?.opinion?.selected}</ul>
+                  )}
+                </p>
+              ) : (
+                <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                  {viewMessageData?.opinion?.selected.length > 0 && (
+                    <ul className="space-y-2">
+                      {viewMessageData?.opinion.selected.map((item: any, index: number) => (
+                        <li key={index}>- {item.question}</li>
+                      ))}
+                    </ul>
+                  )}
+                </p>
+              )}
             </div>
           </div>
         )}

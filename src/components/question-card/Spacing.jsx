@@ -22,9 +22,9 @@ const Spacing = ({ questStartData, show, postProperties }) => {
             questStartData.startStatus !== 'change answer') ||
           questStartData.isClosed ? (
             <div
-              className={`${questStartData?.type === 'embed' ? 'items-center' : 'items-end'} flex h-[23px] justify-center tablet:h-[50px]`}
+              className={`flex max-h-[24.16px] min-h-[24.16px] items-center justify-center text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[50px] tablet:min-h-[50px] tablet:text-[1rem]`}
             >
-              <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 dark:text-accent-300 tablet:py-[10px] tablet:text-[1rem] tablet:leading-[1rem]">
+              <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 dark:text-accent-300 tablet:text-[1rem] tablet:leading-[1rem]">
                 Participation is closed{' '}
                 {questStartData?.isClosed
                   ? '- Historical / Past Event'

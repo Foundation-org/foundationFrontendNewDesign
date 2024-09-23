@@ -236,8 +236,8 @@ const ButtonGroup = ({
     findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested'
   ) {
     return (
-      <div className="mt-[0.94rem] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mt-5 tablet:px-10">
-        <button className="w-full cursor-default">&#x200B;</button>
+      <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
+        <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
         <Button
           variant={'g-submit'}
           disabled={isUndoFeedbackPending}
@@ -249,7 +249,7 @@ const ButtonGroup = ({
           {isUndoFeedbackPending === true ? (
             <FaSpinner className="animate-spin text-[#EAEAEA]" />
           ) : findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ? (
-            'It applies to me now'
+            'This applies to me now'
           ) : (
             'I am interested now'
           )}
@@ -488,7 +488,7 @@ const ButtonGroup = ({
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               </Button> */}
-              <button className="w-full cursor-default">&#x200B;</button>
+              <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               <Button
                 variant="g-submit"
                 onClick={() => handleSubmit()}
@@ -512,7 +512,7 @@ const ButtonGroup = ({
             </div>
           ) : questStartData.startStatus === 'change answer' ? (
             <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
-              <button className="w-full cursor-default">&#x200B;</button>
+              <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
@@ -534,7 +534,7 @@ const ButtonGroup = ({
         <div className="flex w-full justify-end">
           {questStartData.startStatus === 'change answer' ? (
             <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
-              <button className="w-full cursor-default">&#x200B;</button>
+              <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
@@ -551,7 +551,7 @@ const ButtonGroup = ({
           ) : questStartData.startStatus === 'completed' ? null : (
             <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
               {persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor' ? (
-                <button className="w-full cursor-default">&#x200B;</button>
+                <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               ) : (
                 <Button
                   variant={'submit'}
@@ -652,7 +652,7 @@ const ButtonGroup = ({
                     </span>
                   </Button>
                 ) : (
-                  <button className="w-full cursor-default">&#x200B;</button>
+                  <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
                 )}
                 <Button id={`submit-${questStartData._id}`} variant="g-submit" onClick={() => handleSubmit()}>
                   Submit
@@ -690,7 +690,7 @@ const ButtonGroup = ({
         )}
       {questStartData.startStatus === 'continue' && !questStartData.isClosed && (
         <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
-          <button className="w-full cursor-default">&#x200B;</button>
+          <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
           <Button
             id={`submit-${questStartData._id}`}
             variant="g-submit"
