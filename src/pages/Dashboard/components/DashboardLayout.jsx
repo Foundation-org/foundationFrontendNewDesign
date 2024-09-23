@@ -294,16 +294,17 @@ export default function DashboardLayout({ children }) {
                 </div>
               ) : persistedUserInfo?.role === 'visitor' ? (
                 <div className="flex cursor-pointer items-center gap-2">
-                  <div className="relative h-fit w-fit">
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
-                      alt="badge"
-                      className="h-[25px] w-5 tablet:size-[36px]"
-                    />
-                    <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
+                  {/* <div className="relative h-fit w-fit"> */}
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
+                    alt="badge"
+                    className="h-[25px] w-5 tablet:size-[36px]"
+                  />
+                  `{' '}
+                  {/* <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
                       V
-                    </p>
-                  </div>
+                    </p>` */}
+                  {/* </div> */}
                   <div className="flex flex-col gap-1">
                     <h4 className="heading w-fit border-b">My Balance (Visitor)</h4>
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
@@ -695,16 +696,16 @@ export default function DashboardLayout({ children }) {
               </div>
             ) : persistedUserInfo?.role === 'visitor' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
-                <div className="relative h-fit w-fit">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
-                    alt="badge"
-                    className="tablet:h-[47px] tablet:w-[38px]"
-                  />
-                  <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-white">
+                {/* <div className="relative h-fit w-fit"> */}
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
+                  alt="badge"
+                  className="tablet:h-[47px] tablet:w-[38px]"
+                />
+                {/* <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-white">
                     V
                   </p>
-                </div>
+                </div> */}
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance (Visitor)</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
