@@ -9,6 +9,7 @@ import {
 } from '../../../../features/seldon-ai/seldonSlice';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { Button } from '../../../../components/ui/Button';
+import Checkbox from '../../../../components/ui/Checkbox';
 
 const ragCollections = [
   {
@@ -280,17 +281,12 @@ export default function SeldonInputs() {
       </div>
       <div className="flex gap-3 tablet:gap-4">
         {ragCollections.map((item) => (
-          <div className="flex items-center gap-1 laptop:gap-[18px]">
-            <label>
-              <input
-                type="checkbox"
-                className="accent-green-100"
-                checked={seldonState.knowledgebase?.includes(item.val)}
-                onChange={() => handleCheckboxChange(item.val)}
-              />{' '}
-              {item.title}
-            </label>
-          </div>
+          <Checkbox
+            key={item.id}
+            checked={seldonState.knowledgebase?.includes(item.val)}
+            onChange={() => handleCheckboxChange(item.val)}
+            label={item.title}
+          />
         ))}
       </div>
       <Button
