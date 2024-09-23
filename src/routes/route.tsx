@@ -87,7 +87,7 @@ export function Router() {
               localStorage.getItem('userExist') === 'true' ? (
                 <Navigate to="/signin" />
               ) : (
-                <GuestRedirect redirectUrl="/help/about" />
+                <GuestRedirect redirectUrl="/" />
               )
             }
           />
@@ -195,7 +195,8 @@ export function Router() {
             <Route path="/verify-phone" element={<VerifyPhone />} />
             <Route
               path="*"
-              element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Navigate to={'/help/about'} />}
+              element={<Navigate to="/" />}
+              // element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Navigate to={'/help/about'} />}
             />
           </Route>
         </Routes>

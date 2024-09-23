@@ -46,6 +46,37 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }: Vie
         <p className="pl-3 text-[10px] font-medium leading-[16px] text-[#9A9A9A] dark:text-gray-300 tablet:pl-7 tablet:text-[20px] tablet:leading-[32px]">
           {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
         </p>
+
+        {viewMessageData?.postQuestion && filter !== 'sent' && (
+          <div className="mt-5 space-y-5 rounded-md border p-4">
+            <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+              Why you received this message?{' '}
+            </h1>
+            <div className="space-y-2">
+              <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                Participated on this Post
+              </h1>
+              <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                {viewMessageData?.postQuestion}
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                And Selected
+              </h1>
+              <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                {viewMessageData?.opinion?.selected.length > 0 && (
+                  <ul className="space-y-2">
+                    {viewMessageData?.opinion.selected.map((item: any, index: number) => (
+                      <li key={index}>- {item.question}</li>
+                    ))}
+                  </ul>
+                )}
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="flex justify-end">
           <Button variant="cancel" onClick={() => setViewMsg(false)}>
             Go Back
