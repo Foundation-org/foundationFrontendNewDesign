@@ -95,7 +95,11 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             className="size-[12.325px] tablet:size-5"
           />
           <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? item.to : 'Foundation-IO.com'}
+            {filter === 'sent'
+              ? item.to === 'Participants'
+                ? `${item.receiversIds.length} Participant${item.receiversIds.length === 1 ? '' : 's'}`
+                : item.to
+              : 'Foundation-IO.com'}
           </h1>
         </div>
         <div className="flex items-center gap-1">
