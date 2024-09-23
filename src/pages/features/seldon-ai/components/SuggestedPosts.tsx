@@ -1,35 +1,26 @@
+import { FaSpinner } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { Button } from '../../../../components/ui/Button';
 import { parseQuestionsAndOptions } from '../../../../utils/seldon';
 import { questionValidation } from '../../../../services/api/questsApi';
+import { SuggestedPost, SuggestedPostsProps } from '../../../../types/seldon';
+import { usePublishArticleMutation } from '../../../../services/mutations/seldon-ai';
 import { addNewOption, addQuestion, setOptionsByArray } from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
-import { Button } from '../../../../components/ui/Button';
-import { usePublishArticleMutation } from '../../../../services/mutations/seldon-ai';
-import { FaSpinner } from 'react-icons/fa';
 import showToast from '../../../../components/ui/Toast';
 
-interface Post {
-  question: string;
-  options: string[];
-  postType: string;
-  userCanAddOption: boolean;
-  errorMessage: string | null;
-}
-
-interface PropsType {
-  afterSuggestions: string;
-  promptResponse: string;
-  promptSources: string[];
-  title: String | null;
-}
-
-export default function SuggestedPosts({ afterSuggestions, promptResponse, promptSources, title }: PropsType) {
+export default function SuggestedPosts({
+  afterSuggestions,
+  promptResponse,
+  promptSources,
+  title,
+}: SuggestedPostsProps) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { protocol, host } = window.location;
-  const [suggestedPosts, setSuggestedPosts] = useState<Post[]>([]);
+  const [suggestedPosts, setSuggestedPosts] = useState<SuggestedPost[]>([]);
   const [loading, setLoading] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();

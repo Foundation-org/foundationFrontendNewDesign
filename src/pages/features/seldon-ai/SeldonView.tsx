@@ -15,7 +15,7 @@ export default function SeldonView() {
   const [promptSources, setPromptSources] = useState([]);
 
   const { data: response, isLoading } = useQuery({
-    queryKey: ['articles'],
+    queryKey: ['articles', location.pathname.split('/').pop()],
     queryFn: () => getArticles(location.pathname.split('/').pop()),
   });
 

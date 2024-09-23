@@ -6,15 +6,13 @@ import { extractSections, processPromptResponse } from '../../../utils/seldon';
 import { getSeldonState, handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
 import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
 import Markdown from 'react-markdown';
+import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
-import SourcePosts from './components/SourcePosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
-import { useLocation } from 'react-router-dom';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
-  const location = useLocation();
   const seldonState = useSelector(getSeldonState);
   const [promptResponse, setPromptResponse] = useState(localStorage.getItem('seldomResp') || '');
   const [promptSources, setPromptSources] = useState([]);

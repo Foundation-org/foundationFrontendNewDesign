@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom';
 import { extractSections, processPromptResponse } from '../../../../utils/seldon';
-import { toast } from 'sonner';
+import { PostArticlesCardProps } from '../../../../types/seldon';
 
-interface PropsType {
-  questStartData: any;
-}
-
-export default function PostArticlesCard({ questStartData }: PropsType) {
+export default function PostArticlesCard({ questStartData }: PostArticlesCardProps) {
   const { articles } = questStartData;
 
   function getTruncatedAbstract(articleBody: string): string {
@@ -36,12 +32,7 @@ export default function PostArticlesCard({ questStartData }: PropsType) {
                 </p>
                 <Link
                   to={`/r/${article._id}`}
-                  // state={{ articleId: article._id }}
                   className="text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600"
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   toast.warning('Feature coming soon');
-                  // }}
                 >
                   View Article
                 </Link>
