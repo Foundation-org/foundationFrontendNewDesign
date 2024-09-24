@@ -1,17 +1,12 @@
 import { Link } from 'react-router-dom';
-import { extractSections, processPromptResponse } from '../../../../utils/seldon';
 import { PostArticlesCardProps } from '../../../../types/seldon';
 
 export default function PostArticlesCard({ questStartData }: PostArticlesCardProps) {
   const { articles } = questStartData;
 
-  function getTruncatedAbstract(articleBody: string): string {
+  function getTruncatedAbstract(abstract: string): string {
     const maxTextLength = 146;
-    const abstractText = extractSections(processPromptResponse(articleBody)?.before)?.abstract;
-
-    return abstractText && abstractText.length > maxTextLength
-      ? abstractText.slice(0, maxTextLength) + '...'
-      : abstractText || '';
+    return abstract && abstract.length > maxTextLength ? abstract.slice(0, maxTextLength) + '...' : abstract || '';
   }
 
   return (
@@ -25,10 +20,10 @@ export default function PostArticlesCard({ questStartData }: PostArticlesCardPro
             {articles?.map((article: any) => (
               <div key={article._id} className="my-5 flex w-full min-w-full flex-col gap-3">
                 <h5 className="text-[0.5rem] font-semibold leading-[0.5rem] text-gray-900 dark:text-white-400 tablet:text-[1rem] tablet:leading-[1rem]">
-                  {extractSections(processPromptResponse(article.body).before).title}
+                  {article.title}
                 </h5>
                 <p className="text-[0.5rem] leading-[0.5rem] text-gray-900 dark:text-white-400 tablet:text-[1rem] tablet:leading-[1rem]">
-                  {getTruncatedAbstract(article.body)}
+                  {getTruncatedAbstract(article.abstract)}
                 </p>
                 <Link
                   to={`/r/${article._id}`}

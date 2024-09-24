@@ -2,6 +2,7 @@ import { GrClose } from 'react-icons/gr';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getSeldonState,
+  handleDebubMode,
   handleKnowledgebase,
   handleSeldonInput,
   resetSeldonProperty,
@@ -288,6 +289,9 @@ export default function SeldonInputs() {
             label={item.title}
           />
         ))}
+      </div>
+      <div className="flex gap-3 tablet:gap-4">
+        <Checkbox checked={seldonState.debug} onChange={() => dispatch(handleDebubMode())} label="Debug Mode" />
       </div>
       <Button
         variant="submit"

@@ -6,11 +6,21 @@ export interface SuggestedPost {
   errorMessage: string | null;
 }
 
+export interface Suggestions {
+  statement: string;
+  options: string[];
+}
+
+export interface PromptResponse {
+  title: string;
+  abstract: string;
+  findings: string[];
+  suggestions: Suggestions[];
+}
+
 export interface SuggestedPostsProps {
-  afterSuggestions: string;
-  promptResponse: string;
+  promptResponse: PromptResponse;
   promptSources: string[];
-  title: String | null;
 }
 
 export interface PostArticlesCardProps {

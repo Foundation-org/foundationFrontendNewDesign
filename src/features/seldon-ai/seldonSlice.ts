@@ -11,6 +11,7 @@ interface SeldonState {
   fetchK: number;
   lambda: number;
   knowledgebase: string[];
+  debug: boolean;
 }
 
 const initialState: SeldonState = {
@@ -25,6 +26,7 @@ const initialState: SeldonState = {
   fetchK: 5,
   lambda: 0.5,
   knowledgebase: ['user', 'about', 'knowladgebaseone'],
+  debug: false,
 };
 
 export const seldonSlice = createSlice({
@@ -48,6 +50,9 @@ export const seldonSlice = createSlice({
         }
       }
     },
+    handleDebubMode: (state) => {
+      state.debug = !state.debug;
+    },
     resetSeldonState: (state) => {
       return {
         ...initialState,
@@ -59,13 +64,14 @@ export const seldonSlice = createSlice({
       if (propertyToReset === 'knowledgebase') {
         state[propertyToReset] = [];
       } else {
-        (state[propertyToReset] as string | number) = initialState[propertyToReset]; // Reset the specific property to its initial value
+        (state[propertyToReset] as string | number | boolean) = initialState[propertyToReset]; // Reset the specific property to its initial value
       }
     },
   },
 });
 
-export const { handleSeldonInput, handleKnowledgebase, resetSeldonState, resetSeldonProperty } = seldonSlice.actions;
+export const { handleSeldonInput, handleKnowledgebase, resetSeldonState, resetSeldonProperty, handleDebubMode } =
+  seldonSlice.actions;
 
 export default seldonSlice.reducer;
 

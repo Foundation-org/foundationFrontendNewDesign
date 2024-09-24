@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../components/ui/Button';
-import { parseQuestionsAndOptions } from '../../../../utils/seldon';
+import { transformPromptSuggestions } from '../../../../utils/seldon';
 import { questionValidation } from '../../../../services/api/questsApi';
 import { SuggestedPost, SuggestedPostsProps } from '../../../../types/seldon';
 import { usePublishArticleMutation } from '../../../../services/mutations/seldon-ai';
@@ -11,12 +11,7 @@ import { addNewOption, addQuestion, setOptionsByArray } from '../../../../featur
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
 
-export default function SuggestedPosts({
-  afterSuggestions,
-  promptResponse,
-  promptSources,
-  title,
-}: SuggestedPostsProps) {
+export default function SuggestedPosts({ promptResponse, promptSources }: SuggestedPostsProps) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { protocol, host } = window.location;
@@ -42,7 +37,7 @@ export default function SuggestedPosts({
   const processQuestions = async () => {
     setLoading(true);
     try {
-      const processedQuestions = parseQuestionsAndOptions(afterSuggestions);
+      const processedQuestions = transformPromptSuggestions(promptResponse.suggestions);
 
       const results = await Promise.all(
         processedQuestions.map(async (item) => {
@@ -64,7 +59,7 @@ export default function SuggestedPosts({
 
   useEffect(() => {
     processQuestions();
-  }, [afterSuggestions]);
+  }, [promptResponse]);
 
   const copyToClipboard = async () => {
     try {
@@ -132,10 +127,11 @@ export default function SuggestedPosts({
             } else {
               handlePublishArticle({
                 userUuid: persistedUserInfo.uuid,
-                body: promptResponse,
+                title: promptResponse?.title,
+                abstract: promptResponse?.abstract,
+                findings: promptResponse?.findings,
+                suggestion: promptResponse?.suggestions,
                 source: promptSources,
-                suggestion: suggestedPosts,
-                title,
               } as any);
             }
           }}

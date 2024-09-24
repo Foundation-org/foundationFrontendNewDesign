@@ -154,13 +154,13 @@ export default function NewMessageForm() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (to === 'advance-analytics') {
-      return participants * sendAmount;
+      return participants;
     } else if (formatRecipient(to) === 'All') {
       return persistedUserInfo?.allCount;
     } else if (formatRecipient(to) === 'List') {
       return persistedUserInfo?.mailCount;
     } else if (emailRegex.test(to)) {
-      return sendAmount;
+      return 1;
     } else {
       return 0;
     }
@@ -211,10 +211,12 @@ export default function NewMessageForm() {
         </div>
         <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[#707175] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            You will reach {participants} Users
+            You will reach {handleNoOfUsers()} Users
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {participants} * {sendAmount} FDX
+            {formatRecipient(to) === 'List'
+              ? `${handleNoOfUsers()} * 0 FDX`
+              : `${handleNoOfUsers()} * ${sendAmount} FDX`}
           </p>
         </div>
         <div
@@ -251,7 +253,7 @@ export default function NewMessageForm() {
               <>
                 Send
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (+{handleNoOfUsers()} FDX)
+                  {formatRecipient(to) === 'List' ? `+0 FDX` : `+${handleNoOfUsers() * sendAmount} FDX`}
                 </span>
               </>
             )}

@@ -36,56 +36,61 @@ const Topbar = () => {
     refetchInterval: 300000,
   });
 
+  const handleHomeClick = () => {
+    if (filterStates.filterBySort !== 'Newest First') {
+      localStorage.setItem('selectedButtonId', 'newButton');
+
+      dispatch(homeFilterActions.setBookmarks(false));
+      dispatch(homeFilterActions.setBlockTopics([]));
+      dispatch(homeFilterActions.setFilterByScope('All'));
+      dispatch(homeFilterActions.setFilterBySort('Newest First'));
+
+      setFilters({
+        ...filterStates,
+        filterBySort: 'Newest First',
+        filterByScope: '',
+        bookmarks: false,
+        selectedBtnId: 'newButton',
+        topics: {
+          ...filterStates.topics,
+          Block: {
+            ...filterStates.topics.Block,
+            list: [],
+          },
+        },
+        uuid: persistedUserInfo.uuid,
+      });
+    }
+
+    dispatch(setIsShowPlayer(false));
+    dispatch(setPlayingPlayerId(''));
+    dispatch(resetPlayingIds());
+    dispatch(createQuestActions.resetCreateQuest());
+
+    navigate('/');
+  };
+
   return (
     <div className="border-blue-100 border-b-blue-100 bg-blue-100 dark:border-b-gray-100 dark:bg-gray-200 tablet:border-b-[1.85px]">
       <div className="static mx-auto flex h-[48px] max-h-[48px] min-h-[48px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-20 tablet:min-h-20 laptop:h-[92px] laptop:max-h-[69px] laptop:min-h-[69px] laptop:flex-row">
         <div className="relative flex h-full w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:px-0 laptop:py-0 laptop:pl-[31px] desktop:pl-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
           <div className="flex w-full items-center justify-between gap-[25px] laptop:justify-center">
-            <div
-              className="flex cursor-pointer items-center gap-[10px] tablet:gap-[25px]"
-              onClick={() => {
-                if (filterStates.filterBySort !== 'Newest First') {
-                  localStorage.setItem('selectedButtonId', 'newButton');
-
-                  dispatch(homeFilterActions.setBookmarks(false));
-                  dispatch(homeFilterActions.setBlockTopics([]));
-                  dispatch(homeFilterActions.setFilterByScope('All'));
-                  dispatch(homeFilterActions.setFilterBySort('Newest First'));
-
-                  setFilters({
-                    ...filterStates,
-                    filterBySort: 'Newest First',
-                    filterByScope: '',
-                    bookmarks: false,
-                    selectedBtnId: 'newButton',
-                    topics: {
-                      ...filterStates.topics,
-                      Block: {
-                        ...filterStates.topics.Block,
-                        list: [],
-                      },
-                    },
-                    uuid: persistedUserInfo.uuid,
-                  });
-                }
-
-                dispatch(setIsShowPlayer(false));
-                dispatch(setPlayingPlayerId(''));
-                dispatch(resetPlayingIds());
-                dispatch(createQuestActions.resetCreateQuest());
-
-                navigate('/');
-              }}
-            >
-              <div className="relative flex justify-center">
+            <div className="flex cursor-pointer items-center gap-[10px] tablet:gap-[25px]">
+              <div className="relative flex justify-center" onClick={handleHomeClick}>
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/' ? 'home-filled.svg' : 'home.svg'}`}
                   alt="foundation_logo"
                   className="size-5 tablet:size-8"
                 />
               </div>
-
-              <div className="flex items-center gap-[5px] tablet:flex-col tablet:items-start tablet:gap-0">
+              <div className="relative flex justify-center">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/news' ? 'news-active.svg' : 'news.svg'}`}
+                  alt="foundation_logo"
+                  className="size-5 tablet:size-8"
+                />
+              </div>
+              <div className="flex flex-col" onClick={handleHomeClick}>
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/foundation_logo.svg`}
                   alt="foundation_logo"

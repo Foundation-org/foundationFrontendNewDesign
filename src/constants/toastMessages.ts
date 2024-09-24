@@ -106,4 +106,5 @@ export const toastMessages = {
   optionAlreadyExists: 'Option already exists',
   noParticipants: 'There is no participants to send message to',
   articlePublished: 'Article published successfully',
+  rankChoiceParticipantNotAllowed: 'Direct Message is not available for Rank Choice post',
 } as const;

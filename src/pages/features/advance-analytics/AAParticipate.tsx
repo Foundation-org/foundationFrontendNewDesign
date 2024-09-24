@@ -25,8 +25,10 @@ export default function AAParticipate({ questStartData }: { questStartData: any 
         <span className="font-bold">{questStartData?.participantsCount}</span> total participants engaged -{' '}
         <button
           onClick={() => {
-            if (questStartData?.participantsCount > 0) {
+            if (questStartData.whichTypeQuestion !== 'ranked choise' && questStartData?.participantsCount > 0) {
               setShowModal(true);
+            } else if (questStartData.whichTypeQuestion === 'ranked choise') {
+              showToast('warning', 'rankChoiceParticipantNotAllowed');
             } else {
               showToast('warning', 'noParticipants');
             }

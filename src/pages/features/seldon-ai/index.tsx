@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { FaCircleArrowUp } from 'react-icons/fa6';
+import { PromptResponse } from '../../../types/seldon';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
-import { extractSections, processPromptResponse } from '../../../utils/seldon';
-import { getSeldonState, handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
 import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
-import Markdown from 'react-markdown';
+import { getSeldonState, handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
 import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
@@ -14,8 +13,9 @@ import DotsLoading from '../../../components/ui/DotsLoading';
 export default function SeldonAi() {
   const dispatch = useDispatch();
   const seldonState = useSelector(getSeldonState);
-  const [promptResponse, setPromptResponse] = useState(localStorage.getItem('seldomResp') || '');
+  const [promptResponse, setPromptResponse] = useState<PromptResponse | null>(null);
   const [promptSources, setPromptSources] = useState([]);
+  const [promptDebug, setPromptDebug] = useState([]);
 
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
@@ -28,8 +28,9 @@ export default function SeldonAi() {
       } as any);
 
       if (response?.status === 200) {
-        localStorage.setItem('seldomResp', response.data.response);
+        localStorage.setItem('seldomResp', JSON.stringify(response.data.response));
         localStorage.setItem('seldonIds', JSON.stringify(response.data?.source));
+        localStorage.setItem('seldonDebug', JSON.stringify(response.data.debug));
 
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
@@ -37,20 +38,12 @@ export default function SeldonAi() {
 
         setPromptResponse(response.data.response);
         setPromptSources(ids);
+        setPromptDebug(response.data?.debug);
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
     }
   };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      e.currentTarget.form?.dispatchEvent(new Event('submit', { bubbles: true }));
-    }
-  };
-
-  const { title, abstract, findings } = extractSections(processPromptResponse(promptResponse).before);
 
   useEffect(() => {
     const ids = JSON.parse(localStorage.getItem('seldonIds') || '[]')
@@ -58,6 +51,17 @@ export default function SeldonAi() {
       .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
     setPromptSources(ids);
   }, [localStorage.getItem('seldonIds')]);
+
+  useEffect(() => {
+    setPromptResponse(JSON.parse(localStorage.getItem('seldomResp') || ''));
+  }, [localStorage.getItem('seldomResp')]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      e.currentTarget.form?.dispatchEvent(new Event('submit', { bubbles: true }));
+    }
+  };
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -87,25 +91,38 @@ export default function SeldonAi() {
       ) : (
         promptResponse && (
           <div className="flex flex-col gap-4 pt-4 tablet:pt-8">
+            {promptDebug && promptDebug.length > 0 && (
+              <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+                <h1 className="text-[16px] font-bold">Debug Mode:</h1>
+                <ul className="space-y-4">
+                  {promptDebug?.map((item, index) => (
+                    <li key={index} className="text-[12px] tablet:text-[16px]">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-              <h1 className="text-[12px] font-bold tablet:text-[16px]">{title}</h1>
+              <h1 className="text-[12px] font-bold tablet:text-[16px]">{promptResponse?.title}</h1>
             </div>
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Abstract:</h1>
-              <p className="text-[12px] tablet:text-[16px]">{abstract}</p>
+              <p className="text-[12px] tablet:text-[16px]">{promptResponse?.abstract}</p>
             </div>
             <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Findings:</h1>
-              <Markdown>{findings}</Markdown>
+              <ul className="space-y-4">
+                {promptResponse?.findings.map((item, index) => (
+                  <li key={index} className="text-[12px] tablet:text-[16px]">
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
             <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
             <SourcePosts promptSources={promptSources} />
-            <SuggestedPosts
-              afterSuggestions={processPromptResponse(promptResponse).after}
-              promptResponse={promptResponse}
-              promptSources={promptSources}
-              title={title}
-            />
+            <SuggestedPosts promptResponse={promptResponse} promptSources={promptSources} />
           </div>
         )
       )}
