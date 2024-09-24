@@ -37,7 +37,7 @@ export default function SuggestedPosts({ promptResponse, promptSources }: Sugges
   const processQuestions = async () => {
     setLoading(true);
     try {
-      const processedQuestions = transformPromptSuggestions(promptResponse.suggestions);
+      const processedQuestions = transformPromptSuggestions(promptResponse?.suggestions);
 
       const results = await Promise.all(
         processedQuestions.map(async (item) => {

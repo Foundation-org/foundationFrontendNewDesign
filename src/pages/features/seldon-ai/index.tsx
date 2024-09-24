@@ -46,14 +46,37 @@ export default function SeldonAi() {
   };
 
   useEffect(() => {
-    const ids = JSON.parse(localStorage.getItem('seldonIds') || '[]')
-      .filter((fileName: string) => fileName.startsWith('post_'))
-      .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
-    setPromptSources(ids);
+    const storedIds = localStorage.getItem('seldonIds');
+
+    if (storedIds) {
+      try {
+        const ids = JSON.parse(storedIds)
+          .filter((fileName: string) => fileName.startsWith('post_'))
+          .map((fileName: string) => {
+            const match = fileName.match(/post_(\w+)\.pdf/);
+            return match ? match[1] : null;
+          })
+          .filter((id: string | null) => id !== null);
+
+        setPromptSources(ids);
+      } catch (error) {
+        console.error('Failed to parse JSON from localStorage:', error);
+        setPromptSources([]);
+      }
+    }
   }, [localStorage.getItem('seldonIds')]);
 
   useEffect(() => {
-    setPromptResponse(JSON.parse(localStorage.getItem('seldomResp') || ''));
+    const storedResponse = localStorage.getItem('seldomResp');
+
+    if (storedResponse) {
+      try {
+        setPromptResponse(JSON.parse(storedResponse));
+      } catch (error) {
+        console.error('Failed to parse JSON from localStorage:', error);
+        setPromptResponse(null);
+      }
+    }
   }, [localStorage.getItem('seldomResp')]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
