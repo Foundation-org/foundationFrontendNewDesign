@@ -153,10 +153,7 @@ function App() {
 
   useEffect(() => {
     if (persistedUserInfo?.tempLogout) {
-      // handleSignout(persistedUserInfo.uuid);
-      localStorage.removeItem('seldomResp');
-      localStorage.removeItem('seldonIds');
-      localStorage.removeItem('seldonDebug');
+      handleSignout(persistedUserInfo.uuid);
     }
   }, [persistedUserInfo]);
 
