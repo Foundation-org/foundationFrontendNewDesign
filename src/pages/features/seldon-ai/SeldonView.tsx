@@ -20,6 +20,7 @@ export default function SeldonView() {
   useEffect(() => {
     setPromptSources(response?.data?.source);
   }, [response]);
+  console.log(response?.data?.findings);
 
   return (
     <>
@@ -47,9 +48,10 @@ export default function SeldonView() {
                   <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
                     <h1 className="text-[16px] font-bold">Findings:</h1>
                     <ul className="space-y-4">
-                      {response?.data?.findings.map((item: string, index: number) => (
+                      {response?.data?.findings.map((item: { heading: string; content: string }, index: number) => (
                         <li key={index} className="text-[12px] tablet:text-[16px]">
-                          {item}
+                          <strong className="text-[12px] font-bold tablet:text-[16px]">{item.heading}:</strong>{' '}
+                          {item.content}
                         </li>
                       ))}
                     </ul>

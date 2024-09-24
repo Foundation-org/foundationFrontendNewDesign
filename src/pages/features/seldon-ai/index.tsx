@@ -9,6 +9,7 @@ import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
+import Markdown from 'react-markdown';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
@@ -115,9 +116,11 @@ export default function SeldonAi() {
       ) : (
         <div className="flex flex-col gap-4 pt-4 tablet:pt-8">
           {promptDebug ? (
-            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+            <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Debug Mode:</h1>
-              <h1 className="text-[12px] font-bold tablet:text-[16px]">{promptDebug}</h1>
+              <br></br>
+
+              <Markdown>{promptDebug}</Markdown>
             </div>
           ) : (
             promptResponse && (

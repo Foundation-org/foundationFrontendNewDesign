@@ -12,6 +12,8 @@ import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
 
 export default function SuggestedPosts({ promptResponse, promptSources, articleId }: SuggestedPostsProps) {
+  console.log(promptResponse);
+
   const dispatch = useDispatch();
   const location = useLocation();
   const { protocol, host } = window.location;
