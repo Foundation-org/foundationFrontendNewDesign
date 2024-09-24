@@ -12,8 +12,6 @@ import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
 
 export default function SuggestedPosts({ promptResponse, promptSources, articleId }: SuggestedPostsProps) {
-  console.log(promptResponse);
-
   const dispatch = useDispatch();
   const location = useLocation();
   const { protocol, host } = window.location;
@@ -40,8 +38,6 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
     setLoading(true);
     try {
       const processedQuestions = transformPromptSuggestions(promptResponse?.suggestions);
-      console.log(processQuestions);
-
       const results = await Promise.all(
         processedQuestions.map(async (item) => {
           const { errorMessage } = await checkDuplicatePost(item.question);

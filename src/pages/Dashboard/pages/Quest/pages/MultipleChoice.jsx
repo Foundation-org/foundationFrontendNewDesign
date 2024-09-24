@@ -152,6 +152,10 @@ const MultipleChoice = () => {
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'choice',
     };
+    if (location?.state?.articleId && location?.state?.postData?.id) {
+      params.articleId = location.state.articleId;
+      params.suggestionId = location?.state?.postData?.id;
+    }
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 

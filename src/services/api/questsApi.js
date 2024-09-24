@@ -34,7 +34,7 @@ export const createStartQuest = async (data) => {
 // creation of a quest of all types
 export const createInfoQuest = async (data) => {
   try {
-    return await api.post('/infoquestions/createInfoQuestQuest', {
+    const params = {
       Question: data.Question,
       whichTypeQuestion: data.whichTypeQuestion,
       QuestionCorrect: data.QuestionCorrect,
@@ -49,7 +49,12 @@ export const createInfoQuest = async (data) => {
       url: data.url,
       description: data.description,
       type: data.type,
-    });
+    };
+    if (data.articleId && data.suggestionId) {
+      params.articleId = data.articleId;
+      params.suggestionId = data.suggestionId;
+    }
+    return await api.post('/infoquestions/createInfoQuestQuest', params);
   } catch (error) {
     showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
   }

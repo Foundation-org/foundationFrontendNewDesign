@@ -20,8 +20,6 @@ export default function SeldonView() {
   useEffect(() => {
     setPromptSources(response?.data?.source);
   }, [response]);
-  console.log(response?.data?.findings);
-
   return (
     <>
       <Topbar />
@@ -66,6 +64,7 @@ export default function SeldonView() {
                       suggestions: response?.data?.suggestion,
                     }}
                     promptSources={promptSources}
+                    articleId={location.pathname.split('/').pop()}
                   />
                 </div>
               )
