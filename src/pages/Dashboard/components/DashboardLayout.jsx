@@ -300,7 +300,6 @@ export default function DashboardLayout({ children }) {
                     alt="badge"
                     className="h-[25px] w-5 tablet:size-[36px]"
                   />
-                  `{' '}
                   {/* <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
                       V
                     </p>` */}

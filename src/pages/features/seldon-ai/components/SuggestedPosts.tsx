@@ -11,7 +11,7 @@ import { addNewOption, addQuestion, setOptionsByArray } from '../../../../featur
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
 
-export default function SuggestedPosts({ promptResponse, promptSources }: SuggestedPostsProps) {
+export default function SuggestedPosts({ promptResponse, promptSources, articleId }: SuggestedPostsProps) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { protocol, host } = window.location;
@@ -38,6 +38,7 @@ export default function SuggestedPosts({ promptResponse, promptSources }: Sugges
     setLoading(true);
     try {
       const processedQuestions = transformPromptSuggestions(promptResponse?.suggestions);
+      console.log(processQuestions);
 
       const results = await Promise.all(
         processedQuestions.map(async (item) => {
@@ -95,7 +96,7 @@ export default function SuggestedPosts({ promptResponse, promptSources }: Sugges
                 <div className="col-span-1 flex w-full justify-end">
                   <Link
                     to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
-                    state={{ postData: item }}
+                    state={{ postData: item, articleId }}
                     className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
                     onClick={() => {
                       dispatch(addQuestion(item.question));

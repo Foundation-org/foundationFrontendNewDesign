@@ -9,18 +9,23 @@ export interface SuggestedPost {
 export interface Suggestions {
   statement: string;
   options: string[];
+  _id:any
 }
-
+export interface findings{
+  heading:String;
+  content:String;
+}
 export interface PromptResponse {
   title: string;
   abstract: string;
-  findings: string[];
+  findings: findings[];
   suggestions: Suggestions[];
 }
 
 export interface SuggestedPostsProps {
   promptResponse: PromptResponse;
   promptSources: string[];
+  articleId?: any
 }
 
 export interface PostArticlesCardProps {

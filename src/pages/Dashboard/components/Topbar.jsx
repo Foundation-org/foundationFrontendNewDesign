@@ -150,7 +150,12 @@ const Topbar = () => {
 
         {/* Desktop */}
         <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
-          {TopbarItems.map((item) => (
+          {TopbarItems.filter(
+            (item) =>
+              item.id !== 5 &&
+              item.id !== 6 &&
+              (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor'),
+          ).map((item) => (
             <Link
               key={item.id}
               to={
