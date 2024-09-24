@@ -103,7 +103,11 @@ const Topbar = () => {
             </div>
             {/* Mobile */}
             <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[14rem] tablet:min-w-[14rem] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
-              {TopbarItems.map((item) => (
+              {TopbarItems.filter(
+                (item) =>
+                  (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor') ||
+                  (item.id !== 5 && item.id !== 6),
+              ).map((item) => (
                 <Link
                   key={item.id}
                   to={
@@ -152,9 +156,8 @@ const Topbar = () => {
         <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
           {TopbarItems.filter(
             (item) =>
-              item.id !== 5 &&
-              item.id !== 6 &&
-              (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor'),
+              (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor') ||
+              (item.id !== 5 && item.id !== 6),
           ).map((item) => (
             <Link
               key={item.id}
