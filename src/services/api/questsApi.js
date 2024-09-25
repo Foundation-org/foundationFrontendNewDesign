@@ -50,9 +50,9 @@ export const createInfoQuest = async (data) => {
       description: data.description,
       type: data.type,
     };
-    if (data.articleId && data.suggestionId) {
+    if (data.articleId && data.suggestionTitle) {
       params.articleId = data.articleId;
-      params.suggestionId = data.suggestionId;
+      params.suggestionTitle = data.suggestionTitle;
     }
     return await api.post('/infoquestions/createInfoQuestQuest', params);
   } catch (error) {

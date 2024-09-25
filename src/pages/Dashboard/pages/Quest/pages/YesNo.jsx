@@ -148,7 +148,7 @@ const YesNo = () => {
     };
     if (location?.state?.articleId && location?.state?.postData?.id) {
       params.articleId = location.state.articleId;
-      params.suggestionId = location?.state?.postData?.id;
+      params.suggestionTitle = location?.state?.postData?.question;
     }
 
     if (!checkHollow()) {

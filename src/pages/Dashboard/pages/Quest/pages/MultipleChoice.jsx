@@ -94,6 +94,7 @@ const MultipleChoice = () => {
   //     setLoading(false);
   //   },
   // });
+  console.log(location?.state);
 
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));
@@ -152,9 +153,9 @@ const MultipleChoice = () => {
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'choice',
     };
-    if (location?.state?.articleId && location?.state?.postData?.id) {
+    if (location?.state?.articleId && location?.state?.postData?.question) {
       params.articleId = location.state.articleId;
-      params.suggestionId = location?.state?.postData?.id;
+      params.suggestionTitle = location?.state?.postData?.question;
     }
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');

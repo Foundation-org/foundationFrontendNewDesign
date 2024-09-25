@@ -150,7 +150,13 @@ export default function SeldonAi() {
           )}
           <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
           <SourcePosts promptSources={promptSources} />
-          {!promptDebug && <SuggestedPosts promptResponse={promptResponse} promptSources={promptSources} />}
+          {!promptDebug && (
+            <SuggestedPosts
+              promptResponse={promptResponse}
+              promptSources={promptSources}
+              articleId={promptResponse?.articleId || null}
+            />
+          )}
         </div>
       )}
     </div>
