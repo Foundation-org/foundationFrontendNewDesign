@@ -12,6 +12,9 @@ interface SeldonState {
   lambda: number;
   knowledgebase: string[];
   debug: boolean;
+  title:string,
+  update:boolean,
+  articleId:any
 }
 
 const initialState: SeldonState = {
@@ -27,15 +30,18 @@ const initialState: SeldonState = {
   lambda: 0.5,
   knowledgebase: ['user', 'about', 'knowladgebaseone'],
   debug: false,
+  title:'',
+  update:false,
+  articleId:false
 };
 
 export const seldonSlice = createSlice({
   name: 'seldon',
   initialState,
   reducers: {
-    handleSeldonInput: (state, action: PayloadAction<{ name: keyof SeldonState; value: string | number }>) => {
+    handleSeldonInput: (state, action: PayloadAction<{ name: keyof SeldonState; value: string | number | boolean }>) => {
       const { name, value } = action.payload;
-      (state[name] as string | number) = value;
+      (state[name] as string | number | boolean) = value;
     },
     handleKnowledgebase: (state, action: PayloadAction<string>) => {
       const itemIndex = state.knowledgebase.indexOf(action.payload);

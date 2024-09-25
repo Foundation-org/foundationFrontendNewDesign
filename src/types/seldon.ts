@@ -26,6 +26,7 @@ export interface SuggestedPostsProps {
   promptResponse: PromptResponse;
   promptSources: string[];
   articleId?: any
+  handleFormSubmit?:any
 }
 
 export interface PostArticlesCardProps {

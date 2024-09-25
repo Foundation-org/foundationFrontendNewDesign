@@ -10,8 +10,16 @@ import { usePublishArticleMutation } from '../../../../services/mutations/seldon
 import { addNewOption, addQuestion, setOptionsByArray } from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
+import { useMutation } from '@tanstack/react-query';
+import { updateSources } from '../../../../services/api/seldon';
+import { handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
 
-export default function SuggestedPosts({ promptResponse, promptSources, articleId }: SuggestedPostsProps) {
+export default function SuggestedPosts({
+  promptResponse,
+  promptSources,
+  articleId,
+  handleFormSubmit,
+}: SuggestedPostsProps) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { protocol, host } = window.location;
@@ -60,9 +68,21 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
     processQuestions();
   }, [promptResponse]);
 
+  const { mutateAsync: handleSoucesUpdate } = useMutation({
+    mutationFn: updateSources,
+    onSuccess: () => {
+      localStorage.removeItem('isSourcesUpdated');
+      dispatch(handleSeldonInput({ name: 'update', value: true }));
+      handleFormSubmit();
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(`${protocol}//${host}${location.pathname}`);
+      await navigator.clipboard.writeText(`${protocol}//${host}/r/${articleId}`);
     } catch (err) {
       console.error('Unable to copy text to clipboard:', err);
     }
@@ -113,14 +133,29 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
         </div>
       </div>
       <div className="flex w-full items-center justify-between gap-4">
-        <button className="w-full cursor-default">&#x200B;</button>
+        {articleId && localStorage.getItem('isSourcesUpdated') === 'true' ? (
+          <Button
+            variant="submit"
+            className="w-full"
+            rounded
+            onClick={() => {
+              const storedIds = localStorage.getItem('seldonIds');
+              let sources: string[] = storedIds ? JSON.parse(storedIds) : [];
+              handleSoucesUpdate({ id: articleId, source: promptSources });
+            }}
+          >
+            Update
+          </Button>
+        ) : (
+          <button className="w-full cursor-default">&#x200B;</button>
+        )}
         <Button
           variant="submit"
           className="w-full"
           rounded
           disabled={isPublishPending}
           onClick={() => {
-            if (location.pathname.startsWith('/r/')) {
+            if (location.pathname.startsWith('/r/') || articleId) {
               copyToClipboard();
               showToast('success', 'copyLink');
             } else {
@@ -135,7 +170,7 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
             }
           }}
         >
-          {location.pathname.startsWith('/r/') ? (
+          {location.pathname.startsWith('/r/') || articleId ? (
             'Share Article'
           ) : isPublishPending ? (
             <FaSpinner className="animate-spin text-[#EAEAEA]" />

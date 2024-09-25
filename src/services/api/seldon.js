@@ -7,3 +7,11 @@ export const getArticles = async (id) => {
     console.log(err);
   }
 };
+
+export const updateSources = async ({ id, source }) => {
+  try {
+    return await api.post(`/article/update`, { id, source });
+  } catch (err) {
+    console.log(err);
+  }
+};

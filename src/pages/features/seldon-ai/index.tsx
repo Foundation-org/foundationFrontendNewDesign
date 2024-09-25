@@ -29,9 +29,11 @@ export default function SeldonAi() {
       } as any);
 
       if (response?.status === 200) {
-        localStorage.setItem('seldomResp', JSON.stringify(response.data.response));
-        localStorage.setItem('seldonIds', JSON.stringify(response.data?.source));
-        localStorage.setItem('seldonDebug', JSON.stringify(response.data.debug));
+        localStorage.setItem('seldomResp', JSON.stringify(response?.data?.response));
+        localStorage.setItem('seldonIds', JSON.stringify(response?.data?.source));
+        localStorage.setItem('seldonDebug', JSON.stringify(response?.data?.debug));
+        dispatch(handleSeldonInput({ name: 'title', value: response?.data?.response?.title }));
+        dispatch(handleSeldonInput({ name: 'articleId', value: response?.data?.articleId }));
 
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
@@ -149,12 +151,13 @@ export default function SeldonAi() {
             )
           )}
           <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
-          <SourcePosts promptSources={promptSources} />
+          <SourcePosts promptSources={promptSources} setPromptSources={setPromptSources} />
           {!promptDebug && (
             <SuggestedPosts
               promptResponse={promptResponse}
               promptSources={promptSources}
               articleId={promptResponse?.articleId || null}
+              handleFormSubmit={handleFormSubmit}
             />
           )}
         </div>
