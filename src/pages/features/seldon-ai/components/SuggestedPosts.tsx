@@ -139,8 +139,6 @@ export default function SuggestedPosts({
             className="w-full"
             rounded
             onClick={() => {
-              const storedIds = localStorage.getItem('seldonIds');
-              let sources: string[] = storedIds ? JSON.parse(storedIds) : [];
               handleSoucesUpdate({ id: articleId, source: promptSources });
             }}
           >

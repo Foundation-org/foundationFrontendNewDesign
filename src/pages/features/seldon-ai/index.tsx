@@ -88,7 +88,7 @@ export default function SeldonAi() {
       e.currentTarget.form?.dispatchEvent(new Event('submit', { bubbles: true }));
     }
   };
-  console.log({ promptDebug });
+  console.log({ promptResponse });
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -101,6 +101,7 @@ export default function SeldonAi() {
           placeholder="Message Seldon"
           onChange={(e) => {
             dispatch(handleSeldonInput({ name: 'question', value: e.target.value }));
+            dispatch(handleSeldonInput({ name: 'articleId', value: false }));
           }}
           onKeyDown={handleKeyDown}
           value={seldonState.question}

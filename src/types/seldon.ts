@@ -20,6 +20,7 @@ export interface PromptResponse {
   abstract: string;
   findings: findings[];
   suggestions: Suggestions[];
+  articleId: any
 }
 
 export interface SuggestedPostsProps {
