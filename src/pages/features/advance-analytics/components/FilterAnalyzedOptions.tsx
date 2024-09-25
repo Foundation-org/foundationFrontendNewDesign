@@ -13,6 +13,7 @@ type ClearAllAnalyticsProps = {
   title: string;
   image: string;
   questStartData: any;
+  submitBtn: string;
 };
 
 export default function FilterAnalyzedOptions({
@@ -21,6 +22,7 @@ export default function FilterAnalyzedOptions({
   title,
   image,
   questStartData,
+  submitBtn,
 }: ClearAllAnalyticsProps) {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
@@ -39,6 +41,14 @@ export default function FilterAnalyzedOptions({
         option._id === data._id ? { ...option, selected: !option.selected } : option,
       );
     });
+  };
+
+  const handleSelectAllOptions = (isSelect: boolean) => {
+    if (isSelect) {
+      setSelectedOptions((prevSelected: any[]) => prevSelected.map((option: any) => ({ ...option, selected: true })));
+    } else {
+      setSelectedOptions((prevSelected: any[]) => prevSelected.map((option: any) => ({ ...option, selected: false })));
+    }
   };
 
   const { mutateAsync: fetchParticipants } = useMutation({
@@ -80,12 +90,16 @@ export default function FilterAnalyzedOptions({
       remove={false}
       isBackground={false}
     >
-      <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
+      <div className="space-y-3 px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px] laptop:space-y-5">
         <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
-          Select one or more options to message their participants.
+          Select participants to send a message to.
         </h1>
+        <hr />
         <div className="flex flex-col items-center justify-center gap-[15px]">
-          <ul className="mt-[10px] flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:mt-[25px] tablet:max-h-[472px] tablet:gap-[10px]">
+          <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
+            <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+              {questStartData.Question}
+            </h1>
             {selectedOptions?.map((post: any) => (
               <SelectionOption
                 key={post.id}
@@ -97,10 +111,22 @@ export default function FilterAnalyzedOptions({
             ))}
           </ul>
         </div>
-        <p className="summary-text mt-[10px] text-center tablet:mt-[25px]">
-          Total participants selected{' '}
-          {selectedOptions?.filter((option: any) => option.selected).length === 0 ? 0 : participants}
-        </p>
+        <div className="mt-[10px] flex items-center justify-between tablet:mt-[25px]">
+          <p className="summary-text text-center">
+            Total participants selected{' '}
+            {selectedOptions?.filter((option: any) => option.selected).length === 0 ? 0 : participants}
+          </p>
+          <button
+            className="summary-text cursor-pointer text-blue-100 underline"
+            onClick={() => {
+              selectedOptions?.filter((option: any) => option.selected).length > 0
+                ? handleSelectAllOptions(false)
+                : handleSelectAllOptions(true);
+            }}
+          >
+            {selectedOptions?.filter((option: any) => option.selected).length > 0 ? 'Deselect All' : 'Select All '}
+          </button>
+        </div>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button
             variant={
@@ -112,13 +138,18 @@ export default function FilterAnalyzedOptions({
               selectedOptions?.filter((option: any) => option.selected).length > 0 && participants > 0 ? false : true
             }
             onClick={() => {
-              navigate('/direct-messaging/new-message', { state: { questStartData, selectedOptions } });
+              navigate('/direct-messaging/new-message?advance-analytics=true', {
+                state: { questStartData, selectedOptions, key: new Date().getTime() },
+              });
+              if (submitBtn === 'Update') {
+                handleClose();
+              }
             }}
           >
-            Yes
+            {submitBtn}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
-            No
+            Cancel
           </Button>
         </div>
       </div>

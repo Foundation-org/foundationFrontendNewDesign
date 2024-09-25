@@ -1,4 +1,10 @@
 export default function SelectionOption({ data, handleSelection, page, questStartData }: any) {
+  const calculatePercentage = () => {
+    return questStartData?.selectedPercentage && questStartData.selectedPercentage.length > 0
+      ? questStartData.selectedPercentage[questStartData.selectedPercentage.length - 1][data?.question]
+      : `0%`;
+  };
+
   return (
     <li
       className="flex w-full cursor-pointer justify-between rounded-[5.387px] border border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px]"
@@ -7,7 +13,13 @@ export default function SelectionOption({ data, handleSelection, page, questStar
       <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[4px] bg-white-500 dark:bg-gray-100 tablet:h-[43px] tablet:w-5 tablet:min-w-5">
         &#x200B;
       </div>
-      <div className="flex w-full items-center">
+      <div className="relative flex w-full items-center">
+        <div
+          className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
+          style={{
+            width: calculatePercentage(),
+          }}
+        />
         <h1 className="pb-[5.7px] pl-2 pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px]">
           {page === 'filterAnalyzedOptions' ? data?.question : data?.option}
         </h1>

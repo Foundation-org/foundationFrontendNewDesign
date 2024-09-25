@@ -114,14 +114,14 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         <h1 className="text-[12.145px] font-semibold leading-[12.145px] tablet:text-[22px] tablet:leading-[22px]">
           {item.subject}
         </h1>
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
             Participated on this Post
           </h1>
           <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
             {item?.postQuestion} ...
           </p>
-        </div>
+        </div> */}
         <div className="flex justify-end gap-2">
           {item?.type === 'sent' && item?.to === 'Participants' && (
             <Button
@@ -171,7 +171,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               variant={item?.viewed ? 'change' : 'submit'}
               onClick={() => {
                 setViewMsg(true);
-                handleViewMessage(item._id, item.sender, item.receiver, filter === 'sent' ? item : false);
+                handleViewMessage(item._id, item.sender, item.receiver, item);
               }}
             >
               {item?.viewed ? 'Read Again' : 'Read'}{' '}

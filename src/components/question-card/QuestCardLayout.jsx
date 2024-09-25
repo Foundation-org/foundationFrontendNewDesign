@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
+import { EmbededImage } from './EmbededImage';
+import { EmbededVideo } from './EmbededVideo';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { isImageUrl } from '../../utils/embeddedutils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateDialogueBox } from '../../features/quest/utilsSlice';
-import CardTopbar from './CardTopbar';
-import QuestBottombar from './QuestBottombar';
-import * as HomepageApis from '../../services/api/homepageApis';
-import { isImageUrl } from '../../utils/embeddedutils';
-import { EmbededVideo } from './EmbededVideo';
-import { EmbededImage } from './EmbededImage';
-import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 import showToast from '../ui/Toast';
+import CardTopbar from './CardTopbar';
 import PostTopBar from './PostTopBar';
+import QuestBottombar from './QuestBottombar';
 import EmbedStatusBar from '../../pages/Embed/EmbedStatusBar';
+import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 import PostArticlesCard from '../../pages/features/seldon-ai/components/PostArticlesCard';
+import * as HomepageApis from '../../services/api/homepageApis';
 
 const QuestCardLayout = ({ questStartData, playing, postProperties, questType, children }) => {
   const dispatch = useDispatch();
@@ -131,11 +131,6 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         ))}
       <CardTopbar
         questStartData={questStartData}
-        QuestTopic={questStartData.QuestTopic}
-        img={'assets/svgs/dashboard/badge.svg'}
-        alt={'badge'}
-        badgeCount={questStartData.getUserBadge?.badges?.length}
-        createdBy={questStartData.uuid}
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
         postProperties={postProperties}
@@ -156,20 +151,22 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         />
       )}
 
-      {questStartData?.type !== 'embed' && questStartData?.page !== 'advance-analytics' && (
-        <QuestBottombar
-          time={
-            postProperties === 'HiddenPosts'
-              ? questStartData.userQuestSetting.feedbackTime
-              : postProperties === 'SharedLinks'
-                ? questStartData.userQuestSetting.sharedTime
-                : questStartData.createdAt
-          }
-          questStartData={questStartData}
-          postProperties={postProperties}
-          showDisableSharedLinkPopup={showDisableSharedLinkPopup}
-        />
-      )}
+      {questStartData?.type !== 'embed' &&
+        questStartData?.page !== 'advance-analytics' &&
+        postProperties !== 'preview' && (
+          <QuestBottombar
+            time={
+              postProperties === 'HiddenPosts'
+                ? questStartData.userQuestSetting.feedbackTime
+                : postProperties === 'SharedLinks'
+                  ? questStartData.userQuestSetting.sharedTime
+                  : questStartData.createdAt
+            }
+            questStartData={questStartData}
+            postProperties={postProperties}
+            showDisableSharedLinkPopup={showDisableSharedLinkPopup}
+          />
+        )}
       <PostArticlesCard questStartData={questStartData} />
     </div>
   );

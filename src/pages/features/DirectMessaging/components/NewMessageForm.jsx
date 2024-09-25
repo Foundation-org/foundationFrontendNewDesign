@@ -1,16 +1,13 @@
 import { toast } from 'sonner';
-import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { FaSpinner } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 import { Button } from '../../../../components/ui/Button';
-import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { getConstantsValues } from '../../../../features/constants/constantsSlice';
-import {
-  createDraftMessage,
-  createMessage,
-  fetchOptionParticipants,
-} from '../../../../services/api/directMessagingApi';
+import { createDraftMessage, fetchOptionParticipants } from '../../../../services/api/directMessagingApi';
+import SelectionOption from '../../../../components/SelectionOption';
+import FilterAnalyzedOptions from '../../advance-analytics/components/FilterAnalyzedOptions';
 
 export default function NewMessageForm() {
   const location = useLocation();
@@ -22,11 +19,15 @@ export default function NewMessageForm() {
   const defaultReadReward = persistedConstants?.MINIMUM_READ_REWARD;
   const { draft } = location?.state || {};
   const { questStartData, selectedOptions } = useOutletContext();
+  const [optionsArr, setOptionsArr] = useState(selectedOptions || []);
   const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || '');
   const [sub, setSub] = useState(draft?.subject || '');
   const [msg, setMsg] = useState(draft?.message || '');
   const [readReward, setReadReward] = useState(defaultReadReward);
   const [participants, setParticipants] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleHideModal = () => setShowModal(false);
 
   function formatRecipient(to) {
     const trimmedTo = to?.trim().toLowerCase();
@@ -53,32 +54,17 @@ export default function NewMessageForm() {
     },
   });
 
-  const { mutateAsync: createNewMessage, isPending } = useMutation({
-    mutationFn: createMessage,
-    onSuccess: () => {
-      queryClient.invalidateQueries('messages');
-      toast.success('Message sent');
-      setMsg();
-      setTo();
-      setSub();
-      navigate('/direct-messaging');
-    },
-    onError: (err) => {
-      console.log(err);
-      toast.error(err.response.data.message);
-    },
-  });
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const handlePreview = () => {
     if (readReward < defaultReadReward) {
       toast.error(`Read Reward must be at least ${defaultReadReward}`);
       return;
     }
+
     if (sub === '' || msg === '') {
       toast.error(`Subject and message cannot be empty`);
       return;
     }
+
     const params = {
       from: persistedUserInfo.email,
       subject: sub,
@@ -104,7 +90,7 @@ export default function NewMessageForm() {
       params.options = selectedQuestions;
     }
 
-    createNewMessage(params);
+    navigate('/direct-messaging/preview', { state: { params, questStartData, participants } });
   };
 
   const { mutateAsync: createDraft } = useMutation({
@@ -166,22 +152,82 @@ export default function NewMessageForm() {
     }
   };
 
+  const sortSelectedOptionsBySelectedStatus = () => {
+    setOptionsArr((prevSelected) => {
+      return [...prevSelected].sort((a, b) => {
+        return a.selected === b.selected ? 0 : a.selected ? -1 : 1;
+      });
+    });
+  };
+
+  useEffect(() => {
+    setOptionsArr(selectedOptions);
+    sortSelectedOptionsBySelectedStatus();
+  }, [selectedOptions]);
+
   return (
-    <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:mb-8 tablet:px-5 tablet:py-6">
-      <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
-        <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
-          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
-            To:
-          </p>
-          <input
-            type="text"
-            value={questStartData?.page === 'advance-analytics' ? `${participants} Participants` : to}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
-            onChange={(e) => {
-              setTo(e.target.value);
-            }}
-          />
+    // <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
+    <div className="space-y-[9px] tablet:space-y-[15px]">
+      {showModal && (
+        <FilterAnalyzedOptions
+          handleClose={handleHideModal}
+          modalVisible={showModal}
+          title={'Message Participants'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
+          questStartData={questStartData}
+          submitBtn="Update"
+        />
+      )}
+      {/* Selected Post */}
+      <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+        <div className="flex flex-col items-center justify-center gap-[15px]">
+          <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
+            <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+              {questStartData.Question}
+            </h1>
+            {optionsArr?.map((post) => (
+              <SelectionOption key={post.id} data={post} page="filterAnalyzedOptions" questStartData={questStartData} />
+            ))}
+          </ul>
         </div>
+      </div>
+      {/* You are sending 4 participants */}
+      <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+        <div className="flex items-center justify-between">
+          <p className="summary-text text-center">
+            You are sending a message to{' '}
+            <b>{selectedOptions?.filter((option) => option.selected).length === 0 ? 0 : participants}</b> total
+            participants
+          </p>
+          <p
+            className="summary-text cursor-pointer text-blue-100 underline"
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
+            Edit
+            {/* {selectedOptions?.filter((option) => option.selected).length > 0 ? 'Deselect All' : 'Select All '} */}
+          </p>
+        </div>
+      </div>
+      {/* Message Card */}
+      <div className="relative h-fit w-full max-w-[730px] space-y-[9px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:mb-8 tablet:space-y-[15px] tablet:px-5 tablet:py-6">
+        {questStartData?.page !== 'advance-analytics' && (
+          <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
+            <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
+              To:
+            </p>
+            <input
+              type="text"
+              value={questStartData?.page === 'advance-analytics' ? `${participants} Participants` : to}
+              className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
+              onChange={(e) => {
+                setTo(e.target.value);
+              }}
+            />
+          </div>
+        )}
+        {/* Subject */}
         <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Subject:
@@ -189,12 +235,17 @@ export default function NewMessageForm() {
           <input
             type="text"
             value={sub}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
+            className="w-full bg-transparent px-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
-              setSub(e.target.value);
+              const inputValue = e.target.value;
+              if (inputValue.length <= 200) {
+                setSub(inputValue);
+              }
             }}
           />
+          {sub.length}/200
         </div>
+        {/* Message */}
         <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-[2.768px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Message:
@@ -203,63 +254,89 @@ export default function NewMessageForm() {
             type="text"
             rows="14"
             value={msg}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
+            className="w-full bg-transparent px-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
-              setMsg(e.target.value);
+              const inputValue = e.target.value;
+              if (inputValue.length <= 500) {
+                setMsg(inputValue);
+              }
             }}
           />
+          <div className="flex items-end">{msg.length}/500</div>
         </div>
-        <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[#707175] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            You will reach {handleNoOfUsers()} Users
-          </p>
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {formatRecipient(to) === 'List'
-              ? `${handleNoOfUsers()} * 0 FDX`
-              : `${handleNoOfUsers()} * ${sendAmount} FDX`}
-          </p>
-        </div>
+        {/* Read Reward */}
         <div
           className={`${formatRecipient(to) === 'All' || to === 'advance-analytics' ? '' : 'opacity-50'} flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3`}
         >
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
+          <p className="w-fit whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Read Reward:
           </p>
           <input
             type="number"
             value={readReward}
             placeholder={defaultReadReward}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
+            className="w-fit bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
               setReadReward(e.target.value);
             }}
             disabled={to !== 'advance-analytics' && formatRecipient(to) !== 'All'}
           />
         </div>
-        <div className="flex justify-end gap-4 pt-[2px] tablet:pt-[10px]">
+        <h1 className="px-2 py-[5.7px] text-[8.52px] font-normal italic leading-none text-[#435059] dark:text-[#D3D3D3] tablet:px-[18px] tablet:py-3 tablet:text-[19px]">
+          Enter the amount of FDX a participant will earn from reading your message. FDX will only be deducted from your
+          balance if a message is read
+        </h1>
+      </div>
+      {/* Total FDX to send message*/}
+      <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+        <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[#707175] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+            {/* You will reach {handleNoOfUsers()} Users */}
+            Total FDX to send message
+          </p>
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+            {`${handleNoOfUsers()} participants = ${formatRecipient(to) === 'List' ? `0 FDX` : `${handleNoOfUsers() * sendAmount} FDX`}`}
+            {/* {formatRecipient(to) === 'List'
+              ? `${handleNoOfUsers()} * 0 FDX`
+              : `${handleNoOfUsers()} * ${sendAmount} FDX`} */}
+          </p>
+        </div>
+      </div>
+      {/* Last Section Buttons */}
+      <div className="flex h-fit w-full max-w-[730px] justify-between gap-4 tablet:mx-auto">
+        <Button
+          variant="cancel"
+          onClick={() => {
+            navigate('/direct-messaging');
+          }}
+        >
+          Cancel
+        </Button>
+        <div className="flex gap-4">
           <Button
-            variant="cancel"
+            variant="hollow-submit"
             onClick={() => {
               handleDraft();
-              navigate('/direct-messaging');
             }}
           >
-            Go Back
+            Save as draft
           </Button>
-          <Button variant={'submit'}>
+          <Button variant={'submit'} onClick={handlePreview}>
+            Preview
+          </Button>
+          {/* <Button variant={'submit'}>
             {isPending === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
               <>
-                Send
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                   {formatRecipient(to) === 'List' ? `+0 FDX` : `+${handleNoOfUsers() * sendAmount} FDX`}
                 </span>
               </>
             )}
-          </Button>
+          </Button> */}
         </div>
-      </form>
+      </div>
     </div>
   );
 }

@@ -2,16 +2,28 @@ import { useMemo } from 'react';
 import { calculateTimeAgo } from '../../../../utils/utils';
 import { useSelector } from 'react-redux';
 import { Button } from '../../../../components/ui/Button';
+import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
+import { useQuery } from '@tanstack/react-query';
+import { getSinglePost } from '../../../../services/api/homepageApis';
 
 interface ViewProps {
-  setViewMsg: React.Dispatch<React.SetStateAction<boolean>>;
+  setViewMsg?: React.Dispatch<React.SetStateAction<boolean>>;
   viewMessageData: any;
   filter: string;
+  questStartData?: any;
+  page?: string;
 }
 
-export default function ViewMessage({ setViewMsg, viewMessageData, filter }: ViewProps) {
+export default function ViewMessage({ setViewMsg, viewMessageData, filter, questStartData, page }: ViewProps) {
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(viewMessageData?.createdAt), [viewMessageData?.createdAt]);
+
+  const { data: singlePostData } = useQuery({
+    queryKey: ['singlePostData', persistedUserInfo.uuid, viewMessageData?.postId],
+    queryFn: async () => getSinglePost({ uuid: persistedUserInfo.uuid, qId: viewMessageData?.postId }),
+    enabled: !!viewMessageData?.postId,
+  });
 
   return (
     <div className="h-fit w-full rounded-[8px] border-[1.232px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200 tablet:mx-0 tablet:rounded-[15px] tablet:border-2">
@@ -47,7 +59,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }: Vie
           {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
         </p>
 
-        {viewMessageData?.postQuestion && filter !== 'sent' && (
+        {/* {viewMessageData?.postQuestion && filter !== 'sent' && (
           <div className="mt-5 space-y-5 rounded-md border p-4">
             <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
               Why you received this message?{' '}
@@ -85,10 +97,30 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }: Vie
               )}
             </div>
           </div>
+        )} */}
+
+        {viewMessageData?.postQuestion && filter !== 'sent' && (
+          <div className="mt-5 space-y-5">
+            <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+              You receive this message because of you engagement in the below post.
+            </h1>
+            <QuestionCardWithToggle
+              questStartData={questStartData || singlePostData?.data.data[0]}
+              postProperties={'preview'}
+            />
+          </div>
         )}
 
         <div className="flex justify-end">
-          <Button variant="cancel" onClick={() => setViewMsg(false)}>
+          <Button
+            variant="cancel"
+            disabled={page === 'preview'}
+            onClick={() => {
+              if (page !== 'preview') {
+                setViewMsg?.(false);
+              }
+            }}
+          >
             Go Back
           </Button>
         </div>
