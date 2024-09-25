@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { Button } from '../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
+import { useLocation, useNavigate, useOutletContext, useSearchParams } from 'react-router-dom';
 import { getConstantsValues } from '../../../../features/constants/constantsSlice';
 import { createDraftMessage, fetchOptionParticipants } from '../../../../services/api/directMessagingApi';
 import SelectionOption from '../../../../components/SelectionOption';
@@ -26,6 +26,8 @@ export default function NewMessageForm() {
   const [readReward, setReadReward] = useState(defaultReadReward);
   const [participants, setParticipants] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [searchParams] = useSearchParams();
+  const advanceAnalytics = searchParams.get('advance-analytics');
 
   const handleHideModal = () => setShowModal(false);
 
@@ -90,7 +92,7 @@ export default function NewMessageForm() {
       params.options = selectedQuestions;
     }
 
-    navigate('/direct-messaging/preview', { state: { params, questStartData, participants } });
+    navigate('/direct-messaging/preview?advance-analytics=true', { state: { params, questStartData, participants } });
   };
 
   const { mutateAsync: createDraft } = useMutation({
@@ -161,12 +163,13 @@ export default function NewMessageForm() {
   };
 
   useEffect(() => {
-    setOptionsArr(selectedOptions);
-    sortSelectedOptionsBySelectedStatus();
+    if (advanceAnalytics) {
+      setOptionsArr(selectedOptions);
+      sortSelectedOptionsBySelectedStatus();
+    }
   }, [selectedOptions]);
 
   return (
-    // <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
     <div className="space-y-[9px] tablet:space-y-[15px]">
       {showModal && (
         <FilterAnalyzedOptions
@@ -179,35 +182,47 @@ export default function NewMessageForm() {
         />
       )}
       {/* Selected Post */}
-      <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
-        <div className="flex flex-col items-center justify-center gap-[15px]">
-          <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
-            <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
-              {questStartData.Question}
-            </h1>
-            {optionsArr?.map((post) => (
-              <SelectionOption key={post.id} data={post} page="filterAnalyzedOptions" questStartData={questStartData} />
-            ))}
-          </ul>
+      {advanceAnalytics && (
+        <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+          <div className="flex flex-col items-center justify-center gap-[15px]">
+            <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
+              <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+                {questStartData.Question}
+              </h1>
+              {optionsArr?.map((post) => (
+                <SelectionOption
+                  key={post.id}
+                  data={post}
+                  page="filterAnalyzedOptions"
+                  questStartData={questStartData}
+                />
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
       {/* You are sending 4 participants */}
       <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
         <div className="flex items-center justify-between">
           <p className="summary-text text-center">
             You are sending a message to{' '}
-            <b>{selectedOptions?.filter((option) => option.selected).length === 0 ? 0 : participants}</b> total
-            participants
+            {advanceAnalytics ? (
+              <b>{selectedOptions?.filter((option) => option.selected).length === 0 ? 0 : participants}</b>
+            ) : (
+              <b>{handleNoOfUsers()}</b>
+            )}{' '}
+            total participants
           </p>
-          <p
-            className="summary-text cursor-pointer text-blue-100 underline"
-            onClick={() => {
-              setShowModal(true);
-            }}
-          >
-            Edit
-            {/* {selectedOptions?.filter((option) => option.selected).length > 0 ? 'Deselect All' : 'Select All '} */}
-          </p>
+          {advanceAnalytics && (
+            <p
+              className="summary-text cursor-pointer text-blue-100 underline"
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              Edit
+            </p>
+          )}
         </div>
       </div>
       {/* Message Card */}
@@ -291,14 +306,10 @@ export default function NewMessageForm() {
       <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
         <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[#707175] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {/* You will reach {handleNoOfUsers()} Users */}
             Total FDX to send message
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
             {`${handleNoOfUsers()} participants = ${formatRecipient(to) === 'List' ? `0 FDX` : `${handleNoOfUsers() * sendAmount} FDX`}`}
-            {/* {formatRecipient(to) === 'List'
-              ? `${handleNoOfUsers()} * 0 FDX`
-              : `${handleNoOfUsers()} * ${sendAmount} FDX`} */}
           </p>
         </div>
       </div>
@@ -324,17 +335,6 @@ export default function NewMessageForm() {
           <Button variant={'submit'} onClick={handlePreview}>
             Preview
           </Button>
-          {/* <Button variant={'submit'}>
-            {isPending === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              <>
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  {formatRecipient(to) === 'List' ? `+0 FDX` : `+${handleNoOfUsers() * sendAmount} FDX`}
-                </span>
-              </>
-            )}
-          </Button> */}
         </div>
       </div>
     </div>

@@ -10,10 +10,10 @@ const Breadcrumb = () => {
         {location.pathname.startsWith('/treasury') && 'Treasury'}
         {location.pathname.startsWith('/help') && 'Help'}
         {location.pathname === '/direct-messaging/new-message' && 'New Message'}
-        {location.pathname === '/direct-messaging' && 'Direct Messaging'}
-        {location.pathname === '/direct-messaging/sent' && 'Direct Messaging'}
-        {location.pathname === '/direct-messaging/deleted' && 'Direct Messaging'}
-        {location.pathname === '/direct-messaging/draft' && 'Direct Messaging'}
+        {location.pathname === '/direct-messaging' && 'Messages'}
+        {location.pathname === '/direct-messaging/sent' && 'Messages'}
+        {location.pathname === '/direct-messaging/deleted' && 'Messages'}
+        {location.pathname === '/direct-messaging/draft' && 'Messages'}
         {location.pathname === '/post-preview' && 'Preview Post'}
         {location.pathname !== '/post-preview' && location.pathname.startsWith('/post') && 'Create a Post'}
         {location.pathname.startsWith('/seldon-ai') && 'Seldon'}

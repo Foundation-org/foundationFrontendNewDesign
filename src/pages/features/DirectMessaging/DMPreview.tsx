@@ -1,13 +1,12 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import MessageCard from './components/MessageCard';
-import { useSelector } from 'react-redux';
-import ViewMessage from './components/ViewMessage';
-import { Button } from '../../../components/ui/Button';
-import { createMessage } from '../../../services/api/directMessagingApi';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import React from 'react';
+import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
+import { Button } from '../../../components/ui/Button';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createMessage } from '../../../services/api/directMessagingApi';
+import MessageCard from './components/MessageCard';
+import ViewMessage from './components/ViewMessage';
 
 export default function DMPreview() {
   const currentDate = new Date();
@@ -15,16 +14,15 @@ export default function DMPreview() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  console.log(location.state);
 
   const transformedOptions = {
-    selected: location.state.params.options.map((question: string) => ({ question })), // Map each question into an object
+    selected: location.state.params.options?.map((question: string) => ({ question })), // Map each question into an object
     contended: [],
     created: currentDate.toISOString(),
   };
 
   const filterOutOptions = () => {
-    return location.state.questStartData.QuestAnswers.filter((answer: any) =>
+    return location.state.questStartData?.QuestAnswers.filter((answer: any) =>
       location.state.params.options.includes(answer.question),
     );
   };
@@ -68,8 +66,8 @@ export default function DMPreview() {
         <MessageCard
           filter="receive"
           item={{
-            postQuestion: location.state.questStartData.Question,
-            whichTypeQuestion: location.state.questStartData.whichTypeQuestion,
+            postQuestion: location.state.questStartData?.Question,
+            whichTypeQuestion: location.state.questStartData?.whichTypeQuestion,
             opinion: location.state.params.options,
             _id: persistedUserInfo.uuid,
             sender: persistedUserInfo.uuid,
@@ -102,8 +100,8 @@ export default function DMPreview() {
             senderMessageId: persistedUserInfo.uuid,
             isDeleted: false,
             readReward: location.state.params.readReward,
-            postQuestion: location.state.questStartData.Question,
-            whichTypeQuestion: location.state.questStartData.whichTypeQuestion,
+            postQuestion: location.state.questStartData?.Question,
+            whichTypeQuestion: location.state.questStartData?.whichTypeQuestion,
             opinion: transformedOptions,
             __v: 0,
             createdAt: currentDate.toISOString(),

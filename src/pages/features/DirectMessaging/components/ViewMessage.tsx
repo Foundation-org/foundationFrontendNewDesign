@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { calculateTimeAgo } from '../../../../utils/utils';
 import { useSelector } from 'react-redux';
-import { Button } from '../../../../components/ui/Button';
-import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { useQuery } from '@tanstack/react-query';
+import { Button } from '../../../../components/ui/Button';
+import { calculateTimeAgo } from '../../../../utils/utils';
 import { getSinglePost } from '../../../../services/api/homepageApis';
+import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 
 interface ViewProps {
   setViewMsg?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,55 +59,17 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
           {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
         </p>
 
-        {/* {viewMessageData?.postQuestion && filter !== 'sent' && (
-          <div className="mt-5 space-y-5 rounded-md border p-4">
-            <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-              Why you received this message?{' '}
-            </h1>
-            <div className="space-y-2">
-              <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                Participated on this Post
-              </h1>
-              <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                {viewMessageData?.postQuestion}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                And Selected
-              </h1>
-              {viewMessageData?.whichTypeQuestion === 'yes/no' ||
-              viewMessageData?.whichTypeQuestion === 'agree/disagree' ||
-              viewMessageData?.whichTypeQuestion === 'like/dislike' ? (
-                <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                  {viewMessageData?.opinion?.selected && (
-                    <ul className="space-y-2">{viewMessageData?.opinion?.selected}</ul>
-                  )}
-                </p>
-              ) : (
-                <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                  {viewMessageData?.opinion?.selected.length > 0 && (
-                    <ul className="space-y-2">
-                      {viewMessageData?.opinion.selected.map((item: any, index: number) => (
-                        <li key={index}>- {item.question}</li>
-                      ))}
-                    </ul>
-                  )}
-                </p>
-              )}
-            </div>
-          </div>
-        )} */}
-
         {viewMessageData?.postQuestion && filter !== 'sent' && (
           <div className="mt-5 space-y-5">
             <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
               You receive this message because of you engagement in the below post.
             </h1>
-            <QuestionCardWithToggle
-              questStartData={questStartData || singlePostData?.data.data[0]}
-              postProperties={'preview'}
-            />
+            {questStartData || singlePostData?.data.data[0] ? (
+              <QuestionCardWithToggle
+                questStartData={questStartData || singlePostData?.data.data[0]}
+                postProperties={'preview'}
+              />
+            ) : null}
           </div>
         )}
 
