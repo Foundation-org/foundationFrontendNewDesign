@@ -14,6 +14,7 @@ type ClearAllAnalyticsProps = {
   image: string;
   questStartData: any;
   submitBtn: string;
+  optionsArr?: any;
 };
 
 export default function FilterAnalyzedOptions({
@@ -23,16 +24,21 @@ export default function FilterAnalyzedOptions({
   image,
   questStartData,
   submitBtn,
+  optionsArr,
 }: ClearAllAnalyticsProps) {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [participants, setParticipants] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<any>(() => {
-    const initialOptions = questStartData?.QuestAnswers || [];
-    return initialOptions.map((option: any) => ({
-      ...option,
-      selected: false,
-    }));
+    if (submitBtn === 'Update') {
+      return optionsArr;
+    } else {
+      const initialOptions = questStartData?.QuestAnswers || [];
+      return initialOptions.map((option: any) => ({
+        ...option,
+        selected: false,
+      }));
+    }
   });
 
   const handleOptionSelection = (data: any) => {

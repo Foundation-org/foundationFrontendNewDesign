@@ -116,7 +116,13 @@ export default function DMPreview() {
         <Button
           variant="cancel"
           onClick={() => {
-            navigate('/direct-messaging');
+            navigate('/direct-messaging/new-message?advance-analytics=true', {
+              state: {
+                questStartData: location.state.questStartData,
+                selectedOptions: location.state.params.options,
+                key: new Date().getTime(),
+              },
+            });
           }}
         >
           Continue editing

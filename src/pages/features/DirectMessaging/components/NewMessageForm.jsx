@@ -117,13 +117,16 @@ export default function NewMessageForm() {
         to: to,
         subject: sub,
         message: msg,
-        id: location.state?.draft.id,
+        id: location.state?.draft?.id,
       };
 
       createDraft(params);
       setMsg();
       setTo();
       setSub();
+      navigate('/direct-messaging');
+    } else {
+      toast.warning('Subject and message cannot be empty');
     }
   };
 
@@ -179,6 +182,7 @@ export default function NewMessageForm() {
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
           questStartData={questStartData}
           submitBtn="Update"
+          optionsArr={optionsArr}
         />
       )}
       {/* Selected Post */}
@@ -258,7 +262,7 @@ export default function NewMessageForm() {
               }
             }}
           />
-          {sub.length}/200
+          {sub?.length}/200
         </div>
         {/* Message */}
         <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-[2.768px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
@@ -277,7 +281,7 @@ export default function NewMessageForm() {
               }
             }}
           />
-          <div className="flex items-end">{msg.length}/500</div>
+          <div className="flex items-end">{msg?.length}/500</div>
         </div>
         {/* Read Reward */}
         <div
