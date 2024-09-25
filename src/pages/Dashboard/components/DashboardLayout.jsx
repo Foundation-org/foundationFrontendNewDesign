@@ -15,18 +15,14 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
-import {
-  getQuestUtils,
-  setIsShowPlayer,
-  setPlayingPlayerId,
-  setAreHiddenPosts,
-} from '../../../features/quest/utilsSlice';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 import { getConstantsValues, saveConstants } from '../../../features/constants/constantsSlice';
 import showToast from '../../../components/ui/Toast';
 import { changeThemeTo } from '../../../features/utils/utilsSlice';
 import SeldonInputs from '../../features/seldon-ai/components/SeldonInputs';
+import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -171,10 +167,6 @@ export default function DashboardLayout({ children }) {
     }
   };
 
-  // const handleGuestLogout = async () => {
-  //   navigate('/guest-signup');
-  // };
-
   // Hidden post Search
   const handleHiddenPostSearch = (e) => {
     setHiddenSearch(e.target.value);
@@ -300,10 +292,6 @@ export default function DashboardLayout({ children }) {
                     alt="badge"
                     className="h-[25px] w-5 tablet:size-[36px]"
                   />
-                  {/* <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
-                      V
-                    </p>` */}
-                  {/* </div> */}
                   <div className="flex flex-col gap-1">
                     <h4 className="heading w-fit border-b">My Balance (Visitor)</h4>
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
@@ -455,6 +443,7 @@ export default function DashboardLayout({ children }) {
 
         {/* Desktop Left Side */}
         <div className="left-0 top-0 hidden tablet:block laptop:absolute">
+          {/* Treasury Icon and Treasury Balance */}
           <div
             className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:bg-gray-200 laptop:block"
             onClick={() => navigate('/treasury')}
@@ -473,7 +462,7 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
           </div>
-
+          {/* Sidebar Left */}
           {!location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile' &&
@@ -501,7 +490,11 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/shared-list-link/result' &&
             location.pathname !== '/profile/verification-badges' &&
             location.pathname !== '/profile/lists' &&
-            !location.pathname.startsWith('/direct-messaging') && <SidebarLeft />}
+            !location.pathname.startsWith('/direct-messaging') &&
+            !location.pathname.startsWith('/news') && <SidebarLeft />}
+
+          {/* News Feed Search */}
+          <NewsFeedSearch />
 
           {location.pathname !== '/treasury' &&
             !location.pathname.startsWith('/seldon-ai') &&
@@ -524,10 +517,14 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/direct-messaging') &&
             location.pathname !== '/profile/lists' && <SideNavbar />}
 
-          <div className="hidden h-[calc(100dvh-162px)] overflow-y-scroll no-scrollbar laptop:block">
-            {location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}
-          </div>
+          {/* Seldon Inputs */}
+          {location.pathname.startsWith('/seldon-ai') && (
+            <div className="hidden h-[calc(100dvh-162px)] overflow-y-scroll no-scrollbar laptop:block">
+              {location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}
+            </div>
+          )}
 
+          {/* Media Controls */}
           {questUtilsState.isShowPlayer && location.pathname === '/' && (
             <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
               <div className="relative">
@@ -545,46 +542,42 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
 
-          {/* {canAddPost !== 'true' && location.pathname.startsWith('/profile/postsbylist/') && <ManageList />} */}
-
           {/* HiddenPost Search */}
           {location.pathname === '/profile/feedback-given' && questUtils.areHiddenPosts && (
-            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
-              <div className="relative">
-                <div className="relative h-[45px] w-full">
-                  <input
-                    type="text"
-                    id="floating_outlined"
-                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
-                    value={hiddenSearch}
-                    placeholder=""
-                    onChange={handleHiddenPostSearch}
-                  />
-                  <label
-                    htmlFor="floating_outlined"
-                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
-                  >
-                    Search
-                  </label>
-                </div>
-                {getHiddenPostFilters.searchData && (
-                  <button
-                    className="absolute right-3 top-4"
-                    onClick={() => {
-                      dispatch(updateSearch(''));
-                    }}
-                  >
-                    <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
-                  </button>
-                )}
-                {!getHiddenPostFilters.searchData && (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
-                    alt="search"
-                    className="absolute right-3 top-4 h-4 w-4"
-                  />
-                )}
+            <div className="relative my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
+              <div className="relative h-[45px] w-full">
+                <input
+                  type="text"
+                  id="floating_outlined"
+                  className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
+                  value={hiddenSearch}
+                  placeholder=""
+                  onChange={handleHiddenPostSearch}
+                />
+                <label
+                  htmlFor="floating_outlined"
+                  className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                >
+                  Search
+                </label>
               </div>
+              {getHiddenPostFilters.searchData && (
+                <button
+                  className="absolute right-3 top-4"
+                  onClick={() => {
+                    dispatch(updateSearch(''));
+                  }}
+                >
+                  <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+                </button>
+              )}
+              {!getHiddenPostFilters.searchData && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
+                  alt="search"
+                  className="absolute right-3 top-4 h-4 w-4"
+                />
+              )}
             </div>
           )}
 
@@ -757,8 +750,6 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/direct-messaging') && <SummarySidebar userData={userInfoData?.data} />}
         </div>
       </div>
-      {/* Mobile Children */}
-      {/* {(location.pathname === '/treasury' || location.pathname === '/treasury/ledger') && children} */}
     </div>
   );
 }

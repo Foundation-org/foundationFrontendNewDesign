@@ -25,7 +25,8 @@ const initialState = {
   },
   areHiddenPosts: false,
   areShareLinks: false,
-  areFeedBackPosts: false
+  areFeedBackPosts: false,
+  areNewsFeed: false,
 };
 
 export const utilsSlice = createSlice({
@@ -110,14 +111,17 @@ export const utilsSlice = createSlice({
       state.adultFilterPopup.rating = action.payload.rating;
     },
     setAreHiddenPosts: (state, action) => {
-      state.areHiddenPosts = action.payload
+      state.areHiddenPosts = action.payload;
     },
     setAreShareLinks: (state, action) => {
-      state.areShareLinks = action.payload
+      state.areShareLinks = action.payload;
     },
     setAreFeedbackPosts: (state, action) => {
-      state.areFeedBackPosts = action.payload
-    }
+      state.areFeedBackPosts = action.payload;
+    },
+    setAreNewsFeed: (state, action) => {
+      state.areNewsFeed = action.payload;
+    },
   },
 });
 
@@ -143,7 +147,8 @@ export const {
   addAdultFilterPopup,
   setAreHiddenPosts,
   setAreShareLinks,
-  setAreFeedbackPosts
+  setAreFeedbackPosts,
+  setAreNewsFeed,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

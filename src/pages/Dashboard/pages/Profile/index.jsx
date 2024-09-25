@@ -23,7 +23,7 @@ const Profile = () => {
       </div>
       <div
         ref={scrollRef}
-        className={`${location.pathname !== '/profile/ledger' ? 'max-w-[778px] laptop:h-[calc(100dvh-147.6px)]' : 'max-w-[1440px] pb-16 laptop:mt-[128px] laptop:h-[calc(100dvh-207.6px)]'} no-scrollbar mx-auto mt-10 h-[calc(100dvh-174px)] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-224px)] `}
+        className={`${location.pathname !== '/profile/ledger' ? 'max-w-[778px] laptop:h-[calc(100dvh-147.6px)]' : 'max-w-[1440px] pb-16 laptop:mt-[128px] laptop:h-[calc(100dvh-207.6px)]'} mx-auto mt-10 h-[calc(100dvh-174px)] overflow-y-scroll no-scrollbar tablet:mt-[77.63px] tablet:h-[calc(100dvh-224px)]`}
       >
         <Outlet />
       </div>

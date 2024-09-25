@@ -83,10 +83,15 @@ const Topbar = () => {
                   className="size-5 tablet:size-8"
                 />
               </div>
-              <div className="relative flex justify-center">
+              <div
+                className="relative flex justify-center"
+                onClick={() => {
+                  navigate('/news');
+                }}
+              >
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/news' ? 'news-active.svg' : 'news.svg'}`}
-                  alt="foundation_logo"
+                  alt="news-feed-icon"
                   className="size-5 tablet:size-8"
                 />
               </div>

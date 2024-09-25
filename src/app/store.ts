@@ -23,6 +23,7 @@ import userSettingsReducer from '../features/profile/userSettingSlice';
 import seeMoreOptionsReducer from '../features/quest/seeMoreOptionsSlice';
 import extrasReducer from '../features/extras/extrasSlice';
 import seldonReducer from '../features/seldon-ai/seldonSlice';
+import newsFeedReducer from '../features/news-feed/newsFeedSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -51,6 +52,7 @@ const reducer = combineReducers({
   seeMoreOptionsUtils: seeMoreOptionsReducer,
   extras: extrasReducer,
   seldon: seldonReducer,
+  newsFeed: newsFeedReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);
