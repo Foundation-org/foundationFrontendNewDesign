@@ -33,21 +33,22 @@ export const useChatGptDataMutation = () => {
   return mutation;
 };
 
-export const publishArticle = async ({ userUuid, title, abstract, findings, suggestion, source }) => {
+export const publishArticle = async ({ userUuid, prompt, title, abstract, findings, suggestion, source }) => {
   return await api.post(`/article/create`, {
     userUuid,
+    prompt,
     title,
     abstract,
     findings,
-    suggestion,
+    suggestions: suggestion,
     source,
   });
 };
 
 export const usePublishArticleMutation = () => {
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, title, abstract, findings, suggestion, source }) => {
-      return publishArticle({ userUuid, title, abstract, findings, suggestion, source });
+    mutationFn: async ({ userUuid, prompt, title, abstract, findings, suggestion, source }) => {
+      return publishArticle({ userUuid, prompt, title, abstract, findings, suggestion, source });
     },
     onSuccess: (resp) => {
       if (resp.status === 201) {

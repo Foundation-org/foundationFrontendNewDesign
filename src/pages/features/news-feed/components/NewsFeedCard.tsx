@@ -1,15 +1,33 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { calculateTimeAgo } from '../../../../utils/utils';
 import { NewsFeedPropsType } from '../../../../types/news-feed';
 import { Button } from '../../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
+import { getArticleStates, setArticleData } from '../../../../features/seldon-ai/articleSlice';
 
 export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef } = props;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(data.createdAt), [data?.createdAt]);
+  const getArticleData = useSelector(getArticleStates);
+
+  const handleUpdateArticle = () => {
+    // dispatch(
+    //   setArticleData({
+    //     prompt: data.prompt,
+    //     articleId: data._id,
+    //     abstract: data.abstract,
+    //     sources: data.source,
+    //     title: data.title,
+    //   }),
+    // );
+    navigate(`/seldon-ai?update-article=true&articleId=${data._id}`);
+  };
+
+  console.log('getArticleData', getArticleData);
 
   return (
     <div
@@ -38,7 +56,14 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           {data?.abstract}
         </p>
         <div className="flex w-full items-center justify-between gap-4">
-          <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
+          {/* <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button> */}
+          <Button
+            variant={'submit'}
+            className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
+            onClick={handleUpdateArticle}
+          >
+            Update Article
+          </Button>
           <Button
             variant={'g-submit'}
             className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}

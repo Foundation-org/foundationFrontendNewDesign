@@ -37,9 +37,12 @@ export const seldonSlice = createSlice({
   name: 'seldon',
   initialState,
   reducers: {
-    handleSeldonInput: (state, action: PayloadAction<{ name: keyof SeldonState; value: string | number }>) => {
+    handleSeldonInput: (
+      state,
+      action: PayloadAction<{ name: keyof SeldonState; value: string | number | boolean }>,
+    ) => {
       const { name, value } = action.payload;
-      (state[name] as string | number) = value;
+      (state[name] as string | number | boolean) = value;
     },
     handleKnowledgebase: (state, action: PayloadAction<string>) => {
       const itemIndex = state.knowledgebase.indexOf(action.payload);

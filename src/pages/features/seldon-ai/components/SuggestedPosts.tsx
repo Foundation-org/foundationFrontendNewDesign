@@ -6,17 +6,28 @@ import { Button } from '../../../../components/ui/Button';
 import { transformPromptSuggestions } from '../../../../utils/seldon';
 import { questionValidation } from '../../../../services/api/questsApi';
 import { SuggestedPost, SuggestedPostsProps } from '../../../../types/seldon';
-import { usePublishArticleMutation } from '../../../../services/mutations/seldon-ai';
+import { usePublishArticleMutation, useChatGptDataMutation } from '../../../../services/mutations/seldon-ai';
 import { addNewOption, addQuestion, setOptionsByArray } from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
+import { useMutation } from '@tanstack/react-query';
+import { updateSources } from '../../../../services/api/seldon';
+import { getSeldonState, handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
 
-export default function SuggestedPosts({ promptResponse, promptSources, articleId }: SuggestedPostsProps) {
+export default function SuggestedPosts({
+  promptResponse,
+  promptSources,
+  articleId,
+  handleFormSubmit,
+}: SuggestedPostsProps) {
   const dispatch = useDispatch();
   const location = useLocation();
+  const seldonState = useSelector(getSeldonState);
   const { protocol, host } = window.location;
   const [suggestedPosts, setSuggestedPosts] = useState<SuggestedPost[]>([]);
   const [loading, setLoading] = useState(false);
+  const params = new URLSearchParams(location.search);
+  const updateArticle = params.get('update-article');
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();
 
@@ -34,12 +45,14 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
     }
   };
 
+  console.log('promptResponse', promptResponse);
+
   const processQuestions = async () => {
     setLoading(true);
     try {
       const processedQuestions = transformPromptSuggestions(promptResponse?.suggestions);
       const results = await Promise.all(
-        processedQuestions.map(async (item) => {
+        processedQuestions?.map(async (item) => {
           const { errorMessage } = await checkDuplicatePost(item.question);
           return { ...item, errorMessage };
         }),
@@ -57,12 +70,43 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
   };
 
   useEffect(() => {
-    processQuestions();
+    if (promptResponse) {
+      processQuestions();
+    }
   }, [promptResponse]);
+
+  // const { mutateAsync: handleSoucesUpdate } = useMutation({
+  //   mutationFn: updateSources,
+  //   onSuccess: () => {
+  //     // localStorage.removeItem('isSourcesUpdated');
+  //     // dispatch(handleSeldonInput({ name: 'update', value: true }));
+  //     handleFormSubmit();
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //   },
+  // });
+  const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
+
+  const handleUpdateArticle = async () => {
+    try {
+      const response = await handleSendPrompt({
+        params: { ...seldonState, articleId, title: promptResponse.title, sources: promptSources },
+      } as any);
+
+      if (response?.status === 200) {
+        localStorage.setItem('seldomResp', JSON.stringify(response?.data?.response));
+        localStorage.setItem('seldonIds', JSON.stringify(response?.data?.source));
+        localStorage.setItem('seldonDebug', JSON.stringify(response?.data?.debug));
+      }
+    } catch (error) {
+      console.error('Error submitting the form:', error);
+    }
+  };
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(`${protocol}//${host}${location.pathname}`);
+      await navigator.clipboard.writeText(`${protocol}//${host}/r/${articleId}`);
     } catch (err) {
       console.error('Unable to copy text to clipboard:', err);
     }
@@ -113,19 +157,33 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
         </div>
       </div>
       <div className="flex w-full items-center justify-between gap-4">
-        <button className="w-full cursor-default">&#x200B;</button>
+        {articleId || updateArticle ? (
+          <Button
+            variant="hollow-submit"
+            className="w-full"
+            rounded
+            onClick={() => {
+              handleUpdateArticle();
+            }}
+          >
+            Update
+          </Button>
+        ) : (
+          <button className="w-full cursor-default">&#x200B;</button>
+        )}
         <Button
           variant="submit"
           className="w-full"
           rounded
           disabled={isPublishPending}
           onClick={() => {
-            if (location.pathname.startsWith('/r/')) {
+            if (location.pathname.startsWith('/r/') || articleId || updateArticle) {
               copyToClipboard();
               showToast('success', 'copyLink');
             } else {
               handlePublishArticle({
                 userUuid: persistedUserInfo.uuid,
+                prompt: seldonState.question,
                 title: promptResponse?.title,
                 abstract: promptResponse?.abstract,
                 findings: promptResponse?.findings,
@@ -135,7 +193,7 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
             }
           }}
         >
-          {location.pathname.startsWith('/r/') ? (
+          {location.pathname.startsWith('/r/') || articleId || updateArticle ? (
             'Share Article'
           ) : isPublishPending ? (
             <FaSpinner className="animate-spin text-[#EAEAEA]" />

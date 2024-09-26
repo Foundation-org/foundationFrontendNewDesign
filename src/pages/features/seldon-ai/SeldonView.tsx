@@ -55,9 +55,10 @@ export default function SeldonView() {
                     </ul>
                   </div>
                   <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
-                  <SourcePosts promptSources={promptSources} />
+                  <SourcePosts promptSources={promptSources} setPromptSources={setPromptSources} />
                   <SuggestedPosts
                     promptResponse={{
+                      articleId: response?.data.articleId,
                       title: response?.data?.title,
                       abstract: response?.data?.abstract,
                       findings: response?.data?.findings,

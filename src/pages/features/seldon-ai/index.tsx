@@ -10,13 +10,31 @@ import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
 import Markdown from 'react-markdown';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getArticles } from '../../../services/api/seldon';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
+  const location = useLocation();
   const seldonState = useSelector(getSeldonState);
-  const [promptResponse, setPromptResponse] = useState<PromptResponse | null>(null);
+  const [promptResponse, setPromptResponse] = useState<PromptResponse>();
   const [promptSources, setPromptSources] = useState([]);
   const [promptDebug, setPromptDebug] = useState('');
+  const params = new URLSearchParams(location.search);
+  const updateArticle = params.get('update-article');
+  const articleId = params.get('articleId');
+
+  const { data: apiResponse, isLoading } = useQuery({
+    queryKey: ['article', articleId],
+    queryFn: () => getArticles(articleId),
+    enabled: !!articleId,
+  });
+
+  useEffect(() => {
+    setPromptResponse({ ...apiResponse?.data, articleId });
+    setPromptSources(apiResponse?.data.source);
+  }, [apiResponse]);
 
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
@@ -29,9 +47,11 @@ export default function SeldonAi() {
       } as any);
 
       if (response?.status === 200) {
-        localStorage.setItem('seldomResp', JSON.stringify(response.data.response));
-        localStorage.setItem('seldonIds', JSON.stringify(response.data?.source));
-        localStorage.setItem('seldonDebug', JSON.stringify(response.data.debug));
+        localStorage.setItem('seldomResp', JSON.stringify(response?.data?.response));
+        localStorage.setItem('seldonIds', JSON.stringify(response?.data?.source));
+        localStorage.setItem('seldonDebug', JSON.stringify(response?.data?.debug));
+        // dispatch(handleSeldonInput({ name: 'title', value: response?.data?.response?.title }));
+        // dispatch(handleSeldonInput({ name: 'articleId', value: response?.data?.articleId }));
 
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
@@ -46,39 +66,39 @@ export default function SeldonAi() {
     }
   };
 
-  useEffect(() => {
-    const storedIds = localStorage.getItem('seldonIds');
+  // useEffect(() => {
+  //   const storedIds = localStorage.getItem('seldonIds');
 
-    if (storedIds) {
-      try {
-        const ids = JSON.parse(storedIds)
-          .filter((fileName: string) => fileName.startsWith('post_'))
-          .map((fileName: string) => {
-            const match = fileName.match(/post_(\w+)\.pdf/);
-            return match ? match[1] : null;
-          })
-          .filter((id: string | null) => id !== null);
+  //   if (storedIds) {
+  //     try {
+  //       const ids = JSON.parse(storedIds)
+  //         .filter((fileName: string) => fileName.startsWith('post_'))
+  //         .map((fileName: string) => {
+  //           const match = fileName.match(/post_(\w+)\.pdf/);
+  //           return match ? match[1] : null;
+  //         })
+  //         .filter((id: string | null) => id !== null);
 
-        setPromptSources(ids);
-      } catch (error) {
-        console.error('Failed to parse JSON from localStorage:', error);
-        setPromptSources([]);
-      }
-    }
-  }, [localStorage.getItem('seldonIds')]);
+  //       setPromptSources(ids);
+  //     } catch (error) {
+  //       console.error('Failed to parse JSON from localStorage:', error);
+  //       setPromptSources([]);
+  //     }
+  //   }
+  // }, [localStorage.getItem('seldonIds')]);
 
-  useEffect(() => {
-    const storedResponse = localStorage.getItem('seldomResp');
+  // useEffect(() => {
+  //   const storedResponse = localStorage.getItem('seldomResp');
 
-    if (storedResponse) {
-      try {
-        setPromptResponse(JSON.parse(storedResponse));
-      } catch (error) {
-        console.error('Failed to parse JSON from localStorage:', error);
-        setPromptResponse(null);
-      }
-    }
-  }, [localStorage.getItem('seldomResp')]);
+  //   if (storedResponse) {
+  //     try {
+  //       setPromptResponse(JSON.parse(storedResponse));
+  //     } catch (error) {
+  //       console.error('Failed to parse JSON from localStorage:', error);
+  //       setPromptResponse(null);
+  //     }
+  //   }
+  // }, [localStorage.getItem('seldomResp')]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -86,7 +106,6 @@ export default function SeldonAi() {
       e.currentTarget.form?.dispatchEvent(new Event('submit', { bubbles: true }));
     }
   };
-  console.log({ promptDebug });
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -99,6 +118,7 @@ export default function SeldonAi() {
           placeholder="Message Seldon"
           onChange={(e) => {
             dispatch(handleSeldonInput({ name: 'question', value: e.target.value }));
+            // dispatch(handleSeldonInput({ name: 'articleId', value: false }));
           }}
           onKeyDown={handleKeyDown}
           value={seldonState.question}
@@ -119,7 +139,6 @@ export default function SeldonAi() {
             <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Debug Mode:</h1>
               <br></br>
-
               <Markdown>{promptDebug}</Markdown>
             </div>
           ) : (
@@ -135,7 +154,7 @@ export default function SeldonAi() {
                 <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
                   <h1 className="text-[16px] font-bold">Findings:</h1>
                   <ul className="space-y-4">
-                    {promptResponse?.findings.map((item, index) => (
+                    {promptResponse?.findings?.map((item, index) => (
                       <>
                         <li key={index} className="text-[12px] tablet:text-[16px]">
                           <strong className="text-[12px] font-bold tablet:text-[16px]">{item.heading}</strong>:{' '}
@@ -149,12 +168,13 @@ export default function SeldonAi() {
             )
           )}
           <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
-          <SourcePosts promptSources={promptSources} />
+          <SourcePosts promptSources={promptSources} setPromptSources={setPromptSources} />
           {!promptDebug && (
             <SuggestedPosts
-              promptResponse={promptResponse}
+              promptResponse={promptResponse!}
               promptSources={promptSources}
               articleId={promptResponse?.articleId || null}
+              handleFormSubmit={handleFormSubmit}
             />
           )}
         </div>
