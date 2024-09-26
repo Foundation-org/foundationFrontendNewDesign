@@ -26,7 +26,6 @@ const initialState = {
   areHiddenPosts: false,
   areShareLinks: false,
   areFeedBackPosts: false,
-  areNewsFeed: false,
 };
 
 export const utilsSlice = createSlice({
@@ -64,26 +63,6 @@ export const utilsSlice = createSlice({
     addEnablePostId: (state, action) => {
       state.enablePostId = action.payload;
     },
-    // addBookmarkResponse: (state, action) => {
-    //   const newResponse = action.payload;
-    //   state.bookmarkResponse.push(newResponse);
-    // },
-    // addBookmarkResponse: (state, action) => {
-    //   const newResponse = action.payload;
-
-    //   const existingBookmark = state.bookmarkResponse.find(
-    //     (bookmark) => bookmark.questForeignKey === newResponse.questForeignKey,
-    //   );
-    //   if (!existingBookmark) {
-    //     state.bookmarkResponse.push(newResponse);
-    //   } else {
-    //   }
-    // },
-    // removeBookmarkResponse: (state, action) => {
-    //   const idToRemove = action.payload;
-    //   console.log('🚀 ~ idToRemove:', idToRemove);
-    //   state.bookmarkResponse = state.bookmarkResponse.filter((response) => response.questForeignKey !== idToRemove);
-    // },
     toggleMedia: (state, action) => {
       state.isMediaPlaying = action.payload;
     },
@@ -119,9 +98,6 @@ export const utilsSlice = createSlice({
     setAreFeedbackPosts: (state, action) => {
       state.areFeedBackPosts = action.payload;
     },
-    setAreNewsFeed: (state, action) => {
-      state.areNewsFeed = action.payload;
-    },
   },
 });
 
@@ -148,7 +124,6 @@ export const {
   setAreHiddenPosts,
   setAreShareLinks,
   setAreFeedbackPosts,
-  setAreNewsFeed,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

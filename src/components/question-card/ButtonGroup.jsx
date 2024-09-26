@@ -280,6 +280,8 @@ const ButtonGroup = ({
     // );
   }
 
+  if (postProperties === 'preview') return null;
+
   if (postProperties === 'HiddenPosts') {
     const { mutateAsync: unHidePost, isPending: unHidePostLoading } = useMutation({
       mutationFn: updateHiddenQuest,

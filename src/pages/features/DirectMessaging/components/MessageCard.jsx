@@ -114,14 +114,6 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
         <h1 className="text-[12.145px] font-semibold leading-[12.145px] tablet:text-[22px] tablet:leading-[22px]">
           {item.subject}
         </h1>
-        {/* <div className="space-y-2">
-          <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-            Participated on this Post
-          </h1>
-          <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-            {item?.postQuestion} ...
-          </p>
-        </div> */}
         <div className="flex justify-end gap-2">
           {item?.type === 'sent' && item?.to === 'Participants' && (
             <Button
@@ -171,10 +163,10 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               variant={item?.viewed ? 'change' : 'submit'}
               onClick={() => {
                 setViewMsg(true);
-                handleViewMessage(item._id, item.sender, item.receiver, filter === 'sent' ? item : false);
+                handleViewMessage(item._id, item.sender, item.receiver, item);
               }}
             >
-              {item?.viewed ? 'Read Again' : 'Read'}{' '}
+              {item?.viewed ? 'Read Again' : filter === 'sent' ? 'View' : 'Read'}{' '}
               {item.readReward != null && item.readReward >= 0 && !item?.viewed && filter !== 'sent' && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                   {`(+${item?.readReward} FDX)`}
@@ -194,21 +186,21 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {item.send
                   ? item.to === 'Participants' || item.to === 'All' || item.to === 'List'
-                    ? `${item.receiversIds.length} Messages Sent`
-                    : '1 Messages Sent'
-                  : '0 Messages Sent'}
+                    ? `${item.receiversIds.length} Sent`
+                    : '1 Sent'
+                  : '0 Sent'}
               </p>
             </div>
-            {/* <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1">
               <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgFails.svg`}
-                alt="msgFails"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgViewd.svg`}
+                alt="msgViewd"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {item.fail ? '1 Fail' : '0 Fail'}
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
+                {`${item.view} Read`}
               </p>
-            </div> */}
+            </div>
             <div className="flex items-center gap-1">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgNotViewed.svg`}
@@ -217,26 +209,6 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               />
               <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {item?.deleteCount ? `${item?.deleteCount} Deleted` : '0 Deleted'}
-              </p>
-            </div>
-            {/* <div className="flex items-center gap-1">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgNotViewed.svg`}
-                alt="msgNotViewed"
-                className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
-              />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {`${item.unView} Not Viewed`}
-              </p>
-            </div> */}
-            <div className="flex items-center gap-1">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgViewd.svg`}
-                alt="msgViewd"
-                className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
-              />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {`${item.view} Viewed`}
               </p>
             </div>
           </div>

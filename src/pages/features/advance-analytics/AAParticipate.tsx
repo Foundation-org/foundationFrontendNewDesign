@@ -16,9 +16,10 @@ export default function AAParticipate({ questStartData }: { questStartData: any 
         <FilterAnalyzedOptions
           handleClose={handleHideModal}
           modalVisible={showModal}
-          title={'Target Participants'}
-          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
+          title={'Message Participants'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/send-message.svg`}
           questStartData={questStartData}
+          submitBtn="Continue"
         />
       )}
       <p className="summary-text mt-[10px] text-center tablet:mt-[15px]">

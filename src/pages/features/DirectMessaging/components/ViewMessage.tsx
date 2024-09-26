@@ -1,17 +1,29 @@
 import { useMemo } from 'react';
-import { calculateTimeAgo } from '../../../../utils/utils';
 import { useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from '../../../../components/ui/Button';
+import { calculateTimeAgo } from '../../../../utils/utils';
+import { getSinglePost } from '../../../../services/api/homepageApis';
+import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 
 interface ViewProps {
-  setViewMsg: React.Dispatch<React.SetStateAction<boolean>>;
+  setViewMsg?: React.Dispatch<React.SetStateAction<boolean>>;
   viewMessageData: any;
   filter: string;
+  questStartData?: any;
+  page?: string;
 }
 
-export default function ViewMessage({ setViewMsg, viewMessageData, filter }: ViewProps) {
+export default function ViewMessage({ setViewMsg, viewMessageData, filter, questStartData, page }: ViewProps) {
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(viewMessageData?.createdAt), [viewMessageData?.createdAt]);
+
+  const { data: singlePostData } = useQuery({
+    queryKey: ['singlePostData', persistedUserInfo.uuid, viewMessageData?.postId],
+    queryFn: async () => getSinglePost({ uuid: persistedUserInfo.uuid, qId: viewMessageData?.postId }),
+    enabled: !!viewMessageData?.postId,
+  });
 
   return (
     <div className="h-fit w-full rounded-[8px] border-[1.232px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200 tablet:mx-0 tablet:rounded-[15px] tablet:border-2">
@@ -48,47 +60,29 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter }: Vie
         </p>
 
         {viewMessageData?.postQuestion && filter !== 'sent' && (
-          <div className="mt-5 space-y-5 rounded-md border p-4">
+          <div className="mt-5 space-y-5">
             <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-              Why you received this message?{' '}
+              You receive this message because of you engagement in the below post.
             </h1>
-            <div className="space-y-2">
-              <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                Participated on this Post
-              </h1>
-              <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                {viewMessageData?.postQuestion}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                And Selected
-              </h1>
-              {viewMessageData?.whichTypeQuestion === 'yes/no' ||
-              viewMessageData?.whichTypeQuestion === 'agree/disagree' ||
-              viewMessageData?.whichTypeQuestion === 'like/dislike' ? (
-                <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                  {viewMessageData?.opinion?.selected && (
-                    <ul className="space-y-2">{viewMessageData?.opinion?.selected}</ul>
-                  )}
-                </p>
-              ) : (
-                <p className="text-[12px] leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                  {viewMessageData?.opinion?.selected.length > 0 && (
-                    <ul className="space-y-2">
-                      {viewMessageData?.opinion.selected.map((item: any, index: number) => (
-                        <li key={index}>- {item.question}</li>
-                      ))}
-                    </ul>
-                  )}
-                </p>
-              )}
-            </div>
+            {questStartData || singlePostData?.data.data[0] ? (
+              <QuestionCardWithToggle
+                questStartData={questStartData || singlePostData?.data.data[0]}
+                postProperties={'preview'}
+              />
+            ) : null}
           </div>
         )}
 
         <div className="flex justify-end">
-          <Button variant="cancel" onClick={() => setViewMsg(false)}>
+          <Button
+            variant="cancel"
+            disabled={page === 'preview'}
+            onClick={() => {
+              if (page !== 'preview') {
+                setViewMsg?.(false);
+              }
+            }}
+          >
             Go Back
           </Button>
         </div>

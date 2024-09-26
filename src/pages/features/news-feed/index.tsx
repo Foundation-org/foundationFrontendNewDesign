@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
-import { setAreNewsFeed } from '../../../features/quest/utilsSlice';
 import { useFetchNewsFeed } from '../../../services/queries/news-feed';
 import { newsFeedFilters, updateNewsFeedSearch } from '../../../features/news-feed/newsFeedSlice';
 import NewsFeedCard from './components/NewsFeedCard';
@@ -34,14 +33,6 @@ export default function NewsFeed() {
         return <NewsFeedCard key={post._id} data={post} innerRef={isLastPost ? ref : null} />;
       }),
     );
-  }, [data]);
-
-  useEffect(() => {
-    if (data?.pages[0].length !== 0) {
-      dispatch(setAreNewsFeed(true));
-    } else {
-      dispatch(setAreNewsFeed(false));
-    }
   }, [data]);
 
   if (isError) return <div>Error fetching articles</div>;
