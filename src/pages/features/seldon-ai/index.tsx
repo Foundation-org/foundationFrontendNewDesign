@@ -148,6 +148,10 @@ export default function SeldonAi() {
                   <p className="text-[12px] tablet:text-[16px]">{promptResponse?.abstract}</p>
                 </div>
                 <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+                  <h1 className="text-[16px] font-bold">Seo Summary:</h1>
+                  <p className="text-[12px] tablet:text-[16px]">{promptResponse?.seoSummary}</p>
+                </div>
+                <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
                   <h1 className="text-[16px] font-bold">Findings:</h1>
                   <ul className="space-y-4">
                     {promptResponse?.findings?.map((item, index) => (

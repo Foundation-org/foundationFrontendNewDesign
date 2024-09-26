@@ -169,6 +169,7 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
                 findings: promptResponse?.findings,
                 suggestion: promptResponse?.suggestions,
                 source: promptSources,
+                seoSummary: promptResponse?.seoSummary,
               } as any);
             }
           }}

@@ -21,6 +21,7 @@ export interface PromptResponse {
   findings: findings[];
   suggestions: Suggestions[];
   articleId: string;
+  seoSummary: string;
 }
 
 export interface SuggestedPostsProps {
