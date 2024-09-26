@@ -45,6 +45,8 @@ export default function SuggestedPosts({
     }
   };
 
+  console.log('promptResponse', promptResponse);
+
   const processQuestions = async () => {
     setLoading(true);
     try {
@@ -68,7 +70,9 @@ export default function SuggestedPosts({
   };
 
   useEffect(() => {
-    processQuestions();
+    if (promptResponse) {
+      processQuestions();
+    }
   }, [promptResponse]);
 
   // const { mutateAsync: handleSoucesUpdate } = useMutation({
