@@ -12,6 +12,8 @@ interface SeldonState {
   lambda: number;
   knowledgebase: string[];
   debug: boolean;
+  finding: number;
+  suggestion: number;
 }
 
 const initialState: SeldonState = {
@@ -27,6 +29,8 @@ const initialState: SeldonState = {
   lambda: 0.5,
   knowledgebase: ['user', 'about', 'knowladgebaseone'],
   debug: false,
+  finding: 1,
+  suggestion: 1,
 };
 
 export const seldonSlice = createSlice({

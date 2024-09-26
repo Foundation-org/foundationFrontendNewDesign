@@ -11,6 +11,7 @@ import {
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { Button } from '../../../../components/ui/Button';
 import Checkbox from '../../../../components/ui/Checkbox';
+import showToast from '../../../../components/ui/Toast';
 
 const ragCollections = [
   {
@@ -244,6 +245,78 @@ export default function SeldonInputs() {
             className="absolute right-3 top-1/2 -translate-y-1/2"
             onClick={() => {
               dispatch(resetSeldonProperty('lambda'));
+            }}
+          >
+            <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+          </button>
+        )}
+      </div>
+      <div className="relative">
+        <div className="relative h-[29px] w-full tablet:h-[45px]">
+          <input
+            type="number"
+            id="floating_outlined"
+            className="peer block h-full w-full appearance-none rounded-lg border border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-white-100 dark:bg-gray-200 dark:text-white-100 dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:text-[18.23px]"
+            value={seldonState.finding}
+            placeholder=""
+            onChange={(e) => {
+              const value = e.target.value;
+
+              if (value === '' || (parseInt(value, 10) >= 1 && parseInt(value, 10) <= 9)) {
+                dispatch(handleSeldonInput({ name: 'finding', value }));
+              } else {
+                showToast('warning', 'numberShouldBeBetween1and9');
+              }
+            }}
+          />
+          <label
+            htmlFor="floating_outlined"
+            className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-gray-400 px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:bg-white tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+          >
+            Findings
+          </label>
+        </div>
+        {seldonState.finding >= 0 && (
+          <button
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={() => {
+              dispatch(resetSeldonProperty('finding'));
+            }}
+          >
+            <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+          </button>
+        )}
+      </div>
+      <div className="relative">
+        <div className="relative h-[29px] w-full tablet:h-[45px]">
+          <input
+            type="number"
+            id="floating_outlined"
+            className="peer block h-full w-full appearance-none rounded-lg border border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-white-100 dark:bg-gray-200 dark:text-white-100 dark:focus:border-blue-500 tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:text-[18.23px]"
+            value={seldonState.suggestion}
+            placeholder=""
+            onChange={(e) => {
+              const value = e.target.value;
+
+              if (value === '' || (parseInt(value, 10) >= 1 && parseInt(value, 10) <= 9)) {
+                dispatch(handleSeldonInput({ name: 'suggestion', value }));
+              } else {
+                showToast('warning', 'numberShouldBeBetween1and9');
+              }
+            }}
+          />
+          <label
+            htmlFor="floating_outlined"
+            className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-gray-400 px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:bg-white tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+          >
+            Suggestions
+          </label>
+        </div>
+        {seldonState.suggestion >= 0 && (
+          <button
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={() => {
+              dispatch(resetSeldonProperty('suggestion'));
             }}
           >
             <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />

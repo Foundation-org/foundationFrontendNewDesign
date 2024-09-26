@@ -107,4 +107,5 @@ export const toastMessages = {
   noParticipants: 'There is no participants to send message to',
   articlePublished: 'Article published successfully',
   rankChoiceParticipantNotAllowed: 'Direct Message is not available for Rank Choice post',
+  numberShouldBeBetween1and9: 'Number should be between 1 and 9',
 } as const;
