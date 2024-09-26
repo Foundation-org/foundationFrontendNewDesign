@@ -17,12 +17,13 @@ export default function NewMessageForm() {
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const defaultReadReward = persistedConstants?.MINIMUM_READ_REWARD;
-  const { draft } = location?.state || {};
-  const { questStartData, selectedOptions } = useOutletContext();
-  const [optionsArr, setOptionsArr] = useState(selectedOptions || []);
+  const { draft, questStartData, selectedOptions, params } = location?.state || {};
+  // const { questStartData, selectedOptions, params } = useOutletContext();
+
+  const [optionsArr, setOptionsArr] = useState(selectedOptions);
   const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || '');
-  const [sub, setSub] = useState(draft?.subject || '');
-  const [msg, setMsg] = useState(draft?.message || '');
+  const [sub, setSub] = useState(draft?.subject || params?.message || '');
+  const [msg, setMsg] = useState(draft?.message || params?.subject || '');
   const [readReward, setReadReward] = useState(defaultReadReward);
   const [participants, setParticipants] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -166,7 +167,7 @@ export default function NewMessageForm() {
   };
 
   useEffect(() => {
-    if (advanceAnalytics) {
+    if (advanceAnalytics && optionsArr.length > 0) {
       setOptionsArr(selectedOptions);
       sortSelectedOptionsBySelectedStatus();
     }
@@ -209,13 +210,8 @@ export default function NewMessageForm() {
       <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
         <div className="flex items-center justify-between">
           <p className="summary-text text-center">
-            You are sending a message to{' '}
-            {advanceAnalytics ? (
-              <b>{selectedOptions?.filter((option) => option.selected).length === 0 ? 0 : participants}</b>
-            ) : (
-              <b>{handleNoOfUsers()}</b>
-            )}{' '}
-            total participants
+            You are sending a message to {advanceAnalytics ? <b>{participants}</b> : <b>{handleNoOfUsers()}</b>} total
+            participants
           </p>
           {advanceAnalytics && (
             <p

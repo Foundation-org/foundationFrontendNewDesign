@@ -95,7 +95,7 @@ export default function DMPreview() {
             sender: persistedUserInfo.uuid,
             receiver: '1',
             subject: location.state.params.subject,
-            shortMessage: location.state.params.subject,
+            shortMessage: location.state.params.message,
             viewed: false,
             senderMessageId: persistedUserInfo.uuid,
             isDeleted: false,
@@ -119,7 +119,8 @@ export default function DMPreview() {
             navigate('/direct-messaging/new-message?advance-analytics=true', {
               state: {
                 questStartData: location.state.questStartData,
-                selectedOptions: location.state.params.options,
+                selectedOptions: location.state?.questStartData?.QuestAnswers,
+                params: location.state.params,
                 key: new Date().getTime(),
               },
             });
