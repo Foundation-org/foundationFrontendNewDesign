@@ -1,29 +1,28 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { FaCircleArrowUp } from 'react-icons/fa6';
 import { PromptResponse } from '../../../types/seldon';
 import { useDispatch, useSelector } from 'react-redux';
+import { getArticles } from '../../../services/api/seldon';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
 import { getSeldonState, handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
+import Markdown from 'react-markdown';
 import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
-import Markdown from 'react-markdown';
-import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { getArticles } from '../../../services/api/seldon';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const articleId = params.get('articleId');
   const seldonState = useSelector(getSeldonState);
-  const [promptResponse, setPromptResponse] = useState<PromptResponse>();
+  const [promptResponse, setPromptResponse] = useState<PromptResponse | null>(null);
   const [promptSources, setPromptSources] = useState([]);
   const [promptDebug, setPromptDebug] = useState('');
-  const params = new URLSearchParams(location.search);
-  const updateArticle = params.get('update-article');
-  const articleId = params.get('articleId');
 
   const { data: apiResponse, isLoading } = useQuery({
     queryKey: ['article', articleId],
@@ -50,12 +49,10 @@ export default function SeldonAi() {
         localStorage.setItem('seldomResp', JSON.stringify(response?.data?.response));
         localStorage.setItem('seldonIds', JSON.stringify(response?.data?.source));
         localStorage.setItem('seldonDebug', JSON.stringify(response?.data?.debug));
-        // dispatch(handleSeldonInput({ name: 'title', value: response?.data?.response?.title }));
-        // dispatch(handleSeldonInput({ name: 'articleId', value: response?.data?.articleId }));
 
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
-          .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]); // Extract the ID from the filename
+          .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
 
         setPromptResponse(response.data.response);
         setPromptSources(ids);
@@ -66,39 +63,39 @@ export default function SeldonAi() {
     }
   };
 
-  // useEffect(() => {
-  //   const storedIds = localStorage.getItem('seldonIds');
+  useEffect(() => {
+    const storedIds = localStorage.getItem('seldonIds');
 
-  //   if (storedIds) {
-  //     try {
-  //       const ids = JSON.parse(storedIds)
-  //         .filter((fileName: string) => fileName.startsWith('post_'))
-  //         .map((fileName: string) => {
-  //           const match = fileName.match(/post_(\w+)\.pdf/);
-  //           return match ? match[1] : null;
-  //         })
-  //         .filter((id: string | null) => id !== null);
+    if (storedIds) {
+      try {
+        const ids = JSON.parse(storedIds)
+          .filter((fileName: string) => fileName.startsWith('post_'))
+          .map((fileName: string) => {
+            const match = fileName.match(/post_(\w+)\.pdf/);
+            return match ? match[1] : null;
+          })
+          .filter((id: string | null) => id !== null);
 
-  //       setPromptSources(ids);
-  //     } catch (error) {
-  //       console.error('Failed to parse JSON from localStorage:', error);
-  //       setPromptSources([]);
-  //     }
-  //   }
-  // }, [localStorage.getItem('seldonIds')]);
+        setPromptSources(ids);
+      } catch (error) {
+        console.error('Failed to parse JSON from localStorage:', error);
+        setPromptSources([]);
+      }
+    }
+  }, [localStorage.getItem('seldonIds')]);
 
-  // useEffect(() => {
-  //   const storedResponse = localStorage.getItem('seldomResp');
+  useEffect(() => {
+    const storedResponse = localStorage.getItem('seldomResp');
 
-  //   if (storedResponse) {
-  //     try {
-  //       setPromptResponse(JSON.parse(storedResponse));
-  //     } catch (error) {
-  //       console.error('Failed to parse JSON from localStorage:', error);
-  //       setPromptResponse(null);
-  //     }
-  //   }
-  // }, [localStorage.getItem('seldomResp')]);
+    if (storedResponse) {
+      try {
+        setPromptResponse(JSON.parse(storedResponse));
+      } catch (error) {
+        console.error('Failed to parse JSON from localStorage:', error);
+        setPromptResponse(null);
+      }
+    }
+  }, [localStorage.getItem('seldomResp')]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -118,7 +115,6 @@ export default function SeldonAi() {
           placeholder="Message Seldon"
           onChange={(e) => {
             dispatch(handleSeldonInput({ name: 'question', value: e.target.value }));
-            // dispatch(handleSeldonInput({ name: 'articleId', value: false }));
           }}
           onKeyDown={handleKeyDown}
           value={seldonState.question}
@@ -174,7 +170,6 @@ export default function SeldonAi() {
               promptResponse={promptResponse!}
               promptSources={promptSources}
               articleId={promptResponse?.articleId || null}
-              handleFormSubmit={handleFormSubmit}
             />
           )}
         </div>

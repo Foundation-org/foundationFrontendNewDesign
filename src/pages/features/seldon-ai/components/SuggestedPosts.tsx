@@ -10,16 +10,9 @@ import { usePublishArticleMutation, useChatGptDataMutation } from '../../../../s
 import { addNewOption, addQuestion, setOptionsByArray } from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
-import { useMutation } from '@tanstack/react-query';
-import { updateSources } from '../../../../services/api/seldon';
-import { getSeldonState, handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
+import { getSeldonState } from '../../../../features/seldon-ai/seldonSlice';
 
-export default function SuggestedPosts({
-  promptResponse,
-  promptSources,
-  articleId,
-  handleFormSubmit,
-}: SuggestedPostsProps) {
+export default function SuggestedPosts({ promptResponse, promptSources, articleId }: SuggestedPostsProps) {
   const dispatch = useDispatch();
   const location = useLocation();
   const seldonState = useSelector(getSeldonState);
@@ -44,8 +37,6 @@ export default function SuggestedPosts({
       return { question: value, errorMessage: 'ERROR' }; // Handle or return a default error
     }
   };
-
-  console.log('promptResponse', promptResponse);
 
   const processQuestions = async () => {
     setLoading(true);
@@ -75,17 +66,6 @@ export default function SuggestedPosts({
     }
   }, [promptResponse]);
 
-  // const { mutateAsync: handleSoucesUpdate } = useMutation({
-  //   mutationFn: updateSources,
-  //   onSuccess: () => {
-  //     // localStorage.removeItem('isSourcesUpdated');
-  //     // dispatch(handleSeldonInput({ name: 'update', value: true }));
-  //     handleFormSubmit();
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  // });
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
   const handleUpdateArticle = async () => {
