@@ -24,7 +24,7 @@ export default function NewMessageForm() {
   const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || '');
   const [sub, setSub] = useState(draft?.subject || params?.message || '');
   const [msg, setMsg] = useState(draft?.message || params?.subject || '');
-  const [readReward, setReadReward] = useState(defaultReadReward);
+  const [readReward, setReadReward] = useState(params?.readReward || defaultReadReward);
   const [participants, setParticipants] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [searchParams] = useSearchParams();
@@ -140,7 +140,7 @@ export default function NewMessageForm() {
     };
 
     fetchParticipants(params);
-  }, []);
+  }, [optionsArr]);
 
   const handleNoOfUsers = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -172,6 +172,8 @@ export default function NewMessageForm() {
       sortSelectedOptionsBySelectedStatus();
     }
   }, [selectedOptions]);
+
+  console.log('optionsArr', optionsArr);
 
   return (
     <div className="space-y-[9px] tablet:space-y-[15px]">

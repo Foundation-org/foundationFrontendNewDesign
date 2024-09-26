@@ -57,6 +57,14 @@ export default function DMPreview() {
     }
   };
 
+  const updateOptionSelected = () => {
+    const initialOptions = location.state.questStartData?.QuestAnswers || [];
+    return initialOptions.map((option: any) => ({
+      ...option,
+      selected: location.state.params.options.includes(option.question) ? true : false,
+    }));
+  };
+
   return (
     <div className="space-y-[9px] tablet:space-y-[15px]">
       <div className="relative h-fit w-full max-w-[730px] space-y-[9px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:space-y-[15px] tablet:px-5 tablet:py-6">
@@ -119,7 +127,7 @@ export default function DMPreview() {
             navigate('/direct-messaging/new-message?advance-analytics=true', {
               state: {
                 questStartData: location.state.questStartData,
-                selectedOptions: location.state?.questStartData?.QuestAnswers,
+                selectedOptions: updateOptionSelected(),
                 params: location.state.params,
                 key: new Date().getTime(),
               },

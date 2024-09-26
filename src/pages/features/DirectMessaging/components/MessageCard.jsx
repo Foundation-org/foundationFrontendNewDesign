@@ -129,7 +129,9 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
           {filter !== 'sent' && (
             <Button
               variant={'danger'}
+              disabled={location.pathname === '/direct-messaging/preview'}
               onClick={() => {
+                if (location.pathname === '/direct-messaging/preview') return;
                 setLoading(true);
                 filter === 'deleted' ? handleDelete(item._id, filter) : handleTrash(item._id, filter);
               }}
@@ -161,7 +163,9 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
           ) : (
             <Button
               variant={item?.viewed ? 'change' : 'submit'}
+              disabled={location.pathname === '/direct-messaging/preview'}
               onClick={() => {
+                if (location.pathname === '/direct-messaging/preview') return;
                 setViewMsg(true);
                 handleViewMessage(item._id, item.sender, item.receiver, item);
               }}
