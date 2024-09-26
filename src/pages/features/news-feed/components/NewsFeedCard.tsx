@@ -53,7 +53,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           {data?.title}
         </h4>
         <p className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          {data?.abstract}
+          {data?.seoSummary}
         </p>
         <div className="flex w-full items-center justify-between gap-4">
           {/* <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button> */}

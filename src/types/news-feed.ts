@@ -15,6 +15,7 @@ interface articleType {
   title: string;
   updatedAt: string;
   userUuid: string;
+  seoSummary: string;
   suggestion: suggestions[];
   __v: number;
 }
