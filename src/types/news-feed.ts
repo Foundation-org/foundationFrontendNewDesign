@@ -5,6 +5,7 @@ interface suggestions {
 }
 
 interface articleType {
+  prompt: string;
   _id: string;
   abstract: string;
   createdAt: string;

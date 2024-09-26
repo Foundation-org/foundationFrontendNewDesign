@@ -27,13 +27,21 @@ export default function SourcePosts({
 
   const transformSelectedPost = (selectedPost: any) => {
     setSelectedPost(null);
-    const storedIds = localStorage.getItem('seldonIds');
-    let seldonIds: string[] = storedIds ? JSON.parse(storedIds) : [];
-    seldonIds.push(`post_${selectedPost._id}.pdf`);
-    localStorage.setItem('seldonIds', JSON.stringify(seldonIds));
-    setPromptSources([selectedPost._id, ...promptSources]);
-    localStorage.setItem('isSourcesUpdated', 'true');
+    const newId = selectedPost._id;
+    let storedIds = localStorage.getItem('seldonIds');
+    let seldonIdsArray = storedIds ? JSON.parse(storedIds) : [];
+    if (!seldonIdsArray.includes(newId)) {
+      seldonIdsArray.unshift(`post_${newId}`);
+    }
+    localStorage.setItem('seldonIds', JSON.stringify(seldonIdsArray));
+    setPromptSources((prevPromptSources: string[]) => {
+      if (!prevPromptSources.includes(newId)) {
+        return [newId, ...prevPromptSources];
+      }
+      return prevPromptSources;
+    });
   };
+
   useEffect(() => {
     const handleSearchPost = async () => {
       setSearchPostLoad(true);

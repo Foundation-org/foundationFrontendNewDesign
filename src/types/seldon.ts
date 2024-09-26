@@ -9,25 +9,25 @@ export interface SuggestedPost {
 export interface Suggestions {
   statement: string;
   options: string[];
-  _id:any
+  _id: any;
 }
-export interface findings{
-  heading:String;
-  content:String;
+export interface findings {
+  heading: String;
+  content: String;
 }
 export interface PromptResponse {
   title: string;
   abstract: string;
   findings: findings[];
   suggestions: Suggestions[];
-  articleId: any
+  articleId: string;
 }
 
 export interface SuggestedPostsProps {
   promptResponse: PromptResponse;
   promptSources: string[];
-  articleId?: any
-  handleFormSubmit?:any
+  articleId?: any;
+  handleFormSubmit?: any;
 }
 
 export interface PostArticlesCardProps {
