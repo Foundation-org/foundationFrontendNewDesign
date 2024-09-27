@@ -175,7 +175,7 @@ export const legacy = [
 
 export const pseudo = [
   {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/pseudo.svg`,
     title: 'Pseudo',
     ButtonColor: 'blue',
     ButtonText: 'Add',

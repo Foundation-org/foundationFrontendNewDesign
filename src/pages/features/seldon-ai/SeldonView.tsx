@@ -10,7 +10,7 @@ import Topbar from '../../Dashboard/components/Topbar';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
 import DashboardLayout from '../../Dashboard/components/DashboardLayout';
-import { formatDate } from '../../../utils/utils';
+import { formatDateMDY } from '../../../utils/utils';
 
 export default function SeldonView() {
   const location = useLocation();
@@ -60,7 +60,7 @@ export default function SeldonView() {
                   <div className="space-y-1">
                     <h1 className="text-[16px] font-bold tablet:text-[24px]">{response?.data?.title}</h1>
                     <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
-                    <p className="text-[10px] tablet:text-[16px]">Posted: {formatDate(response?.data.createdAt)}</p>
+                    <p className="text-[10px] tablet:text-[16px]">Posted: {formatDateMDY(response?.data.createdAt)}</p>
                   </div>
                   <p className="text-[12px] tablet:text-[20px]">{response?.data?.abstract}</p>
                   <div className="flex flex-col gap-2 tablet:mt-[10px] tablet:gap-5">

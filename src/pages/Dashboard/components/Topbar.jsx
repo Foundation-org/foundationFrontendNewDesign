@@ -16,12 +16,13 @@ import { appVersion } from '../../../version';
 import { getRecievedMessages } from '../../../services/api/directMessagingApi';
 
 const Topbar = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(homeFilterActions.getFilters);
-  const navigate = useNavigate();
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
@@ -70,6 +71,8 @@ const Topbar = () => {
     navigate('/');
   };
 
+  console.log('isPseudoBadge', isPseudoBadge);
+
   return (
     <div className="border-blue-100 border-b-blue-100 bg-blue-100 dark:border-b-gray-100 dark:bg-gray-200 tablet:border-b-[1.85px]">
       <div className="static mx-auto flex h-[48px] max-h-[48px] min-h-[48px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-20 tablet:min-h-20 laptop:h-[92px] laptop:max-h-[69px] laptop:min-h-[69px] laptop:flex-row">
@@ -110,7 +113,7 @@ const Topbar = () => {
             <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[14rem] tablet:min-w-[14rem] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
               {TopbarItems.filter(
                 (item) =>
-                  (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor') ||
+                  (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor' && isPseudoBadge) ||
                   (item.id !== 5 && item.id !== 6),
               ).map((item) => (
                 <Link
@@ -161,7 +164,7 @@ const Topbar = () => {
         <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
           {TopbarItems.filter(
             (item) =>
-              (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor') ||
+              (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor' && isPseudoBadge) ||
               (item.id !== 5 && item.id !== 6),
           ).map((item) => (
             <Link

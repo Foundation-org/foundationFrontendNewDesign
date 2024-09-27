@@ -10,7 +10,7 @@ import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
-import { formatDate } from '../../../utils/utils';
+import { formatDateMDY } from '../../../utils/utils';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
@@ -101,7 +101,7 @@ export default function SeldonAi() {
               <div className="space-y-1">
                 <h1 className="text-[16px] font-bold tablet:text-[24px]">{getSeldonDataState.title}</h1>
                 <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
-                <p className="text-[10px] tablet:text-[16px]">Posted: {formatDate(getSeldonDataState.createdAt)}</p>
+                <p className="text-[10px] tablet:text-[16px]">Posted: {formatDateMDY(getSeldonDataState.createdAt)}</p>
               </div>
               <p className="text-[12px] tablet:text-[20px]">
                 <strong>Seo Summary </strong>

@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { formatDate } from '../../../../utils/utils';
+import { formatDateMDY } from '../../../../utils/utils';
 import { Button } from '../../../../components/ui/Button';
 import { NewsFeedPropsType } from '../../../../types/news-feed';
 import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
@@ -10,6 +10,8 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
 
   const handleUpdateArticle = () => {
     dispatch(
@@ -38,7 +40,9 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         <h4 className="text-[0.6rem] font-semibold text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
           {data?.title}
         </h4>
-        <p className="text-[0.6rem] font-normal text-white tablet:text-[14px]">Posted {formatDate(data.createdAt)}</p>
+        <p className="text-[0.6rem] font-normal text-white tablet:text-[14px]">
+          Posted {formatDateMDY(data.createdAt)}
+        </p>
       </div>
       {/* Body */}
       <div className="flex flex-col justify-between gap-1.5 rounded-b-[12.3px] border-x-2 border-b-2 border-blue-100 bg-white p-[0.87rem] dark:border-accent-100 dark:bg-gray-200 tablet:gap-4 tablet:rounded-b-[15px] tablet:p-4">
@@ -46,13 +50,15 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           {data?.seoSummary}
         </p>
         <div className="flex w-full items-center justify-between gap-4">
-          <Button
-            variant={'submit'}
-            className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
-            onClick={handleUpdateArticle}
-          >
-            Update Article
-          </Button>
+          {isPseudoBadge && (
+            <Button
+              variant={'submit'}
+              className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
+              onClick={handleUpdateArticle}
+            >
+              Update Article
+            </Button>
+          )}
           <Button
             variant={'g-submit'}
             className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
