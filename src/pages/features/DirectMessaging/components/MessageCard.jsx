@@ -9,8 +9,6 @@ import { calculateTimeAgo } from '../../../../utils/utils';
 import api from '../../../../services/api/Axios';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage }) {
-  console.log(item, filter);
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);

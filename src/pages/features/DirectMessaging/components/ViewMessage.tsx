@@ -5,6 +5,7 @@ import { Button } from '../../../../components/ui/Button';
 import { calculateTimeAgo } from '../../../../utils/utils';
 import { getSinglePost } from '../../../../services/api/homepageApis';
 import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
+import { FaSpinner } from 'react-icons/fa';
 
 interface ViewProps {
   setViewMsg?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +20,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(viewMessageData?.createdAt), [viewMessageData?.createdAt]);
 
-  const { data: singlePostData } = useQuery({
+  const { data: singlePostData, isPending } = useQuery({
     queryKey: ['singlePostData', persistedUserInfo.uuid, viewMessageData?.postId],
     queryFn: async () => getSinglePost({ uuid: persistedUserInfo.uuid, qId: viewMessageData?.postId }),
     enabled: !!viewMessageData?.postId,
@@ -52,40 +53,48 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
       </div>
       {/* Body */}
       <div className="m-3 flex flex-col gap-3 tablet:m-5 tablet:gap-5">
-        <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[22px] tablet:leading-[22px]">
-          {viewMessageData?.subject}
-        </h1>
-        <p className="pl-3 text-[10px] font-medium leading-[16px] text-[#9A9A9A] dark:text-gray-300 tablet:pl-7 tablet:text-[20px] tablet:leading-[32px]">
-          {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
-        </p>
-
-        {viewMessageData?.postQuestion && filter !== 'sent' && (
-          <div className="mt-5 space-y-5">
-            <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-              You receive this message because of you engagement in the below post.
-            </h1>
-            {questStartData || singlePostData?.data.data[0] ? (
-              <QuestionCardWithToggle
-                questStartData={questStartData || singlePostData?.data.data[0]}
-                postProperties={'preview'}
-              />
-            ) : null}
+        {page !== 'preview' && isPending ? (
+          <div className="flex items-center justify-center tablet:my-5">
+            <FaSpinner className="animate-spin text-[1rem] text-blue-100 tablet:text-[3rem]" />
           </div>
-        )}
+        ) : (
+          <>
+            <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[22px] tablet:leading-[22px]">
+              {viewMessageData?.subject}
+            </h1>
+            <p className="pl-3 text-[10px] font-medium leading-[16px] text-[#9A9A9A] dark:text-gray-300 tablet:pl-7 tablet:text-[20px] tablet:leading-[32px]">
+              {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
+            </p>
 
-        <div className="flex justify-end">
-          <Button
-            variant="cancel"
-            disabled={page === 'preview'}
-            onClick={() => {
-              if (page !== 'preview') {
-                setViewMsg?.(false);
-              }
-            }}
-          >
-            Go Back
-          </Button>
-        </div>
+            {viewMessageData?.postQuestion && filter !== 'sent' && (
+              <div className="mt-5 space-y-5">
+                <h1 className="text-[12px] font-semibold leading-[12px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                  You receive this message because of you engagement in the below post.
+                </h1>
+                {questStartData || singlePostData?.data.data[0] ? (
+                  <QuestionCardWithToggle
+                    questStartData={questStartData || singlePostData?.data.data[0]}
+                    postProperties={'preview'}
+                  />
+                ) : null}
+              </div>
+            )}
+
+            <div className="flex justify-end">
+              <Button
+                variant="cancel"
+                disabled={page === 'preview'}
+                onClick={() => {
+                  if (page !== 'preview') {
+                    setViewMsg?.(false);
+                  }
+                }}
+              >
+                Go Back
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
