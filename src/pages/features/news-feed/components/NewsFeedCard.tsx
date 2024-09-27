@@ -50,7 +50,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           {data?.seoSummary}
         </p>
         <div className="flex w-full items-center justify-between gap-4">
-          {isPseudoBadge && (
+          {isPseudoBadge ? (
             <Button
               variant={'submit'}
               className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
@@ -58,6 +58,8 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
             >
               Update Article
             </Button>
+          ) : (
+            <button className="w-full cursor-default">&#x200B;</button>
           )}
           <Button
             variant={'g-submit'}

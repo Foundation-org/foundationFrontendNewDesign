@@ -111,11 +111,20 @@ const Topbar = () => {
             </div>
             {/* Mobile */}
             <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[14rem] tablet:min-w-[14rem] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
-              {TopbarItems.filter(
-                (item) =>
-                  (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor' && isPseudoBadge) ||
-                  (item.id !== 5 && item.id !== 6),
-              ).map((item) => (
+              {TopbarItems.filter((item) => {
+                if (persistedUserInfo.role === 'guest' || persistedUserInfo.role === 'visitor') {
+                  // Hide both item.id 5 and 6 for guest or visitor roles
+                  return item.id !== 5 && item.id !== 6;
+                }
+
+                // Hide item.id 6 only if isPseudoBadge is true
+                if (isPseudoBadge && item.id === 6) {
+                  return false;
+                }
+
+                // For all other cases, show the item
+                return true;
+              }).map((item) => (
                 <Link
                   key={item.id}
                   to={
@@ -162,11 +171,20 @@ const Topbar = () => {
 
         {/* Desktop */}
         <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
-          {TopbarItems.filter(
-            (item) =>
-              (persistedUserInfo.role !== 'guest' && persistedUserInfo.role !== 'visitor' && isPseudoBadge) ||
-              (item.id !== 5 && item.id !== 6),
-          ).map((item) => (
+          {TopbarItems.filter((item) => {
+            if (persistedUserInfo.role === 'guest' || persistedUserInfo.role === 'visitor') {
+              // Hide both item.id 5 and 6 for guest or visitor roles
+              return item.id !== 5 && item.id !== 6;
+            }
+
+            // Hide item.id 6 only if isPseudoBadge is true
+            if (!isPseudoBadge && item.id === 6) {
+              return false;
+            }
+
+            // For all other cases, show the item
+            return true;
+          }).map((item) => (
             <Link
               key={item.id}
               to={

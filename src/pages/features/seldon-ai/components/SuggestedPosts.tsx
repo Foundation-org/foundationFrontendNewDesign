@@ -155,7 +155,7 @@ export default function SuggestedPosts() {
         </div>
       </div>
       <div className="flex w-full items-center justify-between gap-4">
-        {getSeldonDataState.articleId ? (
+        {!location.pathname.includes('/r') ? (
           <Button
             variant="g-submit"
             className="w-full"

@@ -24,6 +24,7 @@ export default function DirectMessaging() {
   const [viewMessageData, setViewMessageData] = useState();
   const [search, setSearch] = useState('');
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const { mutateAsync: ViewAMessage } = useMutation({
     mutationFn: viewMessage,
@@ -97,16 +98,18 @@ export default function DirectMessaging() {
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] border-[1.85px] border-gray-250 bg-white px-3 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-5 tablet:py-[18.73px]">
       <div className={`${addNewMsg || viewMsg ? 'hidden' : 'block'}`}>
-        <div className="hidden justify-end pb-5 laptop:flex">
-          <Button
-            variant="addOption"
-            onClick={() => {
-              navigate('/direct-messaging/new-message');
-            }}
-          >
-            + New Message
-          </Button>
-        </div>
+        {isPseudoBadge && (
+          <div className="hidden justify-end pb-5 laptop:flex">
+            <Button
+              variant="addOption"
+              onClick={() => {
+                navigate('/direct-messaging/new-message');
+              }}
+            >
+              + New Message
+            </Button>
+          </div>
+        )}
         <div className="relative h-6 tablet:h-[42px]">
           <input
             type="text"

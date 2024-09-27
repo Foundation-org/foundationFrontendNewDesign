@@ -41,6 +41,7 @@ export default function DashboardLayout({ children }) {
   const questUtilsState = useSelector(getQuestUtils);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const persistedConstants = useSelector(getConstantsValues);
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
@@ -371,7 +372,7 @@ export default function DashboardLayout({ children }) {
                     <>
                       {location.pathname === '/direct-messaging/new-message' ? null : location.pathname.startsWith(
                           '/direct-messaging',
-                        ) ? (
+                        ) && isPseudoBadge ? (
                         <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
                           <Button
                             variant="hollow-submit2"

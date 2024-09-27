@@ -64,46 +64,48 @@ export default function SourcePosts() {
           See what posts you contributed to that were used or engage with posts and earn
         </h5>
       </div>
-      <div className="relative w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[10px] tablet:border-[3px]">
-        <TextareaAutosize
-          value={(selectedPost && selectedPost?.Question) ?? searchPost}
-          placeholder="Add more sources..."
-          className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none dark:border-gray-100 dark:bg-transparent dark:text-gray-300 tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px]"
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setSelectedPost(null);
-            setSearchPost(e.target.value);
-          }}
-        />
-        {searchPost !== '' &&
-          (searchPostLoad ? (
-            <div className="flex w-full items-center justify-center py-6">
-              <FaSpinner className="size-6 animate-spin text-blue-200 tablet:size-16" />
-            </div>
-          ) : (
-            <ul className="h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
-              {searchResult?.map((post: any) => (
-                <li
-                  key={post._id}
-                  className="cursor-pointer px-4 py-[6px] tablet:py-2"
-                  onClick={() => {
-                    setSearchPost('');
-                    setSearchResult([]);
-                    transformSelectedPost(post);
-                  }}
-                >
-                  <QuestionCardWithToggle questStartData={post} />
-                </li>
-              ))}
-            </ul>
-          ))}
-      </div>
+      {!location.pathname.includes('/r') && (
+        <div className="relative w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[10px] tablet:border-[3px]">
+          <TextareaAutosize
+            value={(selectedPost && selectedPost?.Question) ?? searchPost}
+            placeholder="Add more sources..."
+            className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none dark:border-gray-100 dark:bg-transparent dark:text-gray-300 tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px]"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setSelectedPost(null);
+              setSearchPost(e.target.value);
+            }}
+          />
+          {searchPost !== '' &&
+            (searchPostLoad ? (
+              <div className="flex w-full items-center justify-center py-6">
+                <FaSpinner className="size-6 animate-spin text-blue-200 tablet:size-16" />
+              </div>
+            ) : (
+              <ul className="h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
+                {searchResult?.map((post: any) => (
+                  <li
+                    key={post._id}
+                    className="cursor-pointer px-4 py-[6px] tablet:py-2"
+                    onClick={() => {
+                      setSearchPost('');
+                      setSearchResult([]);
+                      transformSelectedPost(post);
+                    }}
+                  >
+                    <QuestionCardWithToggle questStartData={post} />
+                  </li>
+                ))}
+              </ul>
+            ))}
+        </div>
+      )}
       <div className="flex flex-col gap-4">
         {isFetching ? (
           <DotsLoading />
         ) : (
           sourcePosts?.slice(0, showMorePosts ? sourcePosts.length : 3).map((post: any, index: number) => (
             <div key={index + 1} className="relative">
-              {getSeldonDataState.sources.length > 1 && (
+              {getSeldonDataState.sources.length > 1 && !location.pathname.includes('/r') && (
                 <button
                   className="absolute -right-3 -top-3 flex size-8 items-center justify-center rounded-full bg-gray-100"
                   onClick={() => {
