@@ -1,39 +1,21 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-scroll';
 import { FaCircleArrowUp } from 'react-icons/fa6';
-import { PromptResponse } from '../../../types/seldon';
 import { useDispatch, useSelector } from 'react-redux';
-import { getArticles } from '../../../services/api/seldon';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
 import { getSeldonState, handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
+import { addDebug, getSeldonDataStates, setSeldonData } from '../../../features/seldon-ai/seldonDataSlice';
 import Markdown from 'react-markdown';
 import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
+import { formatDate } from '../../../utils/utils';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const articleId = params.get('articleId');
   const seldonState = useSelector(getSeldonState);
-  const [promptResponse, setPromptResponse] = useState<PromptResponse | null>(null);
-  const [promptSources, setPromptSources] = useState([]);
-  const [promptDebug, setPromptDebug] = useState('');
-
-  const { data: apiResponse, isLoading } = useQuery({
-    queryKey: ['article', articleId],
-    queryFn: () => getArticles(articleId),
-    enabled: !!articleId,
-  });
-
-  useEffect(() => {
-    setPromptResponse({ ...apiResponse?.data, articleId });
-    setPromptSources(apiResponse?.data.source);
-  }, [apiResponse]);
+  const getSeldonDataState = useSelector(getSeldonDataStates);
 
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
@@ -46,56 +28,33 @@ export default function SeldonAi() {
       } as any);
 
       if (response?.status === 200) {
-        localStorage.setItem('seldomResp', JSON.stringify(response?.data?.response));
-        localStorage.setItem('seldonIds', JSON.stringify(response?.data?.source));
-        localStorage.setItem('seldonDebug', JSON.stringify(response?.data?.debug));
-
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
           .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
 
-        setPromptResponse(response.data.response);
-        setPromptSources(ids);
-        setPromptDebug(response.data?.debug);
+        if (response.data.debug) {
+          dispatch(addDebug({ debug: response.data.debug, sources: ids }));
+        } else {
+          dispatch(
+            setSeldonData({
+              debug: response.data.debug,
+              title: response.data.response.title,
+              abstract: response.data.response.abstract,
+              seoSummary: response.data.response.seoSummary,
+              findings: response.data.response.findings,
+              suggestions: response.data.response.suggestions,
+              createdAt: new Date().toISOString(),
+              sources: ids,
+              articleId: response.data.response?.articleId ? response.data.response.articleId : '',
+              prompt: seldonState.question,
+            }),
+          );
+        }
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
     }
   };
-
-  useEffect(() => {
-    const storedIds = localStorage.getItem('seldonIds');
-
-    if (storedIds) {
-      try {
-        const ids = JSON.parse(storedIds)
-          .filter((fileName: string) => fileName.startsWith('post_'))
-          .map((fileName: string) => {
-            const match = fileName.match(/post_(\w+)\.pdf/);
-            return match ? match[1] : null;
-          })
-          .filter((id: string | null) => id !== null);
-
-        setPromptSources(ids);
-      } catch (error) {
-        console.error('Failed to parse JSON from localStorage:', error);
-        setPromptSources([]);
-      }
-    }
-  }, [localStorage.getItem('seldonIds')]);
-
-  useEffect(() => {
-    const storedResponse = localStorage.getItem('seldomResp');
-
-    if (storedResponse) {
-      try {
-        setPromptResponse(JSON.parse(storedResponse));
-      } catch (error) {
-        console.error('Failed to parse JSON from localStorage:', error);
-        setPromptResponse(null);
-      }
-    }
-  }, [localStorage.getItem('seldomResp')]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -130,52 +89,62 @@ export default function SeldonAi() {
       {isPending ? (
         <DotsLoading />
       ) : (
-        <div className="flex flex-col gap-4 pt-4 tablet:pt-8">
-          {promptDebug ? (
+        <div id="containerElement" className="flex flex-col gap-4 pt-4 text-gray-500 tablet:pt-8">
+          {getSeldonDataState.debug ? (
             <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Debug Mode:</h1>
               <br></br>
-              <Markdown>{promptDebug}</Markdown>
+              <Markdown>{getSeldonDataState.debug}</Markdown>
             </div>
           ) : (
-            promptResponse && (
-              <>
-                <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-                  <h1 className="text-[12px] font-bold tablet:text-[16px]">{promptResponse?.title}</h1>
-                </div>
-                <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-                  <h1 className="text-[16px] font-bold">Abstract:</h1>
-                  <p className="text-[12px] tablet:text-[16px]">{promptResponse?.abstract}</p>
-                </div>
-                <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-                  <h1 className="text-[16px] font-bold">Seo Summary:</h1>
-                  <p className="text-[12px] tablet:text-[16px]">{promptResponse?.seoSummary}</p>
-                </div>
-                <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-                  <h1 className="text-[16px] font-bold">Findings:</h1>
-                  <ul className="space-y-4">
-                    {promptResponse?.findings?.map((item, index) => (
-                      <>
-                        <li key={index} className="text-[12px] tablet:text-[16px]">
-                          <strong className="text-[12px] font-bold tablet:text-[16px]">{item.heading}</strong>:{' '}
-                          {item.content}
-                        </li>
-                      </>
-                    ))}
-                  </ul>
-                </div>
-              </>
-            )
+            <>
+              <div className="space-y-1">
+                <h1 className="text-[16px] font-bold tablet:text-[24px]">{getSeldonDataState.title}</h1>
+                <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
+                <p className="text-[10px] tablet:text-[16px]">Posted: {formatDate(getSeldonDataState.createdAt)}</p>
+              </div>
+              <p className="text-[12px] tablet:text-[20px]">
+                <strong>Seo Summary </strong>
+                {getSeldonDataState.seoSummary}
+              </p>
+              <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.abstract}</p>
+              <div className="flex flex-col gap-2 tablet:mt-[10px] tablet:gap-5">
+                <Link
+                  to="posts-list"
+                  containerId="containerElement"
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
+                >
+                  View posts that informed this article
+                </Link>
+                <Link
+                  to="posts-ideas"
+                  containerId="containerElement"
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
+                >
+                  Get post ideas and earn FDX
+                </Link>
+              </div>
+              <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
+              <ol className="list-disc space-y-4">
+                {getSeldonDataState.findings.map((item: { heading: string; content: string }, index: number) => (
+                  <li key={index} className="ml-6 text-[12px] tablet:ml-10 tablet:text-[20px]">
+                    <strong className="font-bold">{item.heading}:</strong> {item.content}
+                  </li>
+                ))}
+              </ol>
+            </>
           )}
-          <h1 className="text-[16px] font-bold">Sourced Posts:</h1>
-          <SourcePosts promptSources={promptSources} setPromptSources={setPromptSources} />
-          {!promptDebug && (
-            <SuggestedPosts
-              promptResponse={promptResponse!}
-              promptSources={promptSources}
-              articleId={promptResponse?.articleId || null}
-            />
-          )}
+
+          <SourcePosts />
+          {!getSeldonDataState.debug && <SuggestedPosts />}
         </div>
       )}
     </div>

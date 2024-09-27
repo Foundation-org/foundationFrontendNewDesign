@@ -15,20 +15,6 @@ export interface findings {
   heading: String;
   content: String;
 }
-export interface PromptResponse {
-  title: string;
-  abstract: string;
-  findings: findings[];
-  suggestions: Suggestions[];
-  articleId: string;
-  seoSummary: string;
-}
-
-export interface SuggestedPostsProps {
-  promptResponse: PromptResponse;
-  promptSources: string[];
-  articleId?: any;
-}
 
 export interface PostArticlesCardProps {
   questStartData: any;

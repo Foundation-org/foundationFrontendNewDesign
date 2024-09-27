@@ -25,12 +25,23 @@ import extrasReducer from '../features/extras/extrasSlice';
 import seldonReducer from '../features/seldon-ai/seldonSlice';
 import newsFeedReducer from '../features/news-feed/newsFeedSlice';
 import articleReducer from '../features/seldon-ai/articleSlice';
+import seldonDataReducer from '../features/seldon-ai/seldonDataSlice';
 
 const persistConfig = {
   key: 'persist-store',
   version: 1,
   storage,
-  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters', 'systemConstants', 'userSettings', 'ledger', 'seldon'],
+  whitelist: [
+    'utils',
+    'auth',
+    'filters',
+    'bookmarkFilters',
+    'systemConstants',
+    'userSettings',
+    'ledger',
+    'seldon',
+    'seldonData',
+  ],
 };
 
 const reducer = combineReducers({
@@ -55,6 +66,7 @@ const reducer = combineReducers({
   seldon: seldonReducer,
   newsFeed: newsFeedReducer,
   article: articleReducer,
+  seldonData: seldonDataReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

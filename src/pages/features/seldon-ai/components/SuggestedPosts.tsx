@@ -5,22 +5,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../components/ui/Button';
 import { transformPromptSuggestions } from '../../../../utils/seldon';
 import { questionValidation } from '../../../../services/api/questsApi';
-import { SuggestedPost, SuggestedPostsProps } from '../../../../types/seldon';
+import { SuggestedPost } from '../../../../types/seldon';
 import { usePublishArticleMutation, useChatGptDataMutation } from '../../../../services/mutations/seldon-ai';
 import { addNewOption, addQuestion, setOptionsByArray } from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
 import { getSeldonState } from '../../../../features/seldon-ai/seldonSlice';
+import { getSeldonDataStates, setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
+import { Element } from 'react-scroll';
 
-export default function SuggestedPosts({ promptResponse, promptSources, articleId }: SuggestedPostsProps) {
+export default function SuggestedPosts() {
   const dispatch = useDispatch();
   const location = useLocation();
   const seldonState = useSelector(getSeldonState);
+  const getSeldonDataState = useSelector(getSeldonDataStates);
   const { protocol, host } = window.location;
   const [suggestedPosts, setSuggestedPosts] = useState<SuggestedPost[]>([]);
   const [loading, setLoading] = useState(false);
-  const params = new URLSearchParams(location.search);
-  const updateArticle = params.get('update-article');
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();
 
@@ -41,7 +42,7 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
   const processQuestions = async () => {
     setLoading(true);
     try {
-      const processedQuestions = transformPromptSuggestions(promptResponse?.suggestions);
+      const processedQuestions = transformPromptSuggestions(getSeldonDataState.suggestions);
       const results = await Promise.all(
         processedQuestions?.map(async (item) => {
           const { errorMessage } = await checkDuplicatePost(item.question);
@@ -61,23 +62,42 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
   };
 
   useEffect(() => {
-    if (promptResponse) {
+    if (getSeldonDataState.suggestions) {
       processQuestions();
     }
-  }, [promptResponse]);
+  }, [getSeldonDataState.suggestions]);
 
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
   const handleUpdateArticle = async () => {
     try {
       const response = await handleSendPrompt({
-        params: { ...seldonState, articleId, title: promptResponse.title, sources: promptSources },
+        params: {
+          ...seldonState,
+          articleId: getSeldonDataState.articleId,
+          title: getSeldonDataState.title,
+          sources: getSeldonDataState.sources,
+        },
       } as any);
 
       if (response?.status === 200) {
-        localStorage.setItem('seldomResp', JSON.stringify(response?.data?.response));
-        localStorage.setItem('seldonIds', JSON.stringify(response?.data?.source));
-        localStorage.setItem('seldonDebug', JSON.stringify(response?.data?.debug));
+        const ids = response.data?.source
+          .filter((fileName: string) => fileName.startsWith('post_'))
+          .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
+
+        dispatch(
+          setSeldonData({
+            title: response.data.response.title,
+            abstract: response.data.response.abstract,
+            seoSummary: response.data.response.seoSummary,
+            findings: response.data.response.findings,
+            suggestions: response.data.response.suggestions,
+            sources: ids,
+            debug: response.data?.debug,
+            articleId: response.data?.response.articleId,
+            prompt: '',
+          }),
+        );
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
@@ -86,39 +106,37 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(`${protocol}//${host}/r/${articleId}`);
+      await navigator.clipboard.writeText(`${protocol}//${host}/r/${getSeldonDataState.articleId}`);
     } catch (err) {
       console.error('Unable to copy text to clipboard:', err);
     }
   };
 
   return (
-    <>
-      <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
-        <h1 className="text-[16px] font-bold">New Post Suggestions:</h1>
-        <div className="mt-4 flex flex-col gap-4">
+    <Element name="posts-ideas" className="space-y-4">
+      <div className="space-y-1">
+        <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Inspired by this post?</h1>{' '}
+        <h5 className="text-center text-[14px] tablet:text-[20px]">
+          Check out these post ideas that can get people engaged and FDX in your portfolio!
+        </h5>
+      </div>
+      <div className="">
+        <div className="space-y-4">
           {loading ? (
             <DotsLoading />
           ) : (
             suggestedPosts?.map((item, index) => (
-              <div key={index} className="grid grid-cols-4 gap-4 tablet:gap-8">
+              <div
+                key={index}
+                className="space-y-2 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]"
+              >
                 <div className="col-span-3">
-                  <h5 className="text-[12px] font-semibold tablet:text-[16px]">
-                    {index + 1} - {item.question}
-                  </h5>
-                  <ul className="flex gap-4">
-                    {item.options.map((option, index) => (
-                      <li key={index} className="text-[12px] tablet:text-[16px]">
-                        {option}
-                      </li>
-                    ))}
-                    {item.userCanAddOption && <li className="text-[12px] tablet:text-[16px]">Other</li>}
-                  </ul>
+                  <h5 className="text-[12px] font-semibold tablet:text-[16px]">{item.question}</h5>
                 </div>
                 <div className="col-span-1 flex w-full justify-end">
                   <Link
                     to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
-                    state={{ postData: item, articleId }}
+                    state={{ postData: item, articleId: getSeldonDataState.articleId }}
                     className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
                     onClick={() => {
                       dispatch(addQuestion(item.question));
@@ -128,7 +146,7 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
                       dispatch(setOptionsByArray(item.options));
                     }}
                   >
-                    Create Post
+                    Create Post {'>'}
                   </Link>
                 </div>
               </div>
@@ -137,9 +155,9 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
         </div>
       </div>
       <div className="flex w-full items-center justify-between gap-4">
-        {articleId || updateArticle ? (
+        {getSeldonDataState.articleId ? (
           <Button
-            variant="hollow-submit"
+            variant="g-submit"
             className="w-full"
             rounded
             onClick={() => {
@@ -157,24 +175,24 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
           rounded
           disabled={isPublishPending}
           onClick={() => {
-            if (location.pathname.startsWith('/r/') || articleId || updateArticle) {
+            if (location.pathname.startsWith('/r/') || getSeldonDataState.articleId) {
               copyToClipboard();
               showToast('success', 'copyLink');
             } else {
               handlePublishArticle({
                 userUuid: persistedUserInfo.uuid,
                 prompt: seldonState.question,
-                title: promptResponse?.title,
-                abstract: promptResponse?.abstract,
-                findings: promptResponse?.findings,
-                suggestion: promptResponse?.suggestions,
-                source: promptSources,
-                seoSummary: promptResponse?.seoSummary,
+                title: getSeldonDataState.title,
+                abstract: getSeldonDataState.abstract,
+                findings: getSeldonDataState.findings,
+                suggestion: getSeldonDataState.suggestions,
+                source: getSeldonDataState.sources,
+                seoSummary: getSeldonDataState.seoSummary,
               } as any);
             }
           }}
         >
-          {location.pathname.startsWith('/r/') || articleId || updateArticle ? (
+          {location.pathname.startsWith('/r/') || getSeldonDataState.articleId ? (
             'Share Article'
           ) : isPublishPending ? (
             <FaSpinner className="animate-spin text-[#EAEAEA]" />
@@ -183,6 +201,6 @@ export default function SuggestedPosts({ promptResponse, promptSources, articleI
           )}
         </Button>
       </div>
-    </>
+    </Element>
   );
 }

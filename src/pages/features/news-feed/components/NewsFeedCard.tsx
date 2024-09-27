@@ -5,6 +5,8 @@ import { NewsFeedPropsType } from '../../../../types/news-feed';
 import { Button } from '../../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { getArticleStates, setArticleData } from '../../../../features/seldon-ai/articleSlice';
+import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
+import { handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
 
 export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef } = props;
@@ -15,16 +17,23 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   const getArticleData = useSelector(getArticleStates);
 
   const handleUpdateArticle = () => {
-    // dispatch(
-    //   setArticleData({
-    //     prompt: data.prompt,
-    //     articleId: data._id,
-    //     abstract: data.abstract,
-    //     sources: data.source,
-    //     title: data.title,
-    //   }),
-    // );
-    navigate(`/seldon-ai?update-article=true&articleId=${data._id}`);
+    dispatch(
+      setSeldonData({
+        title: data?.title,
+        abstract: data?.abstract,
+        seoSummary: data?.seoSummary,
+        findings: data?.findings,
+        suggestions: data?.suggestions,
+        sources: data?.source,
+        debug: '',
+        articleId: data?._id,
+        prompt: data?.prompt,
+        createdAt: data?.createdAt,
+      }),
+    );
+    dispatch(handleSeldonInput({ name: 'question', value: data?.prompt }));
+
+    navigate('/seldon-ai');
   };
 
   console.log('getArticleData', getArticleData);
@@ -71,7 +80,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
               navigate(`/r/${data?._id}`);
             }}
           >
-            View Full Article
+            Read More
           </Button>
         </div>
       </div>

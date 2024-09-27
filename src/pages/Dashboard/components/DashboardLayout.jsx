@@ -6,7 +6,7 @@ import * as questUtilsActions from '../../../features/quest/utilsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getConstants, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
@@ -413,31 +413,6 @@ export default function DashboardLayout({ children }) {
                   )}
                 </>
               )}
-
-            {/* {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/profile') && (
-            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
-              <Button
-                variant="hollow-submit2"
-                className="bg-white tablet:w-full"
-                onClick={() => navigate('/treasury')}
-              >
-                Treasury
-              </Button>
-            </div>
-          )} */}
-
-            {/*
-          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/treasury') && (
-            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
-              <Button
-                variant="hollow-submit2"
-                className="bg-white tablet:w-full"
-                onClick={() => navigate('/profile')}
-              >
-                My Profile
-              </Button>
-            </div>
-          )} */}
           </div>
         </div>
 
@@ -493,7 +468,6 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/direct-messaging') &&
             !location.pathname.startsWith('/news') && <SidebarLeft />}
 
-          {/* News Feed Search */}
           <NewsFeedSearch />
 
           {location.pathname !== '/treasury' &&
@@ -690,16 +664,11 @@ export default function DashboardLayout({ children }) {
               </div>
             ) : persistedUserInfo?.role === 'visitor' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
-                {/* <div className="relative h-fit w-fit"> */}
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
                   alt="badge"
                   className="tablet:h-[47px] tablet:w-[38px]"
                 />
-                {/* <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-white">
-                    V
-                  </p>
-                </div> */}
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance (Visitor)</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
