@@ -4,7 +4,6 @@ import { calculateTimeAgo } from '../../../../utils/utils';
 import { NewsFeedPropsType } from '../../../../types/news-feed';
 import { Button } from '../../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { getArticleStates, setArticleData } from '../../../../features/seldon-ai/articleSlice';
 import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
 import { handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
 
@@ -14,7 +13,6 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(data.createdAt), [data?.createdAt]);
-  const getArticleData = useSelector(getArticleStates);
 
   const handleUpdateArticle = () => {
     dispatch(
@@ -35,8 +33,6 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
 
     navigate('/seldon-ai');
   };
-
-  console.log('getArticleData', getArticleData);
 
   return (
     <div

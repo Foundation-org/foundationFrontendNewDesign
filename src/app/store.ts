@@ -24,7 +24,6 @@ import seeMoreOptionsReducer from '../features/quest/seeMoreOptionsSlice';
 import extrasReducer from '../features/extras/extrasSlice';
 import seldonReducer from '../features/seldon-ai/seldonSlice';
 import newsFeedReducer from '../features/news-feed/newsFeedSlice';
-import articleReducer from '../features/seldon-ai/articleSlice';
 import seldonDataReducer from '../features/seldon-ai/seldonDataSlice';
 
 const persistConfig = {
@@ -65,7 +64,6 @@ const reducer = combineReducers({
   extras: extrasReducer,
   seldon: seldonReducer,
   newsFeed: newsFeedReducer,
-  article: articleReducer,
   seldonData: seldonDataReducer,
 });
 
