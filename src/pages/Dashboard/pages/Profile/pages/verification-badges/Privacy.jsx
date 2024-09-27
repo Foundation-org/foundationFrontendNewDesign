@@ -133,7 +133,7 @@ const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup })
                       handleRemoveBadgePopup({
                         title: 'Pseudo',
                         type: 'pseudo',
-                        image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                        image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/pseudo.svg`,
                         badgeType: 'pseudo',
                       });
                     } else {

@@ -118,8 +118,8 @@ const Topbar = () => {
                 }
 
                 // Hide item.id 6 only if isPseudoBadge is true
-                if (isPseudoBadge && item.id === 6) {
-                  return false;
+                if (!isPseudoBadge) {
+                  return item.id !== 6;
                 }
 
                 // For all other cases, show the item
@@ -178,8 +178,8 @@ const Topbar = () => {
             }
 
             // Hide item.id 6 only if isPseudoBadge is true
-            if (!isPseudoBadge && item.id === 6) {
-              return false;
+            if (!isPseudoBadge) {
+              return item.id !== 6;
             }
 
             // For all other cases, show the item
