@@ -1,16 +1,40 @@
 import { useSelector } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
-import { legacy } from '../../../../../../constants/varification-badges';
+import { pseudo, legacy } from '../../../../../../constants/varification-badges';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { useState } from 'react';
 import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
 import { CanAdd } from './badgeUtils';
 import { toast } from 'sonner';
+import api from '../../../../../../services/api/Axios';
+import { FaSpinner } from 'react-icons/fa';
+import showToast from '../../../../../../components/ui/Toast';
+import { QueryClient } from '@tanstack/react-query';
 
-const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
+const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup }) => {
   const persistedContants = useSelector(getConstantsValues);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
+  const [pseudoLoading, setPseudoLoading] = useState(false);
+  const queryClient = new QueryClient();
+
+  const addPseudoBadge = async () => {
+    setPseudoLoading(true);
+
+    try {
+      const resp = await api.post('/addPseudoBadge', {
+        uuid: localStorage.getItem('uuid'),
+      });
+      if (resp.status === 200) {
+        showToast('success', 'badgeAdded');
+        queryClient.invalidateQueries(['userInfo']);
+        setPseudoLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setPseudoLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -77,6 +101,45 @@ const Privacy = ({ checkLegacyBadge, handleRemoveBadgePopup }) => {
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                   {checkLegacyBadge() ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
+              </Button>
+            </div>
+          ))}
+          {pseudo.map((item, index) => (
+            <div
+              className="relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5"
+              key={index}
+            >
+              <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]"></div>
+              <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
+              <div className="flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]">
+                <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-gray-400 tablet:text-[20px]">
+                  {item.title}
+                </h1>
+              </div>
+              <Button
+                variant={checkPseudoBadge() ? 'verification-badge-remove' : 'submit'}
+                // color={checkLegacyBadge() ? 'red' : 'blue'}
+                disabled={item.disabled}
+                onClick={() => {
+                  if (checkPseudoBadge()) {
+                    handleRemoveBadgePopup({
+                      title: 'Pseudo',
+                      type: 'pseudo',
+                      image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                      badgeType: 'pseudo',
+                    });
+                  } else {
+                    addPseudoBadge();
+                  }
+                }}
+              >
+                {pseudoLoading ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : checkPseudoBadge() ? (
+                  'Remove'
+                ) : (
+                  'Add'
+                )}
               </Button>
             </div>
           ))}

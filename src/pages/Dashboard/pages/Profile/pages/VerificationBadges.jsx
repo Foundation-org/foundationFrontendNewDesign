@@ -40,6 +40,7 @@ const VerificationBadges = () => {
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
 
   const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   // const loginInWithInsta = async (code) => {
   //   try {
@@ -245,7 +246,11 @@ const VerificationBadges = () => {
         />
       </ContentCard>
       <ContentCard icon="assets/verification-badges/privacy.svg" title="Privacy">
-        <Privacy checkLegacyBadge={checkLegacyBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+        <Privacy
+          checkLegacyBadge={checkLegacyBadge}
+          checkPseudoBadge={checkPseudoBadge}
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+        />
       </ContentCard>
       <ContentCard icon="assets/verification-badges/social.svg" title="Social">
         <Social

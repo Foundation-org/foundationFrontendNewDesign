@@ -173,6 +173,20 @@ export const legacy = [
   },
 ];
 
+export const pseudo = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+    title: 'Pseudo',
+    ButtonColor: 'blue',
+    ButtonText: 'Add',
+    NoOfButton: 1,
+    type: 'pseudo',
+    disabled: false,
+    accountName: '',
+    badgeType: '',
+  },
+];
+
 export const personal = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`,
