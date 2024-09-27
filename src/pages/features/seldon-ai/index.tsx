@@ -89,7 +89,7 @@ export default function SeldonAi() {
       {isPending ? (
         <DotsLoading />
       ) : (
-        <div id="containerElement" className="flex flex-col gap-4 pt-4 text-gray-500 tablet:pt-8">
+        <div id="containerElement" className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
           {getSeldonDataState.debug ? (
             <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Debug Mode:</h1>

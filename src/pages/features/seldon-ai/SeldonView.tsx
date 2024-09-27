@@ -46,7 +46,7 @@ export default function SeldonView() {
             <DotsLoading />
           ) : (
             response?.data && (
-              <div className="mx-auto rounded-[10px] text-gray-200 tablet:max-w-[778px] tablet:px-6">
+              <div className="mx-auto rounded-[10px] text-gray-200 dark:text-white tablet:max-w-[778px] tablet:px-6">
                 <div
                   id="containerElement"
                   className="flex h-[calc(100dvh-91px)] flex-col gap-4 overflow-y-auto p-4 no-scrollbar tablet:h-[calc(100dvh-69px)] tablet:gap-6 tablet:px-0 tablet:py-8"

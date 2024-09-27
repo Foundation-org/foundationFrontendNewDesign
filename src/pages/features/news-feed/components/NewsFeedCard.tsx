@@ -34,15 +34,15 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   return (
     <div ref={innerRef} className="h-full max-w-[730px]">
       {/* Header */}
-      <div className="flex flex-col rounded-t-[12.3px] bg-blue-100 p-[0.57rem] tablet:rounded-t-[15px] tablet:px-5 tablet:py-[11px]">
+      <div className="flex flex-col rounded-t-[12.3px] bg-blue-100 p-[0.57rem] dark:bg-accent-100 tablet:rounded-t-[15px] tablet:px-5 tablet:py-[11px]">
         <h4 className="text-[0.6rem] font-semibold text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
           {data?.title}
         </h4>
         <p className="text-[0.6rem] font-normal text-white tablet:text-[14px]">Posted {formatDate(data.createdAt)}</p>
       </div>
       {/* Body */}
-      <div className="flex flex-col justify-between gap-1.5 rounded-b-[12.3px] border-x-2 border-b-2 border-blue-100 bg-white p-[0.87rem] tablet:gap-4 tablet:rounded-b-[15px] tablet:p-4">
-        <p className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+      <div className="flex flex-col justify-between gap-1.5 rounded-b-[12.3px] border-x-2 border-b-2 border-blue-100 bg-white p-[0.87rem] dark:border-accent-100 dark:bg-gray-200 tablet:gap-4 tablet:rounded-b-[15px] tablet:p-4">
+        <p className="text-[12px] font-medium leading-[13.56px] dark:text-white tablet:text-[16px] tablet:leading-normal">
           {data?.seoSummary}
         </p>
         <div className="flex w-full items-center justify-between gap-4">

@@ -19,7 +19,7 @@ const NewsFeedLayout = () => {
       <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
         {/* <CreateSlider /> */}
         <div className="hidden items-center justify-center tablet:h-[78px] laptop:flex">
-          <h1 className="text-[24px] font-semibold leading-[24px] text-[#707175]">News Feed</h1>
+          <h1 className="text-[24px] font-semibold leading-[24px] text-[#707175] dark:text-white">News Feed</h1>
         </div>
       </div>
       <div
