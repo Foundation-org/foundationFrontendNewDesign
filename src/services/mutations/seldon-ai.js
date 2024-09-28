@@ -11,7 +11,7 @@ export const chatGptData = async ({ params }) => {
 export const useChatGptDataMutation = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: async ({ params }) => {
       return chatGptData({ params });
     },
@@ -30,7 +30,7 @@ export const useChatGptDataMutation = () => {
     },
   });
 
-  return mutation;
+  return { mutateAsync, isPending };
 };
 
 export const publishArticle = async ({
