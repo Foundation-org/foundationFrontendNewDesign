@@ -71,8 +71,6 @@ const Topbar = () => {
     navigate('/');
   };
 
-  console.log('isPseudoBadge', isPseudoBadge);
-
   return (
     <div className="border-blue-100 border-b-blue-100 bg-blue-100 dark:border-b-gray-100 dark:bg-gray-200 tablet:border-b-[1.85px]">
       <div className="static mx-auto flex h-[48px] max-h-[48px] min-h-[48px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-20 tablet:min-h-20 laptop:h-[92px] laptop:max-h-[69px] laptop:min-h-[69px] laptop:flex-row">

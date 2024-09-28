@@ -114,46 +114,48 @@ export default function SuggestedPosts() {
 
   return (
     <Element name="posts-ideas" className="space-y-4">
-      <div className="space-y-1">
-        <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Inspired by this post?</h1>{' '}
-        <h5 className="text-center text-[14px] tablet:text-[20px]">
-          Check out these post ideas that can get people engaged and FDX in your portfolio!
-        </h5>
-      </div>
-      <div className="">
-        <div className="space-y-4">
-          {loading ? (
-            <DotsLoading />
-          ) : (
-            suggestedPosts?.map((item, index) => (
-              <div
-                key={index}
-                className="space-y-2 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]"
-              >
-                <div className="col-span-3">
-                  <h5 className="text-[12px] font-semibold tablet:text-[16px]">{item.question}</h5>
+      {!getSeldonDataState.debug && (
+        <>
+          <div className="space-y-1">
+            <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Inspired by this post?</h1>{' '}
+            <h5 className="text-center text-[14px] tablet:text-[20px]">
+              Check out these post ideas that can get people engaged and FDX in your portfolio!
+            </h5>
+          </div>
+          <div className="space-y-4">
+            {loading ? (
+              <DotsLoading />
+            ) : (
+              suggestedPosts?.map((item, index) => (
+                <div
+                  key={index}
+                  className="space-y-2 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]"
+                >
+                  <div className="col-span-3">
+                    <h5 className="text-[12px] font-semibold tablet:text-[16px]">{item.question}</h5>
+                  </div>
+                  <div className="col-span-1 flex w-full justify-end">
+                    <Link
+                      to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
+                      state={{ postData: item, articleId: getSeldonDataState.articleId }}
+                      className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
+                      onClick={() => {
+                        dispatch(addQuestion(item.question));
+                        item.options.slice(0, item.options.length - 2).forEach((_, index) => {
+                          dispatch(addNewOption(index));
+                        });
+                        dispatch(setOptionsByArray(item.options));
+                      }}
+                    >
+                      Create Post {'>'}
+                    </Link>
+                  </div>
                 </div>
-                <div className="col-span-1 flex w-full justify-end">
-                  <Link
-                    to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
-                    state={{ postData: item, articleId: getSeldonDataState.articleId }}
-                    className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
-                    onClick={() => {
-                      dispatch(addQuestion(item.question));
-                      item.options.slice(0, item.options.length - 2).forEach((_, index) => {
-                        dispatch(addNewOption(index));
-                      });
-                      dispatch(setOptionsByArray(item.options));
-                    }}
-                  >
-                    Create Post {'>'}
-                  </Link>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
+              ))
+            )}
+          </div>
+        </>
+      )}
       <div className="flex w-full items-center justify-between gap-4">
         {!location.pathname.includes('/r') ? (
           <Button

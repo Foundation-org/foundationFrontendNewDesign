@@ -236,7 +236,7 @@ const ButtonGroup = ({
     findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested'
   ) {
     return (
-      <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
+      <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">
         <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
         <Button
           variant={'g-submit'}
@@ -327,7 +327,7 @@ const ButtonGroup = ({
     return (
       <div>
         {startTest !== questStartData._id ? (
-          <div className="flex w-full justify-end gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
+          <div className="mb-[15px] flex w-full justify-end gap-2 px-[0.87rem] tablet:mb-6 tablet:gap-4 tablet:px-10">
             <Button
               variant={hidePostLoading || unHidePostLoading ? 'submit-hollow' : 'submit'}
               onClick={() =>
@@ -397,7 +397,7 @@ const ButtonGroup = ({
     return (
       <div className="w-full px-[0.87rem] tablet:px-10">
         {startTest !== questStartData._id ? (
-          <div className="flex w-full justify-end gap-2 tablet:gap-4">
+          <div className="mb-[15px] flex w-full justify-end gap-2 tablet:mb-6 tablet:gap-4">
             <Button
               variant={'submit-green'}
               onClick={() => {
@@ -429,7 +429,7 @@ const ButtonGroup = ({
             />
           </div>
         ) : (
-          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+          <div className="mb-[15px] flex w-full justify-end gap-2 pr-[14.4px] tablet:mb-6 tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
             <Button
               variant="cancel"
               onClick={() => {
@@ -447,7 +447,7 @@ const ButtonGroup = ({
 
   if (SharedLinkButton === 'shared-links-results-button') {
     return (
-      <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+      <div className="mb-[15px] flex w-full justify-end gap-2 pr-[14.4px] tablet:mb-6 tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
         <Button
           variant="cancel"
           onClick={() => {
@@ -477,7 +477,7 @@ const ButtonGroup = ({
       return (
         <>
           {questStartData.startStatus === '' ? (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
+            <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">
               {/* <Button
                 variant={'submit'}
                 onClick={() => {
@@ -551,7 +551,7 @@ const ButtonGroup = ({
               ) : null}
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
+            <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">
               {persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor' ? (
                 <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               ) : (
@@ -641,7 +641,7 @@ const ButtonGroup = ({
                 <FaSpinner className="animate-spin text-center text-[22px] text-blue-100 dark:text-[#EAEAEA] tablet:text-[30px]" />
               </div>
             ) : (
-              <div className="flex w-full items-center justify-between gap-4">
+              <div className="mb-[15px] flex w-full items-center justify-between gap-4 tablet:mb-6">
                 {questStartData.startStatus !== 'continue' && !questStartData?.startQuestData?.feedbackReverted ? (
                   <Button
                     variant={'submit'}
@@ -678,7 +678,7 @@ const ButtonGroup = ({
       {questStartData.startStatus === 'change answer' &&
         viewResult === questStartData._id &&
         !questStartData.isClosed && (
-          <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+          <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
             <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
             <Button
               variant={result === ', you are good to go' ? 'change' : 'change-outline'}

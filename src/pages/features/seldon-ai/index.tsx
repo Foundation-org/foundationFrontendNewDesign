@@ -89,7 +89,7 @@ export default function SeldonAi() {
       {isPending ? (
         <DotsLoading />
       ) : (
-        <div id="containerElement" className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
+        <div id="containerElement2" className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
           {getSeldonDataState.debug ? (
             <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Debug Mode:</h1>
@@ -111,7 +111,7 @@ export default function SeldonAi() {
               <div className="flex flex-col gap-2 tablet:mt-[10px] tablet:gap-5">
                 <Link
                   to="posts-list"
-                  containerId="containerElement"
+                  containerId="containerElement2"
                   spy={true}
                   smooth={true}
                   offset={-70}
@@ -122,7 +122,7 @@ export default function SeldonAi() {
                 </Link>
                 <Link
                   to="posts-ideas"
-                  containerId="containerElement"
+                  containerId="containerElement2"
                   spy={true}
                   smooth={true}
                   offset={-70}
@@ -144,7 +144,7 @@ export default function SeldonAi() {
           )}
 
           <SourcePosts />
-          {!getSeldonDataState.debug && <SuggestedPosts />}
+          <SuggestedPosts />
         </div>
       )}
     </div>

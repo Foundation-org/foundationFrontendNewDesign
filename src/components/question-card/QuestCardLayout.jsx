@@ -103,6 +103,15 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         postProperties={postProperties}
         setDelModalVisible={setModalVisible}
       />
+      {modalVisible && (
+        <DeletePostPopup
+          handleClose={handleClose}
+          modalVisible={modalVisible}
+          title={'Delete Post'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+          id={questStartData._id}
+        />
+      )}
       {questStartData?.suppressed &&
         questStartData?.uuid === persistedUserInfo.uuid &&
         questStartData?.type !== 'embed' && (
@@ -136,37 +145,12 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         postProperties={postProperties}
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
-      <div
-        className={`${questStartData.type !== 'embed' && questStartData?.page !== 'advance-analytics' && 'pb-[0.94rem] tablet:pb-6'}`}
-      >
-        {children}
-      </div>
-      {modalVisible && (
-        <DeletePostPopup
-          handleClose={handleClose}
-          modalVisible={modalVisible}
-          title={'Delete Post'}
-          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
-          id={questStartData._id}
-        />
-      )}
-
-      {questStartData?.type !== 'embed' &&
-        questStartData?.page !== 'advance-analytics' &&
-        postProperties !== 'preview' && (
-          <QuestBottombar
-            time={
-              postProperties === 'HiddenPosts'
-                ? questStartData.userQuestSetting.feedbackTime
-                : postProperties === 'SharedLinks'
-                  ? questStartData.userQuestSetting.sharedTime
-                  : questStartData.createdAt
-            }
-            questStartData={questStartData}
-            postProperties={postProperties}
-            showDisableSharedLinkPopup={showDisableSharedLinkPopup}
-          />
-        )}
+      {children}
+      <QuestBottombar
+        questStartData={questStartData}
+        postProperties={postProperties}
+        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
+      />
       <PostArticlesCard questStartData={questStartData} />
     </div>
   );
