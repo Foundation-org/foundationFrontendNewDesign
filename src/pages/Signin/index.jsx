@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import Loader from '../Signup/components/Loader';
 import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
 import SocialLogins from '../../components/SocialLogins';
 import '../../index.css';
 import showToast from '../../components/ui/Toast';
+import { setGuestSignInDialogue, setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 
 // const isWebview = () => {
 //   const userAgent = window.navigator.userAgent.toLowerCase();
@@ -27,8 +28,7 @@ export default function Signin() {
   const location = useLocation();
   const [isLoadingSocial, setIsLoadingSocial] = useState(false);
   const [uuid, setUuid] = useState();
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
   const legacyPromiseRef = useRef();
   const [clickedButtonName, setClickedButtonName] = useState('');
@@ -102,7 +102,8 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex h-dvh w-full flex-col bg-blue-100 text-white dark:bg-black lg:flex-row">
+    <div className="flex w-full flex-col rounded-b-[9.76px] bg-white text-white dark:bg-black lg:flex-row tablet:rounded-b-[26px]">
+      {isLoadingSocial && <Loader />}
       <LegacyConfirmationPopup
         isPopup={isPasswordConfirmation}
         setIsPopup={setIsPasswordConfirmation}
@@ -114,49 +115,26 @@ export default function Signin() {
         uuid={uuid}
         setIsLoadingSocial={setIsLoadingSocial}
       />
-      {isLoadingSocial && <Loader />}
-      <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden tablet:h-16`}
-      >
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
-          alt="logo"
-          className="h-[10px] tablet:h-4"
-        />
-      </div>
-      <div className="flex h-full flex-col items-center bg-white dark:bg-gray-200 md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-br-[65px] lg:rounded-tr-[65px]">
-        <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
-          <h1 className="text-center text-[18px] font-[700] text-black dark:text-gray-300 tablet:text-left tablet:text-[35px] tablet:leading-[35px]">
+      <div className="dark:bg-dark flex w-full flex-col items-center rounded-b-[9.76px] bg-white py-4 dark:bg-gray-200 md:justify-center tablet:rounded-b-[26px] tablet:py-7">
+        <div className="flex flex-col items-center justify-center">
+          <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
             {location.pathname === '/signin' ? 'Login' : 'Login with Email'}
-          </h1>
-          {location.pathname === '/signin' && (
-            <SocialLogins setClickedButtonName={setClickedButtonName} isLogin={true} triggerLogin={triggerLogin} />
-          )}
-          <Outlet />
+          </p>
+          <SocialLogins setClickedButtonName={setClickedButtonName} isLogin={true} triggerLogin={triggerLogin} />
           <div className="flex justify-center gap-3">
             <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
               Don’t have an account?
             </p>
-            <Link
-              to={
-                persistedUserInfo && (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor')
-                  ? '/guest-signup'
-                  : '/signup'
-              }
+            <button
+              className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]"
+              onClick={() => {
+                dispatch(setGuestSignUpDialogue(true));
+              }}
             >
-              <p className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]">Sign up</p>
-            </Link>
+              Sign up
+            </button>
           </div>
         </div>
-      </div>
-      <div className="hidden h-screen w-fit items-center px-32 lg:flex">
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
-          alt="logo"
-          className="h-[20vh] w-[23vw]"
-        />
       </div>
     </div>
   );

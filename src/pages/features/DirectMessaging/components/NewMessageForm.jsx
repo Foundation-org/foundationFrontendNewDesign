@@ -173,8 +173,6 @@ export default function NewMessageForm() {
     }
   }, [selectedOptions]);
 
-  console.log('optionsArr', optionsArr);
-
   return (
     <div className="space-y-[9px] tablet:space-y-[15px]">
       {showModal && (

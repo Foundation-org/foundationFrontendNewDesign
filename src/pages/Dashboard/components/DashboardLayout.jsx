@@ -90,7 +90,7 @@ export default function DashboardLayout({ children }) {
     // Handle userInfoData when successfully fetched
     if (userInfoSuccess && userInfoData?.status === 200) {
       if (userInfoData.data) {
-        localStorage.removeItem('userExist');
+        // localStorage.removeItem('userExist');
         dispatch(addUser(userInfoData.data));
         if (userInfoData.data?.userSettings.darkMode) {
           dispatch(changeThemeTo('dark'));

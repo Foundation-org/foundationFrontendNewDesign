@@ -37,7 +37,7 @@ export const Settings = () => {
       dispatch(resetFilters());
       dispatch(addUser(null));
       localStorage.clear();
-      localStorage.setItem('userExist', 'true');
+      // localStorage.setItem('userExist', 'true');
       navigate('/signin');
     },
     onError: (error) => {

@@ -94,7 +94,6 @@ const MultipleChoice = () => {
   //     setLoading(false);
   //   },
   // });
-  console.log(location?.state);
 
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));

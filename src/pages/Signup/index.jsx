@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { referralModalStyle } from '../../constants/styles';
 import showToast from '../../components/ui/Toast';
 import SocialLogins from '../../components/SocialLogins';
@@ -9,7 +9,7 @@ import api from '../../services/api/Axios';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 import Loader from './components/Loader';
-import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
+import { setGuestSignInDialogue, setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 // const isWebview = () => {
 //   const userAgent = window.navigator.userAgent.toLowerCase();
 
@@ -48,7 +48,7 @@ export default function Signup({ allowSignUp }) {
   const handlePopupOpen = () => {
     // setIspopup(true);
   };
-  const handlePopupClose = () => setIspopup(false);
+  // const handlePopupClose = () => setIspopup(false);
 
   const handleReferralOpen = (provider) => {
     // if (isWebview(window.navigator.userAgent)) {
@@ -138,13 +138,11 @@ export default function Signup({ allowSignUp }) {
   };
 
   return (
-    <div
-      className={`${allowSignUp ? 'rounded-b-[9.76px] bg-white tablet:rounded-b-[26px]' : 'h-screen'} flex w-full flex-col bg-blue-100 text-white dark:bg-black lg:flex-row`}
-    >
+    <div className="flex w-full flex-col rounded-b-[9.76px] bg-white text-white dark:bg-black lg:flex-row tablet:rounded-b-[26px]">
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       {/* Mobile Top Header */}
-      {!allowSignUp && (
+      {/* {!allowSignUp && (
         <div
           className={`${
             persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
@@ -156,9 +154,9 @@ export default function Signup({ allowSignUp }) {
             className="h-[10px] tablet:h-4"
           />
         </div>
-      )}
+      )} */}
       {/* Tablet Left Header */}
-      {!allowSignUp && (
+      {/* {!allowSignUp && (
         <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
@@ -166,14 +164,10 @@ export default function Signup({ allowSignUp }) {
             className="h-[20vh] w-[23vw]"
           />
         </div>
-      )}
+      )} */}
       {/* Main Content */}
-      <div
-        className={`${allowSignUp ? 'w-full rounded-b-[9.76px] py-4 tablet:rounded-b-[26px] tablet:py-7' : 'h-screen lg:w-[calc(100%-36.11%)] lg:rounded-bl-[65px] lg:rounded-tl-[65px]'} dark:bg-dark flex flex-col items-center bg-white dark:bg-gray-200 md:justify-center`}
-      >
-        <div
-          className={`${allowSignUp ? '' : 'mt-[17.3px] w-[80%] md:mt-0 laptop:max-w-[35vw]'} flex flex-col items-center justify-center`}
-        >
+      <div className="dark:bg-dark flex w-full flex-col items-center rounded-b-[9.76px] bg-white py-4 dark:bg-gray-200 md:justify-center tablet:rounded-b-[26px] tablet:py-7">
+        <div className="flex flex-col items-center justify-center">
           {allowSignUp ? (
             <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
               Please create and account to unlock this feature.
@@ -185,22 +179,19 @@ export default function Signup({ allowSignUp }) {
                 : 'Create Account with Email'}
             </h1>
           )}
-          {(location.pathname === '/signup' || location.pathname === '/guest-signup' || allowSignUp) && (
-            <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
-          )}
-          <Outlet />
-          <div
-            className="flex gap-3"
-            onClick={() => {
-              allowSignUp && dispatch(setGuestSignUpDialogue(false));
-            }}
-          >
+          <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
+          <div className="flex gap-3">
             <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
               Already have an account?
             </p>
-            <Link to="/signin">
-              <p className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]">Sign in</p>
-            </Link>
+            <button
+              className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]"
+              onClick={() => {
+                dispatch(setGuestSignInDialogue(true));
+              }}
+            >
+              Sign in
+            </button>
           </div>
         </div>
       </div>

@@ -96,7 +96,7 @@ const Authenticating = () => {
         toast.error(
           <p>
             Email Already Exist{' '}
-            <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/signin')}>
+            <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/')}>
               Sign in
             </span>{' '}
           </p>,
@@ -179,6 +179,8 @@ const Authenticating = () => {
       } else {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       }
+    } finally {
+      localStorage.removeItem('authMode');
       navigate(pathname);
     }
   };
@@ -255,7 +257,7 @@ const Authenticating = () => {
 
   useEffect(() => {
     if (!isLoading && !isError && isSuccess) {
-      if (pathname === '/signin') {
+      if (localStorage.getItem('authMode') === 'Login') {
         handleSignInSocial(authSuccessResp.data.user, authSuccessResp.data.user.provider);
       } else if (pathname === '/profile/verification-badges') {
         if (authSuccessResp.data.user.provider === 'google') {

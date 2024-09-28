@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { referralModalStyle } from '../../../constants/styles';
 import { LoginSocialGoogle } from 'reactjs-social-login';
-import { Button as UiButton } from '../../../components/ui/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { addUser } from '../../../features/auth/authSlice';
 import Input from '../../../components/Input';
 import api from '../../../services/api/Axios';
 import ReCAPTCHA from 'react-google-recaptcha';
-import Button from '../../../components/Button';
 import PopUp from '../../../components/ui/PopUp';
 import showToast from '../../../components/ui/Toast';
 import BasicModal from '../../../components/BasicModal';
@@ -17,6 +15,8 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 import { signUpGuest } from '../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
+import { Button } from '../../../components/ui/Button';
+import { setCredentialRegister } from '../../../features/extras/extrasSlice';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -149,8 +149,8 @@ const CredentialRegister = () => {
   };
 
   return (
-    <>
-      <form className="mt-11 flex w-full flex-col gap-11 text-silver-600 dark:text-white tablet:mt-16 5xl:gap-14 short:gap-[38px]">
+    <div className="py-12">
+      <form className="mx-auto flex w-full max-w-[260px] flex-col gap-8 bg-white text-silver-600 tablet:max-w-[512px] tablet:gap-11 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
@@ -214,56 +214,65 @@ const CredentialRegister = () => {
             </div>
           </div>
         </div>
-      </form>
-      <div className="mb-4 mt-4 hidden w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
+        {/* <div className="mb-4 mt-4 w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
         {persistedTheme === 'dark' ? (
           <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="dark" />
         ) : (
           <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="light" />
         )}
-      </div>
-      <div className="mb-12 flex w-full items-center taller:mb-7">
-        <div className="form-control">
-          <label className="label flex cursor-pointer gap-[11.5px] p-0">
-            <input
-              type="checkbox"
-              onChange={(e) => setTermConditionCheck(e.target.checked)}
-              checked={termConditionCheck}
-              className="checkbox h-[11.725px] w-[11.725px] rounded-[2.9px] border-[1.437px] border-[#D6D6D6] md:h-[23px] md:w-[23px] md:rounded-[3.5px]"
-            />
+      </div> */}
+        <div className="flex w-full items-center">
+          <div className="form-control">
+            <label className="label flex cursor-pointer gap-[11.5px] p-0">
+              <input
+                type="checkbox"
+                onChange={(e) => setTermConditionCheck(e.target.checked)}
+                checked={termConditionCheck}
+                className="checkbox h-[11.725px] w-[11.725px] rounded-[2.9px] border-[1.437px] border-[#D6D6D6] md:h-[23px] md:w-[23px] md:rounded-[3.5px]"
+              />
+            </label>
+          </div>
+          <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
+            Creating an account means you have agreed with our{` `}
+            <Link
+              to="/term-of-service"
+              className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+            >
+              Terms of Service
+            </Link>
+            {` `}&{' '}
+            <Link
+              to="/privacy-policy"
+              className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+            >
+              Privacy Policy
+            </Link>
           </label>
         </div>
-        <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
-          Creating an account means you have agreed with our{` `}
-          <Link
-            to="/term-of-service"
-            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
-          >
-            Terms of Service
-          </Link>
-          {` `}&{' '}
-          <Link
-            to="/privacy-policy"
-            className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
-          >
-            Privacy Policy
-          </Link>
-        </label>
+        <Button
+          variant="submit"
+          onClick={() => {
+            handleSignup();
+          }}
+          disabled={(isLoading === true ? true : false) || !email || !password || !reTypePassword}
+        >
+          {isLoading ? (
+            <FaSpinner className="text-blue animate-spin text-[5vw] dark:text-white tablet:text-[2vw]" />
+          ) : (
+            'Create Account'
+          )}
+        </Button>
+      </form>
+      <div className="mt-8 flex justify-center gap-3">
+        <button
+          className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]"
+          onClick={() => {
+            dispatch(setCredentialRegister(false));
+          }}
+        >
+          Go Back
+        </button>
       </div>
-      <Button
-        size="large"
-        color="blue-200"
-        onClick={() => {
-          handleSignup();
-        }}
-        disabled={(isLoading === true ? true : false) || !email || !password || !reTypePassword}
-      >
-        {isLoading ? (
-          <FaSpinner className="text-blue animate-spin text-[5vw] dark:text-white tablet:text-[2vw]" />
-        ) : (
-          'Create Account'
-        )}
-      </Button>
       <BasicModal
         open={isReferral}
         handleClose={handleReferralClose}
@@ -286,7 +295,6 @@ const CredentialRegister = () => {
           credential={true}
         />
       </BasicModal>
-
       <PopUp
         open={isPopup}
         handleClose={handlePopupClose}
@@ -297,14 +305,14 @@ const CredentialRegister = () => {
           <p className="text-[9px] font-medium text-black tablet:text-[20px]">{errorMessage}</p>
           {errorMessage.trim() === 'Email Already Exists' ? (
             <div className="mt-[25px] flex w-full justify-end">
-              <UiButton
+              <Button
                 onClick={() => {
                   navigate('/signin');
                 }}
                 variant={'submit'}
               >
                 Login
-              </UiButton>
+              </Button>
             </div>
           ) : (
             <LoginSocialGoogle
@@ -322,18 +330,18 @@ const CredentialRegister = () => {
               }}
               className="mt-[25px] flex w-full justify-end"
             >
-              <UiButton variant="social-btn">
+              <Button variant="social-btn">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
                   className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px]"
                 />{' '}
                 Continue with Google
-              </UiButton>
+              </Button>
             </LoginSocialGoogle>
           )}
         </div>
       </PopUp>
-    </>
+    </div>
   );
 };
 

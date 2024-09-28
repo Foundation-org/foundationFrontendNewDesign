@@ -14,6 +14,7 @@ import { setFilterStates } from '../../../services/api/userAuth';
 import * as homeFilterActions from '../../../features/sidebar/filtersSlice';
 import { appVersion } from '../../../version';
 import { getRecievedMessages } from '../../../services/api/directMessagingApi';
+import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -187,7 +188,7 @@ const Topbar = () => {
               key={item.id}
               to={
                 (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1
-                  ? item.signupPath
+                  ? '#'
                   : item.path
               }
               className={`${
@@ -201,6 +202,10 @@ const Topbar = () => {
                 dispatch(createQuestActions.resetCreateQuest());
                 dispatch(pictureMediaAction.resetToInitialState());
                 dispatch(addSharedLinkPost(null));
+
+                if ((persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1) {
+                  dispatch(setGuestSignUpDialogue(true));
+                }
               }}
             >
               {item.id === 5 && receivedMsg?.data?.count > 0 && (
