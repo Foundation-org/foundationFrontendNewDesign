@@ -12,10 +12,13 @@ import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/c
 import { addSourceAtStart, getSeldonDataStates, removeSource } from '../../../../features/seldon-ai/seldonDataSlice';
 import { Button } from '../../../../components/ui/Button';
 import { Element } from 'react-scroll';
+import { useLocation } from 'react-router-dom';
 
-export default function SourcePosts() {
+export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
+  const location = useLocation();
   const getSeldonDataState = useSelector(getSeldonDataStates);
+  const [seldonsData, setSeldonsData] = useState(location.pathname.startsWith('/r') ? apiResp : getSeldonDataState);
   const questUtils = useSelector(getQuestUtils);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [selectedPost, setSelectedPost] = useState<any>(null);
@@ -24,6 +27,14 @@ export default function SourcePosts() {
   const [showMorePosts, setShowMorePosts] = useState(false);
   const [searchPostLoad, setSearchPostLoad] = useState(false);
   const debouncedSearch = useDebounce(searchPost, 1000);
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/r')) {
+      setSeldonsData(apiResp);
+    } else {
+      setSeldonsData(getSeldonDataState);
+    }
+  }, [apiResp, getSeldonDataState]);
 
   const transformSelectedPost = (selectedPost: any) => {
     setSelectedPost(null);
@@ -48,13 +59,15 @@ export default function SourcePosts() {
     isFetching,
     isError,
   } = useQuery({
-    queryKey: ['sourcePosts', getSeldonDataState.sources],
-    queryFn: () => getQuestsCustom({ ids: getSeldonDataState.sources, uuid: persistedUserInfo.uuid }),
+    queryKey: ['sourcePosts', seldonsData.source],
+    queryFn: () => getQuestsCustom({ ids: seldonsData.source, uuid: persistedUserInfo.uuid }),
   });
 
   if (isError) {
     return <h1>No Posts Found</h1>;
   }
+
+  console.log('sourcePosts', sourcePosts);
 
   return (
     <Element name="posts-list" className="space-y-4">
@@ -105,7 +118,7 @@ export default function SourcePosts() {
         ) : (
           sourcePosts?.slice(0, showMorePosts ? sourcePosts.length : 3).map((post: any, index: number) => (
             <div key={index + 1} className="relative">
-              {getSeldonDataState.sources.length > 1 && !location.pathname.includes('/r') && (
+              {seldonsData.source.length > 1 && !location.pathname.includes('/r') && (
                 <button
                   className="absolute -right-3 -top-3 flex size-8 items-center justify-center rounded-full bg-gray-100"
                   onClick={() => {

@@ -4,7 +4,6 @@ import { Toaster } from 'sonner';
 import { Helmet } from 'react-helmet-async';
 import { MaintenanceRouter } from './routes/maintenance';
 import api from './services/api/Axios';
-// import GuestDialogueScreen from './components/GuestDialogueScreen';
 import AppRouter from './routes/router';
 
 function App() {
@@ -72,7 +71,6 @@ function App() {
       </Helmet>
       {/* <MaintenanceRouter /> */}
       <AppRouter />
-      {/* <GuestDialogueScreen /> */}
       <Toaster
         position="top-right"
         expand={true}

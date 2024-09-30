@@ -60,6 +60,8 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
         queryClient.setQueryData(['sourcePosts'], (oldData) => {
           return oldData.map((item) => (item._id === resp.data.data._id ? resp.data.data : item));
         });
+      } else if (location.pathname.startsWith('/r')) {
+        queryClient.invalidateQueries(['sourcePosts']);
       } else {
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,

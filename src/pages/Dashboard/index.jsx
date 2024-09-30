@@ -1,12 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import Topbar from './components/Topbar';
 import DashboardLayout from './components/DashboardLayout';
-import GuestDialogueScreen from '../../components/GuestDialogueScreen';
 
 const Dashboard = () => {
   return (
     <>
-      <GuestDialogueScreen />
       <Topbar />
       <div className="flex h-[calc(100dvh-48px)] justify-between bg-gray-400 dark:bg-black tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
         <DashboardLayout>

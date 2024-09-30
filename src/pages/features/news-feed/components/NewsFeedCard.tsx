@@ -1,37 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { formatDateMDY } from '../../../../utils/utils';
 import { Button } from '../../../../components/ui/Button';
 import { NewsFeedPropsType } from '../../../../types/news-feed';
-import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
-import { handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
+
+// import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
+// import { handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
 
 export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef } = props;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
-
-  const handleUpdateArticle = () => {
-    dispatch(
-      setSeldonData({
-        title: data?.title,
-        abstract: data?.abstract,
-        seoSummary: data?.seoSummary,
-        findings: data?.findings,
-        suggestions: data?.suggestions,
-        sources: data?.source,
-        debug: '',
-        articleId: data?._id,
-        prompt: data?.prompt,
-        createdAt: data?.createdAt,
-      }),
-    );
-    dispatch(handleSeldonInput({ name: 'question', value: data?.prompt }));
-
-    navigate('/seldon-ai');
-  };
 
   return (
     <div ref={innerRef} className="h-full max-w-[730px]">
@@ -41,7 +18,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           {data?.title}
         </h4>
         <p className="text-[0.6rem] font-normal text-white tablet:text-[14px]">
-          Posted {formatDateMDY(data.createdAt)}
+          Published {formatDateMDY(data.createdAt)}
         </p>
       </div>
       {/* Body */}
@@ -50,17 +27,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           {data?.seoSummary}
         </p>
         <div className="flex w-full items-center justify-between gap-4">
-          {isPseudoBadge ? (
-            <Button
-              variant={'submit'}
-              className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
-              onClick={handleUpdateArticle}
-            >
-              Update Article
-            </Button>
-          ) : (
-            <button className="w-full cursor-default">&#x200B;</button>
-          )}
+          <button className="w-full cursor-default">&#x200B;</button>
           <Button
             variant={'g-submit'}
             className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}

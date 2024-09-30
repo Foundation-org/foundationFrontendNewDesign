@@ -38,27 +38,53 @@ export const publishArticle = async ({
   prompt,
   title,
   abstract,
-  findings,
+  groundBreakingFindings,
   suggestion,
   source,
   seoSummary,
+  discussion,
+  conclusion,
 }) => {
   return await api.post(`/article/create`, {
     userUuid,
     prompt,
     title,
     abstract,
-    findings,
+    groundBreakingFindings,
     suggestions: suggestion,
     source,
     seoSummary,
+    discussion,
+    conclusion,
   });
 };
 
 export const usePublishArticleMutation = () => {
   const mutation = useMutation({
-    mutationFn: async ({ userUuid, prompt, title, abstract, findings, suggestion, source, seoSummary }) => {
-      return publishArticle({ userUuid, prompt, title, abstract, findings, suggestion, source, seoSummary });
+    mutationFn: async ({
+      userUuid,
+      prompt,
+      title,
+      abstract,
+      groundBreakingFindings,
+      suggestion,
+      source,
+      seoSummary,
+      discussion,
+      conclusion,
+    }) => {
+      return publishArticle({
+        userUuid,
+        prompt,
+        title,
+        abstract,
+        groundBreakingFindings,
+        suggestion,
+        source,
+        seoSummary,
+        discussion,
+        conclusion,
+      });
     },
     onSuccess: (resp) => {
       if (resp.status === 201) {

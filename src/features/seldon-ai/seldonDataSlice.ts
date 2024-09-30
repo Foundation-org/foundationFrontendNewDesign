@@ -6,11 +6,13 @@ interface SeldonDataState {
   title: string;
   abstract: string;
   seoSummary: string;
-  findings: {
+  groundBreakingFindings: {
     heading: string;
     content: string;
   }[];
-  sources: string[];
+  discussion: String;
+  conclusion: String;
+  source: string[];
   suggestions: {
     _id: string;
     statement: string;
@@ -26,9 +28,11 @@ const initialState: SeldonDataState = {
   title: '',
   abstract: '',
   seoSummary: '',
-  findings: [],
+  groundBreakingFindings: [],
+  discussion: '',
+  conclusion: '',
   suggestions: [],
-  sources: [],
+  source: [],
   debug: '',
   createdAt: '',
 };
@@ -40,24 +44,26 @@ export const SeldonDataSlice = createSlice({
     setSeldonData: (state, action: PayloadAction<Partial<SeldonDataState>>) => {
       return { ...state, ...action.payload };
     },
-    addDebug: (state, action: PayloadAction<{ debug: string; sources: string[] }>) => {
+    addDebug: (state, action: PayloadAction<{ debug: string; source: string[] }>) => {
       state.debug = action.payload.debug;
-      state.sources = action.payload.sources;
+      state.source = action.payload.source;
       state.prompt = '';
       state.articleId = '';
       state.title = '';
       state.abstract = '';
       state.seoSummary = '';
-      state.findings = [];
+      state.discussion = '';
+      state.conclusion = '';
+      state.groundBreakingFindings = [];
       state.suggestions = [];
       state.createdAt = '';
     },
     addSourceAtStart: (state, action: PayloadAction<string>) => {
-      state.sources.unshift(action.payload);
+      state.source.unshift(action.payload);
     },
     removeSource: (state, action: PayloadAction<string>) => {
-      if (state.sources.length > 1) {
-        state.sources = state.sources.filter((source) => source !== action.payload);
+      if (state.source.length > 1) {
+        state.source = state.source.filter((source) => source !== action.payload);
       }
     },
   },

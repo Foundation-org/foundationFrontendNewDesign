@@ -85,11 +85,6 @@ export default function CreateSlider() {
             <Link
               className={`${location.pathname === tab.path ? 'slider-link-active' : 'slider-link-inactive'} slider-link`}
               to={tab.path}
-              onClick={(e) => {
-                if (location.state?.postData) {
-                  e.preventDefault();
-                }
-              }}
             >
               {tab.title}
             </Link>

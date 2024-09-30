@@ -7,23 +7,38 @@ import { transformPromptSuggestions } from '../../../../utils/seldon';
 import { questionValidation } from '../../../../services/api/questsApi';
 import { SuggestedPost } from '../../../../types/seldon';
 import { usePublishArticleMutation, useChatGptDataMutation } from '../../../../services/mutations/seldon-ai';
-import { addNewOption, addQuestion, setOptionsByArray } from '../../../../features/createQuest/createQuestSlice';
+import {
+  addNewOption,
+  addQuestion,
+  delOption,
+  resetCreateQuest,
+  setOptionsByArray,
+} from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
 import { getSeldonState } from '../../../../features/seldon-ai/seldonSlice';
 import { getSeldonDataStates, setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
 import { Element } from 'react-scroll';
 
-export default function SuggestedPosts() {
+export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const seldonState = useSelector(getSeldonState);
   const getSeldonDataState = useSelector(getSeldonDataStates);
+  const [seldonsData, setSeldonsData] = useState(location.pathname.startsWith('/r') ? apiResp : getSeldonDataState);
   const { protocol, host } = window.location;
   const [suggestedPosts, setSuggestedPosts] = useState<SuggestedPost[]>([]);
   const [loading, setLoading] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/r')) {
+      setSeldonsData(apiResp);
+    } else {
+      setSeldonsData(getSeldonDataState);
+    }
+  }, [apiResp, getSeldonDataState]);
 
   const checkDuplicatePost = async (value: string) => {
     try {
@@ -42,7 +57,7 @@ export default function SuggestedPosts() {
   const processQuestions = async () => {
     setLoading(true);
     try {
-      const processedQuestions = transformPromptSuggestions(getSeldonDataState.suggestions);
+      const processedQuestions = transformPromptSuggestions(seldonsData.suggestions);
       const results = await Promise.all(
         processedQuestions?.map(async (item) => {
           const { errorMessage } = await checkDuplicatePost(item.question);
@@ -62,10 +77,10 @@ export default function SuggestedPosts() {
   };
 
   useEffect(() => {
-    if (getSeldonDataState.suggestions) {
+    if (seldonsData.suggestions) {
       processQuestions();
     }
-  }, [getSeldonDataState.suggestions]);
+  }, [seldonsData.suggestions]);
 
   const { mutateAsync: handleSendPrompt, isPending } = useChatGptDataMutation();
 
@@ -74,9 +89,8 @@ export default function SuggestedPosts() {
       const response = await handleSendPrompt({
         params: {
           ...seldonState,
-          articleId: getSeldonDataState.articleId,
-          title: getSeldonDataState.title,
-          sources: getSeldonDataState.sources,
+          title: seldonsData.title,
+          sources: seldonsData.sources,
         },
       } as any);
 
@@ -90,9 +104,9 @@ export default function SuggestedPosts() {
             title: response.data.response.title,
             abstract: response.data.response.abstract,
             seoSummary: response.data.response.seoSummary,
-            findings: response.data.response.findings,
+            groundBreakingFindings: response.data.response.groundBreakingFindings,
             suggestions: response.data.response.suggestions,
-            sources: ids,
+            source: ids,
             debug: response.data?.debug,
             articleId: response.data?.response.articleId,
             prompt: '',
@@ -105,8 +119,9 @@ export default function SuggestedPosts() {
   };
 
   const copyToClipboard = async () => {
+    const id = location.pathname.startsWith('/r') ? seldonsData?._id : seldonsData.articleId;
     try {
-      await navigator.clipboard.writeText(`${protocol}//${host}/r/${getSeldonDataState.articleId}`);
+      await navigator.clipboard.writeText(`${protocol}//${host}/r/${id}`);
     } catch (err) {
       console.error('Unable to copy text to clipboard:', err);
     }
@@ -114,7 +129,7 @@ export default function SuggestedPosts() {
 
   return (
     <Element name="posts-ideas" className="space-y-4">
-      {!getSeldonDataState.debug && (
+      {!seldonsData.debug && suggestedPosts.length >= 1 && (
         <>
           <div className="space-y-1">
             <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Inspired by this post?</h1>{' '}
@@ -137,9 +152,10 @@ export default function SuggestedPosts() {
                   <div className="col-span-1 flex w-full justify-end">
                     <Link
                       to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
-                      state={{ postData: item, articleId: getSeldonDataState.articleId }}
+                      state={{ postData: item, articleId: seldonsData.articleId }}
                       className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
                       onClick={() => {
+                        dispatch(resetCreateQuest());
                         dispatch(addQuestion(item.question));
                         item.options.slice(0, item.options.length - 2).forEach((_, index) => {
                           dispatch(addNewOption(index));
@@ -156,8 +172,10 @@ export default function SuggestedPosts() {
           </div>
         </>
       )}
-      <div className="flex w-full items-center justify-between gap-4">
-        {!location.pathname.includes('/r') ? (
+      <div
+        className={`${location.pathname.includes('/r') || seldonsData.articleId ? 'justify-center' : 'justify-between'} flex w-full items-center gap-4`}
+      >
+        {!location.pathname.includes('/r') && !seldonsData.articleId ? (
           <Button
             variant="g-submit"
             className="w-full"
@@ -168,33 +186,33 @@ export default function SuggestedPosts() {
           >
             Update
           </Button>
-        ) : (
-          <button className="w-full cursor-default">&#x200B;</button>
-        )}
+        ) : null}
         <Button
           variant="submit"
-          className="w-full"
+          className={`${location.pathname.includes('/r') || seldonsData.articleId ? 'min-w-[152px] tablet:min-w-[315px]' : 'w-full'}`}
           rounded
           disabled={isPublishPending}
           onClick={() => {
-            if (location.pathname.startsWith('/r/') || getSeldonDataState.articleId) {
+            if (location.pathname.startsWith('/r/') || seldonsData.articleId) {
               copyToClipboard();
               showToast('success', 'copyLink');
             } else {
               handlePublishArticle({
                 userUuid: persistedUserInfo.uuid,
                 prompt: seldonState.question,
-                title: getSeldonDataState.title,
-                abstract: getSeldonDataState.abstract,
-                findings: getSeldonDataState.findings,
-                suggestion: getSeldonDataState.suggestions,
-                source: getSeldonDataState.sources,
-                seoSummary: getSeldonDataState.seoSummary,
+                title: seldonsData.title,
+                abstract: seldonsData.abstract,
+                groundBreakingFindings: seldonsData.groundBreakingFindings,
+                suggestion: seldonsData.suggestions,
+                source: seldonsData.sources,
+                seoSummary: seldonsData.seoSummary,
+                discussion: seldonsData.discussion,
+                conclusion: seldonsData.conclusion,
               } as any);
             }
           }}
         >
-          {location.pathname.startsWith('/r/') || getSeldonDataState.articleId ? (
+          {location.pathname.startsWith('/r/') || seldonsData.articleId ? (
             'Share Article'
           ) : isPublishPending ? (
             <FaSpinner className="animate-spin text-[#EAEAEA]" />

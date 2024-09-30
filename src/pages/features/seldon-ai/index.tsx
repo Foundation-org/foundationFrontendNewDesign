@@ -33,7 +33,7 @@ export default function SeldonAi() {
           .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
 
         if (response.data.debug) {
-          dispatch(addDebug({ debug: response.data.debug, sources: ids }));
+          dispatch(addDebug({ debug: response.data.debug, source: ids }));
         } else {
           dispatch(
             setSeldonData({
@@ -41,10 +41,12 @@ export default function SeldonAi() {
               title: response.data.response.title,
               abstract: response.data.response.abstract,
               seoSummary: response.data.response.seoSummary,
-              findings: response.data.response.findings,
+              groundBreakingFindings: response.data.response.groundBreakingFindings,
+              discussion: response.data.response.discussion,
+              conclusion: response.data.response.conclusion,
               suggestions: response.data.response.suggestions,
               createdAt: new Date().toISOString(),
-              sources: ids,
+              source: ids,
               articleId: response.data.response?.articleId ? response.data.response.articleId : '',
               prompt: seldonState.question,
             }),
@@ -101,7 +103,9 @@ export default function SeldonAi() {
               <div className="space-y-1">
                 <h1 className="text-[16px] font-bold tablet:text-[24px]">{getSeldonDataState.title}</h1>
                 <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
-                <p className="text-[10px] tablet:text-[16px]">Posted: {formatDateMDY(getSeldonDataState.createdAt)}</p>
+                <p className="text-[10px] tablet:text-[16px]">
+                  Published: {formatDateMDY(getSeldonDataState.createdAt)}
+                </p>
               </div>
               <p className="text-[12px] tablet:text-[20px]">
                 <strong>Seo Summary </strong>
@@ -134,12 +138,22 @@ export default function SeldonAi() {
               </div>
               <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
               <ol className="list-disc space-y-4">
-                {getSeldonDataState.findings.map((item: { heading: string; content: string }, index: number) => (
-                  <li key={index} className="ml-6 text-[12px] tablet:ml-10 tablet:text-[20px]">
-                    <strong className="font-bold">{item.heading}:</strong> {item.content}
-                  </li>
-                ))}
+                {getSeldonDataState?.groundBreakingFindings?.map(
+                  (item: { heading: string; content: string }, index: number) => (
+                    <li key={index} className="ml-6 text-[12px] tablet:ml-10 tablet:text-[20px]">
+                      <strong className="font-bold">{item.heading}:</strong> {item.content}
+                    </li>
+                  ),
+                )}
               </ol>
+              <div>
+                <h1 className="text-[16px] font-bold tablet:text-[24px]">Discussion</h1>
+                <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.discussion}</p>
+              </div>
+              <div>
+                <h1 className="text-[16px] font-bold tablet:text-[24px]">Conclusion</h1>
+                <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.conclusion}</p>
+              </div>
             </>
           )}
 

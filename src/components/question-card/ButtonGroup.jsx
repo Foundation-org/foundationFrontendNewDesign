@@ -472,6 +472,7 @@ const ButtonGroup = ({
     if (
       location.pathname.includes('/p/') ||
       location.pathname.includes('/l/') ||
+      location.pathname.includes('/r/') ||
       location.pathname === '/post/isfullscreen'
     ) {
       return (
@@ -513,7 +514,7 @@ const ButtonGroup = ({
               </Button>
             </div>
           ) : questStartData.startStatus === 'change answer' ? (
-            <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+            <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
               <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
@@ -535,7 +536,7 @@ const ButtonGroup = ({
       return (
         <div className="flex w-full justify-end">
           {questStartData.startStatus === 'change answer' ? (
-            <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+            <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
               <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
@@ -691,7 +692,7 @@ const ButtonGroup = ({
           </div>
         )}
       {questStartData.startStatus === 'continue' && !questStartData.isClosed && (
-        <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+        <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
           <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
           <Button
             id={`submit-${questStartData._id}`}
