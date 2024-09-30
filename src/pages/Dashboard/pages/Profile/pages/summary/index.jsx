@@ -125,7 +125,7 @@ const Summary = () => {
               Posts you’ve shared
             </h1>
             <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.sharedQuestsStatistics.sharedQuests}
+              {persistedUserInfo?.sharedQuestsStatistics?.sharedQuests}
             </h5>
           </div>
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
@@ -133,7 +133,7 @@ const Summary = () => {
               Total shared link clicks
             </h1>
             <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.sharedQuestsStatistics.totalQuestsImpression}
+              {persistedUserInfo?.sharedQuestsStatistics?.totalQuestsImpression}
             </h5>
           </div>
           <div>

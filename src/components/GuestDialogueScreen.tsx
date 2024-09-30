@@ -16,8 +16,6 @@ export default function GuestDialogueScreen() {
     dispatch(setGuestSignInDialogue(false));
   };
 
-  console.log('first', guestSignUpDialogue, guestSignInDialogue);
-
   return (
     <>
       {guestSignUpDialogue && (

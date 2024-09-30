@@ -86,7 +86,7 @@ const Authenticating = () => {
         dispatch(setAskPassword(false));
         if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
           navigate(localStorage.getItem('shared-post'));
-          localStorage.clearItem('shared-post');
+          localStorage.removeItem('shared-post');
         } else {
           navigate('/');
         }
@@ -125,7 +125,7 @@ const Authenticating = () => {
         dispatch(setAskPassword(false));
         if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
           navigate(localStorage.getItem('shared-post'));
-          localStorage.clearItem('shared-post');
+          localStorage.removeItem('shared-post');
         } else {
           navigate('/');
         }
@@ -159,7 +159,7 @@ const Authenticating = () => {
           dispatch(addUser(res.data));
           if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
             navigate(localStorage.getItem('shared-post'));
-            localStorage.clearItem('shared-post');
+            localStorage.removeItem('shared-post');
           } else {
             navigate('/');
           }
@@ -275,7 +275,7 @@ const Authenticating = () => {
     } else if (isError) {
       navigate(pathname);
     }
-  }, [isLoading, isError, isSuccess]);
+  }, [isLoading, isError, isSuccess, authSuccessResp]);
 
   const handleOpenPasswordConfirmation = () => {
     setIsPasswordConfirmation(true);

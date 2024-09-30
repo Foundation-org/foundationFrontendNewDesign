@@ -1,17 +1,21 @@
 import { useSelector } from 'react-redux';
-import { createBrowserRouter, RouterProvider, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import authRoutes from './authRoutes';
 import guestRoutes from './guestRoutes';
 import FallbackLoading from '../components/FallbackLoading';
-import { useEffect, useState } from 'react';
 
 const AppRouter = () => {
   const persistedUser = useSelector((state: any) => state.auth.user);
-  const routes = persistedUser?.uuid ? authRoutes : guestRoutes;
-  const router = createBrowserRouter(routes);
+  const [router, setRouter] = useState(createBrowserRouter(guestRoutes)); // Default to guest routes
   const [isLoading, setIsLoading] = useState(true);
 
   console.log('persistedUser', persistedUser?.role, persistedUser?.uuid);
+
+  useEffect(() => {
+    const routes = persistedUser?.uuid ? authRoutes : guestRoutes;
+    setRouter(createBrowserRouter(routes)); // Update router whenever persistedUser changes
+  }, [persistedUser]);
 
   useEffect(() => {
     if (window.location.pathname === '/embed') {

@@ -157,7 +157,7 @@ export default function DashboardLayout({ children }) {
         queryClient.invalidateQueries(['userInfo']);
         if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
           navigate(localStorage.getItem('shared-post'));
-          localStorage.clearItem('shared-post');
+          localStorage.removeItem('shared-post');
         } else {
           navigate('/');
         }
@@ -279,9 +279,9 @@ export default function DashboardLayout({ children }) {
                   <div className="flex flex-col gap-1">
                     <h4 className="heading w-fit border-b">My Balance (Guest)</h4>
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      <p>
+                      <span>
                         {userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX
-                      </p>
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -296,9 +296,9 @@ export default function DashboardLayout({ children }) {
                   <div className="flex flex-col gap-1">
                     <h4 className="heading w-fit border-b">My Balance (Visitor)</h4>
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      <p>
+                      <span>
                         {userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX
-                      </p>
+                      </span>
                     </p>
                   </div>
                 </div>
