@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';
@@ -32,6 +32,7 @@ import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSli
 const OpenChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
@@ -147,6 +148,11 @@ const OpenChoice = () => {
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'choice',
     };
+
+    if (location?.state?.articleId && location?.state?.postData?.question) {
+      params.articleId = location.state.articleId;
+      params.suggestionTitle = location?.state?.postData?.question;
+    }
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 

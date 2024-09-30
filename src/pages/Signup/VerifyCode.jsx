@@ -15,8 +15,10 @@ const VerifyCode = () => {
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [verificationCode, setVerificationCode] = useState([]);
   const [msg, setMsg] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const checkUrlQuery = () => {
+    setLoading(true);
     let urlQuery = window.location.search.slice(1);
     seturlQuery(urlQuery);
 
@@ -53,9 +55,11 @@ const VerifyCode = () => {
         if (data.message === 'Already Verified') {
           setMsg('You are already Verified.Please Proceed to Login');
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error:', error.message);
+        setLoading(false);
       });
   };
 
@@ -86,17 +90,18 @@ const VerifyCode = () => {
       if (response.status === 200) {
         showToast('success', 'emailVerified');
         const data = await response.json();
-        if (!data.isLegacyEmailContactVerified && !data.isGoogleEmail) {
-          localStorage.setItem('uuid', data.uuid);
-          localStorage.setItem('email', data.email);
-          navigate('/verify-phone');
-        } else {
-          dispatch(setAskPassword(false));
-          dispatch(addUser(data));
-          localStorage.setItem('userData', JSON.stringify(data));
-          localStorage.setItem('uuid', data.uuid);
-          navigate('/');
-        }
+        // NOT TO BE REMOVED
+        // if (!data.isLegacyEmailContactVerified && !data.isGoogleEmail) {
+        //   localStorage.setItem('uuid', data.uuid);
+        //   localStorage.setItem('email', data.email);
+        //   navigate('/verify-phone');
+        // } else {
+        dispatch(setAskPassword(false));
+        dispatch(addUser(data));
+        localStorage.setItem('userData', JSON.stringify(data));
+        localStorage.setItem('uuid', data.uuid);
+        navigate('/');
+        // }
       }
 
       if (response.status === 401) {
@@ -140,6 +145,7 @@ const VerifyCode = () => {
                   <div>
                     <button
                       className="flex w-full flex-row items-center justify-center rounded-xl border border-none bg-[#389CE3] py-5 text-center text-sm text-white shadow-sm outline-none"
+                      disabled={loading}
                       onClick={() => {
                         handleVerify(urlQuery);
                       }}

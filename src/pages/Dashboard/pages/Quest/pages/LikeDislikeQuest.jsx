@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -29,6 +29,7 @@ import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSli
 const LikeDislike = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const filterStates = useSelector(filtersActions.getFilters);
 
   const queryClient = useQueryClient();

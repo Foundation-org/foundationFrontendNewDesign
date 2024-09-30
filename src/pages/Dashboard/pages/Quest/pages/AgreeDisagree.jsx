@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -28,6 +28,7 @@ import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSli
 const AgreeDisagree = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const persistedContants = useSelector(getConstantsValues);
   const filterStates = useSelector(filtersActions.getFilters);
@@ -142,6 +143,11 @@ const AgreeDisagree = () => {
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'binary',
     };
+
+    if (location?.state?.articleId && location?.state?.postData?.question) {
+      params.articleId = location.state.articleId;
+      params.suggestionTitle = location?.state?.postData?.question;
+    }
 
     if (!checkHollow()) {
       // createQuest(params);

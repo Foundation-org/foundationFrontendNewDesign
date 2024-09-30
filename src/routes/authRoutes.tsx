@@ -168,7 +168,7 @@ const authRoutes = [
       },
     ],
   },
-  { path: '/welcome', element: <Welcome /> },
+  // { path: '/welcome', element: <Welcome /> },
   { path: '/iframe', element: <Iframe /> },
   { path: '/embed/:link', element: <EmbedPost /> },
   { path: '/authenticating', element: <Authenticating /> },

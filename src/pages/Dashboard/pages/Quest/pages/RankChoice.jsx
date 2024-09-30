@@ -36,6 +36,7 @@ import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSli
 const RankChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
@@ -153,6 +154,11 @@ const RankChoice = () => {
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'choice',
     };
+
+    if (location?.state?.articleId && location?.state?.postData?.question) {
+      params.articleId = location.state.articleId;
+      params.suggestionTitle = location?.state?.postData?.question;
+    }
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 

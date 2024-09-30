@@ -68,12 +68,13 @@ const CredentialLogin = () => {
             return;
           }
 
-          if (!resp.data.isLegacyEmailContactVerified && !email.includes('@gmail.com')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-            localStorage.setItem('email', resp.data.email);
-            navigate('/verify-phone');
-            return;
-          }
+          // NOT TO BE REMOVE
+          // if (!resp.data.isLegacyEmailContactVerified && !email.includes('@gmail.com')) {
+          //   localStorage.setItem('uuid', resp.data.uuid);
+          //   localStorage.setItem('email', resp.data.email);
+          //   navigate('/verify-phone');
+          //   return;
+          // }
           if (resp.data.isPasswordEncryption) {
             setIsLoading(false);
             setUuid(resp.data.uuid);
