@@ -127,6 +127,8 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
     }
   };
 
+
+
   return (
     <Element name="posts-ideas" className="space-y-4">
       {!seldonsData.debug && suggestedPosts.length >= 1 && (
@@ -152,7 +154,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                   <div className="col-span-1 flex w-full justify-end">
                     <Link
                       to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
-                      state={{ postData: item, articleId: seldonsData.articleId }}
+                      state={{ postData: item, articleId: location.pathname.startsWith('/r') ? seldonsData?._id : seldonsData.articleId }}
                       className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
                       onClick={() => {
                         dispatch(resetCreateQuest());
