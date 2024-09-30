@@ -21,6 +21,7 @@ const guestRoutes = [
   { path: '/privacy-policy', element: <SignUpPrivacyPolicy /> },
   { path: '/p/:id', element: <GuestRedirect redirectUrl={null} /> },
   { path: '/l/:id', element: <GuestRedirect redirectUrl={null} /> },
+  { path: '/r/:id', element: <GuestRedirect redirectUrl={null} /> },
   { path: '/treasury/:code', element: <Navigate to="/" state={{ from: '/treasury/:code' }} /> },
   { path: '*', element: <Navigate to="/" /> },
 ];

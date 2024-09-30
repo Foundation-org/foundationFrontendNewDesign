@@ -8,6 +8,7 @@ import FallbackLoading from '../components/FallbackLoading';
 const AppRouter = () => {
   const persistedUser = useSelector((state: any) => state.auth.user);
   const [isLoading, setIsLoading] = useState(true);
+  const [router, setRouter] = useState(createBrowserRouter(guestRoutes)); // Default to guest routes
 
   useEffect(() => {
     if (window.location.pathname === '/embed') {
@@ -22,9 +23,14 @@ const AppRouter = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const routes = persistedUser?.uuid ? authRoutes : guestRoutes;
+    setRouter(createBrowserRouter(routes)); // Update router whenever persistedUser changes
+  }, [persistedUser]);
+
   return (
     <div className="relative">
-      <RouterProvider router={createBrowserRouter(persistedUser?.uuid ? authRoutes : guestRoutes)} />
+      <RouterProvider router={router} />
       {isLoading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-75">
           <FallbackLoading />

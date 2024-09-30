@@ -40,8 +40,6 @@ const GuestRedirect = ({ redirectUrl }) => {
   useEffect(() => {
     if (persistedUserInfo === null) {
       createGuest();
-    } else {
-      navigate('/');
     }
   }, [persistedUserInfo, dispatch]);
 
