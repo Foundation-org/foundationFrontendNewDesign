@@ -53,7 +53,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
       </div>
       {/* Body */}
       <div className="m-3 flex flex-col gap-3 tablet:m-5 tablet:gap-5">
-        {page !== 'preview' && isPending ? (
+        {!!viewMessageData?.postId && page !== 'preview' && isPending ? (
           <div className="flex items-center justify-center tablet:my-5">
             <FaSpinner className="animate-spin text-[1rem] text-blue-100 tablet:text-[3rem]" />
           </div>
