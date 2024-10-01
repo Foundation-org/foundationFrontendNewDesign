@@ -7,6 +7,7 @@ import { Button as UiButton } from '../../components/ui/Button';
 import { setAskPassword } from '../../features/profile/userSettingSlice';
 import showToast from '../../components/ui/Toast';
 import { toast } from 'sonner';
+import { setCredentialLogin } from '../../features/extras/extrasSlice';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
@@ -165,7 +166,7 @@ const VerifyCode = () => {
             <UiButton
               className="mt-[25px] flex w-full justify-end"
               onClick={() => {
-                navigate('/signin');
+                dispatch(setCredentialLogin(true));
               }}
               variant={'submit'}
             >

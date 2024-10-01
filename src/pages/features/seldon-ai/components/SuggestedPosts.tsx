@@ -90,7 +90,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
         params: {
           ...seldonState,
           title: seldonsData.title,
-          sources: seldonsData.sources,
+          sources: seldonsData.source,
         },
       } as any);
 
@@ -127,8 +127,6 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
     }
   };
 
-
-
   return (
     <Element name="posts-ideas" className="space-y-4">
       {!seldonsData.debug && suggestedPosts.length >= 1 && (
@@ -154,7 +152,10 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                   <div className="col-span-1 flex w-full justify-end">
                     <Link
                       to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
-                      state={{ postData: item, articleId: location.pathname.startsWith('/r') ? seldonsData?._id : seldonsData.articleId }}
+                      state={{
+                        postData: item,
+                        articleId: location.pathname.startsWith('/r') ? seldonsData?._id : seldonsData.articleId,
+                      }}
                       className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
                       onClick={() => {
                         dispatch(resetCreateQuest());
@@ -175,53 +176,58 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
         </>
       )}
       <div
-        className={`${location.pathname.includes('/r') || seldonsData.articleId ? 'justify-center' : 'justify-between'} flex w-full items-center gap-4`}
+        className={`${location.pathname.includes('/r') ? 'justify-center' : 'justify-between'} flex w-full items-center gap-4`}
       >
-        {!location.pathname.includes('/r') && !seldonsData.articleId ? (
+        {location.pathname.includes('/r') ? (
           <Button
-            variant="g-submit"
-            className="w-full"
+            variant="submit"
+            className="min-w-[152px] tablet:min-w-[315px]"
             rounded
             onClick={() => {
-              handleUpdateArticle();
-            }}
-          >
-            Update
-          </Button>
-        ) : null}
-        <Button
-          variant="submit"
-          className={`${location.pathname.includes('/r') || seldonsData.articleId ? 'min-w-[152px] tablet:min-w-[315px]' : 'w-full'}`}
-          rounded
-          disabled={isPublishPending}
-          onClick={() => {
-            if (location.pathname.startsWith('/r/') || seldonsData.articleId) {
               copyToClipboard();
               showToast('success', 'copyLink');
-            } else {
-              handlePublishArticle({
-                userUuid: persistedUserInfo.uuid,
-                prompt: seldonState.question,
-                title: seldonsData.title,
-                abstract: seldonsData.abstract,
-                groundBreakingFindings: seldonsData.groundBreakingFindings,
-                suggestion: seldonsData.suggestions,
-                source: seldonsData.sources,
-                seoSummary: seldonsData.seoSummary,
-                discussion: seldonsData.discussion,
-                conclusion: seldonsData.conclusion,
-              } as any);
-            }
-          }}
-        >
-          {location.pathname.startsWith('/r/') || seldonsData.articleId ? (
-            'Share Article'
-          ) : isPublishPending ? (
-            <FaSpinner className="animate-spin text-[#EAEAEA]" />
-          ) : (
-            'Publish Article'
-          )}
-        </Button>
+            }}
+            disabled={isPending}
+          >
+            {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Share Article'}
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant="g-submit"
+              className="w-full"
+              rounded
+              onClick={() => {
+                handleUpdateArticle();
+              }}
+              disabled={isPending}
+            >
+              {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Update'}
+            </Button>
+            <Button
+              variant="submit"
+              className="w-full"
+              rounded
+              disabled={isPublishPending}
+              onClick={() => {
+                handlePublishArticle({
+                  userUuid: persistedUserInfo.uuid,
+                  prompt: seldonState.question,
+                  title: seldonsData.title,
+                  abstract: seldonsData.abstract,
+                  groundBreakingFindings: seldonsData.groundBreakingFindings,
+                  suggestion: seldonsData.suggestions,
+                  source: seldonsData.sources,
+                  seoSummary: seldonsData.seoSummary,
+                  discussion: seldonsData.discussion,
+                  conclusion: seldonsData.conclusion,
+                } as any);
+              }}
+            >
+              {isPublishPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Publish Article'}
+            </Button>
+          </>
+        )}
       </div>
     </Element>
   );

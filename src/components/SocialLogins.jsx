@@ -51,11 +51,9 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
           onClick={() => {
             localStorage.setItem('target-url', `${window.location.href}`);
             if (isLogin) {
-              // localStorage.setItem('target-url', `${window.location.href}`);
               triggerLogin(item.provider);
               localStorage.setItem('authMode', 'Login');
             } else {
-              // localStorage.setItem('target-url', `${window.location.href}`);
               setClickedButtonName(item.provider);
               handleReferralOpen(item.provider);
               localStorage.setItem('authMode', 'Register');
@@ -72,13 +70,6 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
         <Button
           variant="auth"
           onClick={() => {
-            // if (location.pathname === '/signin') {
-            //   navigate('/signin/credentials');
-            // } else if (location.pathname === '/signup') {
-            //   navigate('/signup/credentials');
-            // } else {
-            //   navigate('/guest-signup/credentials');
-            // }
             if (guestSignUpDialogue) {
               dispatch(setCredentialRegister(true));
             } else {

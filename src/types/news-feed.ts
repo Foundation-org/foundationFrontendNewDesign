@@ -11,9 +11,11 @@ interface articleType {
   createdAt: string;
   deletedAt: string;
   isActive: boolean;
-  findings: [];
+  groundBreakingFindings: [];
   source: string[];
   title: string;
+  discussion: string;
+  conclusion: string;
   updatedAt: string;
   userUuid: string;
   seoSummary: string;

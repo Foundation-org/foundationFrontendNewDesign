@@ -16,7 +16,7 @@ import { signUpGuest } from '../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../components/ui/Button';
-import { setCredentialRegister } from '../../../features/extras/extrasSlice';
+import { setCredentialLogin, setCredentialRegister } from '../../../features/extras/extrasSlice';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -307,7 +307,7 @@ const CredentialRegister = () => {
             <div className="mt-[25px] flex w-full justify-end">
               <Button
                 onClick={() => {
-                  navigate('/signin');
+                  dispatch(setCredentialLogin(true));
                 }}
                 variant={'submit'}
               >
