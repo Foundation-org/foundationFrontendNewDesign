@@ -12,6 +12,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
+import { setGuestSignInDialogue } from '../features/extras/extrasSlice';
 
 const Authenticating = () => {
   const navigate = useNavigate();
@@ -94,12 +95,17 @@ const Authenticating = () => {
     } catch (error) {
       if (error.response.data.message.split(':')[1].trim() === 'Email Already Exist') {
         toast.error(
-          <p>
+          <div>
             Email Already Exist{' '}
-            <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/')}>
+            <button
+              className="text-[#389CE3] underline"
+              onClick={() => {
+                dispatch(setGuestSignInDialogue(true));
+              }}
+            >
               Sign in
-            </span>{' '}
-          </p>,
+            </button>{' '}
+          </div>,
         );
       } else {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);

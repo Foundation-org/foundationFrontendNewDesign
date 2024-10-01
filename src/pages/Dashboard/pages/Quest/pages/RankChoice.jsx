@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';

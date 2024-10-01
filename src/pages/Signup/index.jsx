@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { referralModalStyle } from '../../constants/styles';
 import showToast from '../../components/ui/Toast';
 import SocialLogins from '../../components/SocialLogins';
@@ -8,8 +8,8 @@ import MyModal from './components/Modal';
 import api from '../../services/api/Axios';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
-import Loader from './components/Loader';
-import { setGuestSignInDialogue, setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
+import { setGuestSignInDialogue } from '../../features/extras/extrasSlice';
+import { FaSpinner } from 'react-icons/fa';
 // const isWebview = () => {
 //   const userAgent = window.navigator.userAgent.toLowerCase();
 
@@ -28,7 +28,6 @@ import { setGuestSignInDialogue, setGuestSignUpDialogue } from '../../features/e
 
 export default function Signup({ allowSignUp }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -139,60 +138,30 @@ export default function Signup({ allowSignUp }) {
 
   return (
     <div className="flex w-full flex-col rounded-b-[9.76px] bg-white text-white dark:bg-black lg:flex-row tablet:rounded-b-[26px]">
-      {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
-      {/* Mobile Top Header */}
-      {/* {!allowSignUp && (
-        <div
-          className={`${
-            persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden tablet:h-16`}
-        >
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
-            alt="logo"
-            className="h-[10px] tablet:h-4"
-          />
-        </div>
-      )} */}
-      {/* Tablet Left Header */}
-      {/* {!allowSignUp && (
-        <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
-            alt="logo"
-            className="h-[20vh] w-[23vw]"
-          />
-        </div>
-      )} */}
-      {/* Main Content */}
       <div className="dark:bg-dark flex w-full flex-col items-center rounded-b-[9.76px] bg-white py-4 dark:bg-gray-200 md:justify-center tablet:rounded-b-[26px] tablet:py-7">
-        <div className="flex flex-col items-center justify-center">
-          {allowSignUp ? (
-            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
-              Please create and account to unlock this feature.
-            </p>
-          ) : (
-            <h1 className="text-[18px] font-[700] text-black dark:text-white tablet:text-[35px] tablet:leading-[35px]">
-              {location.pathname === '/signup' || location.pathname === '/guest-signup'
-                ? 'Create an Account'
-                : 'Create Account with Email'}
-            </h1>
-          )}
-          <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
-          <div className="flex gap-3">
-            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
-              Already have an account?
-            </p>
-            <button
-              className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]"
-              onClick={() => {
-                dispatch(setGuestSignInDialogue(true));
-              }}
-            >
-              Sign in
-            </button>
+        <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
+          Please create and account to unlock this feature.
+        </p>
+        {isLoadingSocial ? (
+          <div className="my-5 flex flex-col items-center justify-center gap-4 tablet:my-10">
+            <FaSpinner className="animate-spin text-[8vw] text-blue-200 tablet:text-[4vw]" />
           </div>
+        ) : (
+          <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
+        )}
+        <div className="flex gap-3">
+          <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
+            Already have an account?
+          </p>
+          <button
+            className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]"
+            onClick={() => {
+              dispatch(setGuestSignInDialogue(true));
+            }}
+          >
+            Sign in
+          </button>
         </div>
       </div>
       <BasicModal

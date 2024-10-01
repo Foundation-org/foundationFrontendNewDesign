@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Loader from '../Signup/components/Loader';
 import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
 import SocialLogins from '../../components/SocialLogins';
 import '../../index.css';
 import showToast from '../../components/ui/Toast';
 import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
+import { FaSpinner } from 'react-icons/fa';
 
 // const isWebview = () => {
 //   const userAgent = window.navigator.userAgent.toLowerCase();
@@ -101,7 +101,6 @@ export default function Signin() {
 
   return (
     <div className="flex w-full flex-col rounded-b-[9.76px] bg-white text-white dark:bg-black lg:flex-row tablet:rounded-b-[26px]">
-      {isLoadingSocial && <Loader />}
       <LegacyConfirmationPopup
         isPopup={isPasswordConfirmation}
         setIsPopup={setIsPasswordConfirmation}
@@ -114,24 +113,28 @@ export default function Signin() {
         setIsLoadingSocial={setIsLoadingSocial}
       />
       <div className="dark:bg-dark flex w-full flex-col items-center rounded-b-[9.76px] bg-white py-4 dark:bg-gray-200 md:justify-center tablet:rounded-b-[26px] tablet:py-7">
-        <div className="flex flex-col items-center justify-center">
-          <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
-            Login
-          </p>
-          <SocialLogins setClickedButtonName={setClickedButtonName} isLogin={true} triggerLogin={triggerLogin} />
-          <div className="flex justify-center gap-3">
-            <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
-              Don’t have an account?
-            </p>
-            <button
-              className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]"
-              onClick={() => {
-                dispatch(setGuestSignUpDialogue(true));
-              }}
-            >
-              Sign up
-            </button>
+        <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
+          Login
+        </p>
+        {isLoadingSocial ? (
+          <div className="my-5 flex flex-col items-center justify-center gap-4 tablet:my-10">
+            <FaSpinner className="animate-spin text-[8vw] text-blue-200 tablet:text-[4vw]" />
           </div>
+        ) : (
+          <SocialLogins setClickedButtonName={setClickedButtonName} isLogin={true} triggerLogin={triggerLogin} />
+        )}
+        <div className="flex justify-center gap-3">
+          <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
+            Don’t have an account?
+          </p>
+          <button
+            className="text-[11.21px] font-[500] text-blue-200 tablet:text-[20px] laptop:text-[22px]"
+            onClick={() => {
+              dispatch(setGuestSignUpDialogue(true));
+            }}
+          >
+            Sign up
+          </button>
         </div>
       </div>
     </div>
