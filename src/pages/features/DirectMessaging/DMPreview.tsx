@@ -124,14 +124,23 @@ export default function DMPreview() {
         <Button
           variant="cancel"
           onClick={() => {
-            navigate('/direct-messaging/new-message?advance-analytics=true', {
-              state: {
-                questStartData: location.state.questStartData,
-                selectedOptions: updateOptionSelected(),
-                params: location.state.params,
-                key: new Date().getTime(),
-              },
-            });
+            if (updateOptionSelected().length >= 1) {
+              navigate('/direct-messaging/new-message?advance-analytics=true', {
+                state: {
+                  questStartData: location.state.questStartData,
+                  selectedOptions: updateOptionSelected(),
+                  params: location.state.params,
+                  key: new Date().getTime(),
+                },
+              });
+            } else {
+              navigate('/direct-messaging/new-message', {
+                state: {
+                  params: location.state.params,
+                  key: new Date().getTime(),
+                },
+              });
+            }
           }}
         >
           Continue editing
@@ -150,7 +159,7 @@ export default function DMPreview() {
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 {location.state.params.to === 'List'
                   ? `+0 FDX`
-                  : `+${handleNoOfUsers() * location.state.params.sendAmount} FDX`}
+                  : `+${(handleNoOfUsers() * location.state.params.sendAmount)?.toFixed(2)} FDX`}
               </span>
             </>
           )}

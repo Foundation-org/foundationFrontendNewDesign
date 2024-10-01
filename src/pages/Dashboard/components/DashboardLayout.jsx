@@ -23,6 +23,7 @@ import showToast from '../../../components/ui/Toast';
 import { changeThemeTo } from '../../../features/utils/utilsSlice';
 import SeldonInputs from '../../features/seldon-ai/components/SeldonInputs';
 import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
+import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -408,7 +409,13 @@ export default function DashboardLayout({ children }) {
                       )}
                     </>
                   ) : (
-                    <Button variant="hollow-submit2" className="bg-white" onClick={() => navigate('/guest-signup')}>
+                    <Button
+                      variant="hollow-submit2"
+                      className="bg-white"
+                      onClick={() => {
+                        dispatch(setGuestSignUpDialogue(true));
+                      }}
+                    >
                       Sign up
                     </Button>
                   )}

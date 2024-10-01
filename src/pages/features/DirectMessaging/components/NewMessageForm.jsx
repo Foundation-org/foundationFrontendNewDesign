@@ -21,7 +21,7 @@ export default function NewMessageForm() {
   // const { questStartData, selectedOptions, params } = useOutletContext();
 
   const [optionsArr, setOptionsArr] = useState(selectedOptions);
-  const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || '');
+  const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || params?.to || '');
   const [sub, setSub] = useState(draft?.subject || params?.message || '');
   const [msg, setMsg] = useState(draft?.message || params?.subject || '');
   const [readReward, setReadReward] = useState(params?.readReward || defaultReadReward);
@@ -63,8 +63,8 @@ export default function NewMessageForm() {
       return;
     }
 
-    if (sub === '' || msg === '') {
-      toast.error(`Subject and message cannot be empty`);
+    if (sub === '' || msg === '' || to === '') {
+      toast.error(`Subject, message and to cannot be empty`);
       return;
     }
 
@@ -192,7 +192,7 @@ export default function NewMessageForm() {
           <div className="flex flex-col items-center justify-center gap-[15px]">
             <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
               <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
-                {questStartData.Question}
+                {questStartData?.Question}
               </h1>
               {optionsArr?.map((post) => (
                 <SelectionOption
@@ -309,7 +309,7 @@ export default function NewMessageForm() {
             Total FDX to send message
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {`${handleNoOfUsers()} participants = ${formatRecipient(to) === 'List' ? `0 FDX` : `${handleNoOfUsers() * sendAmount} FDX`}`}
+            {`${handleNoOfUsers()} participants = ${formatRecipient(to) === 'List' ? `0 FDX` : `${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}`}
           </p>
         </div>
       </div>
@@ -325,7 +325,7 @@ export default function NewMessageForm() {
         </Button>
         <div className="flex gap-4">
           <Button
-            variant="hollow-submit"
+            variant={to !== '' && sub !== '' && msg !== '' ? 'submit' : 'hollow-submit'}
             onClick={() => {
               handleDraft();
             }}

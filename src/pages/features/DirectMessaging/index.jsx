@@ -57,7 +57,6 @@ export default function DirectMessaging() {
     if (item) {
       setAddNewMsg(false);
       setViewMessageData(item);
-      return;
     }
 
     const params = {

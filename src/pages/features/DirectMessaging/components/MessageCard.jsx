@@ -16,6 +16,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(item.createdAt), [item.createdAt]);
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const handleDelete = (id, type) => {
     api
@@ -95,7 +96,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             className="size-[12.325px] tablet:size-5"
           />
           <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? item.to : 'Foundation-IO.com'}
+            {filter === 'sent' ? item.to : isPseudoBadge ? 'Foundation-IO.com' : 'Verified User'}
           </h1>
         </div>
         <div className="flex items-center gap-1">
@@ -165,9 +166,12 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               variant={item?.viewed ? 'change' : 'submit'}
               disabled={location.pathname === '/direct-messaging/preview'}
               onClick={() => {
-                if (location.pathname === '/direct-messaging/preview') return;
-                setViewMsg(true);
-                handleViewMessage(item._id, item.sender, item.receiver, item);
+                if (location.pathname === '/direct-messaging/preview') {
+                  return;
+                } else {
+                  setViewMsg(true);
+                  handleViewMessage(item._id, item.sender, item.receiver, item);
+                }
               }}
             >
               {item?.viewed ? 'Read Again' : filter === 'sent' ? 'View' : 'Read'}{' '}

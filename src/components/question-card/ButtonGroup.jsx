@@ -601,7 +601,7 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id && !questStartData.isClosed) {
     return (
-      <div className="flex w-full gap-2 px-[0.87rem] tablet:gap-[0.75rem] tablet:px-10">
+      <div className="mb-[15px] flex w-full gap-2 px-[0.87rem] tablet:mb-6 tablet:gap-[0.75rem] tablet:px-10">
         <FeedbackAndVisibility
           ref={feedbackAndVisibilityRef}
           questStartData={questStartData}
@@ -642,7 +642,7 @@ const ButtonGroup = ({
                 <FaSpinner className="animate-spin text-center text-[22px] text-blue-100 dark:text-[#EAEAEA] tablet:text-[30px]" />
               </div>
             ) : (
-              <div className="mb-[15px] flex w-full items-center justify-between gap-4 tablet:mb-6">
+              <div className="flex w-full items-center justify-between gap-4">
                 {questStartData.startStatus !== 'continue' && !questStartData?.startQuestData?.feedbackReverted ? (
                   <Button
                     variant={'submit'}
