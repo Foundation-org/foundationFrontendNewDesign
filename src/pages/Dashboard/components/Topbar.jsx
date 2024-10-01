@@ -112,7 +112,7 @@ const Topbar = () => {
                 </div>
               </div>
               {/* Mobile */}
-              <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[14rem] tablet:min-w-[14rem] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
+              <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[14rem] tablet:min-w-[14rem] tablet:gap-2 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
                 {TopbarItems.filter((item) => {
                   if (persistedUserInfo.role === 'guest' || persistedUserInfo.role === 'visitor') {
                     // Hide both item.id 5 and 6 for guest or visitor roles
@@ -141,7 +141,7 @@ const Topbar = () => {
                         : persistedTheme === 'dark'
                           ? 'text-[#92959D]'
                           : 'text-[#BEDEF4]'
-                    } relative flex h-full items-center`}
+                    } relative flex size-full items-center`}
                     onClick={() => {
                       dispatch(createQuestActions.resetCreateQuest());
                       dispatch(pictureMediaAction.resetToInitialState());

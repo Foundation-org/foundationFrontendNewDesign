@@ -39,7 +39,7 @@ export default function NewsFeed() {
 
   return (
     <>
-      <div className="flex justify-end laptop:hidden">
+      <div className="flex justify-end tablet:hidden">
         <NewsFeedSearch />
       </div>
       <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">{content}</div>

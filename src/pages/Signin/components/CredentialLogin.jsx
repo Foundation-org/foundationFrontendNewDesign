@@ -10,7 +10,7 @@ import { addUser } from '../../../features/auth/authSlice';
 import LegacyConfirmationPopup from '../../../components/dialogue-boxes/LegacyConfirmationPopup';
 import showToast from '../../../components/ui/Toast';
 import { Button } from '../../../components/ui/Button';
-import { setCredentialLogin } from '../../../features/extras/extrasSlice';
+import { setCredentialLogin, setGuestSignInDialogue } from '../../../features/extras/extrasSlice';
 
 const CredentialLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +42,7 @@ const CredentialLogin = () => {
   });
 
   const handleSignin = async () => {
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       // const recaptchaResp = await axios({
       //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${
@@ -56,8 +56,8 @@ const CredentialLogin = () => {
       if (capthaToken === '') {
         const resp = await userSignin({ email, password });
         if (resp.status === 200) {
-          console.log(resp);
-          console.log(resp.data.isLegacyEmailContactVerified, email.includes('@gmail.com'));
+          // console.log(resp);
+          // console.log(resp.data.isLegacyEmailContactVerified, email.includes('@gmail.com'));
 
           if (resp.data.message?.includes('Sent a verification email')) {
             showToast('success', 'verificationEmailSent');
@@ -89,7 +89,7 @@ const CredentialLogin = () => {
 
             if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
               navigate(localStorage.getItem('shared-post'));
-              localStorage.clearItem('shared-post');
+              localStorage.removeItem('shared-post');
             } else {
               navigate('/');
             }
@@ -115,10 +115,11 @@ const CredentialLogin = () => {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
         setIsLoading(false);
       }
+    } finally {
+      // setIsLoading(false);
+      dispatch(setCredentialLogin(false));
+      dispatch(setGuestSignInDialogue(false));
     }
-    // finally {
-    //   setIsLoading(false);
-    // }
   };
 
   const togglePasswordVisibility = () => {
@@ -232,7 +233,6 @@ const CredentialLogin = () => {
         <Button
           variant="submit"
           onClick={() => {
-            setIsLoading(true);
             handleSignin();
           }}
           disabled={(isLoading === true ? true : false) || !email || !password}
