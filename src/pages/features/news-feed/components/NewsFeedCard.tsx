@@ -36,19 +36,19 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   };
 
   return (
-    <div ref={innerRef} className="h-full max-w-[730px]">
+    <div
+      ref={innerRef}
+      className="h-full max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
+    >
       {/* Header */}
-      <div className="flex flex-col rounded-t-[12.3px] bg-blue-100 p-[0.57rem] dark:bg-accent-100 tablet:rounded-t-[15px] tablet:px-5 tablet:py-[11px]">
-        <h4 className="text-[0.6rem] font-semibold text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+      <div className="flex flex-col border-b border-gray-250 p-[0.57rem] tablet:border-b-[1.846px] tablet:px-[15px] tablet:py-3">
+        <h4 className="text-[12.14px] font-semibold text-gray-150 dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
           {data?.title}
         </h4>
-        <p className="text-[0.6rem] font-normal text-white tablet:text-[14px]">
-          Published {formatDateMDY(data.createdAt)}
-        </p>
       </div>
       {/* Body */}
-      <div className="flex flex-col justify-between gap-1.5 rounded-b-[12.3px] border-x-2 border-b-2 border-blue-100 bg-white p-[0.87rem] dark:border-accent-100 dark:bg-gray-200 tablet:gap-4 tablet:rounded-b-[15px] tablet:p-4">
-        <p className="text-[12px] font-medium leading-[13.56px] dark:text-white tablet:text-[16px] tablet:leading-normal">
+      <div className="flex flex-col justify-between gap-1.5 p-[0.87rem] tablet:gap-4 tablet:p-4">
+        <p className="text-[10px] font-medium leading-[13.56px] text-accent-600 dark:text-white tablet:text-[16px] tablet:leading-normal">
           {data?.seoSummary}
         </p>
         <div className="flex w-full items-center justify-between gap-4">
@@ -73,6 +73,12 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
             Read More
           </Button>
         </div>
+      </div>
+      {/* Footer */}
+      <div className="relative flex items-center justify-end border-t border-gray-250 px-[0.57rem] py-[5px] tablet:border-t-[1.846px] tablet:px-5 tablet:py-3">
+        <p className="text-[10px] font-normal text-[#9C9C9C] dark:text-white tablet:text-[20px]">
+          Published {formatDateMDY(data.createdAt)}
+        </p>
       </div>
     </div>
   );
