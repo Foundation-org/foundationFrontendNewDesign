@@ -16,6 +16,7 @@ export default function SeldonView() {
     queryKey: ['articles', location.pathname.split('/').pop()],
     queryFn: () => getArticles(location.pathname.split('/').pop()),
   });
+  console.log(response?.data?.groundBreakingFinding);
 
   return (
     <>
@@ -69,7 +70,9 @@ export default function SeldonView() {
                       Get post ideas and earn FDX
                     </ScrollLink>
                   </div>
-                  <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
+                  {response?.data?.groundBreakingFinding.length > 0 && (
+                    <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
+                  )}
                   <ol className="list-disc space-y-4">
                     {response?.data?.groundBreakingFindings.map(
                       (item: { heading: string; content: string }, index: number) => (

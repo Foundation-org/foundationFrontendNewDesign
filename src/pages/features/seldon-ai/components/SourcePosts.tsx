@@ -63,20 +63,20 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
     queryFn: () => getQuestsCustom({ ids: seldonsData.source, uuid: persistedUserInfo.uuid }),
   });
 
-  if (isError) {
-    return <h1>No Posts Found</h1>;
-  }
-
-  console.log('sourcePosts', sourcePosts);
+  // if (isError) {
+  //   return <h1>No Posts Found</h1>;
+  // }
 
   return (
     <Element name="posts-list" className="space-y-4">
-      <div className="space-y-1">
-        <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Post that informed this article</h1>{' '}
-        <h5 className="text-center text-[14px] tablet:text-[20px]">
-          See what posts you contributed to that were used or engage with posts and earn
-        </h5>
-      </div>
+      {seldonsData.source.length !== 0 && (
+        <div className="space-y-1">
+          <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Post that informed this article</h1>{' '}
+          <h5 className="text-center text-[14px] tablet:text-[20px]">
+            See what posts you contributed to that were used or engage with posts and earn
+          </h5>
+        </div>
+      )}
       {!location.pathname.includes('/r') && (
         <div className="relative w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[10px] tablet:border-[3px]">
           <TextareaAutosize
@@ -118,7 +118,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
         ) : (
           sourcePosts?.slice(0, showMorePosts ? sourcePosts.length : 3).map((post: any, index: number) => (
             <div key={index + 1} className="relative">
-              {seldonsData.source.length > 1 && !location.pathname.includes('/r') && (
+              {!location.pathname.includes('/r') && (
                 <button
                   className="absolute -right-3 -top-3 flex size-8 items-center justify-center rounded-full bg-gray-100"
                   onClick={() => {

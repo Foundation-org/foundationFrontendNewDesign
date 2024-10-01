@@ -64,6 +64,7 @@ export default function SeldonAi() {
       e.currentTarget.form?.dispatchEvent(new Event('submit', { bubbles: true }));
     }
   };
+  console.log(getSeldonDataState?.groundBreakingFindings);
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -136,7 +137,9 @@ export default function SeldonAi() {
                   Get post ideas and earn FDX
                 </Link>
               </div>
-              <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
+              {getSeldonDataState?.groundBreakingFindings.length > 0 && (
+                <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
+              )}
               <ol className="list-disc space-y-4">
                 {getSeldonDataState?.groundBreakingFindings?.map(
                   (item: { heading: string; content: string }, index: number) => (
