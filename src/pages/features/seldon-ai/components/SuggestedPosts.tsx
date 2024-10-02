@@ -19,6 +19,8 @@ import showToast from '../../../../components/ui/Toast';
 import { getSeldonState } from '../../../../features/seldon-ai/seldonSlice';
 import { getSeldonDataStates, setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
 import { Element } from 'react-scroll';
+import { shareArticles } from '../../../../services/api/seldon';
+import { useMutation } from '@tanstack/react-query';
 
 export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
@@ -31,6 +33,10 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   const [loading, setLoading] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();
+
+  const { mutateAsync: ShareArticle } = useMutation({
+    mutationFn: shareArticles,
+  });
 
   useEffect(() => {
     if (location.pathname.startsWith('/r')) {
@@ -120,6 +126,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
 
   const copyToClipboard = async () => {
     const id = location.pathname.startsWith('/r') ? seldonsData?._id : seldonsData.articleId;
+    ShareArticle(id);
     try {
       await navigator.clipboard.writeText(`${protocol}//${host}/r/${id}`);
     } catch (err) {
@@ -220,7 +227,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                   abstract: seldonsData.abstract,
                   groundBreakingFindings: seldonsData.groundBreakingFindings,
                   suggestion: seldonsData.suggestions,
-                  source: seldonsData.sources,
+                  source: seldonsData.source,
                   seoSummary: seldonsData.seoSummary,
                   discussion: seldonsData.discussion,
                   conclusion: seldonsData.conclusion,

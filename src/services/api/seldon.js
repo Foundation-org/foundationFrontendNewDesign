@@ -15,3 +15,10 @@ export const updateSources = async ({ id, source }) => {
     console.log(err);
   }
 };
+export const shareArticles = async (articleId) => {
+  try {
+    return await api.post(`shareArticles`, { articleId });
+  } catch (err) {
+    console.log(err);
+  }
+};
