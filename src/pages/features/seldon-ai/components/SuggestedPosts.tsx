@@ -142,9 +142,10 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
       {!seldonsData.debug && suggestedPosts.length >= 1 && (
         <>
           <div className="space-y-1">
-            <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Inspired by this post?</h1>{' '}
+            <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Contribute to the research</h1>{' '}
             <h5 className="text-center text-[14px] tablet:text-[20px]">
-              Check out these post ideas that can get people engaged and FDX in your portfolio!
+              Create one of these AI generated posts where results can improve, alter or validate the findings within
+              the article.
             </h5>
           </div>
           <div className="space-y-4">
