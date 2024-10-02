@@ -15,16 +15,15 @@ const Spacing = ({ questStartData, show, postProperties }) => {
     if (show) {
       return (
         <div className="relative">
-          {(questStartData?.startQuestData?.isFeedback &&
-            questStartData.startStatus !== 'continue' &&
-            questStartData?.page !== 'advance-analytics' &&
-            questStartData.startStatus !== 'change answer') ||
-          questStartData.isClosed ? (
+          {questStartData?.startQuestData?.isFeedback &&
+          // questStartData.startStatus !== 'continue' &&
+          questStartData?.page !== 'advance-analytics' &&
+          questStartData.startStatus !== 'change answer' ? (
             <div
               className={`flex max-h-10 min-h-10 items-center justify-center text-center text-[7.5px] font-normal text-[#85898C] tablet:max-h-[74px] tablet:min-h-[74px] tablet:text-[1rem]`}
             >
               <h4 className="text-center text-[10px] font-semibold leading-[10px] text-red-500 dark:text-accent-300 tablet:text-[1rem] tablet:leading-[1rem]">
-                Participation is closed{' '}
+                {questStartData?.startStatus === 'completed' ? 'Participation is closed' : 'Feedback'}{' '}
                 {questStartData?.isClosed
                   ? '- Historical / Past Event'
                   : `- ${findIdByUuid(questStartData.feedback, persistedUserInfo?.uuid)}`}

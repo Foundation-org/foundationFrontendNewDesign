@@ -29,15 +29,15 @@ export default function PostArticlesCard({ questStartData }: PostArticlesCardPro
     <>
       {articles?.length > 0 && (
         <div className="border-t-2 border-gray-250 dark:border-gray-100">
-          <h4 className="border-l-2 border-gray-100 bg-[#EEE] px-4 py-1 text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:py-3 tablet:text-[1.25rem] tablet:leading-[23px]">
-            Articles related to this post
+          <h4 className="bg-[#EEE] px-4 py-1 text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:bg-accent-200 dark:text-white tablet:py-3 tablet:text-[1.25rem] tablet:leading-[23px]">
+            Related articles {`(${articles?.length})`}
           </h4>
           <div className="my-4">
             {articles?.length > 1 ? (
               <Splide options={splideOptions}>
                 {articles?.map((article: any) => (
                   <SplideSlide key={article._id} className="">
-                    <div className="flex size-full flex-col justify-between gap-[10px] rounded-lg border border-white-500 p-2 tablet:gap-3 tablet:rounded-2xl tablet:border-y-2 tablet:border-l-[25px] tablet:border-r-2 tablet:p-4">
+                    <div className="flex size-full flex-col justify-between gap-[10px] rounded-lg border border-white-500 p-2 dark:border-gray-100 tablet:gap-3 tablet:rounded-2xl tablet:border-y-2 tablet:border-l-[25px] tablet:border-r-2 tablet:p-4">
                       <h5 className="overflow-hidden text-ellipsis break-words break-all text-[10px] font-semibold italic leading-normal text-gray-900 dark:text-white-400 tablet:text-[1rem]">
                         {article.title}
                       </h5>

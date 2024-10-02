@@ -57,6 +57,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const { data: sourcePosts, isFetching } = useQuery({
     queryKey: ['sourcePosts', seldonsData.source],
     queryFn: () => getQuestsCustom({ ids: seldonsData.source, uuid: persistedUserInfo.uuid }),
+    enabled: seldonsData.source.length === 0 ? false : true,
   });
 
   return (

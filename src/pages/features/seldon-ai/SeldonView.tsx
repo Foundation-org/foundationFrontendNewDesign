@@ -29,7 +29,7 @@ export default function SeldonView() {
               response?.data && (
                 <div
                   id="containerElement"
-                  className="mx-auto flex w-full max-w-[778px] flex-col gap-4 px-4 text-gray-200 tablet:gap-6 tablet:px-6"
+                  className="mx-auto flex w-full max-w-[778px] flex-col gap-4 px-4 text-gray-200 dark:text-white tablet:gap-6 tablet:px-6"
                 >
                   <Link
                     to={'/news'}
