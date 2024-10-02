@@ -25,7 +25,7 @@ const AppRouter = () => {
   return (
     <div className="relative">
       <RouterProvider
-        key={persistedUser?.uuid}
+        key={persistedUser?.role}
         router={createBrowserRouter(persistedUser?.uuid ? authRoutes : guestRoutes)}
         future={{ v7_startTransition: true }}
       />

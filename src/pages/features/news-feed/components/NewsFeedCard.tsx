@@ -42,9 +42,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
     >
       {/* Header */}
       <div className="flex flex-col border-b border-gray-250 p-[0.57rem] tablet:border-b-[1.846px] tablet:px-[15px] tablet:py-3">
-        <h4 className="text-[12.14px] font-semibold text-gray-150 dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-          {data?.title}
-        </h4>
+        <h4 className="text-[10px] font-semibold text-[#9C9C9C] dark:text-white tablet:text-[20px]">{data?.title}</h4>
       </div>
       {/* Body */}
       <div className="flex flex-col justify-between gap-1.5 p-[0.87rem] tablet:gap-4 tablet:p-4">
