@@ -302,10 +302,8 @@ const Authenticating = () => {
         login={true}
         uuid={uuid}
       />
-      <div className="flex h-full min-h-screen justify-center bg-[#F5F5F5] text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[4vw]" /> Authenticating User...
-        </div>
+      <div className="flex h-full min-h-screen flex-col items-center justify-center gap-4 bg-[#F5F5F5] text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
+        <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[4vw]" /> Authenticating User...
       </div>
     </>
   );

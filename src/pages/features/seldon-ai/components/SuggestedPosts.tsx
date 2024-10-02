@@ -128,7 +128,10 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   };
 
   return (
-    <Element name="posts-ideas" className="space-y-4">
+    <Element
+      name="posts-ideas"
+      className="mt-4 flex flex-col gap-4 border-t-2 border-gray-100 pt-8 tablet:mt-4 tablet:pt-10"
+    >
       {!seldonsData.debug && suggestedPosts.length >= 1 && (
         <>
           <div className="space-y-1">

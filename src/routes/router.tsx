@@ -22,11 +22,13 @@ const AppRouter = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // key={Date.now()}
-
   return (
     <div className="relative">
-      <RouterProvider router={createBrowserRouter(persistedUser?.uuid ? authRoutes : guestRoutes)} />
+      <RouterProvider
+        key={persistedUser?.uuid}
+        router={createBrowserRouter(persistedUser?.uuid ? authRoutes : guestRoutes)}
+        future={{ v7_startTransition: true }}
+      />
       {isLoading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-75">
           <FallbackLoading />

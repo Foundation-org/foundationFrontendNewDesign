@@ -1,5 +1,6 @@
 import { Link } from 'react-scroll';
 import { FaCircleArrowUp } from 'react-icons/fa6';
+import { formatDateMDY } from '../../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useChatGptDataMutation } from '../../../services/mutations/seldon-ai';
@@ -10,7 +11,6 @@ import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
-import { formatDateMDY } from '../../../utils/utils';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
@@ -64,7 +64,6 @@ export default function SeldonAi() {
       e.currentTarget.form?.dispatchEvent(new Event('submit', { bubbles: true }));
     }
   };
-  console.log(getSeldonDataState?.groundBreakingFindings);
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
@@ -159,7 +158,6 @@ export default function SeldonAi() {
               </div>
             </>
           )}
-
           <SourcePosts />
           <SuggestedPosts />
         </div>

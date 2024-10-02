@@ -22,14 +22,14 @@ export default function SeldonView() {
       <Topbar />
       <div className="w-full bg-[#F2F3F5] dark:bg-black">
         <DashboardLayout>
-          <div className="mx-auto rounded-[10px] text-gray-200 dark:text-white tablet:max-w-[778px] tablet:px-6">
+          <div className="mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[778px] flex-col gap-2 overflow-y-auto py-2 no-scrollbar tablet:h-[calc(100vh-160px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:py-5">
             {isLoading ? (
               <DotsLoading />
             ) : (
               response?.data && (
                 <div
                   id="containerElement"
-                  className="flex h-[calc(100dvh-91px)] flex-col gap-4 overflow-y-auto p-4 no-scrollbar tablet:h-[calc(100dvh-160px)] tablet:gap-6 tablet:px-0 tablet:py-8 laptop:h-[calc(100dvh-69px)]"
+                  className="mx-auto flex w-full max-w-[778px] flex-col gap-4 px-4 text-gray-200 tablet:gap-6 tablet:px-6"
                 >
                   <Link
                     to={'/news'}

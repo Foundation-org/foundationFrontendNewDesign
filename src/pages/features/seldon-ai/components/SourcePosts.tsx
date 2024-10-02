@@ -54,21 +54,16 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
     handleSearchPost();
   }, [debouncedSearch]);
 
-  const {
-    data: sourcePosts,
-    isFetching,
-    isError,
-  } = useQuery({
+  const { data: sourcePosts, isFetching } = useQuery({
     queryKey: ['sourcePosts', seldonsData.source],
     queryFn: () => getQuestsCustom({ ids: seldonsData.source, uuid: persistedUserInfo.uuid }),
   });
 
-  // if (isError) {
-  //   return <h1>No Posts Found</h1>;
-  // }
-
   return (
-    <Element name="posts-list" className="space-y-4">
+    <Element
+      name="posts-list"
+      className="mt-4 flex flex-col gap-4 border-t-2 border-gray-100 pt-8 tablet:mt-4 tablet:pt-10"
+    >
       {seldonsData.source.length !== 0 && (
         <div className="space-y-1">
           <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Post that informed this article</h1>{' '}
@@ -120,7 +115,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
             <div key={index + 1} className="relative">
               {!location.pathname.includes('/r') && (
                 <button
-                  className="absolute -right-3 -top-3 flex size-8 items-center justify-center rounded-full bg-gray-100"
+                  className="absolute -right-3 -top-3 z-50 flex size-8 items-center justify-center rounded-full bg-gray-100"
                   onClick={() => {
                     dispatch(removeSource(post._id));
                   }}
