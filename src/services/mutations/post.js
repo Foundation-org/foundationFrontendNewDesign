@@ -198,19 +198,19 @@ export const useUndoFeedBackMutation = () => {
     mutationFn: undoFeedback,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        if (resp.data.message === 'Feedback Reverted Successfully!') {
-          queryClient.setQueriesData(['posts'], (oldData) => ({
-            ...oldData,
-            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data[0]._id)),
-          }));
-        } else {
-          queryClient.setQueriesData(['posts'], (oldData) => ({
-            ...oldData,
-            pages: oldData?.pages?.map((page) =>
-              page.map((item) => (item._id === resp.data.data[0]._id ? resp.data.data[0] : item)),
-            ),
-          }));
-        }
+        // if (resp.data.message === 'Feedback Reverted Successfully!') {
+        //   queryClient.setQueriesData(['posts'], (oldData) => ({
+        //     ...oldData,
+        //     pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data[0]._id)),
+        //   }));
+        // } else {
+        queryClient.setQueriesData(['posts'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) => (item._id === resp.data.data[0]._id ? resp.data.data[0] : item)),
+          ),
+        }));
+        // }
       }
     },
     onError: (err) => {
