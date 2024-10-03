@@ -154,7 +154,16 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               variant={'submit'}
               onClick={() => {
                 navigate('/direct-messaging/new-message', {
-                  state: { draft: { id: item._id, to: item.to, subject: item.subject, message: item.message } },
+                  state: {
+                    draft: {
+                      id: item._id,
+                      to: item.to,
+                      subject: item.subject,
+                      message: item.message,
+                      options: item.options,
+                      questForeignKey: item.questForeignKey,
+                    },
+                  },
                 });
               }}
             >

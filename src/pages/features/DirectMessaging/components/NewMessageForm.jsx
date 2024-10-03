@@ -21,7 +21,7 @@ export default function NewMessageForm() {
   // const { questStartData, selectedOptions, params } = useOutletContext();
 
   const [optionsArr, setOptionsArr] = useState(selectedOptions);
-  const [to, setTo] = useState(questStartData ? 'advance-analytics' : draft?.to || params?.to || '');
+  const [to, setTo] = useState(questStartData ? 'Participants' : draft?.to || params?.to || '');
   const [sub, setSub] = useState(draft?.subject || params?.message || '');
   const [msg, setMsg] = useState(draft?.message || params?.subject || '');
   const [readReward, setReadReward] = useState(params?.readReward || defaultReadReward);
@@ -77,6 +77,10 @@ export default function NewMessageForm() {
       sendAmount,
       readReward: readReward,
       uuid: persistedUserInfo.uuid,
+      ...(!advanceAnalytics && {
+        options: draft?.options || location?.state.params.options,
+        questForeignKey: draft?.questForeignKey || location?.state.params.questForeignKey,
+      }),
     };
 
     // Only include 'to' if it's not empty or undefined
@@ -113,13 +117,21 @@ export default function NewMessageForm() {
 
   const handleDraft = () => {
     if (sub !== '' || msg !== '') {
+      const selectedQuestions = selectedOptions?.filter((option) => option.selected).map((option) => option.question);
+
       const params = {
         from: persistedUserInfo.email,
         to: to,
         subject: sub,
         message: msg,
         id: location.state?.draft?.id,
+        uuid: persistedUserInfo.uuid,
       };
+
+      if (to === 'Participants') {
+        params.questForeignKey = questStartData?._id || params.questForeignKey;
+        params.options = selectedQuestions || params.options;
+      }
 
       createDraft(params);
       setMsg();
@@ -145,7 +157,7 @@ export default function NewMessageForm() {
   const handleNoOfUsers = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (to === 'advance-analytics') {
+    if (to === 'Participants') {
       return participants;
     } else if (formatRecipient(to) === 'All') {
       return persistedUserInfo?.allCount;
