@@ -13,7 +13,7 @@ import { addSourceAtStart, getSeldonDataStates, removeSource } from '../../../..
 import { Button } from '../../../../components/ui/Button';
 import { useLocation } from 'react-router-dom';
 
-export default function SourcePosts({ apiResp }: { apiResp?: any; }) {
+export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const getSeldonDataState = useSelector(getSeldonDataStates);
@@ -62,7 +62,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any; }) {
   return (
     <div
       id="posts-list"
-      className="mt-4 flex flex-col gap-4 border-t-2 border-gray-100 pt-8 tablet:mt-4 tablet:pt-10"
+      className={`mt-4 flex flex-col gap-4 ${seldonsData.source.length !== 0 && 'border-t-2'} border-gray-100 pt-8 tablet:mt-4 tablet:pt-10`}
     >
       {seldonsData.source.length !== 0 && (
         <div className="space-y-1">

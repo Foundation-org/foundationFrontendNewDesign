@@ -134,7 +134,10 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   };
 
   return (
-    <div id="posts-ideas" className="mt-4 flex flex-col gap-4 border-t-2 border-gray-100 pt-8 tablet:mt-4 tablet:pt-10">
+    <div
+      id="posts-ideas"
+      className={`mt-4 flex flex-col gap-4 ${suggestedPosts.length >= 1 && 'border-t-2'} border-gray-100 pt-8 tablet:mt-4 tablet:pt-10`}
+    >
       {!seldonsData.debug && suggestedPosts.length >= 1 && (
         <>
           <div className="space-y-1">

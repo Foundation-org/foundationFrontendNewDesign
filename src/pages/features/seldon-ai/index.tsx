@@ -112,17 +112,29 @@ export default function SeldonAi() {
                 {getSeldonDataState.seoSummary}
               </p>
               <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.abstract}</p>
-              <div className="flex flex-col gap-2 tablet:mt-[10px] tablet:gap-5">
-                <ScrollIntoView selector="#posts-list" smooth={true}>
-                  <button className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]">
-                    View posts that informed this article
-                  </button>
-                </ScrollIntoView>
-                <ScrollIntoView selector="#posts-ideas" smooth={true}>
-                  <button className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]">
-                    Get post ideas and earn FDX
-                  </button>
-                </ScrollIntoView>
+              <div className="flex flex-col items-start gap-2 tablet:mt-[10px] tablet:gap-5">
+                <button
+                  onClick={() => {
+                    const selectedButton = document.getElementById('posts-list');
+                    if (selectedButton) {
+                      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                  }}
+                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
+                >
+                  View posts that informed this article
+                </button>
+                <button
+                  onClick={() => {
+                    const selectedButton = document.getElementById('posts-ideas');
+                    if (selectedButton) {
+                      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                  }}
+                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
+                >
+                  Get post ideas and earn FDX
+                </button>
               </div>
               {getSeldonDataState?.groundBreakingFindings.length > 0 && (
                 <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
