@@ -18,6 +18,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { register } from 'swiper/element/bundle';
+import { BrowserRouter } from 'react-router-dom';
 
 // register Swiper custom elements
 register();
@@ -31,13 +32,15 @@ const helmetContext = {};
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
   <HelmetProvider context={helmetContext}>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
-      </PersistGate>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
+        </PersistGate>
+      </Provider>
+    </BrowserRouter>
   </HelmetProvider>,
   // </StrictMode>,
 );

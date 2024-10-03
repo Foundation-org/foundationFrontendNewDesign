@@ -4,12 +4,14 @@ import { Toaster } from 'sonner';
 import { Helmet } from 'react-helmet-async';
 import { MaintenanceRouter } from './routes/maintenance';
 import api from './services/api/Axios';
-import AppRouter from './routes/router';
+import FallbackLoading from './components/FallbackLoading';
+import { Router } from './routes/router';
 
 function App() {
   // const [theme, setTheme] = useState(null);
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [isMaintenance, setIsMaintenance] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Handle
   useEffect(() => {
@@ -47,6 +49,14 @@ function App() {
     },
   );
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="h-dvh overflow-hidden">
       <Helmet>
@@ -70,7 +80,14 @@ function App() {
         <meta property="twitter:image" content="https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png" />
       </Helmet>
       {/* <MaintenanceRouter /> */}
-      <AppRouter />
+      <div className="relative">
+        <Router />
+        {isLoading && !location.pathname.includes('/embed') && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-white bg-opacity-75">
+            <FallbackLoading />
+          </div>
+        )}
+      </div>
       <Toaster
         position="top-right"
         expand={true}
