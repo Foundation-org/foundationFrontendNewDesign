@@ -77,10 +77,11 @@ export default function NewMessageForm() {
       sendAmount,
       readReward: readReward,
       uuid: persistedUserInfo.uuid,
-      ...(!advanceAnalytics && {
-        options: draft?.options || location?.state.params.options,
-        questForeignKey: draft?.questForeignKey || location?.state.params.questForeignKey,
-      }),
+      ...(!advanceAnalytics &&
+        to === 'Participants' && {
+          options: draft?.options || location?.state.params.options,
+          questForeignKey: draft?.questForeignKey || location?.state.params.questForeignKey,
+        }),
     };
 
     // Only include 'to' if it's not empty or undefined
