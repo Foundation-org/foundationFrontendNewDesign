@@ -128,8 +128,6 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                 className={`grid w-full ${
                   postProperties !== 'sharedlink-results' &&
                   postProperties !== 'actual-results' &&
-                  !location.pathname.includes('/p/') &&
-                  !location.pathname.includes('/l/') &&
                   location.pathname !== '/post/isfullscreen'
                     ? 'grid-cols-4'
                     : 'grid-cols-3'
@@ -190,8 +188,6 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                 <>
                   {postProperties !== 'sharedlink-results' &&
                   postProperties !== 'actual-results' &&
-                  !location.pathname.includes('/p/') &&
-                  !location.pathname.includes('/l/') &&
                   location.pathname !== '/post/isfullscreen' ? (
                     <div className="flex w-full justify-end">
                       {isFullScreen === undefined ? (

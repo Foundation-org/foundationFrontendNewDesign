@@ -18,7 +18,7 @@ interface SeldonState {
 
 const initialState: SeldonState = {
   system:
-    'Only use Foundation post data. Find strong correlations across the data. Make ground breaking conclusions and discoveries. Solve problems. NEVER cite vote counts, respondents, selections, or individuals. Always respond with a title, abstract, SEO summary, and as many ground breaking findings as you can, a discussion and a conclusion. At the end, give as many new poll and survey suggestions, only multiple choice, open-ended and yes/no, with options separated by slashes in one parentheses that you can that do not already exist in current posts.',
+    'Only use Foundation post data. Find strong correlations across the data. Make ground breaking conclusions and discoveries. Solve problems. NEVER cite vote counts, respondents, selections, or individuals. Always respond with a title, abstract, SEO summary, and as many ground breaking findings as you can, a discussion and a conclusion. At the end, give as many new poll and survey suggestions, only multiple choice, open-ended and yes/no, with options separated by slashes in one parentheses that you can that do not already exist in foundation data.',
   question: '',
   temperature: 0,
   max_tokens: 2048,

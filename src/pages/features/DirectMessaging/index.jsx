@@ -59,12 +59,14 @@ export default function DirectMessaging() {
       setViewMessageData(item);
     }
 
-    const params = {
-      id: id,
-      sender: sender,
-      receiver: receiver,
-    };
-    ViewAMessage(params);
+    if (item.type !== 'sent') {
+      const params = {
+        id: id,
+        sender: sender,
+        receiver: receiver,
+      };
+      ViewAMessage(params);
+    }
   };
 
   useEffect(() => {

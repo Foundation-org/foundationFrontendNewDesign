@@ -52,8 +52,6 @@ const RequireAuth = ({ allowedRoles }: { allowedRoles: string[] }) => {
     }
   }, [persistedUser]);
 
-  console.log('isRoleAllowed', isRoleAllowed);
-
   return isRoleAllowed ? <Outlet /> : <Navigate to="/" />;
 };
 
