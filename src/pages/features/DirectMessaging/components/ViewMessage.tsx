@@ -32,12 +32,12 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
       <div className="flex items-center justify-between rounded-t-[12px] border-b-[1.232px] border-[#D9D9D9] bg-[#FFFCB8] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-t-[15px] tablet:border-b-2 tablet:px-5 tablet:py-3">
         <div className="flex items-center gap-1">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/F.svg`}
-            alt="logo"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${viewMessageData.platform === 'Foundation-IO.com' ? 'assets/svgs/F.svg' : 'assets/addOptions/blueBadge.svg'}`}
+            alt="badge-logo"
             className="size-[12.325px] tablet:size-5"
           />
           <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? viewMessageData.to : 'Foundation-IO.com'}
+            {filter === 'sent' ? viewMessageData.to : viewMessageData.platform}
           </h1>
         </div>
         <div className="flex items-center gap-1">

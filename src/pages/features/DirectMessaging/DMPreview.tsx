@@ -14,7 +14,7 @@ export default function DMPreview() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
   const transformedOptions = {
     selected: location.state.params.options?.map((question: string) => ({ question })), // Map each question into an object
     contended: [],
@@ -89,6 +89,7 @@ export default function DMPreview() {
             __v: 0,
             createdAt: currentDate.toISOString(),
             updatedAt: currentDate.toISOString(),
+            platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
           }}
           key={1}
           setViewMsg={null}
@@ -114,6 +115,7 @@ export default function DMPreview() {
             __v: 0,
             createdAt: currentDate.toISOString(),
             updatedAt: currentDate.toISOString(),
+            platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
           }}
           filter="receive"
           questStartData={{ ...location.state.questStartData, questAnswers: filterOutOptions() }}
@@ -148,7 +150,10 @@ export default function DMPreview() {
         <Button
           variant={'submit'}
           onClick={() => {
-            createNewMessage(location.state.params);
+            createNewMessage({
+              ...location.state.params,
+              platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+            });
           }}
         >
           {isPending === true ? (

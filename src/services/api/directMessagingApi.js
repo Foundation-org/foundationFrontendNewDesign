@@ -19,6 +19,7 @@ export const createMessage = async (data) => {
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
     ...(data?.options?.length > 0 && { options: data.options }),
     ...(data.to === 'Participants' || data.to === 'All' ? { readReward: data.readReward } : {}),
+    platform: data.platform,
   };
 
   return await api.post('/directMessage/send', payload);
