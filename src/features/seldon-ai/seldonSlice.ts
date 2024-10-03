@@ -39,10 +39,10 @@ export const seldonSlice = createSlice({
   reducers: {
     handleSeldonInput: (
       state,
-      action: PayloadAction<{ name: keyof SeldonState; value: string | number | boolean }>,
+      action: PayloadAction<{ name: keyof SeldonState; value: string | number | boolean | string[] }>,
     ) => {
       const { name, value } = action.payload;
-      (state[name] as string | number | boolean) = value;
+      (state[name] as string | number | boolean | string[]) = value;
     },
     handleKnowledgebase: (state, action: PayloadAction<string>) => {
       const itemIndex = state.knowledgebase.indexOf(action.payload);
@@ -65,6 +65,11 @@ export const seldonSlice = createSlice({
         ...initialState,
         question: state.question,
       };
+    },setInputState: (state,action) => {
+      return {
+        ...state,
+        ...action.payload
+      };
     },
     resetSeldonProperty: (state, action: PayloadAction<keyof SeldonState>) => {
       const propertyToReset = action.payload;
@@ -77,9 +82,10 @@ export const seldonSlice = createSlice({
   },
 });
 
-export const { handleSeldonInput, handleKnowledgebase, resetSeldonState, resetSeldonProperty, handleDebubMode } =
+export const { handleSeldonInput,setInputState, handleKnowledgebase, resetSeldonState, resetSeldonProperty, handleDebubMode } =
   seldonSlice.actions;
 
 export default seldonSlice.reducer;
 
 export const getSeldonState = (state: any) => state.seldon;
+

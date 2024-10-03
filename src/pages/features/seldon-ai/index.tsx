@@ -45,10 +45,15 @@ export default function SeldonAi() {
               discussion: response.data.response.discussion,
               conclusion: response.data.response.conclusion,
               suggestions: response.data.response.suggestions,
-              createdAt: new Date().toISOString(),
+              createdAt: response.data.response?.articleInfo?.createdAt
+                ? response.data.response?.articleInfo?.createdAt
+                : new Date().toISOString(),
               source: ids,
               articleId: response.data.response?.articleId ? response.data.response.articleId : '',
               prompt: seldonState.question,
+              updatedAt: response.data.response?.articleInfo?.createdAt
+                ? response.data.response?.articleInfo?.createdAt
+                : null,
             }),
           );
         }
@@ -108,9 +113,11 @@ export default function SeldonAi() {
                 <p className="text-[10px] tablet:text-[16px]">
                   Published: {formatDateMDY(getSeldonDataState.createdAt)}
                 </p>
-                <p className="text-[10px] tablet:text-[16px]">
-                  Last Updated: {formatDateMDY(getSeldonDataState.updatedAt)}
-                </p>
+                {getSeldonDataState.updatedAt !== null && (
+                  <p className="text-[10px] tablet:text-[16px]">
+                    Last Updated: {formatDateMDY(getSeldonDataState.updatedAt)}
+                  </p>
+                )}
               </div>
               <p className="text-[12px] tablet:text-[20px]">
                 <strong>Seo Summary </strong>

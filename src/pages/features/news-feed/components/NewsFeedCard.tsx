@@ -4,7 +4,7 @@ import { Button } from '../../../../components/ui/Button';
 import { NewsFeedPropsType } from '../../../../types/news-feed';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
-import { handleSeldonInput } from '../../../../features/seldon-ai/seldonSlice';
+import { handleSeldonInput, setInputState } from '../../../../features/seldon-ai/seldonSlice';
 
 export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef } = props;
@@ -32,6 +32,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
       }),
     );
     dispatch(handleSeldonInput({ name: 'question', value: data?.prompt }));
+    if (data.settings) dispatch(setInputState(data?.settings));
 
     navigate('/seldon-ai');
   };

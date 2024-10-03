@@ -20,6 +20,7 @@ interface articleType {
   userUuid: string;
   seoSummary: string;
   suggestions: suggestions[];
+  settings: any
   __v: number;
 }
 
