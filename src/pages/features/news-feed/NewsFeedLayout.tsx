@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Breadcrumb from '../../../components/Breadcrumb';
+import NewsFeedSearch from './components/NewsFeedSearch';
 // import CreateSlider from './components/CreateSlider';
 
 const NewsFeedLayout = () => {
@@ -15,7 +16,9 @@ const NewsFeedLayout = () => {
 
   return (
     <div className="mx-auto h-[calc(100dvh-91px)] w-full max-w-[1440px] bg-gray-400 pb-8 dark:bg-black md:pb-12 tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] desktop:mx-auto">
-      <Breadcrumb />
+      <div className="flex h-[43px] items-center justify-center bg-white px-4 py-[10px] dark:bg-gray-200 tablet:hidden tablet:px-[37px] tablet:py-5 laptop:py-[26px]">
+        <NewsFeedSearch />
+      </div>
       <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
         {/* <CreateSlider /> */}
         <div className="hidden items-center justify-center tablet:h-[78px] laptop:flex">

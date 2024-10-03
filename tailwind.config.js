@@ -60,6 +60,7 @@ export default {
       'green-200': '#0fb063',
       'gold-100': '#7A7016',
       'yellow-200': '#FFC300',
+      'yellow-300': '#FABE25',
     },
     fontFamily: {
       poppins: ['Poppins'],

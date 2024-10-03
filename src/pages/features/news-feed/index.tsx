@@ -5,7 +5,6 @@ import { useFetchNewsFeed } from '../../../services/queries/news-feed';
 import { newsFeedFilters, updateNewsFeedSearch } from '../../../features/news-feed/newsFeedSlice';
 import NewsFeedCard from './components/NewsFeedCard';
 import FeedEndStatus from '../../../components/FeedEndStatus';
-import NewsFeedSearch from './components/NewsFeedSearch';
 
 export default function NewsFeed() {
   const { ref, inView } = useInView();
@@ -39,9 +38,6 @@ export default function NewsFeed() {
 
   return (
     <>
-      <div className="flex justify-end tablet:hidden">
-        <NewsFeedSearch />
-      </div>
       <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">{content}</div>
       <FeedEndStatus
         isFetching={isFetching}
