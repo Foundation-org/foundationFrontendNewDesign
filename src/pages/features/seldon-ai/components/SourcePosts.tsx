@@ -3,7 +3,7 @@ import { getQuestsCustom } from '../../../../services/api/questsApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQuestUtils } from '../../../../features/quest/utilsSlice';
 import { FaSpinner } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDebounce } from '../../../../utils/useDebounce';
 import { TextareaAutosize } from '@mui/material';
 import { searchPosts } from '../../../../services/api/listsApi';
@@ -11,10 +11,9 @@ import DotsLoading from '../../../../components/ui/DotsLoading';
 import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { addSourceAtStart, getSeldonDataStates, removeSource } from '../../../../features/seldon-ai/seldonDataSlice';
 import { Button } from '../../../../components/ui/Button';
-import { Element } from 'react-scroll';
 import { useLocation } from 'react-router-dom';
 
-export default function SourcePosts({ apiResp }: { apiResp?: any }) {
+export default function SourcePosts({ apiResp }: { apiResp?: any; }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const getSeldonDataState = useSelector(getSeldonDataStates);
@@ -61,8 +60,8 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   });
 
   return (
-    <Element
-      name="posts-list"
+    <div
+      id="posts-list"
       className="mt-4 flex flex-col gap-4 border-t-2 border-gray-100 pt-8 tablet:mt-4 tablet:pt-10"
     >
       {seldonsData.source.length !== 0 && (
@@ -150,6 +149,6 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
           )}
         </div>
       </div>
-    </Element>
+    </div>
   );
 }

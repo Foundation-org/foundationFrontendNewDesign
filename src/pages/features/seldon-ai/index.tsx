@@ -1,4 +1,3 @@
-import { Link } from 'react-scroll';
 import { FaCircleArrowUp } from 'react-icons/fa6';
 import { formatDateMDY } from '../../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
+import ScrollIntoView from 'react-scroll-into-view';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
@@ -91,7 +91,7 @@ export default function SeldonAi() {
       {isPending ? (
         <DotsLoading />
       ) : (
-        <div id="containerElement2" className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
+        <div className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
           {getSeldonDataState.debug ? (
             <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Debug Mode:</h1>
@@ -113,28 +113,16 @@ export default function SeldonAi() {
               </p>
               <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.abstract}</p>
               <div className="flex flex-col gap-2 tablet:mt-[10px] tablet:gap-5">
-                <Link
-                  to="posts-list"
-                  containerId="containerElement2"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
-                >
-                  View posts that informed this article
-                </Link>
-                <Link
-                  to="posts-ideas"
-                  containerId="containerElement2"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
-                >
-                  Get post ideas and earn FDX
-                </Link>
+                <ScrollIntoView selector="#posts-list" smooth={true}>
+                  <button className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]">
+                    View posts that informed this article
+                  </button>
+                </ScrollIntoView>
+                <ScrollIntoView selector="#posts-ideas" smooth={true}>
+                  <button className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]">
+                    Get post ideas and earn FDX
+                  </button>
+                </ScrollIntoView>
               </div>
               {getSeldonDataState?.groundBreakingFindings.length > 0 && (
                 <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>

@@ -18,7 +18,6 @@ import DotsLoading from '../../../../components/ui/DotsLoading';
 import showToast from '../../../../components/ui/Toast';
 import { getSeldonState } from '../../../../features/seldon-ai/seldonSlice';
 import { getSeldonDataStates, setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
-import { Element } from 'react-scroll';
 import { shareArticles } from '../../../../services/api/seldon';
 import { useMutation } from '@tanstack/react-query';
 
@@ -135,10 +134,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   };
 
   return (
-    <Element
-      name="posts-ideas"
-      className="mt-4 flex flex-col gap-4 border-t-2 border-gray-100 pt-8 tablet:mt-4 tablet:pt-10"
-    >
+    <div id="posts-ideas" className="mt-4 flex flex-col gap-4 border-t-2 border-gray-100 pt-8 tablet:mt-4 tablet:pt-10">
       {!seldonsData.debug && suggestedPosts.length >= 1 && (
         <>
           <div className="space-y-1">
@@ -240,6 +236,6 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
           </>
         )}
       </div>
-    </Element>
+    </div>
   );
 }
