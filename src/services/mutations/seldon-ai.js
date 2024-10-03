@@ -44,6 +44,7 @@ export const publishArticle = async ({
   seoSummary,
   discussion,
   conclusion,
+  settings,
 }) => {
   return await api.post(`/article/create`, {
     userUuid,
@@ -56,6 +57,7 @@ export const publishArticle = async ({
     seoSummary,
     discussion,
     conclusion,
+    settings,
   });
 };
 
@@ -72,6 +74,7 @@ export const usePublishArticleMutation = () => {
       seoSummary,
       discussion,
       conclusion,
+      settings,
     }) => {
       return publishArticle({
         userUuid,
@@ -84,6 +87,7 @@ export const usePublishArticleMutation = () => {
         seoSummary,
         discussion,
         conclusion,
+        settings,
       });
     },
     onSuccess: (resp) => {

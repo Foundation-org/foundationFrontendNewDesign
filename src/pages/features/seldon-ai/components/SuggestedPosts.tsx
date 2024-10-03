@@ -231,6 +231,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                   seoSummary: seldonsData.seoSummary,
                   discussion: seldonsData.discussion,
                   conclusion: seldonsData.conclusion,
+                  settings: seldonState,
                 } as any);
               }}
             >

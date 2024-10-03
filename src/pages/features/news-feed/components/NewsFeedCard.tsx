@@ -28,6 +28,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         articleId: data?._id,
         prompt: data?.prompt,
         createdAt: data?.createdAt,
+        updatedAt: data?.updatedAt,
       }),
     );
     dispatch(handleSeldonInput({ name: 'question', value: data?.prompt }));

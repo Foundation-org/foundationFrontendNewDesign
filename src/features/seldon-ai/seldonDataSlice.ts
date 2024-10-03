@@ -20,6 +20,7 @@ interface SeldonDataState {
   }[];
   debug: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 const initialState: SeldonDataState = {
@@ -35,6 +36,7 @@ const initialState: SeldonDataState = {
   source: [],
   debug: '',
   createdAt: '',
+  updatedAt: '',
 };
 
 export const SeldonDataSlice = createSlice({
@@ -57,13 +59,14 @@ export const SeldonDataSlice = createSlice({
       state.groundBreakingFindings = [];
       state.suggestions = [];
       state.createdAt = '';
+      state.updatedAt = '';
     },
     addSourceAtStart: (state, action: PayloadAction<string>) => {
       state.source.unshift(action.payload);
     },
     removeSource: (state, action: PayloadAction<string>) => {
       // if (state.source.length > 1) {
-        state.source = state.source.filter((source) => source !== action.payload);
+      state.source = state.source.filter((source) => source !== action.payload);
       // }
     },
   },

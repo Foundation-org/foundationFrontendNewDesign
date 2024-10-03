@@ -65,6 +65,8 @@ export default function SeldonAi() {
     }
   };
 
+  console.log('getSeldonDataState', getSeldonDataState);
+
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
       <div className="mb-3 block laptop:hidden">
@@ -105,6 +107,9 @@ export default function SeldonAi() {
                 <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
                 <p className="text-[10px] tablet:text-[16px]">
                   Published: {formatDateMDY(getSeldonDataState.createdAt)}
+                </p>
+                <p className="text-[10px] tablet:text-[16px]">
+                  Last Updated: {formatDateMDY(getSeldonDataState.updatedAt)}
                 </p>
               </div>
               <p className="text-[12px] tablet:text-[20px]">
