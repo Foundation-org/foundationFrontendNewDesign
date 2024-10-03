@@ -1,12 +1,12 @@
-import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import authRoutes from './authRoutes';
-import guestRoutes from './guestRoutes';
 import FallbackLoading from '../components/FallbackLoading';
+// import guestRoutes from './guestRoutes';
+// import { useSelector } from 'react-redux';
 
 const AppRouter = () => {
-  const persistedUser = useSelector((state: any) => state.auth.user);
+  // const persistedUser = useSelector((state: any) => state.auth.user);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,8 +25,8 @@ const AppRouter = () => {
   return (
     <div className="relative">
       <RouterProvider
-        key={persistedUser?.role}
-        router={createBrowserRouter(persistedUser?.uuid ? authRoutes : guestRoutes)}
+        // key={persistedUser?.role}
+        router={createBrowserRouter(authRoutes)}
         future={{ v7_startTransition: true }}
       />
       {isLoading && (
