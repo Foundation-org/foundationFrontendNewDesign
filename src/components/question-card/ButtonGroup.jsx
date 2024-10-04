@@ -231,6 +231,34 @@ const ButtonGroup = ({
     );
   };
 
+  if (
+    (findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
+      findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested') &&
+    location.pathname === '/'
+  ) {
+    return (
+      <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">
+        <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
+        <Button
+          variant={'g-submit'}
+          disabled={isUndoFeedbackPending}
+          className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
+          onClick={() => {
+            useUndoFeedback({ questForeignKey: questStartData._id, uuid: persistedUserInfo?.uuid });
+          }}
+        >
+          {isUndoFeedbackPending === true ? (
+            <FaSpinner className="animate-spin text-[#EAEAEA]" />
+          ) : findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ? (
+            'This applies to me now'
+          ) : (
+            'I am interested now'
+          )}
+        </Button>
+      </div>
+    );
+  }
+
   if (questType === 'feedback' || questType === 'feedback-given') {
     return (
       <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
