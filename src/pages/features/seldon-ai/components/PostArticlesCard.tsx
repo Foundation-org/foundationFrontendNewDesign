@@ -15,6 +15,7 @@ const splideOptions = {
   breakpoints: {
     600: {
       perPage: 2,
+      padding: '1rem',
     },
     1280: {
       perPage: 3,
