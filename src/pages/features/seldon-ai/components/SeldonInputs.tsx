@@ -262,7 +262,7 @@ export default function SeldonInputs() {
             onChange={(e) => {
               const value = e.target.value;
 
-              if (value === '' || (parseInt(value, 10) >= 0 && parseInt(value, 10) <= 9)) {
+              if (value === '' || parseInt(value, 10) >= 0) {
                 dispatch(handleSeldonInput({ name: 'finding', value }));
               } else {
                 showToast('warning', 'numberShouldBeBetween1and9');
@@ -298,7 +298,7 @@ export default function SeldonInputs() {
             onChange={(e) => {
               const value = e.target.value;
 
-              if (value === '' || (parseInt(value, 10) >= 0 && parseInt(value, 10) <= 9)) {
+              if (value === '' || parseInt(value, 10) >= 0) {
                 dispatch(handleSeldonInput({ name: 'suggestion', value }));
               } else {
                 showToast('warning', 'numberShouldBeBetween1and9');

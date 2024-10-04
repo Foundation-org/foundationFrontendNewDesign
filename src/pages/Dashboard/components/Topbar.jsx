@@ -16,6 +16,8 @@ import { appVersion } from '../../../version';
 import { getRecievedMessages } from '../../../services/api/directMessagingApi';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import GuestDialogueScreen from '../../../components/GuestDialogueScreen';
+import { FaBullseye } from 'react-icons/fa';
+import { handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -215,6 +217,9 @@ const Topbar = () => {
 
                   if ((persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1) {
                     dispatch(setGuestSignUpDialogue(true));
+                  }
+                  if (item.id === 6) {
+                    dispatch(handleSeldonInput({ name: 'isTitle', value: false }));
                   }
                 }}
               >

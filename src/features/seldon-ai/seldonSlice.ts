@@ -14,6 +14,7 @@ interface SeldonState {
   debug: boolean;
   finding: number;
   suggestion: number;
+  isTitle:boolean;
 }
 
 const initialState: SeldonState = {
@@ -31,6 +32,8 @@ const initialState: SeldonState = {
   debug: false,
   finding: 1,
   suggestion: 1,
+  isTitle:false
+
 };
 
 export const seldonSlice = createSlice({
@@ -64,6 +67,7 @@ export const seldonSlice = createSlice({
       return {
         ...initialState,
         question: state.question,
+        isTitle:state.isTitle
       };
     },setInputState: (state,action) => {
       return {

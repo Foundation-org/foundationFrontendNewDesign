@@ -31,6 +31,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         updatedAt: data?.updatedAt,
       }),
     );
+    dispatch(handleSeldonInput({ name: 'isTitle', value: true }));
     dispatch(handleSeldonInput({ name: 'question', value: data?.prompt }));
     if (data.settings) dispatch(setInputState(data?.settings));
 
@@ -57,7 +58,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           {isPseudoBadge ? (
             <Button
               variant={'g-submit'}
-              className={'!laptop:px-0 bg-yellow-300 w-full whitespace-nowrap !px-0'}
+              className={'!laptop:px-0 w-full whitespace-nowrap bg-yellow-300 !px-0'}
               onClick={handleUpdateArticle}
             >
               Update Article
