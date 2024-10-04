@@ -30,13 +30,13 @@ export default function NewsFeedSearch() {
   return (
     <>
       {location.pathname === '/news' && (
-        <div className="my-2 h-fit w-full rounded-[3.55px] bg-white dark:border dark:border-gray-100 dark:bg-gray-200 laptop:my-[15px] laptop:ml-[31px] laptop:block laptop:w-[18.75rem] laptop:min-w-[18.75rem] laptop:rounded-[15px] laptop:py-[23px] laptop:pl-[1.3rem] laptop:pr-[2.1rem]">
+        <div className="my-2 h-fit w-full rounded-[3.55px] dark:border dark:border-gray-100 tablet:mx-auto tablet:max-w-[778px] tablet:px-[30px] laptop:my-[15px] laptop:ml-[31px] laptop:block laptop:w-[18.75rem] laptop:min-w-[18.75rem] laptop:rounded-[15px] laptop:bg-white laptop:py-[23px] laptop:pl-[1.3rem] laptop:pr-[2.1rem] laptop:dark:bg-gray-200">
           <div className="relative">
-            <div className="relative h-[23px] w-full laptop:h-[45px]">
+            <div className="relative h-[23px] w-full tablet:h-[45px]">
               <input
                 type="text"
                 id="floating_outlined"
-                className="peer block size-full appearance-none rounded-[8px] border border-[#707175] bg-transparent pl-5 pr-8 text-[6px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px] laptop:rounded-[10px] laptop:border-2 laptop:text-[18.23px]"
+                className="peer block size-full appearance-none rounded-[8px] border border-[#707175] bg-transparent bg-white pl-5 pr-8 text-[6px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-200 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px] laptop:rounded-[10px] laptop:border-2 laptop:text-[18.23px]"
                 value={newsFeedSearch}
                 placeholder=""
                 onChange={handleNewsFeedSearch}

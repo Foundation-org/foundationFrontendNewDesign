@@ -65,9 +65,7 @@ export const SeldonDataSlice = createSlice({
       state.source.unshift(action.payload);
     },
     removeSource: (state, action: PayloadAction<string>) => {
-      // if (state.source.length > 1) {
       state.source = state.source.filter((source) => source !== action.payload);
-      // }
     },
   },
 });

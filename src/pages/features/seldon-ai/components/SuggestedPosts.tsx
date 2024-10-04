@@ -10,16 +10,12 @@ import { usePublishArticleMutation, useChatGptDataMutation } from '../../../../s
 import {
   addNewOption,
   addQuestion,
-  delOption,
   resetCreateQuest,
   setOptionsByArray,
 } from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
-import showToast from '../../../../components/ui/Toast';
 import { getSeldonState } from '../../../../features/seldon-ai/seldonSlice';
 import { getSeldonDataStates, setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
-import { shareArticles } from '../../../../services/api/seldon';
-import { useMutation } from '@tanstack/react-query';
 
 export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
@@ -27,15 +23,10 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   const seldonState = useSelector(getSeldonState);
   const getSeldonDataState = useSelector(getSeldonDataStates);
   const [seldonsData, setSeldonsData] = useState(location.pathname.startsWith('/r') ? apiResp : getSeldonDataState);
-  const { protocol, host } = window.location;
   const [suggestedPosts, setSuggestedPosts] = useState<SuggestedPost[]>([]);
   const [loading, setLoading] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();
-
-  const { mutateAsync: ShareArticle } = useMutation({
-    mutationFn: shareArticles,
-  });
 
   useEffect(() => {
     if (location.pathname.startsWith('/r')) {
@@ -123,16 +114,6 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
     }
   };
 
-  const copyToClipboard = async () => {
-    const id = location.pathname.startsWith('/r') ? seldonsData?._id : seldonsData.articleId;
-    ShareArticle(id);
-    try {
-      await navigator.clipboard.writeText(`${protocol}//${host}/r/${id}`);
-    } catch (err) {
-      console.error('Unable to copy text to clipboard:', err);
-    }
-  };
-
   return (
     <div
       id="posts-ideas"
@@ -141,7 +122,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
       {!seldonsData.debug && suggestedPosts.length >= 1 && (
         <>
           <div className="space-y-1">
-            <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Contribute to the research</h1>{' '}
+            <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Contribute to this research</h1>{' '}
             <h5 className="text-center text-[14px] tablet:text-[20px]">
               Create one of these AI generated posts where results can improve, alter or validate the findings within
               the article.
@@ -186,59 +167,42 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
         </>
       )}
       <div
-        className={`${location.pathname.includes('/r') ? 'justify-center' : 'justify-between'} flex w-full items-center gap-4`}
+        className={`${location.pathname.includes('/r') ? 'hidden' : 'justify-between'} flex w-full items-center gap-4`}
       >
-        {location.pathname.includes('/r') ? (
-          <Button
-            variant="submit"
-            className="min-w-[152px] tablet:min-w-[315px]"
-            rounded
-            onClick={() => {
-              copyToClipboard();
-              showToast('success', 'copyLink');
-            }}
-            disabled={isPending}
-          >
-            {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Share Article'}
-          </Button>
-        ) : (
-          <>
-            <Button
-              variant="g-submit"
-              className="w-full"
-              rounded
-              onClick={() => {
-                handleUpdateArticle();
-              }}
-              disabled={isPending}
-            >
-              {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Update'}
-            </Button>
-            <Button
-              variant="submit"
-              className="w-full"
-              rounded
-              disabled={isPublishPending}
-              onClick={() => {
-                handlePublishArticle({
-                  userUuid: persistedUserInfo.uuid,
-                  prompt: seldonState.question,
-                  title: seldonsData.title,
-                  abstract: seldonsData.abstract,
-                  groundBreakingFindings: seldonsData.groundBreakingFindings,
-                  suggestion: seldonsData.suggestions,
-                  source: seldonsData.source,
-                  seoSummary: seldonsData.seoSummary,
-                  discussion: seldonsData.discussion,
-                  conclusion: seldonsData.conclusion,
-                  settings: seldonState,
-                } as any);
-              }}
-            >
-              {isPublishPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Publish Article'}
-            </Button>
-          </>
-        )}
+        <Button
+          variant="g-submit"
+          className="w-full"
+          rounded
+          onClick={() => {
+            handleUpdateArticle();
+          }}
+          disabled={isPending}
+        >
+          {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Update'}
+        </Button>
+        <Button
+          variant="submit"
+          className="w-full"
+          rounded
+          disabled={isPublishPending}
+          onClick={() => {
+            handlePublishArticle({
+              userUuid: persistedUserInfo.uuid,
+              prompt: seldonState.question,
+              title: seldonsData.title,
+              abstract: seldonsData.abstract,
+              groundBreakingFindings: seldonsData.groundBreakingFindings,
+              suggestion: seldonsData.suggestions,
+              source: seldonsData.source,
+              seoSummary: seldonsData.seoSummary,
+              discussion: seldonsData.discussion,
+              conclusion: seldonsData.conclusion,
+              settings: seldonState,
+            } as any);
+          }}
+        >
+          {isPublishPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Publish Article'}
+        </Button>
       </div>
     </div>
   );

@@ -1,23 +1,38 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { formatDateMDY } from '../../../utils/utils';
 import { Link, useLocation } from 'react-router-dom';
-import { getArticles } from '../../../services/api/seldon';
+import { getArticles, shareArticles } from '../../../services/api/seldon';
 import SourcePosts from './components/SourcePosts';
 import Topbar from '../../Dashboard/components/Topbar';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
 import DashboardLayout from '../../Dashboard/components/DashboardLayout';
-import ScrollIntoView from 'react-scroll-into-view';
-import { useRef } from 'react';
+import { useSelector } from 'react-redux';
+import showToast from '../../../components/ui/Toast';
 
 export default function SeldonView() {
   const location = useLocation();
-  const elementRef = useRef();
+  const { protocol, host } = window.location;
+  const persistedTheme = useSelector((state: any) => state.utils.theme);
 
   const { data: response, isLoading } = useQuery({
     queryKey: ['articles', location.pathname.split('/').pop()],
     queryFn: () => getArticles(location.pathname.split('/').pop()),
   });
+
+  const { mutateAsync: ShareArticle } = useMutation({
+    mutationFn: shareArticles,
+  });
+
+  const copyToClipboard = async () => {
+    const id = location.pathname.startsWith('/r') ? response?.data?._id : response?.data?.articleId;
+    ShareArticle(id);
+    try {
+      await navigator.clipboard.writeText(`${protocol}//${host}/r/${id}`);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
+  };
 
   return (
     <>
@@ -42,6 +57,27 @@ export default function SeldonView() {
                     <p className="text-[10px] tablet:text-[16px]">
                       Published: {formatDateMDY(response?.data.createdAt)}
                     </p>
+                    {response?.data.updatedAt !== null && (
+                      <p className="text-[10px] tablet:text-[16px]">
+                        Last Updated: {formatDateMDY(response?.data.updatedAt)}
+                      </p>
+                    )}
+                    <button
+                      className="flex items-center gap-1 tablet:gap-2"
+                      onClick={() => {
+                        copyToClipboard();
+                        showToast('success', 'copyLink');
+                      }}
+                    >
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/share.svg' : 'assets/svgs/sharelink.svg'}`}
+                        alt="copy"
+                        className="h-3 w-[13.84px] tablet:h-[23px] tablet:w-[23px]"
+                      />
+                      <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                        Share
+                      </h1>
+                    </button>
                   </div>
                   <p className="text-[12px] tablet:text-[20px]">{response?.data?.abstract}</p>
                   <div className="flex flex-col items-start gap-2 tablet:mt-[10px] tablet:gap-5">
