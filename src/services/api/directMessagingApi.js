@@ -35,6 +35,7 @@ export const createDraftMessage = async (data) => {
     uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
     ...(data.options && { options: data.options }),
+    platform: data.platform,
   });
 };
 

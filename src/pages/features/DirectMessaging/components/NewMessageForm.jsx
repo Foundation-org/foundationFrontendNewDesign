@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { Button } from '../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useLocation, useNavigate, useOutletContext, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { getConstantsValues } from '../../../../features/constants/constantsSlice';
 import { createDraftMessage, fetchOptionParticipants } from '../../../../services/api/directMessagingApi';
 import SelectionOption from '../../../../components/SelectionOption';
@@ -18,7 +18,6 @@ export default function NewMessageForm() {
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const defaultReadReward = persistedConstants?.MINIMUM_READ_REWARD;
   const { draft, questStartData, selectedOptions, params } = location?.state || {};
-  // const { questStartData, selectedOptions, params } = useOutletContext();
 
   const [optionsArr, setOptionsArr] = useState(selectedOptions);
   const [to, setTo] = useState(questStartData ? 'Participants' : draft?.to || params?.to || '');
@@ -29,6 +28,7 @@ export default function NewMessageForm() {
   const [showModal, setShowModal] = useState(false);
   const [searchParams] = useSearchParams();
   const advanceAnalytics = searchParams.get('advance-analytics');
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const handleHideModal = () => setShowModal(false);
 
@@ -127,6 +127,7 @@ export default function NewMessageForm() {
         message: msg,
         id: location.state?.draft?.id,
         uuid: persistedUserInfo.uuid,
+        platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
       };
 
       if (to === 'Participants') {
@@ -146,13 +147,15 @@ export default function NewMessageForm() {
 
   useEffect(() => {
     const selectedQuestions = selectedOptions?.filter((option) => option.selected).map((option) => option.question);
-    const params = {
-      questForeignKey: questStartData?._id,
-      uuid: persistedUserInfo.uuid,
-      options: selectedQuestions,
-    };
+    if (to === 'Participants') {
+      const params = {
+        questForeignKey: questStartData?._id || draft?.questForeignKey || location?.state?.params?.questForeignKey,
+        uuid: persistedUserInfo.uuid,
+        options: selectedQuestions || draft?.options || location?.state?.params?.options,
+      };
 
-    fetchParticipants(params);
+      fetchParticipants(params);
+    }
   }, [optionsArr]);
 
   const handleNoOfUsers = () => {
