@@ -90,6 +90,7 @@ export default function NewMessageForm() {
         subject: directMessageState.subject,
         message: directMessageState.message,
         id: directMessageState.draftId,
+        readReward: directMessageState.readReward,
       };
 
       if (directMessageState.to === 'Participants') {
