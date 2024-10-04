@@ -2,28 +2,32 @@ import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../components/ui/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createMessage } from '../../../services/api/directMessagingApi';
+import { createMessage, fetchOptionParticipants } from '../../../services/api/directMessagingApi';
 import MessageCard from './components/MessageCard';
 import ViewMessage from './components/ViewMessage';
+import { getConstantsValues } from '../../../features/constants/constantsSlice';
+import { useEffect, useState } from 'react';
 
 export default function DMPreview() {
   const currentDate = new Date();
-  const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const directMessageState = useSelector((state: any) => state.directMessage);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
-  const transformedOptions = {
-    selected: location.state.params.options?.map((question: string) => ({ question })), // Map each question into an object
-    contended: [],
-    created: currentDate.toISOString(),
-  };
+  const persistedConstants = useSelector(getConstantsValues);
+  const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
+  const [participants, setParticipants] = useState(0);
+
+  const selectedOptions = directMessageState.options
+    .filter((option: any) => option.selected)
+    .map((option: any) => option.question);
 
   const filterOutOptions = () => {
-    return location.state.questStartData?.QuestAnswers.filter((answer: any) =>
-      location.state.params.options.includes(answer.question),
+    return directMessageState.questStartData?.QuestAnswers.filter((answer: any) =>
+      directMessageState.options.includes(answer.question),
     );
   };
 
@@ -44,13 +48,13 @@ export default function DMPreview() {
   const handleNoOfUsers = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (location.state.params.to === 'Participants') {
-      return location.state.participants;
-    } else if (location.state.params.to === 'All') {
+    if (directMessageState.to === 'Participants') {
+      return participants;
+    } else if (directMessageState.to === 'All') {
       return persistedUserInfo?.allCount;
-    } else if (location.state.params.to === 'List') {
+    } else if (directMessageState.to === 'List') {
       return persistedUserInfo?.mailCount;
-    } else if (emailRegex.test(location.state.params.to)) {
+    } else if (emailRegex.test(directMessageState.to)) {
       return 1;
     } else {
       return 0;
@@ -58,12 +62,35 @@ export default function DMPreview() {
   };
 
   const updateOptionSelected = () => {
-    const initialOptions = location.state.questStartData?.QuestAnswers || [];
-    return initialOptions.map((option: any) => ({
+    return directMessageState.options.map((option: any) => ({
       ...option,
-      selected: location.state.params.options.includes(option.question) ? true : false,
+      selected: directMessageState.options.includes(option.question) ? true : false,
     }));
   };
+
+  // =========== HANDLE PARTICIPANTS COUNT
+  const { mutateAsync: fetchParticipants } = useMutation({
+    mutationFn: fetchOptionParticipants,
+    onSuccess: (resp) => {
+      setParticipants(resp?.data.dynamicParticipantsCount);
+    },
+    onError: (err: any) => {
+      // console.log(err:any);
+      toast.error(err.response.data.message);
+    },
+  });
+
+  useEffect(() => {
+    if (directMessageState.to === 'Participants') {
+      const params = {
+        questForeignKey: directMessageState.questStartData?._id,
+        uuid: persistedUserInfo.uuid,
+        options: selectedOptions?.filter((option: any) => option.selected).map((option: any) => option.question),
+      };
+
+      fetchParticipants(params);
+    }
+  }, [directMessageState.options]);
 
   return (
     <div className="space-y-[9px] tablet:space-y-[15px]">
@@ -74,22 +101,11 @@ export default function DMPreview() {
         <MessageCard
           filter="receive"
           item={{
-            postQuestion: location.state.questStartData?.Question,
-            whichTypeQuestion: location.state.questStartData?.whichTypeQuestion,
-            opinion: location.state.params.options,
-            _id: persistedUserInfo.uuid,
-            sender: persistedUserInfo.uuid,
-            receiver: '1',
-            subject: location.state.params.subject,
-            shortMessage: location.state.params.subject,
-            viewed: false,
-            senderMessageId: persistedUserInfo.uuid,
-            isDeleted: false,
-            readReward: location.state.params.readReward,
-            __v: 0,
             createdAt: currentDate.toISOString(),
-            updatedAt: currentDate.toISOString(),
             platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+            subject: directMessageState.subject,
+            viewed: false,
+            readReward: directMessageState?.readReward,
           }}
           key={1}
           setViewMsg={null}
@@ -100,25 +116,15 @@ export default function DMPreview() {
         </h1>
         <ViewMessage
           viewMessageData={{
-            _id: '1',
-            sender: persistedUserInfo.uuid,
-            receiver: '1',
-            subject: location.state.params.subject,
-            shortMessage: location.state.params.message,
-            viewed: false,
-            senderMessageId: persistedUserInfo.uuid,
-            isDeleted: false,
-            readReward: location.state.params.readReward,
-            postQuestion: location.state.questStartData?.Question,
-            whichTypeQuestion: location.state.questStartData?.whichTypeQuestion,
-            opinion: transformedOptions,
-            __v: 0,
+            message: directMessageState?.message,
+            subject: directMessageState?.subject,
+            postQuestion: directMessageState.questStartData?.Question,
+            readReward: directMessageState?.readReward,
             createdAt: currentDate.toISOString(),
-            updatedAt: currentDate.toISOString(),
             platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
           }}
           filter="receive"
-          questStartData={{ ...location.state.questStartData, questAnswers: filterOutOptions() }}
+          questStartData={{ ...directMessageState.questStartData, questAnswers: filterOutOptions() }}
           page="preview"
         />
       </div>
@@ -127,21 +133,9 @@ export default function DMPreview() {
           variant="cancel"
           onClick={() => {
             if (updateOptionSelected().length >= 1) {
-              navigate('/direct-messaging/new-message?advance-analytics=true', {
-                state: {
-                  questStartData: location.state.questStartData,
-                  selectedOptions: updateOptionSelected(),
-                  params: location.state.params,
-                  key: new Date().getTime(),
-                },
-              });
+              navigate('/direct-messaging/new-message?advance-analytics=true');
             } else {
-              navigate('/direct-messaging/new-message', {
-                state: {
-                  params: location.state.params,
-                  key: new Date().getTime(),
-                },
-              });
+              navigate('/direct-messaging/new-message');
             }
           }}
         >
@@ -151,8 +145,13 @@ export default function DMPreview() {
           variant={'submit'}
           onClick={() => {
             createNewMessage({
-              ...location.state.params,
+              ...directMessageState,
+              from: persistedUserInfo.email,
+              uuid: persistedUserInfo.uuid,
+              options: directMessageState.options,
+              questForeignKey: directMessageState.questForeignKey,
               platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+              type: 'new',
             });
           }}
         >
@@ -162,9 +161,7 @@ export default function DMPreview() {
             <>
               Send
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                {location.state.params.to === 'List'
-                  ? `+0 FDX`
-                  : `+${(handleNoOfUsers() * location.state.params.sendAmount)?.toFixed(2)} FDX`}
+                {directMessageState.to === 'List' ? `+0 FDX` : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
               </span>
             </>
           )}

@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -13,30 +13,21 @@ import {
   viewMessage,
 } from '../../../services/api/directMessagingApi';
 import { Button } from '../../../components/ui/Button';
+import { resetDirectMessageForm } from '../../../features/direct-message/directMessageSlice';
 
 export default function DirectMessaging() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+
   const [selectedTab, setSelectedTab] = useState('received');
   const [addNewMsg, setAddNewMsg] = useState(false);
   const [viewMsg, setViewMsg] = useState(false);
   const [viewMessageData, setViewMessageData] = useState();
   const [search, setSearch] = useState('');
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
-
-  const { mutateAsync: ViewAMessage } = useMutation({
-    mutationFn: viewMessage,
-    onSuccess: (resp) => {
-      queryClient.invalidateQueries(['messages', selectedTab]);
-      queryClient.invalidateQueries(['userInfo']);
-      setViewMessageData(resp.data.data);
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
-    },
-  });
 
   const { data: messages } = useQuery({
     queryFn: async () => {
@@ -51,6 +42,18 @@ export default function DirectMessaging() {
       }
     },
     queryKey: ['messages', selectedTab],
+  });
+
+  const { mutateAsync: ViewAMessage } = useMutation({
+    mutationFn: viewMessage,
+    onSuccess: (resp) => {
+      queryClient.invalidateQueries(['messages', selectedTab]);
+      queryClient.invalidateQueries(['userInfo']);
+      setViewMessageData(resp.data.data);
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message.split(':')[1]);
+    },
   });
 
   const handleViewMessage = (id, sender, receiver, item) => {
@@ -104,6 +107,7 @@ export default function DirectMessaging() {
             <Button
               variant="addOption"
               onClick={() => {
+                dispatch(resetDirectMessageForm());
                 navigate('/direct-messaging/new-message');
               }}
             >
@@ -141,9 +145,9 @@ export default function DirectMessaging() {
               )
               .map((item, index) => (
                 <MessageCard
-                  setViewMsg={setViewMsg}
-                  item={item}
                   key={index}
+                  item={item}
+                  setViewMsg={setViewMsg}
                   handleViewMessage={handleViewMessage}
                   filter={selectedTab}
                 />

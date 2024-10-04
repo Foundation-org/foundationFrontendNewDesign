@@ -4,8 +4,9 @@ import { Button } from '../../../../components/ui/Button';
 import PopUp from '../../../../components/ui/PopUp';
 import SelectionOption from '../../../../components/SelectionOption';
 import { useMutation } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchOptionParticipants } from '../../../../services/api/directMessagingApi';
+import { setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
 
 type ClearAllAnalyticsProps = {
   handleClose: () => void;
@@ -27,8 +28,10 @@ export default function FilterAnalyzedOptions({
   optionsArr,
 }: ClearAllAnalyticsProps) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [participants, setParticipants] = useState(0);
+
   const [selectedOptions, setSelectedOptions] = useState<any>(() => {
     if (submitBtn === 'Update') {
       return optionsArr;
@@ -144,9 +147,18 @@ export default function FilterAnalyzedOptions({
               selectedOptions?.filter((option: any) => option.selected).length > 0 && participants > 0 ? false : true
             }
             onClick={() => {
-              navigate('/direct-messaging/new-message?advance-analytics=true', {
-                state: { questStartData, selectedOptions, key: new Date().getTime() },
-              });
+              const selectedQuestions = selectedOptions
+                ?.filter((option: any) => option.selected)
+                .map((option: any) => option.question);
+
+              dispatch(
+                setDirectMessageForm({
+                  to: 'Participants',
+                  questForeignKey: questStartData._id,
+                  options: selectedQuestions,
+                }),
+              );
+              navigate('/direct-messaging/new-message?advance-analytics=true');
               if (submitBtn === 'Update') {
                 handleClose();
               }

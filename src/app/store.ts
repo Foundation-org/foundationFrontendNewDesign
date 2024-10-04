@@ -25,6 +25,7 @@ import extrasReducer from '../features/extras/extrasSlice';
 import seldonReducer from '../features/seldon-ai/seldonSlice';
 import newsFeedReducer from '../features/news-feed/newsFeedSlice';
 import seldonDataReducer from '../features/seldon-ai/seldonDataSlice';
+import directMessageReducer from '../features/direct-message/directMessageSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -65,6 +66,7 @@ const reducer = combineReducers({
   seldon: seldonReducer,
   newsFeed: newsFeedReducer,
   seldonData: seldonDataReducer,
+  directMessage: directMessageReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

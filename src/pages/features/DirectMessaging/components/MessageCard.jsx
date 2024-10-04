@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -7,9 +7,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../../components/ui/Button';
 import { calculateTimeAgo } from '../../../../utils/utils';
 import api from '../../../../services/api/Axios';
+import { setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
 
 export default function MessageCard({ setViewMsg, item, filter, handleViewMessage }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
@@ -153,18 +155,21 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             <Button
               variant={'submit'}
               onClick={() => {
-                navigate('/direct-messaging/new-message', {
-                  state: {
-                    draft: {
-                      id: item._id,
-                      to: item.to,
-                      subject: item.subject,
-                      message: item.message,
-                      options: item.options,
-                      questForeignKey: item.questForeignKey,
-                    },
-                  },
-                });
+                dispatch(
+                  setDirectMessageForm({
+                    draftId: item._id,
+                    to: item.to,
+                    subject: item.subject,
+                    message: item.message,
+                    options: item.options,
+                    questForeignKey: item.questForeignKey,
+                  }),
+                );
+                if (item.to === 'Participants') {
+                  navigate('/direct-messaging/new-message?advance-analytics=true');
+                } else {
+                  navigate('/direct-messaging/new-message');
+                }
               }}
             >
               {resloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Open'}
