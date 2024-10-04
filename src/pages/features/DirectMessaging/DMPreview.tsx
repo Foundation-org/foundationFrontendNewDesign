@@ -82,8 +82,9 @@ export default function DMPreview() {
 
   useEffect(() => {
     if (directMessageState.to === 'Participants') {
+      console.log('a');
       const params = {
-        questForeignKey: directMessageState.questStartData?._id,
+        questForeignKey: directMessageState.questForeignKey,
         uuid: persistedUserInfo.uuid,
         options: selectedOptions?.filter((option: any) => option.selected).map((option: any) => option.question),
       };
@@ -131,6 +132,7 @@ export default function DMPreview() {
       <div className="flex h-fit w-full max-w-[730px] justify-end gap-4 tablet:mx-auto">
         <Button
           variant="cancel"
+          className="w-fit whitespace-nowrap px-2"
           onClick={() => {
             if (updateOptionSelected().length >= 1) {
               navigate('/direct-messaging/new-message?advance-analytics=true');

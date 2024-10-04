@@ -50,6 +50,7 @@ export default function DirectMessaging() {
       queryClient.invalidateQueries(['messages', selectedTab]);
       queryClient.invalidateQueries(['userInfo']);
       setViewMessageData(resp.data.data);
+      setViewMsg(true);
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);

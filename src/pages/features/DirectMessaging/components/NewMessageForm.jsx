@@ -90,8 +90,11 @@ export default function NewMessageForm() {
         subject: directMessageState.subject,
         message: directMessageState.message,
         id: directMessageState.draftId,
-        readReward: directMessageState.readReward,
       };
+
+      if (directMessageState.to === 'Participants' || directMessageState.to === 'All') {
+        params.readReward = directMessageState.readReward;
+      }
 
       if (directMessageState.to === 'Participants') {
         params.questForeignKey = directMessageState.questForeignKey;
@@ -100,7 +103,7 @@ export default function NewMessageForm() {
 
       createDraft(params);
       dispatch(resetDirectMessageForm());
-      navigate('/direct-messaging');
+      navigate('/direct-messaging/draft');
     } else {
       toast.warning('Subject and message cannot be empty');
     }
@@ -150,9 +153,6 @@ export default function NewMessageForm() {
       return 0;
     }
   };
-
-  console.log('updatedQuestAnswers', updatedQuestAnswers);
-  console.log('options', directMessageState.options);
 
   return (
     <div className="space-y-[9px] tablet:space-y-[15px]">
@@ -227,7 +227,7 @@ export default function NewMessageForm() {
           </div>
         )}
         {/* Subject */}
-        <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
+        <div className="flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3 tablet:text-[22px]">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Subject:
           </p>
@@ -245,7 +245,7 @@ export default function NewMessageForm() {
           {directMessageState.subject?.length}/200
         </div>
         {/* Message */}
-        <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-[2.768px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
+        <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[10px] dark:border-[2.768px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:px-5 tablet:py-3 tablet:text-[22px]">
           <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Message:
           </p>

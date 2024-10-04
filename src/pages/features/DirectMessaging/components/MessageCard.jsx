@@ -163,6 +163,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                     message: item.message,
                     options: item.options,
                     questForeignKey: item.questForeignKey,
+                    readReward: item.readReward,
                   }),
                 );
                 if (item.to === 'Participants') {
@@ -182,7 +183,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 if (location.pathname === '/direct-messaging/preview') {
                   return;
                 } else {
-                  setViewMsg(true);
+                  // setViewMsg(true);
                   handleViewMessage(item._id, item.sender, item.receiver, item);
                 }
               }}

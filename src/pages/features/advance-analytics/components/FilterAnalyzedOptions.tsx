@@ -6,7 +6,7 @@ import SelectionOption from '../../../../components/SelectionOption';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOptionParticipants } from '../../../../services/api/directMessagingApi';
-import { setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
+import { resetDirectMessageForm, setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
 
 type ClearAllAnalyticsProps = {
   handleClose: () => void;
@@ -147,6 +147,8 @@ export default function FilterAnalyzedOptions({
               selectedOptions?.filter((option: any) => option.selected).length > 0 && participants > 0 ? false : true
             }
             onClick={() => {
+              dispatch(resetDirectMessageForm());
+
               const selectedQuestions = selectedOptions
                 ?.filter((option: any) => option.selected)
                 .map((option: any) => option.question);

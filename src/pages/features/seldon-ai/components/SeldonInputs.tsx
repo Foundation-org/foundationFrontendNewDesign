@@ -40,7 +40,7 @@ export default function SeldonInputs() {
   };
 
   return (
-    <div className="mt-2 flex h-fit flex-col gap-3 dark:border dark:border-gray-100 dark:bg-gray-200 laptop:my-[15px] laptop:ml-[31px] laptop:w-[18.75rem] laptop:min-w-[18.75rem] laptop:gap-8 laptop:rounded-[15px] laptop:bg-white laptop:py-[23px] laptop:pl-[1.3rem] laptop:pr-[2.1rem]">
+    <div className="mt-2 flex h-fit flex-col gap-3 rounded-[8px] p-3 dark:border dark:border-gray-100 dark:bg-gray-200 laptop:my-[15px] laptop:ml-[31px] laptop:w-[18.75rem] laptop:min-w-[18.75rem] laptop:gap-8 laptop:rounded-[15px] laptop:bg-white laptop:py-[23px] laptop:pl-[1.3rem] laptop:pr-[2.1rem]">
       <div className="relative">
         <div className="relative h-[29px] w-full tablet:h-[45px]">
           <input
