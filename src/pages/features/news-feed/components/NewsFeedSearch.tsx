@@ -30,7 +30,7 @@ export default function NewsFeedSearch() {
   return (
     <>
       {location.pathname === '/news' && (
-        <div className="my-2 h-fit w-full rounded-[3.55px] dark:border dark:border-gray-100 tablet:mx-auto tablet:max-w-[778px] tablet:px-[30px] laptop:my-[15px] laptop:ml-[31px] laptop:block laptop:w-[18.75rem] laptop:min-w-[18.75rem] laptop:rounded-[15px] laptop:bg-white laptop:py-[23px] laptop:pl-[1.3rem] laptop:pr-[2.1rem] laptop:dark:bg-gray-200">
+        <div className="my-2 h-fit w-full rounded-[3.55px] tablet:mx-auto tablet:max-w-[778px] tablet:px-[30px] laptop:my-[15px] laptop:ml-[31px] laptop:block laptop:w-[18.75rem] laptop:min-w-[18.75rem] laptop:rounded-[15px] laptop:bg-white laptop:py-[23px] laptop:pl-[1.3rem] laptop:pr-[2.1rem] laptop:dark:bg-gray-200">
           <div className="relative">
             <div className="relative h-[23px] w-full tablet:h-[45px]">
               <input

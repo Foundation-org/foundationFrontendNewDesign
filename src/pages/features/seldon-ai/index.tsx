@@ -51,8 +51,8 @@ export default function SeldonAi() {
               source: ids,
               articleId: response.data.response?.articleId ? response.data.response.articleId : '',
               prompt: seldonState.question,
-              updatedAt: response.data.response?.articleInfo?.createdAt
-                ? response.data.response?.articleInfo?.createdAt
+              updatedAt: response.data.response?.articleInfo?.updatedAt
+                ? response.data.response?.articleInfo?.updatedAt
                 : null,
             }),
           );
@@ -114,7 +114,7 @@ export default function SeldonAi() {
                       Published: {formatDateMDY(getSeldonDataState.createdAt)}
                     </p>
                   )}
-                  {getSeldonDataState.updatedAt !== '' && (
+                  {getSeldonDataState.updatedAt !== null && (
                     <p className="text-[10px] tablet:text-[16px]">
                       Last Updated: {formatDateMDY(getSeldonDataState.updatedAt)}
                     </p>

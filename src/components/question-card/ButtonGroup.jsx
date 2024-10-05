@@ -235,9 +235,9 @@ const ButtonGroup = ({
     (findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
       findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested') &&
     (location.pathname === '/' ||
-      location.pathname.startsWith('/r') ||
-      location.pathname.startsWith('/p') ||
-      location.pathname.startsWith('/l'))
+      // location.pathname.startsWith('/r') ||
+      // location.pathname.startsWith('/l') ||
+      location.pathname.startsWith('/p'))
   ) {
     return (
       <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">

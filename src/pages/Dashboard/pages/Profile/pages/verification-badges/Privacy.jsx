@@ -18,6 +18,8 @@ export const allowedUsers = [
   'wamiqakram@gmail.com',
   'justinleffew@gmail.com',
   'saba01chaudhary@gmail.com',
+  'k201857@nu.edu.pk',
+  'techflow805@gmail.com',
 ];
 
 const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup }) => {

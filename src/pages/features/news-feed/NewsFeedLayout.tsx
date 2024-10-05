@@ -27,7 +27,7 @@ const NewsFeedLayout = () => {
       </div>
       <div
         ref={scrollRef}
-        className="mx-auto h-[calc(100dvh-134px)] max-w-[778px] overflow-y-scroll no-scrollbar tablet:h-[calc(100dvh-160px)] laptop:mt-[77.63px] laptop:h-[calc(100dvh-147.6px)]"
+        className="mx-auto mt-3 h-[calc(100dvh-134px)] max-w-[778px] overflow-y-scroll no-scrollbar tablet:h-[calc(100dvh-160px)] laptop:mt-[77.63px] laptop:h-[calc(100dvh-147.6px)]"
       >
         <Outlet />
       </div>
