@@ -58,6 +58,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
     queryFn: () => getQuestsCustom({ ids: seldonsData.source, uuid: persistedUserInfo.uuid }),
     enabled: seldonsData.source.length === 0 ? false : true,
   });
+  console.log(sourcePosts);
 
   return (
     <div
