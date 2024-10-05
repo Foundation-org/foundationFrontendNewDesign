@@ -1,31 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Toaster } from 'sonner';
-import { Helmet } from 'react-helmet-async';
-import { signOut } from './services/api/userAuth';
-import { resetFilters } from './features/sidebar/filtersSlice';
-import { addUser } from './features/auth/authSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import api from './services/api/Axios';
-import FallbackLoading from './components/FallbackLoading';
-import showToast from './components/ui/Toast';
-import { MaintenanceRouter } from './routes/maintenance';
-import GuestDialogueScreen from './components/GuestDialogueScreen';
-import ReactGA from 'react-ga';
-import { initFacebookPixel } from './utils/facebookPixel';
-import ReactPixel from 'react-facebook-pixel';
 import { Router } from './routes/router';
+import { Helmet } from 'react-helmet-async';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { initFacebookPixel } from './utils/facebookPixel';
+import { useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga';
+import api from './services/api/Axios';
+import ReactPixel from 'react-facebook-pixel';
+import FallbackLoading from './components/FallbackLoading';
+import { MaintenanceRouter } from './routes/maintenance';
 ReactGA.initialize('AW-16685473482');
 
 function App() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const persistedTheme = useSelector((state: any) => state.utils.theme);
-  const [isMaintenance, setIsMaintenance] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+  const persistedTheme = useSelector((state: any) => state.utils.theme);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMaintenance, setIsMaintenance] = useState(false);
 
   useEffect(() => {
     initFacebookPixel();

@@ -97,81 +97,85 @@ export default function SeldonAi() {
       {isPending ? (
         <DotsLoading />
       ) : (
-        <div className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
-          {getSeldonDataState.debug ? (
-            <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
-              <h1 className="text-[16px] font-bold">Debug Mode:</h1>
-              <br></br>
-              <Markdown>{getSeldonDataState.debug}</Markdown>
-            </div>
-          ) : (
-            <>
-              <div className="space-y-1">
-                <h1 className="text-[16px] font-bold tablet:text-[24px]">{getSeldonDataState.title}</h1>
-                <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
-                <p className="text-[10px] tablet:text-[16px]">
-                  Published: {formatDateMDY(getSeldonDataState.createdAt)}
+        getSeldonDataState.title !== '' && (
+          <div className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
+            {getSeldonDataState.debug ? (
+              <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
+                <h1 className="text-[16px] font-bold">Debug Mode:</h1>
+                <br></br>
+                <Markdown>{getSeldonDataState.debug}</Markdown>
+              </div>
+            ) : (
+              <>
+                <div className="space-y-1">
+                  <h1 className="text-[16px] font-bold tablet:text-[24px]">{getSeldonDataState.title}</h1>
+                  <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
+                  {getSeldonDataState.createdAt !== '' && (
+                    <p className="text-[10px] tablet:text-[16px]">
+                      Published: {formatDateMDY(getSeldonDataState.createdAt)}
+                    </p>
+                  )}
+                  {getSeldonDataState.updatedAt !== '' && (
+                    <p className="text-[10px] tablet:text-[16px]">
+                      Last Updated: {formatDateMDY(getSeldonDataState.updatedAt)}
+                    </p>
+                  )}
+                </div>
+                <p className="text-[12px] tablet:text-[20px]">
+                  <strong>Seo Summary </strong>
+                  {getSeldonDataState.seoSummary}
                 </p>
-                {getSeldonDataState.updatedAt !== null && (
-                  <p className="text-[10px] tablet:text-[16px]">
-                    Last Updated: {formatDateMDY(getSeldonDataState.updatedAt)}
-                  </p>
+                <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.abstract}</p>
+                <div className="flex flex-col items-start gap-2 tablet:mt-[10px] tablet:gap-5">
+                  <button
+                    onClick={() => {
+                      const selectedButton = document.getElementById('posts-list');
+                      if (selectedButton) {
+                        selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                      }
+                    }}
+                    className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
+                  >
+                    View posts that informed this article
+                  </button>
+                  <button
+                    onClick={() => {
+                      const selectedButton = document.getElementById('posts-ideas');
+                      if (selectedButton) {
+                        selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                      }
+                    }}
+                    className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
+                  >
+                    Get post ideas and earn FDX
+                  </button>
+                </div>
+                {getSeldonDataState?.groundBreakingFindings.length > 0 && (
+                  <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
                 )}
-              </div>
-              <p className="text-[12px] tablet:text-[20px]">
-                <strong>Seo Summary </strong>
-                {getSeldonDataState.seoSummary}
-              </p>
-              <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.abstract}</p>
-              <div className="flex flex-col items-start gap-2 tablet:mt-[10px] tablet:gap-5">
-                <button
-                  onClick={() => {
-                    const selectedButton = document.getElementById('posts-list');
-                    if (selectedButton) {
-                      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }
-                  }}
-                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
-                >
-                  View posts that informed this article
-                </button>
-                <button
-                  onClick={() => {
-                    const selectedButton = document.getElementById('posts-ideas');
-                    if (selectedButton) {
-                      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }
-                  }}
-                  className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
-                >
-                  Get post ideas and earn FDX
-                </button>
-              </div>
-              {getSeldonDataState?.groundBreakingFindings.length > 0 && (
-                <h1 className="text-[16px] font-bold tablet:text-[24px]">Findings</h1>
-              )}
-              <ol className="list-disc space-y-4">
-                {getSeldonDataState?.groundBreakingFindings?.map(
-                  (item: { heading: string; content: string }, index: number) => (
-                    <li key={index} className="ml-6 text-[12px] tablet:ml-10 tablet:text-[20px]">
-                      <strong className="font-bold">{item.heading}:</strong> {item.content}
-                    </li>
-                  ),
-                )}
-              </ol>
-              <div>
-                <h1 className="text-[16px] font-bold tablet:text-[24px]">Discussion</h1>
-                <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.discussion}</p>
-              </div>
-              <div>
-                <h1 className="text-[16px] font-bold tablet:text-[24px]">Conclusion</h1>
-                <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.conclusion}</p>
-              </div>
-            </>
-          )}
-          <SourcePosts />
-          <SuggestedPosts />
-        </div>
+                <ol className="list-disc space-y-4">
+                  {getSeldonDataState?.groundBreakingFindings?.map(
+                    (item: { heading: string; content: string }, index: number) => (
+                      <li key={index} className="ml-6 text-[12px] tablet:ml-10 tablet:text-[20px]">
+                        <strong className="font-bold">{item.heading}:</strong> {item.content}
+                      </li>
+                    ),
+                  )}
+                </ol>
+                <div>
+                  <h1 className="text-[16px] font-bold tablet:text-[24px]">Discussion</h1>
+                  <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.discussion}</p>
+                </div>
+                <div>
+                  <h1 className="text-[16px] font-bold tablet:text-[24px]">Conclusion</h1>
+                  <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.conclusion}</p>
+                </div>
+              </>
+            )}
+            <SourcePosts />
+            <SuggestedPosts />
+          </div>
+        )
       )}
     </div>
   );

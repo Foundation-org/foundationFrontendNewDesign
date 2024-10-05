@@ -54,10 +54,12 @@ export default function SeldonView() {
                   <div className="space-y-1">
                     <h1 className="text-[16px] font-bold tablet:text-[24px]">{response?.data?.title}</h1>
                     <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
-                    <p className="text-[10px] tablet:text-[16px]">
-                      Published: {formatDateMDY(response?.data.createdAt)}
-                    </p>
-                    {response?.data.updatedAt !== null && (
+                    {response?.data.createdAt !== '' && (
+                      <p className="text-[10px] tablet:text-[16px]">
+                        Published: {formatDateMDY(response?.data.createdAt)}
+                      </p>
+                    )}
+                    {response?.data.updatedAt !== '' && (
                       <p className="text-[10px] tablet:text-[16px]">
                         Last Updated: {formatDateMDY(response?.data.updatedAt)}
                       </p>
