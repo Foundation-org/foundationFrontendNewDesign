@@ -102,13 +102,13 @@ const Topbar = () => {
                     className="size-5 tablet:size-8"
                   />
                 </div>
-                <div className="flex flex-col" onClick={handleHomeClick}>
+                <div className="flex flex-col gap-[2px] tablet:gap-[6px]" onClick={handleHomeClick}>
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/foundation_logo.svg`}
                     alt="foundation_logo"
                     className="h-[10px] w-auto tablet:h-auto"
                   />
-                  <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[13px] tablet:leading-[13px]">
+                  <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium leading-[10px] text-[#D0E4F2] tablet:text-[14px] tablet:leading-[14px]">
                     v {appVersion}
                   </span>
                 </div>
