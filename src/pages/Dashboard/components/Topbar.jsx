@@ -153,7 +153,9 @@ const Topbar = () => {
                         (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') &&
                         item.id === 1
                       ) {
-                        dispatch(setGuestSignUpDialogue({ isSignup: true, signupTriggeredFrom: 'signup' }));
+                        dispatch(
+                          setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'),
+                        );
                       }
                     }}
                   >
@@ -216,7 +218,9 @@ const Topbar = () => {
                   dispatch(addSharedLinkPost(null));
 
                   if ((persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1) {
-                    dispatch(setGuestSignUpDialogue(true));
+                    dispatch(
+                      setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'),
+                    );
                   }
                   if (item.id === 6) {
                     dispatch(handleSeldonInput({ name: 'isTitle', value: false }));

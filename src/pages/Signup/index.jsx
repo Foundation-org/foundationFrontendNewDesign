@@ -43,6 +43,7 @@ export default function Signup({ allowSignUp }) {
   const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
   const [clickedButtonName, setClickedButtonName] = useState('');
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const text = useSelector((state) => state.extras.text);
 
   const handlePopupOpen = () => {
     // setIspopup(true);
@@ -141,7 +142,7 @@ export default function Signup({ allowSignUp }) {
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div className="dark:bg-dark flex w-full flex-col items-center rounded-b-[9.76px] bg-white py-4 dark:bg-gray-200 md:justify-center tablet:rounded-b-[26px] tablet:py-7">
         <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
-          Please create and account to unlock this feature.
+          {text}
         </p>
         {isLoadingSocial ? (
           <div className="my-5 flex flex-col items-center justify-center gap-4 tablet:my-10">

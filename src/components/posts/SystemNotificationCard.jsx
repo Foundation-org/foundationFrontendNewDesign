@@ -30,7 +30,7 @@ const SystemNotificationCard = ({ post, innerRef }) => {
             className="w-fit bg-white dark:bg-transparent"
             onClick={() => {
               if (post.buttonUrl === '/guest-signup') {
-                dispatch(setGuestSignUpDialogue(true));
+                dispatch(setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'));
               } else {
                 navigate(post.buttonUrl);
               }

@@ -1,11 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setCredentialLogin, setCredentialRegister } from '../../../../features/extras/extrasSlice';
+import {
+  setCredentialLogin,
+  setCredentialRegister,
+  setGuestSignUpDialogue,
+} from '../../../../features/extras/extrasSlice';
 
 const About = () => {
   const navigate = useNavigate();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   return (
     <div className="bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-b-[0.86513rem] tablet:rounded-t-[0.86513rem] tablet:dark:border-[2.56px]">
@@ -121,7 +126,8 @@ const About = () => {
           <button
             className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#156DB4] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
             onClick={() => {
-              dispatch(setCredentialRegister(true));
+              // dispatch(setCredentialRegister(true));
+              dispatch(setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'));
             }}
           >
             Sign up

@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
 const initialState = {
   guestSignUpDialogue: false,
-  isTriggeredFrom: '',
-  signupTriggeredFrom: '',
   guestSignInDialogue: false,
   credentialLogin: false,
   credentialRegister: false,
+  text:''
 };
 
 export const extrasSlice = createSlice({
@@ -14,14 +14,18 @@ export const extrasSlice = createSlice({
   initialState,
   reducers: {
     setGuestSignUpDialogue: (state, action) => {
-      const { isSignup, isTriggeredFrom } = action.payload;
       state.guestSignInDialogue = false;
       state.credentialLogin = false;
-      state.guestSignUpDialogue = isSignup;
-      if (isSignup) {
-        state.isTriggeredFrom = isTriggeredFrom;
+      
+      if (typeof action.payload === 'string') {
+        state.guestSignUpDialogue = true;
+        state.text = action.payload; 
+      } else if (action.payload === true) {
+        state.guestSignUpDialogue = true; 
+        state.text = 'Please create and account to unlock this feature.'; 
       } else {
-        state.signupTriggeredFrom = '';
+        state.guestSignUpDialogue = false; 
+        state.text = ''; 
       }
     },
     setGuestSignInDialogue: (state, action) => {
@@ -36,9 +40,6 @@ export const extrasSlice = createSlice({
     setCredentialRegister: (state, action) => {
       state.guestSignInDialogue = false;
       state.credentialRegister = action.payload;
-    },
-    setSignupTriggeredFrom: (state, action) => {
-      state.signupTriggeredFrom = action.payload;
     },
   },
 });
