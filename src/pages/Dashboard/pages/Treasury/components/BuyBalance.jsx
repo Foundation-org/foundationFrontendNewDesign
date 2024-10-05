@@ -45,7 +45,7 @@ const BuyBalance = ({ triggerPulse }) => {
   };
 
   const handleCreate = () => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     }

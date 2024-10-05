@@ -60,8 +60,11 @@ export default function AdvanceAnalytics({ questStartData }: any) {
   return (
     <div className="mt-2 rounded-[12.3px] border-2 border-white-500 bg-white p-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:mt-[15px] tablet:rounded-[15px] tablet:py-[25px]">
       <h1 className="text-center text-[0.75rem] font-semibold leading-[15px] text-accent-600 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
-        Advanced Analytics
+        Analyze results
       </h1>
+      <p className="summary-text mt-[10px] text-center tablet:mt-[15px]">
+        Filter results to narrow how many participants engaged with certain information or how results change.
+      </p>
       <div className="relative mt-[10px] flex flex-col gap-[10px] tablet:mt-[15px] tablet:gap-[15px]">
         <DndContext
           sensors={[touchSensor, mouseSensor, keyboardSensor]}
@@ -84,7 +87,7 @@ export default function AdvanceAnalytics({ questStartData }: any) {
           }}
         >
           <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
-          Add Function
+          Add filter
         </Button>
         {questStartData?.advanceAnalytics?.length >= 1 && (
           <Button
@@ -93,7 +96,7 @@ export default function AdvanceAnalytics({ questStartData }: any) {
               setClearAnalyticsPopup(true);
             }}
           >
-            Clear All Analytics
+            Clear all filters
           </Button>
         )}
       </div>
@@ -101,7 +104,7 @@ export default function AdvanceAnalytics({ questStartData }: any) {
         <AnalyzeDialogueBox
           handleClose={handleAnalyzeClose}
           modalVisible={analyzePopup}
-          title={'Analyze'}
+          title={'Analyze results'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
           questStartData={questStartData}
           update={false}
@@ -111,7 +114,7 @@ export default function AdvanceAnalytics({ questStartData }: any) {
         <ClearAllAnalytics
           handleClose={handleClearAnalyticsClose}
           modalVisible={clearAnalyticsPopup}
-          title={'Clear All Analytics'}
+          title={'Clear All Filters'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
           id={questStartData?._id}
         />

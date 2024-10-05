@@ -16,6 +16,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import showToast from '../ui/Toast';
 import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
+import { findFeedbackByUuid } from '../../utils/extras';
+import { useUndoFeedBackMutation } from '../../services/mutations/post';
 // import { formatParticipantsCount } from '../../utils/questionCard';
 
 const ButtonGroup = ({
@@ -35,6 +37,7 @@ const ButtonGroup = ({
   checkOptionStatus,
   postProperties,
   SharedLinkButton,
+  questType,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,6 +48,8 @@ const ButtonGroup = ({
   const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const feedbackAndVisibilityRef = useRef();
   const [feedbackLoading, setFeedbackLoading] = useState(false);
+
+  const { useUndoFeedback, isUndoFeedbackPending } = useUndoFeedBackMutation();
 
   let filterState;
 
@@ -226,6 +231,47 @@ const ButtonGroup = ({
     );
   };
 
+  if (
+    (findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
+      findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested') &&
+    location.pathname === '/'
+  ) {
+    return (
+      <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">
+        <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
+        <Button
+          variant={'g-submit'}
+          disabled={isUndoFeedbackPending}
+          className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
+          onClick={() => {
+            useUndoFeedback({ questForeignKey: questStartData._id, uuid: persistedUserInfo?.uuid });
+          }}
+        >
+          {isUndoFeedbackPending === true ? (
+            <FaSpinner className="animate-spin text-[#EAEAEA]" />
+          ) : findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ? (
+            'This applies to me now'
+          ) : (
+            'I am interested now'
+          )}
+        </Button>
+      </div>
+    );
+  }
+
+  if (questType === 'feedback' || questType === 'feedback-given') {
+    return (
+      <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
+        <Button
+          variant="cancel"
+          onClick={() => navigate(`/profile/${questType === 'feedback' ? 'feedback' : 'feedback-given'}`)}
+        >
+          Go Back
+        </Button>
+      </div>
+    );
+  }
+
   if (location.pathname === '/post/isfullscreen') {
     return null;
     // return (
@@ -234,6 +280,8 @@ const ButtonGroup = ({
     //   </h1>
     // );
   }
+
+  if (postProperties === 'preview') return null;
 
   if (postProperties === 'HiddenPosts') {
     const { mutateAsync: unHidePost, isPending: unHidePostLoading } = useMutation({
@@ -280,7 +328,7 @@ const ButtonGroup = ({
     return (
       <div>
         {startTest !== questStartData._id ? (
-          <div className="flex w-full justify-end gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
+          <div className="mb-[15px] flex w-full justify-end gap-2 px-[0.87rem] tablet:mb-6 tablet:gap-4 tablet:px-10">
             <Button
               variant={hidePostLoading || unHidePostLoading ? 'submit-hollow' : 'submit'}
               onClick={() =>
@@ -291,7 +339,26 @@ const ButtonGroup = ({
             >
               View
             </Button>
-            {questStartData.userQuestSetting.hidden ? (
+
+            {findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
+            findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested' ? (
+              <Button
+                variant={'g-submit'}
+                disabled={isUndoFeedbackPending}
+                className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
+                onClick={() => {
+                  useUndoFeedback({ questForeignKey: questStartData._id, uuid: persistedUserInfo?.uuid });
+                }}
+              >
+                {isUndoFeedbackPending === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ? (
+                  'This applies to me now'
+                ) : (
+                  'I am interested now'
+                )}
+              </Button>
+            ) : questStartData.userQuestSetting.hidden ? (
               <Button
                 variant="danger"
                 onClick={() => {
@@ -350,7 +417,7 @@ const ButtonGroup = ({
     return (
       <div className="w-full px-[0.87rem] tablet:px-10">
         {startTest !== questStartData._id ? (
-          <div className="flex w-full justify-end gap-2 tablet:gap-4">
+          <div className="mb-[15px] flex w-full justify-end gap-2 tablet:mb-6 tablet:gap-4">
             <Button
               variant={'submit-green'}
               onClick={() => {
@@ -382,7 +449,7 @@ const ButtonGroup = ({
             />
           </div>
         ) : (
-          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+          <div className="mb-[15px] flex w-full justify-end gap-2 pr-[14.4px] tablet:mb-6 tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
             <Button
               variant="cancel"
               onClick={() => {
@@ -400,11 +467,11 @@ const ButtonGroup = ({
 
   if (SharedLinkButton === 'shared-links-results-button') {
     return (
-      <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+      <div className="mb-[15px] flex w-full justify-end gap-2 pr-[14.4px] tablet:mb-6 tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
         <Button
           variant="cancel"
           onClick={() => {
-            if (persistedUserInfo?.role === 'guest') {
+            if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
               dispatch(setGuestSignUpDialogue(true));
             } else {
               if (location.pathname === '/shared-list-link/result') {
@@ -421,16 +488,17 @@ const ButtonGroup = ({
     );
   }
 
-  if (persistedUserInfo?.role === 'guest' && !questStartData.isClosed) {
+  if ((persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') && !questStartData.isClosed) {
     if (
       location.pathname.includes('/p/') ||
       location.pathname.includes('/l/') ||
+      location.pathname.includes('/r/') ||
       location.pathname === '/post/isfullscreen'
     ) {
       return (
         <>
           {questStartData.startStatus === '' ? (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
+            <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">
               {/* <Button
                 variant={'submit'}
                 onClick={() => {
@@ -443,7 +511,7 @@ const ButtonGroup = ({
                   (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               </Button> */}
-              <button className="w-full cursor-default">&#x200B;</button>
+              <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               <Button
                 variant="g-submit"
                 onClick={() => handleSubmit()}
@@ -466,8 +534,8 @@ const ButtonGroup = ({
               </Button>
             </div>
           ) : questStartData.startStatus === 'change answer' ? (
-            <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
-              <button className="w-full cursor-default">&#x200B;</button>
+            <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
+              <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
@@ -488,8 +556,8 @@ const ButtonGroup = ({
       return (
         <div className="flex w-full justify-end">
           {questStartData.startStatus === 'change answer' ? (
-            <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
-              <button className="w-full cursor-default">&#x200B;</button>
+            <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
+              <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               {questStartData.startStatus === 'change answer' && viewResult === questStartData._id ? (
                 <Button
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
@@ -504,9 +572,9 @@ const ButtonGroup = ({
               ) : null}
             </div>
           ) : questStartData.startStatus === 'completed' ? null : (
-            <div className="flex w-full items-center justify-between gap-4 px-[14.4px] tablet:px-10">
-              {persistedUserInfo?.role === 'guest' ? (
-                <button className="w-full cursor-default">&#x200B;</button>
+            <div className="mb-[15px] flex w-full items-center justify-between gap-4 px-[14.4px] tablet:mb-6 tablet:px-10">
+              {persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor' ? (
+                <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
               ) : (
                 <Button
                   variant={'submit'}
@@ -553,7 +621,7 @@ const ButtonGroup = ({
   /* Participated => Go back - Submit / Not Participated => Submit*/
   if (startTest === questStartData._id && !questStartData.isClosed) {
     return (
-      <div className="flex w-full gap-2 px-[0.87rem] tablet:gap-[0.75rem] tablet:px-10">
+      <div className="mb-[15px] flex w-full gap-2 px-[0.87rem] tablet:mb-6 tablet:gap-[0.75rem] tablet:px-10">
         <FeedbackAndVisibility
           ref={feedbackAndVisibilityRef}
           questStartData={questStartData}
@@ -595,7 +663,7 @@ const ButtonGroup = ({
               </div>
             ) : (
               <div className="flex w-full items-center justify-between gap-4">
-                {questStartData.startStatus !== 'continue' ? (
+                {questStartData.startStatus !== 'continue' && !questStartData?.startQuestData?.feedbackReverted ? (
                   <Button
                     variant={'submit'}
                     className={'!laptop:px-0 w-full whitespace-nowrap !px-0'}
@@ -607,7 +675,7 @@ const ButtonGroup = ({
                     </span>
                   </Button>
                 ) : (
-                  <button className="w-full cursor-default">&#x200B;</button>
+                  <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
                 )}
                 <Button id={`submit-${questStartData._id}`} variant="g-submit" onClick={() => handleSubmit()}>
                   Submit
@@ -631,7 +699,7 @@ const ButtonGroup = ({
       {questStartData.startStatus === 'change answer' &&
         viewResult === questStartData._id &&
         !questStartData.isClosed && (
-          <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
+          <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
             <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
             <Button
               variant={result === ', you are good to go' ? 'change' : 'change-outline'}
@@ -644,8 +712,8 @@ const ButtonGroup = ({
           </div>
         )}
       {questStartData.startStatus === 'continue' && !questStartData.isClosed && (
-        <div className="flex w-full justify-between gap-4 px-[0.87rem] tablet:px-10">
-          <button className="w-full cursor-default">&#x200B;</button>
+        <div className="mb-[15px] flex w-full justify-between gap-4 px-[0.87rem] tablet:mb-6 tablet:px-10">
+          <button className="h-[22px] w-full cursor-default tablet:h-[50px]">&#x200B;</button>
           <Button
             id={`submit-${questStartData._id}`}
             variant="g-submit"

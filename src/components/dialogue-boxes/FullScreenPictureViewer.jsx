@@ -1,7 +1,14 @@
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
-export default function FullScreenPictureViewer({ handleClose, modalVisible, content, customStyle, customClasses }) {
+export default function FullScreenPictureViewer({
+  handleClose,
+  modalVisible,
+  content,
+  customStyle,
+  customClasses,
+  isImageError,
+}) {
   const defaultStyle = {
     boxShadow: 'none',
     position: 'absolute',
@@ -43,8 +50,12 @@ export default function FullScreenPictureViewer({ handleClose, modalVisible, con
             />
           </svg>
         </div>
-        <div className=" rounded-b-[9.76px] bg-black tablet:rounded-b-[26px]">
-          <img src={content} className="w-full" />
+        <div className="rounded-b-[9.76px] bg-black tablet:rounded-b-[26px]">
+          {!content || isImageError ? (
+            <div className="flex h-full items-center justify-center text-center">This image is no longer available</div>
+          ) : (
+            <img src={content} className="w-full" />
+          )}
         </div>
       </Box>
     </Modal>

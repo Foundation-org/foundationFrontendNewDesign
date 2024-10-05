@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { createStartQuest } from '../api/questsApi';
+import { createStartQuest, undoFeedback, updateChangeAnsStartQuest } from '../api/questsApi';
 import { resetaddOptionLimit } from '../../features/quest/utilsSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { submitListResponse, updateCategoryParticipentsCount } from '../api/listsApi';
@@ -56,12 +56,20 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
       queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
 
-      queryClient.setQueriesData(['posts'], (oldData) => ({
-        ...oldData,
-        pages: oldData?.pages?.map((page) =>
-          page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
-        ),
-      }));
+      if (location.pathname.startsWith('/seldon-ai')) {
+        queryClient.setQueryData(['sourcePosts'], (oldData) => {
+          return oldData.map((item) => (item._id === resp.data.data._id ? resp.data.data : item));
+        });
+      } else if (location.pathname.startsWith('/r')) {
+        queryClient.invalidateQueries(['sourcePosts']);
+      } else {
+        queryClient.setQueriesData(['posts'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+          ),
+        }));
+      }
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
@@ -124,7 +132,7 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   const dispatch = useDispatch();
 
   const { mutateAsync: changePost } = useMutation({
-    mutationFn: questServices.updateChangeAnsStartQuest,
+    mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
@@ -143,12 +151,33 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
           setSubmitResponse(resp.data.data);
         }
 
-        queryClient.setQueriesData(['posts'], (oldData) => ({
-          ...oldData,
-          pages: oldData?.pages?.map((page) =>
-            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
-          ),
-        }));
+        if (location.pathname.startsWith('/seldon-ai')) {
+          queryClient.setQueryData(['sourcePosts'], (oldData) => {
+            return oldData.map((item) => (item._id === resp.data.data._id ? resp.data.data : item));
+          });
+        } else {
+          queryClient.setQueriesData(['posts'], (oldData) => ({
+            ...oldData,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+            ),
+          }));
+        }
+
+        if (location.pathname.startsWith('/p/')) {
+          queryClient.setQueryData(['questByShareLink'], (oldData) => {
+            const newData = resp.data.data;
+
+            // Keep the oldData format, but replace data.data[0]
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                data: [newData], // Replace the first item of data.data
+              },
+            };
+          });
+        }
       }
       dispatch(resetaddOptionLimit());
     },
@@ -160,4 +189,38 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   });
 
   return { changePost };
+};
+
+export const useUndoFeedBackMutation = () => {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: useUndoFeedback, isPending: isUndoFeedbackPending } = useMutation({
+    mutationFn: undoFeedback,
+    onSuccess: (resp) => {
+      if (resp.status === 200) {
+        if (
+          resp.data.message === 'Feedback Reverted Successfully!' &&
+          location.pathname.includes('/profile/feedback-given')
+        ) {
+          queryClient.setQueriesData(['posts'], (oldData) => ({
+            ...oldData,
+            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data[0]._id)),
+          }));
+        } else {
+          queryClient.setQueriesData(['posts'], (oldData) => ({
+            ...oldData,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) => (item._id === resp.data.data[0]._id ? resp.data.data[0] : item)),
+            ),
+          }));
+        }
+      }
+    },
+    onError: (err) => {
+      console.log({ err });
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+    },
+  });
+
+  return { useUndoFeedback, isUndoFeedbackPending };
 };

@@ -1,43 +1,23 @@
-import { Button } from '../../../../components/ui/Button';
-import api from '../../../../services/api/Axios';
 import { toast } from 'sonner';
-import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useMemo, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { Button } from '../../../../components/ui/Button';
+import { calculateTimeAgo } from '../../../../utils/utils';
+import api from '../../../../services/api/Axios';
+import { setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
 
-export default function MessageCard({ setViewMsg, item, filter, handleViewMessage, handleDraftOpen }) {
+export default function MessageCard({ setViewMsg, item, filter, handleViewMessage }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [resloading, setResLoading] = useState(false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-  const calculateTimeAgo = (time) => {
-    let timeAgo;
-    const currentDate = new Date();
-    const createdAtDate = new Date(time);
-
-    if (isNaN(createdAtDate.getTime())) {
-      return (timeAgo = 'Invalid date');
-    }
-
-    const timeDifference = currentDate - createdAtDate;
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-      timeAgo = `${days} ${days === 1 ? 'day' : 'days'} ago`;
-    } else if (hours > 0) {
-      timeAgo = `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
-    } else if (minutes > 0) {
-      timeAgo = `${minutes} ${minutes === 1 ? 'min' : 'mins'} ago`;
-    } else {
-      timeAgo = `${seconds} ${seconds === 1 ? 'sec' : 'secs'} ago`;
-    }
-    return timeAgo;
-  };
+  const persistedTheme = useSelector((state) => state.utils.theme);
+  const timeAgo = useMemo(() => calculateTimeAgo(item.createdAt), [item.createdAt]);
 
   const handleDelete = (id, type) => {
     api
@@ -107,38 +87,35 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
   };
 
   return (
-    <div className="rounded-[15px] bg-white">
+    <div className="h-fit w-full rounded-[8px] border-[1.232px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200 tablet:mx-0 tablet:rounded-[15px] tablet:border-2">
       {/* header */}
-      <div className="flex items-center justify-between rounded-t-[15px] bg-[#FFFCB8] px-4 py-[6px] tablet:px-7 tablet:py-2">
+      <div className="flex items-center justify-between rounded-t-[8px] bg-[#FFFCB8] px-3 py-[6px] dark:bg-accent-100 tablet:rounded-t-[15px] tablet:px-5 tablet:py-3">
         <div className="flex items-center gap-1">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/foundation-logo.svg`}
-            alt="logo"
-            className="size-[19.72px] tablet:size-8"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${item.platform === 'Foundation-IO.com' ? 'assets/svgs/F.svg' : 'assets/addOptions/blueBadge.svg'}`}
+            alt="badge-logo"
+            className="size-[12.325px] tablet:size-5"
           />
-          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? item.to : 'Foundation-IO.com'}
+          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+            {filter === 'sent' ? item.to : item.platform}
           </h1>
         </div>
         <div className="flex items-center gap-1">
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/clock.svg`}
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
             alt="clock"
-            className="size-[13.56px] tablet:size-[22px]"
+            className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-[#9C9C9C] tablet:text-[21.211px] tablet:leading-[13.071px]">
-            {calculateTimeAgo(item.createdAt)}
+          <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-[#9C9C9C] dark:text-white tablet:text-[21.211px] tablet:leading-[13.071px]">
+            {timeAgo}
           </h2>
         </div>
       </div>
-      {/* body */}
-      <div className="rounded-b-[15px] border-x-[1.232px] border-y-[1.232px] border-[#D9D9D9] px-4 py-2 text-[#707175] tablet:border-x-2 tablet:border-y-2 tablet:px-7 tablet:py-3">
-        <h1 className="mb-[8.4px] text-[12.145px] font-semibold leading-[12.145px] tablet:mb-[11px] tablet:text-[22px] tablet:leading-[22px]">
+      {/* Body */}
+      <div className="m-3 flex flex-col gap-3 tablet:m-5 tablet:gap-5">
+        <h1 className="text-[12.145px] font-semibold leading-[12.145px] tablet:text-[22px] tablet:leading-[22px]">
           {item.subject}
         </h1>
-        <h2 className="mb-2 truncate text-[8.097px] font-medium leading-[8.097px] tablet:mb-7 tablet:text-[20px] tablet:leading-normal">
-          {filter === 'sent' ? item.message : item.shortMessage}
-        </h2>
         <div className="flex justify-end gap-2">
           {item?.type === 'sent' && item?.to === 'Participants' && (
             <Button
@@ -151,10 +128,12 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Cancel All'}
             </Button>
           )}
-          {filter !== 'sent' && filter !== 'draft' && (
+          {filter !== 'sent' && (
             <Button
               variant={'danger'}
+              disabled={location.pathname === '/direct-messaging/preview'}
               onClick={() => {
+                if (location.pathname === '/direct-messaging/preview') return;
                 setLoading(true);
                 filter === 'deleted' ? handleDelete(item._id, filter) : handleTrash(item._id, filter);
               }}
@@ -176,76 +155,82 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             <Button
               variant={'submit'}
               onClick={() => {
-                handleDraftOpen(item._id, item.to, item.subject, item.message);
+                dispatch(
+                  setDirectMessageForm({
+                    draftId: item._id,
+                    to: item.to,
+                    subject: item.subject,
+                    message: item.message,
+                    options: item.options,
+                    questForeignKey: item.questForeignKey,
+                    readReward: item.readReward,
+                  }),
+                );
+                if (item.to === 'Participants') {
+                  navigate('/direct-messaging/new-message?advance-analytics=true');
+                } else {
+                  navigate('/direct-messaging/new-message');
+                }
               }}
             >
               {resloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Open'}
             </Button>
           ) : (
             <Button
-              variant={'submit'}
+              variant={item?.viewed ? 'change' : 'submit'}
+              disabled={location.pathname === '/direct-messaging/preview'}
               onClick={() => {
-                setViewMsg(true);
-                handleViewMessage(item._id, item.sender, item.receiver, filter === 'sent' ? item : false);
+                if (location.pathname === '/direct-messaging/preview') {
+                  return;
+                } else {
+                  // setViewMsg(true);
+                  handleViewMessage(item._id, item.sender, item.receiver, item);
+                }
               }}
             >
-              View{' '}
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                (+0.1 FDX)
-              </span>
+              {item?.viewed ? 'Read Again' : filter === 'sent' ? 'View' : 'Read'}{' '}
+              {item.readReward != null && item.readReward >= 0 && !item?.viewed && filter !== 'sent' && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                  {`(+${item?.readReward} FDX)`}
+                </span>
+              )}
             </Button>
           )}
         </div>
         {filter === 'sent' && (
-          <div className="mt-4 flex items-center justify-between gap-[15px]">
+          <div className="flex items-center justify-between gap-[15px]">
             <div className="flex items-center gap-1">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgSends.svg`}
                 alt="msgSends"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {item.send ? '1 Messages Sent' : '0 Messages Sent'}
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
+                {item.send
+                  ? item.to === 'Participants' || item.to === 'All' || item.to === 'List'
+                    ? `${item.receiversIds.length} Sent`
+                    : '1 Sent'
+                  : '0 Sent'}
               </p>
             </div>
-            {/* <div className="flex items-center gap-1">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgFails.svg`}
-                alt="msgFails"
-                className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
-              />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {item.fail ? '1 Fail' : '0 Fail'}
-              </p>
-            </div> */}
-            <div className="flex items-center gap-1">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgNotViewed.svg`}
-                alt="msgFails"
-                className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
-              />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {item?.deleteCount ? `${item?.deleteCount} Deleted` : '0 Deleted'}
-              </p>
-            </div>
-            {/* <div className="flex items-center gap-1">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgNotViewed.svg`}
-                alt="msgNotViewed"
-                className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
-              />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {`${item.unView} Not Viewed`}
-              </p>
-            </div> */}
             <div className="flex items-center gap-1">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgViewd.svg`}
                 alt="msgViewd"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] tablet:text-[14.2px] tablet:leading-[14.2px]">
-                {`${item.view} Viewed`}
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
+                {`${item.view} Read`}
+              </p>
+            </div>
+            <div className="flex items-center gap-1">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/msgNotViewed.svg`}
+                alt="msgFails"
+                className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
+              />
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
+                {item?.deleteCount ? `${item?.deleteCount} Deleted` : '0 Deleted'}
               </p>
             </div>
           </div>

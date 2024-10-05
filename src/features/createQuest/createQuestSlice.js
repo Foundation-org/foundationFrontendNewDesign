@@ -1,6 +1,7 @@
 import * as questServices from '../../services/api/questsApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkAnswerExistCreateQuest } from '../../services/api/questsApi';
+import { statusChecking, statusDuplicate, statusRejected, statusVerified } from '../../constants/tooltip';
 
 export const checkDescription = createAsyncThunk('createQuest/checkDescription', async (value) => {
   const result = await questServices.questionValidation({
@@ -340,6 +341,31 @@ export const createQuestSlice = createSlice({
       } else {
         console.error(`Option with the provided id ${id} not found.`);
       }
+    },
+    setOptionsByArray: (state, action) => {
+      const optionsArray = action.payload; // Expecting an array of options
+
+      optionsArray.forEach((option, index) => {
+        // Ensure index is valid
+        if (index >= 0 && index < state.optionsValue.length) {
+          if (option === '') {
+            state.optionsValue[index].question = option;
+            state.optionsValue[index].isTyping = true;
+            state.optionsValue[index].optionStatus = { ...defaultStatus };
+          } else {
+            state.optionsValue[index].question = option;
+            state.optionsValue[index].isTyping = true;
+            if (option === state.optionsValue[index].chatgptQuestion) {
+              state.optionsValue[index].optionStatus = state.optionsValue[index].chatgptOptionStatus;
+              state.optionsValue[index].isTyping = false;
+            } else {
+              state.optionsValue[index].optionStatus = { ...defaultStatus };
+            }
+          }
+        } else {
+          console.error(`Option at index ${index} not found.`);
+        }
+      });
     },
     addNewOption: (state, action) => {
       const newOption = {
@@ -1517,8 +1543,8 @@ export const createQuestSlice = createSlice({
               ...option,
               question: value,
               chatgptQuestion: value,
-              optionStatus: getCheckingStatus(),
-              chatgptOptionStatus: getCheckingStatus(),
+              optionStatus: statusChecking(),
+              chatgptOptionStatus: statusChecking(),
               isTyping: false,
             }
           : option,
@@ -1536,7 +1562,7 @@ export const createQuestSlice = createSlice({
           index,
         });
 
-        const optionStatus = duplicate ? getDuplicateStatus() : getVerifiedStatus();
+        const optionStatus = duplicate ? statusDuplicate() : statusVerified();
 
         const updatedOptions = state.optionsValue.map((option) =>
           option.id === id
@@ -1557,8 +1583,8 @@ export const createQuestSlice = createSlice({
           option.id === id
             ? {
                 ...option,
-                optionStatus: getRejectedStatus(),
-                chatgptOptionStatus: getRejectedStatus(),
+                optionStatus: statusRejected(),
+                chatgptOptionStatus: statusRejected(),
                 isTyping: false,
               }
             : option,
@@ -1567,37 +1593,6 @@ export const createQuestSlice = createSlice({
       }
     });
   },
-});
-
-const getCheckingStatus = () => ({
-  name: 'Checking',
-  color: 'text-[#0FB063]',
-  tooltipName: 'Verifying your answer. Please wait...',
-  tooltipStyle: 'tooltip-success',
-});
-
-const getVerifiedStatus = () => ({
-  name: 'Ok',
-  color: 'text-[#0FB063]',
-  tooltipName: 'Answer is Verified',
-  tooltipStyle: 'tooltip-success',
-});
-
-const getDuplicateStatus = () => ({
-  name: 'Duplicate',
-  color: 'text-[#EFD700]',
-  tooltipName: 'Found Duplication!',
-  tooltipStyle: 'tooltip-error',
-  duplication: true,
-  showToolTipMsg: true,
-});
-
-const getRejectedStatus = () => ({
-  name: 'Rejected',
-  color: 'text-[#b00f0f]',
-  tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-  tooltipStyle: 'tooltip-error',
-  showToolTipMsg: true,
 });
 
 export const {
@@ -1618,6 +1613,7 @@ export const {
   updateMultipleChoice,
   updateRankedChoice,
   addOptionById,
+  setOptionsByArray,
   resetCreateQuest,
   hideToolTipMessage,
   handleQuestionReset,

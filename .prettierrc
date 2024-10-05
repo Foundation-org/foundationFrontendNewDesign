@@ -2,5 +2,6 @@
   "singleQuote": true,
   "bracketSpacing": true,
   "printWidth": 120,
+  "proseWrap": "preserve",
   "plugins": ["prettier-plugin-tailwindcss"]
 }

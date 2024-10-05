@@ -19,6 +19,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import Spacing from '../../../../../components/question-card/Spacing';
 import showToast from '../../../../../components/ui/Toast';
+import { tooltipDefaultStatus } from '../../../../../utils/extras';
 
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
@@ -36,13 +37,7 @@ const QuestionCard = (props) => {
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const reset = {
-    name: 'Ok',
-    color: 'text-[#389CE3] dark:text-blue-700',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-  };
-  const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
+  const [checkOptionStatus, setCheckOptionStatus] = useState(tooltipDefaultStatus);
 
   const handleQuestSelection = (actionPayload) => {
     setQuestSelection((prevState) => {
@@ -89,49 +84,12 @@ const QuestionCard = (props) => {
     })),
   );
 
-  // useEffect(() => {
-  //   console.log('answersSelection', answersSelection);
-  // }, [answersSelection]);
-
-  // useEffect(() => {
-  //   setAnswerSelection(
-  //     questStartData.QuestAnswers?.map((answer) => ({
-  //       label: answer.question,
-  //       // check: false,
-  //       // contend: false,
-  //       uuid: answer.uuid,
-  //     })),
-  //   );
-  // }, [questStartData.QuestAnswers]);
-
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
       id: `unique-${index}`,
       ...item,
     })),
   );
-
-  // const cardSize = useMemo(() => {
-  //   const limit = windowWidth >= 744 ? true : false;
-  //   if (
-  //     questStartData.whichTypeQuestion === 'agree/disagree' ||
-  //     questStartData.whichTypeQuestion === 'like/dislike' ||
-  //     questStartData.whichTypeQuestion === 'yes/no'
-  //   ) {
-  //     return limit ? 108 : 49;
-  //   } else {
-  //     let tempSize = 0;
-  //     questStartData.QuestAnswers.forEach((item, index) => {
-  //       // tempSize += index === 0 ? (limit ? 45 : 24) : limit ? 55 : 29.7;
-  //       tempSize += index === 0 ? (limit ? 49 : 24) : limit ? 59 : 29.7;
-  //     });
-  //     if (limit) {
-  //       return tempSize > 336 ? 336 : tempSize;
-  //     } else {
-  //       return tempSize > 187 ? 187 : tempSize;
-  //     }
-  //   }
-  // }, [questStartData.QuestAnswers, windowWidth]);
 
   const cardSize = useMemo(() => {
     const limit = windowWidth >= 744 ? true : false;

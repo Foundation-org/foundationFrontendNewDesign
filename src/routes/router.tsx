@@ -2,9 +2,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import RequireAuth from './RequireAuth';
 
-// pages
-import Signin from '../pages/Signin';
-import Signup from '../pages/Signup';
 import Guests from '../pages/Guests';
 import SingleQuest from '../pages/SingleQuest';
 import Dashboard from '../pages/Dashboard';
@@ -31,9 +28,6 @@ import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
 import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
-import CredentialLogin from '../pages/Signin/components/CredentialLogin';
-import CredentialRegister from '../pages/Signup/components/CredentialRegister';
-import GuestCustomerSupport from '../pages/Dashboard/pages/CustomerSupport/GuestCustomerSupport';
 import Lists from '../pages/Dashboard/pages/Lists';
 import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
 import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
@@ -63,12 +57,21 @@ import EmbedPost from '../pages/Embed/EmbedPost';
 import Iframe from '../pages/Embed/Iframe';
 import VerifyPhone from '../pages/Signup/VerifyPhone';
 import DirectMessaging from '../pages/features/DirectMessaging';
+import DirectMessageLayout from '../pages/features/DirectMessaging/DirectMessageLayout';
+import NewMessageForm from '../pages/features/DirectMessaging/components/NewMessageForm';
+import SeldonAi from '../pages/features/seldon-ai';
+import SeldonAiLayout from '../pages/features/seldon-ai/SeldonAiLayout';
+import SeldonView from '../pages/features/seldon-ai/SeldonView';
+import NewsFeedLayout from '../pages/features/news-feed/NewsFeedLayout';
+import NewsFeed from '../pages/features/news-feed';
+import DMPreview from '../pages/features/DirectMessaging/DMPreview';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);
   const ROLES = {
     User: 'user',
     Guest: 'guest',
+    Visitor: 'visitor',
   };
 
   return (
@@ -78,23 +81,13 @@ export function Router() {
           <Route
             path="/"
             element={
-              localStorage.getItem('userExist') === 'true' ? (
-                <Navigate to="/signin" />
-              ) : (
-                <GuestRedirect redirectUrl="/help/about" />
-              )
+              localStorage.getItem('userExist') === 'true' ? <Navigate to="/" /> : <GuestRedirect redirectUrl="/" />
             }
           />
           <Route path="/iframe" element={<Iframe />} />
           <Route path="/embed/:link" element={<EmbedPost />} />
           <Route path="/term-of-service" element={<TermOfService />} />
           <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
-          <Route path="/signin/" element={<Signin />}>
-            <Route path="credentials" element={<CredentialLogin />} />
-          </Route>
-          <Route path="/signup" element={<Signup />}>
-            <Route path="credentials" element={<CredentialRegister />} />
-          </Route>
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/verify-phone" element={<VerifyPhone />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
@@ -102,12 +95,11 @@ export function Router() {
           <Route path="/l/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="/authenticating" element={<Authenticating />} />
-          <Route path="*" element={<Navigate to="/signin" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       ) : (
         <Routes>
-          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
-            <Route path="/direct-messaging" element={<DirectMessaging />} />
+          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest, ROLES.Visitor]} />}>
             <Route path="/iframe" element={<Iframe />} />
             <Route path="/embed/:link" element={<EmbedPost />} />
             <Route path="/authenticating" element={<Authenticating />} />
@@ -161,6 +153,18 @@ export function Router() {
                   <Route path="change-password" element={<ChangePassword />} />
                 </Route>
               </Route>
+              <Route path="/direct-messaging/" element={<DirectMessageLayout />}>
+                <Route path="" element={<DirectMessaging />} />
+                <Route path="new-message" element={<NewMessageForm />} />
+                <Route path="preview" element={<DMPreview />} />
+                <Route path="*" element={<DirectMessaging />} />
+              </Route>
+              <Route path="/seldon-ai/" element={<SeldonAiLayout />}>
+                <Route path="" element={<SeldonAi />} />
+              </Route>
+              <Route path="/news/" element={<NewsFeedLayout />}>
+                <Route path="" element={<NewsFeed />} />
+              </Route>
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
@@ -168,20 +172,12 @@ export function Router() {
             <Route path="/post/:isFullScreen" element={<Guests />} />
             <Route path="/p/:id" element={<SingleQuest />} />
             <Route path="/l/:id" element={<PostsByList />} />
+            <Route path="/r/:id" element={<SeldonView />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/guest-signup" element={<Signup />}>
-              <Route path="credentials" element={<CredentialRegister />} />
-            </Route>
-            <Route path="/signin/" element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Signin />}>
-              <Route path="credentials" element={<CredentialLogin />} />
-            </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route path="/verify-phone" element={<VerifyPhone />} />
-            <Route
-              path="*"
-              element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Navigate to={'/help/about'} />}
-            />
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
       )}

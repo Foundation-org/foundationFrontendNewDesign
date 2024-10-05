@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
-import { resetFilters } from '../features/sidebar/filtersSlice';
 import { addUser } from '../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetFilters } from '../features/sidebar/filtersSlice';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 
 const RequireAuth = ({ allowedRoles }: { allowedRoles: string[] }) => {
   const navigate = useNavigate();
@@ -19,11 +19,11 @@ const RequireAuth = ({ allowedRoles }: { allowedRoles: string[] }) => {
       localStorage.clear();
       dispatch(resetFilters());
       dispatch(addUser(null));
-      navigate('/signin');
+      navigate('/');
     }
   }, [persistedUser]);
 
-  return isRoleAllowed ? <Outlet /> : <Navigate to="/help/about" />;
+  return isRoleAllowed ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default RequireAuth;

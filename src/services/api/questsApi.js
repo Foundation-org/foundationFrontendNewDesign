@@ -34,7 +34,7 @@ export const createStartQuest = async (data) => {
 // creation of a quest of all types
 export const createInfoQuest = async (data) => {
   try {
-    return await api.post('/infoquestions/createInfoQuestQuest', {
+    const params = {
       Question: data.Question,
       whichTypeQuestion: data.whichTypeQuestion,
       QuestionCorrect: data.QuestionCorrect,
@@ -49,7 +49,12 @@ export const createInfoQuest = async (data) => {
       url: data.url,
       description: data.description,
       type: data.type,
-    });
+    };
+    if (data.articleId && data.suggestionTitle) {
+      params.articleId = data.articleId;
+      params.suggestionTitle = data.suggestionTitle;
+    }
+    return await api.post('/infoquestions/createInfoQuestQuest', params);
   } catch (error) {
     showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
   }
@@ -458,4 +463,20 @@ export const createCustomLink = async ({ questStartData, uuid, link }) => {
     questForeignKey: questStartData._id,
     link,
   });
+};
+
+export const undoFeedback = async ({ questForeignKey, uuid }) => {
+  return await api.post(`/userQuestSetting/undoFeedback`, {
+    questForeignKey,
+    uuid,
+  });
+};
+
+export const getQuestsCustom = async ({ ids, uuid }) => {
+  const queryParams = new URLSearchParams({
+    ids,
+    uuid,
+  }).toString();
+
+  return (await api.get(`/infoquestions/getQuestsCustom?${queryParams}`)).data.data;
 };

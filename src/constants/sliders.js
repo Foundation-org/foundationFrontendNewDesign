@@ -34,3 +34,10 @@ export const helpItems = [
   { id: 4, title: 'Privacy Policy', path: '/help/privacy-policy' },
   { id: 5, title: 'Contact Us', path: '/help/contact-us' },
 ];
+
+export const DMItems = [
+  { id: 1, title: 'Received', path: '/direct-messaging' },
+  { id: 2, title: 'Sent', path: '/direct-messaging/sent' },
+  { id: 3, title: 'Deleted', path: '/direct-messaging/deleted' },
+  { id: 4, title: 'Draft', path: '/direct-messaging/draft' },
+];

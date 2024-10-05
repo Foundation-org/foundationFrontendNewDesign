@@ -164,7 +164,7 @@ const Contributions = () => {
         badgeVal={persistedUserInfo?.badges?.length}
         from={persistedUserInfo?.badges.length}
       >
-        <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]  ">
+        <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
           {yourPosts.map((item) => (
             <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
               <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>

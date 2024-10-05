@@ -12,6 +12,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
+import { setGuestSignInDialogue } from '../features/extras/extrasSlice';
 
 const Authenticating = () => {
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ const Authenticating = () => {
         dispatch(setAskPassword(false));
         if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
           navigate(localStorage.getItem('shared-post'));
-          localStorage.clearItem('shared-post');
+          localStorage.removeItem('shared-post');
         } else {
           navigate('/');
         }
@@ -94,12 +95,17 @@ const Authenticating = () => {
     } catch (error) {
       if (error.response.data.message.split(':')[1].trim() === 'Email Already Exist') {
         toast.error(
-          <p>
+          <div>
             Email Already Exist{' '}
-            <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/signin')}>
+            <button
+              className="text-[#389CE3] underline"
+              onClick={() => {
+                dispatch(setGuestSignInDialogue(true));
+              }}
+            >
               Sign in
-            </span>{' '}
-          </p>,
+            </button>{' '}
+          </div>,
         );
       } else {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -125,7 +131,7 @@ const Authenticating = () => {
         dispatch(setAskPassword(false));
         if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
           navigate(localStorage.getItem('shared-post'));
-          localStorage.clearItem('shared-post');
+          localStorage.removeItem('shared-post');
         } else {
           navigate('/');
         }
@@ -159,7 +165,7 @@ const Authenticating = () => {
           dispatch(addUser(res.data));
           if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
             navigate(localStorage.getItem('shared-post'));
-            localStorage.clearItem('shared-post');
+            localStorage.removeItem('shared-post');
           } else {
             navigate('/');
           }
@@ -179,6 +185,8 @@ const Authenticating = () => {
       } else {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       }
+    } finally {
+      localStorage.removeItem('authMode');
       navigate(pathname);
     }
   };
@@ -255,7 +263,7 @@ const Authenticating = () => {
 
   useEffect(() => {
     if (!isLoading && !isError && isSuccess) {
-      if (pathname === '/signin') {
+      if (localStorage.getItem('authMode') === 'Login') {
         handleSignInSocial(authSuccessResp.data.user, authSuccessResp.data.user.provider);
       } else if (pathname === '/profile/verification-badges') {
         if (authSuccessResp.data.user.provider === 'google') {
@@ -273,7 +281,7 @@ const Authenticating = () => {
     } else if (isError) {
       navigate(pathname);
     }
-  }, [isLoading, isError, isSuccess]);
+  }, [isLoading, isError, isSuccess, authSuccessResp]);
 
   const handleOpenPasswordConfirmation = () => {
     setIsPasswordConfirmation(true);
@@ -294,10 +302,8 @@ const Authenticating = () => {
         login={true}
         uuid={uuid}
       />
-      <div className="flex h-full min-h-screen justify-center bg-[#F5F5F5] text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[4vw]" /> Authenticating User...
-        </div>
+      <div className="flex h-full min-h-screen flex-col items-center justify-center gap-4 bg-[#F5F5F5] text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
+        <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[4vw]" /> Authenticating User...
       </div>
     </>
   );

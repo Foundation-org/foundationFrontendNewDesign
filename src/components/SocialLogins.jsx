@@ -1,25 +1,15 @@
 import { Button } from './ui/Button';
 import { authMethods } from '../constants/authentication';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { isWebview } from '../utils/helper';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentialLogin, setCredentialRegister } from '../features/extras/extrasSlice';
 
-const isWebview = () => {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-
-  // Common webview identifiers or patterns
-  const webviewIdentifiers = [
-    'wv', // Common abbreviation for webview
-    'webview', // Webview identifier
-    'fbav', // Facebook App WebView
-    'instagram', // Instagram WebView
-    'twitter', // Twitter WebView
-  ];
-
-  // Check if any of the webview identifiers exist in the userAgent string
-  return webviewIdentifiers.some((identifier) => userAgent.includes(identifier));
-};
 const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, triggerLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const guestSignUpDialogue = useSelector((state) => state.extras.guestSignUpDialogue);
 
   const filteredAuthMethods = authMethods.filter((item) => {
     if (isWebview()) {
@@ -59,13 +49,14 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
           variant="auth"
           key={item.id}
           onClick={() => {
+            localStorage.setItem('target-url', `${window.location.href}`);
             if (isLogin) {
-              localStorage.setItem('target-url', `${window.location.href}`);
               triggerLogin(item.provider);
+              localStorage.setItem('authMode', 'Login');
             } else {
-              localStorage.setItem('target-url', `${window.location.href}`);
               setClickedButtonName(item.provider);
               handleReferralOpen(item.provider);
+              localStorage.setItem('authMode', 'Register');
             }
           }}
         >
@@ -79,12 +70,10 @@ const SocialLogins = ({ handleReferralOpen, setClickedButtonName, isLogin, trigg
         <Button
           variant="auth"
           onClick={() => {
-            if (location.pathname === '/signin') {
-              navigate('/signin/credentials');
-            } else if (location.pathname === '/signup') {
-              navigate('/signup/credentials');
+            if (guestSignUpDialogue) {
+              dispatch(setCredentialRegister(true));
             } else {
-              navigate('/guest-signup/credentials');
+              dispatch(setCredentialLogin(true));
             }
           }}
         >

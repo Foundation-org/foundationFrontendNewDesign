@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
+import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SummarySidebar = ({ userData }) => {
+  const dispatch = useDispatch();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
   const yourPosts = [
     { id: 1, title: 'Posts you’ve created', val: (userData && userData?.questsCreated) || 0 },
     { id: 2, title: 'Engagements with your posts', val: (userData && userData?.yourPostEngaged) || 0 },
@@ -36,8 +41,16 @@ const SummarySidebar = ({ userData }) => {
               <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
             </div>
           ))}
+
           <Link
             to={'/profile/feedback'}
+            onClick={(e) => {
+              if (persistedUserInfo?.role !== 'user') {
+                e.preventDefault();
+                dispatch(setGuestSignUpDialogue(true));
+                console.log('Guest dialogue triggered');
+              }
+            }}
             className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3"
           >
             See why your posts were
@@ -57,6 +70,13 @@ const SummarySidebar = ({ userData }) => {
           ))}
           <Link
             to={'/profile/feedback-given'}
+            onClick={(e) => {
+              if (persistedUserInfo?.role !== 'user') {
+                e.preventDefault();
+                dispatch(setGuestSignUpDialogue(true));
+                console.log('Guest dialogue triggered');
+              }
+            }}
             className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3"
           >
             View posts you’ve hidden

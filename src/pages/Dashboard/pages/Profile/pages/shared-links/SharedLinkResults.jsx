@@ -12,7 +12,9 @@ import { Button } from '../../../../../../components/ui/Button';
 export default function SharedLinkResults() {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [tab, setTab] = useState(persistedUserInfo.role === 'guest' ? 'All of Foundation' : 'My Group Only');
+  const [tab, setTab] = useState(
+    persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor' ? 'All of Foundation' : 'My Group Only',
+  );
   const [questData, setQuestData] = useState();
   const [allQuestData, setAllQuestData] = useState();
   const [loading, setLoading] = useState(false);
@@ -99,7 +101,7 @@ export default function SharedLinkResults() {
             ) : (
               allQuestData && (
                 <div
-                  className={`${persistedUserInfo?.role === 'guest' ? 'pt-5' : ''} mx-auto px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-0`}
+                  className={`${persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor' ? 'pt-5' : ''} mx-auto px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-0`}
                 >
                   <QuestionCardWithToggle
                     questStartData={allQuestData}

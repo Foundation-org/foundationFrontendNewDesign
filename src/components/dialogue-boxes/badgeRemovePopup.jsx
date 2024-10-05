@@ -48,6 +48,11 @@ export default function BadgeRemovePopup({
           eyk: localStorage.getItem('legacyHash'),
           badgeName: type,
         });
+      } else if (type === 'pseudo') {
+        removeBadge = await api.post('/removePseudoBadge', {
+          uuid: fetchUser.uuid,
+          badgeName: type,
+        });
       } else if (badgeType === 'passkey') {
         removeBadge = await api.post(`/removePasskey`, {
           type: type,

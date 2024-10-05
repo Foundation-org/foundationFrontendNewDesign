@@ -22,12 +22,26 @@ import systemConstantsReducer from '../features/constants/constantsSlice';
 import userSettingsReducer from '../features/profile/userSettingSlice';
 import seeMoreOptionsReducer from '../features/quest/seeMoreOptionsSlice';
 import extrasReducer from '../features/extras/extrasSlice';
+import seldonReducer from '../features/seldon-ai/seldonSlice';
+import newsFeedReducer from '../features/news-feed/newsFeedSlice';
+import seldonDataReducer from '../features/seldon-ai/seldonDataSlice';
+import directMessageReducer from '../features/direct-message/directMessageSlice';
 
 const persistConfig = {
   key: 'persist-store',
   version: 1,
   storage,
-  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters', 'systemConstants', 'userSettings', 'ledger'],
+  whitelist: [
+    'utils',
+    'auth',
+    'filters',
+    'bookmarkFilters',
+    'systemConstants',
+    'userSettings',
+    'ledger',
+    'seldon',
+    'seldonData',
+  ],
 };
 
 const reducer = combineReducers({
@@ -49,6 +63,10 @@ const reducer = combineReducers({
   userSettings: userSettingsReducer,
   seeMoreOptionsUtils: seeMoreOptionsReducer,
   extras: extrasReducer,
+  seldon: seldonReducer,
+  newsFeed: newsFeedReducer,
+  seldonData: seldonDataReducer,
+  directMessage: directMessageReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

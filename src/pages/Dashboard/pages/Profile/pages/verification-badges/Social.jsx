@@ -110,16 +110,9 @@ const Social = ({
         <div className="hidden">
           <SignInButton
             onClick={() => console.log('testing clicking....')}
-            // onStatusResponse={(res) => console.log("status callback:", res)}
-            onSuccess={
-              (data) => {
-                // alert("testing...")
-                // console.log("testing...");
-                isButtonClicked && handleFarcaster('Farcaster', 'farcaster', data);
-              }
-              // console.log(`Hello, ${username}! Your fid is ${fid} ${data}.`)
-              // console.log(data)
-            }
+            onSuccess={(data) => {
+              isButtonClicked && handleFarcaster('Farcaster', 'farcaster', data);
+            }}
           />
         </div>
         <div className="hidden"></div>
@@ -156,7 +149,7 @@ const Social = ({
                     : 'submit'
                 }
                 onClick={async () => {
-                  if (persistedUserInfo?.role === 'guest') {
+                  if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
                     handleGuestBadgeAdd();
                     return;
                   }

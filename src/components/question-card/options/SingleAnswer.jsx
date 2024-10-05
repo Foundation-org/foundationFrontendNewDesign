@@ -4,7 +4,7 @@ const SingleAnswer = (props) => {
       className={`flex items-center ${props.questStartData.type === 'embed' ? 'px-7 tablet:px-[3.94rem]' : 'pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]'}`}
     >
       <div
-        className={`flex w-full justify-between rounded-[5.387px] border border-white-500 bg-white tablet:rounded-[10px] tablet:border-[3px] dark:border-gray-100 dark:bg-accent-100 ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
+        className={`flex w-full justify-between rounded-[5.387px] border border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
         onClick={() =>
           props.btnText === 'Results'
             ? null
@@ -16,7 +16,7 @@ const SingleAnswer = (props) => {
               )
         }
       >
-        <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[4px] bg-white-500 tablet:h-[43px] tablet:w-5 tablet:min-w-5 dark:bg-gray-100">
+        <div className="flex h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[4px] bg-white-500 dark:bg-gray-100 tablet:h-[43px] tablet:w-5 tablet:min-w-5">
           &#x200B;
         </div>
         <div className="relative flex w-full items-center">
@@ -26,7 +26,7 @@ const SingleAnswer = (props) => {
               width: props.percentage,
             }}
           />
-          <h1 className="pb-[5.7px] pl-2 pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] dark:text-[#D3D3D3]">
+          <h1 className="pb-[5.7px] pl-2 pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px]">
             {props.answer}
           </h1>
         </div>
@@ -51,7 +51,7 @@ const SingleAnswer = (props) => {
                   </div>
                 )}
               {props.btnText === 'Results' ? (
-                props.percentage === undefined ? (
+                props.percentage === undefined || props.percentage === null ? (
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
                 ) : (
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">{props.percentage}</span>

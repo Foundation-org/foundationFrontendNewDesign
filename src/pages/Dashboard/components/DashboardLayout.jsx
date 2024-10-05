@@ -6,7 +6,7 @@ import * as questUtilsActions from '../../../features/quest/utilsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getConstants, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
@@ -15,17 +15,15 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
-import {
-  getQuestUtils,
-  setIsShowPlayer,
-  setPlayingPlayerId,
-  setAreHiddenPosts,
-} from '../../../features/quest/utilsSlice';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 import { getConstantsValues, saveConstants } from '../../../features/constants/constantsSlice';
 import showToast from '../../../components/ui/Toast';
 import { changeThemeTo } from '../../../features/utils/utilsSlice';
+import SeldonInputs from '../../features/seldon-ai/components/SeldonInputs';
+import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
+import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -44,6 +42,7 @@ export default function DashboardLayout({ children }) {
   const questUtilsState = useSelector(getQuestUtils);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const persistedConstants = useSelector(getConstantsValues);
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
@@ -92,7 +91,7 @@ export default function DashboardLayout({ children }) {
     // Handle userInfoData when successfully fetched
     if (userInfoSuccess && userInfoData?.status === 200) {
       if (userInfoData.data) {
-        localStorage.removeItem('userExist');
+        // localStorage.removeItem('userExist');
         dispatch(addUser(userInfoData.data));
         if (userInfoData.data?.userSettings.darkMode) {
           dispatch(changeThemeTo('dark'));
@@ -159,7 +158,7 @@ export default function DashboardLayout({ children }) {
         queryClient.invalidateQueries(['userInfo']);
         if (localStorage.getItem('shared-post') !== '' && localStorage.getItem('shared-post') !== null) {
           navigate(localStorage.getItem('shared-post'));
-          localStorage.clearItem('shared-post');
+          localStorage.removeItem('shared-post');
         } else {
           navigate('/');
         }
@@ -169,10 +168,6 @@ export default function DashboardLayout({ children }) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
-
-  // const handleGuestLogout = async () => {
-  //   navigate('/guest-signup');
-  // };
 
   // Hidden post Search
   const handleHiddenPostSearch = (e) => {
@@ -268,9 +263,9 @@ export default function DashboardLayout({ children }) {
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
         <div>
-          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 tablet:h-[80px] tablet:px-5 laptop:hidden dark:bg-silver-500">
+          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white-500 px-4 dark:bg-silver-500 tablet:h-[80px] tablet:px-5 laptop:hidden">
             <div className="h-fit rounded-[15px]" onClick={() => navigate('/treasury')}>
-              {persistedUserInfo?.role !== 'user' ? (
+              {persistedUserInfo?.role === 'guest' ? (
                 <div className="flex cursor-pointer items-center gap-2">
                   <div className="relative h-fit w-fit">
                     <img
@@ -285,9 +280,26 @@ export default function DashboardLayout({ children }) {
                   <div className="flex flex-col gap-1">
                     <h4 className="heading w-fit border-b">My Balance (Guest)</h4>
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      <p>
+                      <span>
                         {userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX
-                      </p>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              ) : persistedUserInfo?.role === 'visitor' ? (
+                <div className="flex cursor-pointer items-center gap-2">
+                  {/* <div className="relative h-fit w-fit"> */}
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
+                    alt="badge"
+                    className="h-[25px] w-5 tablet:size-[36px]"
+                  />
+                  <div className="flex flex-col gap-1">
+                    <h4 className="heading w-fit border-b">My Balance (Visitor)</h4>
+                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                      <span>
+                        {userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -311,8 +323,8 @@ export default function DashboardLayout({ children }) {
                         </p>
                       </div>
                       <div className="flex h-7 flex-col justify-between tablet:h-9 laptop:h-7">
-                        <h4 className="heading w-fit border-b">My Balance</h4>
-                        <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                        <h4 className="heading w-fit whitespace-nowrap border-b">My Balance</h4>
+                        <p className="font-inter whitespace-nowrap text-[11px] font-medium leading-[11px] text-[#616161] dark:text-[#D2D2D2] tablet:text-[16px]">
                           {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
                         </p>
                       </div>
@@ -331,7 +343,7 @@ export default function DashboardLayout({ children }) {
                       />
                       <div className="flex h-7 flex-col justify-between tablet:h-9 laptop:h-7">
                         <h4 className="heading w-fit border-b">Treasury</h4>
-                        <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                        <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] dark:text-[#D2D2D2] tablet:text-[16px]">
                           {constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX
                         </p>
                       </div>
@@ -341,6 +353,7 @@ export default function DashboardLayout({ children }) {
               )}
             </div>
             {location.pathname !== '/profile' &&
+              !location.pathname.startsWith('/seldon-ai') &&
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
               location.pathname !== '/profile/shared-links' &&
@@ -357,67 +370,65 @@ export default function DashboardLayout({ children }) {
               location.pathname !== '/treasury/ledger' && (
                 <>
                   {persistedUserInfo?.role === 'user' ? (
-                    <div className="flex w-fit items-center gap-1 tablet:ml-[31px] tablet:w-full tablet:justify-end tablet:gap-[15px] laptop:flex-col">
-                      <Button
-                        variant="hollow-submit2"
-                        className="bg-white tablet:w-fit"
-                        onClick={() => navigate('/post')}
-                      >
-                        Create Post
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                          (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
-                        </span>
-                      </Button>
-                      <Button
-                        variant="hollow-submit2"
-                        className="bg-white tablet:w-fit"
-                        onClick={() => navigate('/profile/verification-badges')}
-                      >
-                        Add Badge
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                          (+{persistedConstants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
-                        </span>
-                      </Button>
-                    </div>
+                    <>
+                      {location.pathname === '/direct-messaging/new-message' ? null : location.pathname.startsWith(
+                          '/direct-messaging',
+                        ) && isPseudoBadge ? (
+                        <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
+                          <Button
+                            variant="hollow-submit2"
+                            className="bg-white tablet:w-fit"
+                            onClick={() => navigate('/direct-messaging/new-message')}
+                          >
+                            + New Message
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
+                          <Button
+                            variant="hollow-submit2"
+                            className="bg-white tablet:w-fit"
+                            onClick={() => navigate('/post')}
+                          >
+                            Create Post
+                            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                              (+{persistedConstants?.QUEST_CREATED_AMOUNT} FDX)
+                            </span>
+                          </Button>
+                          <Button
+                            variant="hollow-submit2"
+                            className="bg-white tablet:w-fit"
+                            onClick={() => navigate('/profile/verification-badges')}
+                          >
+                            Add Badge
+                            <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                              (+{persistedConstants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
+                            </span>
+                          </Button>
+                        </div>
+                      )}
+                    </>
                   ) : (
-                    <Button variant="hollow-submit2" className="bg-white" onClick={() => navigate('/guest-signup')}>
+                    <Button
+                      variant="hollow-submit2"
+                      className="bg-white"
+                      onClick={() => {
+                        dispatch(setGuestSignUpDialogue(true));
+                      }}
+                    >
                       Sign up
                     </Button>
                   )}
                 </>
               )}
-
-            {/* {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/profile') && (
-            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
-              <Button
-                variant="hollow-submit2"
-                className="bg-white tablet:w-full"
-                onClick={() => navigate('/treasury')}
-              >
-                Treasury
-              </Button>
-            </div>
-          )} */}
-
-            {/*
-          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/treasury') && (
-            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
-              <Button
-                variant="hollow-submit2"
-                className="bg-white tablet:w-full"
-                onClick={() => navigate('/profile')}
-              >
-                My Profile
-              </Button>
-            </div>
-          )} */}
           </div>
         </div>
 
         {/* Desktop Left Side */}
         <div className="left-0 top-0 hidden tablet:block laptop:absolute">
+          {/* Treasury Icon and Treasury Balance */}
           <div
-            className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:bg-gray-200"
+            className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] border-gray-100 bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:bg-gray-200 laptop:block"
             onClick={() => navigate('/treasury')}
           >
             <div className="flex items-center gap-[15px]">
@@ -428,14 +439,15 @@ export default function DashboardLayout({ children }) {
               />
               <div className="flex h-[47px] flex-col justify-between">
                 <h4 className="heading w-fit border-b-2">Treasury</h4>
-                <p className="font-inter text-[10.79px] text-base font-medium text-gray-650 tablet:text-[18px] tablet:leading-[18px] dark:text-white-100">
+                <p className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
                   <span>{constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
               </div>
             </div>
           </div>
-
+          {/* Sidebar Left */}
           {!location.pathname.startsWith('/post') &&
+            !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/feedback-given' &&
@@ -456,12 +468,18 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/help/contact-us' &&
             !location.pathname.startsWith('/p/') &&
             !location.pathname.startsWith('/l/') &&
+            !location.pathname.startsWith('/r/') &&
             !location.pathname.startsWith('/profile/postsbylist/') &&
             location.pathname !== '/shared-list-link/result' &&
             location.pathname !== '/profile/verification-badges' &&
-            location.pathname !== '/profile/lists' && <SidebarLeft />}
+            location.pathname !== '/profile/lists' &&
+            !location.pathname.startsWith('/direct-messaging') &&
+            !location.pathname.startsWith('/news') && <SidebarLeft />}
+
+          <NewsFeedSearch />
 
           {location.pathname !== '/treasury' &&
+            !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/treasury/reward-schedule' &&
             location.pathname !== '/treasury/buy-fdx' &&
             location.pathname !== '/treasury/redemption-center' &&
@@ -478,15 +496,24 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/shared-list-link/result' &&
             !location.pathname.startsWith('/profile/postsbylist/') &&
             location.pathname !== '/profile/verification-badges' &&
+            !location.pathname.startsWith('/direct-messaging') &&
             location.pathname !== '/profile/lists' && <SideNavbar />}
 
+          {/* Seldon Inputs */}
+          {location.pathname.startsWith('/seldon-ai') && (
+            <div className="hidden h-[calc(100dvh-162px)] overflow-y-scroll no-scrollbar laptop:block">
+              {location.pathname.startsWith('/seldon-ai') && <SeldonInputs />}
+            </div>
+          )}
+
+          {/* Media Controls */}
           {questUtilsState.isShowPlayer && location.pathname === '/' && (
             <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
               <div className="relative">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                   alt="mediaCloseIcon"
-                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
+                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black dark:text-white tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px]"
                   onClick={() => {
                     dispatch(setIsShowPlayer(false));
                     dispatch(setPlayingPlayerId(''));
@@ -497,24 +524,22 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
 
-          {/* {canAddPost !== 'true' && location.pathname.startsWith('/profile/postsbylist/') && <ManageList />} */}
-
           {/* HiddenPost Search */}
           {location.pathname === '/profile/feedback-given' && questUtils.areHiddenPosts && (
-            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:border-gray-100 dark:bg-gray-200">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500"
+                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
                     value={hiddenSearch}
                     placeholder=""
                     onChange={handleHiddenPostSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
-                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500"
+                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
                   >
                     Search
                   </label>
@@ -542,20 +567,20 @@ export default function DashboardLayout({ children }) {
 
           {/* SharedLinks Search */}
           {location.pathname === '/profile/shared-links' && questUtils.areShareLinks && (
-            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:border-gray-100 dark:bg-gray-200">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500"
+                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
                     value={sharedlinkSearch}
                     placeholder=""
                     onChange={handleSharedLinkSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
-                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500"
+                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
                   >
                     Search
                   </label>
@@ -583,20 +608,20 @@ export default function DashboardLayout({ children }) {
 
           {/* Feedback Search */}
           {location.pathname === '/profile/feedback' && questUtils.areFeedBackPosts && (
-            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border dark:border-gray-100 dark:bg-gray-200">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border dark:border-gray-100 dark:bg-gray-200 laptop:block">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
                     type="text"
                     id="floating_outlined"
-                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500"
+                    className="peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-500 tablet:text-[18.23px]"
                     value={feedbackSearch}
                     placeholder=""
                     onChange={handleFeedbackSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
-                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500"
+                    className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-gray-200 dark:text-white-100 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
                   >
                     Search
                   </label>
@@ -625,8 +650,8 @@ export default function DashboardLayout({ children }) {
         {children}
         {/* Desktop Right Side */}
         <div className="right-0 top-0 hidden h-[calc(100dvh-70px)] overflow-y-scroll no-scrollbar tablet:block tablet:pb-[15px] laptop:absolute">
-          <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:border-gray-100 dark:bg-gray-200 tablet:dark:border">
-            {persistedUserInfo?.role !== 'user' ? (
+          <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border laptop:block">
+            {persistedUserInfo?.role === 'guest' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
                 <div className="relative h-fit w-fit">
                   <img
@@ -640,7 +665,21 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance (Guest)</h4>
-                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 tablet:text-[18px] tablet:leading-[18px] dark:text-white-100">
+                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
+                    <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
+                  </div>
+                </div>
+              </div>
+            ) : persistedUserInfo?.role === 'visitor' ? (
+              <div className="flex cursor-pointer items-center gap-[15px]">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
+                  alt="badge"
+                  className="tablet:h-[47px] tablet:w-[38px]"
+                />
+                <div className="flex h-[47px] flex-col justify-between">
+                  <h4 className="heading w-fit border-b-2">My Balance (Visitor)</h4>
+                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
                     <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>
                 </div>
@@ -664,7 +703,7 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance</h4>
-                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 tablet:text-[18px] tablet:leading-[18px] dark:text-white-100">
+                  <div className="font-inter text-[10.79px] text-base font-medium text-gray-650 dark:text-white-100 tablet:text-[18px] tablet:leading-[18px]">
                     <p>
                       {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
                     </p>
@@ -675,6 +714,7 @@ export default function DashboardLayout({ children }) {
           </div>
 
           {!location.pathname.startsWith('/post') &&
+            !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/post-activity' &&
             location.pathname !== '/treasury' &&
@@ -685,11 +725,10 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/help/') &&
             location.pathname !== '/help/about' &&
             location.pathname !== '/help/faq' &&
-            location.pathname !== '/help/contact-us' && <SummarySidebar userData={userInfoData?.data} />}
+            location.pathname !== '/help/contact-us' &&
+            !location.pathname.startsWith('/direct-messaging') && <SummarySidebar userData={userInfoData?.data} />}
         </div>
       </div>
-      {/* Mobile Children */}
-      {/* {(location.pathname === '/treasury' || location.pathname === '/treasury/ledger') && children} */}
     </div>
   );
 }

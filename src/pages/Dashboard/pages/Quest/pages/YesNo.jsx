@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -43,6 +43,7 @@ const YesNo = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
   const persistedContants = useSelector(getConstantsValues);
+  const location = useLocation();
 
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: questServices.createInfoQuest,
@@ -92,7 +93,7 @@ const YesNo = () => {
     dispatch(setIsShowPlayer(false));
     dispatch(setPlayingPlayerId(''));
     dispatch(resetPlayingIds());
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     }
@@ -145,6 +146,10 @@ const YesNo = () => {
       type: 'binary',
       // description: getMediaStates?.isMedia.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
+    if (location?.state?.articleId && location?.state?.postData?.id) {
+      params.articleId = location.state.articleId;
+      params.suggestionTitle = location?.state?.postData?.question;
+    }
 
     if (!checkHollow()) {
       // createQuest(params);

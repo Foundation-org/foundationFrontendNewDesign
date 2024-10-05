@@ -1,40 +1,78 @@
 import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
-import { FaSpinner } from 'react-icons/fa';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { Button } from '../../../../components/ui/Button';
-import { createMessage } from '../../../../services/api/directMessagingApi';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getConstantsValues } from '../../../../features/constants/constantsSlice';
+import { createDraftMessage, fetchOptionParticipants } from '../../../../services/api/directMessagingApi';
+import SelectionOption from '../../../../components/SelectionOption';
+import FilterAnalyzedOptions from '../../advance-analytics/components/FilterAnalyzedOptions';
+import { resetDirectMessageForm, setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
+import { getQuestById } from '../../../../services/api/homepageApis';
 
-export default function NewMessageForm({
-  draftId,
-  to,
-  sub,
-  msg,
-  setTo,
-  setMsg,
-  setSub,
-  setAddNewMsg,
-  isDraft,
-  setIsDraft,
-  readReward,
-  setReadReward,
-  questStartData,
-}) {
+export default function NewMessageForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const directMessageState = useSelector((state) => state.directMessage);
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
-  const { mutateAsync: createNewMessage, isPending } = useMutation({
-    mutationFn: createMessage,
+  const defaultReadReward = persistedConstants?.MINIMUM_READ_REWARD;
+
+  const [participants, setParticipants] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [searchParams] = useSearchParams();
+  const advanceAnalytics = searchParams.get('advance-analytics');
+  const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+
+  const handleHideModal = () => setShowModal(false);
+
+  // =========== FETCH POST
+  const { data: singlePost, isPending } = useQuery({
+    queryFn: () => getQuestById(persistedUserInfo?.uuid, directMessageState.questForeignKey),
+    queryKey: ['dmSinglePost', directMessageState.questForeignKey],
+    enabled: !!directMessageState.questForeignKey,
+  });
+
+  const updatedQuestAnswers =
+    !isPending &&
+    singlePost?.data?.data[0]?.QuestAnswers.map((answer) => ({
+      ...answer,
+      selected: directMessageState.options.includes(answer.question),
+    }));
+
+  // =========== HANDLE PARTICIPANTS COUNT
+  const { mutateAsync: fetchParticipants } = useMutation({
+    mutationFn: fetchOptionParticipants,
+    onSuccess: (resp) => {
+      setParticipants(resp?.data.dynamicParticipantsCount);
+    },
+    onError: (err) => {
+      console.log(err);
+      toast.error(err.response.data.message);
+    },
+  });
+
+  useEffect(() => {
+    if (directMessageState.to === 'Participants') {
+      const params = {
+        questForeignKey: directMessageState.questForeignKey,
+        uuid: persistedUserInfo.uuid,
+        options: directMessageState.options?.filter((option) => option.selected).map((option) => option.question),
+      };
+
+      fetchParticipants(params);
+    }
+  }, [directMessageState.options]);
+
+  // =========== HANDLE DRAFTS
+  const { mutateAsync: createDraft } = useMutation({
+    mutationFn: createDraftMessage,
     onSuccess: () => {
       queryClient.invalidateQueries('messages');
-      toast.success('Message sent');
-      setMsg();
-      setTo();
-      setSub();
-      setAddNewMsg(false);
-      setIsDraft(false);
+      toast.success('Message saved to Draft');
     },
     onError: (err) => {
       console.log(err);
@@ -42,130 +80,268 @@ export default function NewMessageForm({
     },
   });
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const handleDraft = () => {
+    if (directMessageState.subject || directMessageState.message) {
+      const params = {
+        from: persistedUserInfo.email,
+        uuid: persistedUserInfo.uuid,
+        platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+        to: directMessageState.to,
+        subject: directMessageState.subject,
+        message: directMessageState.message,
+        id: directMessageState.draftId,
+      };
 
-    const formattedTo =
-      to?.trim().toLowerCase() === 'all'
-        ? 'All'
-        : to?.trim().toLowerCase() === 'list'
-          ? 'List'
-          : to?.trim()
-            ? to
-            : undefined;
+      if (directMessageState.to === 'Participants' || directMessageState.to === 'All') {
+        params.readReward = directMessageState.readReward;
+      }
 
-    const params = {
-      from: persistedUserInfo.email,
-      subject: sub,
-      message: msg,
-      type: isDraft ? 'draft' : 'new',
-      draftId: draftId,
-      readReward,
-      uuid: persistedUserInfo.uuid,
-    };
+      if (directMessageState.to === 'Participants') {
+        params.questForeignKey = directMessageState.questForeignKey;
+        params.options = directMessageState.options;
+      }
 
-    // Only include 'to' if it's not empty or undefined
-    if (formattedTo) {
-      params.to = formattedTo;
+      createDraft(params);
+      dispatch(resetDirectMessageForm());
+      navigate('/direct-messaging/draft');
+    } else {
+      toast.warning('Subject and message cannot be empty');
+    }
+  };
+
+  // =========== HANDLE PREVIEW
+  const handlePreview = () => {
+    if (directMessageState.readReward < defaultReadReward) {
+      toast.error(`Read Reward must be at least ${defaultReadReward}`);
+      return;
     }
 
-    // Add additional fields for 'advance-analytics' page
-    if (questStartData?.page === 'advance-analytics') {
-      params.questForeignKey = questStartData._id;
-      params.to = 'Participants'; // Override 'to' if on 'advance-analytics' page
+    if (directMessageState.subject === '' || directMessageState.message === '' || directMessageState.to === '') {
+      toast.error(`Subject, message and to cannot be empty`);
+      return;
     }
 
-    createNewMessage(params);
+    navigate('/direct-messaging/preview');
+  };
+
+  function formatRecipient(to) {
+    const trimmedTo = to?.trim().toLowerCase();
+
+    if (trimmedTo === 'all') {
+      return 'All';
+    } else if (trimmedTo === 'list') {
+      return 'List';
+    } else if (trimmedTo) {
+      return to;
+    } else {
+      return undefined;
+    }
+  }
+
+  const handleNoOfUsers = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (directMessageState.to === 'Participants') {
+      return participants;
+    } else if (formatRecipient(directMessageState.to) === 'All') {
+      return persistedUserInfo?.allCount;
+    } else if (formatRecipient(directMessageState.to) === 'List') {
+      return persistedUserInfo?.mailCount;
+    } else if (emailRegex.test(directMessageState.to)) {
+      return 1;
+    } else {
+      return 0;
+    }
   };
 
   return (
-    <div className="relative mx-[13px] mt-5 h-fit max-h-[calc(100vh-140px)] w-full rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] pb-[15px] pt-[37px] tablet:mx-0 tablet:px-5 tablet:pb-6 tablet:pt-[50px]">
-      <img
-        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/directMessaging/darkCross.svg`}
-        alt="msgNotViewed"
-        className="absolute right-[15px] top-[14px] h-[15.5px] w-[12.44px] cursor-pointer tablet:size-[22.026px]"
-        onClick={() => setAddNewMsg(false)}
-      />
-      <form onSubmit={handleFormSubmit} className="space-y-[9px] tablet:space-y-[15px]">
-        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
-          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-            To:
-          </p>
-          <input
-            type="text"
-            value={
-              questStartData?.page === 'advance-analytics'
-                ? `${questStartData?.participantsCount ?? questStartData?.submitCounter} Participants`
-                : to
-            }
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
-            onChange={(e) => {
-              setTo(e.target.value);
-            }}
-          />
+    <div className="space-y-[9px] tablet:space-y-[15px]">
+      {showModal && (
+        <FilterAnalyzedOptions
+          handleClose={handleHideModal}
+          modalVisible={showModal}
+          title={'Message Participants'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
+          questStartData={singlePost?.data?.data[0]}
+          submitBtn="Update"
+          optionsArr={updatedQuestAnswers}
+        />
+      )}
+      {/* Selected Post */}
+      {advanceAnalytics && (
+        <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+          <div className="flex flex-col items-center justify-center gap-[15px]">
+            <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
+              <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+                {singlePost?.data?.data[0]?.Question}
+              </h1>
+              {!isPending &&
+                updatedQuestAnswers.length >= 1 &&
+                updatedQuestAnswers?.map((post) => (
+                  <SelectionOption
+                    key={post.id}
+                    data={post}
+                    page="filterAnalyzedOptions"
+                    questStartData={singlePost?.data?.data[0]}
+                  />
+                ))}
+            </ul>
+          </div>
         </div>
-        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
-          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+      )}
+      {/* You are sending 4 participants */}
+      <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+        <div className="flex items-center justify-between">
+          <p className="summary-text text-center">
+            You are sending a message to {advanceAnalytics ? <b>{participants}</b> : <b>{handleNoOfUsers()}</b>} total
+            participants
+          </p>
+          {advanceAnalytics && (
+            <p
+              className="summary-text cursor-pointer text-blue-100 underline"
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              Edit
+            </p>
+          )}
+        </div>
+      </div>
+      {/* Message Card */}
+      <div className="relative h-fit w-full max-w-[730px] space-y-[9px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:mb-8 tablet:space-y-[15px] tablet:px-5 tablet:py-6">
+        {directMessageState.to !== 'Participants' && (
+          <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
+            <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
+              To:
+            </p>
+            <input
+              type="text"
+              value={directMessageState.to}
+              className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                dispatch(setDirectMessageForm({ to: inputValue }));
+              }}
+            />
+          </div>
+        )}
+        {/* Subject */}
+        <div className="flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3 tablet:text-[22px]">
+          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Subject:
           </p>
           <input
             type="text"
-            value={sub}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+            value={directMessageState.subject}
+            className="w-full bg-transparent px-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
-              setSub(e.target.value);
+              const inputValue = e.target.value;
+              if (inputValue.length <= 200) {
+                dispatch(setDirectMessageForm({ subject: inputValue }));
+              }
             }}
           />
+          {directMessageState.subject?.length}/200
         </div>
-        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
-          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+        {/* Message */}
+        <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[10px] dark:border-[2.768px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:px-5 tablet:py-3 tablet:text-[22px]">
+          <p className="text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Message:
           </p>
           <textarea
             type="text"
             rows="14"
-            value={msg}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+            value={directMessageState.message}
+            className="w-full bg-transparent px-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
-              setMsg(e.target.value);
+              const inputValue = e.target.value;
+              if (inputValue.length <= 500) {
+                dispatch(setDirectMessageForm({ message: inputValue }));
+              }
             }}
           />
+          <div className="flex items-end">{directMessageState.message?.length}/500</div>
         </div>
-
-        <div className="flex justify-between rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-            You will reach {questStartData?.participantsCount ?? questStartData?.submitCounter} Users
-          </p>
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
-            {(questStartData?.participantsCount ?? questStartData?.submitCounter) || 0} * {sendAmount} FDX ={' '}
-            {((questStartData?.participantsCount ?? questStartData?.submitCounter) || 0) * sendAmount}FDX
-          </p>
-        </div>
-        <div className="flex rounded-[3.817px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] tablet:rounded-[9.228px] tablet:px-5 tablet:py-3">
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] tablet:text-[22px] tablet:leading-[22px]">
+        {/* Read Reward */}
+        <div
+          className={`${directMessageState.to === 'All' || directMessageState.to === 'Participants' ? '' : 'opacity-50'} flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3`}
+        >
+          <p className="w-fit whitespace-nowrap text-[10px] font-semibold leading-[10px] text-[#707175] dark:text-white tablet:text-[22px] tablet:leading-[22px]">
             Read Reward:
           </p>
           <input
             type="number"
-            value={readReward}
-            className="w-full bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none tablet:text-[22px] tablet:leading-[22px]"
+            value={directMessageState.readReward}
+            placeholder={defaultReadReward}
+            className="w-fit bg-transparent pl-2 text-[10px] leading-[10px] focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
             onChange={(e) => {
-              setReadReward(e.target.value);
+              dispatch(setDirectMessageForm({ readReward: e.target.value }));
             }}
+            disabled={directMessageState.to !== 'Participants' && directMessageState.to !== 'All'}
           />
         </div>
-
-        <div className="flex justify-end pt-[2px] tablet:pt-[10px]">
-          <Button variant={'submit'}>
-            {' '}
-            {isPending === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              `Send (+ ${((questStartData?.participantsCount ?? questStartData?.submitCounter) || sendAmount) * sendAmount}FDX`
-            )}
+        <h1 className="px-2 py-[5.7px] text-[8.52px] font-normal italic leading-none text-[#435059] dark:text-[#D3D3D3] tablet:px-[18px] tablet:py-3 tablet:text-[19px]">
+          Enter the amount of FDX a participant will earn from reading your message. FDX will only be deducted from your
+          balance if a message is read
+        </h1>
+      </div>
+      {/* Total FDX to send message*/}
+      <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+        <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-[#707175] dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+            Total FDX to send message
+          </p>
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+            {`${handleNoOfUsers()} participants = ${directMessageState.to === 'List' ? `0 FDX` : `${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}`}
+          </p>
+        </div>
+      </div>
+      {/* Last Section Buttons */}
+      <div className="flex h-fit w-full max-w-[730px] justify-between gap-4 tablet:mx-auto">
+        <Button
+          variant="cancel"
+          onClick={() => {
+            navigate('/direct-messaging');
+          }}
+        >
+          Cancel
+        </Button>
+        <div className="flex gap-4">
+          <Button
+            variant={
+              directMessageState.to !== '' && directMessageState.subject !== '' && directMessageState.message !== ''
+                ? 'submit'
+                : 'hollow-submit'
+            }
+            disabled={
+              directMessageState.to !== '' && directMessageState.subject !== '' && directMessageState.message !== ''
+                ? false
+                : true
+            }
+            onClick={() => {
+              handleDraft();
+            }}
+          >
+            Save as draft
+          </Button>
+          <Button
+            variant={
+              directMessageState.to !== '' && directMessageState.subject !== '' && directMessageState.message !== ''
+                ? 'submit'
+                : 'hollow-submit'
+            }
+            disabled={
+              directMessageState.to !== '' && directMessageState.subject !== '' && directMessageState.message !== ''
+                ? false
+                : true
+            }
+            onClick={handlePreview}
+          >
+            Preview
           </Button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

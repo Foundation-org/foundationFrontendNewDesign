@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';
@@ -36,6 +36,7 @@ import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSli
 const RankChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
@@ -47,14 +48,14 @@ const RankChoice = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
   const filterStates = useSelector(filtersActions.getFilters);
-
+  const [optionsArray, setOptionsArray] = useState(optionsValue || []);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
   const mouseSensor = useSensor(MouseSensor);
-  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { delay: 200, tolerance: 10 } });
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
       delay: 500,
@@ -97,7 +98,7 @@ const RankChoice = () => {
     dispatch(setIsShowPlayer(false));
     dispatch(setPlayingPlayerId(''));
     dispatch(resetPlayingIds());
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     }
@@ -153,6 +154,11 @@ const RankChoice = () => {
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'choice',
     };
+
+    if (location?.state?.articleId && location?.state?.postData?.question) {
+      params.articleId = location.state.articleId;
+      params.suggestionTitle = location?.state?.postData?.question;
+    }
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 
@@ -283,6 +289,8 @@ const RankChoice = () => {
   };
 
   useEffect(() => {
+    setOptionsArray(optionsValue);
+
     if (getMediaStates.isMedia.isMedia) {
       if (
         !checkMediaHollow() &&
@@ -340,6 +348,7 @@ const RankChoice = () => {
       const oldIndex = optionsValue.findIndex((item) => item.id === active.id);
       const newIndex = optionsValue.findIndex((item) => item.id === over.id);
       const newData = arrayMove(optionsValue, oldIndex, newIndex);
+      setOptionsArray(newData);
       dispatch(createQuestAction.drapAddDrop({ newTypedValues: newData }));
     }
   };
@@ -358,8 +367,8 @@ const RankChoice = () => {
         onDragEnd={handleOnDragEnd}
       >
         <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
-          <SortableContext items={optionsValue}>
-            {optionsValue.map((item, index) => (
+          <SortableContext items={optionsArray}>
+            {optionsArray.map((item, index) => (
               <Options
                 key={item.id}
                 id={item.id}
@@ -368,15 +377,15 @@ const RankChoice = () => {
                 label={`Option ${index + 1} #`}
                 trash={true}
                 dragable={true}
-                handleChange={(value) => handleChange(index, value, optionsValue)}
+                handleChange={(value) => handleChange(index, value, optionsArray)}
                 handleOptionSelect={() => handleOptionSelect(index)}
                 typedValue={item.question}
                 isTyping={item?.isTyping}
                 isSelected={item.selected}
-                optionsCount={optionsValue.length}
+                optionsCount={optionsArray.length}
                 removeOption={removeOption}
                 number={index + 3}
-                optionStatus={optionsValue[index].optionStatus}
+                optionStatus={optionsArray[index].optionStatus}
                 answerVerification={(value) => answerVerification(item.id, index, value)}
                 handleTab={handleTab}
               />

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
 import showToast from '../../components/ui/Toast';
+import { setCredentialLogin } from '../../features/extras/extrasSlice';
 
 const BadgeVerifyCode = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const BadgeVerifyCode = () => {
             let verificationToken = token.substr(token.length - 6);
             setVerificationCode(Array.from(verificationToken)); // Create an array from the token
           } else {
-            showToast('error', 'verifyCode')
+            showToast('error', 'verifyCode');
           }
           document.addEventListener('keypress', handleKeyPress);
 
@@ -54,7 +55,7 @@ const BadgeVerifyCode = () => {
       })
       .catch((error) => {
         console.error('Error:', error.message);
-        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       });
   }, []);
 
@@ -79,7 +80,7 @@ const BadgeVerifyCode = () => {
       });
 
       if (response.status === 200) {
-        showToast('success', 'emailVerified')
+        showToast('success', 'emailVerified');
 
         const data = await response.json();
         dispatch(addUser(data));
@@ -88,7 +89,7 @@ const BadgeVerifyCode = () => {
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
 
@@ -108,54 +109,54 @@ const BadgeVerifyCode = () => {
             <div>
               <div className="flex flex-col space-y-16">
                 <div className="mx-auto flex w-full max-w-[25rem] flex-row items-center justify-between">
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="istBox"
                       value={verificationCode[0]}
                     />
                   </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="tablet:px-5outline-none focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg focus:ring-1"
+                      className="tablet:px-5outline-none focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg ring-blue-700 focus:ring-1"
                       type="text"
                       name=""
                       id="sndBox"
                       value={verificationCode[1]}
                     />
                   </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="trdBox"
                       value={verificationCode[2]}
                     />
                   </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="frtBox"
                       value={verificationCode[3]}
                     />
                   </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="fifBox"
                       value={verificationCode[4]}
                     />
                   </div>
-                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="sixBox"
@@ -186,7 +187,7 @@ const BadgeVerifyCode = () => {
             <UiButton
               className="mt-[25px] flex w-full justify-end"
               onClick={() => {
-                navigate('/signin');
+                dispatch(setCredentialLogin(true));
               }}
               variant={'submit'}
             >

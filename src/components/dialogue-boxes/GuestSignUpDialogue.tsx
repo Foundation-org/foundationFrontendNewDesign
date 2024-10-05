@@ -1,5 +1,7 @@
+import { useSelector } from 'react-redux';
 import Signup from '../../pages/Signup';
 import PopUp from '../ui/PopUp';
+import CredentialRegister from '../../pages/Signup/components/CredentialRegister';
 
 type GuestSignUpDialogueProps = {
   handleClose: () => void;
@@ -9,6 +11,8 @@ type GuestSignUpDialogueProps = {
 };
 
 export default function GuestSignUpDialogue({ handleClose, modalVisible, title, image }: GuestSignUpDialogueProps) {
+  const credentialRegister = useSelector((state: any) => state.extras.credentialRegister);
+
   return (
     <PopUp
       logo={image}
@@ -22,7 +26,7 @@ export default function GuestSignUpDialogue({ handleClose, modalVisible, title, 
       remove=""
       autoSize=""
     >
-      <Signup allowSignUp={true} />
+      {credentialRegister ? <CredentialRegister /> : <Signup allowSignUp={true} />}
     </PopUp>
   );
 }

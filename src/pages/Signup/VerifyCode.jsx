@@ -7,6 +7,8 @@ import { Button as UiButton } from '../../components/ui/Button';
 import { setAskPassword } from '../../features/profile/userSettingSlice';
 import showToast from '../../components/ui/Toast';
 import { toast } from 'sonner';
+import { setGuestSignInDialogue } from '../../features/extras/extrasSlice';
+import GuestDialogueScreen from '../../components/GuestDialogueScreen';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
@@ -15,8 +17,10 @@ const VerifyCode = () => {
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [verificationCode, setVerificationCode] = useState([]);
   const [msg, setMsg] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const checkUrlQuery = () => {
+    setLoading(true);
     let urlQuery = window.location.search.slice(1);
     seturlQuery(urlQuery);
 
@@ -56,6 +60,9 @@ const VerifyCode = () => {
       })
       .catch((error) => {
         console.error('Error:', error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -86,17 +93,18 @@ const VerifyCode = () => {
       if (response.status === 200) {
         showToast('success', 'emailVerified');
         const data = await response.json();
-        if (!data.isLegacyEmailContactVerified && !data.isGoogleEmail) {
-          localStorage.setItem('uuid', data.uuid);
-          localStorage.setItem('email', data.email);
-          navigate('/verify-phone');
-        } else {
-          dispatch(setAskPassword(false));
-          dispatch(addUser(data));
-          localStorage.setItem('userData', JSON.stringify(data));
-          localStorage.setItem('uuid', data.uuid);
-          navigate('/');
-        }
+        // NOT TO BE REMOVED
+        // if (!data.isLegacyEmailContactVerified && !data.isGoogleEmail) {
+        //   localStorage.setItem('uuid', data.uuid);
+        //   localStorage.setItem('email', data.email);
+        //   navigate('/verify-phone');
+        // } else {
+        dispatch(setAskPassword(false));
+        dispatch(addUser(data));
+        localStorage.setItem('userData', JSON.stringify(data));
+        localStorage.setItem('uuid', data.uuid);
+        navigate('/');
+        // }
       }
 
       if (response.status === 401) {
@@ -110,6 +118,7 @@ const VerifyCode = () => {
 
   return (
     <div className="bg-gray-50 relative flex min-h-screen flex-col justify-center overflow-hidden bg-[#F2F3F5] px-4 py-12">
+      <GuestDialogueScreen />
       {showDialogBox ? (
         <div className="relative mx-auto w-full max-w-lg rounded-2xl bg-white px-5 pb-9 pt-10 shadow-xl tablet:px-6">
           <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
@@ -140,6 +149,7 @@ const VerifyCode = () => {
                   <div>
                     <button
                       className="flex w-full flex-row items-center justify-center rounded-xl border border-none bg-[#389CE3] py-5 text-center text-sm text-white shadow-sm outline-none"
+                      disabled={loading}
                       onClick={() => {
                         handleVerify(urlQuery);
                       }}
@@ -159,7 +169,7 @@ const VerifyCode = () => {
             <UiButton
               className="mt-[25px] flex w-full justify-end"
               onClick={() => {
-                navigate('/signin');
+                dispatch(setGuestSignInDialogue(true));
               }}
               variant={'submit'}
             >

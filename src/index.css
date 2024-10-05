@@ -50,6 +50,11 @@
   }
 }
 
+/* SPLIDE */
+.splide__arrow:disabled {
+  @apply !hidden;
+}
+
 .heading {
   @apply text-[12px] font-semibold leading-[12px] text-gray-650 dark:text-white-100 2xl:text-[30px] tablet:text-[18px] tablet:leading-[18px];
 }

@@ -39,7 +39,7 @@ export default function Contact({
     return;
   };
   const handleClickContactBadgeEmail = async (type, title, image) => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       handleGuestBadgeAdd();
     } else {
       if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) {

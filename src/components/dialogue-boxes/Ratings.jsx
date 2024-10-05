@@ -448,7 +448,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
                 checked={selectedOptions.includes('adult')}
                 onChange={() => {
-                  if (persistedUserInfo?.role === 'guest') {
+                  if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
                     dispatch(setGuestSignUpDialogue(true));
                     return;
                   }

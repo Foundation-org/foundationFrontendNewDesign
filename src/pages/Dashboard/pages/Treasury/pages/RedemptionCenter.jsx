@@ -127,7 +127,7 @@ export default function RedemptionCenter() {
   });
 
   const handleAdd = () => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
@@ -154,7 +154,7 @@ export default function RedemptionCenter() {
   };
 
   const handleCreate = () => {
-    if (persistedUserInfo?.role === 'guest') {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {

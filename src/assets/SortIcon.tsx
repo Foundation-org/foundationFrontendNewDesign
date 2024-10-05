@@ -1,4 +1,10 @@
-export default function SortIcon({ type, ass, des }) {
+interface Props {
+  type?: string;
+  ass?: boolean;
+  des?: boolean;
+}
+
+export default function SortIcon({ type, ass, des }: Props) {
   let color = '#4DD896';
   if (type === 'contended') {
     color = '#FDD503';

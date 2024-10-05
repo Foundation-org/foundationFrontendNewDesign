@@ -7,6 +7,7 @@ import api from '../../../../../services/api/Axios';
 import PopUp from '../../../../../components/ui/PopUp';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../../../../../components/ui/Toast';
+import { isWebview } from '../../../../../utils/helper';
 const REDIRECT_URI = window.location.href;
 const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge }) => {
   const queryClient = useQueryClient();
@@ -65,28 +66,32 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
     <div>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="pb-[15px] pt-2 tablet:pb-5 tablet:pt-[30px]">
-          <div className="flex w-full justify-center">
-            <Button
-              variant="social-btn"
-              onClick={() => {
-                localStorage.setItem('selectedBadge', selectedBadge);
-                localStorage.setItem('target-url', `${window.location.href}`);
-                window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
-              }}
-              className={'dark:bg-accent-100'}
-            >
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
-                className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
-              />
-              Continue with Google
-            </Button>
-          </div>
+          {!isWebview() && (
+            <div className="flex w-full justify-center">
+              <Button
+                variant="social-btn"
+                onClick={() => {
+                  localStorage.setItem('selectedBadge', selectedBadge);
+                  localStorage.setItem('target-url', `${window.location.href}`);
+                  window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+                }}
+                className={'dark:bg-accent-100'}
+              >
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
+                  className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px]"
+                />
+                Continue with Google
+              </Button>
+            </div>
+          )}
 
-          <div className=" px-5 tablet:px-[60px] laptop:px-[80px]">
-            <h1 className="my-2 text-center text-[10px] font-medium leading-[12.1px] text-[#707175] tablet:my-[15px] tablet:text-[25px] tablet:leading-[30px]">
-              -OR-
-            </h1>
+          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+            {!isWebview() && (
+              <h1 className="my-2 text-center text-[10px] font-medium leading-[12.1px] text-[#707175] tablet:my-[15px] tablet:text-[25px] tablet:leading-[30px]">
+                -OR-
+              </h1>
+            )}
             <p
               htmlFor="email"
               className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[24.2px]"

@@ -25,7 +25,7 @@ const initialState = {
   },
   areHiddenPosts: false,
   areShareLinks: false,
-  areFeedBackPosts: false
+  areFeedBackPosts: false,
 };
 
 export const utilsSlice = createSlice({
@@ -63,26 +63,6 @@ export const utilsSlice = createSlice({
     addEnablePostId: (state, action) => {
       state.enablePostId = action.payload;
     },
-    // addBookmarkResponse: (state, action) => {
-    //   const newResponse = action.payload;
-    //   state.bookmarkResponse.push(newResponse);
-    // },
-    // addBookmarkResponse: (state, action) => {
-    //   const newResponse = action.payload;
-
-    //   const existingBookmark = state.bookmarkResponse.find(
-    //     (bookmark) => bookmark.questForeignKey === newResponse.questForeignKey,
-    //   );
-    //   if (!existingBookmark) {
-    //     state.bookmarkResponse.push(newResponse);
-    //   } else {
-    //   }
-    // },
-    // removeBookmarkResponse: (state, action) => {
-    //   const idToRemove = action.payload;
-    //   console.log('🚀 ~ idToRemove:', idToRemove);
-    //   state.bookmarkResponse = state.bookmarkResponse.filter((response) => response.questForeignKey !== idToRemove);
-    // },
     toggleMedia: (state, action) => {
       state.isMediaPlaying = action.payload;
     },
@@ -110,14 +90,14 @@ export const utilsSlice = createSlice({
       state.adultFilterPopup.rating = action.payload.rating;
     },
     setAreHiddenPosts: (state, action) => {
-      state.areHiddenPosts = action.payload
+      state.areHiddenPosts = action.payload;
     },
     setAreShareLinks: (state, action) => {
-      state.areShareLinks = action.payload
+      state.areShareLinks = action.payload;
     },
     setAreFeedbackPosts: (state, action) => {
-      state.areFeedBackPosts = action.payload
-    }
+      state.areFeedBackPosts = action.payload;
+    },
   },
 });
 
@@ -143,7 +123,7 @@ export const {
   addAdultFilterPopup,
   setAreHiddenPosts,
   setAreShareLinks,
-  setAreFeedbackPosts
+  setAreFeedbackPosts,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

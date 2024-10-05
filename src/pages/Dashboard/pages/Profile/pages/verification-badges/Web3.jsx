@@ -153,23 +153,16 @@ export default function Web3({
 
   return (
     <>
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-white-400">
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
         Linking your wallet gives you more FDX transaction options.
       </h1>
       <AuthKitProvider config={config}>
         <div className="hidden">
           <SignInButton
             onClick={() => console.log('testing clicking....')}
-            // onStatusResponse={(res) => console.log("status callback:", res)}
-            onSuccess={
-              (data) => {
-                // alert("testing...")
-                // console.log("testing...");
-                isButtonClicked && handlePasskey('Farcaster', 'farcaster', data);
-              }
-              // console.log(`Hello, ${username}! Your fid is ${fid} ${data}.`)
-              // console.log(data)
-            }
+            onSuccess={(data) => {
+              isButtonClicked && handlePasskey('Farcaster', 'farcaster', data);
+            }}
           />
         </div>
         <div className="hidden"></div>
@@ -292,9 +285,9 @@ export default function Web3({
             )}
             <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
             <div
-              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px] dark:border-gray-100 dark:bg-accent-100`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
             >
-              <h1 className="text-[2.11vw] font-medium leading-normal text-black tablet:text-[20px] dark:text-gray-400">
+              <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
                 {item.title}
               </h1>
             </div>
