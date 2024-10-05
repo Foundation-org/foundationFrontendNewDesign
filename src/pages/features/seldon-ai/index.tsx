@@ -10,7 +10,6 @@ import SourcePosts from './components/SourcePosts';
 import SeldonInputs from './components/SeldonInputs';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
-import ScrollIntoView from 'react-scroll-into-view';
 
 export default function SeldonAi() {
   const dispatch = useDispatch();
@@ -97,15 +96,15 @@ export default function SeldonAi() {
       {isPending ? (
         <DotsLoading />
       ) : (
-        getSeldonDataState.title !== '' && (
-          <div className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
-            {getSeldonDataState.debug ? (
-              <div className="mt-4 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mt-8 tablet:py-[18.73px]">
-                <h1 className="text-[16px] font-bold">Debug Mode:</h1>
-                <br></br>
-                <Markdown>{getSeldonDataState.debug}</Markdown>
-              </div>
-            ) : (
+        <div className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
+          {getSeldonDataState.debug ? (
+            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+              <h1 className="text-[16px] font-bold">Debug Mode:</h1>
+              <br></br>
+              <Markdown>{getSeldonDataState.debug}</Markdown>
+            </div>
+          ) : (
+            getSeldonDataState.title !== '' && (
               <>
                 <div className="space-y-1">
                   <h1 className="text-[16px] font-bold tablet:text-[24px]">{getSeldonDataState.title}</h1>
@@ -171,11 +170,15 @@ export default function SeldonAi() {
                   <p className="text-[12px] tablet:text-[20px]">{getSeldonDataState.conclusion}</p>
                 </div>
               </>
-            )}
-            <SourcePosts />
-            <SuggestedPosts />
-          </div>
-        )
+            )
+          )}
+          {getSeldonDataState.title !== '' && (
+            <>
+              <SourcePosts />
+              <SuggestedPosts />
+            </>
+          )}
+        </div>
       )}
     </div>
   );

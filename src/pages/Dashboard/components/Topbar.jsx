@@ -153,7 +153,7 @@ const Topbar = () => {
                         (persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') &&
                         item.id === 1
                       ) {
-                        dispatch(setGuestSignUpDialogue(true));
+                        dispatch(setGuestSignUpDialogue({ isSignup: true, signupTriggeredFrom: 'signup' }));
                       }
                     }}
                   >
