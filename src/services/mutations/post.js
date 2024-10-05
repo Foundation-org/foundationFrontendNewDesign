@@ -206,13 +206,32 @@ export const useUndoFeedBackMutation = () => {
             ...oldData,
             pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data[0]._id)),
           }));
-        } else {
+        } else if (location.pathname === '/') {
           queryClient.setQueriesData(['posts'], (oldData) => ({
             ...oldData,
             pages: oldData?.pages?.map((page) =>
               page.map((item) => (item._id === resp.data.data[0]._id ? resp.data.data[0] : item)),
             ),
           }));
+        } else {
+          queryClient.setQueryData(['questByShareLink'], (oldData) => {
+            if (!oldData || !oldData.data || !oldData.data.data) return oldData;
+
+            const updatedData = oldData.data.data.map((item) => {
+              if (item._id === resp.data.data[0]._id) {
+                return { ...item, ...resp.data.data[0] };
+              }
+              return item;
+            });
+
+            return {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                data: updatedData,
+              },
+            };
+          });
         }
       }
     },
