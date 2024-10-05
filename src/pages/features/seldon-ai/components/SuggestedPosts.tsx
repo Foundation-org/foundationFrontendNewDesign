@@ -166,44 +166,46 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
           </div>
         </>
       )}
-      <div
-        className={`${location.pathname.includes('/r') ? 'hidden' : 'justify-between'} flex w-full items-center gap-4`}
-      >
-        <Button
-          variant="g-submit"
-          className="w-full"
-          rounded
-          onClick={() => {
-            handleUpdateArticle();
-          }}
-          disabled={isPending}
+      {!seldonState.debug && (
+        <div
+          className={`${location.pathname.includes('/r') ? 'hidden' : 'justify-between'} flex w-full items-center gap-4`}
         >
-          {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Update'}
-        </Button>
-        <Button
-          variant="submit"
-          className="w-full"
-          rounded
-          disabled={isPublishPending}
-          onClick={() => {
-            handlePublishArticle({
-              userUuid: persistedUserInfo.uuid,
-              prompt: seldonState.question,
-              title: seldonsData.title,
-              abstract: seldonsData.abstract,
-              groundBreakingFindings: seldonsData.groundBreakingFindings,
-              suggestion: seldonsData.suggestions,
-              source: seldonsData.source,
-              seoSummary: seldonsData.seoSummary,
-              discussion: seldonsData.discussion,
-              conclusion: seldonsData.conclusion,
-              settings: seldonState,
-            } as any);
-          }}
-        >
-          {isPublishPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Publish Article'}
-        </Button>
-      </div>
+          <Button
+            variant="g-submit"
+            className="w-full"
+            rounded
+            onClick={() => {
+              handleUpdateArticle();
+            }}
+            disabled={isPending}
+          >
+            {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Update'}
+          </Button>
+          <Button
+            variant="submit"
+            className="w-full"
+            rounded
+            disabled={isPublishPending}
+            onClick={() => {
+              handlePublishArticle({
+                userUuid: persistedUserInfo.uuid,
+                prompt: seldonState.question,
+                title: seldonsData.title,
+                abstract: seldonsData.abstract,
+                groundBreakingFindings: seldonsData.groundBreakingFindings,
+                suggestion: seldonsData.suggestions,
+                source: seldonsData.source,
+                seoSummary: seldonsData.seoSummary,
+                discussion: seldonsData.discussion,
+                conclusion: seldonsData.conclusion,
+                settings: seldonState,
+              } as any);
+            }}
+          >
+            {isPublishPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Publish Article'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

@@ -31,6 +31,7 @@ export default function SeldonAi() {
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
           .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
+        console.log(response);
 
         if (response.data.debug) {
           dispatch(addDebug({ debug: response.data.debug, source: ids }));
@@ -69,8 +70,6 @@ export default function SeldonAi() {
       e.currentTarget.form?.dispatchEvent(new Event('submit', { bubbles: true }));
     }
   };
-
-  console.log('getSeldonDataState', getSeldonDataState);
 
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
