@@ -26,7 +26,7 @@ export default function SeldonView() {
 
   const copyToClipboard = async () => {
     const id = location.pathname.startsWith('/r') ? response?.data?._id : response?.data?.articleId;
-    ShareArticle(id);
+    // ShareArticle(id);
     try {
       await navigator.clipboard.writeText(`${protocol}//${host}/r/${id}`);
     } catch (err) {

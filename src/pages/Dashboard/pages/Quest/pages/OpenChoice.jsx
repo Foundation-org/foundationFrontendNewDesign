@@ -59,6 +59,7 @@ const OpenChoice = () => {
       tolerance: 0,
     },
   });
+  const getArticleId = useSelector(createQuestAction.getArticleId);
 
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: createInfoQuest,
@@ -149,11 +150,10 @@ const OpenChoice = () => {
       type: 'choice',
     };
 
-    if (location?.state?.articleId && location?.state?.postData?.question) {
-      params.articleId = location.state.articleId;
-      params.suggestionTitle = location?.state?.postData?.question;
+    if (getArticleId !== '') {
+      params.articleId = getArticleId;
+      params.suggestionTitle = createQuestSlice.question;
     }
-
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 
     if (isEmptyAnswer) {

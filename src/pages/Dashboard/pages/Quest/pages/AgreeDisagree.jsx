@@ -44,6 +44,8 @@ const AgreeDisagree = () => {
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
+  const getArticleId = useSelector(createQuestAction.getArticleId);
+  console.log(getArticleId);
 
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: questServices.createInfoQuest,
@@ -147,6 +149,10 @@ const AgreeDisagree = () => {
     if (location?.state?.articleId && location?.state?.postData?.question) {
       params.articleId = location.state.articleId;
       params.suggestionTitle = location?.state?.postData?.question;
+    }
+    if (getArticleId !== '') {
+      params.articleId = getArticleId;
+      params.suggestionTitle = createQuestSlice.question;
     }
 
     if (!checkHollow()) {

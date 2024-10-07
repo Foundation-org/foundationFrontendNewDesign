@@ -11,6 +11,7 @@ import {
   addNewOption,
   addQuestion,
   resetCreateQuest,
+  setArticleId,
   setOptionsByArray,
 } from '../../../../features/createQuest/createQuestSlice';
 import DotsLoading from '../../../../components/ui/DotsLoading';
@@ -145,7 +146,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                       to={item.postType === 'yes/no' ? '/post/yes-no' : '/post'}
                       state={{
                         postData: item,
-                        articleId: location.pathname.startsWith('/r') ? seldonsData?._id : seldonsData.articleId,
+                        articleId: location.pathname.startsWith('/r') ? seldonsData?._id : getSeldonDataState.articleId,
                       }}
                       className="whitespace-nowrap text-[12px] font-semibold text-blue-200 underline dark:text-blue-600 tablet:text-[16px]"
                       onClick={() => {
@@ -155,6 +156,8 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                           dispatch(addNewOption(index));
                         });
                         dispatch(setOptionsByArray(item.options));
+                        const id = location.pathname.startsWith('/r') ? seldonsData?._id : getSeldonDataState.articleId;
+                        dispatch(setArticleId(id));
                       }}
                     >
                       Create Post {'>'}

@@ -177,6 +177,7 @@ const initialState = {
     chatgptOptionStatus: { ...defaultStatus },
     isTyping: true,
   })),
+  articleId: '',
 };
 
 export const createQuestSlice = createSlice({
@@ -196,6 +197,12 @@ export const createQuestSlice = createSlice({
     },
     updateIsGifMedia: (state, action) => {
       state.gifMedia.isGifMedia = action.payload;
+    },
+    setArticleId: (state, action) => {
+      state.articleId = action.payload;
+    },
+    resetArticleId: (state) => {
+      state.articleId = '';
     },
     // Description
     addMediaDesc: (state, action) => {
@@ -1627,6 +1634,8 @@ export const {
   clearGifUrl,
   clearPicsUrl,
   clearPicsMedia,
+  setArticleId,
+  resetArticleId,
 } = createQuestSlice.actions;
 
 export default createQuestSlice.reducer;
@@ -1636,6 +1645,7 @@ export const getAudio = (state) => state.createQuest.audio;
 export const getGif = (state) => state.createQuest.gifMedia;
 export const getPicsMedia = (state) => state.createQuest.pictureMedia;
 export const getCreate = (state) => state.createQuest.questions;
+export const getArticleId = (state) => state.createQuest.articleId;
 export const questionStatus = (state) => state.createQuest.questionReset;
 export const questionChatgptStatus = (state) => state.createQuest.chatgptStatus;
 export const optionsValue = (state) => state.createQuest.optionsValue;

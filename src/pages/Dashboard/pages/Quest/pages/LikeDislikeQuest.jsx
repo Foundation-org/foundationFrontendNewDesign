@@ -45,7 +45,7 @@ const LikeDislike = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
   const persistedContants = useSelector(getConstantsValues);
-
+  const getArticleId = useSelector(createQuestAction.getArticleId);
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: questServices.createInfoQuest,
   //   onSuccess: (resp) => {
@@ -142,6 +142,10 @@ const LikeDislike = () => {
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'binary',
     };
+    if (getArticleId !== '') {
+      params.articleId = getArticleId;
+      params.suggestionTitle = createQuestSlice.question;
+    }
 
     if (!checkHollow()) {
       // createQuest(params);

@@ -49,7 +49,7 @@ export default function SeldonAi() {
                 ? response.data.response?.articleInfo?.createdAt
                 : new Date().toISOString(),
               source: ids,
-              articleId: response.data.response?.articleId ? response.data.response.articleId : '',
+              articleId: '',
               prompt: seldonState.question,
               updatedAt: response.data.response?.articleInfo?.updatedAt
                 ? response.data.response?.articleInfo?.updatedAt

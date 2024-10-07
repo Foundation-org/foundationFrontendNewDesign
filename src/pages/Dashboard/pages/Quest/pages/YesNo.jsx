@@ -44,6 +44,7 @@ const YesNo = () => {
   const [hollow, setHollow] = useState(true);
   const persistedContants = useSelector(getConstantsValues);
   const location = useLocation();
+  const getArticleId = useSelector(createQuestAction.getArticleId);
 
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: questServices.createInfoQuest,
@@ -88,7 +89,6 @@ const YesNo = () => {
       }
     }
   };
-
   const handleSubmit = async () => {
     dispatch(setIsShowPlayer(false));
     dispatch(setPlayingPlayerId(''));
@@ -146,9 +146,9 @@ const YesNo = () => {
       type: 'binary',
       // description: getMediaStates?.isMedia.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
-    if (location?.state?.articleId && location?.state?.postData?.id) {
-      params.articleId = location.state.articleId;
-      params.suggestionTitle = location?.state?.postData?.question;
+    if (getArticleId !== '') {
+      params.articleId = getArticleId;
+      params.suggestionTitle = createQuestSlice.question;
     }
 
     if (!checkHollow()) {
