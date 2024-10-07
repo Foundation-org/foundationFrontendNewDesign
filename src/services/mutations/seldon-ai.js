@@ -45,6 +45,7 @@ export const publishArticle = async ({
   discussion,
   conclusion,
   settings,
+  articleId,
 }) => {
   return await api.post(`/article/create`, {
     userUuid,
@@ -58,6 +59,7 @@ export const publishArticle = async ({
     discussion,
     conclusion,
     settings,
+    ...(articleId && { articleId }),
   });
 };
 
@@ -75,6 +77,7 @@ export const usePublishArticleMutation = () => {
       discussion,
       conclusion,
       settings,
+      articleId,
     }) => {
       return publishArticle({
         userUuid,
@@ -88,6 +91,7 @@ export const usePublishArticleMutation = () => {
         discussion,
         conclusion,
         settings,
+        articleId,
       });
     },
     onSuccess: (resp) => {

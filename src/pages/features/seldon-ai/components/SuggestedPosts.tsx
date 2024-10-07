@@ -199,6 +199,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                 discussion: seldonsData.discussion,
                 conclusion: seldonsData.conclusion,
                 settings: seldonState,
+                articleId: getSeldonDataState.articleId,
               } as any);
             }}
           >

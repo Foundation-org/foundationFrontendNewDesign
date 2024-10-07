@@ -5,12 +5,11 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { initFacebookPixel } from './utils/facebookPixel';
 import { useLocation } from 'react-router-dom';
-import ReactGA from 'react-ga';
 import api from './services/api/Axios';
-import ReactPixel from 'react-facebook-pixel';
 import FallbackLoading from './components/FallbackLoading';
 import { MaintenanceRouter } from './routes/maintenance';
-ReactGA.initialize('AW-16685473482');
+import ReactGA from 'react-ga4';
+const TRACKING_ID = 'G-3TVZ4YD2FG';
 
 function App() {
   const location = useLocation();
@@ -19,12 +18,10 @@ function App() {
   const [isMaintenance, setIsMaintenance] = useState(false);
 
   useEffect(() => {
-    initFacebookPixel();
-  }, []);
+    ReactGA.initialize(TRACKING_ID);
+    ReactGA.send({ hitType: 'pageview', page: '/', title: 'Landing Page' });
 
-  useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search);
-    ReactPixel.pageView();
+    initFacebookPixel();
   }, [location]);
 
   // Handle
