@@ -56,7 +56,7 @@ export default function PostArticlesCard({ questStartData }: PostArticlesCardPro
           ) : (
             <div className="px-4">
               <div className="flex h-[90px] max-h-[90px] w-full flex-col justify-between gap-[10px] rounded-lg border border-l-[16px] border-white-500 p-2 dark:border-gray-100 tablet:h-[140px] tablet:max-h-[140px] tablet:gap-3 tablet:rounded-2xl tablet:border-y-2 tablet:border-l-[25px] tablet:border-r-2 tablet:p-4">
-                <h5 className="line-clamp-3 overflow-hidden text-ellipsis break-words break-all text-[10px] font-semibold italic leading-normal text-gray-900 dark:text-white-400 tablet:text-[1rem]">
+                <h5 className="line-clamp-3 overflow-hidden text-ellipsis break-words text-[10px] font-semibold italic leading-normal text-gray-900 dark:text-white-400 tablet:text-[1rem]">
                   {articles[0].title}
                 </h5>
                 <div className="flex w-full justify-end">
