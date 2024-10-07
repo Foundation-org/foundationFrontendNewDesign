@@ -76,8 +76,8 @@ const PostsByList = () => {
         <meta name="google" content="notranslate" />
       </Helmet>
       {id === null || id === '' || id === undefined ? (
-        <div className="mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-black">
-          <div className="no-scrollbar flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
+        <div className="mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] dark:bg-black tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)]">
+          <div className="flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
             {content}
           </div>
         </div>
@@ -86,8 +86,8 @@ const PostsByList = () => {
           <Topbar />
           <div className="w-full bg-[#F2F3F5] dark:bg-black">
             <DashboardLayout>
-              <div className="no-scrollbar mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-70px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:mx-[331px] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] desktop:mx-auto dark:bg-black">
-                <div className=" no-scrollbar mb-10 flex h-[calc(100dvh)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mb-0 tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
+              <div className="mx-auto mt-[0.94rem] flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-70px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] no-scrollbar dark:bg-black tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:mx-[331px] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] desktop:mx-auto">
+                <div className="mb-10 flex h-[calc(100dvh)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:mb-0 tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
                   {isLoading ? (
                     <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
                       Loading...
