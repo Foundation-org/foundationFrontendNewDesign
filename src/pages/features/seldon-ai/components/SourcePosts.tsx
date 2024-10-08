@@ -100,7 +100,10 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
                       transformSelectedPost(post);
                     }}
                   >
-                    <QuestionCardWithToggle questStartData={post} />
+                    <div className="relative">
+                      <div className="absolute left-0 top-0 z-50 size-full cursor-grab bg-transparent" />
+                      <QuestionCardWithToggle questStartData={post} />
+                    </div>
                   </li>
                 ))}
               </ul>
