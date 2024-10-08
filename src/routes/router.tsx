@@ -93,6 +93,7 @@ export function Router() {
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/l/:id" element={<GuestRedirect redirectUrl={null} />} />
+          <Route path="/r/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="/authenticating" element={<Authenticating />} />
           <Route path="*" element={<Navigate to="/" />} />

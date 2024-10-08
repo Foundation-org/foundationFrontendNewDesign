@@ -47,7 +47,7 @@ export default function SeldonView() {
                 <div className="mx-auto flex w-full max-w-[778px] flex-col gap-4 px-4 text-gray-200 dark:text-white tablet:gap-6 tablet:px-6">
                   <Link
                     to={'/news'}
-                    className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3 tablet:text-[20px]"
+                    className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:text-[20px]"
                   >
                     {'<'} Back to all news
                   </Link>
