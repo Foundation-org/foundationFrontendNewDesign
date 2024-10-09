@@ -17,7 +17,8 @@ import { getRecievedMessages } from '../../../services/api/directMessagingApi';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import GuestDialogueScreen from '../../../components/GuestDialogueScreen';
 import { FaBullseye } from 'react-icons/fa';
-import { handleSeldonInput } from '../../../features/seldon-ai/seldonSlice';
+import { getSeldonState, handleSeldonInput, resetSeldonState } from '../../../features/seldon-ai/seldonSlice';
+import { resetSeldonDataState } from '../../../features/seldon-ai/seldonDataSlice';
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Topbar = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(homeFilterActions.getFilters);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+  const seldonState = useSelector(getSeldonState);
 
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
@@ -157,6 +159,15 @@ const Topbar = () => {
                           setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'),
                         );
                       }
+
+                      if (item.id === 6) {
+                        if (seldonState.isTitle) {
+                          dispatch(resetSeldonState());
+                          dispatch(handleSeldonInput({ name: 'isTitle', value: false }));
+                          dispatch(handleSeldonInput({ name: 'question', value: '' }));
+                          dispatch(resetSeldonDataState());
+                        }
+                      }
                     }}
                   >
                     {item.id === 5 && receivedMsg?.data?.count > 0 && (
@@ -223,7 +234,12 @@ const Topbar = () => {
                     );
                   }
                   if (item.id === 6) {
-                    dispatch(handleSeldonInput({ name: 'isTitle', value: false }));
+                    if (seldonState.isTitle) {
+                      dispatch(resetSeldonState());
+                      dispatch(handleSeldonInput({ name: 'isTitle', value: false }));
+                      dispatch(handleSeldonInput({ name: 'question', value: '' }));
+                      dispatch(resetSeldonDataState());
+                    }
                   }
                 }}
               >

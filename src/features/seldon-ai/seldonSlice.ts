@@ -69,10 +69,11 @@ export const seldonSlice = createSlice({
         isTitle: state.isTitle,
       };
     },
-    setInputState: (state, action) => {
+    setInputState: (state, action: PayloadAction<Partial<SeldonState>>) => {
+      const { isTitle, ...otherPayload } = action.payload;
       return {
         ...state,
-        ...action.payload,
+        ...otherPayload,
       };
     },
     resetSeldonProperty: (state, action: PayloadAction<keyof SeldonState>) => {

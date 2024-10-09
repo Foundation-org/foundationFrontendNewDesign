@@ -67,10 +67,16 @@ export const SeldonDataSlice = createSlice({
     removeSource: (state, action: PayloadAction<string>) => {
       state.source = state.source.filter((source) => source !== action.payload);
     },
+    resetSeldonDataState: (state) => {
+      return {
+        ...initialState,
+      };
+    },
   },
 });
 
-export const { setSeldonData, addDebug, addSourceAtStart, removeSource } = SeldonDataSlice.actions;
+export const { setSeldonData, addDebug, addSourceAtStart, removeSource, resetSeldonDataState } =
+  SeldonDataSlice.actions;
 
 export default SeldonDataSlice.reducer;
 
