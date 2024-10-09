@@ -70,6 +70,13 @@ export default function SeldonAi() {
     }
   };
 
+  const createdAtDate = getSeldonDataState?.createdAt
+    ? new Date(getSeldonDataState.createdAt).toISOString().split('T')[0]
+    : '';
+  const updatedAtDate = getSeldonDataState?.updatedAt
+    ? new Date(getSeldonDataState?.updatedAt).toISOString().split('T')[0]
+    : '';
+
   return (
     <div className="mx-auto mb-[10px] rounded-[10px] px-4 tablet:mb-[15px] tablet:max-w-[730px] tablet:px-0">
       <div className="mb-3 block laptop:hidden">
@@ -114,7 +121,7 @@ export default function SeldonAi() {
                       Published: {formatDateMDY(getSeldonDataState.createdAt)}
                     </p>
                   )}
-                  {getSeldonDataState.updatedAt !== null && (
+                  {getSeldonDataState.updatedAt !== null && updatedAtDate !== createdAtDate && (
                     <p className="text-[10px] tablet:text-[16px]">
                       Last Updated: {formatDateMDY(getSeldonDataState.updatedAt)}
                     </p>

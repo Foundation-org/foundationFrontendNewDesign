@@ -34,6 +34,9 @@ export default function SeldonView() {
     }
   };
 
+  const createdAtDate = response?.data.createdAt ? new Date(response.data.createdAt).toISOString().split('T')[0] : '';
+  const updatedAtDate = response?.data.updatedAt ? new Date(response.data.updatedAt).toISOString().split('T')[0] : '';
+
   return (
     <>
       <Topbar />
@@ -59,7 +62,7 @@ export default function SeldonView() {
                         Published: {formatDateMDY(response?.data.createdAt)}
                       </p>
                     )}
-                    {response?.data.updatedAt !== '' && (
+                    {response?.data.updatedAt !== '' && updatedAtDate !== createdAtDate && (
                       <p className="text-[10px] tablet:text-[16px]">
                         Last Updated: {formatDateMDY(response?.data.updatedAt)}
                       </p>
