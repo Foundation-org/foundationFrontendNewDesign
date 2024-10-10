@@ -36,6 +36,8 @@ const EmbedPost = () => {
     resize();
   }, []);
 
+  const queryParams = new URLSearchParams(location.search);
+
   return (
     <>
       {isFetching ? (
@@ -49,7 +51,8 @@ const EmbedPost = () => {
             isBookmarked={false}
             isSingleQuest={true}
             postLink={link}
-            postProperties="Embed"
+            postProperties={'Embed'}
+            isEmbedResults={queryParams.get('results') === 'true' ? true : false}
           />
         ))
       )}

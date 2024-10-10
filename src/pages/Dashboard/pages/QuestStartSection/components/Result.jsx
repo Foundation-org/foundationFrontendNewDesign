@@ -80,6 +80,8 @@ const Result = (props) => {
             questStartData={props.questStartData}
             handleSortIconClick={handleSortIconClick}
             selectedOption={selectedOption}
+            isEmbedResults={props.isEmbedResults}
+            postProperties={props.postProperties}
           />
           {sortedAnswers?.map((item) => (
             <SingleAnswer
@@ -108,6 +110,7 @@ const Result = (props) => {
               btnText={'Results'}
               questStartData={props.questStartData}
               postProperties={props.postProperties}
+              isEmbedResults={props.isEmbedResults}
             />
           ))}
         </div>
@@ -119,6 +122,8 @@ const Result = (props) => {
             handleSortIconClick={handleSortIconClick}
             selectedOption={selectedOption}
             contendedOption={contendedOption}
+            isEmbedResults={props.isEmbedResults}
+            postProperties={props.postProperties}
           />
           <div
             className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 ? 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]' : ''}`}
@@ -169,6 +174,7 @@ const Result = (props) => {
                   answersSelection={props.answersSelection}
                   setAnswerSelection={props.setAnswerSelection}
                   postProperties={props.postProperties}
+                  isEmbedResults={props.isEmbedResults}
                 />
               ))}
             {showOptions.id !== props.questStartData._id &&
@@ -184,6 +190,8 @@ const Result = (props) => {
             handleSortIconClick={handleSortIconClick}
             selectedOption={selectedOption}
             contendedOption={contendedOption}
+            isEmbedResults={props.isEmbedResults}
+            postProperties={props.postProperties}
           />
           <div
             className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 && 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]'}`}
@@ -227,6 +235,7 @@ const Result = (props) => {
                     setAddOptionLimit={props.setAddOptionLimit}
                     btnText={'Results'}
                     postProperties={props.postProperties}
+                    isEmbedResults={props.isEmbedResults}
                   />
                 </div>
               ))}

@@ -25,7 +25,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
-  const { isSingleQuest, postLink, categoryId } = props;
+  const { isSingleQuest, postLink, categoryId, isEmbedResults } = props;
 
   let questData;
 
@@ -668,6 +668,7 @@ const QuestionCardWithToggle = (props) => {
             questSelection={questSelection}
             cardSize={cardSize}
             postProperties={postProperties}
+            isEmbedResults={isEmbedResults}
           />
           <AddOptions
             questStartData={questStartData}

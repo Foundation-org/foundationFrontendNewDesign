@@ -20,46 +20,49 @@ const SingleAnswer = (props) => {
           &#x200B;
         </div>
         <div className="relative flex w-full items-center">
-          <div
-            className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
-            style={{
-              width: props.percentage,
-            }}
-          />
+          {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+            <div
+              className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
+              style={{
+                width: props.percentage,
+              }}
+            />
+          )}
           <h1 className="pb-[5.7px] pl-2 pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px]">
             {props.answer}
           </h1>
         </div>
-        {props?.postProperties !== 'HiddenPosts' && (
-          <div
-            className={`flex items-center gap-[10.3px] pr-[10px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px] ${
-              props.btnText === 'Results' ? 'pointer-events-none' : ''
-            }`}
-          >
-            <div className="flex items-center gap-1 laptop:gap-[18px]">
-              {props?.questStartData?.type !== 'embed' &&
-                props?.postProperties !== 'sharedlink-results' &&
-                props.postProperties !== 'actual-results' && (
-                  <div id="custom-checkbox" className="flex h-full items-center">
-                    <input
-                      id="small-checkbox"
-                      type="checkbox"
-                      className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                      checked={props.check}
-                      readOnly
-                    />
-                  </div>
-                )}
-              {props.btnText === 'Results' ? (
-                props.percentage === undefined || props.percentage === null ? (
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                ) : (
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">{props.percentage}</span>
-                )
-              ) : null}
+        {props?.postProperties !== 'HiddenPosts' &&
+          ((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+            <div
+              className={`flex items-center gap-[10.3px] pr-[10px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px] ${
+                props.btnText === 'Results' ? 'pointer-events-none' : ''
+              }`}
+            >
+              <div className="flex items-center gap-1 laptop:gap-[18px]">
+                {props?.questStartData?.type !== 'embed' &&
+                  props?.postProperties !== 'sharedlink-results' &&
+                  props.postProperties !== 'actual-results' && (
+                    <div id="custom-checkbox" className="flex h-full items-center">
+                      <input
+                        id="small-checkbox"
+                        type="checkbox"
+                        className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                        checked={props.check}
+                        readOnly
+                      />
+                    </div>
+                  )}
+                {props.btnText === 'Results' ? (
+                  props.percentage === undefined || props.percentage === null ? (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                  ) : (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">{props.percentage}</span>
+                  )
+                ) : null}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

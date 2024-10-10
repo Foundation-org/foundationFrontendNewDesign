@@ -263,54 +263,60 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           ) : (
             <div className="flex items-center text-[9.238px] tablet:justify-center tablet:text-[16px]">
-              {props.btnText === 'Results' ? (
+              {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
                 <>
-                  {props.contendPercentages &&
-                  props.contendPercentages?.[props.answer.trim()] &&
-                  props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
-                    <div className="flex items-center gap-1 tablet:gap-[10px]">
-                      {props?.postProperties !== 'sharedlink-results' && (
-                        <ContentionIcon
-                          classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                          checked={contendState}
-                        />
+                  {props.btnText === 'Results' ? (
+                    <>
+                      {props.contendPercentages &&
+                      props.contendPercentages?.[props.answer.trim()] &&
+                      props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
+                        <div className="flex items-center gap-1 tablet:gap-[10px]">
+                          {props?.postProperties !== 'sharedlink-results' && (
+                            <ContentionIcon
+                              classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                              checked={contendState}
+                            />
+                          )}
+                          <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                            {props.contendPercentages[props.answer.trim()]}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1 tablet:gap-[10px]">
+                          {props?.postProperties !== 'sharedlink-results' && (
+                            <ContentionIcon
+                              classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                              checked={false}
+                            />
+                          )}
+                          <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                        </div>
                       )}
-                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                        {props.contendPercentages[props.answer.trim()]}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1 tablet:gap-[10px]">
-                      {props?.postProperties !== 'sharedlink-results' && (
-                        <ContentionIcon
-                          classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                          checked={false}
-                        />
-                      )}
-                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                    </div>
-                  )}
+                    </>
+                  ) : null}
                 </>
-              ) : null}
+              )}
             </div>
           )}
         </div>
         {/* Option */}
         <div
-          className={`flex w-full items-center rounded-l-[5.387px] bg-white tablet:rounded-l-[10px] dark:bg-accent-100 ${props.btnText === 'Results' || props.postProperties === 'HiddenPosts' ? 'pointer-events-none' : 'cursor-pointer'}`}
+          className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-accent-100 tablet:rounded-l-[10px] ${props.btnText === 'Results' || props.postProperties === 'HiddenPosts' ? 'pointer-events-none' : 'cursor-pointer'}`}
           onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
-          <div className="flex h-full min-h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 tablet:h-full tablet:min-h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-gray-100"></div>
-          <div className="relative flex h-full min-h-[21.8px] w-full justify-between border-y border-y-white-500 tablet:h-full tablet:min-h-[49px] tablet:border-y-[3px] dark:border-y-gray-100">
-            <div
-              className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
-              style={{
-                width:
-                  props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()]
-                    ? props?.selectedPercentages[props?.answer.trim()]
-                    : '0%',
-              }}
-            />
+          <div className="flex h-full min-h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-white-500 dark:bg-gray-100 tablet:h-full tablet:min-h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
+          <div className="relative flex h-full min-h-[21.8px] w-full justify-between border-y border-y-white-500 dark:border-y-gray-100 tablet:h-full tablet:min-h-[49px] tablet:border-y-[3px]">
+            {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+              <div
+                className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
+                style={{
+                  width:
+                    props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()]
+                      ? props?.selectedPercentages[props?.answer.trim()]
+                      : '0%',
+                }}
+              />
+            )}
             {props.editable ? (
               <TextareaAutosize
                 inputMode="text"
@@ -320,16 +326,16 @@ const SingleAnswerMultipleChoice = (props) => {
                 value={answer}
                 autoFocus
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
-                className="w-full resize-none rounded-[4.73px] bg-white px-2 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-accent-600 outline-none tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px] dark:bg-accent-100 dark:text-white-600"
+                className="w-full resize-none rounded-[4.73px] bg-white px-2 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-accent-600 outline-none dark:bg-accent-100 dark:text-white-600 tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
               />
             ) : (
-              <h1 className="px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-accent-600 tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
+              <h1 className="px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-accent-600 dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                 {props.answer}
               </h1>
             )}
             {props.deleteable && (
               <div
-                className={`relative flex items-center bg-white text-[0.5rem] font-semibold tablet:text-[1rem] laptop:text-[1.25rem] dark:bg-accent-100 ${props.checkOptionStatus.color}`}
+                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-accent-100 tablet:text-[1rem] laptop:text-[1.25rem] ${props.checkOptionStatus.color}`}
               >
                 <div className="flex h-[75%] w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span> {isTyping ? `${answer.length}/200` : props.checkOptionStatus.name}</span>
@@ -337,53 +343,57 @@ const SingleAnswerMultipleChoice = (props) => {
                 <Tooltip optionStatus={props.checkOptionStatus} />
               </div>
             )}
-            <div
-              className={`absolute bottom-0 block h-[5px] bg-[#FDD503B2] tablet:h-[10px]`}
-              style={{
-                width:
-                  props.contendPercentages &&
-                  props.contendPercentages?.[props.answer.trim()] &&
-                  props.contendPercentages?.[props.answer.trim()] !== '0%'
-                    ? props.contendPercentages[props.answer.trim()]
-                    : '0%',
-              }}
-            />
+            {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+              <div
+                className={`absolute bottom-0 block h-[5px] bg-[#FDD503B2] tablet:h-[10px]`}
+                style={{
+                  width:
+                    props.contendPercentages &&
+                    props.contendPercentages?.[props.answer.trim()] &&
+                    props.contendPercentages?.[props.answer.trim()] !== '0%'
+                      ? props.contendPercentages[props.answer.trim()]
+                      : '0%',
+                }}
+              />
+            )}
           </div>
         </div>
         {props?.postProperties === 'HiddenPosts' ? (
-          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px] text-[9.238px] tablet:gap-[19px]  tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] dark:border-gray-100 dark:bg-accent-100"></div>
+          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px] text-[9.238px] dark:border-gray-100 dark:bg-accent-100 tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px]"></div>
         ) : (
           <div
-            className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px]  text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] dark:border-gray-100 dark:bg-accent-100 ${
+            className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px] text-[9.238px] dark:border-gray-100 dark:bg-accent-100 tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
               props.btnText === 'Results' ? 'pointer-events-none' : ''
             }`}
             onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
           >
-            <div className="flex items-center gap-1 laptop:gap-[18px]">
-              {props?.postProperties !== 'sharedlink-results' && props?.questStartData?.type !== 'embed' && (
-                <div id="custom-checkbox" className="flex h-full items-center">
-                  <input
-                    id="small-checkbox"
-                    type="checkbox"
-                    className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                    checked={checkState}
-                    readOnly
-                  />
-                </div>
-              )}
+            {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+              <div className="flex items-center gap-1 laptop:gap-[18px]">
+                {props?.postProperties !== 'sharedlink-results' && props?.questStartData?.type !== 'embed' && (
+                  <div id="custom-checkbox" className="flex h-full items-center">
+                    <input
+                      id="small-checkbox"
+                      type="checkbox"
+                      className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                      checked={checkState}
+                      readOnly
+                    />
+                  </div>
+                )}
 
-              {props.btnText === 'Results' ? (
-                <>
-                  {props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()] ? (
-                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                      {props.selectedPercentages[props.answer.trim()]}
-                    </span>
-                  ) : (
-                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                  )}
-                </>
-              ) : null}
-            </div>
+                {props.btnText === 'Results' ? (
+                  <>
+                    {props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()] ? (
+                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                        {props.selectedPercentages[props.answer.trim()]}
+                      </span>
+                    ) : (
+                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                    )}
+                  </>
+                ) : null}
+              </div>
+            )}
           </div>
         )}
       </div>

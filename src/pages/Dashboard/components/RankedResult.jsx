@@ -39,32 +39,39 @@ const RankedResult = (props) => {
         <div
           className={`absolute top-1/2 -translate-y-1/2 text-[9.238px] tablet:text-[16px] ${props.postProperties !== 'sharedlink-results' && props.btnText === 'Results' ? '-right-[37px] tablet:-right-[75px]' : '-right-9 tablet:-right-14'}`}
         >
-          {props.btnText === 'Results' ? (
+          {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
             <>
-              {props.contendPercentages &&
-              props.contendPercentages?.[props.answer.trim()] &&
-              props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
-                <div className="flex items-center gap-1 tablet:gap-[10px]">
-                  {props?.postProperties !== 'sharedlink-results' && (
-                    <ContentionIcon
-                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                      checked={checkState}
-                    />
+              {props.btnText === 'Results' ? (
+                <>
+                  {props.contendPercentages &&
+                  props.contendPercentages?.[props.answer.trim()] &&
+                  props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
+                    <div className="flex items-center gap-1 tablet:gap-[10px]">
+                      {props?.postProperties !== 'sharedlink-results' && (
+                        <ContentionIcon
+                          classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                          checked={checkState}
+                        />
+                      )}
+                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                        {props.contendPercentages[props.answer.trim()]}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1 tablet:gap-[10px]">
+                      {props?.postProperties !== 'sharedlink-results' && (
+                        <ContentionIcon
+                          classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                          checked={false}
+                        />
+                      )}
+                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                    </div>
                   )}
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                    {props.contendPercentages[props.answer.trim()]}
-                  </span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-1 tablet:gap-[10px]">
-                  {props?.postProperties !== 'sharedlink-results' && (
-                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
-                  )}
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                </div>
-              )}
+                </>
+              ) : null}
             </>
-          ) : null}
+          )}
         </div>
         {/* Options */}
         <div className="flex w-full items-center">
@@ -80,12 +87,14 @@ const RankedResult = (props) => {
             </div>
           )}
           <div className="relative flex w-full justify-between">
-            <div
-              className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
-              style={{
-                width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
-              }}
-            />
+            {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+              <div
+                className="absolute top-0 block h-[5px] bg-green-100 tablet:h-[10px]"
+                style={{
+                  width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
+                }}
+              />
+            )}
             <h1 className="w-full border-y border-white-500 px-2 py-[6px] text-[8.5px] font-normal leading-[10px] text-accent-600 dark:border-gray-100 dark:text-white-600 tablet:border-y-[3px] tablet:py-3 tablet:pl-[18px] tablet:pr-5 tablet:text-[19px] tablet:leading-none laptop:pr-[34px]">
               {props.answer}
             </h1>
@@ -124,17 +133,19 @@ const RankedResult = (props) => {
               />
             </BasicModal>
 
-            <div
-              className={`absolute bottom-0 block h-[5px] bg-[#FDD503B2] tablet:h-[10px]`}
-              style={{
-                width:
-                  props.contendPercentages &&
-                  props.contendPercentages?.[props.answer.trim()] &&
-                  props.contendPercentages?.[props.answer.trim()] !== '0%'
-                    ? props.contendPercentages[props.answer.trim()]
-                    : '0%',
-              }}
-            />
+            {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+              <div
+                className={`absolute bottom-0 block h-[5px] bg-[#FDD503B2] tablet:h-[10px]`}
+                style={{
+                  width:
+                    props.contendPercentages &&
+                    props.contendPercentages?.[props.answer.trim()] &&
+                    props.contendPercentages?.[props.answer.trim()] !== '0%'
+                      ? props.contendPercentages[props.answer.trim()]
+                      : '0%',
+                }}
+              />
+            )}
           </div>
         </div>
         {/* to show rank number */}
@@ -146,12 +157,18 @@ const RankedResult = (props) => {
                   <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">
                     {originalOrder.indexOf(props?.selectedPercentages[props?.answer.trim()]) + 1}
                   </h1>
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                    {props?.selectedPercentages[props?.answer.trim()]}
-                  </span>
+                  {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                      {props?.selectedPercentages[props?.answer.trim()]}
+                    </span>
+                  )}
                 </div>
               ) : (
-                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                <>
+                  {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                  )}
+                </>
               )}
             </>
           ) : null}
