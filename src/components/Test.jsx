@@ -23,7 +23,7 @@ const Test = () => {
 
       // Send Push Notification
       console.log('Sending Push...');
-      await fetch(`${import.meta.env.VITE_FRONTEND_URL}/pushNotifications/subscribe`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/pushNotifications/subscribe`, {
         method: 'POST',
         body: JSON.stringify(subscription),
         headers: {
