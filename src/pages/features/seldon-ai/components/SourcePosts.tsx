@@ -12,6 +12,7 @@ import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/c
 import { addSourceAtStart, getSeldonDataStates, removeSource } from '../../../../features/seldon-ai/seldonDataSlice';
 import { Button } from '../../../../components/ui/Button';
 import { useLocation } from 'react-router-dom';
+import ViewMyLists from './ViewMyLists';
 
 export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const [showMorePosts, setShowMorePosts] = useState(false);
   const [searchPostLoad, setSearchPostLoad] = useState(false);
   const debouncedSearch = useDebounce(searchPost, 1000);
+  const [viewLists, setViewLists] = useState(false);
+  const [selectedList, setSelectedList] = useState([]);
+
+  const closeViewList = () => setViewLists(false);
 
   useEffect(() => {
     if (location.pathname.startsWith('/r')) {
@@ -53,10 +58,12 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
     handleSearchPost();
   }, [debouncedSearch]);
 
+  const combinedList = [...seldonsData.source, ...selectedList];
+
   const { data: sourcePosts, isFetching } = useQuery({
-    queryKey: ['sourcePosts', seldonsData.source],
-    queryFn: () => getQuestsCustom({ ids: seldonsData.source, uuid: persistedUserInfo.uuid }),
-    enabled: seldonsData.source.length === 0 ? false : true,
+    queryKey: ['sourcePosts', combinedList],
+    queryFn: () => getQuestsCustom({ ids: combinedList, uuid: persistedUserInfo.uuid }),
+    enabled: combinedList.length === 0 ? false : true,
   });
 
   return (
@@ -73,42 +80,52 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
         </div>
       )}
       {!location.pathname.includes('/r') && (
-        <div className="relative w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[10px] tablet:border-[3px]">
-          <TextareaAutosize
-            value={(selectedPost && selectedPost?.Question) ?? searchPost}
-            placeholder="Add more sources..."
-            className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none dark:border-gray-100 dark:bg-transparent dark:text-gray-300 tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px]"
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setSelectedPost(null);
-              setSearchPost(e.target.value);
-            }}
-          />
-          {searchPost !== '' &&
-            (searchPostLoad ? (
-              <div className="flex w-full items-center justify-center py-6">
-                <FaSpinner className="size-6 animate-spin text-blue-200 tablet:size-16" />
-              </div>
-            ) : (
-              <ul className="h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
-                {searchResult?.map((post: any) => (
-                  <li
-                    key={post._id}
-                    className="cursor-pointer px-4 py-[6px] tablet:py-2"
-                    onClick={() => {
-                      setSearchPost('');
-                      setSearchResult([]);
-                      transformSelectedPost(post);
-                    }}
-                  >
-                    <div className="relative">
-                      <div className="absolute left-0 top-0 z-50 size-full cursor-grab bg-transparent" />
-                      <QuestionCardWithToggle questStartData={post} />
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ))}
-        </div>
+        <>
+          <div className="relative w-full rounded-[5.387px] border border-white-500 dark:border-gray-100 tablet:rounded-[10px] tablet:border-[3px]">
+            <TextareaAutosize
+              value={(selectedPost && selectedPost?.Question) ?? searchPost}
+              placeholder="Add more sources..."
+              className="flex w-full resize-none items-center rounded-[5.387px] bg-white px-2 py-[6px] text-[10px] font-normal leading-[0.625rem] text-accent-600 focus-visible:outline-none dark:border-gray-100 dark:bg-transparent dark:text-gray-300 tablet:rounded-[10px] tablet:px-4 tablet:py-3 tablet:text-[20px] tablet:leading-[20px]"
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                setSelectedPost(null);
+                setSearchPost(e.target.value);
+              }}
+            />
+            {searchPost !== '' &&
+              (searchPostLoad ? (
+                <div className="flex w-full items-center justify-center py-6">
+                  <FaSpinner className="size-6 animate-spin text-blue-200 tablet:size-16" />
+                </div>
+              ) : (
+                <ul className="h-fit max-h-80 w-full overflow-y-auto border border-white-500 bg-white text-[10px] font-medium leading-normal text-[#707175] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:max-h-96 tablet:rounded-b-[10px] tablet:border-[3px] tablet:text-[15.7px]">
+                  {searchResult?.map((post: any) => (
+                    <li
+                      key={post._id}
+                      className="cursor-pointer px-4 py-[6px] tablet:py-2"
+                      onClick={() => {
+                        setSearchPost('');
+                        setSearchResult([]);
+                        transformSelectedPost(post);
+                      }}
+                    >
+                      <div className="relative">
+                        <div className="absolute left-0 top-0 z-50 size-full cursor-grab bg-transparent" />
+                        <QuestionCardWithToggle questStartData={post} />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+          </div>
+          <div className="w-fit">
+            {viewLists && (
+              <ViewMyLists handleClose={closeViewList} modalVisible={viewLists} setSelectedList={setSelectedList} />
+            )}
+            <Button variant="submit" onClick={() => setViewLists(true)}>
+              View my lists
+            </Button>
+          </div>
+        </>
       )}
       <div className="flex flex-col gap-4">
         {isFetching ? (
