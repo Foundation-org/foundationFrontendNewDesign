@@ -67,6 +67,12 @@ const Result = (props) => {
     }
   }, [persistedUserInfo?.userSettings?.defaultSort]);
 
+  useEffect(() => {
+    if (!props.isEmbedResults && props.postProperties === 'Embed') {
+      sortAnswers();
+    }
+  }, [props.isEmbedResults, props.postProperties]);
+
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px` }}>
       {props.questStartData?.whichTypeQuestion === 'yes/no' ||
