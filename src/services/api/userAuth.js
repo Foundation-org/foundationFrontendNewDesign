@@ -137,6 +137,7 @@ export const deleteAccount = async (uuid) => {
   return await api.delete(`/delete/${uuid}`);
 };
 
-export const createGuestMode = async () => {
-  return await api.post('/user/create/guestMode');
+export const createGuestMode = async (fid) => {
+  const url = fid ? `/user/create/guestMode?fid=${fid}` : '/user/create/guestMode';
+  return await api.post(url);
 };

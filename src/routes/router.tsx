@@ -91,7 +91,7 @@ export function Router() {
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/verify-phone" element={<VerifyPhone />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
-          <Route path="/p/:id" element={<GuestRedirect redirectUrl={null} />} />
+          <Route path="/p/:id/:fid?" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/l/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/r/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />

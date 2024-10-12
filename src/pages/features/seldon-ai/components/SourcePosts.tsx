@@ -117,14 +117,14 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
                 </ul>
               ))}
           </div>
-          {/* <div className="w-fit">
+          <div className="w-fit">
             {viewLists && (
               <ViewMyLists handleClose={closeViewList} modalVisible={viewLists} setSelectedList={setSelectedList} />
             )}
             <Button variant="submit" onClick={() => setViewLists(true)}>
               View my lists
             </Button>
-          </div> */}
+          </div>
         </>
       )}
       <div className="flex flex-col gap-4">
