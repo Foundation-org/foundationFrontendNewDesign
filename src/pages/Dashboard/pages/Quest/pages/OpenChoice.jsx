@@ -374,7 +374,7 @@ const OpenChoice = () => {
       >
         <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
           <SortableContext items={optionsArray}>
-            {optionsArray.map((item, index) => (
+            {optionsValue.map((item, index) => (
               <Options
                 key={item.id}
                 id={item.id}
