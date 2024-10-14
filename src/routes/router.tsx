@@ -65,6 +65,7 @@ import SeldonView from '../pages/features/seldon-ai/SeldonView';
 import NewsFeedLayout from '../pages/features/news-feed/NewsFeedLayout';
 import NewsFeed from '../pages/features/news-feed';
 import DMPreview from '../pages/features/DirectMessaging/DMPreview';
+import Unsubscribe from '../pages/Emails/Unsubscrbe';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);
@@ -179,6 +180,7 @@ export function Router() {
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route path="/verify-phone" element={<VerifyPhone />} />
+            <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
