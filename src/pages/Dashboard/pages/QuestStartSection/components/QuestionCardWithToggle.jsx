@@ -17,6 +17,7 @@ import AddOptions from '../../../../../components/question-card/AddOptions';
 import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 import { tooltipDefaultStatus } from '../../../../../utils/extras';
 import { useChangePost, useStartGuestListPost, useStartPost } from '../../../../../services/mutations/post';
+import { sortAnswers } from '../../../../../utils/utils';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -48,6 +49,48 @@ const QuestionCardWithToggle = (props) => {
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [checkOptionStatus, setCheckOptionStatus] = useState(tooltipDefaultStatus);
+  const [selectedOption, setSelectedOption] = useState(1);
+  const [contendedOption, setContendedOption] = useState(1);
+  const [sortedAnswers, setSortedAnswers] = useState(
+    questStartData?.QuestAnswers ? questStartData?.QuestAnswers : null,
+  );
+
+  // ==========================SORT FUNCTION STARTS =============================
+
+  useEffect(() => {
+    if (questStartData?.QuestAnswers) {
+      setSortedAnswers(questStartData?.QuestAnswers);
+    }
+  }, [questStartData?.QuestAnswers]);
+
+  const handleSortIconClick = (isSelection) => {
+    const setOption = isSelection ? setSelectedOption : setContendedOption;
+    setOption((prevOption) => {
+      const nextOption = prevOption === 3 ? 1 : prevOption + 1;
+
+      const order = nextOption === 1 ? 'normal' : nextOption === 2 ? 'desc' : 'asc';
+      const sortedData = sortAnswers(questStartData, order, isSelection);
+      setSortedAnswers(sortedData);
+      return nextOption;
+    });
+  };
+
+  useEffect(() => {
+    if (persistedUserInfo?.userSettings?.defaultSort) {
+      const sortedData = sortAnswers(questStartData, 'desc', true);
+      setSortedAnswers(sortedData);
+      setSelectedOption(2);
+    }
+  }, [persistedUserInfo?.userSettings?.defaultSort]);
+
+  useEffect(() => {
+    if (!isEmbedResults && postProperties === 'Embed') {
+      const sortedData = sortAnswers();
+      setSortedAnswers(sortedData);
+    }
+  }, [isEmbedResults, postProperties]);
+
+  // ==========================SORT FUNCTION ENDED ==============================
 
   const handleQuestSelection = (actionPayload) => {
     setQuestSelection((prevState) => {
@@ -669,6 +712,10 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             postProperties={postProperties}
             isEmbedResults={isEmbedResults}
+            sortedAnswers={sortedAnswers}
+            selectedOption={selectedOption}
+            contendedOption={contendedOption}
+            handleSortIconClick={handleSortIconClick}
           />
           <AddOptions
             questStartData={questStartData}

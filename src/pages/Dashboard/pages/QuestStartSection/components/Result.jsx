@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getSeeMoreOptions } from '../../../../../features/quest/seeMoreOptionsSlice';
@@ -12,66 +10,11 @@ import ResultSortIcons from './ResultSortIcons';
 const Result = (props) => {
   const showOptions = useSelector(getSeeMoreOptions);
   const { isFullScreen } = useParams();
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [selectedOption, setSelectedOption] = useState(1);
-  const [contendedOption, setCcontendedOption] = useState(1);
-  const [sortedAnswers, setSortedAnswers] = useState(
-    props.questStartData?.QuestAnswers ? props.questStartData?.QuestAnswers : null,
-  );
-
-  useEffect(() => {
-    if (props.questStartData?.QuestAnswers) {
-      setSortedAnswers(props.questStartData?.QuestAnswers);
-    }
-  }, [props.questStartData?.QuestAnswers]);
 
   function findSelectionContentionCheck(array, labelToFind) {
     const foundObject = array.find((obj) => obj.question === labelToFind);
     return !!foundObject;
   }
-
-  const sortAnswers = (order = 'normal', isSelection = true) => {
-    const dataKey = isSelection ? 'selectedPercentage' : 'contendedPercentage';
-    const percentages = props.questStartData?.[dataKey]?.[props.questStartData?.[dataKey].length - 1];
-
-    const sorted = _.sortBy([...sortedAnswers], (answer) => {
-      const percentage = percentages?.[answer.question];
-      return percentage ? parseInt(percentage) : -1;
-    });
-
-    if (order === 'desc') {
-      setSortedAnswers([..._.reverse(sorted)]);
-    } else if (order === 'asc') {
-      setSortedAnswers(sorted);
-    } else {
-      setSortedAnswers([...props.questStartData?.QuestAnswers]);
-    }
-  };
-
-  const handleSortIconClick = (isSelection) => {
-    const setOption = isSelection ? setSelectedOption : setCcontendedOption;
-    setOption((prevOption) => {
-      const nextOption = prevOption === 3 ? 1 : prevOption + 1;
-
-      const order = nextOption === 1 ? 'normal' : nextOption === 2 ? 'desc' : 'asc';
-      sortAnswers(order, isSelection);
-
-      return nextOption;
-    });
-  };
-
-  useEffect(() => {
-    if (persistedUserInfo?.userSettings?.defaultSort) {
-      sortAnswers('desc', true);
-      setSelectedOption(2);
-    }
-  }, [persistedUserInfo?.userSettings?.defaultSort]);
-
-  useEffect(() => {
-    if (!props.isEmbedResults && props.postProperties === 'Embed') {
-      sortAnswers();
-    }
-  }, [props.isEmbedResults, props.postProperties]);
 
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px` }}>
@@ -84,12 +27,12 @@ const Result = (props) => {
         >
           <ResultSortIcons
             questStartData={props.questStartData}
-            handleSortIconClick={handleSortIconClick}
-            selectedOption={selectedOption}
+            handleSortIconClick={props.handleSortIconClick}
+            selectedOption={props.selectedOption}
             isEmbedResults={props.isEmbedResults}
             postProperties={props.postProperties}
           />
-          {sortedAnswers?.map((item) => (
+          {props.sortedAnswers?.map((item) => (
             <SingleAnswer
               key={item._id}
               answer={item.question}
@@ -125,22 +68,22 @@ const Result = (props) => {
         <div className="relative">
           <ResultSortIcons
             questStartData={props.questStartData}
-            handleSortIconClick={handleSortIconClick}
-            selectedOption={selectedOption}
-            contendedOption={contendedOption}
+            handleSortIconClick={props.handleSortIconClick}
+            selectedOption={props.selectedOption}
+            contendedOption={props.contendedOption}
             isEmbedResults={props.isEmbedResults}
             postProperties={props.postProperties}
           />
           <div
-            className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 ? 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]' : ''}`}
+            className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && props.sortedAnswers?.length >= 10 ? 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]' : ''}`}
           >
-            {sortedAnswers
+            {props.sortedAnswers
               ?.slice(
                 0,
                 showOptions.isShow && showOptions.id === props.questStartData._id
-                  ? sortedAnswers.length
+                  ? props.sortedAnswers.length
                   : isFullScreen || location.pathname.startsWith('/p')
-                    ? sortedAnswers.length
+                    ? props.sortedAnswers.length
                     : 10,
               )
               .map((item, index) => (
@@ -184,7 +127,7 @@ const Result = (props) => {
                 />
               ))}
             {showOptions.id !== props.questStartData._id &&
-              sortedAnswers?.length >= 10 &&
+              props.sortedAnswers?.length >= 10 &&
               isFullScreen === undefined &&
               !location.pathname.startsWith('/p') && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
@@ -193,22 +136,22 @@ const Result = (props) => {
         <div className="relative">
           <ResultSortIcons
             questStartData={props.questStartData}
-            handleSortIconClick={handleSortIconClick}
-            selectedOption={selectedOption}
-            contendedOption={contendedOption}
+            handleSortIconClick={props.handleSortIconClick}
+            selectedOption={props.selectedOption}
+            contendedOption={props.contendedOption}
             isEmbedResults={props.isEmbedResults}
             postProperties={props.postProperties}
           />
           <div
-            className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && sortedAnswers?.length >= 10 && 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]'}`}
+            className={`relative flex flex-col gap-[5.7px] tablet:gap-[10px] ${props.questStartData.type === 'embed' && props.sortedAnswers?.length >= 10 && 'h-[284px] overflow-scroll no-scrollbar tablet:h-[580px]'}`}
           >
-            {sortedAnswers
+            {props.sortedAnswers
               ?.slice(
                 0,
                 showOptions.isShow && showOptions.id === props.questStartData._id
-                  ? sortedAnswers.length
+                  ? props.sortedAnswers.length
                   : isFullScreen || location.pathname.startsWith('/p')
-                    ? sortedAnswers.length
+                    ? props.sortedAnswers.length
                     : 10,
               )
               .map((item, index) => (
@@ -246,7 +189,7 @@ const Result = (props) => {
                 </div>
               ))}
             {showOptions.id !== props.questStartData._id &&
-              sortedAnswers?.length >= 10 &&
+              props.sortedAnswers?.length >= 10 &&
               isFullScreen === undefined &&
               !location.pathname.startsWith('/p') && <SeeMoreOptions id={props.questStartData._id} />}
           </div>
