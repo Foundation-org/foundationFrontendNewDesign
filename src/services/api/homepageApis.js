@@ -27,8 +27,6 @@ export const searchTopics = async (topicSearch) => {
   return await api.get(`/preferences/searchTopics?search=${topicSearch}`);
 };
 
-// ============ Filters
-
 // For Default
 export const getAllQuestsWithDefaultStatus = async (params) => {
   return await api.post('/infoquestions/getAllQuestsWithDefaultStatus', params);
@@ -51,19 +49,11 @@ export const getSinglePost = async ({ uuid, qId }) => {
   return await api.get(`/infoquestions/getQuest/${uuid}/${qId}`);
 };
 
-// Get Quest By uniqueShareLink
-// export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
-//   return await api.get(`/infoquestions/getQuest/${uniqueShareLink}`);
-// };
+// For Shared Link
 export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
-  // try {
   return await api.get(`/infoquestions/getQuest/${uniqueShareLink}/`, {
     params: { uuid: localStorage.getItem('uuid') },
   });
-  // return response.data.data;
-  // } catch (error) {
-  //   return error.response?.data?.message || 'An error occurred while fetching the quest.';
-  // }
 };
 
 // For Unanswered

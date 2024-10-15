@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { questImpression } from '../../services/api/questsApi';
+import { getQuestsCustom, questImpression } from '../../services/api/questsApi';
 import { getQuestByUniqueShareLink } from '../../services/api/homepageApis';
 import Topbar from '../Dashboard/components/Topbar';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
@@ -12,8 +12,10 @@ import SystemNotificationCard from '../../components/posts/SystemNotificationCar
 
 const SingleQuest = () => {
   let { id } = useParams();
+  const postId = id?.split('=')[1];
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [postData, setPostData] = useState(null);
 
   const {
     data: singleQuestData,
@@ -22,15 +24,28 @@ const SingleQuest = () => {
     isSuccess,
   } = useQuery({
     queryKey: ['questByShareLink'],
-    queryFn: () => getQuestByUniqueShareLink(location.pathname.split('/').pop()),
-    enabled: persistedUserInfo !== null,
+    queryFn: () => getQuestByUniqueShareLink(id),
+    enabled: persistedUserInfo !== null && postId === undefined,
   });
 
   useEffect(() => {
     if (isSuccess && singleQuestData) {
+      setPostData(singleQuestData?.data?.data);
       questImpression(id);
     }
   }, [isSuccess, singleQuestData?.data?.data]);
+
+  const { data: sourcePosts, isSuccess: singlePostSuccess } = useQuery({
+    queryKey: ['singlePostById'],
+    queryFn: () => getQuestsCustom({ ids: [postId], uuid: persistedUserInfo?.uuid }),
+    enabled: postId !== undefined,
+  });
+
+  useEffect(() => {
+    if (singlePostSuccess && sourcePosts) {
+      setPostData(sourcePosts);
+    }
+  }, [singlePostSuccess, sourcePosts]);
 
   // Add Meta Pixel script to the page head
   useEffect(() => {
@@ -99,12 +114,12 @@ const SingleQuest = () => {
             window.prerenderReady = false;
           `}
         </script>
-        {/* // Metaprop */}
+        {/* Meta prop */}
         <title>Foundation</title>
-        <meta name="description" content={singleQuestData?.data.data?.Question} />
-        //OG
+        <meta name="description" content={postData?.Question} />
+        {/* OG */}
         <meta property="og:title" content="Foundation" />
-        <meta property="og:description" content={singleQuestData?.data.data?.Question} />
+        <meta property="og:description" content={postData?.Question} />
         <meta property="og:type" content="website" />
         {/* <meta name="theme-color" content={seoMeta.color} />
         <meta property="og:video" content={seoMeta.video} />
@@ -126,10 +141,10 @@ const SingleQuest = () => {
         {/* <meta property="og:audio" content={seoMeta.preview} />
         <meta property="og:audio:type" content="audio/vnd.facebook.bridge" />
         <meta property="og:audio:type" content="audio/mpeg" /> */}
-        //Note // Twitter
+        {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content="Foundation" />
-        <meta property="twitter:description" content={singleQuestData?.data?.data?.Question} />
+        <meta property="twitter:description" content={postData?.Question} />
         <meta property="twitter:domain" content="on.foundation" />
         <meta property="twitter:image" content={`https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png`} />
         <meta name="google" content="notranslate"></meta>
@@ -142,15 +157,15 @@ const SingleQuest = () => {
               <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
                 Loading...
               </p>
-            ) : !singleQuestData && error !== '' ? (
+            ) : !postData && error !== '' ? (
               <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
                 {error?.response?.data?.message
                   ? error?.response?.data?.message
                   : 'An error occurred while fetching the quest.'}
               </p>
             ) : null}
-            {singleQuestData &&
-              singleQuestData?.data.data?.map((item, index) =>
+            {postData &&
+              postData?.map((item, index) =>
                 item.id === 'guest_notification' ? (
                   <div key={index + 1} className="mx-auto w-full max-w-[778px] px-4 tablet:px-6">
                     <SystemNotificationCard post={item} />
