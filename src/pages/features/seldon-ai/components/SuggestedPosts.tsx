@@ -17,6 +17,7 @@ import {
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import { getSeldonState } from '../../../../features/seldon-ai/seldonSlice';
 import { getSeldonDataStates, setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
+import UploadArticleImage from './UploadArticleImage';
 
 export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
@@ -169,6 +170,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
           </div>
         </>
       )}
+      <UploadArticleImage articleId={seldonsData.articleId} />
       {!seldonState.debug && (
         <div
           className={`${location.pathname.includes('/r') ? 'hidden' : 'justify-between'} flex w-full items-center gap-4`}
