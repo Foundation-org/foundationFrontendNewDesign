@@ -14,7 +14,7 @@ export default function EmbedParticipate({ postProperties }: { postProperties: s
               target="_blank"
               className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:text-[20px]"
             >
-              Click to participate
+              Participate and earn 25 FDX
             </a>
           )}
         </div>

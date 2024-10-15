@@ -38,8 +38,9 @@ const Unsubscribe = () => {
         <IoIosMail className="text-4xl text-blue-100" />
         {message ? (
           <>
-            <h1 className="text-2xl font-semibold text-blue-600">You've unsubscribed</h1>
-            <p>You'll no longer receive emails from Foundation.io</p>
+            <h1 className="text-2xl font-semibold text-blue-600">You've Successfully Unsubscribed</h1>
+            <p>You will no longer receive emails from Foundation.io.</p>
+            <p>If you change your mind, you can easily re-enable emails in your settings at any time.</p>
           </>
         ) : (
           <h1 className="text-2xl font-semibold text-blue-600">Unable to unsubscribe.</h1>

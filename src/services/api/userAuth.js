@@ -76,6 +76,8 @@ export const updateUserSettings = async ({
   systemNotifications,
   email,
   emailNotifications,
+  newNewsNotifications,
+  newPostsNotifications,
 }) => {
   return await api.post('user/updateUserSettings', {
     uuid,
@@ -84,6 +86,8 @@ export const updateUserSettings = async ({
     systemNotifications,
     email,
     emailNotifications,
+    newNewsNotifications,
+    newPostsNotifications,
   });
 };
 
