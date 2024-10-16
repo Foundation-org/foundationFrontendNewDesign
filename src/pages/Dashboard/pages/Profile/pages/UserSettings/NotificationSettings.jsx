@@ -47,14 +47,18 @@ export default function NotificationSettings() {
         />
       )}
       <SummaryCard headerIcon="/assets/svgs/notification-icon.svg" headerTitle="Notification Settings">
+        <h1 className="text-end text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+          Email
+        </h1>
+
         <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                General Notifications
+                General
               </h1>{' '}
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Get notified of new features, updates and more!
+                Get updates on new features, opportunities to earn FDX and more.
               </p>
             </div>
             <Switch
@@ -78,10 +82,10 @@ export default function NotificationSettings() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                New Posts Notifications
+                New Posts
               </h1>
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Helpful messages in your feed to guide you along
+                Stay up to date on the latest posts on Foundation.
               </p>
             </div>
             <Switch
@@ -106,10 +110,10 @@ export default function NotificationSettings() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                New News Notifications
+                Foundation News
               </h1>
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Helpful messages in your feed to guide you along
+                Get notified of recently published articles.
               </p>
             </div>
             <Switch

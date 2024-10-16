@@ -97,10 +97,10 @@ export const Settings = () => {
             <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
               <div>
                 <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                  Default Sort
+                  Post results
                 </h1>
                 <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                  Automatically sort results from highest to lowest
+                  Show from highest to lowest.
                 </p>
               </div>
               <Switch
@@ -121,10 +121,10 @@ export const Settings = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                  System Notifications
+                  Quick Tips
                 </h1>
                 <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                  Helpful messages in your feed to guide you along
+                  View helpful information as you engage across the patform.
                 </p>
               </div>
               <Switch
@@ -152,10 +152,10 @@ export const Settings = () => {
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
               <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                Ask Password
+                Password Request
               </h1>
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Ask for your password every time when encrypting or decrypting.
+                Request password when encrypting or decrypting. Only appicabLe if you have the encryption badge.
               </p>
             </div>
             <Switch
