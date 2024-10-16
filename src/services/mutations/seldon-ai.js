@@ -118,8 +118,12 @@ export const usePublishArticleMutation = () => {
     },
     onError: (error) => {
       console.log(error);
-      // Show error message in a toast
-      toast.warning(error.response.data.message);
+      if (error?.response?.data?.error === 'File too large') {
+        toast.error('File too large. Please select a file less than 1 MB.');
+      } else {
+        // Show error message in a toast
+        toast.warning(error.response.data.message);
+      }
     },
   });
 
