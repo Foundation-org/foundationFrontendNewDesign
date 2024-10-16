@@ -29,6 +29,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
   const [loading, setLoading] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handlePublishArticle, isPending: isPublishPending } = usePublishArticleMutation();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (location.pathname.startsWith('/r')) {
@@ -170,7 +171,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
           </div>
         </>
       )}
-      <UploadArticleImage articleId={seldonsData.articleId} />
+      {!location.pathname.includes('/r') && <UploadArticleImage setSelectedFile={setSelectedFile} />}
       {!seldonState.debug && (
         <div
           className={`${location.pathname.includes('/r') ? 'hidden' : 'justify-between'} flex w-full items-center gap-4`}
@@ -205,6 +206,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
                 conclusion: seldonsData.conclusion,
                 settings: seldonState,
                 articleId: getSeldonDataState.articleId,
+                image: selectedFile,
               } as any);
             }}
           >
