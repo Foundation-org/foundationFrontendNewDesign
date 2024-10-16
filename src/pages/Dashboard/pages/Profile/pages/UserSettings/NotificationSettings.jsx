@@ -47,10 +47,6 @@ export default function NotificationSettings() {
         />
       )}
       <SummaryCard headerIcon="/assets/svgs/notification-icon.svg" headerTitle="Notification Settings">
-        <h1 className="text-end text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-          Email
-        </h1>
-
         <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
           <div className="flex items-center justify-between">
             <div>
@@ -61,23 +57,28 @@ export default function NotificationSettings() {
                 Get updates on new features, opportunities to earn FDX and more.
               </p>
             </div>
-            <Switch
-              checked={emailNotifications}
-              onChange={(e) => {
-                setModalVisible(true);
-              }}
-              className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={`switch_base ${
-                  emailNotifications
-                    ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                    : 'translate-x-[1px] bg-[#707175]'
-                }`}
-              />
-            </Switch>
+            <div className="flex flex-col items-center gap-1">
+              <h1 className="text-end text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                Email
+              </h1>
+              <Switch
+                checked={emailNotifications}
+                onChange={(e) => {
+                  setModalVisible(true);
+                }}
+                className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+              >
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`switch_base ${
+                    emailNotifications
+                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                      : 'translate-x-[1px] bg-[#707175]'
+                  }`}
+                />
+              </Switch>
+            </div>
           </div>
           <div className="flex items-center justify-between">
             <div>
