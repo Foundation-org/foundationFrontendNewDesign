@@ -5,10 +5,14 @@ import { useDebounce } from '../../../../utils/useDebounce';
 import { fetchLists } from '../../../../services/api/listsApi';
 import { useQuery } from '@tanstack/react-query';
 import PopUp from '../../../../components/ui/PopUp';
+import { useDispatch } from 'react-redux';
+import { addMultipleSourcesAtStart } from '../../../../features/seldon-ai/seldonDataSlice';
 
-export default function ViewMyLists({ handleClose, modalVisible, setSelectedList }) {
+export default function ViewMyLists({ handleClose, modalVisible }) {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null); // Track selected item
   const debouncedSearch = useDebounce(search, 1000);
 
   const handleSearch = (e) => {
@@ -24,36 +28,23 @@ export default function ViewMyLists({ handleClose, modalVisible, setSelectedList
     console.log('some error occur');
   }
 
-  const handleCheckboxChange = (itemId) => {
+  const handleCheckboxChange = (item) => {
+    setSelectedItem(item);
     setSelectedOption((prevSelectedOption) => {
-      if (prevSelectedOption.includes(itemId)) {
-        return prevSelectedOption.filter((id) => id !== itemId);
+      if (prevSelectedOption.includes(item._id)) {
+        return prevSelectedOption.filter((id) => id !== item._id);
       } else {
-        return [...prevSelectedOption, itemId];
+        return [...prevSelectedOption, item._id];
       }
     });
   };
 
-  const handleSelectedList = (list) => {
-    const questIds = list.post.map((post) => post.questForeginKey._id);
+  const handleSelectedList = () => {
+    if (!selectedItem) return;
 
-    setSelectedList((prevSelectedList) => {
-      const newSelectedList = [...prevSelectedList];
+    const questIds = selectedItem.post.map((post) => post.questForeginKey._id);
 
-      // Loop through each questId and toggle it in the selected list
-      questIds.forEach((id) => {
-        if (newSelectedList.includes(id)) {
-          // If id is already selected, remove it
-          const index = newSelectedList.indexOf(id);
-          newSelectedList.splice(index, 1);
-        } else {
-          // If id is not selected, add it
-          newSelectedList.push(id);
-        }
-      });
-
-      return newSelectedList;
-    });
+    dispatch(addMultipleSourcesAtStart(questIds));
 
     handleClose();
   };
@@ -84,7 +75,7 @@ export default function ViewMyLists({ handleClose, modalVisible, setSelectedList
                 />
                 <label
                   htmlFor="floating_outlined"
-                  className="te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[9px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-accent-100 dark:text-gray-300 peer-focus:dark:text-blue-500 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+                  className="absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[9px] text-sm text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-accent-100 dark:text-gray-300 peer-focus:dark:text-blue-500 tablet:text-[17px]"
                 >
                   Search
                 </label>
@@ -102,7 +93,7 @@ export default function ViewMyLists({ handleClose, modalVisible, setSelectedList
                 />
               )}
             </div>
-            <div className="h-fit max-h-[160px] overflow-y-auto no-scrollbar tablet:max-h-[280px]">
+            <div className="flex h-fit max-h-[160px] flex-col gap-2 overflow-y-auto no-scrollbar tablet:max-h-[280px] tablet:gap-4">
               {listData
                 .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 ?.filter((list) => {
@@ -112,45 +103,42 @@ export default function ViewMyLists({ handleClose, modalVisible, setSelectedList
                   return list.category.toLowerCase().includes(debouncedSearch.toLowerCase());
                 })
                 .map((item) => (
-                  <>
-                    <div
-                      key={item._id}
-                      className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
-                    >
-                      <div className="w-fit space-y-2 tablet:space-y-5">
-                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
-                          {item.category}
-                        </h4>
-                        <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] dark:text-gray-300 tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
-                          {item.post.length} Post{item.post.length > 1 ? 's' : ''}
-                        </h4>
-                      </div>
-                      <div id="custom-rating-checkbox" className="flex h-full items-center">
-                        <input
-                          id={`checkbox-${item._id}`}
-                          type="checkbox"
-                          className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                          checked={selectedOption.includes(item._id)}
-                          onChange={() => {
-                            handleCheckboxChange(item._id);
-                          }}
-                          readOnly
-                        />
-                      </div>
+                  <div
+                    key={item._id}
+                    className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
+                  >
+                    <div className="w-fit space-y-2 tablet:space-y-5">
+                      <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                        {item.category}
+                      </h4>
+                      <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] dark:text-gray-300 tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
+                        {item.post.length} Post{item.post.length > 1 ? 's' : ''}
+                      </h4>
                     </div>
-                    <div className="mt-3 flex justify-end gap-4 tablet:mt-[25px]">
-                      <Button
-                        variant="submit"
-                        className={'bg-[#7C7C7C]'}
-                        onClick={() => {
-                          handleSelectedList(item);
+                    <div id="custom-rating-checkbox" className="flex h-full items-center">
+                      <input
+                        id={`checkbox-${item._id}`}
+                        type="checkbox"
+                        className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                        checked={selectedOption.includes(item._id)}
+                        onChange={() => {
+                          handleCheckboxChange(item);
                         }}
-                      >
-                        Import list
-                      </Button>
+                        readOnly
+                      />
                     </div>
-                  </>
+                  </div>
                 ))}
+              <div className="flex justify-end gap-4">
+                <Button
+                  variant="submit"
+                  className={'bg-[#7C7C7C]'}
+                  onClick={handleSelectedList}
+                  disabled={!selectedItem} // Disable if no item is selected
+                >
+                  Import list
+                </Button>
+              </div>
             </div>
           </>
         )}

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { createStartQuest, undoFeedback, updateChangeAnsStartQuest } from '../api/questsApi';
 import { resetaddOptionLimit } from '../../features/quest/utilsSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -46,6 +46,8 @@ export const useStartGuestListPost = (setLoading) => {
 };
 
 export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, questStartData) => {
+  let { id } = useParams();
+  const postId = id?.split('=')[1];
   const location = useLocation();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
@@ -60,9 +62,13 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
         queryClient.setQueryData(['sourcePosts'], (oldData) => {
           return oldData.map((item) => (item._id === resp.data.data._id ? resp.data.data : item));
         });
-      } else if (location.pathname.startsWith('/r')) {
+      }
+
+      if (location.pathname.startsWith('/r')) {
         queryClient.invalidateQueries(['sourcePosts']);
-      } else {
+      }
+
+      if (location.pathname === '/') {
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,
           pages: oldData?.pages?.map((page) =>
@@ -74,18 +80,31 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
 
-        queryClient.setQueryData(['questByShareLink'], (oldData) => {
-          if (!oldData) return resp.data.data;
+        if (location.pathname.startsWith('/p/')) {
+          if (postId === undefined) {
+            queryClient.setQueryData(['questByShareLink'], (oldData) => {
+              const newData = resp.data.data;
 
-          return {
-            ...oldData,
-            data: {
-              ...oldData.data,
-              ...resp.data.data,
-              data: oldData.data.data.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
-            },
-          };
-        });
+              return {
+                ...oldData,
+                data: {
+                  ...oldData.data,
+                  data: [newData],
+                },
+              };
+            });
+          } else {
+            queryClient.setQueryData(['singlePostById'], (oldData) => {
+              const newData = resp.data.data;
+
+              if (Array.isArray(oldData) && oldData.length > 0) {
+                return [newData, ...oldData.slice(1)];
+              }
+
+              return [newData];
+            });
+          }
+        }
       }
 
       if (location.pathname.startsWith('/post/')) {
@@ -130,6 +149,8 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   const location = useLocation();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  let { id } = useParams();
+  const postId = id?.split('=')[1];
 
   const { mutateAsync: changePost } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
@@ -155,7 +176,9 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
           queryClient.setQueryData(['sourcePosts'], (oldData) => {
             return oldData.map((item) => (item._id === resp.data.data._id ? resp.data.data : item));
           });
-        } else {
+        }
+
+        if (location.pathname === '/') {
           queryClient.setQueriesData(['posts'], (oldData) => ({
             ...oldData,
             pages: oldData?.pages?.map((page) =>
@@ -165,18 +188,29 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
         }
 
         if (location.pathname.startsWith('/p/')) {
-          queryClient.setQueryData(['questByShareLink'], (oldData) => {
-            const newData = resp.data.data;
+          if (postId === undefined) {
+            queryClient.setQueryData(['questByShareLink'], (oldData) => {
+              const newData = resp.data.data;
 
-            // Keep the oldData format, but replace data.data[0]
-            return {
-              ...oldData,
-              data: {
-                ...oldData.data,
-                data: [newData], // Replace the first item of data.data
-              },
-            };
-          });
+              return {
+                ...oldData,
+                data: {
+                  ...oldData.data,
+                  data: [newData],
+                },
+              };
+            });
+          } else {
+            queryClient.setQueryData(['singlePostById'], (oldData) => {
+              const newData = resp.data.data;
+
+              if (Array.isArray(oldData) && oldData.length > 0) {
+                return [newData, ...oldData.slice(1)];
+              }
+
+              return [newData];
+            });
+          }
         }
       }
       dispatch(resetaddOptionLimit());

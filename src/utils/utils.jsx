@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const formatCountNumber = (num) => {
   if (num >= 1000) {
     const formatted = (num / 1000).toLocaleString(undefined, { minimumFractionDigits: num % 1000 !== 0 ? 1 : 0 });
@@ -62,3 +64,29 @@ export function camelCaseToReadable(text) {
     .replace(/([a-z])([A-Z])/g, '$1 $2') // Insert space before each uppercase letter
     .replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
 }
+
+/**
+ * Sorts answers based on percentage values and order.
+ *
+ * @param {Array} questStartData - The data containing the answers and percentages.
+ * @param {string} order - The sorting order: 'asc', 'desc', or 'normal'.
+ * @param {boolean} isSelection - Whether to use selected or contended percentage.
+ * @returns {Array} - The sorted answers array.
+ */
+export const sortAnswers = (questStartData, order = 'normal', isSelection = true) => {
+  const dataKey = isSelection ? 'selectedPercentage' : 'contendedPercentage';
+  const percentages = questStartData?.[dataKey]?.[questStartData?.[dataKey].length - 1];
+
+  const sortedAnswers = _.sortBy([...questStartData?.QuestAnswers], (answer) => {
+    const percentage = percentages?.[answer.question];
+    return percentage ? parseInt(percentage) : -1;
+  });
+
+  if (order === 'desc') {
+    return _.reverse(sortedAnswers);
+  } else if (order === 'asc') {
+    return sortedAnswers;
+  } else {
+    return [...questStartData?.QuestAnswers];
+  }
+};

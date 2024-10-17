@@ -21,6 +21,7 @@ interface articleType {
   seoSummary: string;
   suggestions: suggestions[];
   settings: any
+  s3Urls:string[]
   __v: number;
 }
 

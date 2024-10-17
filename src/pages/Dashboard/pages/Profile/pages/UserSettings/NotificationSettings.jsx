@@ -11,11 +11,14 @@ export default function NotificationSettings() {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [modalVisible, setModalVisible] = useState(false);
-  const [systemNotifications, setSystemNotifications] = useState(
-    persistedUserInfo.notificationSettings.systemNotifications || false,
-  );
   const [emailNotifications, setEmailNotifications] = useState(
     persistedUserInfo.notificationSettings.emailNotifications || false,
+  );
+  const [postNotifications, setPostNotifications] = useState(
+    persistedUserInfo.notificationSettings.newPostsNotifications || false,
+  );
+  const [newsNotifications, setNewsNotifications] = useState(
+    persistedUserInfo.notificationSettings.newNewsNotifications || false,
   );
 
   const { mutateAsync: handleUserSettings } = useMutation({
@@ -48,24 +51,58 @@ export default function NotificationSettings() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                Email Notifications
+                General
               </h1>{' '}
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Get notified of new features, updates and more!
+                Get updates on new features, opportunities to earn FDX and more.
+              </p>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <h1 className="text-end text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                Email
+              </h1>
+              <Switch
+                checked={emailNotifications}
+                onChange={(e) => {
+                  setModalVisible(true);
+                }}
+                className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+              >
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`switch_base ${
+                    emailNotifications
+                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                      : 'translate-x-[1px] bg-[#707175]'
+                  }`}
+                />
+              </Switch>
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                New Posts
+              </h1>
+              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                Stay up to date on the latest posts on Foundation.
               </p>
             </div>
             <Switch
-              checked={emailNotifications}
+              checked={postNotifications}
               onChange={(e) => {
-                setModalVisible(true);
+                showToast('warning', 'featureComingSoon');
+                // setPostNotifications(e);
+                // handleUserSettings({ uuid: persistedUserInfo.uuid, newPostsNotifications: e });
               }}
-              className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+              className={`${postNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
             >
               <span className="sr-only">Use setting</span>
               <span
                 aria-hidden="true"
                 className={`switch_base ${
-                  emailNotifications
+                  postNotifications
                     ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
                     : 'translate-x-[1px] bg-[#707175]'
                 }`}
@@ -75,25 +112,26 @@ export default function NotificationSettings() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                System Notifications
+                Foundation News
               </h1>
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Helpful messages in your feed to guide you along
+                Get notified of recently published articles.
               </p>
             </div>
             <Switch
-              checked={systemNotifications}
+              checked={newsNotifications}
               onChange={(e) => {
-                setSystemNotifications(e);
-                handleUserSettings({ uuid: persistedUserInfo.uuid, systemNotifications: e });
+                showToast('warning', 'featureComingSoon');
+                // setNewsNotifications(e);
+                // handleUserSettings({ uuid: persistedUserInfo.uuid, newNewsNotifications: e });
               }}
-              className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+              className={`${newsNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
             >
               <span className="sr-only">Use setting</span>
               <span
                 aria-hidden="true"
                 className={`switch_base ${
-                  systemNotifications
+                  newsNotifications
                     ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
                     : 'translate-x-[1px] bg-[#707175]'
                 }`}

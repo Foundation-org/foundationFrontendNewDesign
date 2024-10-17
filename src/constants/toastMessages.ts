@@ -108,4 +108,5 @@ export const toastMessages = {
   articlePublished: 'Article published successfully',
   rankChoiceParticipantNotAllowed: 'Direct Message is not available for Rank Choice post',
   numberShouldBeBetween1and9: 'Number should be between 1 and 9',
+  noEncryptionBadgeAdded: 'You need to have the encryption badge to use this feature',
 } as const;

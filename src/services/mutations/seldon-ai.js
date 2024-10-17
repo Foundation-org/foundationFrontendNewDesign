@@ -46,20 +46,35 @@ export const publishArticle = async ({
   conclusion,
   settings,
   articleId,
+  image, // Add image file here
 }) => {
-  return await api.post(`/article/create`, {
-    userUuid,
-    prompt,
-    title,
-    abstract,
-    groundBreakingFindings,
-    suggestions: suggestion,
-    source,
-    seoSummary,
-    discussion,
-    conclusion,
-    settings,
-    ...(articleId && { articleId }),
+  const formData = new FormData();
+  console.log(source);
+
+  formData.append('userUuid', userUuid);
+  formData.append('prompt', prompt);
+  formData.append('title', title);
+  formData.append('abstract', abstract);
+  formData.append('groundBreakingFindings', JSON.stringify(groundBreakingFindings));
+  formData.append('suggestions', JSON.stringify(suggestion));
+  formData.append('source', JSON.stringify(source));
+  formData.append('seoSummary', seoSummary);
+  formData.append('discussion', discussion);
+  formData.append('conclusion', conclusion);
+  formData.append('settings', JSON.stringify(settings));
+
+  if (articleId) {
+    formData.append('articleId', articleId);
+  }
+
+  if (image) {
+    formData.append('file', image);
+  }
+
+  return await api.post(`/article/create`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data', // Required for file uploads
+    },
   });
 };
 
@@ -78,6 +93,7 @@ export const usePublishArticleMutation = () => {
       conclusion,
       settings,
       articleId,
+      image,
     }) => {
       return publishArticle({
         userUuid,
@@ -92,6 +108,7 @@ export const usePublishArticleMutation = () => {
         conclusion,
         settings,
         articleId,
+        image,
       });
     },
     onSuccess: (resp) => {
@@ -101,8 +118,12 @@ export const usePublishArticleMutation = () => {
     },
     onError: (error) => {
       console.log(error);
-      // Show error message in a toast
-      toast.warning(error.response.data.message);
+      if (error?.response?.data?.error === 'File too large') {
+        toast.error('File too large. Please select a file less than 1 MB.');
+      } else {
+        // Show error message in a toast
+        toast.warning(error.response.data.message);
+      }
     },
   });
 

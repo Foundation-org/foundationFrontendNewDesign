@@ -22,6 +22,9 @@ export const Settings = () => {
   const [defaultSort, setDefaultSort] = useState(persistedUserInfo.userSettings.defaultSort || false);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [askPasswordEverytime, setAskPasswordEverytime] = useState(getAskPasswordFromRedux);
+  const [systemNotifications, setSystemNotifications] = useState(
+    persistedUserInfo.notificationSettings.systemNotifications || false,
+  );
 
   const handleTheme = () => {
     dispatch(changeTheme());
@@ -53,6 +56,7 @@ export const Settings = () => {
     mutationFn: updateUserSettings,
     onSuccess: () => {
       queryClient.invalidateQueries(['userInfo']);
+      queryClient.invalidateQueries(['posts']);
     },
     onError: (error) => {
       console.log(error);
@@ -89,46 +93,80 @@ export const Settings = () => {
           </div>
         </SummaryCard>
         <SummaryCard headerIcon="/assets/svgs/feed-settings.svg" headerTitle="Feed Settings">
-          <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
-            <div className="">
-              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                Default Sort
-              </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Automatically sort results from highest to lowest
-              </p>
+          <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
+            <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
+              <div>
+                <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                  Post results
+                </h1>
+                <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                  Show from highest to lowest.
+                </p>
+              </div>
+              <Switch
+                checked={defaultSort}
+                onChange={(e) => {
+                  setDefaultSort(e);
+                  handleUserSettings({ uuid: persistedUserInfo.uuid, defaultSort: e });
+                }}
+                className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+              >
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`switch_base ${defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'}`}
+                />
+              </Switch>
             </div>
-            <Switch
-              checked={defaultSort}
-              onChange={(e) => {
-                setDefaultSort(e);
-                handleUserSettings({ uuid: persistedUserInfo.uuid, defaultSort: e });
-              }}
-              className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={`switch_base ${defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'}`}
-              />
-            </Switch>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                  Quick Tips
+                </h1>
+                <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                  View helpful information as you engage across the patform.
+                </p>
+              </div>
+              <Switch
+                checked={systemNotifications}
+                onChange={(e) => {
+                  setSystemNotifications(e);
+                  handleUserSettings({ uuid: persistedUserInfo.uuid, systemNotifications: e });
+                }}
+                className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+              >
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`switch_base ${
+                    systemNotifications
+                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                      : 'translate-x-[1px] bg-[#707175]'
+                  }`}
+                />
+              </Switch>
+            </div>
           </div>
         </SummaryCard>
         <SummaryCard headerIcon="/assets/svgs/encrypt.svg" headerTitle="Encryption Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
               <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                Ask Password
+                Password Request
               </h1>
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Ask for your password every time when encrypting or decrypting.
+                Request password when encrypting or decrypting. Only appicable if you have the encryption badge.
               </p>
             </div>
             <Switch
               checked={askPasswordEverytime}
               onChange={(e) => {
-                setAskPasswordEverytime(e);
-                dispatch(setAskPassword(e));
+                if (persistedUserInfo.isPasswordEncryption) {
+                  setAskPasswordEverytime(e);
+                  dispatch(setAskPassword(e));
+                } else {
+                  showToast('warning', 'noEncryptionBadgeAdded');
+                }
               }}
               className={`${askPasswordEverytime ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
             >
