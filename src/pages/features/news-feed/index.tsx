@@ -10,7 +10,7 @@ export default function NewsFeed() {
   const { ref, inView } = useInView();
   const dispatch = useDispatch();
   const getNewsFeedFilters = useSelector(newsFeedFilters);
-  const { data, fetchNextPage, hasNextPage, isLoading, isError, isFetching } = useFetchNewsFeed(
+  const { data, fetchNextPage, hasNextPage, isLoading, isError, isFetching, error } = useFetchNewsFeed(
     getNewsFeedFilters.searchData,
   );
 
@@ -34,7 +34,7 @@ export default function NewsFeed() {
     );
   }, [data]);
 
-  if (isError) return <div>Error fetching articles</div>;
+  if (isError) return <div className="flex w-full justify-center">{error?.message}</div>;
 
   return (
     <>
