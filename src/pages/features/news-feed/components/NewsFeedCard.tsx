@@ -29,6 +29,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         prompt: data?.prompt,
         createdAt: data?.createdAt,
         updatedAt: data?.updatedAt,
+        seoImage: data.s3Urls[0],
       }),
     );
     dispatch(handleSeldonInput({ name: 'isTitle', value: true }));

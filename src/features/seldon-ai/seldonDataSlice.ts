@@ -21,6 +21,7 @@ interface SeldonDataState {
   debug: string;
   createdAt: string;
   updatedAt: string;
+  seoImage:string
 }
 
 const initialState: SeldonDataState = {
@@ -37,6 +38,7 @@ const initialState: SeldonDataState = {
   debug: '',
   createdAt: '',
   updatedAt: '',
+  seoImage:''
 };
 
 export const SeldonDataSlice = createSlice({
@@ -60,12 +62,16 @@ export const SeldonDataSlice = createSlice({
       state.suggestions = [];
       state.createdAt = '';
       state.updatedAt = '';
+      state.seoImage=''
     },
     addSourceAtStart: (state, action: PayloadAction<string>) => {
       state.source.unshift(action.payload);
     },
     removeSource: (state, action: PayloadAction<string>) => {
       state.source = state.source.filter((source) => source !== action.payload);
+    },
+    setSeoImage:(state,action:PayloadAction<string>)=>{
+      state.seoImage=action.payload
     },
     resetSeldonDataState: (state) => {
       return {
@@ -75,7 +81,7 @@ export const SeldonDataSlice = createSlice({
   },
 });
 
-export const { setSeldonData, addDebug, addSourceAtStart, removeSource, resetSeldonDataState } =
+export const { setSeldonData, addDebug, addSourceAtStart, removeSource, resetSeldonDataState,setSeoImage } =
   SeldonDataSlice.actions;
 
 export default SeldonDataSlice.reducer;

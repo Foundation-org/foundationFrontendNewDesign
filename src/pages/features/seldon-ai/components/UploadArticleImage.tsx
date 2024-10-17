@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button } from '../../../../components/ui/Button';
 import { toast } from 'sonner';
 import api from '../../../../services/api/Axios';
+import { getSeldonDataStates } from '../../../../features/seldon-ai/seldonDataSlice';
+import { useSelector } from 'react-redux';
 
 export default function UploadArticleImage({
   setSelectedFile,
@@ -9,14 +11,15 @@ export default function UploadArticleImage({
   setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>;
 }) {
   const [imagePreview, setImagePreview] = useState<string | null>(null); // State to store the image URL
-
+  const getSeldonDataState = useSelector(getSeldonDataStates);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const reader = new FileReader();
 
       reader.onload = (event) => {
-        if (!event.target) {
+        const result = event.target?.result;
+        if (!result) {
           return;
         }
 
@@ -25,21 +28,25 @@ export default function UploadArticleImage({
           const width = img.width;
           const height = img.height;
 
-          if (width / height === 16 / 9 && event.target) {
+          console.log(width, height, width / height);
+
+          if (width / height >= 1.7 && width / height <= 2) {
             setSelectedFile(file);
-            setImagePreview(event.target.result as string); // Create and set the image preview URL
+            setImagePreview(result as string); // Set the image preview URL
           } else {
             toast.error('Please upload an image with a 16:9 aspect ratio.');
             setSelectedFile(null);
             setImagePreview(null);
           }
         };
-        img.src = event.target.result as string;
+
+        img.src = result as string; // Set image source to the data URL
       };
 
       reader.readAsDataURL(file);
     }
   };
+  console.log(getSeldonDataState);
 
   // const handleUpload = async () => {
   //   if (!selectedFile) return;
@@ -87,10 +94,20 @@ export default function UploadArticleImage({
         </div>
 
         {/* Display the image preview if available */}
-        {imagePreview && (
+        {imagePreview ? (
           <div>
             <img src={imagePreview} alt="Selected article image" className="max-w-xs rounded-lg shadow-md" />
           </div>
+        ) : (
+          getSeldonDataState?.seoImage && (
+            <div>
+              <img
+                src={getSeldonDataState?.seoImage}
+                alt="Selected article image"
+                className="max-w-xs rounded-lg shadow-md"
+              />
+            </div>
+          )
         )}
       </div>
     </>
