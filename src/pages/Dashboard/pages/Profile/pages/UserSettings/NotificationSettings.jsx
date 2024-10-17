@@ -92,8 +92,9 @@ export default function NotificationSettings() {
             <Switch
               checked={postNotifications}
               onChange={(e) => {
-                setPostNotifications(e);
-                handleUserSettings({ uuid: persistedUserInfo.uuid, newPostsNotifications: e });
+                showToast('warning', 'featureComingSoon');
+                // setPostNotifications(e);
+                // handleUserSettings({ uuid: persistedUserInfo.uuid, newPostsNotifications: e });
               }}
               className={`${postNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
             >
@@ -120,8 +121,9 @@ export default function NotificationSettings() {
             <Switch
               checked={newsNotifications}
               onChange={(e) => {
-                setNewsNotifications(e);
-                handleUserSettings({ uuid: persistedUserInfo.uuid, newNewsNotifications: e });
+                showToast('warning', 'featureComingSoon');
+                // setNewsNotifications(e);
+                // handleUserSettings({ uuid: persistedUserInfo.uuid, newNewsNotifications: e });
               }}
               className={`${newsNotifications ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
             >

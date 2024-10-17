@@ -9,7 +9,12 @@ import { TextareaAutosize } from '@mui/material';
 import { searchPosts } from '../../../../services/api/listsApi';
 import DotsLoading from '../../../../components/ui/DotsLoading';
 import QuestionCardWithToggle from '../../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
-import { addSourceAtStart, getSeldonDataStates, removeSource } from '../../../../features/seldon-ai/seldonDataSlice';
+import {
+  addMultipleSourcesAtStart,
+  addSourceAtStart,
+  getSeldonDataStates,
+  removeSource,
+} from '../../../../features/seldon-ai/seldonDataSlice';
 import { Button } from '../../../../components/ui/Button';
 import { useLocation } from 'react-router-dom';
 import ViewMyLists from './ViewMyLists';
@@ -28,7 +33,6 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const [searchPostLoad, setSearchPostLoad] = useState(false);
   const debouncedSearch = useDebounce(searchPost, 1000);
   const [viewLists, setViewLists] = useState(false);
-  const [selectedList, setSelectedList] = useState([]);
 
   const closeViewList = () => setViewLists(false);
 
@@ -58,12 +62,10 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
     handleSearchPost();
   }, [debouncedSearch]);
 
-  const combinedList = [...seldonsData.source, ...selectedList];
-
   const { data: sourcePosts, isFetching } = useQuery({
-    queryKey: ['sourcePosts', combinedList],
-    queryFn: () => getQuestsCustom({ ids: combinedList, uuid: persistedUserInfo.uuid }),
-    enabled: combinedList.length === 0 ? false : true,
+    queryKey: ['sourcePosts', seldonsData.source],
+    queryFn: () => getQuestsCustom({ ids: seldonsData.source, uuid: persistedUserInfo.uuid }),
+    enabled: seldonsData.source.length === 0 ? false : true,
   });
 
   return (
@@ -118,9 +120,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
               ))}
           </div>
           <div className="w-fit">
-            {viewLists && (
-              <ViewMyLists handleClose={closeViewList} modalVisible={viewLists} setSelectedList={setSelectedList} />
-            )}
+            {viewLists && <ViewMyLists handleClose={closeViewList} modalVisible={viewLists} />}
             <Button variant="submit" onClick={() => setViewLists(true)}>
               View my lists
             </Button>
@@ -138,6 +138,10 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
                   className="absolute -right-3 -top-3 z-50 flex size-8 items-center justify-center rounded-full bg-gray-100"
                   onClick={() => {
                     dispatch(removeSource(post._id));
+                    setSeldonsData((prev: any) => ({
+                      ...prev,
+                      source: prev.source.filter((item: any) => item._id !== post._id),
+                    }));
                   }}
                 >
                   <img

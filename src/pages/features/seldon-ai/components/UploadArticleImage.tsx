@@ -46,7 +46,6 @@ export default function UploadArticleImage({
       reader.readAsDataURL(file);
     }
   };
-  console.log(getSeldonDataState);
 
   // const handleUpload = async () => {
   //   if (!selectedFile) return;

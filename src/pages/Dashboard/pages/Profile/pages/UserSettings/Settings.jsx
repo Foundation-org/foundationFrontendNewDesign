@@ -161,8 +161,12 @@ export const Settings = () => {
             <Switch
               checked={askPasswordEverytime}
               onChange={(e) => {
-                setAskPasswordEverytime(e);
-                dispatch(setAskPassword(e));
+                if (persistedUserInfo.isPasswordEncryption) {
+                  setAskPasswordEverytime(e);
+                  dispatch(setAskPassword(e));
+                } else {
+                  showToast('warning', 'noEncryptionBadgeAdded');
+                }
               }}
               className={`${askPasswordEverytime ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
             >
