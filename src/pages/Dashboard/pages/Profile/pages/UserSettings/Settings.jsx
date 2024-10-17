@@ -155,7 +155,7 @@ export const Settings = () => {
                 Password Request
               </h1>
               <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
-                Request password when encrypting or decrypting. Only appicabLe if you have the encryption badge.
+                Request password when encrypting or decrypting. Only appicable if you have the encryption badge.
               </p>
             </div>
             <Switch
