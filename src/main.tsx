@@ -46,11 +46,11 @@ createRoot(document.getElementById('root')!).render(
 );
 
 // Service Worker Registration
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/worker.js')
-      .then((reg) => console.log('Service Worker registered', reg))
-      .catch((err) => console.log('Service Worker registration failed', err));
-  });
-}
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker
+//       .register('/worker.js')
+//       .then((reg) => console.log('Service Worker registered', reg))
+//       .catch((err) => console.log('Service Worker registration failed', err));
+//   });
+// }

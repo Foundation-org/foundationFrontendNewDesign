@@ -66,7 +66,7 @@ import NewsFeedLayout from '../pages/features/news-feed/NewsFeedLayout';
 import NewsFeed from '../pages/features/news-feed';
 import DMPreview from '../pages/features/DirectMessaging/DMPreview';
 import Unsubscribe from '../pages/Emails/Unsubscrbe';
-import Withdrawls from '../pages/Dashboard/pages/Treasury/pages/Withdrawls';
+import Withdraws from '../pages/Dashboard/pages/Treasury/pages/withdraws';
 
 export function Router() {
   const persistedUser = useSelector((state: any) => state.auth.user);
@@ -134,7 +134,7 @@ export function Router() {
                 <Route path="buy-fdx" element={<BuyFDX />} />
                 <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
-                <Route path="withdrawls" element={<Withdrawls />} />
+                <Route path="withdrawls" element={<Withdraws />} />
               </Route>
               {/* <Route path="treasury/:code" element={<TreasuryLayout />}>
                 <Route path="" element={<TreasurySummary />} />
