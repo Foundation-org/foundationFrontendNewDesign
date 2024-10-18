@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
+import { ethers } from 'ethers';
+import ABI from '../../../../../../src/contracts/TokenTransfer/TokenTransfer.json';
 
 function Withdrawls() {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [dollar, setDollar] = useState(0);
-
-  console.log(persistedUserInfo);
 
   const handleFdxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fdxValue = parseFloat(e.target.value);
     setDollar(fdxValue);
   };
 
-  const handleWithdraw = (e: React.FormEvent<HTMLFormElement>) => {
+  const checkWeb3Badge = () =>
+    persistedUserInfo?.badges?.some((badge: any) => badge?.web3?.hasOwnProperty('etherium-wallet') || false) || false;
+
+  const handleWithdraw = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (dollar <= 0 || Number.isNaN(dollar)) {
@@ -26,6 +29,29 @@ function Withdrawls() {
       toast.warning('Insufficient balance');
       return;
     }
+
+    try {
+      if (window.ethereum) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const contract = new ethers.Contract(import.meta.env.VITE_TRANSFERTOKEN_AGREEMENT, ABI, signer);
+        const toAddress = persistedUserInfo?.badges?.find((badge: any) =>
+          badge?.web3?.hasOwnProperty('etherium-wallet'),
+        )?.web3['etherium-wallet'];
+        const transaction = await contract.transferTokens(toAddress, {
+          value: ethers.utils.parseEther('0.0000000000000001'),
+        });
+
+        const receipt = await transaction.wait();
+        console.log('Withdrawl Successfull', receipt);
+        toast.success('Withdrawl Successfull');
+        window.location.reload();
+      } else {
+        toast.error('Please install metamask first');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -36,7 +62,7 @@ function Withdrawls() {
             Withdraw FDX
           </h1>
           <p className="text-[9px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:font-medium tablet:leading-normal">
-            You can withdraw FDX from your balance.
+            Note: Transaction fee to be paid by user
           </p>
         </div>
         <form
@@ -55,10 +81,25 @@ function Withdrawls() {
               className="w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 py-[4.5px] text-[9.053px] font-semibold leading-normal focus:outline-none tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:py-[9px] tablet:text-[20px]"
             />
           </div>
-          <div className="flex w-full justify-end">
-            <Button variant="submit" type="submit">
-              Withdraw
-            </Button>
+          <div className="flex w-full justify-between">
+            <div className="flex items-end">
+              {!checkWeb3Badge() ? (
+                <p className="text-[9px] font-normal leading-[113%] text-red-500 tablet:text-[16px] tablet:font-medium tablet:leading-normal">
+                  Please add Ethereum badge first!
+                </p>
+              ) : (
+                <></>
+              )}
+            </div>
+            {checkWeb3Badge() ? (
+              <Button variant="submit" type="submit">
+                Withdraw
+              </Button>
+            ) : (
+              <Button variant="hollow-submit" type="submit" disabled={true}>
+                Withdraw
+              </Button>
+            )}
           </div>
         </form>
       </div>

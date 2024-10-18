@@ -24,8 +24,8 @@ export const treasuryItems = [
   { id: 1, title: 'Rewards & Fees', path: '/treasury/reward-schedule' },
   // { id: 2, title: 'Buy FDX', path: '/treasury/buy-fdx' },
   // { id: 3, title: 'Redemption center', path: '/treasury/redemption-center' },
-  // { id: 5, title: 'Withdrawals', path: '/treasury/withdrawls' },
   { id: 4, title: 'Treasury Activity', path: '/treasury/ledger' },
+  { id: 5, title: 'Withdrawals', path: '/treasury/withdrawls' },
 ];
 
 export const helpItems = [
