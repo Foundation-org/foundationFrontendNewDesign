@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import api from '../services/api/Axios';
@@ -34,7 +33,6 @@ const LocationService = () => {
   };
 
   const failedToGet = (err: GeolocationPositionError) => {
-    toast.error('Failed to get location');
     console.error(err);
   };
 
@@ -42,7 +40,9 @@ const LocationService = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
     } else {
-      toast.error('Geolocation not supported');
+
+      console.error('Geolocation not supported');
+
     }
   };
 
