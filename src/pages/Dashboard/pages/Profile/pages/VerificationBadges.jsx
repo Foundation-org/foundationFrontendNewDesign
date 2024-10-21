@@ -243,6 +243,7 @@ const VerificationBadges = () => {
           checkLegacyBadge={checkLegacyBadge}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           getAskPassword={getAskPasswordFromRedux}
+          checkPseudoBadge={checkPseudoBadge}
         />
       </ContentCard>
       <ContentCard icon="assets/verification-badges/privacy.svg" title="Privacy">
@@ -258,6 +259,7 @@ const VerificationBadges = () => {
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}
           checkSocial={checkSocial}
+          checkPseudoBadge={checkPseudoBadge}
           checkPrimary={checkPrimary}
         />
       </ContentCard>
@@ -276,6 +278,7 @@ const VerificationBadges = () => {
             handleRemoveBadgePopup={handleRemoveBadgePopup}
             handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
             checkLegacyBadge={checkLegacyBadge}
+            checkPseudoBadge={checkPseudoBadge}
             getAskPassword={getAskPasswordFromRedux}
           />
         </MetaMaskProvider>
@@ -287,6 +290,7 @@ const VerificationBadges = () => {
           checkLegacyBadge={checkLegacyBadge}
           handlePasskeyConfirmation={handlePasskeyConfirmation}
           getAskPassword={getAskPasswordFromRedux}
+          checkPseudoBadge={checkPseudoBadge}
         />
       </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">

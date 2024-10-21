@@ -98,7 +98,7 @@ const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup })
                     });
                   } else {
                     const timeRemaining = CanAdd(persistedUserInfo, 'password', 'password');
-                    if (timeRemaining === true) {
+                    if (timeRemaining === true || checkPseudoBadge()) {
                       setIsPersonalPopup(true);
                     } else {
                       toast.warning(

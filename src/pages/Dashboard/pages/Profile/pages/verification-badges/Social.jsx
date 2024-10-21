@@ -19,6 +19,7 @@ const Social = ({
   checkLegacyBadge,
   checkSocial,
   checkPrimary,
+  checkPseudoBadge,
 }) => {
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -164,7 +165,7 @@ const Social = ({
                     });
                   } else {
                     const timeRemaining = CanAdd(persistedUserInfo, item.type, 'social');
-                    if (timeRemaining === true) {
+                    if (timeRemaining === true || checkPseudoBadge()) {
                       if (
                         (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
                         (checkLegacyBadge() && getAskPasswordFromRedux)

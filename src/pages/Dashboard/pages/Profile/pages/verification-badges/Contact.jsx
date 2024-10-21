@@ -17,6 +17,7 @@ export default function Contact({
   handleOpenPasswordConfirmation,
   checkLegacyBadge,
   getAskPassword,
+  checkPseudoBadge,
 }) {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
@@ -44,7 +45,7 @@ export default function Contact({
     } else {
       if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) {
         const timeRemaining = CanAdd(persistedUserInfo, type, 'contact');
-        if (timeRemaining === true) {
+        if (timeRemaining === true || checkPseudoBadge()) {
           await handleOpenPasswordConfirmation();
         } else {
           toast.warning(`You need to wait just ${timeRemaining} more days before you can unlock this badge.`);
@@ -53,7 +54,7 @@ export default function Contact({
       if (!checkContact(type)) {
         const timeRemaining = CanAdd(persistedUserInfo, type, 'contact');
 
-        if (timeRemaining === true) {
+        if (timeRemaining === true || checkPseudoBadge()) {
           setIsPopup(true);
           setSelectedBadge(type);
         } else {
