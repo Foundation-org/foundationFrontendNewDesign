@@ -18,6 +18,7 @@ export default function SeldonView() {
   const { data: response, isLoading } = useQuery({
     queryKey: ['articles', location.pathname.split('/').pop()],
     queryFn: () => getArticles(location.pathname.split('/').pop()),
+    refetchOnWindowFocus: false,
   });
 
   const { mutateAsync: ShareArticle } = useMutation({

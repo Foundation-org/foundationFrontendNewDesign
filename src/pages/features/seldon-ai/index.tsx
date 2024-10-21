@@ -30,7 +30,6 @@ export default function SeldonAi() {
         const ids = response.data?.source
           .filter((fileName: string) => fileName.startsWith('post_'))
           .map((fileName: any) => fileName.match(/post_(\w+)\.pdf/)[1]);
-        console.log(response);
 
         if (response.data.debug) {
           dispatch(addDebug({ debug: response.data.debug, source: ids }));
