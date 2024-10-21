@@ -205,7 +205,9 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="flex items-center pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]">
+    <div
+      className={`${props.postProperties === 'Embed' && !props.isEmbedResults ? 'px-7 tablet:px-[69px]' : 'pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]'} flex items-center`}
+    >
       {/* =============== To Display Option */}
       <div className="relative flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         {props.addedAnswerUuid && (

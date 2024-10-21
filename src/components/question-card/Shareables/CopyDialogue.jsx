@@ -66,6 +66,9 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
+        queryClient.invalidateQueries({
+          queryKey: ['posts'],
+        });
         const uuid = localStorage.getItem('uuid');
         queryClient.invalidateQueries({
           queryKey: ['userInfo', uuid],
@@ -87,6 +90,10 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
+        queryClient.invalidateQueries({
+          queryKey: ['posts'],
+          exact: true,
+        });
         const uuid = localStorage.getItem('uuid');
         queryClient.invalidateQueries({
           queryKey: ['userInfo', uuid],
