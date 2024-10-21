@@ -12,7 +12,7 @@ export default function EmbedParticipate({ postProperties }: { postProperties: s
             <a
               href={`${import.meta.env.VITE_FRONTEND_URL}/p/${match[1]}`}
               target="_blank"
-              className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:text-[20px]"
+              className="cursor-pointer text-[10px] font-normal leading-[121.4%] text-blue-200 underline dark:text-blue-600 tablet:text-[20px]"
             >
               Participate and earn 25 FDX
             </a>
