@@ -9,6 +9,7 @@ import api from './services/api/Axios';
 import FallbackLoading from './components/FallbackLoading';
 import { MaintenanceRouter } from './routes/maintenance';
 import ReactGA from 'react-ga4';
+import LocationService from './utils/LocationService';
 const TRACKING_ID = 'G-3TVZ4YD2FG';
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
 
   return (
     <div className="h-dvh overflow-hidden">
+      <LocationService />
       <Helmet>
         <script>
           {`

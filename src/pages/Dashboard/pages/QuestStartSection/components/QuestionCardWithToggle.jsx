@@ -51,9 +51,12 @@ const QuestionCardWithToggle = (props) => {
   const [checkOptionStatus, setCheckOptionStatus] = useState(tooltipDefaultStatus);
   const [selectedOption, setSelectedOption] = useState(1);
   const [contendedOption, setContendedOption] = useState(1);
-  const [sortedAnswers, setSortedAnswers] = useState(
-    questStartData?.QuestAnswers ? questStartData?.QuestAnswers : null,
-  );
+  const [sortedAnswers, setSortedAnswers] = useState(() => {
+    if (persistedUserInfo?.userSettings?.defaultSort) {
+      return sortAnswers(questStartData, 'desc', true);
+    }
+    return questStartData;
+  });
 
   // ==========================SORT FUNCTION STARTS =============================
 
@@ -81,11 +84,11 @@ const QuestionCardWithToggle = (props) => {
       setSortedAnswers(sortedData);
       setSelectedOption(2);
     }
-  }, [persistedUserInfo?.userSettings?.defaultSort]);
+  }, [persistedUserInfo?.userSettings?.defaultSort, questStartData]);
 
   useEffect(() => {
     if (!isEmbedResults && postProperties === 'Embed') {
-      const sortedData = sortAnswers();
+      const sortedData = sortAnswers(questStartData, 'desc', true);
       setSortedAnswers(sortedData);
     }
   }, [isEmbedResults, postProperties]);

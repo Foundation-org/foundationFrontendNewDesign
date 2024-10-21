@@ -18,6 +18,7 @@ export default function Web3({
   handleOpenPasswordConfirmation,
   checkLegacyBadge,
   getAskPassword,
+  checkPseudoBadge,
 }) {
   const { sdk } = useSDK();
   const persistedContants = useSelector(getConstantsValues);
@@ -304,7 +305,7 @@ export default function Web3({
                     (checkLegacyBadge() && getAskPassword)
                   ) {
                     const timeRemaining = CanAdd(persistedUserInfo, item.type, 'etherium-wallet');
-                    if (timeRemaining === true) {
+                    if (timeRemaining === true || checkPseudoBadge()) {
                       await handleOpenPasswordConfirmation();
                     } else {
                       toast.warning(
@@ -325,7 +326,7 @@ export default function Web3({
                     });
                   } else {
                     const timeRemaining = CanAdd(persistedUserInfo, item.type, 'etherium-wallet');
-                    if (timeRemaining === true) {
+                    if (timeRemaining === true || checkPseudoBadge()) {
                       connect();
                     } else {
                       toast.warning(

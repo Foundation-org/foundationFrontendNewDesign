@@ -17,6 +17,7 @@ export default function Personal({
   checkLegacyBadge,
   handlePasskeyConfirmation,
   getAskPassword,
+  checkPseudoBadge,
 }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -36,7 +37,7 @@ export default function Personal({
       return;
     } else {
       const timeRemaining = CanAdd(persistedUserInfo, type, 'personal');
-      if (timeRemaining === true) {
+      if (timeRemaining === true || checkPseudoBadge()) {
         if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
           await handleOpenPasswordConfirmation();
 

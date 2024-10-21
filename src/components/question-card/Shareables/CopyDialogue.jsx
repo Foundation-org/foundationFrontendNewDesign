@@ -66,7 +66,11 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
-        queryClient.invalidateQueries(['userInfo']);
+        const uuid = localStorage.getItem('uuid');
+        queryClient.invalidateQueries({
+          queryKey: ['userInfo', uuid],
+          exact: true,
+        });
       }
     } else if (questStartData?.userQuestSetting && !questStartData?.userQuestSetting?.link) {
       data.isGenerateLink = true;
@@ -83,7 +87,11 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
-        queryClient.invalidateQueries(['userInfo']);
+        const uuid = localStorage.getItem('uuid');
+        queryClient.invalidateQueries({
+          queryKey: ['userInfo', uuid],
+          exact: true,
+        });
       }
     } else {
       setIsLoading(false);
@@ -98,7 +106,11 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
       showToast('success', 'customLinkGenerated');
-      queryClient.invalidateQueries(['userInfo']);
+      const uuid = localStorage.getItem('uuid');
+      queryClient.invalidateQueries({
+        queryKey: ['userInfo', uuid],
+        exact: true,
+      });
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
           ...oldData,
