@@ -3,7 +3,7 @@ import TermsPrivacyLayout from '../components/TermsPrivacyLayout';
 
 const SignUpPrivacyPolicy = () => {
   return (
-    <TermsPrivacyLayout title={'Privacy Policy'} timeStamp={'Last Updated: January 19, 2024'}>
+    <TermsPrivacyLayout title={'Privacy Policy'} timeStamp={'Last Updated: October 18, 2024'}>
       <div className="term_policy_paragraph mt-[5px] tablet:mt-[15px]">
         <p>
           This Privacy Notice for Foundation Internet Organization, Inc. ("we," "us," or "our") outlines how and why we
