@@ -4,15 +4,12 @@ import api from '../services/api/Axios';
 
 const LocationService = () => {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const hasGeolocationBadge = persistedUserInfo.badges.some(
-    (badge: any) => badge.personal && badge.personal.geolocation,
-  );
 
   useEffect(() => {
-    if (hasGeolocationBadge) {
+    if (persistedUserInfo) {
       getLocation();
     }
-  }, []);
+  }, [persistedUserInfo]);
 
   const postLocation = async (location: string) => {
     await api.post('/location', {
@@ -37,12 +34,16 @@ const LocationService = () => {
   };
 
   const getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
-    } else {
+    const hasGeolocationBadge = persistedUserInfo.badges.some(
+      (badge: any) => badge.personal && badge.personal.geolocation,
+    );
 
-      console.error('Geolocation not supported');
-
+    if (hasGeolocationBadge) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
+      } else {
+        console.error('Geolocation not supported');
+      }
     }
   };
 
