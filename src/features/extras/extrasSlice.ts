@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const initialState = {
   guestSignUpDialogue: false,
   guestSignInDialogue: false,
   credentialLogin: false,
   credentialRegister: false,
-  text:''
+  text: '',
 };
 
 export const extrasSlice = createSlice({
@@ -16,16 +15,16 @@ export const extrasSlice = createSlice({
     setGuestSignUpDialogue: (state, action) => {
       state.guestSignInDialogue = false;
       state.credentialLogin = false;
-      
+
       if (typeof action.payload === 'string') {
         state.guestSignUpDialogue = true;
-        state.text = action.payload; 
+        state.text = action.payload;
       } else if (action.payload === true) {
-        state.guestSignUpDialogue = true; 
-        state.text = 'Please create and account to unlock this feature.'; 
+        state.guestSignUpDialogue = true;
+        state.text = 'Please create and account to unlock this feature.';
       } else {
-        state.guestSignUpDialogue = false; 
-        state.text = ''; 
+        state.guestSignUpDialogue = false;
+        state.text = '';
       }
     },
     setGuestSignInDialogue: (state, action) => {
@@ -41,10 +40,18 @@ export const extrasSlice = createSlice({
       state.guestSignInDialogue = false;
       state.credentialRegister = action.payload;
     },
+    resetAuthModalState: (state) => {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { setGuestSignUpDialogue, setGuestSignInDialogue, setCredentialLogin, setCredentialRegister } =
-  extrasSlice.actions;
+export const {
+  setGuestSignUpDialogue,
+  setGuestSignInDialogue,
+  setCredentialLogin,
+  setCredentialRegister,
+  resetAuthModalState,
+} = extrasSlice.actions;
 
 export default extrasSlice.reducer;
