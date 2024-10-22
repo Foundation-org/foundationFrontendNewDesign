@@ -26,7 +26,7 @@ const RankedResult = (props) => {
     <div
       className={`${props.postProperties === 'Embed' && !props.isEmbedResults ? 'px-7 tablet:px-[69px]' : 'pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]'} flex items-center`}
     >
-      <div className="relative flex w-full justify-between rounded-r-[4.73px] rounded-s-[5.387px] border-l-0 border-r border-white-500 bg-white dark:border-gray-250 dark:bg-accent-100 tablet:rounded-r-[10px] tablet:rounded-s-[10px] tablet:border-r-[3px]">
+      <div className="relative flex w-full justify-between rounded-r-[4.73px] rounded-s-[5.387px] border-l-0 border-r border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100 tablet:rounded-r-[10px] tablet:rounded-s-[10px] tablet:border-r-[3px]">
         {/* To Display Badges on Left of Option */}
         {props.addedAnswerUuid &&
           (props.addedAnswerUuid === persistedUserInfo?.uuid ||
