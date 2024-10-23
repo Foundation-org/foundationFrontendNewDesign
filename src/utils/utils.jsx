@@ -90,3 +90,44 @@ export const sortAnswers = (questStartData, order = 'normal', isSelection = true
     return [...questStartData?.QuestAnswers];
   }
 };
+
+export function generateAdvanceAnalyticsCSV(singlePost) {
+  const rows = [];
+
+  const { Question, QuestAnswers, selectedPercentage, contendedPercentage, result } = singlePost;
+
+  QuestAnswers.forEach((answer) => {
+    // Get the count and percentage of participation (if any)
+    const selectedCount = result[0].selected[answer.question] || 0;
+    const percentageData = selectedPercentage[0][answer.question] || '0%';
+
+    console.log((contendedPercentage[0] && contendedPercentage[0][answer.question]) || '0%');
+    // Get the count and percentage of objections (if any)
+    const objections = (result[0].contended && result[0]?.contended[answer.question]) || 0;
+    const objectionPercentage = (contendedPercentage[0] && contendedPercentage[0][answer.question]) || '0%';
+
+    // Push a new row to the CSV data
+    rows.push({
+      Title: Question,
+      Option: answer.question,
+      Participants: selectedCount,
+      'Participant %': percentageData,
+      Objections: objections,
+      'Objection %': objectionPercentage,
+    });
+  });
+
+  return rows;
+}
+
+export function convertToAdvanceAnalyticsCSV(objArray) {
+  const array = [Object.keys(objArray[0])].concat(objArray);
+
+  return array
+    .map((row) => {
+      return Object.values(row)
+        .map((value) => `"${value}"`)
+        .join(',');
+    })
+    .join('\n');
+}
