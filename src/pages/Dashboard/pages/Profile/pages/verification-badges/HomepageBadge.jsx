@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { homepageBadges, personal } from '../../../../../../constants/varification-badges';
+import { homepageBadges } from '../../../../../../constants/varification-badges';
 import PersonalBadgesPopup from '../../../../../../components/dialogue-boxes/PersonalBadgesPopup';
 import { toast } from 'sonner';
-import api from '../../../../../../services/api/Axios';
-import EducationBadgePopup from '../../../../../../components/dialogue-boxes/EducationBadgePopup';
-import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import { Button } from '../../../../../../components/ui/Button';
 import { CanAdd } from './badgeUtils';
 import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
+import api from '../../../../../../services/api/Axios';
+import HomepageBadgePopup from '../../../../../../components/dialogue-boxes/HomepageBadgePopup';
 
 export default function HomepageBadge({
   fetchUser,
@@ -38,8 +37,8 @@ export default function HomepageBadge({
     } else {
       const timeRemaining = CanAdd(persistedUserInfo, type, 'personal');
       if (timeRemaining === true || checkPseudoBadge()) {
-        if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
-          await handleOpenPasswordConfirmation();
+        // if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
+        //   await handleOpenPasswordConfirmation();
 
         if (edit) {
           setEdit(true);
@@ -60,176 +59,15 @@ export default function HomepageBadge({
     }
 
     switch (seletedPersonalBadge) {
-      case 'firstName':
+      case 'domainBadge':
         return (
-          <PersonalBadgesPopup
+          <HomepageBadgePopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
-            title="First Name"
-            type={'firstName'}
+            title="Domain Badge"
+            type={'domainBadge'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`}
             placeholder="First Name Here"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'lastName':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Last Name"
-            type={'lastName'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/lastname.png`}
-            placeholder="Last Name Here"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'dateOfBirth':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Date of Birth"
-            type={'dateOfBirth'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/dob.svg`}
-            placeholder="MM/DD/YYYY"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'currentCity':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Current City"
-            type={'currentCity'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/currentcity-1.png`}
-            placeholder="Current City here"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'homeTown':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Home Town"
-            type={'homeTown'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hometown.svg`}
-            placeholder="Hometown Here"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'sex':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Sex"
-            type={'sex'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`}
-            placeholder="Sex Here"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'relationshipStatus':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Relationship Status"
-            type={'relationshipStatus'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`}
-            placeholder="Relationship Here"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'work':
-        return (
-          <WorkBadgePopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Work"
-            type={'work'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`}
-            placeholder="Work Here"
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'education':
-        return (
-          <EducationBadgePopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Education"
-            type={'education'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
-            placeholder="Education Here"
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'id-passport':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="ID / Passport"
-            type={'id-passport'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Identity-2x-1.png`}
-            placeholder="ID / Passport Here"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'geolocation':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Geolocation"
-            type={'geolocation'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
-            placeholder="Geolocation"
-            edit={edit}
-            setEdit={setEdit}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-          />
-        );
-      case 'security-question':
-        return (
-          <PersonalBadgesPopup
-            isPopup={isPersonalPopup}
-            setIsPopup={setIsPersonalPopup}
-            title="Security Question"
-            type={'security-question'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/securityquestion-a.png`}
-            placeholder="Answer Here"
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}

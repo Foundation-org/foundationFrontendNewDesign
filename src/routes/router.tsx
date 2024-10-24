@@ -71,12 +71,17 @@ import UserProfile from '../pages/UserProfile';
 
 export const getSubDomain = (location: string) => {
   const locationParts = location.split('.');
-  let sliceTill = -2;
 
   const isLocalHost = locationParts.slice(-1)[0] === 'localhost';
-  if (isLocalHost) sliceTill = -1;
+  if (isLocalHost) {
+    return locationParts.length > 1 ? locationParts[0] : '';
+  }
 
-  return locationParts.slice(0, sliceTill).join('');
+  if (locationParts.length > 2) {
+    return locationParts.slice(0, locationParts.length - 2).join('.');
+  }
+
+  return '';
 };
 
 export function Router() {

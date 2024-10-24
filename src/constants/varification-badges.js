@@ -306,7 +306,7 @@ export const homepageBadges = [
     ButtonColor: 'submit',
     NoOfButton: 1,
     ButtonText: 'Add',
-    type: 'firstName',
+    type: 'domainBadge',
     disabled: false,
   },
 ];
