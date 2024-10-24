@@ -11,7 +11,6 @@ import api from '../../../../../../services/api/Axios';
 import HomepageBadgePopup from '../../../../../../components/dialogue-boxes/HomepageBadgePopup';
 
 export default function HomepageBadge({
-  fetchUser,
   handleOpenPasswordConfirmation,
   checkLegacyBadge,
   handlePasskeyConfirmation,
@@ -27,8 +26,12 @@ export default function HomepageBadge({
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
   const [edit, setEdit] = useState(false);
 
-  const checkPersonalBadge = (itemType) =>
-    fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
+  //   const checkPersonalBadge = (itemType) =>
+  //     persistedUserInfo?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
+
+  const checkDomainBadge = () => {
+    return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
+  };
 
   const handleClickPesonalBadges = async (type, edit) => {
     if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
@@ -65,12 +68,10 @@ export default function HomepageBadge({
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="Domain Badge"
-            type={'domainBadge'}
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`}
-            placeholder="First Name Here"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
             edit={edit}
             setEdit={setEdit}
-            fetchUser={fetchUser}
+            fetchUser={persistedUserInfo}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -79,7 +80,7 @@ export default function HomepageBadge({
     }
   };
 
-  const PersonalItem = ({ item, persistedTheme, checkPersonalBadge, handleClickPesonalBadges }) => (
+  const PersonalItem = ({ item, persistedTheme, handleClickPesonalBadges }) => (
     <div
       className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled ? 'opacity-60' : ''}`}
     >
@@ -93,14 +94,14 @@ export default function HomepageBadge({
       </div>
 
       <Button
-        variant={checkPersonalBadge(item.type) ? 'verification-badge-edit' : item.ButtonColor}
+        variant={checkDomainBadge() ? 'verification-badge-edit' : item.ButtonColor}
         onClick={() => {
-          handleClickPesonalBadges(item.type, checkPersonalBadge(item.type) ? true : false);
+          handleClickPesonalBadges(item.type, checkDomainBadge() ? true : false);
         }}
         disabled={item.disabled}
       >
-        {checkPersonalBadge(item.type) ? 'Edit' : item.ButtonText}
-        {!checkPersonalBadge(item.type) && (
+        {checkDomainBadge() ? 'Edit' : item.ButtonText}
+        {!checkDomainBadge() && (
           <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
             (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
           </span>
@@ -121,7 +122,6 @@ export default function HomepageBadge({
             key={index}
             item={item}
             persistedTheme={persistedTheme}
-            checkPersonalBadge={checkPersonalBadge}
             handleClickPesonalBadges={handleClickPesonalBadges}
           />
         ))}

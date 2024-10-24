@@ -67,6 +67,11 @@ export default function BadgeRemovePopup({
           uuid: fetchUser.uuid,
           badgeName: type,
         });
+      } else if (badgeType === 'homepage') {
+        removeBadge = await api.post(`/removeDomainBadge`, {
+          type: type,
+          uuid: fetchUser.uuid,
+        });
       } else {
         const findBadge = fetchUser.badges.filter((item) => {
           if (item.accountName === accountName) {
@@ -87,11 +92,11 @@ export default function BadgeRemovePopup({
         }
         showToast('success', 'badgeRemoval');
         queryClient.invalidateQueries(['userInfo']);
-        handleClose();
-        setIsLoading(false);
         {
-          badgeType === 'personal' && setIsPersonalPopup(false);
+          (badgeType === 'personal' || badgeType === 'homepage') && setIsPersonalPopup(false);
         }
+        setIsLoading(false);
+        handleClose();
       }
     } catch (error) {
       setIsLoading(false);

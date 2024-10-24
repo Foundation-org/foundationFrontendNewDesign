@@ -296,7 +296,6 @@ const VerificationBadges = () => {
       </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Homepage">
         <HomepageBadge
-          fetchUser={persistedUserInfo}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}
           handlePasskeyConfirmation={handlePasskeyConfirmation}
