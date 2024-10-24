@@ -116,15 +116,18 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, type, title, logo, edit, fetc
             placeholder="Title"
             className={`verification_badge_input ${edit ? (domainBadge.title ? '' : 'caret-hidden') : ''}`}
           />
-          <input
-            type="text"
-            value={domainBadge.domain}
-            onChange={(e) => {
-              setDomainBadge({ ...domainBadge, domain: e.target.value });
-            }}
-            placeholder="Domain"
-            className={`verification_badge_input ${edit ? (domainBadge.domain ? '' : 'caret-hidden') : ''}`}
-          />
+          <div>
+            <input
+              type="text"
+              value={domainBadge.domain}
+              onChange={(e) => {
+                setDomainBadge({ ...domainBadge, domain: e.target.value });
+              }}
+              placeholder="Domain"
+              className={`verification_badge_input ${edit ? (domainBadge.domain ? '' : 'caret-hidden') : ''}`}
+            />
+            <p>Domain Preview: {`(${domainBadge.domain}.${window.location.hostname})`}</p>
+          </div>
           <TextareaAutosize
             id="input-2"
             aria-label="multiple choice question"
@@ -143,8 +146,8 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, type, title, logo, edit, fetc
               for="dropzone-file"
               className={`verification_badge_input resize-none ${edit ? (domainBadge.image ? '' : 'caret-hidden') : ''}`}
             >
-              <div class="flex flex-col items-center justify-center pb-6 pt-5">
-                <p> Click to upload or drag and drop</p>
+              <div class="flex flex-col items-center justify-center">
+                <p>Click to upload</p>
                 <p>Image should be of (16:9 aspect ratio)</p>
               </div>
               <input
@@ -157,6 +160,15 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, type, title, logo, edit, fetc
               />
             </label>
           </div>
+          {domainBadge.image && (
+            <div className="flex items-center">
+              <img
+                src={domainBadge.image?.length === 2 ? domainBadge.image[0] : URL.createObjectURL(domainBadge.image)}
+                alt="badge"
+                className="aspect-video rounded-md object-contain"
+              />
+            </div>
+          )}
           <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
             {edit && (
               <Button

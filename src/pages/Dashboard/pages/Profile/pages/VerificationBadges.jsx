@@ -294,14 +294,8 @@ const VerificationBadges = () => {
           checkPseudoBadge={checkPseudoBadge}
         />
       </ContentCard>
-      <ContentCard icon="assets/profile/subsl_icon.svg" title="Homepage">
-        <HomepageBadge
-          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-          checkLegacyBadge={checkLegacyBadge}
-          handlePasskeyConfirmation={handlePasskeyConfirmation}
-          getAskPassword={getAskPasswordFromRedux}
-          checkPseudoBadge={checkPseudoBadge}
-        />
+      <ContentCard icon="assets/profile/homepagebadges.svg" title="Homepage">
+        <HomepageBadge checkPseudoBadge={checkPseudoBadge} />
       </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
         <Subscription />

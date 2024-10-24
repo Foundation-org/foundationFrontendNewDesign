@@ -1,33 +1,21 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { homepageBadges } from '../../../../../../constants/varification-badges';
-import PersonalBadgesPopup from '../../../../../../components/dialogue-boxes/PersonalBadgesPopup';
 import { toast } from 'sonner';
-import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
-import { Button } from '../../../../../../components/ui/Button';
+import { useState } from 'react';
 import { CanAdd } from './badgeUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '../../../../../../components/ui/Button';
+import { homepageBadges } from '../../../../../../constants/varification-badges';
 import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
-import api from '../../../../../../services/api/Axios';
+import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import HomepageBadgePopup from '../../../../../../components/dialogue-boxes/HomepageBadgePopup';
 
-export default function HomepageBadge({
-  handleOpenPasswordConfirmation,
-  checkLegacyBadge,
-  handlePasskeyConfirmation,
-  getAskPassword,
-  checkPseudoBadge,
-}) {
+export default function HomepageBadge({ checkPseudoBadge }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
-
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
   const [edit, setEdit] = useState(false);
-
-  //   const checkPersonalBadge = (itemType) =>
-  //     persistedUserInfo?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
 
   const checkDomainBadge = () => {
     return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
@@ -40,9 +28,6 @@ export default function HomepageBadge({
     } else {
       const timeRemaining = CanAdd(persistedUserInfo, type, 'personal');
       if (timeRemaining === true || checkPseudoBadge()) {
-        // if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
-        //   await handleOpenPasswordConfirmation();
-
         if (edit) {
           setEdit(true);
         } else {
