@@ -55,6 +55,9 @@ export default function SeldonView() {
                   >
                     {'<'} Back to all news
                   </Link>
+                  {response?.data?.s3Urls?.length > 0 && location.pathname.startsWith('/r') && (
+                    <img src={response.data.s3Urls[0]} alt="" />
+                  )}
                   <div className="space-y-1">
                     <h1 className="text-[16px] font-bold tablet:text-[24px]">{response?.data?.title}</h1>
                     <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
@@ -120,7 +123,7 @@ export default function SeldonView() {
                         <li key={index} className="ml-6 text-[12px] tablet:ml-10 tablet:text-[20px]">
                           <strong className="font-bold">{item.heading}:</strong> {item.content}
                         </li>
-                      ),
+                      )
                     )}
                   </ol>
                   <div>
