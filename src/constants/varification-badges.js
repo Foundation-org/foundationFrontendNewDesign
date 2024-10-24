@@ -299,6 +299,18 @@ export const personal = [
   },
 ];
 
+export const homepageBadges = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+    title: 'Domain Badge',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'firstName',
+    disabled: false,
+  },
+];
+
 export const subscription = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/creditScore.svg`,

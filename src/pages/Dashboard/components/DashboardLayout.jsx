@@ -372,7 +372,7 @@ export default function DashboardLayout({ children }) {
                   {persistedUserInfo?.role === 'user' ? (
                     <>
                       {location.pathname === '/direct-messaging/new-message' ? null : location.pathname.startsWith(
-                          '/direct-messaging',
+                          '/direct-messaging'
                         ) && isPseudoBadge ? (
                         <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
                           <Button
@@ -446,7 +446,8 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
           {/* Sidebar Left */}
-          {!location.pathname.startsWith('/post') &&
+          {!localStorage.getItem('isSubDomain') &&
+            !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
@@ -713,7 +714,8 @@ export default function DashboardLayout({ children }) {
             )}
           </div>
 
-          {!location.pathname.startsWith('/post') &&
+          {!localStorage.getItem('isSubDomain') &&
+            !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/post-activity' &&

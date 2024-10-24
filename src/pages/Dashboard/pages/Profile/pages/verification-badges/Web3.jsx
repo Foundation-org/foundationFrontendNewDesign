@@ -14,6 +14,7 @@ import { Button } from '../../../../../../components/ui/Button';
 import { CanAdd } from './badgeUtils';
 import { toast } from 'sonner';
 export default function Web3({
+  isVerificationBadge = true,
   handleRemoveBadgePopup,
   handleOpenPasswordConfirmation,
   checkLegacyBadge,
@@ -154,9 +155,11 @@ export default function Web3({
 
   return (
     <>
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        Linking your wallet gives you more FDX transaction options.
-      </h1>
+      {isVerificationBadge && (
+        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+          Linking your wallet gives you more FDX transaction options.
+        </h1>
+      )}
       <AuthKitProvider config={config}>
         <div className="hidden">
           <SignInButton
@@ -309,7 +312,7 @@ export default function Web3({
                       await handleOpenPasswordConfirmation();
                     } else {
                       toast.warning(
-                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`,
+                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`
                       );
                     }
                   }
@@ -330,7 +333,7 @@ export default function Web3({
                       connect();
                     } else {
                       toast.warning(
-                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`,
+                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`
                       );
                     }
                   }

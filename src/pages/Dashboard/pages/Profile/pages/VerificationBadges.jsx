@@ -1,19 +1,13 @@
-import { toast } from 'sonner';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import Loader from '../../../../Signup/components/Loader';
-import api from '../../../../../services/api/Axios';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 import Personal from './verification-badges/Personal';
 import Web3 from './verification-badges/Web3';
 import Contact from './verification-badges/Contact';
 import { useQueryClient } from '@tanstack/react-query';
-import Legacy from './verification-badges/Legacy';
 import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
 import { startRegistration } from '@simplewebauthn/browser';
-import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
-import showToast from '../../../../../components/ui/Toast';
 import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
 import { badgesTotalLength } from '../../../../../constants/varification-badges';
 import Privacy from './verification-badges/Privacy';
@@ -21,18 +15,25 @@ import Social from './verification-badges/Social';
 import ContentCard from '../../../../../components/ContentCard';
 import { MetaMaskProvider } from '@metamask/sdk-react';
 import Subscription from './verification-badges/Subscription';
+import HomepageBadge from './verification-badges/HomepageBadge';
+// import api from '../../../../../services/api/Axios';
+// import Legacy from './verification-badges/Legacy';
+// import showToast from '../../../../../components/ui/Toast';
+// import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+// import { toast } from 'sonner';
+// import { useNavigate } from 'react-router-dom';
 
 const VerificationBadges = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const navigate = useNavigate();
+  // const persistedTheme = useSelector((state) => state.utils.theme);
+  // const persistedContants = useSelector(getConstantsValues);
+  // const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
   const legacyPromiseRef = useRef();
-  const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [socialRemoveLoading, setSocialRemoveLoading] = useState(false);
 
@@ -99,65 +100,65 @@ const VerificationBadges = () => {
   const handleBadgesClose = () => setModalVisible(false);
   const checkSocial = (name) => persistedUserInfo?.badges?.some((i) => i.accountName === name);
 
-  const handleRemoveBadge = async (accountName) => {
-    const findBadge = persistedUserInfo.badges.filter((item) => {
-      if (item.accountName === accountName) {
-        return item;
-      }
-    });
-    try {
-      const removeBadge = await api.post(`/removeBadge`, {
-        badgeAccountId: findBadge[0].accountId,
-        uuid: persistedUserInfo.uuid,
-      });
-      if (removeBadge.status === 200) {
-        showToast('success', 'badgeRemoval');
-        queryClient.invalidateQueries(['userInfo']);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const handleRemoveBadge = async (accountName) => {
+  //   const findBadge = persistedUserInfo.badges.filter((item) => {
+  //     if (item.accountName === accountName) {
+  //       return item;
+  //     }
+  //   });
+  //   try {
+  //     const removeBadge = await api.post(`/removeBadge`, {
+  //       badgeAccountId: findBadge[0].accountId,
+  //       uuid: persistedUserInfo.uuid,
+  //     });
+  //     if (removeBadge.status === 200) {
+  //       showToast('success', 'badgeRemoval');
+  //       queryClient.invalidateQueries(['userInfo']);
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
-  const handleAddBadge = async (provider, data) => {
-    try {
-      let id;
-      if (provider === 'linkedin') {
-        id = data.sub;
-      } else if (provider === 'instagram') {
-        id = data.user_id;
-      } else if (provider === 'facebook') {
-        id = data.id;
-      } else if (provider === 'twitter') {
-        id = data.user.uid;
-      } else if (provider === 'github') {
-        id = data.id;
-      } else if (provider === 'youtube') {
-        id = data.items[0].id;
-      }
-      const payload = {
-        data,
-        provider,
-        badgeAccountId: id,
-        uuid: persistedUserInfo.uuid,
-      };
-      if (localStorage.getItem('legacyHash')) {
-        payload.infoc = localStorage.getItem('legacyHash');
-      }
-      const addBadge = await api.post(`/addBadge`, payload);
-      if (addBadge.status === 200) {
-        showToast('success', 'badgeAdded');
-        queryClient.invalidateQueries(['userInfo']);
-      }
-    } catch (error) {
-      console.log(provider);
-      if (provider !== 'instagram') {
-        showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const handleAddBadge = async (provider, data) => {
+  //   try {
+  //     let id;
+  //     if (provider === 'linkedin') {
+  //       id = data.sub;
+  //     } else if (provider === 'instagram') {
+  //       id = data.user_id;
+  //     } else if (provider === 'facebook') {
+  //       id = data.id;
+  //     } else if (provider === 'twitter') {
+  //       id = data.user.uid;
+  //     } else if (provider === 'github') {
+  //       id = data.id;
+  //     } else if (provider === 'youtube') {
+  //       id = data.items[0].id;
+  //     }
+  //     const payload = {
+  //       data,
+  //       provider,
+  //       badgeAccountId: id,
+  //       uuid: persistedUserInfo.uuid,
+  //     };
+  //     if (localStorage.getItem('legacyHash')) {
+  //       payload.infoc = localStorage.getItem('legacyHash');
+  //     }
+  //     const addBadge = await api.post(`/addBadge`, payload);
+  //     if (addBadge.status === 200) {
+  //       showToast('success', 'badgeAdded');
+  //       queryClient.invalidateQueries(['userInfo']);
+  //     }
+  //   } catch (error) {
+  //     console.log(provider);
+  //     if (provider !== 'instagram') {
+  //       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleRemoveBadgePopup = async (item) => {
     if (
@@ -292,6 +293,9 @@ const VerificationBadges = () => {
           getAskPassword={getAskPasswordFromRedux}
           checkPseudoBadge={checkPseudoBadge}
         />
+      </ContentCard>
+      <ContentCard icon="assets/profile/subsl_icon.svg" title="Homepage">
+        <HomepageBadge />
       </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
         <Subscription />

@@ -67,14 +67,52 @@ import NewsFeed from '../pages/features/news-feed';
 import DMPreview from '../pages/features/DirectMessaging/DMPreview';
 import Unsubscribe from '../pages/Emails/Unsubscrbe';
 import Withdraws from '../pages/Dashboard/pages/Treasury/pages/withdraws';
+import UserProfile from '../pages/UserProfile';
+
+export const getSubDomain = (location: string) => {
+  const locationParts = location.split('.');
+  let sliceTill = -2;
+
+  const isLocalHost = locationParts.slice(-1)[0] === 'localhost';
+  if (isLocalHost) sliceTill = -1;
+
+  return locationParts.slice(0, sliceTill).join('');
+};
 
 export function Router() {
+  const subDomain = getSubDomain(window.location.hostname);
   const persistedUser = useSelector((state: any) => state.auth.user);
   const ROLES = {
     User: 'user',
     Guest: 'guest',
     Visitor: 'visitor',
   };
+
+  if (subDomain !== '') {
+    localStorage.setItem('isSubDomain', 'true');
+
+    return (
+      <>
+        {persistedUser?.uuid ? (
+          <Routes>
+            <Route path="/" element={<Dashboard />}>
+              <Route path="" element={<UserProfile />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route
+              path="/"
+              element={
+                localStorage.getItem('userExist') === 'true' ? <Navigate to="/" /> : <GuestRedirect redirectUrl="/" />
+              }
+            />
+          </Routes>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -146,6 +184,7 @@ export function Router() {
               <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
                 <Route path="profile/" element={<Profile />}>
                   <Route path="" element={<Summary />} />
+                  <Route path="me" element={<UserProfile />} />
                   <Route path="verification-badges" element={<VerificationBadges />} />
                   <Route path="post-activity" element={<Contributions />} />
                   <Route path="lists" element={<Lists />} />
