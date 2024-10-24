@@ -73,12 +73,25 @@ export const getSubDomain = (location: string) => {
   const locationParts = location.split('.');
 
   const isLocalHost = locationParts.slice(-1)[0] === 'localhost';
-  if (isLocalHost) {
-    return locationParts.length > 1 ? locationParts[0] : '';
+  const isDevelopmentDomain = location.endsWith('development.on.foundation');
+  const isFoundationDomain = location.endsWith('on.foundation');
+
+  // Check if it's a bare localhost or on.foundation or development.on.foundation
+  if (isLocalHost && locationParts.length === 1) {
+    return '';
   }
 
-  if (locationParts.length > 2) {
-    return locationParts.slice(0, locationParts.length - 2).join('.');
+  if (isDevelopmentDomain && locationParts.length === 3) {
+    return ''; // Return empty for development.on.foundation
+  }
+
+  if (isFoundationDomain && locationParts.length === 2) {
+    return ''; // Return empty for on.foundation
+  }
+
+  // If anything precedes these, return the subdomain
+  if (isLocalHost || isDevelopmentDomain || isFoundationDomain) {
+    return locationParts.slice(0, locationParts.length - (isLocalHost ? 1 : isDevelopmentDomain ? 3 : 2)).join('.');
   }
 
   return '';
