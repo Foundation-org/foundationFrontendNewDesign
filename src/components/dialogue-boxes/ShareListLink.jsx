@@ -75,9 +75,9 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
   };
 
   return (
-    <div className="relative w-[90vw] laptop:w-[52.6rem] ">
+    <div className="relative w-[90vw] laptop:w-[52.6rem]">
       {/* Dialogue box header */}
-      <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] from-accent-100 to-accent-100 px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px] dark:border dark:border-gray-100 dark:bg-gradient-to-tr">
+      <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] from-accent-100 to-accent-100 px-[15px] py-1 dark:border dark:border-gray-100 dark:bg-gradient-to-tr tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px]">
         <div className="w-fit rounded-full bg-white p-[5px] tablet:p-[10px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -115,22 +115,22 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
       </div>
 
       {/* Dialogue box body */}
-      <div className="flex flex-col justify-center py-[15px] tablet:py-[25px] dark:rounded-b-[0.5rem] dark:border dark:border-gray-100 dark:bg-gray-200 dark:tablet:rounded-b-[1.5rem]">
-        <div className="px-[20px] laptop:px-[80px] ">
-          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal dark:bg-gray-200 dark:text-gray-300">
+      <div className="flex flex-col justify-center py-[15px] dark:rounded-b-[0.5rem] dark:border dark:border-gray-100 dark:bg-gray-200 tablet:py-[25px] dark:tablet:rounded-b-[1.5rem]">
+        <div className="px-[20px] laptop:px-[80px]">
+          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:bg-gray-200 dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             {createCustom
               ? 'Custom Link Address'
               : 'Copy the link below to share this list on other platforms. When other people engage with posts on your list, you will earn FDX. '}
           </p>
-          <div className="flex rounded-[9.42px] border border-white-500 tablet:rounded-[15px] tablet:border-[3px] dark:border-gray-100 dark:bg-accent-100 ">
+          <div className="flex rounded-[9.42px] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
               <div className="flex h-[28.38px] items-center tablet:h-[62.92px]">
-                <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px] dark:text-gray-300">
+                <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] dark:text-gray-300 tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]">
                   {url}
                 </p>
                 <input
                   type="text"
-                  className="w-full bg-transparent pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] tablet:text-[26px] tablet:leading-[30px] dark:text-gray-300"
+                  className="w-full bg-transparent pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] dark:text-gray-300 tablet:text-[26px] tablet:leading-[30px]"
                   value={link}
                   onChange={(e) => {
                     if (selectedItem?.isLinkUserCustomized) return;
@@ -145,14 +145,14 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
               </div>
             ) : (
               <div className="flex w-full items-center rounded-l-[9.42px] pl-[9.43px] pr-[1.58rem] tablet:pl-4 laptop:rounded-l-[26px] laptop:pr-[70px]">
-                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-normal text-[#435059] tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem] dark:text-gray-300">
+                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-normal text-[#435059] dark:text-gray-300 tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem]">
                   {isLoading ? <p className="italic">Generating link..</p> : url + postLink}
                 </p>
               </div>
             )}
             {!createCustom && (
               <button
-                className="rounded-r-[9px] bg-white-500 px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px] dark:bg-gray-100"
+                className="rounded-r-[9px] bg-white-500 px-[11px] py-[6px] dark:bg-gray-100 tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
                 onClick={() => {
                   copyToClipboard();
                   showToast('success', 'copyLink');
@@ -165,7 +165,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
         </div>
         <div
           className={
-            'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8 dark:bg-gray-200'
+            'mx-[10px] mt-[10px] flex justify-end gap-4 dark:bg-gray-200 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'
           }
         >
           {!createCustom ? (
@@ -182,17 +182,19 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
               >
                 Create Custom Link
               </Button>
-              <Button
-                variant={'submit'}
-                className={'w-fit min-w-fit whitespace-nowrap'}
-                onClick={() =>
-                  navigate('/shared-list-link/result', {
-                    state: { categoryItem: selectedItem?._id },
-                  })
-                }
-              >
-                Manage My Shared Lists
-              </Button>
+              {location.pathname !== '/profile/lists' && (
+                <Button
+                  variant={'submit'}
+                  className={'w-fit min-w-fit whitespace-nowrap'}
+                  onClick={() =>
+                    navigate('/shared-list-link/result', {
+                      state: { categoryItem: selectedItem?._id },
+                    })
+                  }
+                >
+                  Manage My Shared Lists
+                </Button>
+              )}
             </div>
           ) : (
             <div className="flex items-center gap-4 tablet:gap-[25px]">

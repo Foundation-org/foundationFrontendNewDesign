@@ -43,7 +43,7 @@ export const Button = ({ className = '', children, rounded = false, variant = ''
         ? 'addoption-boxShadow h-[25px] min-w-[4.875rem] rounded-[0.28688rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[40px] tablet:min-w-[10.8125rem] tablet:rounded-[9px] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
       variant === 'hollow-submit'
-        ? 'h-[1.375rem] min-w-[4.875rem] rounded-[7.28px] border-[1.428px] border-[#389CE3] bg-gradient-to-tr px-[6.63px] py-[3.8px] text-[0.625rem] font-semibold leading-normal text-[#389CE3] dark:border-gray-300 dark:text-gray-300 tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[15.2px] tablet:border-[3px] tablet:text-[1.25rem] tablet:leading-none laptop:rounded-[12px] laptop:px-[17px]'
+        ? 'h-[1.375rem] rounded-[7.28px] border-[1.428px] border-[#389CE3] bg-gradient-to-tr px-[6.63px] py-[3.8px] text-[0.625rem] font-semibold leading-normal text-[#389CE3] dark:border-gray-300 dark:text-gray-300 tablet:h-[3.125rem] tablet:rounded-[15.2px] tablet:border-[3px] tablet:text-[1.25rem] tablet:leading-none laptop:rounded-[12px] laptop:px-[17px]'
         : '',
       variant === 'hollow-submit2'
         ? 'h-[25px] min-w-[4.875rem] whitespace-nowrap rounded-[0.28688rem] border-[1.428px] border-[#6BA5CF] bg-gradient-to-tr px-[6px] py-[3.8px] text-[10px] font-semibold leading-normal text-[#6BA5CF] dark:border-white-200 dark:bg-gray-200 dark:text-white-200 tablet:h-[40px] tablet:min-w-[12rem] tablet:rounded-[9px] tablet:border-2 tablet:text-[1.25rem] tablet:leading-none laptop:w-full laptop:px-[17px]'
@@ -114,7 +114,7 @@ export const Button = ({ className = '', children, rounded = false, variant = ''
       variant === 'hollow-feedback'
         ? 'h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] border-accent-900 px-[6.63px] text-[0.625rem] font-semibold text-accent-600 tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
-      className,
+      className
     )}
     {...props}
   >

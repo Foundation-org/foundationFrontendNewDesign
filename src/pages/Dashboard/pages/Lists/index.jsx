@@ -18,6 +18,7 @@ import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from 
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import SummaryCard from '../../../../components/SummaryCard';
+import { calculateTimeAgo } from '../../../../utils/utils';
 
 const Lists = () => {
   const navigate = useNavigate();
@@ -172,7 +173,7 @@ const Lists = () => {
           Sharing lists is a great way to earn FDX - especially if people engage with them.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Lists you’ve shared
             </h1>
@@ -180,7 +181,7 @@ const Lists = () => {
               {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
             </h5>
           </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6 dark:border-gray-300">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Total list clicks
             </h1>
@@ -212,25 +213,41 @@ const Lists = () => {
             items?.map((categoryItem, categoryIndex) => (
               <div
                 key={categoryItem._id}
-                className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white tablet:rounded-[15px] dark:border-gray-100 dark:bg-gray-200"
+                className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
               >
-                <div className="flex items-center gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
-                  <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px] dark:text-gray-300">
-                    {categoryItem.category}
-                  </h4>
-                  <h4
-                    className="cursor-pointer text-[9px] font-normal leading-[9px] text-[#7C7C7C] underline tablet:text-[1rem] tablet:leading-[23px] dark:text-gray-300"
+                <div className="flex items-center justify-between gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                  <div className="flex gap-2">
+                    <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
+                      {categoryItem.category}
+                    </h4>
+                    <h4
+                      className="cursor-pointer text-[9px] font-normal leading-[9px] text-[#7C7C7C] underline dark:text-gray-300 tablet:text-[1rem] tablet:leading-[23px]"
+                      onClick={() => {
+                        setCategoryId(categoryItem._id);
+                        setListName(categoryItem.category);
+                        setEditListPopup(true);
+                      }}
+                    >
+                      Edit List Name
+                    </h4>
+                  </div>
+                  <div
                     onClick={() => {
-                      setCategoryId(categoryItem._id);
-                      setListName(categoryItem.category);
-                      setEditListPopup(true);
+                      setSelectedItem(categoryItem);
+                      setCopyModal(true);
                     }}
+                    className="cursor-pointer"
                   >
-                    Edit List Name
-                  </h4>
+                    {persistedTheme === 'dark' ? <Copy /> : <Copy />}
+                  </div>
                 </div>
 
                 <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
+                  <h4 className="my-2 text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:my-[27px] tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px]">
+                    {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''} (drag and drop to change
+                    order)
+                  </h4>
+
                   <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
                     <DndContext
                       sensors={[touchSensor, mouseSensor, keyboardSensor]}
@@ -257,7 +274,7 @@ const Lists = () => {
 
                   {listData[categoryIndex]?.post?.length <= 0 && (
                     <div className="flex w-full items-center gap-1 tablet:gap-20">
-                      <h2 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
+                      <h2 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                         This list has no posts
                       </h2>
                     </div>
@@ -270,7 +287,7 @@ const Lists = () => {
                         alt="clicks"
                         className="h-2 w-2 tablet:h-6 tablet:w-6"
                       />
-                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px] dark:text-gray-300">
+                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
                         {categoryItem.clicks === null ? 0 : categoryItem.clicks} Clicks{' '}
                       </h2>
                     </div>
@@ -280,78 +297,97 @@ const Lists = () => {
                         alt="participants"
                         className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                       />
-                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px] dark:text-gray-300">
+                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
                         {categoryItem.participents === null ? 0 : categoryItem.participents} Engagements{' '}
                       </h2>
                     </div>
                   </div>
 
-                  <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
-                    <Button
-                      variant="cancel"
-                      className="bg-[#A3A3A3]"
-                      onClick={() => {
-                        setSelectedItem(categoryItem);
-                        setCategoryId(categoryItem._id);
-                        setAddPostModal(true);
-                      }}
-                    >
-                      + Add Post
-                    </Button>
-                    {listData[categoryIndex]?.post?.length > 0 && (
+                  <div className="flex flex-col gap-2 tablet:gap-4">
+                    <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
                       <Button
-                        variant="submit"
-                        className={'tablet:min-w-[9rem]'}
-                        onClick={() =>
-                          navigate('/shared-list-link/result', {
-                            state: { categoryItem: categoryItem._id },
-                          })
-                        }
-                      >
-                        View
-                      </Button>
-                    )}
-
-                    {categoryItem._id === hasReordered && hasReordered !== '' ? (
-                      <Button
-                        variant="submit"
+                        variant="cancel"
+                        className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
                         onClick={() => {
-                          handleSavePostsOrder(categoryItem.post, categoryItem._id);
+                          setSelectedItem(categoryItem);
+                          setCategoryId(categoryItem._id);
+                          setAddPostModal(true);
                         }}
                       >
-                        Save
+                        + Add Post
                       </Button>
-                    ) : (
-                      <Button variant="hollow-submit" disabled={true}>
-                        Save
+                      {categoryItem._id === hasReordered && hasReordered !== '' ? (
+                        <Button
+                          variant="submit"
+                          className="w-full min-w-full"
+                          onClick={() => {
+                            handleSavePostsOrder(categoryItem.post, categoryItem._id);
+                          }}
+                        >
+                          Save
+                        </Button>
+                      ) : (
+                        <Button variant="hollow-submit" className="w-full tablet:max-w-[320px]" disabled={true}>
+                          Save
+                        </Button>
+                      )}
+                    </div>
+                    <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
+                      {listData[categoryIndex]?.post?.length > 0 && (
+                        <Button
+                          variant={'submit-green'}
+                          className={'w-full tablet:w-full'}
+                          onClick={() =>
+                            navigate('/shared-list-link/result', {
+                              state: { categoryItem: categoryItem._id },
+                            })
+                          }
+                        >
+                          View My List Results
+                        </Button>
+                      )}
+                      {/* {questStartData.userQuestSetting.linkStatus === 'Enable' ? ( */}
+                      <Button
+                        variant="danger"
+                        // onClick={showDisableSharedLinkPopup}
+                        className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
+                      >
+                        Disable Sharing
                       </Button>
-                    )}
+                      {/* // ) : (
+                    //   <Button
+                    //     variant="submit"
+                    //     className={'w-full !px-0 laptop:!px-0'}
+                    //     onClick={showEnableSharedLinkPopup}
+                    //   >
+                    //     Enable Sharing
+                    //   </Button>
+                    // )} */}
+                    </div>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between border-t-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
-                  <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px] dark:text-gray-300">
-                    {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''}
-                  </h4>
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
+                    alt="trash-icon"
+                    className="h-[15px] w-3 cursor-pointer tablet:h-[25px] tablet:w-5"
+                    onClick={() => {
+                      setCategoryId(categoryItem._id);
+                      setModalVisible(true);
+                    }}
+                  />
                   <div className="flex items-center gap-3 tablet:gap-[1.62rem]">
-                    <div
-                      onClick={() => {
-                        setSelectedItem(categoryItem);
-                        setCopyModal(true);
-                      }}
-                      className="cursor-pointer"
-                    >
-                      {persistedTheme === 'dark' ? <Copy /> : <Copy />}
+                    <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
+                        alt="clock"
+                        className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
+                      />
+                      <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                        {`Created list ${calculateTimeAgo(categoryItem.createdAt)}`}
+                      </h4>
                     </div>
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
-                      alt="trash-icon"
-                      className="h-[15px] w-3 cursor-pointer tablet:h-[25px] tablet:w-5"
-                      onClick={() => {
-                        setCategoryId(categoryItem._id);
-                        setModalVisible(true);
-                      }}
-                    />
                   </div>
                 </div>
               </div>

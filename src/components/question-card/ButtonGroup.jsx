@@ -201,7 +201,7 @@ const ButtonGroup = ({
   const result = calculateRemainingTime(
     questStartData?.updatedAt,
     questStartData?.startQuestData && questStartData?.startQuestData?.data.length,
-    questStartData.usersChangeTheirAns,
+    questStartData.usersChangeTheirAns
   );
 
   // const showHidePostOpen = (type) => setModalVisible({ state: true, type });
@@ -215,7 +215,7 @@ const ButtonGroup = ({
           status: true,
           link: questStartData.userQuestSetting.link,
           id: questStartData._id,
-        }),
+        })
       );
   };
 
@@ -227,7 +227,7 @@ const ButtonGroup = ({
         status: true,
         link: questStartData.userQuestSetting.link,
         id: questStartData._id,
-      }),
+      })
     );
   };
 
@@ -296,8 +296,8 @@ const ButtonGroup = ({
             ...oldData,
             pages: oldData?.pages?.map((page) =>
               page.map((item) =>
-                item._id === resp.data.data.questForeignKey ? { ...item, userQuestSetting: resp.data.data } : item,
-              ),
+                item._id === resp.data.data.questForeignKey ? { ...item, userQuestSetting: resp.data.data } : item
+              )
             ),
           };
         });
@@ -317,8 +317,8 @@ const ButtonGroup = ({
             ...oldData,
             pages: oldData?.pages?.map((page) =>
               page.map((item) =>
-                item._id === resp.data.data.questForeignKey ? { ...item, userQuestSetting: resp.data.data } : item,
-              ),
+                item._id === resp.data.data.questForeignKey ? { ...item, userQuestSetting: resp.data.data } : item
+              )
             ),
           };
         });
@@ -438,11 +438,11 @@ const ButtonGroup = ({
                 onClick={showDisableSharedLinkPopup}
                 className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
               >
-                Disable Link
+                Disable Sharing
               </Button>
             ) : (
               <Button variant="submit" className={'w-full !px-0 laptop:!px-0'} onClick={showEnableSharedLinkPopup}>
-                Enable Link
+                Enable Sharing
               </Button>
             )}
             <UnHidePostPopup

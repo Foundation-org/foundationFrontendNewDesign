@@ -6,7 +6,7 @@ import { createCustomLink, createUpdateUniqueLink, generateImage } from '../../.
 import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 import { getConstantsValues } from '../../../features/constants/constantsSlice';
@@ -16,6 +16,7 @@ import EmbedPostDialogue from '../../../pages/Embed/EmbedPostDialogue';
 const CopyDialogue = ({ handleClose, questStartData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const persistedContants = useSelector(getConstantsValues);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -63,6 +64,17 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         ) {
           sendImage({ questStartData, link: resp.data.data.link });
         }
+
+        if (location.pathname === '/shared-list-link/result') {
+          queryClient.invalidateQueries({
+            queryKey: ['postsByCategory', persistedUserInfo.uuid],
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: ['allPostsByCategory', persistedUserInfo.uuid],
+          });
+        }
+
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
