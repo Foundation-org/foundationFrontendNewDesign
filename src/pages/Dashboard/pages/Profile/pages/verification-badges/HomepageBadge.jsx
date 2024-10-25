@@ -14,7 +14,7 @@ export default function HomepageBadge({ checkPseudoBadge }) {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
-  const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
+  const [selectedPersonalBadge, setSelectedPersonalBadge] = useState('');
   const [edit, setEdit] = useState(false);
 
   const checkDomainBadge = () => {
@@ -46,7 +46,7 @@ export default function HomepageBadge({ checkPseudoBadge }) {
       return null;
     }
 
-    switch (seletedPersonalBadge) {
+    switch (selectedPersonalBadge) {
       case 'domainBadge':
         return (
           <HomepageBadgePopup
@@ -55,8 +55,6 @@ export default function HomepageBadge({ checkPseudoBadge }) {
             title="Domain Badge"
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
             edit={edit}
-            setEdit={setEdit}
-            fetchUser={persistedUserInfo}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -64,36 +62,6 @@ export default function HomepageBadge({ checkPseudoBadge }) {
         return null;
     }
   };
-
-  const PersonalItem = ({ item, persistedTheme, handleClickPesonalBadges }) => (
-    <div
-      className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled ? 'opacity-60' : ''}`}
-    >
-      <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
-      <div
-        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
-      >
-        <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
-          {item.title}
-        </h1>
-      </div>
-
-      <Button
-        variant={checkDomainBadge() ? 'verification-badge-edit' : item.ButtonColor}
-        onClick={() => {
-          handleClickPesonalBadges(item.type, checkDomainBadge() ? true : false);
-        }}
-        disabled={item.disabled}
-      >
-        {checkDomainBadge() ? 'Edit' : item.ButtonText}
-        {!checkDomainBadge() && (
-          <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
-            (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
-          </span>
-        )}
-      </Button>
-    </div>
-  );
 
   return (
     <>
@@ -103,12 +71,33 @@ export default function HomepageBadge({ checkPseudoBadge }) {
       {renderPersonalBadgesPopup()}
       <div className="flex flex-col items-center justify-between gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">
         {homepageBadges.map((item, index) => (
-          <PersonalItem
-            key={index}
-            item={item}
-            persistedTheme={persistedTheme}
-            handleClickPesonalBadges={handleClickPesonalBadges}
-          />
+          <div
+            key={index + 1}
+            className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled ? 'opacity-60' : ''}`}
+          >
+            <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
+            <div
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
+            >
+              <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
+                {item.title}
+              </h1>
+            </div>
+            <Button
+              variant={checkDomainBadge() ? 'verification-badge-edit' : item.ButtonColor}
+              onClick={() => {
+                handleClickPesonalBadges(item.type, checkDomainBadge() ? true : false);
+              }}
+              disabled={item.disabled}
+            >
+              {checkDomainBadge() ? 'Edit' : item.ButtonText}
+              {!checkDomainBadge() && (
+                <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
+                  (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
+                </span>
+              )}
+            </Button>
+          </div>
         ))}
       </div>
     </>

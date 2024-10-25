@@ -4,6 +4,7 @@ import api from '../../services/api/Axios';
 import { FaSpinner } from 'react-icons/fa';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
+import { useSelector } from 'react-redux';
 
 export default function BadgeRemovePopup({
   handleClose,
@@ -11,13 +12,13 @@ export default function BadgeRemovePopup({
   title,
   image,
   accountName,
-  fetchUser,
   type,
   badgeType,
   setIsPersonalPopup,
   setIsLoading,
   loading,
 }) {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
 
   const handleRemoveBadge = async () => {
@@ -27,53 +28,53 @@ export default function BadgeRemovePopup({
       if (badgeType === 'contact') {
         removeBadge = await api.post(`/removeContactBadge`, {
           type: type,
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
       } else if (badgeType === 'personal') {
         removeBadge = await api.post(`/removePersonalBadge`, {
           type: type,
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
       } else if (badgeType === 'web3') {
         removeBadge = await api.post(`/removeWeb3Badge`, {
           type: type,
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
       } else if (type === 'password') {
         removeBadge = await api.post('/addPasswordBadgesUpdate', {
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           eyk: localStorage.getItem('legacyHash'),
           badgeName: type,
         });
       } else if (type === 'pseudo') {
         removeBadge = await api.post('/removePseudoBadge', {
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
       } else if (badgeType === 'passkey') {
         removeBadge = await api.post(`/removePasskey`, {
           type: type,
           accountName: accountName,
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
       } else if (badgeType === 'farcaster') {
         removeBadge = await api.post(`/removeFarCasterBadge`, {
           type: type,
           accountName: accountName,
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
       } else if (badgeType === 'homepage') {
         removeBadge = await api.post(`/removeDomainBadge`, {
           type: type,
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
         });
       } else {
-        const findBadge = fetchUser.badges.filter((item) => {
+        const findBadge = persistedUserInfo.badges.filter((item) => {
           if (item.accountName === accountName) {
             return item;
           }
@@ -81,7 +82,7 @@ export default function BadgeRemovePopup({
 
         removeBadge = await api.post(`/removeBadge`, {
           badgeAccountId: findBadge[0].accountId,
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
       }
