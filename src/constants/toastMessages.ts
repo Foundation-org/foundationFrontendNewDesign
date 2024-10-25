@@ -104,7 +104,7 @@ export const toastMessages = {
   activityAlreadyExists: 'Activity already exists',
   resultsUpdatedSuccess: 'Results updated Successfully',
   optionAlreadyExists: 'Option already exists',
-  noParticipants: 'There is no participants to send message to',
+  noParticipants: 'There are no participants to send message to',
   articlePublished: 'Article published successfully',
   rankChoiceParticipantNotAllowed: 'Direct Message is not available for Rank Choice post',
   numberShouldBeBetween1and9: 'Number should be between 1 and 9',

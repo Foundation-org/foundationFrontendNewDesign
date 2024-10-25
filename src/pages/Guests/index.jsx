@@ -45,7 +45,7 @@ const Guests = () => {
       setViewResult(null);
       setStartTest((prev) => (prev === testId ? null : testId));
     },
-    [setViewResult, setStartTest],
+    [setViewResult, setStartTest]
   );
 
   const handleViewResults = useCallback(
@@ -53,7 +53,7 @@ const Guests = () => {
       setStartTest(null);
       setViewResult((prev) => (prev === testId ? null : testId));
     },
-    [setStartTest, setViewResult],
+    [setStartTest, setViewResult]
   );
 
   function downloadCSV(singleQuestResp) {
@@ -151,9 +151,15 @@ const Guests = () => {
                       <AdvanceAnalytics questStartData={singleQuestResp} />
                     </div>
                     <div className="mx-auto mt-4 flex max-w-[730px] justify-end px-4 tablet:px-[0px]">
-                      <Button variant="submit" onClick={() => downloadCSV(singleQuestResp)}>
-                        Export results
-                      </Button>
+                      {singleQuestResp?.participantsCount > 0 ? (
+                        <Button variant="submit" onClick={() => downloadCSV(singleQuestResp)}>
+                          Export results
+                        </Button>
+                      ) : (
+                        <Button variant="hollow-submit" disabled={true}>
+                          Export results
+                        </Button>
+                      )}
                     </div>
                   </>
                 )}

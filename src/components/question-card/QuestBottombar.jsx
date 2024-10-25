@@ -64,11 +64,11 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
-      if (questStartData?.startStatus === '') {
-        showToast('warning', 'analyzeParticipatedPost');
-      } else {
-        navigate('/post/isfullscreen', { state: { questId: questStartData._id } });
-      }
+      // if (questStartData?.startStatus === '') {
+      //   showToast('warning', 'analyzeParticipatedPost');
+      // } else {
+      navigate('/post/isfullscreen', { state: { questId: questStartData._id } });
+      // }
     }
   };
 
