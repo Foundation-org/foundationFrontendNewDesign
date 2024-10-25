@@ -185,11 +185,8 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
               </label>
             </div>
           </div>
-          {/* <DynamicBadgeImageCropper
-            imgSrc={domainBadge.image}
-            setImgSrc={(newData) => setDomainBadge((prev) => ({ ...prev, ...newData }))}
-          /> */}
-          {domainBadge.image && (
+          <DynamicBadgeImageCropper imgSrc={domainBadge.image} setDomainBadge={setDomainBadge} />
+          {/* {domainBadge.image && (
             <div className="flex items-center">
               <img
                 src={domainBadge.image?.length === 2 ? domainBadge.image[0] : URL.createObjectURL(domainBadge.image)}
@@ -197,7 +194,7 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
                 className="aspect-video rounded-md object-contain"
               />
             </div>
-          )}
+          )} */}
           <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
             {edit && (
               <Button

@@ -8,13 +8,19 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return useMutation({
-    mutationFn: () => {
+    mutationFn: async () => {
       const formData = new FormData();
       formData.append('name', domainBadge.domain);
       formData.append('title', domainBadge.title);
       formData.append('description', domainBadge.description);
       formData.append('uuid', persistedUserInfo.uuid);
 
+      // Convert the Blob URL to a Blob
+      if (domainBadge.croppedImage) {
+        const blobResponse = await fetch(domainBadge.croppedImage);
+        const blob = await blobResponse.blob();
+        formData.append('croppedImage', blob, 'croppedImage.png');
+      }
       if (edit) {
         formData.append('update', true);
       }
