@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { referralModalStyle } from '../../../../constants/styles';
 import DeleteListPopup from '../../../../components/dialogue-boxes/DeleteListPopup';
 import ShareListLink from '../../../../components/dialogue-boxes/ShareListLink';
-import Copy from '../../../../assets/Copy';
 import BasicModal from '../../../../components/BasicModal';
 import ManagePostInListPopup from '../../../../components/dialogue-boxes/ManagePostInListPopup';
 import DeleteListPostPopup from '../../../../components/dialogue-boxes/DeleteListPostPopup';
@@ -19,6 +18,7 @@ import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import SummaryCard from '../../../../components/SummaryCard';
 import { calculateTimeAgo } from '../../../../utils/utils';
+import DisabledListPopup from '../../../../components/dialogue-boxes/DisabledListPopup';
 
 const Lists = () => {
   const navigate = useNavigate();
@@ -28,6 +28,8 @@ const Lists = () => {
   const [items, setItems] = useState([]);
   const [copyModal, setCopyModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [enableDisableModal, setEnableDisableModal] = useState(false);
+  const [enableDisableType, setEnableDisableType] = useState('');
   const [addPostModal, setAddPostModal] = useState(false);
   const [deletePostPopup, setDeletePostPopup] = useState(false);
   const [editListPopup, setEditListPopup] = useState(false);
@@ -160,10 +162,20 @@ const Lists = () => {
         <EditListNameDialogue
           handleClose={handleCloseEditList}
           modalVisible={editListPopup}
-          title={'Edit List Name'}
+          title={'Edit'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/lists/white-list-icon.svg`}
           categoryId={categoryId}
           listData={listName}
+        />
+      )}
+      {enableDisableModal && (
+        <DisabledListPopup
+          handleClose={() => {
+            setEnableDisableModal(false);
+          }}
+          modalVisible={enableDisableModal}
+          type={enableDisableType}
+          categoryId={categoryId}
         />
       )}
 
@@ -228,17 +240,22 @@ const Lists = () => {
                         setEditListPopup(true);
                       }}
                     >
-                      Edit List Name
+                      Edit
                     </h4>
                   </div>
                   <div
+                    className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
                     onClick={() => {
                       setSelectedItem(categoryItem);
                       setCopyModal(true);
                     }}
-                    className="cursor-pointer"
                   >
-                    {persistedTheme === 'dark' ? <Copy /> : <Copy />}
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
+                      alt="eye-cut"
+                      className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
+                    />
+                    <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
                   </div>
                 </div>
 
@@ -346,23 +363,21 @@ const Lists = () => {
                           View My List Results
                         </Button>
                       )}
-                      {/* {questStartData.userQuestSetting.linkStatus === 'Enable' ? ( */}
                       <Button
-                        variant="danger"
-                        // onClick={showDisableSharedLinkPopup}
-                        className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
+                        variant={categoryItem.isEnable ? 'danger' : 'submit'}
+                        onClick={() => {
+                          setEnableDisableType(categoryItem.isEnable ? 'disable' : 'enable');
+                          setCategoryId(categoryItem._id);
+                          setEnableDisableModal(true);
+                        }}
+                        className={
+                          categoryItem.isEnable
+                            ? 'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'
+                            : 'w-full !px-0 laptop:!px-0'
+                        }
                       >
-                        Disable Sharing
+                        {categoryItem.isEnable ? 'Disable Sharing' : 'Enable Sharing'}
                       </Button>
-                      {/* // ) : (
-                    //   <Button
-                    //     variant="submit"
-                    //     className={'w-full !px-0 laptop:!px-0'}
-                    //     onClick={showEnableSharedLinkPopup}
-                    //   >
-                    //     Enable Sharing
-                    //   </Button>
-                    // )} */}
                     </div>
                   </div>
                 </div>
