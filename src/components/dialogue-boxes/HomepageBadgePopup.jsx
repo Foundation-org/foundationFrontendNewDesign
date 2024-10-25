@@ -8,6 +8,7 @@ import BadgeRemovePopup from './badgeRemovePopup';
 import useAddDomainBadge from '../../services/mutations/verification-adges';
 import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
+import DynamicBadgeImageCropper from '../DynamicBadgeImageCropper';
 
 const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPersonalPopup }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -184,6 +185,10 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
               </label>
             </div>
           </div>
+          {/* <DynamicBadgeImageCropper
+            imgSrc={domainBadge.image}
+            setImgSrc={(newData) => setDomainBadge((prev) => ({ ...prev, ...newData }))}
+          /> */}
           {domainBadge.image && (
             <div className="flex items-center">
               <img
