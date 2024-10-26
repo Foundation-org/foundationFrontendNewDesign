@@ -19,14 +19,14 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose) => {
       if (domainBadge.croppedImage) {
         const blobResponse = await fetch(domainBadge.croppedImage);
         const blob = await blobResponse.blob();
-        formData.append('croppedImage', blob, 'croppedImage.png');
+        formData.append('files', blob, 'croppedImage.png');
       }
       if (edit) {
         formData.append('update', true);
       }
 
       if (domainBadge.image.length !== 2) {
-        formData.append('file', domainBadge.image);
+        formData.append('files', domainBadge.image);
       }
 
       return api.post(`/addDomainBadge`, formData, {
