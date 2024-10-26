@@ -4,6 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { useInView } from 'react-intersection-observer';
 import { getQuestUtils } from '../../features/quest/utilsSlice';
+import { Link } from 'react-router-dom';
 
 export default function SharedPosts() {
   const { ref, inView } = useInView();
@@ -59,9 +60,12 @@ export default function SharedPosts() {
   //rounded-t-[10px]
 
   return (
-    <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-6">
-      <div className="flex h-[43.2px] w-full items-center bg-blue-200 px-8">
-        <h1 className="text-[18px] font-medium text-white">Shared Posts</h1>
+    <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
+      <div className="flex h-[25px] w-full items-center justify-between bg-blue-200 px-5 text-[12px] font-medium text-white tablet:h-[43.2px] tablet:px-7 tablet:text-[18px]">
+        <h1>Shared Posts</h1>
+        <Link to="/user/profile/shared-posts/create" className="underline">
+          Manage my Shared Posts
+        </Link>
       </div>
       <div className="flex w-full flex-col gap-3 tablet:gap-5">{content}</div>
     </div>

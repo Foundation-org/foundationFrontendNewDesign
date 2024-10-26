@@ -24,6 +24,8 @@ import { changeThemeTo } from '../../../features/utils/utilsSlice';
 import SeldonInputs from '../../features/seldon-ai/components/SeldonInputs';
 import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
+import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
+import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -447,6 +449,8 @@ export default function DashboardLayout({ children }) {
           </div>
           {/* Sidebar Left */}
           {!localStorage.getItem('isSubDomain') &&
+            location.pathname !== '/profile/me' &&
+            location.pathname !== '/profile-others' &&
             !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile' &&
@@ -479,7 +483,12 @@ export default function DashboardLayout({ children }) {
 
           <NewsFeedSearch />
 
+          <SearchOtherProfiles />
+          <FindOtherProfiles />
+
           {location.pathname !== '/treasury' &&
+            location.pathname !== '/profile/me' &&
+            location.pathname !== '/profile-others' &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/treasury/reward-schedule' &&
             location.pathname !== '/treasury/buy-fdx' &&
@@ -715,6 +724,8 @@ export default function DashboardLayout({ children }) {
           </div>
 
           {!localStorage.getItem('isSubDomain') &&
+            location.pathname !== '/profile-others' &&
+            location.pathname !== '/profile/me' &&
             !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile/ledger' &&

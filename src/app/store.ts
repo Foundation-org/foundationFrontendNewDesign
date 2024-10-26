@@ -26,6 +26,7 @@ import seldonReducer from '../features/seldon-ai/seldonSlice';
 import newsFeedReducer from '../features/news-feed/newsFeedSlice';
 import seldonDataReducer from '../features/seldon-ai/seldonDataSlice';
 import directMessageReducer from '../features/direct-message/directMessageSlice';
+import profileReducer from '../features/profiles/profileSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -65,6 +66,7 @@ const reducer = combineReducers({
   extras: extrasReducer,
   seldon: seldonReducer,
   newsFeed: newsFeedReducer,
+  profile: profileReducer,
   seldonData: seldonDataReducer,
   directMessage: directMessageReducer,
 });

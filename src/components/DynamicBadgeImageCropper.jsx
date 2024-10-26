@@ -49,7 +49,11 @@ const DynamicBadgeImageCropper = ({ imgSrc, setDomainBadge }) => {
             Article Cover Image:
           </p>
           <ReactCrop crop={crop} onChange={setCrop} aspect={1} onComplete={handleCompleteCrop}>
-            <img ref={imgRef} src={URL.createObjectURL(imgSrc)} alt="cropper image" />
+            <img
+              ref={imgRef}
+              src={imgSrc?.length === 2 ? imgSrc[0] : URL.createObjectURL(imgSrc)}
+              alt="cropper image"
+            />
           </ReactCrop>
         </>
       )}

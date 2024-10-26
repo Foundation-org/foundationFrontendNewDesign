@@ -68,6 +68,8 @@ import DMPreview from '../pages/features/DirectMessaging/DMPreview';
 import Unsubscribe from '../pages/Emails/Unsubscrbe';
 import Withdraws from '../pages/Dashboard/pages/Treasury/pages/withdraws';
 import UserProfile from '../pages/UserProfile';
+import { OtherProfiles } from '../pages/UserProfile/OtherProfiles';
+import OtherProfilesLayout from '../pages/UserProfile/OtherProfilesLayout';
 
 export const getSubDomain = (location: string) => {
   const locationParts = location.split('.');
@@ -227,7 +229,11 @@ export function Router() {
               <Route path="/news/" element={<NewsFeedLayout />}>
                 <Route path="" element={<NewsFeed />} />
               </Route>
+              <Route path="/profile-others/" element={<OtherProfilesLayout />}>
+                <Route path="" element={<OtherProfiles />} />
+              </Route>
             </Route>
+
             <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
             <Route path="/shared-list-link/result" element={<SharedListResults />} />

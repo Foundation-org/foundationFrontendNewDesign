@@ -164,12 +164,12 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
               Image
             </p>
-            <div class="flex w-full items-center justify-center">
+            <div className="flex w-full items-center justify-center">
               <label
-                for="dropzone-file"
+                htmlFor="dropzone-file"
                 className={`verification_badge_input resize-none py-5 ${edit ? (domainBadge.image ? '' : 'caret-hidden') : ''}`}
               >
-                <div class="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
                   <p>Upload Your Image</p>
                   <p className="text-[16px] font-normal">Please upload your image or drag and drop it here.</p>
                   <p className="text-[16px] font-normal">Ensure the image has a 16:9 aspect ratio.</p>
@@ -177,7 +177,7 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
                 <input
                   id="dropzone-file"
                   type="file"
-                  class="hidden"
+                  className="hidden"
                   onChange={(e) => {
                     setDomainBadge({ ...domainBadge, image: e.target.files[0] });
                   }}
