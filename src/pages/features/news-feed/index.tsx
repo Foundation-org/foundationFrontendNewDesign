@@ -11,7 +11,7 @@ export default function NewsFeed() {
   const dispatch = useDispatch();
   const getNewsFeedFilters = useSelector(newsFeedFilters);
   const { data, fetchNextPage, hasNextPage, isLoading, isError, isFetching, error } = useFetchNewsFeed(
-    getNewsFeedFilters.searchData,
+    getNewsFeedFilters.searchData
   );
 
   useEffect(() => {
@@ -26,11 +26,11 @@ export default function NewsFeed() {
     }
 
     return data.pages.map((posts) =>
-      posts.map((post: any, index: number) => {
+      posts?.map((post: any, index: number) => {
         const isLastPost = posts.length === index + 1;
 
         return <NewsFeedCard key={post._id} data={post} innerRef={isLastPost ? ref : null} />;
-      }),
+      })
     );
   }, [data]);
 

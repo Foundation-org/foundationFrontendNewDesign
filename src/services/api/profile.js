@@ -15,7 +15,7 @@ const fetchProfiles = async (pageNo, limit = 5, sort = 'Newest First', terms = '
 
 export const useFetchOtherProfiles = (terms = '') => {
   return useInfiniteQuery({
-    queryKey: ['news-feed', terms],
+    queryKey: ['others-profiles', terms],
     queryFn: async ({ pageParam = 1 }) => {
       return await fetchProfiles(pageParam, 5, 'Newest First', terms);
     },

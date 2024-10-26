@@ -26,7 +26,7 @@ export const OtherProfiles = () => {
     }
 
     return data.pages.map((profiles) =>
-      profiles.domains.map((profile: any, index: number) => {
+      profiles.domains?.map((profile: any, index: number) => {
         const isLastPost = profiles.length === index + 1;
 
         return <OthersProfileCard key={profile._id} data={profile} innerRef={isLastPost ? ref : null} />;

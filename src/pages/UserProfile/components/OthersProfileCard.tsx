@@ -19,7 +19,7 @@ export default function OthersProfileCard(props: { data: any; innerRef: any }) {
         <div className="flex flex-col gap-2 text-[#7C7C7C] tablet:gap-4">
           <div>
             <h1 className="text-[12px] font-semibold tablet:text-[20px]">{data?.domain.title}</h1>
-            <p className="text-[10px] leading-normal tablet:text-[16px]">{data?.domain.name}</p>
+            <p className="text-[10px] leading-normal tablet:text-[16px]">{`${data?.domain.name}.${window.location.hostname}`}</p>
           </div>
           <p className="text-[11px] leading-normal tablet:text-[18px]">{data?.domain.description}</p>
         </div>
