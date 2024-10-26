@@ -15,7 +15,7 @@ export default function SharedPosts({ posts }: { posts: any }) {
         </Link>
       </div>
       <div className="flex w-full flex-col gap-3 tablet:gap-5">
-        {posts.map((post: any) => (
+        {posts?.map((post: any) => (
           <QuestionCardWithToggle
             key={post._id}
             questStartData={post}
