@@ -1,6 +1,7 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import api from '../api/Axios';
 
+// FETCH ALL PROFILES
 const fetchProfiles = async (pageNo, limit = 5, sort = 'Newest First', terms = '') => {
   const response = await api.get(`/user/searchUsersByDomain`, {
     params: {
@@ -20,5 +21,24 @@ export const useFetchOtherProfiles = (terms = '') => {
       return await fetchProfiles(pageParam, 5, 'Newest First', terms);
     },
     getNextPageParam: (lastPage, allPages) => (lastPage.length ? allPages.length + 1 : undefined),
+  });
+};
+
+// FETCH MY PROFILE
+const fetchMyProfile = async (domain) => {
+  const response = await api.get(`/user/fetchUserProfile`, {
+    params: {
+      domain,
+    },
+  });
+  return response.data;
+};
+
+export const useFetchMyProfile = (domain) => {
+  return useQuery({
+    queryKey: ['my-profile', domain],
+    queryFn: async () => {
+      return await fetchMyProfile(domain);
+    },
   });
 };
