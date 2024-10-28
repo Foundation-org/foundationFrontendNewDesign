@@ -19,7 +19,12 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
     description: '',
     image: '',
   });
-
+  const [prevState, setPrevState] = useState({
+    title: '',
+    domain: '',
+    description: '',
+    image: '',
+  });
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,6 +43,12 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
       const domainBadge = persistedUserInfo?.badges.find((badge) => badge?.domain);
 
       setDomainBadge({
+        title: domainBadge?.domain?.title,
+        domain: domainBadge?.domain?.name,
+        description: domainBadge?.domain?.description,
+        image: domainBadge?.domain?.s3Urls,
+      });
+      setPrevState({
         title: domainBadge?.domain?.title,
         domain: domainBadge?.domain?.name,
         description: domainBadge?.domain?.description,
@@ -92,7 +103,24 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
     }
   };
 
-  console.log({ domainBadge });
+  const checkHollow = () => {
+    if (
+      domainBadge.title === '' ||
+      domainBadge.domain === '' ||
+      domainBadge.description === '' ||
+      domainBadge.image === '' ||
+      JSON.stringify(prevState) === JSON.stringify(domainBadge)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  console.log(domainBadge);
+
+  useEffect(() => {
+    checkHollow();
+  }, [domainBadge.title, domainBadge.domain, domainBadge.description, domainBadge.image]);
 
   return (
     <>
@@ -180,8 +208,12 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
               >
                 <div className="flex flex-col items-center justify-center">
                   <p>Upload Your Image</p>
-                  <p className="text-[16px] font-normal">Please upload your image or drag and drop it here.</p>
-                  <p className="text-[16px] font-normal">Ensure the image has a 16:9 aspect ratio.</p>
+                  <p className="text-[10px] font-normal tablet:text-[16px]">
+                    Please upload your image or drag and drop it here.
+                  </p>
+                  <p className="text-[10px] font-normal tablet:text-[16px]">
+                    Ensure the image has a 16:9 aspect ratio.
+                  </p>
                 </div>
                 <input
                   id="dropzone-file"
@@ -246,9 +278,26 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
               </Button>
             )}
             <div className="flex gap-2">
-              <Button variant={'submit'} onClick={() => addDomainBadge()}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
-              </Button>
+              {checkHollow() ? (
+                <Button variant={'submit-hollow'} disabled={true}>
+                  {edit ? 'Update' : 'Add'}
+                </Button>
+              ) : (
+                <Button
+                  variant={'submit'}
+                  onClick={() => {
+                    if (Array.isArray(domainBadge.image)) {
+                      addDomainBadge();
+                    } else if (!Array.isArray(domainBadge.image) && domainBadge.croppedImage) {
+                      addDomainBadge();
+                    } else {
+                      toast.warning('Please crop the image for your profile.');
+                    }
+                  }}
+                >
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                </Button>
+              )}
             </div>
           </div>
         </div>

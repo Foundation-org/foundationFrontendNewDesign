@@ -9,6 +9,7 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose) => {
 
   return useMutation({
     mutationFn: async () => {
+      setLoading(true);
       const formData = new FormData();
       formData.append('name', domainBadge.domain);
       formData.append('title', domainBadge.title);
