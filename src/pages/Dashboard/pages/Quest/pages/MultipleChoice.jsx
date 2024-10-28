@@ -201,7 +201,7 @@ const MultipleChoice = () => {
     answerVerification(
       `index-${optionsValue.length - 2}`,
       optionsValue.length - 2,
-      optionsValue[optionsValue.length - 1].question,
+      optionsValue[optionsValue.length - 1].question
     );
   };
 
@@ -218,7 +218,7 @@ const MultipleChoice = () => {
         addOption,
         options: tempOptions,
         multipleOption,
-      }),
+      })
     );
   }, [
     createQuestSlice.question,
@@ -308,7 +308,7 @@ const MultipleChoice = () => {
             value.question !== '' &&
             createQuestSlice.question !== '' &&
             // getMediaStates.desctiption !== '' &&
-            getMediaStates.url !== '',
+            getMediaStates.url !== ''
         )
       ) {
         setHollow(false);
@@ -375,6 +375,11 @@ const MultipleChoice = () => {
     }
   }, [location.state?.postData.options]);
 
+  useEffect(() => {
+    document.getElementById(`input-${optionsValue.length + 2}`).blur();
+  }, []);
+  console.log(optionsArray, optionsValue);
+
   return (
     <CreateQuestWrapper
       quest="M/R"
@@ -400,14 +405,14 @@ const MultipleChoice = () => {
                 trash={true}
                 options={false}
                 dragable={true}
-                handleChange={(value) => handleChange(item.id, value, optionsArray)}
+                handleChange={(value) => handleChange(item.id, value, optionsValue)}
                 typedValue={item.question}
                 isTyping={item?.isTyping}
                 isSelected={item.selected}
-                optionsCount={optionsArray.length}
+                optionsCount={optionsValue.length}
                 removeOption={removeOption}
                 number={index + 3}
-                optionStatus={optionsArray[index].optionStatus}
+                optionStatus={optionsValue[index].optionStatus}
                 answerVerification={(value) => answerVerification(item.id, index, value)}
                 handleTab={handleTab}
               />
@@ -432,7 +437,7 @@ const MultipleChoice = () => {
       {/* <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
         &#x200B;
       </p> */}
-      <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12">
+      <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12" id="focusOut">
         <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
           Post Settings
         </h5>
