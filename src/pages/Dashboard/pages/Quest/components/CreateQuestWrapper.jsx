@@ -10,12 +10,10 @@ import { POST_QUESTION_CHAR_LIMIT } from '../../../../../constants/Values/consta
 import { dyk } from '../../../../../constants/dyk';
 import SystemNotificationCard from '../../../../../components/posts/SystemNotificationCard';
 import AddGif from './AddGif';
-import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export default function CreateQuestWrapper({ quest, type, handleTab, msg, children }) {
   const dispatch = useDispatch();
-  const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
@@ -37,10 +35,10 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   };
 
   useEffect(() => {
-    if (location.state?.postData?.question) {
-      questionVerification(location.state.postData.question);
+    if (createQuestSlice?.question) {
+      questionVerification(createQuestSlice.question);
     }
-  }, [location.state?.postData?.question]);
+  }, [createQuestSlice?.question]);
 
   return (
     <>
@@ -73,7 +71,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                     createQuestAction.updateIsMedia({
                       isMedia: true,
                       type: 'EmbedVideo',
-                    }),
+                    })
                   );
                 }}
               >
@@ -91,7 +89,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                       createQuestAction.updateIsMedia({
                         isMedia: true,
                         type: 'EmbedAudio',
-                      }),
+                      })
                     );
                   }}
                 >
@@ -106,7 +104,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                     createQuestAction.updateIsMedia({
                       isMedia: false,
                       type: '',
-                    }),
+                    })
                   );
                   dispatch(createQuestAction.updateIsGifMedia(false));
                   dispatch(pictureMediaAction.updateIsPicMedia(true));

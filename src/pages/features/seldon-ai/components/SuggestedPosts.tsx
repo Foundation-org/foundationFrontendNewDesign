@@ -61,7 +61,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
         processedQuestions?.map(async (item) => {
           const { errorMessage } = await checkDuplicatePost(item.question);
           return { ...item, errorMessage };
-        }),
+        })
       );
 
       // Filter out items with 'Duplication' error message
@@ -109,7 +109,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
             debug: response.data?.debug,
             articleId: response.data?.response.articleId,
             prompt: '',
-          }),
+          })
         );
       }
     } catch (error) {
