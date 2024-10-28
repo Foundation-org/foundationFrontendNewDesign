@@ -70,6 +70,7 @@ import Withdraws from '../pages/Dashboard/pages/Treasury/pages/withdraws';
 import UserProfile from '../pages/UserProfile';
 import { OtherProfiles } from '../pages/UserProfile/OtherProfiles';
 import OtherProfilesLayout from '../pages/UserProfile/OtherProfilesLayout';
+import PublicProfile from '../pages/UserProfile/PublicProfile';
 
 export const getSubDomain = (location: string) => {
   const locationParts = location.split('.');
@@ -233,7 +234,6 @@ export function Router() {
                 <Route path="" element={<OtherProfiles />} />
               </Route>
             </Route>
-
             <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
             <Route path="/shared-list-link/result" element={<SharedListResults />} />
@@ -241,6 +241,7 @@ export function Router() {
             <Route path="/p/:id" element={<SingleQuest />} />
             <Route path="/l/:id" element={<PostsByList />} />
             <Route path="/r/:id" element={<SeldonView />} />
+            <Route path="/h/:domain" element={<PublicProfile />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/verifycode" element={<VerifyCode />} />

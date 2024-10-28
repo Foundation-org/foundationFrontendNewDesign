@@ -1,22 +1,27 @@
 import { useSelector } from 'react-redux';
 import { Button } from '../../components/ui/Button';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function ProfileCard() {
+  const location = useLocation();
+  const isPublicProfile = location.pathname.startsWith('/h/');
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const profile = persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain;
 
   return (
-    <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[14px] rounded-[13.84px] border-[1.846px] border-[#D9D9D9] bg-white p-[18px] tablet:gap-4 tablet:p-5">
+    <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[14px] rounded-[13.84px] border-2 border-[#D9D9D9] bg-white p-[18px] tablet:gap-4 tablet:p-5">
       <div className="flex w-full items-center gap-[14px] tablet:gap-6">
         <div>
           <div className="relative flex size-[60px] min-w-[60px] flex-col gap-[6px] rounded-full border-[5px] border-[#C9C8C8] tablet:size-[185px] tablet:min-w-[185px]">
-            <div className="absolute bottom-0 flex h-[40%] w-full items-center justify-center bg-[#FBFBFB]/50">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/camera.svg`}
-                alt="save icon"
-                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[45px]"
-              />
-            </div>
+            {!isPublicProfile && (
+              <div className="absolute bottom-0 flex h-[40%] w-full items-center justify-center bg-[#FBFBFB]/50">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/camera.svg`}
+                  alt="save icon"
+                  className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[45px]"
+                />
+              </div>
+            )}
             <img
               src={profile?.s3Urls[0]}
               alt="aa"
@@ -39,18 +44,24 @@ export default function ProfileCard() {
           </div>
           <p className="text-[11px] leading-normal tablet:text-[18px]">{profile?.description}</p>
         </div>
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-          alt="Edit Icon"
-          className="absolute right-4 top-4 h-[12px] w-[12px] cursor-pointer tablet:h-[23px] tablet:w-[23px]"
-          // onClick={() => {
-          //   setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
-          // }}
-        />
+        {!isPublicProfile && (
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+            alt="Edit Icon"
+            className="absolute right-4 top-4 h-[12px] w-[12px] cursor-pointer tablet:h-[23px] tablet:w-[23px]"
+            // onClick={() => {
+            //   setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+            // }}
+          />
+        )}
       </div>
-      <div className="flex w-full items-center justify-end">
-        <Button variant="submit">View as public</Button>
-      </div>
+      {!isPublicProfile && (
+        <div className="flex w-full items-center justify-end">
+          <Link to={`/h/${profile?.name}`}>
+            <Button variant="submit">View as public</Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

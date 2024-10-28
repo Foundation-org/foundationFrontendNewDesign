@@ -355,6 +355,7 @@ export default function DashboardLayout({ children }) {
               )}
             </div>
             {location.pathname !== '/profile' &&
+              !location.pathname.startsWith('/h/') &&
               !location.pathname.startsWith('/seldon-ai') &&
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
@@ -451,6 +452,7 @@ export default function DashboardLayout({ children }) {
           {!localStorage.getItem('isSubDomain') &&
             location.pathname !== '/profile/me' &&
             location.pathname !== '/profile-others' &&
+            !location.pathname.startsWith('/h/') &&
             !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile' &&
@@ -487,6 +489,7 @@ export default function DashboardLayout({ children }) {
           <FindOtherProfiles />
 
           {location.pathname !== '/treasury' &&
+            !location.pathname.startsWith('/h/') &&
             location.pathname !== '/profile/me' &&
             location.pathname !== '/profile-others' &&
             !location.pathname.startsWith('/seldon-ai') &&
@@ -725,6 +728,7 @@ export default function DashboardLayout({ children }) {
 
           {!localStorage.getItem('isSubDomain') &&
             location.pathname !== '/profile-others' &&
+            !location.pathname.startsWith('/h/') &&
             location.pathname !== '/profile/me' &&
             !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
