@@ -378,7 +378,6 @@ const MultipleChoice = () => {
   useEffect(() => {
     document.getElementById(`input-${optionsValue.length + 2}`).blur();
   }, []);
-  console.log(optionsArray, optionsValue);
 
   return (
     <CreateQuestWrapper

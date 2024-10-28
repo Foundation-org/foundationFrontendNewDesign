@@ -115,14 +115,21 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
               Domain
             </p>
-            <input
-              type="text"
-              value={domainBadge.domain}
-              onChange={handleDomainChange}
-              onBlur={handleDomainInputBlur}
-              className={`verification_badge_input ${edit ? (domainBadge.domain ? '' : 'caret-hidden') : ''}`}
-            />
-            <p>Domain Preview: {`(${domainBadge.domain}.${window.location.hostname})`}</p>
+            <div className="relative inline-block w-full">
+              <input
+                type="text"
+                value={domainBadge.domain}
+                onChange={handleDomainChange}
+                onBlur={handleDomainInputBlur}
+                className={`verification_badge_input ${edit ? (domainBadge.domain ? '' : 'caret-hidden') : ''}`}
+                placeholder="Enter domain"
+              />
+              {/* Display the suffix next to the input */}
+              <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-[9.28px] text-gray-500 tablet:text-[20px]">
+                .on.foundation
+              </span>
+            </div>
+            <p className="text-[9.28px] tablet:text-[20px]">Characters Remaining: {63 - domainBadge.domain.length}</p>
           </div>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
@@ -158,7 +165,9 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
               // onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(2, 'Enter'))}
               className={`verification_badge_input resize-none ${edit ? (domainBadge.description ? '' : 'caret-hidden') : ''}`}
             />
-            <p>Characters Remaining: {300 - domainBadge.description.length}</p>
+            <p className="text-[9.28px] tablet:text-[20px]">
+              Characters Remaining: {300 - domainBadge.description.length}
+            </p>
           </div>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
@@ -179,7 +188,32 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
                   type="file"
                   className="hidden"
                   onChange={(e) => {
-                    setDomainBadge({ ...domainBadge, image: e.target.files[0] });
+                    if (e.target.files && e.target.files[0]) {
+                      const file = e.target.files[0];
+                      const reader = new FileReader();
+
+                      reader.onload = (event) => {
+                        const result = event.target?.result;
+                        if (!result) {
+                          return;
+                        }
+
+                        const img = new Image();
+                        img.onload = () => {
+                          const width = img.width;
+                          const height = img.height;
+                          if (width / height >= 1.7 && width / height <= 2) {
+                            setDomainBadge({ ...domainBadge, image: e.target.files[0] });
+                          } else {
+                            toast.error('Please upload an image with a 16:9 aspect ratio.');
+                          }
+                        };
+
+                        img.src = result; // Set image source to the data URL
+                      };
+
+                      reader.readAsDataURL(file);
+                    }
                   }}
                 />
               </label>
