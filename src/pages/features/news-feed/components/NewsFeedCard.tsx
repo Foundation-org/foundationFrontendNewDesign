@@ -1,17 +1,22 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { formatDateMDY } from '../../../../utils/utils';
 import { Button } from '../../../../components/ui/Button';
 import { NewsFeedPropsType } from '../../../../types/news-feed';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
 import { handleSeldonInput, setInputState } from '../../../../features/seldon-ai/seldonSlice';
+import { useUpdateSpotLight } from '../../../../services/api/profile';
 
 export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile/me';
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
+
+  const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   const handleUpdateArticle = () => {
     dispatch(
@@ -30,7 +35,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         createdAt: data?.createdAt,
         updatedAt: data?.updatedAt,
         seoImage: data.s3Urls[0],
-      }),
+      })
     );
     dispatch(handleSeldonInput({ name: 'isTitle', value: true }));
     dispatch(handleSeldonInput({ name: 'question', value: data?.prompt }));
@@ -45,10 +50,22 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
       className="h-full max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
     >
       {/* Header */}
-      <div className="flex flex-col border-b border-gray-250 p-[0.57rem] tablet:border-b-[1.846px] tablet:px-[15px] tablet:py-3">
+      <div className="flex items-center justify-between gap-4 border-b border-gray-250 p-[0.57rem] tablet:border-b-[1.846px] tablet:px-[15px] tablet:py-3">
         <h4 className="text-[12.145px] font-semibold text-gray-150 dark:text-white tablet:text-[18px]">
           {data?.title}
         </h4>
+        {/* Pin To SpotLight */}
+        {isProfilePage && !data?.spotLightType && (
+          <button
+            className="whitespace-nowrap text-[18px] font-medium text-[#6BA5CF] underline"
+            onClick={() => {
+              const domain = persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain.name;
+              handleSpotLight({ domain, type: 'news', id: data._id, status: 'set' });
+            }}
+          >
+            Pin to Spotlight
+          </button>
+        )}
       </div>
       {/* Body */}
       <div className="flex flex-col justify-between gap-2 px-3 pb-[15px] pt-2 tablet:gap-4 tablet:px-4 tablet:pb-6 tablet:pt-4">

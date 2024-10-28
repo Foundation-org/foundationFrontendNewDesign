@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import api from '../api/Axios';
 
 // FETCH ALL PROFILES
@@ -39,6 +39,23 @@ export const useFetchMyProfile = (domain) => {
     queryKey: ['my-profile', domain],
     queryFn: async () => {
       return await fetchMyProfile(domain);
+    },
+  });
+};
+
+const updateSpotLight = async (data) => {
+  const response = await api.post('/app/spotLight', data);
+  return response.data;
+};
+
+export const useUpdateSpotLight = () => {
+  return useMutation({
+    mutationFn: updateSpotLight,
+    onError: (error) => {
+      console.error('Error creating spotLight:', error);
+    },
+    onSuccess: (data) => {
+      console.log('SpotLight created successfully:', data);
     },
   });
 };

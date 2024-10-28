@@ -1,12 +1,18 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { calculateTimeAgo } from '../../utils/utils';
 import showToast from '../ui/Toast';
+import { useUpdateSpotLight } from '../../services/api/profile';
 
 export default function PostTopBar({ questStartData, postProperties, setDelModalVisible }) {
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile/me';
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const timeAgo = useMemo(() => calculateTimeAgo(questStartData?.createdAt), [questStartData?.createdAt]);
+
+  const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   let ratingImage = null;
 
@@ -63,7 +69,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
               </button>
             )}
           {/* TimeStamp */}
-          {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
+          {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && !isProfilePage && (
             <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
@@ -74,6 +80,19 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                 {timeAgo}
               </h4>
             </div>
+          )}
+
+          {/* Pin To SpotLight */}
+          {isProfilePage && !questStartData.spotLightType && (
+            <button
+              className="text-[18px] font-medium text-[#6BA5CF] underline"
+              onClick={() => {
+                const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
+                handleSpotLight({ domain, type: 'posts', id: questStartData._id, status: 'set' });
+              }}
+            >
+              Pin to Spotlight
+            </button>
           )}
         </div>
       )}

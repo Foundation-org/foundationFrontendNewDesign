@@ -20,8 +20,9 @@ interface articleType {
   userUuid: string;
   seoSummary: string;
   suggestions: suggestions[];
-  settings: any
-  s3Urls:string[]
+  settings: any;
+  s3Urls: string[];
+  spotLightType?: string;
   __v: number;
 }
 

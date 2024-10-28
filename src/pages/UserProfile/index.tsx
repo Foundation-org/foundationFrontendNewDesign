@@ -33,7 +33,7 @@ export default function UserProfile() {
       ) : (
         <>
           <ProfileCard />
-          {/* <Spotlight /> */}
+          <Spotlight spotlight={data?.spotLight} />
           <SharedPosts posts={data?.posts?.data} />
           {/* <SharedLists lists={data?.lists} /> */}
           <NewsArticles articles={data?.articles} />

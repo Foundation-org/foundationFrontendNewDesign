@@ -102,38 +102,17 @@ export const getSubDomain = (location: string) => {
 
 export function Router() {
   const subDomain = getSubDomain(window.location.hostname);
+
+  if (subDomain !== '') {
+    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/h/${subDomain}`;
+  }
+
   const persistedUser = useSelector((state: any) => state.auth.user);
   const ROLES = {
     User: 'user',
     Guest: 'guest',
     Visitor: 'visitor',
   };
-
-  if (subDomain !== '') {
-    localStorage.setItem('isSubDomain', 'true');
-
-    return (
-      <>
-        {persistedUser?.uuid ? (
-          <Routes>
-            <Route path="/" element={<Dashboard />}>
-              <Route path="" element={<UserProfile />} />
-            </Route>
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        ) : (
-          <Routes>
-            <Route
-              path="/"
-              element={
-                localStorage.getItem('userExist') === 'true' ? <Navigate to="/" /> : <GuestRedirect redirectUrl="/" />
-              }
-            />
-          </Routes>
-        )}
-      </>
-    );
-  }
 
   return (
     <>
@@ -155,6 +134,7 @@ export function Router() {
           <Route path="/p/:id/:fid?" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/l/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/r/:id" element={<GuestRedirect redirectUrl={null} />} />
+          <Route path="/h/:domain" element={<PublicProfile />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="/authenticating" element={<Authenticating />} />
           <Route path="/test" element={<Test />} />
