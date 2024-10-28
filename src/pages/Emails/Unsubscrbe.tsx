@@ -9,8 +9,8 @@ const Unsubscribe = () => {
   const [message, setMessage] = useState(false);
 
   const { mutateAsync: handleUnsubscribe } = useMutation({
-    mutationFn: async (email: string) => {
-      const response = await api.get(`/user/unsubscribe?email=${email}`);
+    mutationFn: async ({ email, typeEmail }: any) => {
+      const response = await api.get(`/user/unsubscribe?email=${email}&type=${typeEmail}`);
       return response.data;
     },
     onSuccess: (data) => {
@@ -24,9 +24,10 @@ const Unsubscribe = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const email = queryParams.get('email');
+    const typeEmail = queryParams.get('type');
 
     if (email) {
-      handleUnsubscribe(email);
+      handleUnsubscribe({ email, typeEmail } as any);
     } else {
       setMessage(false);
     }
