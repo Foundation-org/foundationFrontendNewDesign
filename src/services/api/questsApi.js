@@ -177,7 +177,7 @@ export const answerValidation = async ({ answer }) => {
     if (answer.split(' ').length === 1) {
       val = 10;
     }
-    const response = await api.get(`/ai-validation/${val}?userMessage=${answer}`);
+    const response = await api.get(`/ai-validation/${val}?userMessage=${encodeURIComponent(answer)}`);
 
     if (response.data.status === 'VIOLATION') {
       await updateViolationCounterAPI();
@@ -353,7 +353,7 @@ export const gifUrlCheck = async ({ url }) => {
 
 export const moderationRating = async ({ validatedQuestion }) => {
   try {
-    const response = await api.post(`/ai-validation/moderator?userMessage=${validatedQuestion}`);
+    const response = await api.post(`/ai-validation/moderator?userMessage=${encodeURIComponent(validatedQuestion)}`);
     if (response.status === 200) {
       return response.data;
     } else {
