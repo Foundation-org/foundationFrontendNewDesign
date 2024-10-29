@@ -116,7 +116,6 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
       return false;
     }
   };
-  console.log(domainBadge);
 
   useEffect(() => {
     checkHollow();

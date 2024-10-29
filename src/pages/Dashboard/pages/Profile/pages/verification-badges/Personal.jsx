@@ -143,7 +143,7 @@ export default function Personal({
             title="Sex"
             type={'sex'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`}
-            placeholder="Sex Here"
+            placeholder="Choose"
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
@@ -158,7 +158,7 @@ export default function Personal({
             title="Relationship Status"
             type={'relationshipStatus'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`}
-            placeholder="Relationship Here"
+            placeholder="Choose"
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
