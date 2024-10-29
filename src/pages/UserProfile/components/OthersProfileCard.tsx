@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import showToast from '../../../components/ui/Toast';
 
 export default function OthersProfileCard(props: { data: any; innerRef: any }) {
   const { data, innerRef } = props;
@@ -27,7 +28,12 @@ export default function OthersProfileCard(props: { data: any; innerRef: any }) {
         </div>
       </div>
       <div className="grid w-full grid-cols-2 gap-1 text-[12px] font-semibold tablet:gap-2 tablet:text-[20px]">
-        <button className="rounded-bl-[13.84px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] py-3 text-white tablet:py-4">
+        <button
+          className="rounded-bl-[13.84px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] py-3 text-white tablet:py-4"
+          onClick={() => {
+            showToast('warning', 'featureComingSoon');
+          }}
+        >
           Follow
         </button>
         <Link

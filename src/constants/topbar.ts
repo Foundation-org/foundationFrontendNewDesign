@@ -14,6 +14,7 @@ export const TopbarItems = [
       '/profile/shared-links',
       '/profile/user-settings',
       '/profile/lists',
+      '/profile/me',
     ],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile-filled.svg`,
