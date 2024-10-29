@@ -369,12 +369,4 @@ export const subscription = [
 ];
 
 export const badgesTotalLength =
-  contacts.length +
-  socials.length +
-  web3.length +
-  legacy.length +
-  personal.length +
-  pseudo.length +
-  homepageBadges.length +
-  subscription.length -
-  1;
+  contacts.length + socials.length + web3.length + legacy.length + personal.length + homepageBadges.length;
