@@ -109,4 +109,7 @@ export const toastMessages = {
   rankChoiceParticipantNotAllowed: 'Direct Message is not available for Rank Choice post',
   numberShouldBeBetween1and9: 'Number should be between 1 and 9',
   noEncryptionBadgeAdded: 'You need to have the encryption badge to use this feature',
+  spotLightAdded: 'Spotlight added successfully',
+  spotLightRemoved: 'Spotlight removed successfully',
+  spotLightAlreadyExists: 'Only single spotlight is allowed at once.',
 } as const;

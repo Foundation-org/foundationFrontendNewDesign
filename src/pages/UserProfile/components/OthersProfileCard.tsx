@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function OthersProfileCard(props: { data: any; innerRef: any }) {
   const { data, innerRef } = props;
 
@@ -28,7 +30,12 @@ export default function OthersProfileCard(props: { data: any; innerRef: any }) {
         <button className="rounded-bl-[13.84px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] py-3 text-white tablet:py-4">
           Follow
         </button>
-        <button className="rounded-br-[13.84px] bg-[#7C7C7C] py-3 text-white tablet:py-4">View Profile</button>
+        <Link
+          to={`/h/${data.domain.name}`}
+          className="rounded-br-[13.84px] bg-[#7C7C7C] py-3 text-center text-white tablet:py-4"
+        >
+          View Profile
+        </Link>
       </div>
     </div>
   );

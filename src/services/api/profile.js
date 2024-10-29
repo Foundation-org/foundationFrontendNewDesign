@@ -1,5 +1,7 @@
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import api from '../api/Axios';
+import { useSelector } from 'react-redux';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import showToast from '../../components/ui/Toast';
 
 // FETCH ALL PROFILES
 const fetchProfiles = async (pageNo, limit = 5, sort = 'Newest First', terms = '') => {
@@ -43,19 +45,30 @@ export const useFetchMyProfile = (domain) => {
   });
 };
 
+// SPOTLIGHT ADD and REMOVE
 const updateSpotLight = async (data) => {
   const response = await api.post('/app/spotLight', data);
   return response.data;
 };
 
 export const useUpdateSpotLight = () => {
+  const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
+
   return useMutation({
     mutationFn: updateSpotLight,
     onError: (error) => {
-      console.error('Error creating spotLight:', error);
+      showToast('warning', 'spotLightAlreadyExists');
     },
     onSuccess: (data) => {
-      console.log('SpotLight created successfully:', data);
+      queryClient.invalidateQueries({ queryKey: ['my-profile', domain] });
+
+      if (data.message === 'Spotlight added successfully') {
+        showToast('success', 'spotLightAdded');
+      } else {
+        showToast('success', 'spotLightRemoved');
+      }
     },
   });
 };
