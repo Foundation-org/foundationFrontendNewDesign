@@ -38,7 +38,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
     if (createQuestSlice?.question) {
       questionVerification(createQuestSlice.question);
     }
-  }, [createQuestSlice?.question]);
+  }, []);
 
   return (
     <>
