@@ -1,5 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
+import showToast from '../../components/ui/Toast';
 
 export default function NewsArticles({ articles }: { articles: any }) {
   const location = useLocation();
@@ -10,9 +11,14 @@ export default function NewsArticles({ articles }: { articles: any }) {
       <div className="flex h-[25px] w-full items-center justify-between bg-blue-200 px-5 text-[12px] font-medium text-white tablet:h-[43.2px] tablet:px-7 tablet:text-[18px]">
         <h1>News Articles</h1>
         {!isPublicProfile && (
-          <Link to="/user/profile/shared-posts/create" className="underline">
+          <button
+            className="underline"
+            onClick={() => {
+              showToast('warning', 'featureComingSoon');
+            }}
+          >
             Manage my News Articles
-          </Link>
+          </button>
         )}
       </div>
       <div className="mb-4 flex w-full flex-col gap-3 tablet:gap-5">

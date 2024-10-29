@@ -13,7 +13,7 @@ export default function SharedPosts({ posts }: { posts: any }) {
       <div className="flex h-[25px] w-full items-center justify-between bg-blue-200 px-5 text-[12px] font-medium text-white tablet:h-[43.2px] tablet:px-7 tablet:text-[18px]">
         <h1>Shared Posts</h1>
         {!isPublicProfile && (
-          <Link to="/user/profile/shared-posts/create" className="underline">
+          <Link to="/profile/shared-links" className="underline">
             Manage my Shared Posts
           </Link>
         )}

@@ -35,7 +35,7 @@ export default function UserProfile() {
           <ProfileCard />
           {data?.spotLight && <Spotlight spotlight={data?.spotLight} />}
           <SharedPosts posts={data?.posts?.data} />
-          {/* <SharedLists lists={data?.lists} /> */}
+          <SharedLists lists={data?.lists} />
           <NewsArticles articles={data?.articles} />
         </>
       )}

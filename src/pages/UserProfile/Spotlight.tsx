@@ -1,9 +1,10 @@
 import { useLocation } from 'react-router-dom';
-import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { useSelector } from 'react-redux';
 import { getQuestUtils } from '../../features/quest/utilsSlice';
-import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 import { useUpdateSpotLight } from '../../services/api/profile';
+import ListCard from '../Dashboard/pages/Lists/components/ListCard';
+import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
+import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 
 export default function Spotlight({ spotlight }: any) {
   const location = useLocation();
@@ -12,6 +13,8 @@ export default function Spotlight({ spotlight }: any) {
   const isPublicProfile = location.pathname.startsWith('/h/');
 
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
+
+  // console.log('first', spotlight);
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
@@ -22,7 +25,9 @@ export default function Spotlight({ spotlight }: any) {
             className="underline"
             onClick={() => {
               const domain = persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain.name;
-              handleSpotLight({ domain, type: spotlight.spotLightType, id: spotlight._id, status: 'reset' });
+              const id = spotlight.spotLightType === 'lists' ? spotlight.category._id : spotlight._id;
+
+              handleSpotLight({ domain, type: spotlight.spotLightType, id, status: 'reset' });
             }}
           >
             Remove from Spotlight
@@ -38,6 +43,8 @@ export default function Spotlight({ spotlight }: any) {
           />
         ) : spotlight?.spotLightType === 'news' ? (
           <NewsFeedCard key={spotlight._id} data={spotlight} innerRef={null} />
+        ) : spotlight?.spotLightType === 'lists' ? (
+          <ListCard listData={[spotlight.category]} />
         ) : null}
       </div>
     </div>
