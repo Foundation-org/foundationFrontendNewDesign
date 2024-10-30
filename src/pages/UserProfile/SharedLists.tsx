@@ -11,7 +11,7 @@ export default function SharedLists({ lists }: { lists: any }) {
         <h1>Shared List</h1>
         {!isPublicProfile && (
           <Link to="/profile/lists" className="underline">
-            Manage my Shared Lists
+            Manage my Lists
           </Link>
         )}
       </div>

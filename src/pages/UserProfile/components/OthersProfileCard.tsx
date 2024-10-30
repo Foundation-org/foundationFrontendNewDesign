@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
-import showToast from '../../../components/ui/Toast';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/ui/Button';
 
 export default function OthersProfileCard(props: { data: any; innerRef: any }) {
   const { data, innerRef } = props;
+  const navigate = useNavigate();
 
   return (
     <div
       ref={innerRef}
       className="flex flex-col items-center rounded-[13.84px] border-[1.846px] border-[#D9D9D9] bg-white"
     >
-      <div className="flex items-center gap-[14px] p-[18px] tablet:gap-6 tablet:p-5">
+      <div className="flex w-full items-center gap-[14px] p-[18px] tablet:gap-6 tablet:p-5">
         <div>
           <div className="flex size-[60px] min-w-[60px] flex-col gap-[6px] rounded-full border-[5px] border-[#C9C8C8] tablet:size-[185px] tablet:min-w-[185px]">
             <img
@@ -27,21 +28,15 @@ export default function OthersProfileCard(props: { data: any; innerRef: any }) {
           <p className="text-[11px] leading-normal tablet:text-[18px]">{data?.domain.description}</p>
         </div>
       </div>
-      <div className="grid w-full grid-cols-2 gap-1 text-[12px] font-semibold tablet:gap-2 tablet:text-[20px]">
-        <button
-          className="rounded-bl-[13.84px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] py-3 text-white tablet:py-4"
+      <div className="tablet:text-[20px]] flex w-full justify-end px-[18px] pb-[18px] text-[12px] font-semibold tablet:gap-2 tablet:px-5 tablet:pb-5">
+        <Button
+          variant="cancel"
           onClick={() => {
-            showToast('warning', 'featureComingSoon');
+            navigate(`/h/${data.domain.name}`);
           }}
         >
-          Follow
-        </button>
-        <Link
-          to={`/h/${data.domain.name}`}
-          className="rounded-br-[13.84px] bg-[#7C7C7C] py-3 text-center text-white tablet:py-4"
-        >
           View Profile
-        </Link>
+        </Button>
       </div>
     </div>
   );

@@ -25,6 +25,7 @@ const ListCard = ({ listData }) => {
   const queryClient = useQueryClient();
   const location = useLocation();
   const isProfilePage = location.pathname === '/profile/me';
+  const notPublicProfile = !location.pathname.startsWith('/h/');
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [items, setItems] = useState([]);
@@ -203,16 +204,18 @@ const ListCard = ({ listData }) => {
                     <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
                       {categoryItem.category}
                     </h4>
-                    <h4
-                      className="cursor-pointer text-[9px] font-normal leading-[9px] text-[#7C7C7C] underline dark:text-gray-300 tablet:text-[1rem] tablet:leading-[23px]"
-                      onClick={() => {
-                        setCategoryId(categoryItem._id);
-                        setListName(categoryItem.category);
-                        setEditListPopup(true);
-                      }}
-                    >
-                      Edit
-                    </h4>
+                    {notPublicProfile && (
+                      <h4
+                        className="cursor-pointer text-[9px] font-normal leading-[9px] text-[#7C7C7C] underline dark:text-gray-300 tablet:text-[1rem] tablet:leading-[23px]"
+                        onClick={() => {
+                          setCategoryId(categoryItem._id);
+                          setListName(categoryItem.category);
+                          setEditListPopup(true);
+                        }}
+                      >
+                        Edit
+                      </h4>
+                    )}
                   </div>
 
                   {/* Pin To SpotLight */}
@@ -249,10 +252,12 @@ const ListCard = ({ listData }) => {
                   )}
                 </div>
                 <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
-                  <h4 className="my-2 text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:my-[27px] tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px]">
-                    {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''} (drag and drop to change
-                    order)
-                  </h4>
+                  {notPublicProfile && (
+                    <h4 className="my-2 text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:my-[27px] tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px]">
+                      {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''} (drag and drop to change
+                      order)
+                    </h4>
+                  )}
 
                   {/* Posts Statements */}
                   <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
@@ -288,112 +293,120 @@ const ListCard = ({ listData }) => {
                   )}
 
                   {/* Clicks & Engagement */}
-                  <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
-                    <div className="flex items-center gap-[1px] tablet:gap-2">
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
-                        alt="clicks"
-                        className="h-2 w-2 tablet:h-6 tablet:w-6"
-                      />
-                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
-                        {categoryItem.clicks === null ? 0 : categoryItem.clicks} Clicks{' '}
-                      </h2>
+                  {notPublicProfile && (
+                    <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
+                      <div className="flex items-center gap-[1px] tablet:gap-2">
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
+                          alt="clicks"
+                          className="h-2 w-2 tablet:h-6 tablet:w-6"
+                        />
+                        <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
+                          {categoryItem.clicks === null ? 0 : categoryItem.clicks} Clicks{' '}
+                        </h2>
+                      </div>
+                      <div className="flex items-center gap-[1px] tablet:gap-2">
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/group.svg' : 'assets/svgs/participants.svg'}`}
+                          alt="participants"
+                          className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
+                        />
+                        <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
+                          {categoryItem.participents === null ? 0 : categoryItem.participents} Engagements{' '}
+                        </h2>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-[1px] tablet:gap-2">
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/group.svg' : 'assets/svgs/participants.svg'}`}
-                        alt="participants"
-                        className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
-                      />
-                      <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
-                        {categoryItem.participents === null ? 0 : categoryItem.participents} Engagements{' '}
-                      </h2>
-                    </div>
-                  </div>
+                  )}
 
                   {/* Buttons Row  */}
-                  <div className="flex flex-col gap-2 tablet:gap-4">
-                    {/* Buttons Row 1 */}
-                    <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
-                      <Button
-                        variant="cancel"
-                        className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
-                        onClick={() => {
-                          setSelectedItem(categoryItem);
-                          setCategoryId(categoryItem._id);
-                          setAddPostModal(true);
-                        }}
-                      >
-                        + Add Post
-                      </Button>
-                      {categoryItem._id === hasReordered && hasReordered !== '' ? (
+                  {notPublicProfile && (
+                    <div className="flex flex-col gap-2 tablet:gap-4">
+                      {/* Buttons Row 1 */}
+                      <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
                         <Button
-                          variant="submit"
-                          className="w-full min-w-full"
+                          variant="cancel"
+                          className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
                           onClick={() => {
-                            handleSavePostsOrder(categoryItem.post, categoryItem._id);
+                            setSelectedItem(categoryItem);
+                            setCategoryId(categoryItem._id);
+                            setAddPostModal(true);
                           }}
                         >
-                          Save
+                          + Add Post
                         </Button>
-                      ) : (
-                        <Button variant="hollow-submit" className="w-full tablet:max-w-[320px]" disabled={true}>
-                          Save
+                        {categoryItem._id === hasReordered && hasReordered !== '' ? (
+                          <Button
+                            variant="submit"
+                            className="w-full min-w-full"
+                            onClick={() => {
+                              handleSavePostsOrder(categoryItem.post, categoryItem._id);
+                            }}
+                          >
+                            Save
+                          </Button>
+                        ) : (
+                          <Button variant="hollow-submit" className="w-full tablet:max-w-[320px]" disabled={true}>
+                            Save
+                          </Button>
+                        )}
+                      </div>
+                      {/* Buttons Row 2 */}
+                      <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
+                        <Button
+                          variant={'submit-green'}
+                          className={'w-full tablet:w-full'}
+                          onClick={() => {
+                            if (listData[categoryIndex]?.post?.length > 0) {
+                              navigate('/shared-list-link/result', {
+                                state: { categoryItem: categoryItem._id },
+                              });
+                            } else {
+                              showToast('warning', 'noPostsInList');
+                            }
+                          }}
+                        >
+                          View My List Results
                         </Button>
-                      )}
-                    </div>
-                    {/* Buttons Row 2 */}
-                    <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
-                      <Button
-                        variant={'submit-green'}
-                        className={'w-full tablet:w-full'}
-                        onClick={() => {
-                          if (listData[categoryIndex]?.post?.length > 0) {
-                            navigate('/shared-list-link/result', {
-                              state: { categoryItem: categoryItem._id },
-                            });
-                          } else {
-                            showToast('warning', 'noPostsInList');
+                        <Button
+                          variant={categoryItem.isEnable && categoryItem.link !== null ? 'danger' : 'submit'}
+                          onClick={() => {
+                            if (categoryItem.link !== null) {
+                              setEnableDisableType(
+                                categoryItem.isEnable && categoryItem.link !== null ? 'disable' : 'enable'
+                              );
+                              setCategoryId(categoryItem._id);
+                              setEnableDisableModal(true);
+                            } else {
+                              setSelectedItem(categoryItem);
+                              setCopyModal(true);
+                            }
+                          }}
+                          className={
+                            categoryItem.isEnable
+                              ? 'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'
+                              : 'w-full !px-0 laptop:!px-0'
                           }
-                        }}
-                      >
-                        View My List Results
-                      </Button>
-                      <Button
-                        variant={categoryItem.isEnable && categoryItem.link !== null ? 'danger' : 'submit'}
-                        onClick={() => {
-                          if (categoryItem.link !== null) {
-                            setEnableDisableType(
-                              categoryItem.isEnable && categoryItem.link !== null ? 'disable' : 'enable'
-                            );
-                            setCategoryId(categoryItem._id);
-                            setEnableDisableModal(true);
-                          } else {
-                            setSelectedItem(categoryItem);
-                            setCopyModal(true);
-                          }
-                        }}
-                        className={
-                          categoryItem.isEnable
-                            ? 'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'
-                            : 'w-full !px-0 laptop:!px-0'
-                        }
-                      >
-                        {categoryItem.isEnable && categoryItem.link !== null ? 'Disable Sharing' : 'Enable Sharing'}
-                      </Button>
+                        >
+                          {categoryItem.isEnable && categoryItem.link !== null ? 'Disable Sharing' : 'Enable Sharing'}
+                        </Button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <div className="flex items-center justify-between border-t-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
-                    alt="trash-icon"
-                    className="h-[15px] w-3 cursor-pointer tablet:h-[25px] tablet:w-5"
-                    onClick={() => {
-                      setCategoryId(categoryItem._id);
-                      setModalVisible(true);
-                    }}
-                  />
+                  {notPublicProfile ? (
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
+                      alt="trash-icon"
+                      className="h-[15px] w-3 cursor-pointer tablet:h-[25px] tablet:w-5"
+                      onClick={() => {
+                        setCategoryId(categoryItem._id);
+                        setModalVisible(true);
+                      }}
+                    />
+                  ) : (
+                    <div />
+                  )}
                   <div className="flex items-center gap-3 tablet:gap-[1.62rem]">
                     <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
                       <img
