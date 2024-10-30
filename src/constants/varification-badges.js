@@ -309,6 +309,15 @@ export const homepageBadges = [
     type: 'domainBadge',
     disabled: false,
   },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
+    title: 'Link Hub Badge',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'homepage',
+    disabled: false,
+  },
 ];
 
 export const subscription = [

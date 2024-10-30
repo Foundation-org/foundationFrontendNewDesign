@@ -86,6 +86,9 @@ export default function HomepageBadge({ checkPseudoBadge }) {
             <Button
               variant={checkDomainBadge() ? 'verification-badge-edit' : item.ButtonColor}
               onClick={() => {
+                if (item.type === 'homepage') {
+                  toast.info('Feature coming soon.');
+                }
                 handleClickPesonalBadges(item.type, checkDomainBadge() ? true : false);
               }}
               disabled={item.disabled}
