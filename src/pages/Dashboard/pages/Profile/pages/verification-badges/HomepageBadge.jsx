@@ -84,7 +84,7 @@ export default function HomepageBadge({ checkPseudoBadge }) {
               </h1>
             </div>
             <Button
-              variant={checkDomainBadge() ? 'verification-badge-edit' : item.ButtonColor}
+              variant={checkDomainBadge() && item.type !== 'homepage' ? 'verification-badge-edit' : item.ButtonColor}
               onClick={() => {
                 if (item.type === 'homepage') {
                   toast.info('Feature coming soon.');
