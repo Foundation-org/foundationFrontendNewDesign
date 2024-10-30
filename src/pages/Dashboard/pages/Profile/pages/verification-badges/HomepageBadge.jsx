@@ -88,6 +88,7 @@ export default function HomepageBadge({ checkPseudoBadge }) {
               onClick={() => {
                 if (item.type === 'homepage') {
                   toast.info('Feature coming soon.');
+                  return;
                 }
                 handleClickPesonalBadges(item.type, checkDomainBadge() ? true : false);
               }}
