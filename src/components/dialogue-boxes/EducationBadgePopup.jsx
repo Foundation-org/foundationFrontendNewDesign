@@ -428,7 +428,7 @@ const EducationBadgePopup = ({
     const [edit, setEdit] = useState(false);
 
     return (
-      <div className="pb-[15px] pt-2 tablet:py-[25px]">
+      <div className="py-[15px] tablet:py-[25px]">
         {modalVisible && (
           <BadgeRemovePopup
             handleClose={handleBadgesClose}
@@ -548,6 +548,9 @@ const EducationBadgePopup = ({
           </div>
         ) : (
           <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
+            <h1 className="pb-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+              Your educational background paves the way for reward opportunities aligned with your expertise.
+            </h1>
             <div className="mb-[5px] tablet:mb-[15px]">
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field1.label}

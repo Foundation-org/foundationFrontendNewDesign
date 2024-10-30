@@ -83,7 +83,12 @@ const VerificationPopups = ({
   return (
     <div>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-        <div className="pb-[15px] pt-2 tablet:pb-5 tablet:pt-[30px]">
+        <div className="px-5 py-[15px] tablet:px-[60px] tablet:pb-5 tablet:pt-[30px] laptop:px-[80px]">
+          <h1 className="pb-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+            {title === 'Work Email'
+              ? 'Your professional identity is more credible with a work email.'
+              : 'Your education email strengthens your academic credentials.'}
+          </h1>
           {!isWebview() && (
             <div className="flex w-full justify-center">
               <Button
@@ -104,7 +109,7 @@ const VerificationPopups = ({
             </div>
           )}
 
-          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+          <div>
             {!isWebview() && (
               <h1 className="my-2 text-center text-[10px] font-medium leading-[12.1px] text-[#707175] tablet:my-[15px] tablet:text-[25px] tablet:leading-[30px]">
                 -OR-

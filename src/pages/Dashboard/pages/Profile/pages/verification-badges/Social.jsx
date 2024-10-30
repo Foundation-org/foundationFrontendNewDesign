@@ -55,8 +55,6 @@ const Social = ({
   }, [loading.state]);
 
   const handleFarcaster = async (title, type, value) => {
-    console.log('farcaster data', value);
-
     try {
       const payload = {
         uuid: persistedUserInfo.uuid,
@@ -179,9 +177,10 @@ const Social = ({
                       setLoading({ state: true, badge: item.accountName });
                       localStorage.setItem('target-url', `${window.location.href}`);
                       window.location.href = `${import.meta.env.VITE_API_URL}${item.link}`;
+                      <SocialConnectPopup />;
                     } else {
                       toast.warning(
-                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`,
+                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`
                       );
                     }
                   }

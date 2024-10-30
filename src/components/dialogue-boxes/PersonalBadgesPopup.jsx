@@ -410,11 +410,14 @@ const PersonalBadgesPopup = ({
 
   const handleBadgesClose = () => setModalVisible(false);
 
-  const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data, placeholder2) => {
+  const renderInputField = (title, name, placeholder, apiResp, data, placeholder2, summaryText) => {
     const isError = apiResp?.data?.message === 'No';
 
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+          {summaryText}
+        </h1>
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -573,10 +576,13 @@ const PersonalBadgesPopup = ({
     );
   };
 
-  const renderCurrentCity = (title, name, handleNameChange, placeholder, apiResp, data) => {
+  const renderCurrentCity = (title, name, placeholder, apiResp, summaryText) => {
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+          {summaryText}
+        </h1>
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <CustomCombobox
             items={cities}
@@ -622,12 +628,13 @@ const PersonalBadgesPopup = ({
     );
   };
 
-  const renderRelationship = (title, data, placeholder, apiResp) => {
+  const renderRelationship = (title, data, placeholder, apiResp, summaryText) => {
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        {/* {data && data.length >= 1 ? (
-          <> */}
+        <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+          {summaryText}
+        </h1>
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <Listbox
             items={data}
@@ -707,10 +714,32 @@ const PersonalBadgesPopup = ({
         />
       )}
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-        {title === 'First Name' && renderInputField('First Name', name, handleNameChange, placeholder, apiResp)}
-        {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
+        {title === 'First Name' &&
+          renderInputField(
+            'First Name',
+            name,
+            placeholder,
+            apiResp,
+            null,
+            null,
+            'Your first name is a simple way to begin enhancing your value.'
+          )}
+        {title === 'Last Name' &&
+          renderInputField(
+            'Last Name',
+            name,
+            placeholder,
+            apiResp,
+            null,
+            null,
+            'Your last name further strengthens your authenticity.'
+          )}
         {title === 'Date of Birth' && (
           <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+            <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+              Your date of birth strengthens your identity verification, boosting your trustworthiness and creating
+              opportunities for age-related rewards.
+            </h1>
             {fetchingEdit ? (
               <input
                 type="text"
@@ -756,22 +785,44 @@ const PersonalBadgesPopup = ({
             </div>
           </div>
         )}
-        {title === 'Current City' && renderCurrentCity('Current City', name, handleNameChange, placeholder, apiResp)}
-        {title === 'Home Town' && renderCurrentCity('Home Town', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Current City' &&
+          renderCurrentCity(
+            'Current City',
+            name,
+            placeholder,
+            apiResp,
+            'Your current location qualifies you for location-specific rewards.'
+          )}
+        {title === 'Home Town' &&
+          renderCurrentCity('Home Town', name, placeholder, apiResp, 'Enhance your chances for personalized rewards.')}
         {title === 'Relationship Status' &&
-          renderRelationship('Relationship Status', relationshipData, placeholder, apiResp)}
-        {title === 'Sex' && renderRelationship('Sex', sexOtpions, placeholder, apiResp)}
+          renderRelationship(
+            'Relationship Status',
+            relationshipData,
+            placeholder,
+            apiResp,
+            'Enhance your credibility, value and opportunities to earn rewards.'
+          )}
+        {title === 'Sex' &&
+          renderRelationship(
+            'Sex',
+            sexOtpions,
+            placeholder,
+            apiResp,
+            'Increase your credibility, value and earning potential.'
+          )}
         {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
-        {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Geolocation' &&
+          renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp, 'not yet')}
         {title === 'Security Question' &&
           renderInputField(
             'Security Question',
             name,
-            handleSecurityQuestionChange,
             'Security question here',
             apiResp,
             data,
-            'Write your answer here'
+            'Write your answer here',
+            'Your security question helps in recovering your account if you get locked out.'
           )}
         {onboarding && (
           <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
