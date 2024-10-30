@@ -32,7 +32,7 @@ const Lists = () => {
               Total lists
             </h1>
             <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
+              {persistedUserInfo?.myListStatistics?.totalLists}
             </h5>
           </div>
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
