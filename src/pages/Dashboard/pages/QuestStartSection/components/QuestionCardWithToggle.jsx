@@ -24,6 +24,8 @@ const QuestionCardWithToggle = (props) => {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
+  const queryParams = new URLSearchParams(window.location.search);
+  const preSelectOption = queryParams.get('option');
 
   const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
   const { isSingleQuest, postLink, categoryId, isEmbedResults } = props;
@@ -135,18 +137,30 @@ const QuestionCardWithToggle = (props) => {
   const [rankedAnswers, setRankedAnswers] = useState([]);
 
   useEffect(() => {
-    setAnswerSelection(
-      questStartData.QuestAnswers?.map((answer) => ({
-        label: answer.question,
-        check: false,
-        contend: false,
-        uuid: answer.uuid,
-      })),
-    );
+    setAnswerSelection((prevSelections) => {
+      const initialSelections =
+        prevSelections.length === 0
+          ? questStartData.QuestAnswers.map((answer) => ({
+              label: answer.question,
+              check: false,
+              contend: false,
+              uuid: answer.uuid,
+            }))
+          : prevSelections;
+
+      if (preSelectOption !== undefined) {
+        return initialSelections.map((answer, index) =>
+          index === preSelectOption - 1 ? { ...answer, check: true } : answer
+        );
+      }
+
+      return initialSelections;
+    });
+
     if (questData === 0) {
       setAddOptionField(0);
     }
-  }, [questStartData]);
+  }, [questStartData, preSelectOption]);
 
   const cardSize = useMemo(() => {
     const limit = windowWidth >= 600 ? true : false;
@@ -196,7 +210,7 @@ const QuestionCardWithToggle = (props) => {
       answersSelection?.map((item, index) => ({
         id: `unique-${index}`,
         ...item,
-      })),
+      }))
     );
   }, [answersSelection]);
 
@@ -254,7 +268,7 @@ const QuestionCardWithToggle = (props) => {
             ? true
             : false
           : null,
-        questStartData._id,
+        questStartData._id
       );
     }
     if (questStartData.whichTypeQuestion === 'agree/disagree') {
@@ -273,7 +287,7 @@ const QuestionCardWithToggle = (props) => {
             ? true
             : true
           : null,
-        questStartData._id,
+        questStartData._id
       );
     }
     if (questStartData.whichTypeQuestion === 'like/dislike') {
@@ -294,7 +308,7 @@ const QuestionCardWithToggle = (props) => {
             ? true
             : false
           : null,
-        questStartData._id,
+        questStartData._id
       );
     }
   }, [questStartData]);
