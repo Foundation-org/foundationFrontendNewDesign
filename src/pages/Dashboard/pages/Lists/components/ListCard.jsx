@@ -55,6 +55,19 @@ const ListCard = ({ listData }) => {
   const handleCloseDeletePost = () => setDeletePostPopup(false);
   const handleCloseEditList = () => setEditListPopup(false);
 
+  const copyToClipboard = async (link) => {
+    const { protocol, host } = window.location;
+    let sharedPostUrl = `${protocol}//${host}/l/${link}`;
+
+    const textToCopy = sharedPostUrl;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
+  };
+
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   useEffect(() => {
@@ -217,8 +230,13 @@ const ListCard = ({ listData }) => {
                     <div
                       className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
                       onClick={() => {
-                        setSelectedItem(categoryItem);
-                        setCopyModal(true);
+                        if (categoryItem.link === null) {
+                          setSelectedItem(categoryItem);
+                          setCopyModal(true);
+                        } else {
+                          copyToClipboard(categoryItem.link);
+                          showToast('success', 'copyLink');
+                        }
                       }}
                     >
                       <img
@@ -236,6 +254,7 @@ const ListCard = ({ listData }) => {
                     order)
                   </h4>
 
+                  {/* Posts Statements */}
                   <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
                     <DndContext
                       sensors={[touchSensor, mouseSensor, keyboardSensor]}
@@ -268,6 +287,7 @@ const ListCard = ({ listData }) => {
                     </div>
                   )}
 
+                  {/* Clicks & Engagement */}
                   <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
                     <div className="flex items-center gap-[1px] tablet:gap-2">
                       <img
@@ -291,7 +311,9 @@ const ListCard = ({ listData }) => {
                     </div>
                   </div>
 
+                  {/* Buttons Row  */}
                   <div className="flex flex-col gap-2 tablet:gap-4">
+                    {/* Buttons Row 1 */}
                     <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
                       <Button
                         variant="cancel"
@@ -320,26 +342,36 @@ const ListCard = ({ listData }) => {
                         </Button>
                       )}
                     </div>
+                    {/* Buttons Row 2 */}
                     <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
-                      {listData[categoryIndex]?.post?.length > 0 && (
-                        <Button
-                          variant={'submit-green'}
-                          className={'w-full tablet:w-full'}
-                          onClick={() =>
+                      <Button
+                        variant={'submit-green'}
+                        className={'w-full tablet:w-full'}
+                        onClick={() => {
+                          if (listData[categoryIndex]?.post?.length > 0) {
                             navigate('/shared-list-link/result', {
                               state: { categoryItem: categoryItem._id },
-                            })
+                            });
+                          } else {
+                            showToast('warning', 'noPostsInList');
                           }
-                        >
-                          View My List Results
-                        </Button>
-                      )}
+                        }}
+                      >
+                        View My List Results
+                      </Button>
                       <Button
-                        variant={categoryItem.isEnable ? 'danger' : 'submit'}
+                        variant={categoryItem.isEnable && categoryItem.link !== null ? 'danger' : 'submit'}
                         onClick={() => {
-                          setEnableDisableType(categoryItem.isEnable ? 'disable' : 'enable');
-                          setCategoryId(categoryItem._id);
-                          setEnableDisableModal(true);
+                          if (categoryItem.link !== null) {
+                            setEnableDisableType(
+                              categoryItem.isEnable && categoryItem.link !== null ? 'disable' : 'enable'
+                            );
+                            setCategoryId(categoryItem._id);
+                            setEnableDisableModal(true);
+                          } else {
+                            setSelectedItem(categoryItem);
+                            setCopyModal(true);
+                          }
                         }}
                         className={
                           categoryItem.isEnable
@@ -347,7 +379,7 @@ const ListCard = ({ listData }) => {
                             : 'w-full !px-0 laptop:!px-0'
                         }
                       >
-                        {categoryItem.isEnable ? 'Disable Sharing' : 'Enable Sharing'}
+                        {categoryItem.isEnable && categoryItem.link !== null ? 'Disable Sharing' : 'Enable Sharing'}
                       </Button>
                     </div>
                   </div>

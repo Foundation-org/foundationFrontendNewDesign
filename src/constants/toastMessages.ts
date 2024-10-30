@@ -112,4 +112,5 @@ export const toastMessages = {
   spotLightAdded: 'Spotlight added successfully',
   spotLightRemoved: 'Spotlight removed successfully',
   spotLightAlreadyExists: 'Only single spotlight is allowed at once.',
+  noPostsInList: 'Please add posts to view results',
 } as const;
