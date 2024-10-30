@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -207,28 +206,6 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
           </svg>
         </div>
       </div>
-      {/* {createdBy === persistedUserInfo?.uuid ? (
-          <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[10px]">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-              alt={alt}
-              className="h-[50px] w-[48px] tablet:h-[80px] tablet:w-[64px]"
-            />
-            <p className="absolute left-[50%] top-[37%] z-50 -translate-x-1/2 -translate-y-1/2 transform text-[19px] font-[400] leading-normal text-[#7A7016] tablet:pb-3 tablet:text-[42.5px] laptop:top-[39%]">
-              {persistedUserInfo?.badges?.length}
-            </p>
-          </div>
-        ) : (
-          <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[15px]">
-            <img src={img} alt={alt} className="h-[48.8px] w-[39px] tablet:h-[106px] tablet:w-[85px]" />
-            <p className="absolute left-[50%] top-[30%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[19.5px] font-[400] leading-normal text-[#F6F6F6] tablet:top-[42%] tablet:pb-3 tablet:text-[42.5px] laptop:top-[39%]">
-              {badgeCount}
-            </p>
-          </div>
-        )}
-        <h1 className="mb-[1.15rem] text-center text-[12px] font-semibold text-[#5B5B5B] tablet:mb-5 tablet:text-[25px]">
-          Say Thanks to Contributor
-        </h1> */}
       <div className="flex flex-col justify-center py-[15px] dark:rounded-b-[0.5rem] dark:border dark:border-gray-100 tablet:py-[25px] dark:tablet:rounded-b-[1.5rem]">
         <div className="px-[20px] laptop:px-[80px]">
           <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
@@ -237,6 +214,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
               : 'Copy the link below to share this post on other platforms. When other people engage with your shared posts, you will earn FDX. '}
           </p>
           <div className="flex rounded-[9.42px] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[15px] tablet:border-[3px]">
+            {/* Generate Link || Custom Link Input */}
             {createCustom ? (
               <div className="flex h-[28.38px] items-center tablet:h-[62.92px]">
                 <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] dark:text-gray-300 tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]">
@@ -264,6 +242,8 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 </p>
               </div>
             )}
+
+            {/* Copy Button */}
             {!createCustom && (
               <button
                 className="rounded-r-[9px] bg-white-500 px-[11px] py-[6px] dark:bg-gray-100 tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"

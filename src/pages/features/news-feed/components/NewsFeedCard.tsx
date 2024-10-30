@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
 import { handleSeldonInput, setInputState } from '../../../../features/seldon-ai/seldonSlice';
 import { useUpdateSpotLight } from '../../../../services/api/profile';
+import { useState } from 'react';
+import { setGuestSignUpDialogue } from '../../../../features/extras/extrasSlice';
+import Copy from '../../../../assets/Copy';
+import ShareNewsArticle from './ShareNewsArticle';
 
 export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef } = props;
@@ -14,7 +18,13 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   const location = useLocation();
   const isProfilePage = location.pathname === '/profile/me';
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const persistedTheme = useSelector((state: any) => state.utils.theme);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
+  const [copyModal, setCopyModal] = useState(false);
+
+  const handleCopyClose = () => {
+    setCopyModal(false);
+  };
 
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
@@ -42,6 +52,15 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
     if (data.settings) dispatch(setInputState(data?.settings));
 
     navigate('/seldon-ai');
+  };
+
+  const handleSharePostClick = () => {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
+      dispatch(setGuestSignUpDialogue(true));
+      return;
+    } else {
+      setCopyModal(true);
+    }
   };
 
   return (
@@ -96,11 +115,28 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         </div>
       </div>
       {/* Footer */}
-      <div className="relative flex items-center justify-end border-t border-gray-250 px-[0.57rem] py-[5px] tablet:border-t-[1.846px] tablet:px-5 tablet:py-3">
+      <div className="relative flex items-center justify-between border-t border-gray-250 px-[0.57rem] py-[5px] tablet:border-t-[1.846px] tablet:px-5 tablet:py-3">
+        {/* Share */}
+        <button className={`flex w-fit items-center gap-1 tablet:gap-2`} onClick={handleSharePostClick}>
+          {persistedTheme === 'dark' ? <Copy /> : <Copy />}
+          <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+            Share
+          </h1>
+        </button>
+        {/* Created At */}
         <p className="text-[10px] font-normal text-[#9C9C9C] dark:text-white tablet:text-[20px]">
           Published {formatDateMDY(data.createdAt)}
         </p>
       </div>
+      {copyModal && (
+        <ShareNewsArticle
+          modalVisible={copyModal}
+          handleClose={handleCopyClose}
+          title={'Share Article'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/CopyIcon.svg`}
+          questStartData={data}
+        />
+      )}
     </div>
   );
 }
