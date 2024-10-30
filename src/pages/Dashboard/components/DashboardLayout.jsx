@@ -26,6 +26,8 @@ import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
 import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
+import PersonalBadgesPopup from '../../../components/dialogue-boxes/PersonalBadgesPopup';
+import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -45,6 +47,7 @@ export default function DashboardLayout({ children }) {
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const persistedConstants = useSelector(getConstantsValues);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+  const [isPopup, setIsPopup] = useState(false);
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
@@ -163,6 +166,7 @@ export default function DashboardLayout({ children }) {
           localStorage.removeItem('shared-post');
         } else {
           navigate('/');
+          set;
         }
       }
     } catch (error) {
@@ -261,6 +265,8 @@ export default function DashboardLayout({ children }) {
           </div>
         </div>
       </PopUp>
+
+      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} fetchUser={persistedUserInfo} />
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}

@@ -46,6 +46,8 @@ const PersonalBadgesPopup = ({
   edit,
   fetchUser,
   setIsPersonalPopup,
+  handleSkip,
+  onboarding,
 }) => {
   const queryClient = useQueryClient();
   const [selected, setSelected] = useState();
@@ -387,6 +389,10 @@ const PersonalBadgesPopup = ({
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         handleClose();
       }
     } catch (error) {
@@ -721,6 +727,7 @@ const PersonalBadgesPopup = ({
                 className="verification_badge_input"
               />
             )}
+
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
                 <Button
@@ -764,8 +771,15 @@ const PersonalBadgesPopup = ({
             'Security question here',
             apiResp,
             data,
-            'Write your answer here',
+            'Write your answer here'
           )}
+        {onboarding && (
+          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+            <Button variant="submit" onClick={handleSkip}>
+              Skip
+            </Button>
+          </div>
+        )}
       </PopUp>
     </>
   );

@@ -10,7 +10,7 @@ import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 import DynamicBadgeImageCropper from '../DynamicBadgeImageCropper';
 
-const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPersonalPopup }) => {
+const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPersonalPopup, handleSkip, onboarding }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(false);
   const [domainBadge, setDomainBadge] = useState({
@@ -300,6 +300,13 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
             </div>
           </div>
         </div>
+        {onboarding && (
+          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+            <Button variant="submit" onClick={handleSkip}>
+              Skip
+            </Button>
+          </div>
+        )}
       </PopUp>
     </>
   );

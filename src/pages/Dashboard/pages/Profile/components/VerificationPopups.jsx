@@ -9,7 +9,17 @@ import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../../../../../components/ui/Toast';
 import { isWebview } from '../../../../../utils/helper';
 const REDIRECT_URI = window.location.href;
-const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge }) => {
+const VerificationPopups = ({
+  isPopup,
+  setIsPopup,
+  title,
+  logo,
+  placeholder,
+  selectedBadge,
+  onboarding,
+  handleSkip,
+  handleAdd,
+}) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
@@ -44,11 +54,19 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         handleClose();
         setEmail('');
       }
       if (addBadge.status === 201) {
         showToast('success', 'verifyEmail');
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
@@ -112,6 +130,13 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
             </div>
           </div>
         </div>
+        {onboarding && (
+          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+            <Button variant="submit" onClick={handleSkip}>
+              Skip
+            </Button>
+          </div>
+        )}
       </PopUp>
     </div>
   );

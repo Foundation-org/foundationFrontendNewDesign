@@ -55,7 +55,18 @@ const endingYear = {
   type: 'endingYear',
 };
 
-const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, fetchUser, setIsPersonalPopup }) => {
+const WorkBadgePopup = ({
+  isPopup,
+  setIsPopup,
+  type,
+  title,
+  logo,
+  placeholder,
+  fetchUser,
+  setIsPersonalPopup,
+  handleSkip,
+  onboarding,
+}) => {
   const queryClient = useQueryClient();
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
@@ -219,6 +230,10 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
           if (jobsSaved.status === 200) {
             console.log(jobsSaved);
           }
+        }
+        if (onboarding) {
+          handleSkip();
+          return;
         }
         handleClose();
         setLoading(false);
@@ -686,6 +701,13 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                 </Button>
               )}
             </div>
+          </div>
+        )}
+        {onboarding && (
+          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+            <Button variant="submit" onClick={handleSkip}>
+              Skip
+            </Button>
           </div>
         )}
       </div>

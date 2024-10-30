@@ -13,7 +13,17 @@ import { addUser } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { setAskPassword } from '../../features/profile/userSettingSlice';
 
-const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verification }) => {
+const AddCellPhonePopup = ({
+  isPopup,
+  title,
+  logo,
+  handleClose,
+  type,
+  verification,
+  onboarding,
+  handleSkip,
+  handleAdd,
+}) => {
   const queryClient = useQueryClient();
   const [phone, setPhone] = useState();
   const [otpResp, setOtpResp] = useState();
@@ -129,6 +139,10 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
           showToast('success', 'badgeAdded');
         }
         queryClient.invalidateQueries(['userInfo']);
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         handleClose();
         setLoading(false);
       }
@@ -249,6 +263,13 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
               </Button>
             </div>
           </div>
+        </div>
+      )}
+      {onboarding && (
+        <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+          <Button variant="submit" onClick={handleSkip}>
+            Skip
+          </Button>
         </div>
       )}
     </PopUp>

@@ -48,6 +48,8 @@ const EducationBadgePopup = ({
   placeholder,
   fetchUser,
   setIsPersonalPopup,
+  handleSkip,
+  onboarding,
 }) => {
   const queryClient = useQueryClient();
   const [universities, setUniversities] = useState([]);
@@ -205,6 +207,10 @@ const EducationBadgePopup = ({
           if (dataSaved2.status === 200) {
             console.log(dataSaved2);
           }
+        }
+        if (onboarding) {
+          handleSkip();
+          return;
         }
         document.getElementById('cancalTheForm').click();
         setLoading(false);
@@ -601,7 +607,7 @@ const EducationBadgePopup = ({
                   <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
                 )}
               </div>
-              <p className="flex items-center pt-4 text-[9.28px]  font-medium leading-[11.23px] text-[#7C7C7C] tablet:pt-10 tablet:text-[20px]">
+              <p className="flex items-center pt-4 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:pt-10 tablet:text-[20px]">
                 in
               </p>
               <div className="w-full">
@@ -766,6 +772,13 @@ const EducationBadgePopup = ({
                 </Button>
               )}
             </div>
+          </div>
+        )}
+        {onboarding && (
+          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+            <Button variant="submit" onClick={handleSkip}>
+              Skip
+            </Button>
           </div>
         )}
       </div>
