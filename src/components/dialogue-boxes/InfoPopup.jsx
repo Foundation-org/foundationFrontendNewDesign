@@ -1,7 +1,19 @@
 import { Button } from '../ui/Button';
 import PopUp from '../ui/PopUp';
 
-const InfoPopup = ({ isPopup, title, logo, message, message2, message3, buttonText, handleSkip, onboarding }) => {
+const InfoPopup = ({
+  isPopup,
+  setIsPopup,
+  title,
+  logo,
+  message,
+  message2,
+  message3,
+  buttonText,
+  handleSkip,
+  onboarding,
+  progress,
+}) => {
   const handleClose = () => setIsPopup(false);
   return (
     <>
@@ -18,11 +30,25 @@ const InfoPopup = ({ isPopup, title, logo, message, message2, message3, buttonTe
           </h1>
         </div>
         {onboarding && (
-          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-            <Button variant="submit" onClick={handleSkip}>
-              {buttonText}
-            </Button>
-          </div>
+          <>
+            {/* Progress Bar */}
+            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+              <div
+                style={{
+                  width: `${progress}%`,
+                  backgroundColor: '#4caf50',
+                  height: '10px',
+                  borderRadius: '5px',
+                }}
+              ></div>
+              <p>{`Progress: ${progress}%`}</p>
+            </div>
+            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+              <Button variant="submit" onClick={handleSkip}>
+                {buttonText}
+              </Button>
+            </div>
+          </>
         )}
       </PopUp>
     </>

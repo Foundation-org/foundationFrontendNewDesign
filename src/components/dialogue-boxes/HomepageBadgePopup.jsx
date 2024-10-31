@@ -10,7 +10,17 @@ import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 import DynamicBadgeImageCropper from '../DynamicBadgeImageCropper';
 
-const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPersonalPopup, handleSkip, onboarding }) => {
+const HomepageBadgePopup = ({
+  isPopup,
+  setIsPopup,
+  title,
+  logo,
+  edit,
+  setIsPersonalPopup,
+  handleSkip,
+  onboarding,
+  progress,
+}) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(false);
   const [domainBadge, setDomainBadge] = useState({
@@ -301,11 +311,25 @@ const HomepageBadgePopup = ({ isPopup, setIsPopup, title, logo, edit, setIsPerso
           </div>
         </div>
         {onboarding && (
-          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-            <Button variant="submit" onClick={handleSkip}>
-              Skip
-            </Button>
-          </div>
+          <>
+            {/* Progress Bar */}
+            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+              <div
+                style={{
+                  width: `${progress}%`,
+                  backgroundColor: '#4caf50',
+                  height: '10px',
+                  borderRadius: '5px',
+                }}
+              ></div>
+              <p>{`Progress: ${progress}%`}</p>
+            </div>
+            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+              <Button variant="submit" onClick={handleSkip}>
+                Skip
+              </Button>
+            </div>
+          </>
         )}
       </PopUp>
     </>

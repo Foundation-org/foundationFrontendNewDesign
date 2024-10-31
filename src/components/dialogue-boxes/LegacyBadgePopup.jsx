@@ -8,7 +8,7 @@ import showToast from '../ui/Toast';
 import api from '../../services/api/Axios';
 import PasswordStrengthBar from 'react-password-strength-bar';
 
-const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo, handleSkip, onboarding }) => {
+const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo, handleSkip, onboarding, progress }) => {
   const handleClose = () => setIsPopup(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -153,11 +153,25 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo, handleSkip, onboar
         </div>
       </div>
       {onboarding && (
-        <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-          <Button variant="submit" onClick={handleSkip}>
-            Skip
-          </Button>
-        </div>
+        <>
+          {/* Progress Bar */}
+          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+            <div
+              style={{
+                width: `${progress}%`,
+                backgroundColor: '#4caf50',
+                height: '10px',
+                borderRadius: '5px',
+              }}
+            ></div>
+            <p>{`Progress: ${progress}%`}</p>
+          </div>
+          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+            <Button variant="submit" onClick={handleSkip}>
+              Skip
+            </Button>
+          </div>
+        </>
       )}
     </PopUp>
   );

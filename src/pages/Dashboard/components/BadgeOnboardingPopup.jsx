@@ -18,6 +18,7 @@ const badgeData = [
     message:
       'Congratulations, you’ve earned 10 FDX! Keep adding verification badges and receive an additional 10 FDX for each one! Every badge you add increases your credibility on Foundation. Every badge added increases your value and credibility on the network.',
     buttonText: 'Continue',
+    info: true,
   },
   {
     component: PersonalBadgesPopup,
@@ -54,6 +55,7 @@ const badgeData = [
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
     message: `Every badge you add strengthens your validity and improves the quality of crowd-sourced insights on Foundation. Plus, you're stacking up more FDX with each step—keep going!`,
     buttonText: 'Continue',
+    info: true,
   },
   {
     component: AddCellPhonePopup,
@@ -105,6 +107,7 @@ const badgeData = [
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
     message: `Adding more badges leads to more opportunities and rewards for you on Foundation. Keep the momentum going!`,
     buttonText: 'Continue',
+    info: true,
   },
   {
     component: VerificationPopups,
@@ -156,6 +159,7 @@ const badgeData = [
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
     message: `Adding all these badges starts you off with an impressive FDX balance! Your contributions play a key role in keeping Foundation’s data authentic. Keep it up—more badges and rewards are just ahead!`,
     buttonText: 'Continue',
+    info: true,
   },
   {
     component: LegacyBadgePopup,
@@ -223,6 +227,7 @@ const badgeData = [
       'Your commitment to completing all badges enhances your credibility and opens the door to more earning opportunities.',
     message3: 'Thank you for being an essential part of our community!',
     buttonText: 'Finish',
+    info: true,
   },
   {
     component: InfoPopup,
@@ -230,6 +235,7 @@ const badgeData = [
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
     message: `Add more badges to boost your profile, increase credibility, and easily earn more FDX along the way. Each badge brings you closer to maximizing your earning potential on Foundation!`,
     buttonText: 'Continue',
+    info: true,
   },
 ];
 
@@ -237,6 +243,8 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit, fetch
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
+    console.log(currentIndex, badgeData.length - 1);
+
     if (currentIndex < badgeData.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
@@ -251,6 +259,11 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit, fetch
   const handleAdd = () => {
     handleNext();
   };
+
+  const actionableBadges = badgeData.filter((badge) => !badge.info);
+  const totalBadges = actionableBadges.length;
+  const completedBadges = actionableBadges.slice(0, currentIndex).length;
+  const progress = Math.floor((completedBadges / totalBadges) * 100);
 
   const CurrentBadgeComponent = badgeData[currentIndex].component;
 
@@ -275,6 +288,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit, fetch
       buttonText={badgeData[currentIndex].buttonText}
       accountName={badgeData[currentIndex].accountName}
       link={badgeData[currentIndex].link}
+      progress={progress}
     />
   );
 };

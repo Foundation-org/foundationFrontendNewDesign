@@ -20,7 +20,18 @@ const getSummaryText = {
   farcaster: 'Earn rewards for participating in and sharing posts on Farcaster.',
 };
 
-const SocialConnectPopup = ({ isPopup, setIsPopup, title, logo, accountName, type, link, handleSkip, onboarding }) => {
+const SocialConnectPopup = ({
+  isPopup,
+  setIsPopup,
+  title,
+  logo,
+  accountName,
+  type,
+  link,
+  handleSkip,
+  onboarding,
+  progress,
+}) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const queryClient = useQueryClient();
@@ -121,11 +132,25 @@ const SocialConnectPopup = ({ isPopup, setIsPopup, title, logo, accountName, typ
           )}
         </div>
         {onboarding && (
-          <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-            <Button variant="submit" onClick={handleSkip}>
-              Skip
-            </Button>
-          </div>
+          <>
+            {/* Progress Bar */}
+            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+              <div
+                style={{
+                  width: `${progress}%`,
+                  backgroundColor: '#4caf50',
+                  height: '10px',
+                  borderRadius: '5px',
+                }}
+              ></div>
+              <p>{`Progress: ${progress}%`}</p>
+            </div>
+            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
+              <Button variant="submit" onClick={handleSkip}>
+                Skip
+              </Button>
+            </div>
+          </>
         )}
       </PopUp>
     </>
