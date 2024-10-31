@@ -813,7 +813,15 @@ const PersonalBadgesPopup = ({
           )}
         {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
         {title === 'Geolocation' &&
-          renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp, 'not yet')}
+          renderInputField(
+            'Geolocation',
+            name,
+            placeholder,
+            apiResp,
+            null,
+            null,
+            'Keeping your location up to date ensures you receive rewards tailored to your travel tendencies and interests, enhancing your overall experience on the platform.'
+          )}
         {title === 'Security Question' &&
           renderInputField(
             'Security Question',

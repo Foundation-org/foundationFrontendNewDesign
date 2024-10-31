@@ -26,7 +26,6 @@ import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
 import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
-import PersonalBadgesPopup from '../../../components/dialogue-boxes/PersonalBadgesPopup';
 import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
 
 export default function DashboardLayout({ children }) {
@@ -166,8 +165,8 @@ export default function DashboardLayout({ children }) {
           localStorage.removeItem('shared-post');
         } else {
           navigate('/');
-          set;
         }
+        setIsPopup(true);
       }
     } catch (error) {
       console.log(error);
@@ -230,7 +229,7 @@ export default function DashboardLayout({ children }) {
     <div className="mx-auto w-full max-w-[1440px]">
       <PopUp
         logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email.svg`}
-        title={'Email'}
+        title={'Your account has been created!'}
         open={modalVisible}
         closeIcon={true}
       >
@@ -239,7 +238,7 @@ export default function DashboardLayout({ children }) {
             {persistedUserInfo?.email}
           </p>
           <p className="mb-[10px] mt-[10px] text-center text-[10px] font-medium text-[#838383] tablet:mb-[22px] tablet:mt-[14px] tablet:text-[25px]">
-            Please select if this email is personal or professional.
+            Choose an email type to complete your first verification badge and earn 10 FDX tokens!
           </p>
           <div className="flex items-center justify-center gap-[30px] tablet:gap-[65px]">
             <Button
