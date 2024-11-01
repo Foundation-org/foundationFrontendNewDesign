@@ -16,6 +16,7 @@ import ContentCard from '../../../../../components/ContentCard';
 import { MetaMaskProvider } from '@metamask/sdk-react';
 import Subscription from './verification-badges/Subscription';
 import HomepageBadge from './verification-badges/HomepageBadge';
+import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
 
 const VerificationBadges = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -26,7 +27,7 @@ const VerificationBadges = () => {
   const legacyPromiseRef = useRef();
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [socialRemoveLoading, setSocialRemoveLoading] = useState(false);
-
+  const [isPopup, setIsPopup] = useState(true);
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
 
@@ -73,6 +74,8 @@ const VerificationBadges = () => {
 
   return (
     <div className="pb-8">
+      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
+
       {/* DELETE MODAL POPUP */}
       {modalVisible && (
         <BadgeRemovePopup

@@ -265,7 +265,7 @@ export default function DashboardLayout({ children }) {
         </div>
       </PopUp>
 
-      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} fetchUser={persistedUserInfo} />
+      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
