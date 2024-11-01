@@ -13,10 +13,11 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
   const navigate = useNavigate();
   const persistedContants = useSelector(getConstantsValues);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   const [createCustom, setCreateCustom] = useState(false);
   const [link, setLink] = useState('');
-  const [postLink, setPostLink] = useState(questStartData?.uniqueLink || '');
+  const [postLink, setPostLink] = useState(questStartData?.articleSetting?.uniqueLink || '');
   let url = `${protocol}//${host}/r/`;
 
   const copyToClipboard = async () => {
@@ -32,9 +33,10 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
   const { mutateAsync: handleGenerateLink, isPending } = useGenerateArticleLink(setPostLink);
 
   useEffect(() => {
-    if (questStartData.uniqueLink === '') {
+    if (questStartData.articleSetting?.uniqueLink === '' || !questStartData?.articleSetting?.uniqueLink) {
       handleGenerateLink({
         id: questStartData._id,
+        uuid: persistedUserInfo.uuid,
       });
     }
   }, []);
@@ -61,7 +63,7 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
                     className="w-full bg-transparent pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] dark:text-gray-300 tablet:text-[26px] tablet:leading-[30px]"
                     value={link}
                     onChange={(e) => {
-                      if (questStartData?.uniqueCustomizedLinkGenerated) return;
+                      if (questStartData?.articleSetting.uniqueCustomizedLinkGenerated) return;
                       const inputValue = e.target.value;
                       if (inputValue.length <= 35) {
                         setLink(inputValue);
@@ -102,8 +104,8 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
                   className={'w-fit min-w-fit whitespace-nowrap'}
                   onClick={() => {
                     setCreateCustom(true);
-                    if (questStartData?.uniqueLink) {
-                      setLink(questStartData.uniqueLink);
+                    if (questStartData?.articleSetting.uniqueLink) {
+                      setLink(questStartData.articleSetting.uniqueLink);
                     }
                   }}
                 >
@@ -135,7 +137,7 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
                       customLink: link,
                     });
                   }}
-                  disabled={isPending || questStartData?.uniqueCustomizedLinkGenerated}
+                  disabled={isPending || questStartData?.articleSetting.uniqueCustomizedLinkGenerated}
                 >
                   {isPending ? (
                     <FaSpinner className="animate-spin text-[#EAEAEA]" />

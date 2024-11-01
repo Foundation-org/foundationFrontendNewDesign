@@ -3,8 +3,8 @@ import api from './Axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const handleCreateUniqueLink = async (data) => {
-  const { id, customLink } = data;
-  const body = customLink ? { id, customLink } : { id };
+  const { uuid, id, customLink } = data;
+  const body = customLink ? { id, customLink, uuid } : { id, uuid };
 
   const resp = await api.post('/article/uniqueLink', body);
   return resp.data;
@@ -16,7 +16,7 @@ export const useGenerateArticleLink = (setPostLink) => {
   return useMutation({
     mutationFn: handleCreateUniqueLink,
     onSuccess: (resp) => {
-      setPostLink(resp?.article?.uniqueLink);
+      setPostLink(resp?.article?.articleSetting.uniqueLink);
       queryClient.invalidateQueries({ queryKey: ['news-feed', ''] });
       showToast('success', 'customLinkGenerated');
     },

@@ -27,6 +27,7 @@ import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
 import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
 import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
+import SharedArticlesSearch from '../pages/Profile/pages/share-articles/SharedArticlesSearch';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -365,6 +366,7 @@ export default function DashboardLayout({ children }) {
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
               location.pathname !== '/profile/shared-links' &&
+              location.pathname !== '/profile/shared-articles' &&
               location.pathname !== '/profile/user-settings' &&
               location.pathname !== '/profile/post-activity' &&
               location.pathname !== '/profile/verification-badges' &&
@@ -464,6 +466,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/feedback-given' &&
             location.pathname !== '/profile/shared-links' &&
+            location.pathname !== '/profile/shared-articles' &&
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/feedback' &&
             location.pathname !== '/profile/post-activity' &&
@@ -508,6 +511,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/feedback-given' &&
             location.pathname !== '/profile/shared-links' &&
+            location.pathname !== '/profile/shared-articles' &&
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/post-activity' &&
             location.pathname !== '/profile/feedback' &&
@@ -664,6 +668,8 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
           )}
+
+          <SharedArticlesSearch />
         </div>
         {children}
         {/* Desktop Right Side */}

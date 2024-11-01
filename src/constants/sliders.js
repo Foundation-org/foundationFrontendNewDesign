@@ -15,6 +15,7 @@ export const profileItems = [
   { id: 3, title: 'Feedback Given', path: '/profile/feedback-given', to: 'hidden-posts' },
   { id: 6, title: 'Feedback Received', path: '/profile/feedback', to: 'feedback' },
   { id: 4, title: 'Shared Posts', path: '/profile/shared-links', to: 'shared-links' },
+  { id: 10, title: 'Shared Articles', path: '/profile/shared-articles', to: 'shared-articles' },
   { id: 7, title: 'My Lists', path: '/profile/lists', to: 'lists' },
   { id: 5, title: 'User Settings', path: '/profile/user-settings', to: 'user-settings' },
   { id: 2, title: 'My Activity', path: '/profile/ledger', to: 'ledger' },

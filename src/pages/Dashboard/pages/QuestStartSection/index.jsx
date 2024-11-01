@@ -21,7 +21,7 @@ const QuestStartSection = () => {
 
   const { data, status, error, fetchNextPage, hasNextPage, isFetching } = useFetchPosts(
     filterStates,
-    persistedUserInfo,
+    persistedUserInfo
   );
 
   useEffect(() => {
@@ -53,9 +53,9 @@ const QuestStartSection = () => {
               playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
             />
           );
-        }),
+        })
       ),
-    [data, ref, questUtils],
+    [data, ref, questUtils]
   );
 
   return (

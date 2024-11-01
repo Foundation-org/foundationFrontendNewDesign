@@ -7,10 +7,10 @@ import NewsFeedCard from './components/NewsFeedCard';
 import FeedEndStatus from '../../../components/FeedEndStatus';
 
 export default function NewsFeed() {
-  const { ref, inView } = useInView();
   const dispatch = useDispatch();
+  const { ref, inView } = useInView();
   const getNewsFeedFilters = useSelector(newsFeedFilters);
-  const { data, fetchNextPage, hasNextPage, isLoading, isError, isFetching, error } = useFetchNewsFeed(
+  const { data, fetchNextPage, hasNextPage, isError, isFetching, error } = useFetchNewsFeed(
     getNewsFeedFilters.searchData
   );
 
@@ -25,8 +25,8 @@ export default function NewsFeed() {
       return null;
     }
 
-    return data.pages.map((posts) =>
-      posts?.map((post: any, index: number) => {
+    return data?.pages?.map((posts) =>
+      posts?.data?.map((post: any, index: number) => {
         const isLastPost = posts.length === index + 1;
 
         return <NewsFeedCard key={post._id} data={post} innerRef={isLastPost ? ref : null} />;

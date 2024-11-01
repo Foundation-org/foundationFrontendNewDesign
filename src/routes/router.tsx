@@ -71,6 +71,7 @@ import UserProfile from '../pages/UserProfile';
 import { OtherProfiles } from '../pages/UserProfile/OtherProfiles';
 import OtherProfilesLayout from '../pages/UserProfile/OtherProfilesLayout';
 import PublicProfile from '../pages/UserProfile/PublicProfile';
+import SharedArticles from '../pages/Dashboard/pages/Profile/pages/share-articles/SharedArticles';
 
 export const getSubDomain = (location: string) => {
   const locationParts = location.split('.');
@@ -194,6 +195,7 @@ export function Router() {
                   <Route path="feedback-given" element={<HiddenPosts />} />
                   <Route path="feedback" element={<Feedback />} />
                   <Route path="shared-links" element={<SharedLinks />} />
+                  <Route path="shared-articles" element={<SharedArticles />} />
                   <Route path="user-settings" element={<UserSettings />} />
                   <Route path="change-password" element={<ChangePassword />} />
                 </Route>
