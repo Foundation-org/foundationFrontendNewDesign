@@ -52,7 +52,7 @@ const Social = ({
         handleSkip={handleSkip}
         onboarding={onboarding}
       />
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+      <h1 className="summary-text">
         Adding social media accounts helps verify that you're a real human contributing to the Foundation platform.
       </h1>
 

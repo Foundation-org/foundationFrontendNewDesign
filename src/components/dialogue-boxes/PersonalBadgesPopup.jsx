@@ -11,6 +11,7 @@ import Listbox from '../ui/ListBox';
 import { useDebounce } from '../../utils/useDebounce';
 import BadgeRemovePopup from './badgeRemovePopup';
 import showToast from '../ui/Toast';
+import ProgressBar from '../ProgressBar';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -416,9 +417,7 @@ const PersonalBadgesPopup = ({
 
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
-          {summaryText}
-        </h1>
+        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -581,9 +580,7 @@ const PersonalBadgesPopup = ({
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
-          {summaryText}
-        </h1>
+        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <CustomCombobox
             items={cities}
@@ -633,9 +630,7 @@ const PersonalBadgesPopup = ({
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
-          {summaryText}
-        </h1>
+        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <Listbox
             items={data}
@@ -737,7 +732,7 @@ const PersonalBadgesPopup = ({
           )}
         {title === 'Date of Birth' && (
           <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-            <h1 className="pb-5 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+            <h1 className="summary-text mb-[10px] tablet:mb-5">
               Your date of birth strengthens your identity verification, boosting your trustworthiness and creating
               opportunities for age-related rewards.
             </h1>
@@ -833,27 +828,7 @@ const PersonalBadgesPopup = ({
             'Write your answer here',
             'Your security question helps in recovering your account if you get locked out.'
           )}
-        {onboarding && (
-          <>
-            {/* Progress Bar */}
-            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  backgroundColor: '#4caf50',
-                  height: '10px',
-                  borderRadius: '5px',
-                }}
-              ></div>
-              <p>{`Progress: ${progress}%`}</p>
-            </div>
-            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-              <Button variant="submit" onClick={handleSkip}>
-                Skip
-              </Button>
-            </div>
-          </>
-        )}
+        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
       </PopUp>
     </>
   );

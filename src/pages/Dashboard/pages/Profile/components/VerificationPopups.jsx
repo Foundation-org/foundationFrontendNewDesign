@@ -8,6 +8,7 @@ import PopUp from '../../../../../components/ui/PopUp';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../../../../../components/ui/Toast';
 import { isWebview } from '../../../../../utils/helper';
+import ProgressBar from '../../../../../components/ProgressBar';
 const REDIRECT_URI = window.location.href;
 const VerificationPopups = ({
   isPopup,
@@ -84,7 +85,7 @@ const VerificationPopups = ({
     <div>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="px-5 py-[15px] tablet:px-[60px] tablet:pb-5 tablet:pt-[30px] laptop:px-[80px]">
-          <h1 className="pb-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+          <h1 className="summary-text mb-[10px] tablet:mb-5">
             {title === 'Work Email'
               ? 'Your professional identity is more credible with a work email.'
               : 'Your education email strengthens your academic credentials.'}
@@ -135,27 +136,7 @@ const VerificationPopups = ({
             </div>
           </div>
         </div>
-        {onboarding && (
-          <>
-            {/* Progress Bar */}
-            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  backgroundColor: '#4caf50',
-                  height: '10px',
-                  borderRadius: '5px',
-                }}
-              ></div>
-              <p>{`Progress: ${progress}%`}</p>
-            </div>
-            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-              <Button variant="submit" onClick={handleSkip}>
-                Skip
-              </Button>
-            </div>
-          </>
-        )}
+        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
       </PopUp>
     </div>
   );

@@ -10,6 +10,7 @@ import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
 import showToast from '../ui/Toast';
+import ProgressBar from '../ProgressBar';
 
 const School = {
   label: 'School',
@@ -778,27 +779,7 @@ const EducationBadgePopup = ({
             </div>
           </div>
         )}
-        {onboarding && (
-          <>
-            {/* Progress Bar */}
-            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  backgroundColor: '#4caf50',
-                  height: '10px',
-                  borderRadius: '5px',
-                }}
-              ></div>
-              <p>{`Progress: ${progress}%`}</p>
-            </div>
-            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-              <Button variant="submit" onClick={handleSkip}>
-                Skip
-              </Button>
-            </div>
-          </>
-        )}
+        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
       </div>
     );
   };

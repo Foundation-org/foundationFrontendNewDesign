@@ -8,6 +8,7 @@ import showToast from '../../../../../../components/ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
 import '@farcaster/auth-kit/styles.css';
 import api from '../../../../../../services/api/Axios';
+import ProgressBar from '../../../../../../components/ProgressBar';
 
 const getSummaryText = {
   twitter:
@@ -123,35 +124,17 @@ const SocialConnectPopup = ({
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
             {getSummaryText[type]}
           </h1>
-          {loading.state === true && loading.badge === accountName ? (
-            <FaSpinner className="animate-spin text-[#EAEAEA]" />
-          ) : (
-            <Button variant="submit" onClick={handleConnect}>
-              Connect
+          <div className="flex justify-end">
+            <Button variant="submit" className="w-fit" onClick={handleConnect}>
+              {loading.state === true && loading.badge === accountName ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : (
+                'Connect'
+              )}
             </Button>
-          )}
+          </div>
         </div>
-        {onboarding && (
-          <>
-            {/* Progress Bar */}
-            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  backgroundColor: '#4caf50',
-                  height: '10px',
-                  borderRadius: '5px',
-                }}
-              ></div>
-              <p>{`Progress: ${progress}%`}</p>
-            </div>
-            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-              <Button variant="submit" onClick={handleSkip}>
-                Skip
-              </Button>
-            </div>
-          </>
-        )}
+        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
       </PopUp>
     </>
   );

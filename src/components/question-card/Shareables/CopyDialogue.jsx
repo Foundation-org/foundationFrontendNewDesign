@@ -256,7 +256,20 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 <Copy color={persistedTheme === 'dark' ? '#293138' : '#8BAAC0'} />
               </button>
             )}
-          </div>
+          </div>{' '}
+          {console.log(questStartData?.whichTypeQuestion)}
+          {questStartData?.whichTypeQuestion === 'yes/no' ||
+            questStartData?.whichTypeQuestion === 'agree/disagree' ||
+            (questStartData?.whichTypeQuestion === 'like/dislike' && (
+              <div className="mt-[8px] flex items-center gap-2 tablet:mt-3">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`}
+                  alt={'farcaster logo'}
+                  className="size-4 tablet:size-8"
+                />
+                <h1 className="summary-text">This link has Farcaster Frames support</h1>
+              </div>
+            ))}
         </div>
         <div className={'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
           {!createCustom ? (

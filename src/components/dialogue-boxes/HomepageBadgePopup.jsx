@@ -9,6 +9,7 @@ import useAddDomainBadge from '../../services/mutations/verification-adges';
 import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 import DynamicBadgeImageCropper from '../DynamicBadgeImageCropper';
+import ProgressBar from '../ProgressBar';
 
 const HomepageBadgePopup = ({
   isPopup,
@@ -148,6 +149,10 @@ const HomepageBadgePopup = ({
       )}
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+          <h1 className="summary-text">
+            Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily
+            with your audience.
+          </h1>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
               Domain
@@ -310,27 +315,7 @@ const HomepageBadgePopup = ({
             </div>
           </div>
         </div>
-        {onboarding && (
-          <>
-            {/* Progress Bar */}
-            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  backgroundColor: '#4caf50',
-                  height: '10px',
-                  borderRadius: '5px',
-                }}
-              ></div>
-              <p>{`Progress: ${progress}%`}</p>
-            </div>
-            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-              <Button variant="submit" onClick={handleSkip}>
-                Skip
-              </Button>
-            </div>
-          </>
-        )}
+        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
       </PopUp>
     </>
   );

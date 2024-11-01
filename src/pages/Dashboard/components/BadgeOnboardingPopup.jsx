@@ -323,6 +323,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       setCurrentIndex((prev) => prev + 1);
     } else {
       setIsPopup(false);
+      localStorage.removeItem('onBoarding');
     }
   };
 
@@ -342,10 +343,15 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
 
   const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
 
+  const handlePopupClose = (data) => {
+    setIsPopup(data);
+    localStorage.removeItem('onBoarding');
+  };
+
   return (
     <CurrentBadgeComponent
       isPopup={isPopup}
-      setIsPopup={setIsPopup}
+      setIsPopup={handlePopupClose}
       title={actionableBadges[currentIndex].title}
       type={actionableBadges[currentIndex].type}
       logo={actionableBadges[currentIndex].logo}

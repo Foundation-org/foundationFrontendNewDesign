@@ -168,6 +168,7 @@ export default function DashboardLayout({ children }) {
           navigate('/');
         }
         setIsPopup(true);
+        localStorage.setItem('onBoarding', 'true');
       }
     } catch (error) {
       console.log(error);

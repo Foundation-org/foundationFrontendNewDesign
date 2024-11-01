@@ -8,6 +8,7 @@ import api from '../../../../../../services/api/Axios';
 import { CanAdd } from './badgeUtils';
 import { useState } from 'react';
 import { useSDK } from '@metamask/sdk-react';
+import ProgressBar from '../../../../../../components/ProgressBar';
 
 const getSummaryText = {
   etheriumWallet:
@@ -81,27 +82,7 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
             </Button>
           )}
         </div>
-        {onboarding && (
-          <>
-            {/* Progress Bar */}
-            <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  backgroundColor: '#4caf50',
-                  height: '10px',
-                  borderRadius: '5px',
-                }}
-              ></div>
-              <p>{`Progress: ${progress}%`}</p>
-            </div>
-            <div className="flex flex-col items-center pb-[15px] tablet:pb-[25px]">
-              <Button variant="submit" onClick={handleSkip}>
-                Skip
-              </Button>
-            </div>
-          </>
-        )}
+        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
       </PopUp>
     </>
   );
