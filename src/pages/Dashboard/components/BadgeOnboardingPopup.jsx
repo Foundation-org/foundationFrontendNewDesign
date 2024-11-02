@@ -354,7 +354,6 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       setEdit={setEdit}
       fetchUser={fetchUser}
       handleSkip={handleSkip}
-      handleAdd={handleAdd}
       onboarding={true}
       selectedBadge={actionableBadges[currentIndex].type}
       message={actionableBadges[currentIndex].message}
