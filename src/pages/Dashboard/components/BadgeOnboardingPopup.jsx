@@ -331,15 +331,9 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     handleNext();
   };
 
-  const handleAdd = () => {
-    handleNext();
-  };
-
-  const progessCountBadges = actionableBadges.filter((badge) => !badge.info);
-
-  const totalBadges = progessCountBadges.length;
-  const completedBadges = progessCountBadges.slice(0, currentIndex).length;
-  const progress = Math.floor((completedBadges / totalBadges) * 100);
+  const totalBadges = badgeData.filter((badge) => !badge.info);
+  const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
+  const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
 
   const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
 

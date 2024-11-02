@@ -23,7 +23,6 @@ const AddCellPhonePopup = ({
   verification,
   onboarding,
   handleSkip,
-  handleAdd,
   progress,
 }) => {
   const queryClient = useQueryClient();
