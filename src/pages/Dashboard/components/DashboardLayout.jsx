@@ -47,7 +47,13 @@ export default function DashboardLayout({ children }) {
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const persistedConstants = useSelector(getConstantsValues);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
-  const [isPopup, setIsPopup] = useState(false);
+  const [isPopup, setIsPopup] = useState(localStorage.getItem('onBoarding') === 'true' ? true : false);
+
+  useEffect(() => {
+    if (localStorage.getItem('onBoarding') === 'true') {
+      setIsPopup(true);
+    }
+  }, [localStorage.getItem('onBoarding')]);
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
