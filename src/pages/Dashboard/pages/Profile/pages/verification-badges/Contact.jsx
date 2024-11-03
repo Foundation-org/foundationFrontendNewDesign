@@ -202,7 +202,8 @@ export default function Contact({
         setIsPersonalPopup={setIsPersonalPopup}
       />
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        Contact badges increase your verification status and give you more options for account recovery.
+        Contact badges enhance your verification status and improve your account security, ensuring you have reliable
+        options for recovery when needed.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         {renderContactBadgesPopup()}

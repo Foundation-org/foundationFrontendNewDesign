@@ -274,7 +274,8 @@ export default function Personal({
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        The more personal information you add, the stronger your data profile and the more FDX you earn.
+        The more personal information you provide, the stronger your data profile and the greater your opportunities for
+        FDX earnings.
       </h1>
       {renderPersonalBadgesPopup()}
       {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-white-500 py-[17px] tablet:flex tablet:flex-row">

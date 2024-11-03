@@ -78,7 +78,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
         <div className="space-y-1">
           <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Posts that informed this article</h1>{' '}
           <h5 className="text-center text-[14px] tablet:text-[20px]">
-            See what posts you contributed to that were used or engage with posts and earn
+            Engage with these posts to further shape or refine this article's findings.
           </h5>
         </div>
       )}

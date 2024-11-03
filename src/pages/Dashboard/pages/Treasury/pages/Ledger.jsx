@@ -45,7 +45,7 @@ export default function Ledger() {
         itemsPerPage,
         sort,
         debouncedSearch,
-        persistedUserInfo.uuid,
+        persistedUserInfo.uuid
       );
       if (data) {
         setLedgerData(data);
@@ -115,7 +115,10 @@ export default function Ledger() {
 
   return (
     <div className="overflow-y-auto">
-      <div className="ledger-light dark:ledger-dark mx-[17px] mb-5 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px] dark:border-[2.56px] dark:border-gray-100 dark:bg-gray-200">
+      <p className="mx-[17px] px-[0.59rem] text-left text-[0.4rem] tablet:px-[1.36rem] tablet:text-[1rem] laptop:mx-[116px]">
+        Powered by Foudation Blockchain
+      </p>
+      <div className="ledger-light dark:ledger-dark mx-[17px] mb-5 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left dark:border-[2.56px] dark:border-gray-100 dark:bg-gray-200 tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]">
         <LedgerTableTopbar
           isTreasury={false}
           sort={sort}
@@ -125,7 +128,7 @@ export default function Ledger() {
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
         />
-        <div className="no-scrollbar relative w-full overflow-auto tablet:h-[600px]">
+        <div className="relative w-full overflow-auto no-scrollbar tablet:h-[600px]">
           <table
             className="w-full"
             // style={{
@@ -152,7 +155,7 @@ export default function Ledger() {
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.4rem] text-[#bbb] tablet:text-[1rem] laptop:text-[1.2rem] dark:text-gray-300"
+              className="text-[0.4rem] text-[#bbb] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -183,7 +186,7 @@ export default function Ledger() {
             <tbody className="relative text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
                 <tr className="absolute left-1/2 top-1/2 mt-5 h-full -translate-x-1/2 -translate-y-1/2">
-                  <td className="mt-3 text-center text-[0.4rem] md:text-[.88rem] tablet:mt-10 laptop:text-[1.2rem] ">
+                  <td className="mt-3 text-center text-[0.4rem] md:text-[.88rem] tablet:mt-10 laptop:text-[1.2rem]">
                     No results found
                   </td>
                 </tr>
@@ -247,9 +250,9 @@ export default function Ledger() {
                 alt=""
               />
             </button>
-            <div className=" flex items-center gap-[0.46rem] tablet:gap-4 ">
+            <div className="flex items-center gap-[0.46rem] tablet:gap-4">
               {rangeStart > 1 && (
-                <button className="bg-white/0 text-[9px] font-medium text-black tablet:text-[16px] dark:text-[#B3B3B3]">
+                <button className="bg-white/0 text-[9px] font-medium text-black dark:text-[#B3B3B3] tablet:text-[16px]">
                   ...
                 </button>
               )}
@@ -272,7 +275,7 @@ export default function Ledger() {
                   })
                 : null}
               {rangeEnd < totalPages && (
-                <button className="bg-white/0 text-[9px] font-medium text-black tablet:text-[16px] dark:text-gray-300">
+                <button className="bg-white/0 text-[9px] font-medium text-black dark:text-gray-300 tablet:text-[16px]">
                   ...
                 </button>
               )}
@@ -283,7 +286,7 @@ export default function Ledger() {
               className="pagination-btn"
             >
               <img
-                className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
+                className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px]"
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-forward.svg`}
                 alt=""
               />

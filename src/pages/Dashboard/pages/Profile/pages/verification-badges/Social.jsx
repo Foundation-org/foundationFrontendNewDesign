@@ -53,7 +53,8 @@ const Social = ({
         onboarding={onboarding}
       />
       <h1 className="summary-text">
-        Adding social media accounts helps verify that you're a real human contributing to the Foundation platform.
+        Linking your social media accounts boosts your credibility and verifies your identity within the Foundation
+        community.
       </h1>
 
       <div className="flex flex-col items-center justify-between rounded-[16.068px] pt-[10px] tablet:pt-[18.73px]">

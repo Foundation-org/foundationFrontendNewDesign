@@ -127,8 +127,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
           <div className="space-y-1">
             <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Contribute to this research</h1>{' '}
             <h5 className="text-center text-[14px] tablet:text-[20px]">
-              Create one of these AI generated posts where results can improve, alter or validate the findings within
-              the article.
+              Create one of these suggested posts to help enhance, verify, and expand the findings in this article.
             </h5>
           </div>
           <div className="space-y-4">

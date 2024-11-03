@@ -112,7 +112,8 @@ const VerificationBadges = () => {
         outof={badgesTotalLength}
       >
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-          Boost your earnings now and in the future by adding more verified badges to your profile.
+          Enhance your profile by adding verified badges! These badges not only increase your credibility but also
+          unlock more earning opportunities within the Foundation community.
         </h1>
       </ContentCard>
       <ContentCard icon="assets/verification-badges/contact.svg" title="Contact">

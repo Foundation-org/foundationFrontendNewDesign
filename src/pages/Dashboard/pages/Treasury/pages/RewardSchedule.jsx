@@ -68,8 +68,7 @@ const RewardSchedule = () => {
       </div> */}
       <SummaryCard headerIcon="/assets/svgs/reward-and-fees.svg" headerTitle="Rewards & Fees">
         <h1 className="text-[12px] font-normal leading-[133%] tablet:text-[16px] tablet:leading-normal">
-          When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward and
-          fee values below.
+          Below, you'll find the latest values for rewards and fees associated with your activities.
         </h1>
         <p className="mt-1 text-[10px] font-normal leading-[160%] tablet:text-[16px] tablet:leading-normal">
           *Values subject to change.

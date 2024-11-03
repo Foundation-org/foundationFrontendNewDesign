@@ -66,7 +66,7 @@ export default function HomepageBadge({ checkPseudoBadge }) {
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        The more personal information you add, the stronger your data profile and the more FDX you earn.
+        Your Home Page serves as a central hub for sharing and connecting with your audience.
       </h1>
       {renderPersonalBadgesPopup()}
       <div className="flex flex-col items-center justify-between gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">

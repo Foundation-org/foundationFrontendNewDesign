@@ -12,6 +12,7 @@ const Contributions = () => {
   useEffect(() => {
     queryClient.invalidateQueries(['userInfo']);
   }, []);
+  console.log(persistedUserInfo);
 
   const yourPosts = [
     { id: 1, title: 'Posts you’ve created', val: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0 },
@@ -24,8 +25,17 @@ const Contributions = () => {
     { id: 4, title: 'Agreements received', val: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0 },
     {
       id: 5,
+      title: 'Feedback Recieved',
+      val: (persistedUserInfo && persistedUserInfo?.feedBackQuestsStatistics?.questsActivity?.feedbackReceived) || 0,
+      link: '/profile/feedback',
+      text: 'Go to Feedback Recieved >',
+    },
+    {
+      id: 6,
       title: 'My posts hidden by users',
       val: (persistedUserInfo && persistedUserInfo?.feedBackQuestsStatistics?.otherHidingOurQuestsCount) || 0,
+      link: '/profile/feedback',
+      text: 'See why your posts were hidden >',
     },
   ];
 
@@ -40,8 +50,17 @@ const Contributions = () => {
     { id: 4, title: 'Objections given', val: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0 },
     {
       id: 5,
+      title: 'Feedback Given',
+      val: (persistedUserInfo && persistedUserInfo?.questsActivity?.feedbackGiven) || 0,
+      link: '/profile/feedback-given',
+      text: 'Go to Feedback Given >',
+    },
+    {
+      id: 5,
       title: 'Posts I have hidden',
       val: (persistedUserInfo && persistedUserInfo?.questsActivity?.myHiddenQuestsCount) || 0,
+      link: '/profile/feedback-given',
+      text: `View posts you've hidden and why >`,
     },
   ];
 
@@ -166,17 +185,19 @@ const Contributions = () => {
       >
         <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
           {yourPosts.map((item) => (
-            <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
-              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
-              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
-            </div>
+            <>
+              <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
+                <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
+                <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
+              </div>
+              <Link
+                to={item.link}
+                className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+              >
+                {item.text}
+              </Link>
+            </>
           ))}
-          <Link
-            to={'/profile/feedback'}
-            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
-          >
-            See why your posts were hidden {'>'}
-          </Link>
         </div>
       </ContentCard>
       <ContentCard
@@ -187,17 +208,19 @@ const Contributions = () => {
       >
         <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
           {othersPosts.map((item) => (
-            <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
-              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
-              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
-            </div>
+            <>
+              <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
+                <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
+                <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
+              </div>
+              <Link
+                to={item.link}
+                className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+              >
+                {item.text}
+              </Link>
+            </>
           ))}
-          <Link
-            to={'/profile/feedback-given'}
-            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
-          >
-            View posts you’ve hidden and why {'>'}
-          </Link>
         </div>
       </ContentCard>
       <ContentCard icon="assets/post-activity/coc-icon.svg" title="Code of Conduct">

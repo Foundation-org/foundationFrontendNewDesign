@@ -41,7 +41,7 @@ export default function Web3({
       />
       {isVerificationBadge && (
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-          Linking your wallet gives you more FDX transaction options.
+          Linking your wallet offers additional FDX transaction options.
         </h1>
       )}
       <div className="flex flex-col items-center gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">

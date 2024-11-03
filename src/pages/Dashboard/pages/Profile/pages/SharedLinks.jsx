@@ -44,7 +44,7 @@ export default function SharedLinks() {
       setViewResult(null);
       setStartTest((prev) => (prev === testId ? null : testId));
     },
-    [setViewResult, setStartTest],
+    [setViewResult, setStartTest]
   );
 
   const memoizedViewResults = useCallback(
@@ -52,7 +52,7 @@ export default function SharedLinks() {
       setStartTest(null);
       setViewResult((prev) => (prev === testId ? null : testId));
     },
-    [setStartTest, setViewResult],
+    [setStartTest, setViewResult]
   );
 
   const showHidePostClose = () => {
@@ -129,7 +129,7 @@ export default function SharedLinks() {
           />
         );
       }
-    }),
+    })
   );
 
   useEffect(() => {
@@ -145,7 +145,8 @@ export default function SharedLinks() {
       {/* Shared Posts Insights */}
       <ContentCard icon="assets/summary/share-posts-logo.svg" title="Shared Posts">
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
-          Sharing posts is a great way to earn FDX - especially if people engage with them.
+          Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you earn. Shared
+          posts are displayed on your Home Page for all to see.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
@@ -189,13 +190,13 @@ export default function SharedLinks() {
             />
             <label
               htmlFor="floating_outlined"
-              className="absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2  peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
+              className="absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600 dark:bg-[#0A0A0C] peer-focus:dark:text-blue-500 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Search
             </label>
             {getSharedLinksFilters.searchData && (
               <button
-                className="absolute right-1.5 top-[55%] -translate-y-1/2 transform tablet:right-3 tablet:top-1/2 "
+                className="absolute right-1.5 top-[55%] -translate-y-1/2 transform tablet:right-3 tablet:top-1/2"
                 onClick={() => {
                   dispatch(updateSharedLinkSearch(''));
                 }}
@@ -214,7 +215,7 @@ export default function SharedLinks() {
         </div>
       </div>
 
-      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-black">
+      <div className="tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] no-scrollbar dark:bg-black">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
           {content}
           <FeedEndStatus

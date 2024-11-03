@@ -116,6 +116,32 @@ export default function DirectMessaging() {
             </Button>
           </div>
         )}
+        {location.pathname === '/direct-messaging' ? (
+          <p className="summary-text mb-[10px]">
+            Receive targeted messages from interested parties that found you through advanced analytics. Your identity
+            remains anonymous, and no personal information is shared with the sender. Earn rewards for every message
+            received and an additional reward for reading them, keeping you engaged with relevant offers and
+            communications.
+          </p>
+        ) : location.pathname === '/direct-messaging/sent' ? (
+          <p className="summary-text mb-[10px]">
+            Messages you sent to individuals you identified through advanced analytics. Your outreach remains anonymous,
+            ensuring personal information is protected while you reach relevant targets for your audience. Here, you can
+            see metrics on your reach, including who read or deleted your messages.
+          </p>
+        ) : location.pathname === '/direct-messaging/deleted' ? (
+          <p className="summary-text mb-[10px]">
+            View the messages you’ve deleted. If you change your mind, you can easily undelete them to restore your
+            communication.
+          </p>
+        ) : (
+          location.pathname === '/direct-messaging/draft' && (
+            <p className="summary-text mb-[10px]">
+              Targeted messages you’ve created but haven’t sent yet. You can edit or finalize them before sharing with
+              your audience.
+            </p>
+          )
+        )}
         <div className="relative h-6 tablet:h-[42px]">
           <input
             type="text"
@@ -142,7 +168,7 @@ export default function DirectMessaging() {
               .filter(
                 (data) =>
                   data.subject?.toLowerCase().includes(search?.toLowerCase()) ||
-                  data.shortMessage?.toLowerCase().includes(search?.toLowerCase()),
+                  data.shortMessage?.toLowerCase().includes(search?.toLowerCase())
               )
               .map((item, index) => (
                 <MessageCard
