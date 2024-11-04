@@ -32,7 +32,6 @@ const VerificationBadges = () => {
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
   const progress = Math.floor(((persistedUserInfo?.badges.length - 1) / (badgesTotalLength - 1)) * 100);
-  console.log(persistedUserInfo?.badges.length - 1, badgesTotalLength - 1);
 
   const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));

@@ -3,7 +3,7 @@ import api from '../api/Axios';
 import showToast from '../../components/ui/Toast';
 import { useSelector } from 'react-redux';
 
-const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose) => {
+const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboarding, handleSkip) => {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -39,6 +39,10 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose) => {
     onSuccess: (data) => {
       if (data.status === 200) {
         showToast('success', 'badgeAdded');
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         setLoading(false);
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
