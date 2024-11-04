@@ -7,6 +7,7 @@ import { homepageBadges } from '../../../../../../constants/varification-badges'
 import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import HomepageBadgePopup from '../../../../../../components/dialogue-boxes/HomepageBadgePopup';
+import LinkHubPopup from '../../../../../../components/dialogue-boxes/LinkHubPopup';
 
 export default function HomepageBadge({ checkPseudoBadge }) {
   const dispatch = useDispatch();
@@ -17,10 +18,13 @@ export default function HomepageBadge({ checkPseudoBadge }) {
   const [selectedPersonalBadge, setSelectedPersonalBadge] = useState('');
   const [edit, setEdit] = useState(false);
 
-  const checkDomainBadge = () => {
-    return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
+  const checkAlready = (type) => {
+    if (type === 'domainBadge') {
+      return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
+    } else if (type === 'linkHub') {
+      return persistedUserInfo?.badges?.some((badge) => badge?.personal?.hasOwnProperty(type) || false) || false;
+    }
   };
-
   const handleClickPesonalBadges = async (type, edit) => {
     if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
@@ -58,6 +62,18 @@ export default function HomepageBadge({ checkPseudoBadge }) {
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
+      case 'linkHub':
+        return (
+          <LinkHubPopup
+            isPopup={isPersonalPopup}
+            setIsPopup={setIsPersonalPopup}
+            title="Link Hub"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`}
+            edit={edit}
+            type={'linkHub'}
+            setIsPersonalPopup={setIsPersonalPopup}
+          />
+        );
       default:
         return null;
     }
@@ -84,23 +100,18 @@ export default function HomepageBadge({ checkPseudoBadge }) {
               </h1>
             </div>
             <Button
-              variant={checkDomainBadge() && item.type !== 'homepage' ? 'verification-badge-edit' : item.ButtonColor}
+              variant={checkAlready(item.type) ? 'verification-badge-edit' : item.ButtonColor}
               onClick={() => {
-                if (item.type === 'homepage') {
-                  toast.info('Feature coming soon.');
-                  return;
-                }
-                handleClickPesonalBadges(item.type, checkDomainBadge() ? true : false);
+                handleClickPesonalBadges(item.type, false);
               }}
               disabled={item.disabled}
             >
-              {checkDomainBadge() && item.type !== 'homepage' ? 'Edit' : item.ButtonText}
-              {!checkDomainBadge() ||
-                (item.type === 'homepage' && (
-                  <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
-                    (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
-                  </span>
-                ))}
+              {checkAlready(item.type) ? 'Edit' : item.ButtonText}
+              {!checkAlready(item.type) && (
+                <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
+                  (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
+                </span>
+              )}
             </Button>
           </div>
         ))}

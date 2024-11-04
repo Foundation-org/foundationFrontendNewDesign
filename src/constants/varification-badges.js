@@ -315,7 +315,7 @@ export const homepageBadges = [
     ButtonColor: 'submit',
     NoOfButton: 1,
     ButtonText: 'Add',
-    type: 'homepage',
+    type: 'linkHub',
     disabled: false,
   },
 ];
