@@ -12,13 +12,13 @@ export default function NotificationSettings() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [modalVisible, setModalVisible] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(
-    persistedUserInfo.notificationSettings.emailNotifications || false,
+    persistedUserInfo.notificationSettings.emailNotifications || false
   );
   const [postNotifications, setPostNotifications] = useState(
-    persistedUserInfo.notificationSettings.newPostsNotifications || false,
+    persistedUserInfo.notificationSettings.newPostsNotifications || false
   );
   const [newsNotifications, setNewsNotifications] = useState(
-    persistedUserInfo.notificationSettings.newNewsNotifications || false,
+    persistedUserInfo.notificationSettings.newNewsNotifications || false
   );
 
   const { mutateAsync: handleUserSettings } = useMutation({
@@ -57,7 +57,7 @@ export default function NotificationSettings() {
                 Get updates on new features, opportunities to earn FDX and more.
               </p>
             </div>
-            <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-col items-end gap-1">
               <h1 className="text-end text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
                 Email
               </h1>
