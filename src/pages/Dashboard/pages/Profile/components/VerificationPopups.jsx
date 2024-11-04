@@ -54,11 +54,11 @@ const VerificationPopups = ({
       }
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
-        queryClient.invalidateQueries(['userInfo']);
         if (onboarding) {
           handleSkip();
           return;
         }
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
       }

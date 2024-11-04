@@ -18,7 +18,7 @@ const AddCellPhonePopup = ({
   isPopup,
   title,
   logo,
-  handleClose,
+  setIsPopup,
   type,
   verification,
   onboarding,
@@ -32,6 +32,10 @@ const AddCellPhonePopup = ({
   const refs = Array.from({ length: 6 }).map(() => useRef());
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
+  const handleClose = () => {
+    setIsPopup(false);
+  };
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -139,13 +143,13 @@ const AddCellPhonePopup = ({
         if (!verification) {
           showToast('success', 'badgeAdded');
         }
-        queryClient.invalidateQueries(['userInfo']);
+        setLoading(false);
         if (onboarding) {
           handleSkip();
           return;
         }
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);

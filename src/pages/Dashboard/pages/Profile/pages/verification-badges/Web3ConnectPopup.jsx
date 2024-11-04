@@ -39,6 +39,10 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
       const addBadge = await api.post(`/addBadge/web3/add`, payload);
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         queryClient.invalidateQueries(['userInfo']);
         setIsLoading(false);
         handleClose();
@@ -74,14 +78,17 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
           <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
             {getSummaryText['etheriumWallet']}
           </h1>
-          {loading === true ? (
-            <FaSpinner className="animate-spin text-[#EAEAEA]" />
-          ) : (
-            <Button variant="submit" onClick={handleConnect}>
-              Connect
+          <div className="flex justify-end">
+            <Button variant="submit" className="w-fit" onClick={handleConnect}>
+              {loading.state === true && loading.badge === accountName ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : (
+                'Connect'
+              )}
             </Button>
-          )}
+          </div>
         </div>
+
         {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
       </PopUp>
     </>

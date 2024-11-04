@@ -178,7 +178,6 @@ export default function Contact({
               title="Phone Number"
               logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
               selectedBadge={seletedBadge}
-              handleClose={handleClose}
               type={'cell-phone'}
             />
           </>

@@ -213,9 +213,6 @@ const WorkBadgePopup = ({
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
-        showToast('success', 'badgeAdded');
-
         const companySaved = await api.post(`/addBadge/company/add`, {
           name: field1Data.name,
           uuid: localStorage.getItem('uuid'),
@@ -233,10 +230,12 @@ const WorkBadgePopup = ({
             console.log(jobsSaved);
           }
         }
+        showToast('success', 'badgeAdded');
         if (onboarding) {
           handleSkip();
           return;
         }
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setLoading(false);
       }

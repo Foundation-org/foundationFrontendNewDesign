@@ -390,11 +390,12 @@ const PersonalBadgesPopup = ({
       const addBadge = await api.post(`/addBadge/personal/add`, payload);
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
-        queryClient.invalidateQueries(['userInfo']);
+        setName('');
         if (onboarding) {
           handleSkip();
           return;
         }
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
       }
     } catch (error) {

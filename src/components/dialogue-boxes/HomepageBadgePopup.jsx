@@ -43,7 +43,14 @@ const HomepageBadgePopup = ({
   const handleClose = () => setIsPopup(false);
   const handleBadgesClose = () => setModalVisible(false);
 
-  const { mutateAsync: addDomainBadge } = useAddDomainBadge(domainBadge, edit, setLoading, handleClose);
+  const { mutateAsync: addDomainBadge } = useAddDomainBadge(
+    domainBadge,
+    edit,
+    setLoading,
+    handleClose,
+    onboarding,
+    handleSkip
+  );
 
   const checkDomainBadge = () => {
     return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;

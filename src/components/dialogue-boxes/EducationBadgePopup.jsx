@@ -188,8 +188,6 @@ const EducationBadgePopup = ({
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
-        showToast('success', 'badgeAdded');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
@@ -210,10 +208,12 @@ const EducationBadgePopup = ({
             console.log(dataSaved2);
           }
         }
+        showToast('success', 'badgeAdded');
         if (onboarding) {
           handleSkip();
           return;
         }
+        queryClient.invalidateQueries(['userInfo']);
         document.getElementById('cancalTheForm').click();
         setLoading(false);
         setDelLoading(false);
