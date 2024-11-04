@@ -302,7 +302,7 @@ export const personal = [
 export const homepageBadges = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
-    title: 'Domain Badge',
+    title: 'Domain',
     ButtonColor: 'submit',
     NoOfButton: 1,
     ButtonText: 'Add',
@@ -311,7 +311,7 @@ export const homepageBadges = [
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
-    title: 'Link Hub Badge',
+    title: 'Link Hub',
     ButtonColor: 'submit',
     NoOfButton: 1,
     ButtonText: 'Add',

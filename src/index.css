@@ -368,6 +368,13 @@ body {
 }
 
 @media (max-width: 744px) {
+  .splide__arrow--prev{
+    left:0.2rem !important
+  }
+  
+  .splide__arrow--next {
+  right: 0.2rem !important;
+  }
   .MuiFormControlLabel-labelPlacementEnd > span:last-child {
     font-size: 10px;
     white-space: nowrap;
@@ -1023,4 +1030,5 @@ input[type='number'] {
   .scrollable-tabs-container ul {
     @apply gap-4;
   }
+
 }

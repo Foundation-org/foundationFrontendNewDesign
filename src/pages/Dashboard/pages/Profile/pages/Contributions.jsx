@@ -70,7 +70,7 @@ const Contributions = () => {
         {/* Summary Section */}
         <SummaryCard headerIcon="/assets/summary/post-activity-logo2.svg" headerTitle="Post Activity">
           <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-            Creating posts is a great way to earn FDX. Especially if others engage with them.
+            Track your engagement and influence within the Foundation community.
           </h1>
           <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
             <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full">

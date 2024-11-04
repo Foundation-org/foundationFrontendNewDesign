@@ -52,7 +52,7 @@ const About = () => {
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
             /> */}
-          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+          <div className="w-full space-y-[0.6rem] text-left tablet:space-y-1">
             <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-normal">
               Explore and Personalize Your Feed
             </h5>
@@ -70,7 +70,7 @@ const About = () => {
               alt="conversation"
               className="size-5 tablet:h-[1.875rem] tablet:w-[2.13rem]"
             /> */}
-          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+          <div className="w-full space-y-[0.6rem] text-left tablet:space-y-1">
             <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Earn Rewards with Every Action
             </h5>
@@ -91,7 +91,7 @@ const About = () => {
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
             /> */}
-          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+          <div className="w-full space-y-[0.6rem] text-left tablet:space-y-1">
             <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Access News Curated by Community Insights
             </h5>
@@ -102,7 +102,7 @@ const About = () => {
               bias—just real stories shaped by collective truth.
             </p>
           </div>
-          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+          <div className="w-full space-y-[0.6rem] text-left tablet:space-y-1">
             <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Verification Badges: Boosting Authenticity and Security
             </h5>
@@ -114,7 +114,7 @@ const About = () => {
               protected.
             </p>
           </div>
-          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+          <div className="w-full space-y-[0.6rem] text-left tablet:space-y-1">
             <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Build Your Personalized Home Page
             </h5>
@@ -124,7 +124,7 @@ const About = () => {
               streamline your online presence in a dedicated space designed for engagement.
             </p>
           </div>
-          <div className="w-full space-y-[0.6rem] text-center tablet:space-y-1">
+          <div className="w-full space-y-[0.6rem] text-left tablet:space-y-1">
             <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               Participate in Research for Global Impact
             </h5>

@@ -17,6 +17,7 @@ import { MetaMaskProvider } from '@metamask/sdk-react';
 import Subscription from './verification-badges/Subscription';
 import HomepageBadge from './verification-badges/HomepageBadge';
 import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
+import ProgressBar from '../../../../../components/ProgressBar';
 
 const VerificationBadges = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -30,6 +31,8 @@ const VerificationBadges = () => {
   const [isPopup, setIsPopup] = useState(true);
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
+  const progress = Math.floor(((persistedUserInfo?.badges.length - 1) / (badgesTotalLength - 1)) * 100);
+  console.log(persistedUserInfo?.badges.length - 1, badgesTotalLength - 1);
 
   const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
@@ -112,9 +115,11 @@ const VerificationBadges = () => {
         outof={badgesTotalLength}
       >
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-          Enhance your profile by adding verified badges! These badges not only increase your credibility but also
-          unlock more earning opportunities within the Foundation community.
+          Enhance your profile by adding verification badges.
         </h1>
+        <div className="pt-[10px] tablet:pt-[18.73px]">
+          <ProgressBar progress={progress} />
+        </div>
       </ContentCard>
       <ContentCard icon="assets/verification-badges/contact.svg" title="Contact">
         <Contact

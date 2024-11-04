@@ -2,11 +2,13 @@ import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { badgesTotalLength } from '../../constants/varification-badges';
+import ProgressBar from '../ProgressBar';
 
 export default function VerificationBadgeScore({ isMobile, children }) {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const location = useLocation();
+  const progress = Math.floor(((persistedUserInfo?.badges.length - 1) / (badgesTotalLength - 1)) * 100);
 
   return (
     <div className={`${isMobile ? 'mx-4 tablet:mx-6' : ''}`}>
@@ -51,11 +53,13 @@ export default function VerificationBadgeScore({ isMobile, children }) {
         <h1
           className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal ${isMobile ? 'tablet:hidden' : ''}`}
         >
-          Enhance your profile by adding verified badges! These badges not only increase your credibility but also
-          unlock more earning opportunities within the Foundation community.
+          Enhance your profile by adding verification badges.
         </h1>
+        <div className="pt-[10px] tablet:pt-[18.73px]">
+          <ProgressBar progress={progress} />
+        </div>
         {location.pathname === '/profile' && (
-          <div className="mt-3 flex w-full justify-center tablet:mt-5">
+          <div className="flex w-full justify-center">
             <Button variant={'submit'} onClick={() => navigate('/profile/verification-badges')}>
               Add badge
             </Button>
