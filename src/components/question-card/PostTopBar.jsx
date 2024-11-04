@@ -85,7 +85,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
           {/* Pin To SpotLight */}
           {isProfilePage && !questStartData.spotLightType && (
             <button
-              className="text-[18px] font-medium text-[#6BA5CF] underline"
+              className="text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
               onClick={() => {
                 const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
                 handleSpotLight({ domain, type: 'posts', id: questStartData._id, status: 'set' });

@@ -179,7 +179,7 @@ const SingleQuest = () => {
                       postLink={id}
                     />
                   </div>
-                ),
+                )
               )}
           </div>
         </DashboardLayout>

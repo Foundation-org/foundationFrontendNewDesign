@@ -221,7 +221,7 @@ const ListCard = ({ listData }) => {
                   {/* Pin To SpotLight */}
                   {isProfilePage && !categoryItem?.spotLight ? (
                     <button
-                      className="whitespace-nowrap text-[18px] font-medium text-[#6BA5CF] underline"
+                      className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
                       onClick={() => {
                         const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
                         handleSpotLight({ domain, type: 'lists', id: categoryItem._id, status: 'set' });

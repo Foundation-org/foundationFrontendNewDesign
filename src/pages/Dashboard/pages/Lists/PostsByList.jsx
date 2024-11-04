@@ -32,6 +32,7 @@ const PostsByList = () => {
     },
     queryKey: ['postsByCategory', categoryId, persistedUserInfo.uuid, id],
   });
+
   useEffect(() => {
     if (isSuccess && listData) {
       updateCategoryViewCount({ categoryLink: id });
@@ -91,6 +92,10 @@ const PostsByList = () => {
                   {isLoading ? (
                     <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
                       Loading...
+                    </p>
+                  ) : listData?.response?.data?.message === 'This link is not active.' ? (
+                    <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
+                      This link is not active.
                     </p>
                   ) : listData?.response?.data?.message?.includes('An error occurred while getting the userList') ? (
                     <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">

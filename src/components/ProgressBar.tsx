@@ -11,11 +11,9 @@ export default function ProgressBar({ progress, handleSkip, buttonText }: Progre
     <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
       <div className="w-full rounded-md bg-white-400">
         <div
+          className="h-[6px] rounded-md bg-[#4caf50] tablet:h-[10px]"
           style={{
             width: `${progress}%`,
-            backgroundColor: '#4caf50',
-            height: '10px',
-            borderRadius: '5px',
           }}
         ></div>
       </div>

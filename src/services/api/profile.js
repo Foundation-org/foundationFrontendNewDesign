@@ -2,6 +2,7 @@ import api from '../api/Axios';
 import { useSelector } from 'react-redux';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import showToast from '../../components/ui/Toast';
+import axios from 'axios';
 
 // FETCH ALL PROFILES
 const fetchProfiles = async (pageNo, limit = 5, sort = 'Newest First', terms = '') => {
@@ -28,12 +29,20 @@ export const useFetchOtherProfiles = (terms = '') => {
 
 // FETCH MY PROFILE
 const fetchMyProfile = async (domain) => {
-  const response = await api.get(`/user/fetchUserProfile`, {
-    params: {
-      domain,
-    },
-  });
-  return response.data;
+  try {
+    const response = await api.get(`/user/fetchUserProfile`, {
+      params: {
+        domain,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const backendMessage = error.response?.data?.message || error.message;
+      throw new Error(backendMessage);
+    }
+    throw error;
+  }
 };
 
 export const useFetchMyProfile = (domain) => {
@@ -42,6 +51,7 @@ export const useFetchMyProfile = (domain) => {
     queryFn: async () => {
       return await fetchMyProfile(domain);
     },
+    enabled: !!domain,
   });
 };
 

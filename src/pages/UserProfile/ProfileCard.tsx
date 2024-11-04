@@ -1,14 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePopup';
 
-export default function ProfileCard() {
+export default function ProfileCard({ profile }: any) {
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
-  const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const profile = persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain;
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
   return (
@@ -31,7 +28,7 @@ export default function ProfileCard() {
               </button>
             )}
             <img
-              src={profile?.s3Urls[0]}
+              src={profile?.domain.s3Urls[0]}
               alt="s3 image url"
               className="size-[50px] rounded-full object-cover tablet:size-[175px]"
             />
@@ -41,16 +38,16 @@ export default function ProfileCard() {
               Profile Viewers
             </p>
             <p className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[16px]">
-              {profile?.viewers}
+              {profile?.domain.viewers}
             </p>
           </div>
         </div>
         <div className="flex flex-col gap-2 text-[#7C7C7C] tablet:gap-4">
           <div>
-            <h1 className="text-[12px] font-semibold tablet:text-[20px]"> {profile?.title}</h1>
-            <p className="text-[10px] leading-normal tablet:text-[16px]"> {profile?.name}</p>
+            <h1 className="text-[12px] font-semibold tablet:text-[20px]"> {profile?.domain.title}</h1>
+            <p className="text-[10px] leading-normal tablet:text-[16px]"> {profile?.domain.name}</p>
           </div>
-          <p className="text-[11px] leading-normal tablet:text-[18px]">{profile?.description}</p>
+          <p className="text-[11px] leading-normal tablet:text-[18px]">{profile?.domain.description}</p>
         </div>
         {!isPublicProfile && (
           <>
@@ -70,6 +67,9 @@ export default function ProfileCard() {
                 logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
                 edit={true}
                 setIsPersonalPopup={setIsPersonalPopup}
+                handleSkip={null}
+                onboarding={null}
+                progress={null}
               />
             )}
           </>
@@ -77,7 +77,7 @@ export default function ProfileCard() {
       </div>
       {!isPublicProfile && (
         <div className="flex w-full items-center justify-end">
-          <Link to={`/h/${profile?.name}`}>
+          <Link to={`/h/${profile?.domain.name}`}>
             <Button variant="submit">View as public</Button>
           </Link>
         </div>

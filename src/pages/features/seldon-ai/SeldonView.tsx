@@ -15,7 +15,12 @@ export default function SeldonView() {
   const { protocol, host } = window.location;
   const persistedTheme = useSelector((state: any) => state.utils.theme);
 
-  const { data: response, isLoading } = useQuery({
+  const {
+    data: response,
+    isLoading,
+    error,
+    isError,
+  } = useQuery({
     queryKey: ['articles', location.pathname.split('/').pop()],
     queryFn: () => getArticles(location.pathname.split('/').pop()),
     refetchOnWindowFocus: false,
@@ -46,6 +51,14 @@ export default function SeldonView() {
           <div className="scrollable-container mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[778px] flex-col gap-2 overflow-y-auto py-2 no-scrollbar tablet:h-[calc(100vh-160px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:py-5">
             {isLoading ? (
               <DotsLoading />
+            ) : isError && error.message === `AxiosError: Request failed with status code 500` ? (
+              <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
+                An error occurred while fetching the article.
+              </p>
+            ) : isError && error.message === `AxiosError: Request failed with status code 404` ? (
+              <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
+                This link is not active.
+              </p>
             ) : (
               response?.data && (
                 <div className="mx-auto flex w-full max-w-[778px] flex-col gap-4 px-4 text-gray-200 dark:text-white tablet:gap-6 tablet:px-6">

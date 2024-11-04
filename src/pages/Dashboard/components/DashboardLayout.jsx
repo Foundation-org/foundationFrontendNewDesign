@@ -370,6 +370,7 @@ export default function DashboardLayout({ children }) {
             {location.pathname !== '/profile' &&
               !location.pathname.startsWith('/h/') &&
               !location.pathname.startsWith('/seldon-ai') &&
+              location.pathname !== '/profile/me' &&
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
               location.pathname !== '/profile/shared-links' &&
@@ -438,6 +439,32 @@ export default function DashboardLayout({ children }) {
                   )}
                 </>
               )}
+
+            {(location.pathname === '/profile/me' || location.pathname.startsWith('/h/')) && (
+              <>
+                {persistedUserInfo?.role === 'user' ? (
+                  <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
+                    <Button
+                      variant="hollow-submit2"
+                      className="bg-white tablet:w-fit"
+                      onClick={() => navigate('/profile-others')}
+                    >
+                      Find other Profiles
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="hollow-submit2"
+                    className="bg-white"
+                    onClick={() => {
+                      dispatch(setGuestSignUpDialogue(true));
+                    }}
+                  >
+                    Sign up
+                  </Button>
+                )}
+              </>
+            )}
           </div>
         </div>
 

@@ -76,7 +76,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         {/* Pin To SpotLight */}
         {isProfilePage && !data?.spotLightType && (
           <button
-            className="whitespace-nowrap text-[18px] font-medium text-[#6BA5CF] underline"
+            className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
             onClick={() => {
               const domain = persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain.name;
               handleSpotLight({ domain, type: 'news', id: data._id, status: 'set' });

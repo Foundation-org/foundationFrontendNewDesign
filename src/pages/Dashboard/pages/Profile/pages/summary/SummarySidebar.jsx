@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 const SummarySidebar = ({ userData }) => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const SummarySidebar = ({ userData }) => {
       text: 'Go to Feedback Given >',
     },
     {
-      id: 5,
+      id: 6,
       title: 'Posts I have hidden',
       val: (persistedUserInfo && persistedUserInfo?.questsActivity?.myHiddenQuestsCount) || 0,
       link: '/profile/feedback-given',
@@ -58,8 +59,8 @@ const SummarySidebar = ({ userData }) => {
         <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Your posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {yourPosts.map((item) => (
-            <>
-              <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
+            <React.Fragment key={item.id}>
+              <div className="flex items-center justify-between text-gray-900 dark:text-white-100">
                 <p className="max-w-[180px] text-[16px] font-medium leading-[118.75%]">{item.title}</p>
                 <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
               </div>
@@ -75,7 +76,7 @@ const SummarySidebar = ({ userData }) => {
               >
                 <span dangerouslySetInnerHTML={{ __html: item.text }} />
               </Link>
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
@@ -84,8 +85,8 @@ const SummarySidebar = ({ userData }) => {
         <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Others Posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {othersPosts.map((item) => (
-            <>
-              <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
+            <React.Fragment key={item.id}>
+              <div className="flex items-center justify-between text-gray-900 dark:text-white-100">
                 <p className="max-w-[180px] text-[16px] font-medium leading-[118.75%]">{item.title}</p>
                 <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
               </div>
@@ -101,7 +102,7 @@ const SummarySidebar = ({ userData }) => {
               >
                 <span dangerouslySetInnerHTML={{ __html: item.text }} />
               </Link>
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
