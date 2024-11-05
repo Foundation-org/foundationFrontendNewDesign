@@ -141,7 +141,7 @@ export default function HiddenPosts() {
       <div className="mx-4 mb-3 tablet:mx-6 tablet:mb-5">
         <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
           <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-            See the feedback you've given on others' posts, including those you've chosen to hide.
+            See the feedback you've given on other's posts, including those you've chosen to hide.
           </h1>
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">

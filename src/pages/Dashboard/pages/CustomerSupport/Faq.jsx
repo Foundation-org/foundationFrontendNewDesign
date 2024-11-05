@@ -232,7 +232,7 @@ const Faq = () => {
         </div>
       ))}
       <h1 className="border-t-[0.5px] border-black px-[1.13rem] py-[0.94rem] text-[14px] font-semibold leading-none -tracking-[2%] dark:border-gray-100 tablet:border-t tablet:px-[35px] tablet:py-6 tablet:text-[25px]">
-        Sharing
+        News and Research
       </h1>
       {faqs6.map((item) => (
         <div key={item.id}>
@@ -277,7 +277,7 @@ const Faq = () => {
         </div>
       ))}
       <h1 className="border-t-[0.5px] border-black px-[1.13rem] py-[0.94rem] text-[14px] font-semibold leading-none -tracking-[2%] dark:border-gray-100 tablet:border-t tablet:px-[35px] tablet:py-6 tablet:text-[25px]">
-        Home Page
+        Sharing
       </h1>
       {faqs7.map((item) => (
         <div key={item.id}>
@@ -322,7 +322,7 @@ const Faq = () => {
         </div>
       ))}
       <h1 className="border-t-[0.5px] border-black px-[1.13rem] py-[0.94rem] text-[14px] font-semibold leading-none -tracking-[2%] dark:border-gray-100 tablet:border-t tablet:px-[35px] tablet:py-6 tablet:text-[25px]">
-        Analytics and Insights
+        Home Page
       </h1>
       {faqs8.map((item) => (
         <div key={item.id}>

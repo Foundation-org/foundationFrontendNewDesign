@@ -32,19 +32,19 @@ export const faqData = [
     ],
   },
   {
-    id: 5,
-    img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/3.png`,
-    title: 'How does Foundation reward participation?',
-    desc: [
-      'Foundation rewards every engagement with FDX tokens. From creating posts to engaging with others, each action adds value to the platform, earning users FDX in return.',
-    ],
-  },
-  {
     id: 6,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'What is the purpose of Foundation?',
     desc: [
       'Foundation’s mission is to enable a transparent, privacy-focused space for gathering and sharing insights. It provides a platform where contributions are valued, users have full data control, and community knowledge drives real, valuable information.',
+    ],
+  },
+  {
+    id: 5,
+    img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/3.png`,
+    title: 'How does Foundation reward participation?',
+    desc: [
+      'Foundation rewards every engagement with FDX tokens. From creating posts to engaging with others, each action adds value to the platform, earning users FDX in return.',
     ],
   },
   {

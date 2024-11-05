@@ -13,7 +13,8 @@ const Summary = () => {
       <VerificationBadgeScore />
       <SummaryCard headerIcon="/assets/summary/post-activity-logo2.svg" headerTitle="Post Activity">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Track your engagement and influence within the Foundation community.
+          Creating posts is a great way to earn FDX. Your contributions gain value as others engage with them, enhancing
+          your impact within the Foundation community.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
@@ -28,7 +29,7 @@ const Summary = () => {
             </h1>
             <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.yourPostEngaged}</h5>
           </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+          <div className="max-w-28 border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Posts I've engaged with
             </h1>
@@ -49,7 +50,7 @@ const Summary = () => {
       </SummaryCard>
       <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          See the feedback you've given on others' posts, including those you've chosen to hide.
+          See the feedback you've given on other's posts, including those you've chosen to hide.
         </h1>
         <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
           <div className="flex w-full justify-end">
