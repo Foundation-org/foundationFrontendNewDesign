@@ -14,6 +14,7 @@ import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/
 
 export default function UserProfile() {
   const location = useLocation();
+  const isPublicProfile = location.pathname.startsWith('/h/');
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [domain, setDomain] = useState('');
@@ -60,7 +61,7 @@ export default function UserProfile() {
       ) : (
         <>
           <ProfileCard profile={data?.profile} />
-          {data?.linkHub && <LinkHub linkHub={data?.linkHub} />}
+          {data?.linkHub && !isPublicProfile && <LinkHub linkHub={data?.linkHub} />}
           {data?.spotLight && data?.spotLight.message !== 'No list exists yet.' && (
             <Spotlight spotlight={data?.spotLight} />
           )}
