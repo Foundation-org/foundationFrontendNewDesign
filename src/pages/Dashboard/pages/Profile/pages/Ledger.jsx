@@ -157,10 +157,7 @@ export default function BasicTable() {
 
   return (
     <div className="mb-6 overflow-y-auto">
-      <div className="ledger-light dark:ledger-dark mx-[17px] mb-5 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left dark:border-[2.56px] dark:border-gray-100 dark:bg-gray-200 tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]">
-        <p className="text-end text-[0.4rem] tablet:mb-5 tablet:px-[1.36rem] tablet:text-[1rem]">
-          Powered by Foundation Blockchain
-        </p>
+      <div className="ledger-light dark:ledger-dark mx-[17px] mb-2 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left dark:border-[2.56px] dark:border-gray-100 dark:bg-gray-200 tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]">
         <LedgerTableTopbar
           sort={sort}
           setsort={setsort}
@@ -367,6 +364,9 @@ export default function BasicTable() {
           </div>
         </div>
       </div>
+      <p className="mx-[17px] px-[0.59rem] text-end text-[0.4rem] tablet:px-[1.36rem] tablet:text-[1rem] laptop:mx-[116px]">
+        Powered by Foudation Blockchain
+      </p>
     </div>
   );
 }
