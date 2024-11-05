@@ -26,6 +26,8 @@ export default function HomepageBadge({ checkPseudoBadge }) {
     }
   };
   const handleClickPesonalBadges = async (type, edit) => {
+    console.log(type, edit);
+
     if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
@@ -102,7 +104,7 @@ export default function HomepageBadge({ checkPseudoBadge }) {
             <Button
               variant={checkAlready(item.type) ? 'verification-badge-edit' : item.ButtonColor}
               onClick={() => {
-                handleClickPesonalBadges(item.type, false);
+                handleClickPesonalBadges(item.type, checkAlready(item.type));
               }}
               disabled={item.disabled}
             >
