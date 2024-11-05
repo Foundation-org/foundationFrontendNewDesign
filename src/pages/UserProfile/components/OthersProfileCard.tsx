@@ -8,7 +8,7 @@ export default function OthersProfileCard(props: { data: any; innerRef: any }) {
   return (
     <div
       ref={innerRef}
-      className="flex flex-col items-center rounded-[13.84px] border-[1.846px] border-[#D9D9D9] bg-white"
+      className="flex flex-col items-center rounded-[13.84px] border-[1.846px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200"
     >
       <div className="flex w-full items-center gap-[14px] p-[18px] tablet:gap-6 tablet:p-5">
         <div>
@@ -20,7 +20,7 @@ export default function OthersProfileCard(props: { data: any; innerRef: any }) {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-2 text-[#7C7C7C] tablet:gap-4">
+        <div className="flex flex-col gap-2 text-[#7C7C7C] dark:text-[#f1f1f1] tablet:gap-4">
           <div>
             <h1 className="text-[12px] font-semibold tablet:text-[20px]">{data?.domain.title}</h1>
             <p className="text-[10px] leading-normal tablet:text-[16px]">{`${data?.domain.name}.${window.location.hostname}`}</p>

@@ -31,13 +31,14 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
       <div className="flex h-[25px] w-full items-center justify-between bg-blue-200 px-5 text-[12px] font-medium text-white tablet:h-[43.2px] tablet:px-7 tablet:text-[18px]">
         <h1>Link Hub</h1>
       </div>
-      <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[6px] rounded-[13.84px] border-2 border-[#D9D9D9] bg-white p-[18px] tablet:gap-[10px] tablet:p-5">
+      <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[6px] rounded-[13.84px] border-2 border-[#D9D9D9] bg-white p-[18px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-[10px] tablet:p-5">
         {linkHub === 'No Link Hub badge added yet!' ? (
           <>
-            <h1 className="text-[11px] leading-normal text-[#85898C] tablet:text-[18px]">
-              To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
+            <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
+              Need Copy text
+              {/* To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
               <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
-              identity is linked and helps safeguard your assets.
+              identity is linked and helps safeguard your assets. */}
             </h1>
             <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={true} isDomain={false} />
           </>

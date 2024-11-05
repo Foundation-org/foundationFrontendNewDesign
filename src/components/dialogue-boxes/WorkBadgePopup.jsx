@@ -407,23 +407,23 @@ const WorkBadgePopup = ({
         {existingData && !addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
             {existingData.map((item, index) => (
-              <div className="flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
+              <div className="flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
                 <div className="py-3 tablet:py-[25px]">
-                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
+                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
                     {item.companyName}
                   </h4>
                   <div className="max-w-[270px]">
-                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
+                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
                       {item.jobTitle}
                     </h5>
-                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
+                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
                       {item.modeOfJob}
                     </h6>
                   </div>
                 </div>
                 {deleteItem === item.id ? (
                   <div className="max-w-[160px] rounded-[10.06px] border-l border-white-500 px-[9px] py-2 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
-                    <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
+                    <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
                       Are you sure you want to delete your experience?
                     </h1>
                     <div className="flex justify-end gap-2 tablet:gap-[25px]">
@@ -435,7 +435,11 @@ const WorkBadgePopup = ({
                           handleDelete(deleteItem);
                         }}
                       >
-                        {delloading === item.id ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
+                        {delloading === item.id ? (
+                          <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
+                        ) : (
+                          'Yes'
+                        )}
                       </Button>
                       <Button
                         className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
@@ -466,7 +470,7 @@ const WorkBadgePopup = ({
                         onClick={() => setDeleteItem(item.id)}
                       />
                     </div>
-                    <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
+                    <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
                       {item.startingYear + '-' + item.endingYear}
                     </h4>
                   </div>

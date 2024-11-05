@@ -37,18 +37,21 @@ export default function UserProfile() {
           <Loader />
         </div>
       ) : !domain ? (
-        <div className="flex flex-col gap-2 border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] tablet:rounded-[10px] tablet:p-5">
-          <h1 className="text-[11px] leading-normal text-[#85898C] tablet:text-[18px]">
-            To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
+        <div className="dar flex flex-col gap-2 rounded-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-3 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
+          <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
+            Need Copy text
+            {/* To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
             <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
-            identity is linked and helps safeguard your assets.
+            identity is linked and helps safeguard your assets. */}
           </h1>
           <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={false} isDomain={true} />
         </div>
       ) : error?.message === 'No such page exists.' ? (
-        <div className="mt-16 flex h-full flex-col items-center text-[#616161]">
+        <div className="mt-16 flex h-full flex-col items-center text-[#616161] dark:text-[#f1f1f1]">
           <h1 className="text-[32px] font-bold leading-normal">Sorry!</h1>
-          <h2 className="text-[26px] font-semibold leading-normal text-[#616161]">Page not found</h2>
+          <h2 className="text-[26px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1]">
+            Page not found
+          </h2>
           <Button variant="submit" className="mt-10" onClick={() => navigate('/')}>
             Go to Homepage
           </Button>
@@ -61,7 +64,9 @@ export default function UserProfile() {
       ) : (
         <>
           <ProfileCard profile={data?.profile} />
-          {data?.linkHub && !isPublicProfile && <LinkHub linkHub={data?.linkHub} />}
+          {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
+            <LinkHub linkHub={data?.linkHub} />
+          )}
           {data?.spotLight && data?.spotLight.message !== 'No list exists yet.' && (
             <Spotlight spotlight={data?.spotLight} />
           )}

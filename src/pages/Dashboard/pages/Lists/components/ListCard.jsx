@@ -199,7 +199,7 @@ const ListCard = ({ listData }) => {
                 key={categoryItem._id}
                 className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
               >
-                <div className="flex items-center justify-between gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                <div className="flex items-center justify-between gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
                   <div className="flex gap-2">
                     <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
                       {categoryItem.category}
@@ -393,7 +393,7 @@ const ListCard = ({ listData }) => {
                     </div>
                   )}
                 </div>
-                <div className="flex items-center justify-between border-t-[0.125rem] border-gray-250 px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                <div className="flex items-center justify-between border-t-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
                   {notPublicProfile ? (
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}

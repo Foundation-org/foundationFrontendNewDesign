@@ -9,7 +9,7 @@ export default function ProfileCard({ profile }: any) {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
   return (
-    <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[14px] rounded-[13.84px] border-2 border-[#D9D9D9] bg-white p-[18px] tablet:gap-4 tablet:p-5">
+    <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[14px] rounded-[13.84px] border-2 border-[#D9D9D9] bg-white p-[18px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-4 tablet:p-5">
       <div className="flex w-full items-center gap-[14px] tablet:gap-6">
         <div>
           <div
@@ -19,7 +19,7 @@ export default function ProfileCard({ profile }: any) {
             }}
           >
             {!isPublicProfile && (
-              <button className="absolute bottom-0 flex h-[40%] w-full items-center justify-center bg-[#FBFBFB]/50">
+              <button className="absolute bottom-0 flex h-[40%] w-full items-center justify-center rounded-b-full bg-[#FBFBFB]/50">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/camera.svg`}
                   alt="save icon"
@@ -34,15 +34,15 @@ export default function ProfileCard({ profile }: any) {
             />
           </div>
           <div>
-            <p className="whitespace-nowrap text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[16px]">
+            <p className="whitespace-nowrap text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[16px]">
               Profile Viewers
             </p>
-            <p className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[16px]">
+            <p className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[16px]">
               {profile?.domain.viewers}
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-2 text-[#7C7C7C] tablet:gap-4">
+        <div className="flex flex-col gap-2 text-[#7C7C7C] dark:text-[#f1f1f1] tablet:gap-4">
           <div>
             <h1 className="text-[12px] font-semibold tablet:text-[20px]"> {profile?.domain.title}</h1>
             <p className="text-[10px] leading-normal tablet:text-[16px]"> {profile?.domain.name}</p>
