@@ -22,6 +22,7 @@ import ViewMyLists from './ViewMyLists';
 export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
   const location = useLocation();
+  const link = location.pathname.split('/');
   const getSeldonDataState = useSelector(getSeldonDataStates);
   const [seldonsData, setSeldonsData] = useState(location.pathname.startsWith('/r') ? apiResp : getSeldonDataState);
   const questUtils = useSelector(getQuestUtils);
@@ -156,6 +157,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
                 key={post._id}
                 questStartData={post}
                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+                articleId={location.pathname.startsWith('/r') ? link[link.length - 1] : apiResp?.articleId}
               />
             </div>
           ))

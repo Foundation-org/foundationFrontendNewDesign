@@ -7,19 +7,20 @@ import { toast } from 'sonner';
 
 // change ans submit
 export const updateChangeAnsStartQuest = async (data) => {
-  return await api.post('/startQuest/updateChangeAnsStartQuest', {
+  const params = {
     questId: data.questId,
     changeAnswerAddedObj: data.answer,
     addedAnswer: data.addedAnswer,
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
     isAddedAnsSelected: data.isAddedAnsSelected,
-  });
+  };
+  return await api.post('/startQuest/updateChangeAnsStartQuest', params);
 };
 
 // start submit button
 export const createStartQuest = async (data) => {
-  return await api.post('/startQuest/createStartQuest', {
+  const params = {
     questForeignKey: data.questId,
     data: data.answer,
     addedAnswer: data.addedAnswer,
@@ -28,9 +29,12 @@ export const createStartQuest = async (data) => {
     isAddedAnsSelected: data.isAddedAnsSelected,
     isSharedLinkAns: data.isSharedLinkAns,
     postLink: data.postLink,
-  });
+  };
+  if (data.articleRef) {
+    params.articleRef = data.articleRef;
+  }
+  return await api.post('/startQuest/createStartQuest', params);
 };
-
 // creation of a quest of all types
 export const createInfoQuest = async (data) => {
   try {
@@ -368,7 +372,7 @@ export const checkAnswerExistCreateQuest = ({ answersArray, answer, index, start
   return answersArray.some((item, i) =>
     startQuest
       ? item.label.toLowerCase() === answer.toLowerCase() && i !== index
-      : item?.question?.toLowerCase() === answer.toLowerCase() && i !== index,
+      : item?.question?.toLowerCase() === answer.toLowerCase() && i !== index
   );
 };
 
@@ -377,7 +381,7 @@ export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) =>
     (item, i) =>
       i !== index &&
       ((startQuest && item.label.toLowerCase() === answer.toLowerCase()) ||
-        (!startQuest && item?.question?.toLowerCase() === answer.toLowerCase())),
+        (!startQuest && item?.question?.toLowerCase() === answer.toLowerCase()))
   );
 };
 

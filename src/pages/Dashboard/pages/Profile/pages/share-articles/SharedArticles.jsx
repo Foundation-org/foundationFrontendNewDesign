@@ -73,7 +73,7 @@ export default function SharedArticles() {
   return (
     <div>
       {/* Shared Articles Insights */}
-      <ContentCard icon="assets/summary/share-posts-logo.svg" title="Shared Articles">
+      <ContentCard icon="assets/topbar/news.svg" title="Shared Articles">
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
           Need copy text
         </h1>
@@ -86,7 +86,15 @@ export default function SharedArticles() {
               {persistedUserInfo?.myArticleStatistics.overAllArticleSharedCount}
             </h5>
           </div> */}
-          <div className="max-w-28 pr-3 tablet:max-w-full tablet:pr-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+              Total shared article engagements
+            </h1>
+            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+              {persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
+            </h5>
+          </div>
+          <div>
             <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
               Articles you’ve shared
             </h1>

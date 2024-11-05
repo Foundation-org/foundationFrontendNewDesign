@@ -128,7 +128,7 @@ const Summary = () => {
           </div>
           <div>
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total post engagement
+              Total post engagements
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
@@ -169,6 +169,35 @@ const Summary = () => {
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
+            </h5>
+          </div>
+        </div>
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
+          <Button variant={'submit'} onClick={() => navigate('/profile/shared-articles')}>
+            View all shared articles
+          </Button>
+        </div>
+      </SummaryCard>
+
+      <SummaryCard headerIcon="/assets/topbar/news.svg" headerTitle="Shared Articles">
+        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+          Copy text
+        </h1>
+        <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+              Total shared article engagements
+            </h1>
+            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+              {persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
+            </h5>
+          </div>
+          <div>
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+              Articles you’ve shared
+            </h1>
+            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+              {persistedUserInfo?.myArticleStatistics.totalSharedArticlesCount}
             </h5>
           </div>
         </div>

@@ -14,6 +14,7 @@ export default function SeldonView() {
   const location = useLocation();
   const { protocol, host } = window.location;
   const persistedTheme = useSelector((state: any) => state.utils.theme);
+  const link = location.pathname.split('/');
 
   const {
     data: response,
@@ -26,12 +27,8 @@ export default function SeldonView() {
     refetchOnWindowFocus: false,
   });
 
-  const { mutateAsync: ShareArticle } = useMutation({
-    mutationFn: shareArticles,
-  });
-
   const copyToClipboard = async () => {
-    const id = location.pathname.startsWith('/r') ? response?.data?._id : response?.data?.articleId;
+    const id = location.pathname.startsWith('/r') ? link[link.length - 1] : response?.data?.articleId;
     // ShareArticle(id);
     try {
       await navigator.clipboard.writeText(`${protocol}//${host}/r/${id}`);

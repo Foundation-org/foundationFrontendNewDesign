@@ -70,6 +70,16 @@ export default function ShareArticleCard({ data, innerRef }) {
               {data?.articleSetting?.viewCount} Impressions{' '}
             </h2>
           </div>
+          <div className="flex items-center gap-[1px] tablet:gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/group.svg' : 'assets/svgs/participants.svg'}`}
+              alt="participants"
+              className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
+            />
+            <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+              {data?.articleSetting?.submitEngagementsOfArticleSharedByUniqueLink.length} Engagements{' '}
+            </h2>
+          </div>
         </div>
         <div className="flex w-full justify-end gap-2 px-6 tablet:gap-4">
           <div className="w-full">&#x200B;</div>

@@ -370,6 +370,10 @@ const QuestionCardWithToggle = (props) => {
         ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
       };
 
+      if (props.articleId) {
+        params.articleRef = props.articleId;
+      }
+
       if (!params.answer.selected) {
         showToast('warning', 'emptySelection');
         setLoading(false);
@@ -458,6 +462,9 @@ const QuestionCardWithToggle = (props) => {
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
           };
+          if (props.articleId) {
+            params.articleRef = props.articleId;
+          }
 
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
@@ -504,6 +511,9 @@ const QuestionCardWithToggle = (props) => {
           ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
           isAddedAnsSelected: isAddedAnsSelected,
         };
+        if (props.articleId) {
+          params.articleRef = props.articleId;
+        }
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
@@ -594,6 +604,9 @@ const QuestionCardWithToggle = (props) => {
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
           };
+          if (props.articleId) {
+            params.articleRef = props.articleId;
+          }
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
@@ -626,6 +639,9 @@ const QuestionCardWithToggle = (props) => {
           ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
           isAddedAnsSelected: isAddedAnsSelected,
         };
+        if (props.articleId) {
+          params.articleRef = props.articleId;
+        }
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
