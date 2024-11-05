@@ -28,11 +28,12 @@ export const useFetchOtherProfiles = (terms = '') => {
 };
 
 // FETCH MY PROFILE
-const fetchMyProfile = async (domain) => {
+const fetchMyProfile = async (domain, viewerUuid) => {
   try {
     const response = await api.get(`/user/fetchUserProfile`, {
       params: {
         domain,
+        viewerUuid,
       },
     });
     return response.data;
@@ -45,11 +46,11 @@ const fetchMyProfile = async (domain) => {
   }
 };
 
-export const useFetchMyProfile = (domain) => {
+export const useFetchMyProfile = (domain, viewerUuid) => {
   return useQuery({
     queryKey: ['my-profile', domain],
     queryFn: async () => {
-      return await fetchMyProfile(domain);
+      return await fetchMyProfile(domain, viewerUuid);
     },
     enabled: !!domain,
   });

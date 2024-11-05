@@ -3,13 +3,17 @@ import { useState } from 'react';
 import { CanAdd } from './badgeUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
-import { homepageBadges } from '../../../../../../constants/varification-badges';
+import {
+  domainHomepageBadges,
+  homepageBadges,
+  profileHomepageBadges,
+} from '../../../../../../constants/varification-badges';
 import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import HomepageBadgePopup from '../../../../../../components/dialogue-boxes/HomepageBadgePopup';
 import LinkHubPopup from '../../../../../../components/dialogue-boxes/LinkHubPopup';
 
-export default function HomepageBadge({ checkPseudoBadge }) {
+export default function HomepageBadge({ checkPseudoBadge, isProfile, isDomain }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -25,6 +29,7 @@ export default function HomepageBadge({ checkPseudoBadge }) {
       return persistedUserInfo?.badges?.some((badge) => badge?.personal?.hasOwnProperty(type) || false) || false;
     }
   };
+
   const handleClickPesonalBadges = async (type, edit) => {
     console.log(type, edit);
 
@@ -83,12 +88,14 @@ export default function HomepageBadge({ checkPseudoBadge }) {
 
   return (
     <>
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        Your Home Page serves as a central hub for sharing and connecting with your audience.
-      </h1>
+      {!isProfile && !isDomain && (
+        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+          Your Home Page serves as a central hub for sharing and connecting with your audience.
+        </h1>
+      )}
       {renderPersonalBadgesPopup()}
       <div className="flex flex-col items-center justify-between gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">
-        {homepageBadges.map((item, index) => (
+        {(isProfile ? profileHomepageBadges : isDomain ? domainHomepageBadges : homepageBadges).map((item, index) => (
           <div
             key={index + 1}
             className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled ? 'opacity-60' : ''}`}

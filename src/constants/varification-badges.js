@@ -320,6 +320,30 @@ export const homepageBadges = [
   },
 ];
 
+export const domainHomepageBadges = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+    title: 'Domain',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'domainBadge',
+    disabled: false,
+  },
+];
+
+export const profileHomepageBadges = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
+    title: 'Link Hub',
+    ButtonColor: 'submit',
+    NoOfButton: 1,
+    ButtonText: 'Add',
+    type: 'linkHub',
+    disabled: false,
+  },
+];
+
 export const subscription = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/creditScore.svg`,

@@ -9,12 +9,15 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../../components/ui/Loader';
 import { Button } from '../../components/ui/Button';
+import LinkHub from './LinkHub';
+import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/HomepageBadge';
 
 export default function UserProfile() {
   const location = useLocation();
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [domain, setDomain] = useState('');
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
 
   useEffect(() => {
     if (location.pathname.startsWith('/h/')) {
@@ -24,7 +27,7 @@ export default function UserProfile() {
     }
   }, []);
 
-  const { data, isLoading, error } = useFetchMyProfile(domain);
+  const { data, isLoading, error } = useFetchMyProfile(domain, persistedUserInfo.uuid);
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col gap-3 px-4 tablet:gap-6 tablet:px-0">
@@ -33,9 +36,14 @@ export default function UserProfile() {
           <Loader />
         </div>
       ) : !domain ? (
-        <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
-          Add a domain badge to view your profile
-        </p>
+        <div className="flex flex-col gap-2 border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] tablet:rounded-[10px] tablet:p-5">
+          <h1 className="text-[11px] leading-normal text-[#85898C] tablet:text-[18px]">
+            To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
+            <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
+            identity is linked and helps safeguard your assets.
+          </h1>
+          <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={false} isDomain={true} />
+        </div>
       ) : error?.message === 'No such page exists.' ? (
         <div className="mt-16 flex h-full flex-col items-center text-[#616161]">
           <h1 className="text-[32px] font-bold leading-normal">Sorry!</h1>
@@ -52,6 +60,7 @@ export default function UserProfile() {
       ) : (
         <>
           <ProfileCard profile={data?.profile} />
+          {data?.linkHub && <LinkHub linkHub={data?.linkHub} />}
           {data?.spotLight && data?.spotLight.message !== 'No list exists yet.' && (
             <Spotlight spotlight={data?.spotLight} />
           )}
