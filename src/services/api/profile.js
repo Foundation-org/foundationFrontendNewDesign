@@ -28,7 +28,7 @@ export const useFetchOtherProfiles = (terms = '') => {
 };
 
 // FETCH MY PROFILE
-const fetchMyProfile = async (domain, viewerUuid) => {
+export const fetchMyProfile = async (domain, viewerUuid) => {
   try {
     const response = await api.get(`/user/fetchUserProfile`, {
       params: {

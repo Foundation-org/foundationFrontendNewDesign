@@ -30,6 +30,8 @@ export default function UserProfile() {
 
   const { data, isLoading, error } = useFetchMyProfile(domain, persistedUserInfo.uuid);
 
+  console.log('data', data);
+
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col gap-3 px-4 tablet:gap-6 tablet:px-0">
       {isLoading ? (
@@ -71,7 +73,7 @@ export default function UserProfile() {
             <Spotlight spotlight={data?.spotLight} />
           )}
           {data?.posts?.data.length >= 1 && <SharedPosts posts={data?.posts?.data} />}
-          {data?.list?.length >= 1 && <SharedLists lists={data?.lists} />}
+          {data?.lists?.length >= 1 && <SharedLists lists={data?.lists} />}
           {data?.articles.length >= 1 && <NewsArticles articles={data?.articles} />}
         </>
       )}

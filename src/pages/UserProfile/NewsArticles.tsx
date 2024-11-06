@@ -1,10 +1,15 @@
 import { useLocation } from 'react-router-dom';
 import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 import showToast from '../../components/ui/Toast';
+import { useState } from 'react';
 
 export default function NewsArticles({ articles }: { articles: any }) {
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
+
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleArticles = showAll ? articles : articles.slice(0, 5);
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
@@ -22,7 +27,12 @@ export default function NewsArticles({ articles }: { articles: any }) {
         )}
       </div>
       <div className="mb-4 flex w-full flex-col gap-3 tablet:gap-5">
-        {articles?.map((article: any) => <NewsFeedCard key={article._id} data={article} innerRef={null} />)}
+        {visibleArticles?.map((article: any) => <NewsFeedCard key={article._id} data={article} innerRef={null} />)}
+        {!showAll && articles.length > 5 && (
+          <button className="text-[19px] font-semibold leading-normal text-[#389CE3]" onClick={() => setShowAll(true)}>
+            See All Articles
+          </button>
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api/Axios';
 import showToast from '../../components/ui/Toast';
 import { useSelector } from 'react-redux';
+import { fetchMyProfile } from '../api/profile';
 
 const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboarding, handleSkip) => {
   const queryClient = useQueryClient();
@@ -43,8 +44,17 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
           handleSkip();
           return;
         }
+
         setLoading(false);
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries(['userInfo', { exact: true }]);
+        if (!queryClient.getQueryData({ queryKey: ['my-profile'] })) {
+          queryClient.prefetchQuery({
+            queryKey: ['my-profile', data.data.domain.domain.name],
+            queryFn: () => fetchMyProfile(data.data.domain.domain.name, persistedUserInfo.uuid),
+          });
+        } else {
+          queryClient.invalidateQueries({ queryKey: ['my-profile'] });
+        }
         handleClose();
       }
     },

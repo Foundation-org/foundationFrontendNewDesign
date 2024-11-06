@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api/Axios';
 import showToast from '../../components/ui/Toast';
 import { toast } from 'sonner';
+import { setSeldonData } from '../../features/seldon-ai/seldonDataSlice';
+import { useDispatch } from 'react-redux';
 
 export const chatGptData = async ({ params }) => {
   const queryString = new URLSearchParams(params).toString();
@@ -79,6 +81,8 @@ export const publishArticle = async ({
 };
 
 export const usePublishArticleMutation = () => {
+  const dispatch = useDispatch();
+
   const mutation = useMutation({
     mutationFn: async ({
       userUuid,
@@ -114,6 +118,8 @@ export const usePublishArticleMutation = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         showToast('success', 'articlePublished');
+
+        dispatch(setSeldonData({ articleId: resp.data._id }));
       }
     },
     onError: (error) => {

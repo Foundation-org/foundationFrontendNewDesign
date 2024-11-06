@@ -12,6 +12,7 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
       github: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
       facebook: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
       linkedin: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
+      instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
     };
 
     const title = badge.title.toLowerCase();
@@ -23,7 +24,7 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
       }
     }
 
-    return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/default-icon`;
+    return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/default-link.svg`;
   }
 
   return (

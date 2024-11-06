@@ -2,11 +2,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getQuestUtils } from '../../features/quest/utilsSlice';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
+import { useState } from 'react';
 
 export default function SharedPosts({ posts }: { posts: any }) {
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const questUtils = useSelector(getQuestUtils);
+  const [showAll, setShowAll] = useState(false);
+
+  const visiblePosts = showAll ? posts : posts.slice(0, 5);
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
@@ -19,13 +23,18 @@ export default function SharedPosts({ posts }: { posts: any }) {
         )}
       </div>
       <div className="flex w-full flex-col gap-3 tablet:gap-5">
-        {posts?.map((post: any) => (
+        {visiblePosts?.map((post: any) => (
           <QuestionCardWithToggle
             key={post._id}
             questStartData={post}
             playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
           />
         ))}
+        {!showAll && posts.length > 5 && (
+          <button className="text-[19px] font-semibold leading-normal text-[#389CE3]" onClick={() => setShowAll(true)}>
+            See All Posts
+          </button>
+        )}
       </div>
     </div>
   );
