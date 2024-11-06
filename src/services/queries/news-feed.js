@@ -28,7 +28,7 @@ export const useFetchNewsFeed = (terms = '', pageType = '') => {
       return await fetchArticles(pageParam, 5, 'Newest First', terms, pageType, persistedUserInfo.uuid);
     },
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.data.length ? allPages.length + 1 : undefined; // Next page number
+      return lastPage.data.length ? allPages.length + 1 : undefined;
     },
   });
 };
