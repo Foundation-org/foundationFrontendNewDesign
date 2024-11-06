@@ -317,7 +317,8 @@ const LinkHubPopup = ({
         ) : (
           <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
             <h1 className="pb-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
-              Copy text needed
+              Put all your essential links in one place on your Home Page, making it easier for others to find and
+              connect with you across platforms
             </h1>
 
             <div className="mb-4 mt-[15px] flex flex-col gap-[19.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[38px]">

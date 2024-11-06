@@ -40,7 +40,7 @@ export default function UserProfile() {
       ) : !domain ? (
         <div className="dar flex flex-col gap-2 rounded-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-3 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
           <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
-            Need Copy text
+            You must add 'Domain' Badge to view your profile.
             {/* To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
             <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
             identity is linked and helps safeguard your assets. */}

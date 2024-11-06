@@ -36,7 +36,7 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
         {linkHub === 'No Link Hub badge added yet!' ? (
           <>
             <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
-              Need Copy text
+              You must add 'Link Hub' Badge to view this.
               {/* To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
               <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
               identity is linked and helps safeguard your assets. */}

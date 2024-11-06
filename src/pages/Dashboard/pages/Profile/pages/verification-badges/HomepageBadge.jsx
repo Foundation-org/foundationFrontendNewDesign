@@ -31,8 +31,6 @@ export default function HomepageBadge({ checkPseudoBadge, isProfile, isDomain })
   };
 
   const handleClickPesonalBadges = async (type, edit) => {
-    console.log(type, edit);
-
     if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;

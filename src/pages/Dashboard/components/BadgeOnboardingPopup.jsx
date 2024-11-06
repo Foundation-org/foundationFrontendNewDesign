@@ -12,6 +12,7 @@ import Web3ConnectPopup from '../pages/Profile/pages/verification-badges/Web3Con
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
 
 export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => {
   const fetchUser = useSelector((state) => state.auth.user);
@@ -92,7 +93,14 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       info: false,
       check: checkDomainBadge(),
     },
-
+    {
+      component: LinkHubPopup,
+      title: 'Link Hub',
+      type: 'linkHub',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
+      info: false,
+      check: checkPersonalBadge('linkHub'),
+    },
     {
       component: InfoPopup,
       title: 'Onward and upward!',
