@@ -259,8 +259,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 <Copy color={persistedTheme === 'dark' ? '#293138' : '#8BAAC0'} />
               </button>
             )}
-          </div>{' '}
-          {console.log(questStartData?.whichTypeQuestion)}
+          </div>
           {questStartData?.whichTypeQuestion === 'yes/no' ||
             questStartData?.whichTypeQuestion === 'agree/disagree' ||
             (questStartData?.whichTypeQuestion === 'like/dislike' && (

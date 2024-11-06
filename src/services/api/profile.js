@@ -28,7 +28,7 @@ export const useFetchOtherProfiles = (terms = '') => {
 };
 
 // FETCH MY PROFILE
-export const fetchMyProfile = async (domain, viewerUuid) => {
+const fetchMyProfile = async (domain, viewerUuid) => {
   try {
     const response = await api.get(`/user/fetchUserProfile`, {
       params: {
@@ -48,7 +48,7 @@ export const fetchMyProfile = async (domain, viewerUuid) => {
 
 export const useFetchMyProfile = (domain, viewerUuid) => {
   return useQuery({
-    queryKey: ['my-profile', domain],
+    queryKey: ['my-profile', domain, viewerUuid],
     queryFn: async () => {
       return await fetchMyProfile(domain, viewerUuid);
     },

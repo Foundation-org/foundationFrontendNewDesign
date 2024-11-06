@@ -19,6 +19,7 @@ export default function UserProfile() {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [domain, setDomain] = useState('');
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
+  const isDomainBadge = persistedUserInfo?.badges?.some((badge: any) => !!badge?.domain) || false;
 
   useEffect(() => {
     if (location.pathname.startsWith('/h/')) {
@@ -26,11 +27,9 @@ export default function UserProfile() {
     } else {
       setDomain(persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain.name);
     }
-  }, []);
+  }, [isDomainBadge]);
 
   const { data, isLoading, error } = useFetchMyProfile(domain, persistedUserInfo.uuid);
-
-  console.log('data', data);
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col gap-3 px-4 tablet:gap-6 tablet:px-0">
@@ -46,6 +45,7 @@ export default function UserProfile() {
             <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
             identity is linked and helps safeguard your assets. */}
           </h1>
+
           <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={false} isDomain={true} />
         </div>
       ) : error?.message === 'No such page exists.' ? (
@@ -64,7 +64,7 @@ export default function UserProfile() {
           />
         </div>
       ) : (
-        <>
+        <div className="mb-4 flex flex-col gap-3 tablet:gap-6">
           <ProfileCard profile={data?.profile} />
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} />
@@ -75,7 +75,7 @@ export default function UserProfile() {
           {data?.posts?.data.length >= 1 && <SharedPosts posts={data?.posts?.data} />}
           {data?.lists?.length >= 1 && <SharedLists lists={data?.lists} />}
           {data?.articles.length >= 1 && <NewsArticles articles={data?.articles} />}
-        </>
+        </div>
       )}
     </div>
   );

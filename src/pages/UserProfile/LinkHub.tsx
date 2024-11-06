@@ -48,10 +48,10 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
             {linkHub?.personal.linkHub?.map((badge: any) => (
               <div
                 key={badge.id}
-                className="mx-auto flex w-full max-w-[95%] items-center gap-[10px] rounded-[9.228px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-1 tablet:max-w-[80%] tablet:gap-[15px] tablet:px-6"
+                className="mx-auto flex w-full max-w-[95%] items-center gap-[10px] rounded-[9.228px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:max-w-[80%] tablet:gap-[15px] tablet:px-6"
               >
                 <img src={getBadgeIcon(badge)} alt="save icon" className="size-[24.5px] tablet:size-[35px]" />
-                <h1 className="text-[12px] font-semibold leading-normal text-[#616161] tablet:text-[18px]">
+                <h1 className="text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[18px]">
                   {badge.title}
                 </h1>
               </div>

@@ -26,7 +26,7 @@ export default function NewsArticles({ articles }: { articles: any }) {
           </button>
         )}
       </div>
-      <div className="mb-4 flex w-full flex-col gap-3 tablet:gap-5">
+      <div className="flex w-full flex-col gap-3 tablet:gap-5">
         {visibleArticles?.map((article: any) => <NewsFeedCard key={article._id} data={article} innerRef={null} />)}
         {!showAll && articles.length > 5 && (
           <button className="text-[19px] font-semibold leading-normal text-[#389CE3]" onClick={() => setShowAll(true)}>

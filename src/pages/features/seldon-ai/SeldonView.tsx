@@ -73,7 +73,8 @@ export default function SeldonView() {
                           ? response.data.s3Urls[0]
                           : 'https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png'
                       }
-                      alt=""
+                      alt="article image"
+                      className="aspect-video w-full object-cover"
                     />
                   )}
                   <div className="space-y-1">

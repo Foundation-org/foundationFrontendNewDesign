@@ -39,7 +39,7 @@ export default function ProfileCard({ profile }: any) {
                 Profile Viewers
               </p>
               <p className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[16px]">
-                {profile?.domain.viewers}
+                {profile?.domain.viewers?.length}
               </p>
             </div>
           )}

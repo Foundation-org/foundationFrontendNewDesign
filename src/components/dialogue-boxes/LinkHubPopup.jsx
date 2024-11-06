@@ -76,6 +76,7 @@ const LinkHubPopup = ({
           return;
         }
         queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries(['my-profile']);
         document.getElementById('cancalTheForm').click();
         setLoading(false);
         setDelLoading(false);
