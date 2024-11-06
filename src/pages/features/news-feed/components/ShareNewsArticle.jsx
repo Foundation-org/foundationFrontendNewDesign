@@ -135,6 +135,7 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
                     handleGenerateLink({
                       id: questStartData._id,
                       customLink: link,
+                      uuid: persistedUserInfo.uuid,
                     });
                   }}
                   disabled={isPending || questStartData?.articleSetting.uniqueCustomizedLinkGenerated}
