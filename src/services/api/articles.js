@@ -15,10 +15,15 @@ export const useGenerateArticleLink = (setPostLink) => {
 
   return useMutation({
     mutationFn: handleCreateUniqueLink,
-    onSuccess: (resp) => {
+    onSuccess: (resp, variables) => {
+      const { customLink } = variables;
       setPostLink(resp?.article?.articleSetting.uniqueLink);
       queryClient.invalidateQueries({ queryKey: ['news-feed', ''] });
-      showToast('success', 'customLinkGenerated');
+      if (customLink) {
+        showToast('success', 'customLinkGenerated');
+      } else {
+        showToast('success', 'linkCreated');
+      }
     },
     onError: (err) => {
       console.log(err);

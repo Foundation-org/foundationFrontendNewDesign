@@ -104,8 +104,13 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
                   className={'w-fit min-w-fit whitespace-nowrap'}
                   onClick={() => {
                     setCreateCustom(true);
-                    if (questStartData?.articleSetting.uniqueLink) {
+                    if (
+                      questStartData?.articleSetting.uniqueLink &&
+                      questStartData?.articleSetting.uniqueCustomizedLinkGenerated
+                    ) {
                       setLink(questStartData.articleSetting.uniqueLink);
+                    } else {
+                      setLink('');
                     }
                   }}
                 >
