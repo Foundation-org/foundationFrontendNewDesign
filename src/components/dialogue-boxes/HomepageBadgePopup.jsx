@@ -96,6 +96,9 @@ const HomepageBadgePopup = ({
   };
 
   const handleDomainInputBlur = async () => {
+    if (domainBadge.domain === '') {
+      return;
+    }
     const cleanedDomain = domainBadge.domain.replace(/^-+|-+$/g, '');
     setDomainBadge({ ...domainBadge, domain: cleanedDomain });
 
@@ -174,7 +177,7 @@ const HomepageBadgePopup = ({
                 placeholder="Enter domain"
               />
               {/* Display the suffix next to the input */}
-              <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-[9.28px] text-gray-500 tablet:text-[20px]">
+              <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-[9.28px] text-gray-500 dark:text-[#f1f1f1] tablet:text-[20px]">
                 .on.foundation
               </span>
             </div>

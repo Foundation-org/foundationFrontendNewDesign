@@ -33,14 +33,16 @@ export default function ProfileCard({ profile }: any) {
               className="size-[50px] rounded-full object-cover tablet:size-[175px]"
             />
           </div>
-          <div>
-            <p className="whitespace-nowrap text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[16px]">
-              Profile Viewers
-            </p>
-            <p className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[16px]">
-              {profile?.domain.viewers}
-            </p>
-          </div>
+          {!isPublicProfile && (
+            <div>
+              <p className="whitespace-nowrap pt-1 text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[16px]">
+                Profile Viewers
+              </p>
+              <p className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[16px]">
+                {profile?.domain.viewers}
+              </p>
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-2 text-[#7C7C7C] dark:text-[#f1f1f1] tablet:gap-4">
           <div>
