@@ -14,10 +14,10 @@ const SummarySidebar = ({ userData }) => {
     { id: 4, title: 'Agreements received', val: (userData && userData?.selectionsOnAddedAns) || 0 },
     {
       id: 5,
-      title: 'Feedback Recieved',
-      val: (persistedUserInfo && persistedUserInfo?.feedBackQuestsStatistics?.questsActivity?.feedbackReceived) || 0,
+      title: 'Feedback Received',
+      val: (persistedUserInfo && persistedUserInfo?.questsActivity?.feedbackReceived) || 0,
       link: '/profile/feedback',
-      text: 'Go to Feedback Recieved >',
+      text: 'Go to Feedback Received >',
     },
     {
       id: 6,

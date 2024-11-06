@@ -12,7 +12,6 @@ const Contributions = () => {
   useEffect(() => {
     queryClient.invalidateQueries(['userInfo']);
   }, []);
-  console.log(persistedUserInfo);
 
   const yourPosts = [
     { id: 1, title: 'Posts you’ve created', val: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0 },
@@ -25,10 +24,10 @@ const Contributions = () => {
     { id: 4, title: 'Agreements received', val: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0 },
     {
       id: 5,
-      title: 'Feedback Recieved',
-      val: (persistedUserInfo && persistedUserInfo?.feedBackQuestsStatistics?.questsActivity?.feedbackReceived) || 0,
+      title: 'Feedback Received',
+      val: (persistedUserInfo && persistedUserInfo?.questsActivity?.feedbackReceived) || 0,
       link: '/profile/feedback',
-      text: 'Go to Feedback Recieved >',
+      text: 'Go to Feedback Received >',
     },
     {
       id: 6,

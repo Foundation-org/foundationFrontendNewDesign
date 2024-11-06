@@ -114,7 +114,8 @@ const VerificationBadges = () => {
         outof={badgesTotalLength}
       >
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-          Enhance your profile by adding verification badges.
+          Enhance your profile by adding verification badges. These badges not only increase your credibility but also
+          unlock more earning opportunities within the Foundation community.
         </h1>
         <div className="pt-[10px] tablet:pt-[18.73px]">
           <ProgressBar progress={progress} />
