@@ -39,6 +39,7 @@ export default function SeldonView() {
 
   const createdAtDate = response?.data.createdAt ? new Date(response.data.createdAt).toISOString().split('T')[0] : '';
   const updatedAtDate = response?.data.updatedAt ? new Date(response.data.updatedAt).toISOString().split('T')[0] : '';
+  console.log(response?.data?.s3Urls);
 
   return (
     <>
@@ -65,8 +66,15 @@ export default function SeldonView() {
                   >
                     {'<'} Back to all news
                   </Link>
-                  {response?.data?.s3Urls?.length > 0 && location.pathname.startsWith('/r') && (
-                    <img src={response.data.s3Urls[0]} alt="" />
+                  {location.pathname.startsWith('/r') && (
+                    <img
+                      src={
+                        response?.data?.s3Urls?.length > 0
+                          ? response.data.s3Urls[0]
+                          : 'https://foundation-seo.s3.amazonaws.com/seo-logo-v2.png'
+                      }
+                      alt=""
+                    />
                   )}
                   <div className="space-y-1">
                     <h1 className="text-[16px] font-bold tablet:text-[24px]">{response?.data?.title}</h1>
