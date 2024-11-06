@@ -40,7 +40,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     {
       component: InfoPopup,
       title: 'Continue Where You Left Off!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
       message: `Add more badges to boost your profile, increase credibility, and easily earn more FDX along the way. Each badge brings you closer to maximizing your earning potential on Foundation!`,
       buttonText: 'Continue',
       info: true,
@@ -49,7 +49,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     {
       component: InfoPopup,
       title: 'Congratulations!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/congrats.svg`,
       message:
         'Congratulations, you’ve earned 10 FDX! Keep adding verification badges and receive an additional 10 FDX for each one! Every badge you add increases your credibility on Foundation. Every badge added increases your value and credibility on the network.',
       buttonText: 'Continue',
@@ -96,7 +96,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     {
       component: InfoPopup,
       title: 'Onward and upward!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
       message: `Every badge you add strengthens your validity and improves the quality of crowd-sourced insights on Foundation. Plus, you're stacking up more FDX with each step—keep going!`,
       buttonText: 'Continue',
       info: true,
@@ -161,7 +161,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     {
       component: InfoPopup,
       title: 'Lets keep going!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
       message: `Adding more badges leads to more opportunities and rewards for you on Foundation. Keep the momentum going!`,
       buttonText: 'Continue',
       info: true,
@@ -226,7 +226,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     {
       component: InfoPopup,
       title: 'Let’s take it to the next level!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
       message: `Adding all these badges starts you off with an impressive FDX balance! Your contributions play a key role in keeping Foundation’s data authentic. Keep it up—more badges and rewards are just ahead!`,
       buttonText: 'Continue',
       info: true,
@@ -304,7 +304,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     {
       component: InfoPopup,
       title: 'Thats all the badges!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/finish.svg`,
       message: `Completing all your verification badges gives you a highly verified status on Foundation!`,
       message2:
         'Your commitment to completing all badges enhances your credibility and opens the door to more earning opportunities.',
