@@ -18,6 +18,7 @@ import Subscription from './verification-badges/Subscription';
 import HomepageBadge from './verification-badges/HomepageBadge';
 import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
 import ProgressBar from '../../../../../components/ProgressBar';
+import { Button } from '../../../../../components/ui/Button';
 
 const VerificationBadges = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -28,7 +29,7 @@ const VerificationBadges = () => {
   const legacyPromiseRef = useRef();
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [socialRemoveLoading, setSocialRemoveLoading] = useState(false);
-  const [isPopup, setIsPopup] = useState(true);
+  const [isPopup, setIsPopup] = useState(false);
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
   const progress = Math.floor(((persistedUserInfo?.badges.length - 1) / (badgesTotalLength - 1)) * 100);
@@ -119,6 +120,11 @@ const VerificationBadges = () => {
         </h1>
         <div className="pt-[10px] tablet:pt-[18.73px]">
           <ProgressBar progress={progress} />
+        </div>
+        <div className="flex w-full justify-center">
+          <Button variant={'submit'} onClick={() => setIsPopup(true)}>
+            Add badge
+          </Button>
         </div>
       </ContentCard>
       <ContentCard icon="assets/verification-badges/contact.svg" title="Contact">
