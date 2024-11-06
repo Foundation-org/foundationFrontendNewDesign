@@ -49,7 +49,7 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
             <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
               {createCustom
                 ? 'Custom Link Address'
-                : 'Copy the link below to share this article on other platforms. When other people engage with your shared posts, you will earn FDX.'}
+                : 'Copy the link below to share this article across other platforms and expand its reach. Shared articles will also appear on your Home Page.'}
             </p>
             <div className="flex rounded-[9.42px] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[15px] tablet:border-[3px]">
               {/* Generate Link || Custom Link Input */}
