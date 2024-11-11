@@ -185,7 +185,7 @@ const HomepageBadgePopup = ({
           </div>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
-              Title
+              Name / Organization
             </p>
             <input
               type="text"
@@ -291,7 +291,7 @@ const HomepageBadgePopup = ({
                 variant="badge-remove"
                 onClick={() => {
                   handleRemoveBadgePopup({
-                    title: 'Domain Badge',
+                    title: 'Domain',
                     type: 'domainBadge',
                     badgeType: 'homepage',
                     image: logo,

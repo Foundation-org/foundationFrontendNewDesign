@@ -87,6 +87,7 @@ const WorkBadgePopup = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [fetchingEdit, setFetchingEdit] = useState(false);
+  const [addAnotherForm, setAddAnotherForm] = useState(false);
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -236,12 +237,14 @@ const WorkBadgePopup = ({
           return;
         }
         queryClient.invalidateQueries(['userInfo']);
-        handleClose();
+        // handleClose();
         setLoading(false);
+        setAddAnotherForm(false);
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-      handleClose();
+      // handleClose();
+      setAddAnotherForm(false);
     }
   };
 
@@ -339,12 +342,14 @@ const WorkBadgePopup = ({
             console.log(jobsSaved);
           }
         }
-        handleClose();
+        // handleClose();
         setLoading(false);
+        setAddAnotherForm(false);
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-      handleClose();
+      // handleClose();
+      setAddAnotherForm(false);
     }
   };
 
@@ -385,11 +390,10 @@ const WorkBadgePopup = ({
   const handleBadgesClose = () => setModalVisible(false);
 
   const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
-    const [addAnotherForm, setAddAnotherForm] = useState(false);
     const [edit, setEdit] = useState(false);
 
     return (
-      <div className="py-[15px] tablet:py-[25px]">
+      <div className="pb-[15px] tablet:pb-[25px]">
         {modalVisible && (
           <BadgeRemovePopup
             handleClose={handleBadgesClose}
@@ -404,80 +408,84 @@ const WorkBadgePopup = ({
             loading={RemoveLoading}
           />
         )}
-        {existingData && !addAnotherForm ? (
+        {!addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-            {existingData.map((item, index) => (
-              <div className="flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
-                <div className="py-3 tablet:py-[25px]">
-                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
-                    {item.companyName}
-                  </h4>
-                  <div className="max-w-[270px]">
-                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
-                      {item.jobTitle}
-                    </h5>
-                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                      {item.modeOfJob}
-                    </h6>
-                  </div>
-                </div>
-                {deleteItem === item.id ? (
-                  <div className="max-w-[160px] rounded-[10.06px] border-l border-white-500 px-[9px] py-2 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
-                    <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
-                      Are you sure you want to delete your experience?
-                    </h1>
-                    <div className="flex justify-end gap-2 tablet:gap-[25px]">
-                      <Button
-                        className={'min-w-[2.875rem] tablet:min-w-[80px]'}
-                        variant="submit"
-                        onClick={() => {
-                          setDelLoading(item.id);
-                          handleDelete(deleteItem);
-                        }}
-                      >
-                        {delloading === item.id ? (
-                          <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
-                        ) : (
-                          'Yes'
-                        )}
-                      </Button>
-                      <Button
-                        className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
-                        variant="cancel"
-                        onClick={() => {
-                          setDeleteItem('');
-                        }}
-                      >
-                        No
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
-                    <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                        alt="Edit Icon"
-                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                        onClick={() => {
-                          setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
-                        }}
-                      />
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                        alt="Edit Icon"
-                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                        onClick={() => setDeleteItem(item.id)}
-                      />
-                    </div>
-                    <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                      {item.startingYear + '-' + item.endingYear}
+            <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+              Your work experience opens opportunities tailored to your expertise.
+            </h1>
+            {existingData &&
+              existingData.map((item, index) => (
+                <div className="mb-4 flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
+                  <div className="py-3 tablet:py-[25px]">
+                    <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+                      {item.companyName}
                     </h4>
+                    <div className="max-w-[270px]">
+                      <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
+                        {item.jobTitle}
+                      </h5>
+                      <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                        {item.modeOfJob}
+                      </h6>
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
-            <div className="mt-4 flex items-center justify-between">
+                  {deleteItem === item.id ? (
+                    <div className="max-w-[160px] rounded-[10.06px] border-l border-white-500 px-[9px] py-2 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
+                      <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
+                        Are you sure you want to delete your experience?
+                      </h1>
+                      <div className="flex justify-end gap-2 tablet:gap-[25px]">
+                        <Button
+                          className={'min-w-[2.875rem] tablet:min-w-[80px]'}
+                          variant="submit"
+                          onClick={() => {
+                            setDelLoading(item.id);
+                            handleDelete(deleteItem);
+                          }}
+                        >
+                          {delloading === item.id ? (
+                            <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
+                          ) : (
+                            'Yes'
+                          )}
+                        </Button>
+                        <Button
+                          className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
+                          variant="cancel"
+                          onClick={() => {
+                            setDeleteItem('');
+                          }}
+                        >
+                          No
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
+                      <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                          alt="Edit Icon"
+                          className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                          onClick={() => {
+                            setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                          }}
+                        />
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                          alt="Edit Icon"
+                          className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                          onClick={() => setDeleteItem(item.id)}
+                        />
+                      </div>
+                      <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                        {item.startingYear + '-' + item.endingYear}
+                      </h4>
+                    </div>
+                  )}
+                </div>
+              ))}
+            <div className="flex items-center justify-between">
               <Button
                 variant="addOption"
                 onClick={() => {
@@ -485,7 +493,8 @@ const WorkBadgePopup = ({
                   setAddAnotherForm(true);
                 }}
               >
-                <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
+                <span className="text-[16px] tablet:text-[32px]">+</span>
+                {existingData ? 'Add another' : 'Add Work'}
               </Button>
 
               {existingData ? (
@@ -508,11 +517,7 @@ const WorkBadgePopup = ({
             </div>
           </div>
         ) : (
-          <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
-            <h1 className="pb-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
-              Your work experience opens opportunities tailored to your expertise.
-            </h1>
-
+          <div className="mt-[15px] px-5 tablet:px-[60px] laptop:px-[72px]">
             <div className="mb-[5px] tablet:mb-[15px]">
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field1.label}
@@ -657,28 +662,28 @@ const WorkBadgePopup = ({
 
             {/* {isError && <p className="text-red ml-1 text-[6.8px] tablet:text-[14px]">{`Invalid ${title}!`}</p>}{' '} */}
             <div className="mt-[10px] flex justify-between">
-              {existingData && existingData.lenght !== 0 ? (
-                <Button
-                  variant="addOption"
-                  onClick={() => {
-                    setField1Data([]);
-                    setField2Data([]);
-                    // setField3Data([]);
-                    setField4Data([]);
-                    setField5Data();
-                    setField6Data();
-                    setIsPresent(false);
+              {/* {existingData && existingData.lenght !== 0 ? ( */}
+              <Button
+                variant="addOption"
+                onClick={() => {
+                  setField1Data([]);
+                  setField2Data([]);
+                  // setField3Data([]);
+                  setField4Data([]);
+                  setField5Data();
+                  setField6Data();
+                  setIsPresent(false);
 
-                    setAddAnotherForm(false);
-                  }}
-                >
-                  Cancel
-                </Button>
-              ) : (
+                  setAddAnotherForm(false);
+                }}
+              >
+                Cancel
+              </Button>
+              {/* ) : (
                 <div></div>
-              )}
+              )} */}
               {hollow || checkHollow() ? (
-                <Button variant="hollow-submit" id="submitButton" disabled={true}>
+                <Button variant="submit-hollow" id="submitButton" disabled={true}>
                   Add
                 </Button>
               ) : (

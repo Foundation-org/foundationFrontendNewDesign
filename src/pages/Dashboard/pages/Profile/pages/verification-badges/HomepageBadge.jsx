@@ -61,7 +61,7 @@ export default function HomepageBadge({ checkPseudoBadge, isProfile, isDomain })
           <HomepageBadgePopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
-            title="Domain Badge"
+            title="Domain"
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
             edit={edit}
             setIsPersonalPopup={setIsPersonalPopup}

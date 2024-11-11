@@ -65,7 +65,7 @@ export default function ProfileCard({ profile }: any) {
               <HomepageBadgePopup
                 isPopup={isPersonalPopup}
                 setIsPopup={setIsPersonalPopup}
-                title="Domain Badge"
+                title="Domain"
                 logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
                 edit={true}
                 setIsPersonalPopup={setIsPersonalPopup}

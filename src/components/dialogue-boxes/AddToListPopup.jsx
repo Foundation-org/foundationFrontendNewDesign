@@ -255,7 +255,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                 </Button>
               ) : (
                 <Button
-                  variant="hollow-submit"
+                  variant="submit-hollow"
                   onClick={() => {
                     showToast('warning', 'emptyPostList');
                   }}

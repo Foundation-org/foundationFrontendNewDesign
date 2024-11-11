@@ -86,7 +86,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     },
     {
       component: HomepageBadgePopup,
-      title: 'Domain Badge',
+      title: 'Domain',
       type: 'domainBadge',
       logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
       placeholder: 'Answer Here',
