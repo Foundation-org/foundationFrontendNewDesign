@@ -15,7 +15,7 @@ const SubscriptionItem = ({ item, persistedTheme }) => (
       </h1>
     </div>
 
-    <Button variant={'submit-hollow'} disabled={item.disabled}>
+    <Button variant={'verification-badge-hollow'} disabled={item.disabled}>
       Coming Soon
     </Button>
   </div>

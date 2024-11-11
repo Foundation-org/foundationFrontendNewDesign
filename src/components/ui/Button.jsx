@@ -31,10 +31,13 @@ export const Button = ({ className = '', children, rounded = false, variant = ''
         ? 'h-[1.375rem] w-full rounded-[0.28688rem] bg-green-200 text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
         : '',
       variant === 'verification-badge-edit'
-        ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-[#FAD308] px-[6.63px] text-[0.625rem] font-semibold text-white dark:bg-yellow-200 tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        ? 'addoption-boxShadow h-[1.375rem] min-w-[103px] rounded-[0.28688rem] bg-[#FAD308] px-[6.63px] text-[0.625rem] font-semibold text-white dark:bg-yellow-200 tablet:h-[3.125rem] tablet:min-w-[207px] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
       variant === 'verification-badge-remove'
-        ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-red-400 px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        ? 'addoption-boxShadow h-[1.375rem] min-w-[103px] rounded-[0.28688rem] bg-red-400 px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[207px] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        : '',
+      variant === 'verification-badge-hollow'
+        ? 'h-[1.375rem] min-w-[103px] rounded-[0.28688rem] border-[1.428px] border-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-[#389CE3] tablet:h-[3.125rem] tablet:min-w-[207px] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
       variant === 'submit-hollow'
         ? 'h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] border-[1.428px] border-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-[#389CE3] tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem] laptop:px-[17px]'
@@ -144,6 +147,7 @@ Button.propTypes = {
     'hollow-submit2',
     'verification-badge-edit',
     'verification-badge-remove',
+    'verification-badge-hollow',
     'submit2',
     'submit-hollow',
     'getintouch',
