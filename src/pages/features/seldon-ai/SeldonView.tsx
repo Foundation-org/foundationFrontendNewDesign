@@ -7,14 +7,20 @@ import Topbar from '../../Dashboard/components/Topbar';
 import SuggestedPosts from './components/SuggestedPosts';
 import DotsLoading from '../../../components/ui/DotsLoading';
 import DashboardLayout from '../../Dashboard/components/DashboardLayout';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import showToast from '../../../components/ui/Toast';
+import { useState } from 'react';
+import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
+import ShareNewsArticle from '../news-feed/components/ShareNewsArticle';
 
 export default function SeldonView() {
   const location = useLocation();
   const { protocol, host } = window.location;
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const link = location.pathname.split('/');
+  const [copyModal, setCopyModal] = useState(false);
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
 
   const {
     data: response,
@@ -39,10 +45,30 @@ export default function SeldonView() {
 
   const createdAtDate = response?.data.createdAt ? new Date(response.data.createdAt).toISOString().split('T')[0] : '';
   const updatedAtDate = response?.data.updatedAt ? new Date(response.data.updatedAt).toISOString().split('T')[0] : '';
-  console.log(response?.data?.s3Urls);
+
+  const handleSharePostClick = () => {
+    if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
+      dispatch(setGuestSignUpDialogue(true));
+      return;
+    } else {
+      setCopyModal(true);
+    }
+  };
+  const handleCopyClose = () => {
+    setCopyModal(false);
+  };
 
   return (
     <>
+      {copyModal && (
+        <ShareNewsArticle
+          modalVisible={copyModal}
+          handleClose={handleCopyClose}
+          title={'Share Article'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/CopyIcon.svg`}
+          questStartData={response?.data}
+        />
+      )}
       <Topbar />
       <div className="w-full bg-gray-400 dark:bg-black">
         <DashboardLayout>
@@ -93,8 +119,9 @@ export default function SeldonView() {
                     <button
                       className="flex items-center gap-1 tablet:gap-2"
                       onClick={() => {
-                        copyToClipboard();
-                        showToast('success', 'copyLink');
+                        // copyToClipboard();
+                        // showToast('success', 'copyLink');
+                        handleSharePostClick();
                       }}
                     >
                       <img
