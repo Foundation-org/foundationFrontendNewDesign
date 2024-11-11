@@ -47,7 +47,7 @@ export default function ProfileCard({ profile }: any) {
         <div className="flex flex-col gap-2 text-[#7C7C7C] dark:text-[#f1f1f1] tablet:gap-4">
           <div>
             <h1 className="text-[12px] font-semibold tablet:text-[20px]"> {profile?.domain.title}</h1>
-            <p className="text-[10px] leading-normal tablet:text-[16px]"> {profile?.domain.name}</p>
+            <p className="text-[10px] leading-normal tablet:text-[16px]"> {profile?.domain.name}.on.foundation</p>
           </div>
           <p className="text-[11px] leading-normal tablet:text-[18px]">{profile?.domain.description}</p>
         </div>

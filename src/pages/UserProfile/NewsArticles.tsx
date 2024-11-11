@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 import showToast from '../../components/ui/Toast';
 import { useState } from 'react';
+import { Button } from '../../components/ui/Button';
 
 export default function NewsArticles({ articles }: { articles: any }) {
   const location = useLocation();
@@ -29,9 +30,9 @@ export default function NewsArticles({ articles }: { articles: any }) {
       <div className="flex w-full flex-col gap-3 tablet:gap-5">
         {visibleArticles?.map((article: any) => <NewsFeedCard key={article._id} data={article} innerRef={null} />)}
         {!showAll && articles.length > 5 && (
-          <button className="text-[19px] font-semibold leading-normal text-[#389CE3]" onClick={() => setShowAll(true)}>
+          <Button variant="submit" onClick={() => setShowAll(true)}>
             See All Articles
-          </button>
+          </Button>
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { getQuestUtils } from '../../features/quest/utilsSlice';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { useState } from 'react';
+import { Button } from '../../components/ui/Button';
 
 export default function SharedPosts({ posts }: { posts: any }) {
   const location = useLocation();
@@ -31,9 +32,9 @@ export default function SharedPosts({ posts }: { posts: any }) {
           />
         ))}
         {!showAll && posts.length > 5 && (
-          <button className="text-[19px] font-semibold leading-normal text-[#389CE3]" onClick={() => setShowAll(true)}>
+          <Button variant="submit" onClick={() => setShowAll(true)}>
             See All Posts
-          </button>
+          </Button>
         )}
       </div>
     </div>
