@@ -35,7 +35,7 @@ const EmploymentType = {
 
 const Mode = {
   label: 'Mode of Job',
-  placeholder: 'Remote / Hybrid / Onsite',
+  placeholder: 'Choose',
   items: [
     { id: 1, name: 'Remote' },
     { id: 2, name: 'Hybrid' },
@@ -509,7 +509,7 @@ const WorkBadgePopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               ) : (
                 <div></div>
@@ -684,7 +684,7 @@ const WorkBadgePopup = ({
               )} */}
               {hollow || checkHollow() ? (
                 <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                  Add
+                  {edit ? 'Update Badge' : 'Add Badge'}
                 </Button>
               ) : (
                 <Button
@@ -711,7 +711,13 @@ const WorkBadgePopup = ({
                     }
                   }}
                 >
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>

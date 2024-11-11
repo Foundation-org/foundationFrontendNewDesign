@@ -108,7 +108,7 @@ const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup })
                   }
                 }}
               >
-                {checkLegacyBadge() ? 'Remove' : 'Add'}
+                {checkLegacyBadge() ? 'Remove Badge' : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                   {checkLegacyBadge() ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
@@ -147,9 +147,9 @@ const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup })
                   {pseudoLoading ? (
                     <FaSpinner className="animate-spin text-[#EAEAEA]" />
                   ) : checkPseudoBadge() ? (
-                    'Remove'
+                    'Remove Badge'
                   ) : (
-                    'Add'
+                    'Add Badge'
                   )}
                 </Button>
               </div>

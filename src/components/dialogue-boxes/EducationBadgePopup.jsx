@@ -756,7 +756,7 @@ const EducationBadgePopup = ({
               )} */}
               {hollow || isError || isError2 || checkHollow() ? (
                 <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                  Add
+                  {edit ? 'Update Badge' : 'Add Badge'}
                 </Button>
               ) : (
                 <Button
@@ -781,7 +781,13 @@ const EducationBadgePopup = ({
                     }
                   }}
                 >
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>

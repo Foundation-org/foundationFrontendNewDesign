@@ -40,7 +40,7 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
             </div>
             <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
             <div
-              className={` flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-[#CACACA] tablet:text-[20px]">
                 {item.title}
@@ -60,7 +60,7 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
                   : setIsPersonalPopup(true);
               }}
             >
-              {checkLegacyBadge() ? 'Remove' : 'Add'}
+              {checkLegacyBadge() ? 'Remove Badge' : 'Add Badge'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                 {checkLegacyBadge() ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
               </span>

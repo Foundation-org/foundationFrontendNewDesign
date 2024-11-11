@@ -314,7 +314,7 @@ const LinkHubPopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               ) : (
                 <div></div>
@@ -390,7 +390,7 @@ const LinkHubPopup = ({
 
               {hollow || checkHollow() ? (
                 <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                  Add
+                  Add Badge
                 </Button>
               ) : (
                 <Button
@@ -411,7 +411,13 @@ const LinkHubPopup = ({
                     }
                   }}
                 >
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>

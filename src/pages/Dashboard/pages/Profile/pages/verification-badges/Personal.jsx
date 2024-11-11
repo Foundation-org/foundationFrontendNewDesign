@@ -173,7 +173,7 @@ export default function Personal({
             title="Work"
             type={'work'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`}
-            placeholder="Work Here"
+            placeholder="Choose"
             fetchUser={fetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
@@ -186,7 +186,7 @@ export default function Personal({
             title="Education"
             type={'education'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
-            placeholder="Education Here"
+            placeholder="Choose"
             fetchUser={fetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />

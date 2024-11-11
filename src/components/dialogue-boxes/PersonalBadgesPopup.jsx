@@ -470,16 +470,28 @@ const PersonalBadgesPopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               )}
               {hollow ? (
                 <Button variant="submit-hollow" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               ) : (
                 <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>
@@ -510,16 +522,28 @@ const PersonalBadgesPopup = ({
                       });
                     }}
                   >
-                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                   </Button>
                 )}
                 {hollow ? (
                   <Button variant="submit-hollow" disabled={true}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 ) : (
                   <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 )}
               </div>
@@ -554,19 +578,31 @@ const PersonalBadgesPopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               )}
               {hollow ? (
                 <div className="flex gap-2">
                   <Button variant="submit-hollow" disabled={true}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 </div>
               ) : (
                 <div className="flex gap-2">
                   <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 </div>
               )}
@@ -610,16 +646,28 @@ const PersonalBadgesPopup = ({
                 });
               }}
             >
-              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
             </Button>
           )}
           {hollow ? (
             <Button variant="submit-hollow" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           ) : (
             <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           )}
         </div>
@@ -657,16 +705,28 @@ const PersonalBadgesPopup = ({
                 });
               }}
             >
-              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
             </Button>
           )}
           {hollow ? (
             <Button variant="submit-hollow" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           ) : (
             <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           )}
         </div>
@@ -767,16 +827,28 @@ const PersonalBadgesPopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               )}
               {hollow ? (
                 <Button variant="submit-hollow" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               ) : (
                 <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>

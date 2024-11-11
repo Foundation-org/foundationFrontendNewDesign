@@ -8,7 +8,7 @@ export const createQuestItems = [
 ];
 
 export const profileItems = [
-  { id: 8, title: 'Summary', path: '/profile', to: '' },
+  // { id: 8, title: 'Summary', path: '/profile', to: '' },
   { id: 9, title: 'Home Page', path: '/profile/me', to: '' },
   { id: 1, title: 'Verification Badges', path: '/profile/verification-badges', to: '' },
   { id: 0, title: 'Post Activity', path: '/profile/post-activity', to: 'post-activity' },
@@ -22,7 +22,7 @@ export const profileItems = [
 ];
 
 export const treasuryItems = [
-  { id: 0, title: 'Summary', path: '/treasury' },
+  // { id: 0, title: 'Summary', path: '/treasury' },
   { id: 1, title: 'Rewards & Fees', path: '/treasury/reward-schedule' },
   // { id: 2, title: 'Buy FDX', path: '/treasury/buy-fdx' },
   // { id: 3, title: 'Redemption center', path: '/treasury/redemption-center' },

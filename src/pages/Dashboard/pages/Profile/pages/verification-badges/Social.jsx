@@ -128,7 +128,11 @@ const Social = ({
                 }}
               >
                 <>
-                  {checkSocial(item.accountName) ? (checkPrimary(item.accountName) ? 'Added' : 'Remove') : 'Add'}
+                  {checkSocial(item.accountName)
+                    ? checkPrimary(item.accountName)
+                      ? 'Added'
+                      : 'Remove Badge'
+                    : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                     {checkSocial(item.accountName) ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                   </span>

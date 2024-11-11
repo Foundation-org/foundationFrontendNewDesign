@@ -298,13 +298,13 @@ const HomepageBadgePopup = ({
                   });
                 }}
               >
-                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
               </Button>
             )}
             <div className="flex gap-2">
               {checkHollow() ? (
                 <Button variant={'submit-hollow'} disabled={true}>
-                  {edit ? 'Update' : 'Add'}
+                  {edit ? 'Update Badge' : 'Add Badge'}
                 </Button>
               ) : (
                 <Button
@@ -319,7 +319,13 @@ const HomepageBadgePopup = ({
                     }
                   }}
                 >
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>

@@ -148,7 +148,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo, handleSkip, onboar
 
           <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
             <Button variant="submit" onClick={addPasswordBadge}>
-              {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+              {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add Badge'}
             </Button>
           </div>
         </div>

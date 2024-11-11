@@ -98,7 +98,7 @@ export default function Web3({
               }}
               disabled={item.disabled}
             >
-              {checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
+              {checkWeb3Badge(item.type) ? 'Remove Badge' : item.ButtonText}
               {!checkWeb3Badge(item.type) && (
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                   (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
