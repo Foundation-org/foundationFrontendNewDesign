@@ -1,16 +1,41 @@
 import { useLocation } from 'react-router-dom';
-import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
-import showToast from '../../components/ui/Toast';
-import { useState } from 'react';
 import { Button } from '../../components/ui/Button';
+import { useEffect, useMemo, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useFetchNewsFeed } from '../../services/queries/news-feed';
+import showToast from '../../components/ui/Toast';
+import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 
-export default function NewsArticles({ articles }: { articles: any }) {
+export default function NewsArticles({ domain }: { domain: string }) {
   const location = useLocation();
+  const { ref, inView } = useInView();
+  const [showAll, setShowAll] = useState(false);
   const isPublicProfile = location.pathname.startsWith('/h/');
 
-  const [showAll, setShowAll] = useState(false);
+  const { data, fetchNextPage, hasNextPage } = useFetchNewsFeed('', 'sharedArticles', domain);
 
-  const visibleArticles = showAll ? articles : articles.slice(0, 5);
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  const content = useMemo(() => {
+    if (!data || !data.pages || data.pages.length === 0) {
+      return null;
+    }
+
+    const pagesToShow = showAll ? data.pages : data.pages.slice(0, 1);
+
+    return pagesToShow.map((posts) =>
+      posts?.data?.map((post: any, index: number) => {
+        const isLastPost = index === posts.data.length - 1;
+        return <NewsFeedCard key={post._id} data={post} innerRef={isLastPost ? ref : null} />;
+      })
+    );
+  }, [data, ref, showAll]);
+
+  console.log('data', data);
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
@@ -27,14 +52,12 @@ export default function NewsArticles({ articles }: { articles: any }) {
           </button>
         )}
       </div>
-      <div className="flex w-full flex-col gap-3 tablet:gap-5">
-        {visibleArticles?.map((article: any) => <NewsFeedCard key={article._id} data={article} innerRef={null} />)}
-        {!showAll && articles.length > 5 && (
-          <Button variant="submit" onClick={() => setShowAll(true)}>
-            See All Articles
-          </Button>
-        )}
-      </div>
+      <div className="flex w-full flex-col gap-3 tablet:gap-5">{content}</div>
+      {!showAll && (
+        <Button variant="submit" onClick={() => setShowAll(true)}>
+          See All Articles
+        </Button>
+      )}
     </div>
   );
 }

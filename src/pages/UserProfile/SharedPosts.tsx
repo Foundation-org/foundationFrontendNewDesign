@@ -1,17 +1,75 @@
-import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Button } from '../../components/ui/Button';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getQuestUtils } from '../../features/quest/utilsSlice';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
-import { useState } from 'react';
-import { Button } from '../../components/ui/Button';
+import api from '../../services/api/Axios';
 
-export default function SharedPosts({ posts }: { posts: any }) {
+export default function SharedPosts({ domain }: { domain: string }) {
+  const { ref, inView } = useInView();
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const questUtils = useSelector(getQuestUtils);
   const [showAll, setShowAll] = useState(false);
 
-  const visiblePosts = showAll ? posts : posts.slice(0, 5);
+  const fetchPosts = async function getInfoQuestions({ pageParam }: { pageParam: number }) {
+    const params = {
+      _page: pageParam,
+      _limit: 5,
+      start: (pageParam - 1) * 5,
+      end: pageParam * 5,
+      sort: 'Newest First',
+      Page: 'SharedLink',
+      terms: '',
+      type: 'All',
+      moderationRatingInitial: 0,
+      moderationRatingFinal: 100,
+      domain: domain,
+      viewerUuid: persistedUserInfo.uuid,
+    };
+
+    const response = await api.get('/infoquestions/getQuestsAll', { params });
+    return response.data.data;
+  };
+
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['sharedLink', ''],
+    queryFn: fetchPosts,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const nexPage = lastPage.length ? allPages.length + 1 : undefined;
+      return nexPage;
+    },
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  const content = useMemo(() => {
+    const pagesToShow = showAll ? data?.pages : data?.pages.slice(0, 1);
+
+    return pagesToShow?.map((posts) =>
+      posts.map((post: any, index: number) => {
+        const isLastPost = index === posts.length - 1;
+
+        return (
+          <QuestionCardWithToggle
+            key={post._id}
+            innerRef={isLastPost ? ref : null}
+            questStartData={post}
+            playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+          />
+        );
+      })
+    );
+  }, [data, ref, questUtils, showAll]);
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
@@ -23,20 +81,12 @@ export default function SharedPosts({ posts }: { posts: any }) {
           </Link>
         )}
       </div>
-      <div className="flex w-full flex-col gap-3 tablet:gap-5">
-        {visiblePosts?.map((post: any) => (
-          <QuestionCardWithToggle
-            key={post._id}
-            questStartData={post}
-            playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-          />
-        ))}
-        {!showAll && posts.length > 5 && (
-          <Button variant="submit" onClick={() => setShowAll(true)}>
-            See All Posts
-          </Button>
-        )}
-      </div>
+      <div className="flex w-full flex-col gap-3 tablet:gap-5">{content}</div>
+      {!showAll && (
+        <Button variant="submit" onClick={() => setShowAll(true)}>
+          See All Posts
+        </Button>
+      )}
     </div>
   );
 }

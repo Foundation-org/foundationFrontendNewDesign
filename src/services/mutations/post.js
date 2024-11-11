@@ -122,23 +122,31 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
       }
 
       if (location.pathname === '/profile/me' || location.pathname.startsWith('/h/')) {
-        queryClient.setQueryData(['my-profile', domain], (oldData) => {
-          const updatedSpotLight =
-            oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
-              ? { ...oldData.spotLight, ...resp.data.data }
-              : oldData.spotLight;
+        // queryClient.setQueryData(['my-profile', domain], (oldData) => {
+        //   const updatedSpotLight =
+        //     oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
+        //       ? { ...oldData.spotLight, ...resp.data.data }
+        //       : oldData.spotLight;
 
-          const updatedPosts = {
-            ...oldData.posts,
-            data: oldData?.posts?.data?.map((post) =>
-              post._id === resp.data.data._id ? { ...post, ...resp.data.data } : post
-            ),
-          };
+        //   const updatedPosts = {
+        //     ...oldData.posts,
+        //     data: oldData?.posts?.data?.map((post) =>
+        //       post._id === resp.data.data._id ? { ...post, ...resp.data.data } : post
+        //     ),
+        //   };
 
+        //   return {
+        //     ...oldData,
+        //     spotLight: updatedSpotLight,
+        //     posts: updatedPosts,
+        //   };
+        // });
+        queryClient.setQueryData(['sharedLink', ''], (oldData) => {
           return {
             ...oldData,
-            spotLight: updatedSpotLight,
-            posts: updatedPosts,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item))
+            ),
           };
         });
       }
@@ -216,23 +224,31 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
         }
 
         if (location.pathname === '/profile/me' || location.pathname.startsWith('/h/')) {
-          queryClient.setQueryData(['my-profile', domain], (oldData) => {
-            const updatedSpotLight =
-              oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
-                ? { ...oldData.spotLight, ...resp.data.data }
-                : oldData.spotLight;
+          // queryClient.setQueryData(['my-profile', domain], (oldData) => {
+          //   const updatedSpotLight =
+          //     oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
+          //       ? { ...oldData.spotLight, ...resp.data.data }
+          //       : oldData.spotLight;
 
-            const updatedPosts = {
-              ...oldData.posts,
-              data: oldData?.posts?.data?.map((post) =>
-                post._id === resp.data.data._id ? { ...post, ...resp.data.data } : post
-              ),
-            };
+          //   const updatedPosts = {
+          //     ...oldData.posts,
+          //     data: oldData?.posts?.data?.map((post) =>
+          //       post._id === resp.data.data._id ? { ...post, ...resp.data.data } : post
+          //     ),
+          //   };
 
+          //   return {
+          //     ...oldData,
+          //     spotLight: updatedSpotLight,
+          //     posts: updatedPosts,
+          //   };
+          // });
+          queryClient.setQueryData(['sharedLink', ''], (oldData) => {
             return {
               ...oldData,
-              spotLight: updatedSpotLight,
-              posts: updatedPosts,
+              pages: oldData?.pages?.map((page) =>
+                page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item))
+              ),
             };
           });
         }

@@ -42,9 +42,6 @@ export default function UserProfile() {
           <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
             Claim your domain name to enable your Home Page and create a personalized hub. Share posts, lists, news
             articles, and important links. Gain insights into your audience through key metrics and engagement results.
-            {/* To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
-            <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
-            identity is linked and helps safeguard your assets. */}
           </h1>
 
           <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={false} isDomain={true} />
@@ -65,7 +62,7 @@ export default function UserProfile() {
           />
         </div>
       ) : (
-        <div className="mb-4 flex flex-col gap-3 tablet:gap-6">
+        <div className="mb-4 flex flex-col gap-3 pb-3 tablet:gap-6 tablet:pb-6">
           <ProfileCard profile={data?.profile} />
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} />
@@ -73,9 +70,9 @@ export default function UserProfile() {
           {data?.spotLight && data?.spotLight.message !== 'No list exists yet.' && (
             <Spotlight spotlight={data?.spotLight} />
           )}
-          {data?.posts?.data.length >= 1 && <SharedPosts posts={data?.posts?.data} />}
-          {data?.lists?.length >= 1 && <SharedLists lists={data?.lists} />}
-          {data?.articles.length >= 1 && <NewsArticles articles={data?.articles} />}
+          <SharedPosts domain={domain} />
+          {/* <SharedLists domain={domain} /> */}
+          <NewsArticles domain={domain} />
         </div>
       )}
     </div>
