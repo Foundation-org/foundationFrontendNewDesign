@@ -29,13 +29,17 @@ const VerificationBadges = () => {
   const legacyPromiseRef = useRef();
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [socialRemoveLoading, setSocialRemoveLoading] = useState(false);
-  const [isPopup, setIsPopup] = useState(false);
+  const [isPopup, setIsPopup] = useState(true);
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
-  const progress = Math.floor(((persistedUserInfo?.badges.length - 1) / (badgesTotalLength - 1)) * 100);
+  const progress = Math.floor(
+    ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
+      badgesTotalLength) *
+      100
+  );
 
   const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
-  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const handleBadgesClose = () => setModalVisible(false);
   const checkSocial = (name) => persistedUserInfo?.badges?.some((i) => i.accountName === name);
@@ -74,7 +78,6 @@ const VerificationBadges = () => {
     const verificationJSON = await verificationResp.json();
     return verificationJSON.verified;
   };
-
   return (
     <div className="pb-8">
       <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
@@ -111,7 +114,7 @@ const VerificationBadges = () => {
         }
         title="Verification Badge Score"
         badgeVal={persistedUserInfo?.badges?.length}
-        from={persistedUserInfo?.badges.length}
+        from={checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length}
         outof={badgesTotalLength}
       >
         <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">

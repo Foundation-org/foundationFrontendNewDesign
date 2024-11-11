@@ -8,7 +8,13 @@ export default function VerificationBadgeScore({ isMobile, children }) {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const location = useLocation();
-  const progress = Math.floor(((persistedUserInfo?.badges.length - 1) / (badgesTotalLength - 1)) * 100);
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+
+  const progress = Math.floor(
+    ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
+      badgesTotalLength) *
+      100
+  );
 
   return (
     <div className={`${isMobile ? 'mx-4 tablet:mx-6' : ''}`}>

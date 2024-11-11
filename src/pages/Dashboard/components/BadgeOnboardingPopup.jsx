@@ -346,9 +346,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
   const totalBadges = badgeData.filter((badge) => !badge.info);
   const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
   const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
-
   const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
-
   const handlePopupClose = (data) => {
     setIsPopup(data);
     localStorage.removeItem('onBoarding');
