@@ -169,8 +169,9 @@ export function Router() {
                 <Route path="ranked-choice" element={<RankChoice />} />
               </Route>
               <Route path="treasury/" element={<TreasuryLayout />}>
-                <Route path="" element={<TreasurySummary />} />
-                <Route path="reward-schedule" element={<RewardSchedule />} />
+                {/* <Route path="" element={<TreasurySummary />} /> */}
+                {/* <Route path="reward-schedule" element={<RewardSchedule />} /> */}
+                <Route path="" element={<RewardSchedule />} />
                 <Route path="buy-fdx" element={<BuyFDX />} />
                 <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
@@ -185,8 +186,9 @@ export function Router() {
               </Route> */}
               <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
                 <Route path="profile/" element={<Profile />}>
-                  <Route path="" element={<Summary />} />
-                  <Route path="me" element={<UserProfile />} />
+                  {/* <Route path="" element={<Summary />} />
+                  <Route path="me" element={<UserProfile />} /> */}
+                  <Route path="" element={<UserProfile />} />
                   <Route path="verification-badges" element={<VerificationBadges />} />
                   <Route path="post-activity" element={<Contributions />} />
                   <Route path="lists" element={<Lists />} />

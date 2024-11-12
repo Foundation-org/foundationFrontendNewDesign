@@ -121,7 +121,7 @@ const VerificationBadges = () => {
           Enhance your profile by adding verification badges. These badges not only increase your credibility but also
           unlock more earning opportunities within the Foundation community.
         </h1>
-        <div className="pt-[10px] tablet:pt-[18.73px]">
+        <div className="py-[10px] tablet:pt-[18.73px]">
           <ProgressBar progress={progress} />
         </div>
         <div className="flex w-full justify-center">

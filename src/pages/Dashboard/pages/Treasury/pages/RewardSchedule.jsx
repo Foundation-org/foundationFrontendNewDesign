@@ -29,43 +29,38 @@ const RewardSchedule = () => {
 
   return (
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
-      {/* Total FDX */}
-      {/* <div>
-        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-          <div className="flex items-center gap-2">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/your-fdx.svg`}
-              alt={'your-fdx'}
-              className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
-            />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Total FDX</h1>{' '}
-          </div>
-        </div>
-        <div className="flex items-center justify-between rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
+      <SummaryCard headerIcon="/assets/svgs/your-fdx.svg" headerTitle="Your FDX">
+        <div className="flex items-center justify-between tablet:px-[45.27px]">
           <div className="space-y-2">
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-[12px] font-semibold leading-[113%] tablet:text-[18px] tablet:leading-normal">
+              FDX balance
+            </h1>
+            <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               FDX earned:
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               FDX spent:
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            {/* <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               FDX redeemed:
-            </p>
+            </p> */}
           </div>
           <div className="space-y-2 text-end">
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-[12px] font-semibold leading-[113%] tablet:text-[18px] tablet:leading-normal">
+              {persistedUserInfo?.balance?.toFixed(2)} FDX
+            </h1>
+            <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               {persistedUserInfo?.fdxEarned?.toFixed(2)} FDX
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               {persistedUserInfo?.fdxSpent?.toFixed(2)} FDX
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            {/* <p className="text-[12px] font-normal leading-[113%] tablet:text-[16px] tablet:leading-normal">
               {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned?.toFixed(2)} FDX
-            </p>
+            </p> */}
           </div>
         </div>
-      </div> */}
+      </SummaryCard>
       <SummaryCard headerIcon="/assets/svgs/reward-and-fees.svg" headerTitle="Rewards & Fees">
         <h1 className="text-[12px] font-normal leading-[133%] tablet:text-[16px] tablet:leading-normal">
           Below, you'll find the latest values for rewards and fees associated with your activities.
