@@ -485,7 +485,7 @@ const WorkBadgePopup = ({
                   )}
                 </div>
               ))}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-start">
               <Button
                 variant="addOption"
                 onClick={() => {
@@ -494,10 +494,11 @@ const WorkBadgePopup = ({
                 }}
               >
                 <span className="text-[16px] tablet:text-[32px]">+</span>
-                {existingData ? 'Add another' : 'Add Work'}
+                {existingData ? 'Add New Work' : 'Add Work'}
               </Button>
-
-              {existingData ? (
+            </div>
+            {existingData ? (
+              <div className="flex items-center justify-end">
                 <Button
                   variant="badge-remove"
                   onClick={() => {
@@ -511,10 +512,10 @@ const WorkBadgePopup = ({
                 >
                   {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
-              ) : (
-                <div></div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         ) : (
           <div className="mt-[15px] px-5 tablet:px-[60px] laptop:px-[72px]">
