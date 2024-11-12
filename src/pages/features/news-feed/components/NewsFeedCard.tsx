@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { formatDateMDY } from '../../../../utils/utils';
+import { calculateTimeAgo, formatDateMDY } from '../../../../utils/utils';
 import { Button } from '../../../../components/ui/Button';
 import { NewsFeedPropsType } from '../../../../types/news-feed';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,9 +10,10 @@ import { useState } from 'react';
 import { setGuestSignUpDialogue } from '../../../../features/extras/extrasSlice';
 import Copy from '../../../../assets/Copy';
 import ShareNewsArticle from './ShareNewsArticle';
+import ShareArticleCard from '../../../Dashboard/pages/Profile/pages/share-articles/ShareArticleCard';
 
 export default function NewsFeedCard(props: NewsFeedPropsType) {
-  const { data, innerRef } = props;
+  const { data, innerRef, postType } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -69,10 +70,19 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
       className="h-full max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
     >
       {/* Header */}
-      <div className="flex items-center justify-between gap-4 border-b border-gray-250 p-[0.57rem] tablet:border-b-[1.846px] tablet:px-[15px] tablet:py-3">
-        <h4 className="text-[12.145px] font-semibold text-gray-150 dark:text-white tablet:text-[18px]">
-          {data?.title}
-        </h4>
+      <div className="flex items-center justify-end gap-4 border-b-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-[15px] tablet:py-3">
+        <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
+            alt="clock"
+            className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
+          />
+          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+            {postType === 'sharedArticles'
+              ? calculateTimeAgo(data?.articleSetting?.createdAt)
+              : calculateTimeAgo(data?.createdAt)}
+          </h4>
+        </div>
         {/* Pin To SpotLight */}
         {isProfilePage && !data?.spotLightType && (
           <button
@@ -87,7 +97,8 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         )}
       </div>
       {/* Body */}
-      <div className="flex flex-col justify-between gap-2 px-3 pb-[15px] pt-2 tablet:gap-4 tablet:px-4 tablet:pb-6 tablet:pt-4">
+      <div className="flex flex-col justify-between gap-2 px-[13.92px] pb-[15px] pt-2 tablet:gap-4 tablet:px-10 tablet:pb-6 tablet:pt-4">
+        <h4 className="text-[12px] font-semibold text-gray-150 dark:text-white tablet:text-[18px]">{data?.title}</h4>
         <p className="text-[10px] font-medium leading-[13.56px] text-accent-600 dark:text-white tablet:text-[17px] tablet:leading-normal">
           {data?.seoSummary}
         </p>
@@ -115,18 +126,21 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         </div>
       </div>
       {/* Footer */}
-      <div className="relative flex items-center justify-between border-t border-gray-250 px-[0.57rem] py-[5px] tablet:border-t-[1.846px] tablet:px-5 tablet:py-3">
+      <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-3">
         {/* Share */}
-        <button className={`flex w-fit items-center gap-1 tablet:gap-2`} onClick={handleSharePostClick}>
+        <button
+          className={`flex h-[14.5px] w-fit items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
+          onClick={handleSharePostClick}
+        >
           {persistedTheme === 'dark' ? <Copy /> : <Copy />}
           <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
             Share
           </h1>
         </button>
         {/* Created At */}
-        <p className="text-[10px] font-normal text-[#9C9C9C] dark:text-white tablet:text-[20px]">
+        {/* <p className="text-[10px] font-normal text-[#9C9C9C] dark:text-white tablet:text-[20px]">
           Published {formatDateMDY(data.createdAt)}
-        </p>
+        </p> */}
       </div>
       {copyModal && (
         <ShareNewsArticle
@@ -137,6 +151,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           questStartData={data}
         />
       )}
+      {postType === 'sharedArticles' && <ShareArticleCard key={data._id} data={data} innerRef={null} />}
     </div>
   );
 }

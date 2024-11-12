@@ -19,6 +19,8 @@ import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifi
 import { calculateTimeAgo } from '../../../../../utils/utils';
 import DisabledListPopup from '../../../../../components/dialogue-boxes/DisabledListPopup';
 import { useUpdateSpotLight } from '../../../../../services/api/profile';
+import SharedListAdminSection from '../../../../../components/admin-card-section/sharedlist-admin-section';
+import Copy from '../../../../../assets/Copy';
 
 const ListCard = ({ listData }) => {
   const navigate = useNavigate();
@@ -49,6 +51,8 @@ const ListCard = ({ listData }) => {
       tolerance: 0,
     },
   });
+
+  const plusImg = `${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`;
 
   const handleCopyClose = () => setCopyModal(false);
   const handleClose = () => setModalVisible(false);
@@ -199,9 +203,56 @@ const ListCard = ({ listData }) => {
                 key={categoryItem._id}
                 className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
               >
-                <div className="flex items-center justify-between gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                <div className="flex items-center justify-end gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                  {/* Pin To SpotLight */}
+                  {
+                    isProfilePage && !categoryItem?.spotLight ? (
+                      <button
+                        className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
+                        onClick={() => {
+                          const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
+                          handleSpotLight({ domain, type: 'lists', id: categoryItem._id, status: 'set' });
+                        }}
+                      >
+                        Pin to Spotlight
+                      </button>
+                    ) : null
+                    // <div
+                    //   className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
+                    //   onClick={() => {
+                    //     if (categoryItem.link === null) {
+                    //       setSelectedItem(categoryItem);
+                    //       setCopyModal(true);
+                    //     } else {
+                    //       copyToClipboard(categoryItem.link);
+                    //       showToast('success', 'copyLink');
+                    //     }
+                    //   }}
+                    // >
+                    //   <img
+                    //     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
+                    //     alt="eye-cut"
+                    //     className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
+                    //   />
+                    //   <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
+                    // </div>
+                  }
+                  <div className="flex items-center gap-3 tablet:gap-[1.62rem]">
+                    <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
+                        alt="clock"
+                        className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
+                      />
+                      <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                        {calculateTimeAgo(categoryItem.createdAt)}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <div className="mx-7 my-[10px] tablet:mx-10 tablet:mb-6 tablet:mt-4">
                   <div className="flex gap-2">
-                    <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
+                    <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
                       {categoryItem.category}
                     </h4>
                     {notPublicProfile && (
@@ -217,43 +268,8 @@ const ListCard = ({ listData }) => {
                       </h4>
                     )}
                   </div>
-
-                  {/* Pin To SpotLight */}
-                  {isProfilePage && !categoryItem?.spotLight ? (
-                    <button
-                      className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
-                      onClick={() => {
-                        const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
-                        handleSpotLight({ domain, type: 'lists', id: categoryItem._id, status: 'set' });
-                      }}
-                    >
-                      Pin to Spotlight
-                    </button>
-                  ) : (
-                    <div
-                      className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
-                      onClick={() => {
-                        if (categoryItem.link === null) {
-                          setSelectedItem(categoryItem);
-                          setCopyModal(true);
-                        } else {
-                          copyToClipboard(categoryItem.link);
-                          showToast('success', 'copyLink');
-                        }
-                      }}
-                    >
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
-                        alt="eye-cut"
-                        className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
-                      />
-                      <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
-                    </div>
-                  )}
-                </div>
-                <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
                   {notPublicProfile && (
-                    <h4 className="my-2 text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:my-[27px] tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px]">
+                    <h4 className="py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:pl-7 tablet:text-[1rem] tablet:leading-[30px]">
                       {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''} (drag and drop to change
                       order)
                     </h4>
@@ -284,6 +300,34 @@ const ListCard = ({ listData }) => {
                     </DndContext>
                   </ul>
 
+                  <div className="grid grid-cols-2 gap-2 pt-[5.7px] tablet:gap-4 tablet:pl-7 tablet:pt-[9px]">
+                    <Button
+                      variant={'addOption'}
+                      onClick={() => {
+                        setSelectedItem(categoryItem);
+                        setCategoryId(categoryItem._id);
+                        setAddPostModal(true);
+                      }}
+                      className="px-5"
+                    >
+                      <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
+                      Add Post
+                    </Button>
+                  </div>
+
+                  <div className="mt-[50px] grid grid-cols-2 gap-2 tablet:gap-4">
+                    <dir className="col-span-1"></dir>
+                    <Button
+                      variant={'submit-green'}
+                      className={'w-full tablet:w-full'}
+                      onClick={() => {
+                        navigate(`/l/${listData[categoryIndex]?.link}`);
+                      }}
+                    >
+                      Participate
+                    </Button>
+                  </div>
+
                   {listData[categoryIndex]?.post?.length <= 0 && (
                     <div className="flex w-full items-center gap-1 tablet:gap-20">
                       <h2 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
@@ -293,7 +337,7 @@ const ListCard = ({ listData }) => {
                   )}
 
                   {/* Clicks & Engagement */}
-                  {notPublicProfile && (
+                  {/* {notPublicProfile && (
                     <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
                       <div className="flex items-center gap-[1px] tablet:gap-2">
                         <img
@@ -316,12 +360,13 @@ const ListCard = ({ listData }) => {
                         </h2>
                       </div>
                     </div>
-                  )}
+                  )} */}
 
                   {/* Buttons Row  */}
-                  {notPublicProfile && (
+                  {/* Buttons Row 1 */}
+                  {/* Buttons Row 2 */}
+                  {/* {notPublicProfile && (
                     <div className="flex flex-col gap-2 tablet:gap-4">
-                      {/* Buttons Row 1 */}
                       <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
                         <Button
                           variant="cancel"
@@ -350,7 +395,7 @@ const ListCard = ({ listData }) => {
                           </Button>
                         )}
                       </div>
-                      {/* Buttons Row 2 */}
+
                       <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
                         <Button
                           variant={'submit-green'}
@@ -391,10 +436,28 @@ const ListCard = ({ listData }) => {
                         </Button>
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
+
                 <div className="flex items-center justify-between border-t-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
-                  {notPublicProfile ? (
+                  <button
+                    className={`${'w-fit'} flex items-center gap-1 tablet:gap-2`}
+                    onClick={() => {
+                      if (categoryItem.link === null) {
+                        setSelectedItem(categoryItem);
+                        setCopyModal(true);
+                      } else {
+                        copyToClipboard(categoryItem.link);
+                        showToast('success', 'copyLink');
+                      }
+                    }}
+                  >
+                    {persistedTheme === 'dark' ? <Copy /> : <Copy />}
+                    <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                      Share
+                    </h1>
+                  </button>
+                  {/* {notPublicProfile ? (
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
                       alt="trash-icon"
@@ -418,8 +481,25 @@ const ListCard = ({ listData }) => {
                         {`Created list ${calculateTimeAgo(categoryItem.createdAt)}`}
                       </h4>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
+                {notPublicProfile && (
+                  <SharedListAdminSection
+                    categoryItem={categoryItem}
+                    setSelectedItem={setSelectedItem}
+                    setCategoryId={setCategoryId}
+                    setAddPostModal={setAddPostModal}
+                    hasReordered={hasReordered}
+                    handleSavePostsOrder={handleSavePostsOrder}
+                    listData={listData}
+                    categoryIndex={categoryIndex}
+                    setCopyModal={setCopyModal}
+                    setEnableDisableModal={setEnableDisableModal}
+                    setEnableDisableType={setEnableDisableType}
+                    notPublicProfile={notPublicProfile}
+                    setModalVisible={setModalVisible}
+                  />
+                )}
               </div>
             ))}
         </>

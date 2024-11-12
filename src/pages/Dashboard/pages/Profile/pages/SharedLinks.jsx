@@ -1,17 +1,17 @@
 import { GrClose } from 'react-icons/gr';
 import { useSelector, useDispatch } from 'react-redux';
+import { useInView } from 'react-intersection-observer';
 import { useCallback, useEffect, useState } from 'react';
+import { useDebounce } from '../../../../../utils/useDebounce';
+import { setAreShareLinks } from '../../../../../features/quest/utilsSlice';
+import { sharedLinksFilters, updateSharedLinkSearch } from '../../../../../features/profile/sharedLinks';
+import ContentCard from '../../../../../components/ContentCard';
+import FeedEndStatus from '../../../../../components/FeedEndStatus';
+import useFetchSharedLinks from '../../../../../services/api/sharedLinks';
 import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import DisabledLinkPopup from '../../../../../components/dialogue-boxes/DisabledLinkPopup';
-import { sharedLinksFilters, updateSharedLinkSearch } from '../../../../../features/profile/sharedLinks';
-import { setAreShareLinks } from '../../../../../features/quest/utilsSlice';
-import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import api from '../../../../../services/api/Axios';
-import { useDebounce } from '../../../../../utils/useDebounce';
-import ContentCard from '../../../../../components/ContentCard';
-import FeedEndStatus from '../../../../../components/FeedEndStatus';
+import QuestionCardWithToggle from '../../QuestStartSection/components/QuestionCardWithToggle';
 
 export default function SharedLinks() {
   const { ref, inView } = useInView();
@@ -59,35 +59,10 @@ export default function SharedLinks() {
     dispatch(questUtilsActions.updateDialogueBox({ type: null, status: false, link: null, id: null }));
   };
 
-  const fetchPosts = async function getInfoQuestions({ pageParam }) {
-    const params = {
-      _page: pageParam,
-      _limit: 5,
-      start: (pageParam - 1) * 5,
-      end: pageParam * 5,
-      uuid: persistedUserInfo.uuid,
-      sort: 'Newest First',
-      Page: 'SharedLink',
-      terms: getSharedLinksFilters.searchData,
-      type: 'All',
-      moderationRatingInitial: 0,
-      moderationRatingFinal: 100,
-    };
-
-    const response = await api.get('/infoquestions/getQuestsAll', { params });
-
-    return response.data.data;
-  };
-
-  const { data, status, error, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ['sharedLink', getSharedLinksFilters.searchData],
-    queryFn: fetchPosts,
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      const nexPage = lastPage.length ? allPages.length + 1 : undefined;
-      return nexPage;
-    },
-  });
+  const { data, status, error, fetchNextPage, hasNextPage, isFetching } = useFetchSharedLinks(
+    getSharedLinksFilters.searchData,
+    persistedUserInfo
+  );
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -99,37 +74,32 @@ export default function SharedLinks() {
     return <p>Error: {error.message}</p>;
   }
 
-  const content = data?.pages.map((posts) =>
-    posts.map((post, index) => {
-      if (posts.length == index + 1) {
-        return (
-          <QuestionCard
-            innerRef={ref}
-            key={post._id}
-            questStartData={post}
-            postProperties={'SharedLinks'}
-            startTest={startTest}
-            setStartTest={setStartTest}
-            viewResult={viewResult}
-            handleViewResults={memoizedViewResults}
-            handleStartTest={memoizedStartTest}
-          />
-        );
-      } else {
-        return (
-          <QuestionCard
-            key={post._id}
-            questStartData={post}
-            postProperties={'SharedLinks'}
-            startTest={startTest}
-            setStartTest={setStartTest}
-            viewResult={viewResult}
-            handleViewResults={memoizedViewResults}
-            handleStartTest={memoizedStartTest}
-          />
-        );
-      }
-    })
+  const content = data?.pages.flatMap((posts) =>
+    posts.map((post, index) => (
+      <QuestionCardWithToggle
+        key={post._id}
+        innerRef={index === posts.length - 1 ? ref : null}
+        questStartData={post}
+        playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+        postProperties="SharedLinks"
+        handleStartTest={memoizedStartTest}
+        handleViewResults={memoizedViewResults}
+        startTest={startTest}
+        setStartTest={setStartTest}
+        viewResult={viewResult}
+      />
+      // <QuestionCard
+      //   key={post._id}
+      //   questStartData={post}
+      //   postProperties="SharedLinks"
+      //   startTest={startTest}
+      //   setStartTest={setStartTest}
+      //   viewResult={viewResult}
+      //   handleViewResults={memoizedViewResults}
+      //   handleStartTest={memoizedStartTest}
+      //   innerRef={index === posts.length - 1 ? ref : undefined}
+      // />
+    ))
   );
 
   useEffect(() => {

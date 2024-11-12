@@ -14,8 +14,19 @@ import EmbedStatusBar from '../../pages/Embed/EmbedStatusBar';
 import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 import PostArticlesCard from '../../pages/features/seldon-ai/components/PostArticlesCard';
 import * as HomepageApis from '../../services/api/homepageApis';
+import AdminCardSection from '../admin-card-section';
+import SharedLinkAdminSection from '../admin-card-section/sharedlink-admin-section';
 
-const QuestCardLayout = ({ questStartData, playing, postProperties, questType, children }) => {
+const QuestCardLayout = ({
+  questStartData,
+  playing,
+  postProperties,
+  questType,
+  handleViewResults,
+  handleStartTest,
+  startTest,
+  children,
+}) => {
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
@@ -33,7 +44,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       queryClient.setQueryData(['posts'], (oldData) => ({
         ...oldData,
         pages: oldData?.pages?.map((page) =>
-          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: true } : item)),
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: true } : item))
         ),
       }));
     },
@@ -48,7 +59,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       queryClient.setQueryData(['posts'], (oldData) => ({
         ...oldData,
         pages: oldData?.pages?.map((page) =>
-          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: false } : item)),
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: false } : item))
         ),
       }));
     },
@@ -86,7 +97,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         status: true,
         link: questStartData.userQuestSetting.link,
         id: questStartData._id,
-      }),
+      })
     );
   };
 
@@ -152,6 +163,16 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
       <PostArticlesCard questStartData={questStartData} />
+      {postProperties === 'SharedLinks' && (
+        <SharedLinkAdminSection
+          questStartData={questStartData}
+          postProperties={postProperties}
+          showDisableSharedLinkPopup={showDisableSharedLinkPopup}
+          handleStartTest={handleStartTest}
+          handleViewResults={handleViewResults}
+          startTest={startTest}
+        />
+      )}
     </div>
   );
 };

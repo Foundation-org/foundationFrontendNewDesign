@@ -10,6 +10,7 @@ import * as questUtilsActions from '../../../../../../features/quest/utilsSlice'
 import ShareArticleCard from './ShareArticleCard';
 import ContentCard from '../../../../../../components/ContentCard';
 import FeedEndStatus from '../../../../../../components/FeedEndStatus';
+import NewsFeedCard from '../../../../../features/news-feed/components/NewsFeedCard';
 
 export default function SharedArticles() {
   const { ref, inView } = useInView();
@@ -65,7 +66,7 @@ export default function SharedArticles() {
       posts?.data?.map((post, index) => {
         const isLastPost = posts.data.length === index + 1;
 
-        return <ShareArticleCard key={index} data={post} innerRef={isLastPost ? ref : null} />;
+        return <NewsFeedCard key={index} data={post} innerRef={isLastPost ? ref : null} postType="sharedArticles" />;
       })
     );
   }, [data, ref]);

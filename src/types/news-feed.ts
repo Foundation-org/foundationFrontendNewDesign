@@ -24,9 +24,13 @@ interface articleType {
   s3Urls: string[];
   spotLightType?: string;
   __v: number;
+  articleSetting?: {
+    createdAt?: string;
+  };
 }
 
 export interface NewsFeedPropsType {
   data: articleType;
   innerRef: any;
+  postType?: string;
 }

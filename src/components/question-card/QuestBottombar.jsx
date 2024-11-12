@@ -101,7 +101,9 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                     : questStartData.userQuestSetting.hiddenMessage}
                 </h1>
               </div>
-            ) : postProperties === 'SharedLinks' ? (
+            ) : null}
+
+            {/* : postProperties === 'SharedLinks' ? (
               <div className="flex w-full items-center justify-between">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
@@ -121,9 +123,9 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                   </h4>
                 </div>
               </div>
-            ) : null}
+            ) */}
 
-            {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
+            {postProperties !== 'HiddenPosts' && (
               <div
                 className={`grid w-full ${
                   postProperties !== 'sharedlink-results' &&
@@ -133,17 +135,6 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                     : 'grid-cols-3'
                 }`}
               >
-                {/* Hide Post */}
-                <button className="flex w-fit items-center gap-1 tablet:gap-2" onClick={handleHidePostClick}>
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
-                    alt="eye-latest"
-                    className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
-                  />
-                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
-                    Hide
-                  </h1>
-                </button>
                 {/* Share */}
                 <button
                   className={`${
@@ -160,6 +151,17 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                   {persistedTheme === 'dark' ? <Copy /> : <Copy />}
                   <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                     Share
+                  </h1>
+                </button>
+                {/* Hide Post */}
+                <button className="flex w-fit items-center gap-1 tablet:gap-2" onClick={handleHidePostClick}>
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
+                    alt="eye-latest"
+                    className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
+                  />
+                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                    Hide
                   </h1>
                 </button>
                 {/* Add to list */}

@@ -186,8 +186,8 @@ export function Router() {
               </Route> */}
               <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
                 <Route path="profile/" element={<Profile />}>
-                  {/* <Route path="" element={<Summary />} />
-                  <Route path="me" element={<UserProfile />} /> */}
+                  <Route path="summary" element={<Summary />} />
+                  {/* <Route path="me" element={<UserProfile />} /> */}
                   <Route path="" element={<UserProfile />} />
                   <Route path="verification-badges" element={<VerificationBadges />} />
                   <Route path="post-activity" element={<Contributions />} />

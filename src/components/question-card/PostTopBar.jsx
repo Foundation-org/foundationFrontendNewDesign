@@ -11,6 +11,10 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const timeAgo = useMemo(() => calculateTimeAgo(questStartData?.createdAt), [questStartData?.createdAt]);
+  const sharedPostTimeAgo = useMemo(
+    () => calculateTimeAgo(questStartData?.userQuestSetting?.sharedTime),
+    [questStartData?.userQuestSetting?.sharedTime]
+  );
 
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
@@ -35,7 +39,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
 
   return (
     <>
-      {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
+      {postProperties !== 'HiddenPosts' && (
         <div className="relative flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           {/* Topic */}
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
@@ -69,7 +73,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
               </button>
             )}
           {/* TimeStamp */}
-          {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && !isProfilePage && (
+          {postProperties !== 'HiddenPosts' && !isProfilePage && (
             <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
@@ -77,11 +81,10 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                 className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
               />
               <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-                {timeAgo}
+                {postProperties === 'SharedLinks' ? sharedPostTimeAgo : timeAgo}
               </h4>
             </div>
           )}
-
           {/* Pin To SpotLight */}
           {isProfilePage && !questStartData.spotLightType && (
             <button
@@ -126,7 +129,8 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
           </div>
         </div>
       )}
-      {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
+
+      {/* {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
         <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           <div className="flex w-full justify-between">
             <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
@@ -150,7 +154,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }

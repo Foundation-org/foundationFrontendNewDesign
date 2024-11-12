@@ -178,7 +178,6 @@ const Summary = () => {
           </Button>
         </div>
       </SummaryCard>
-
       <SummaryCard headerIcon="/assets/topbar/news.svg" headerTitle="Shared Articles">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
           Manage news articles you’ve shared and track engagement metrics. Shared articles also appear on your Home Page

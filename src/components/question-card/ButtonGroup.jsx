@@ -416,57 +416,57 @@ const ButtonGroup = ({
     );
   }
 
-  if (postProperties === 'SharedLinks') {
-    return (
-      <div className="w-full px-[0.87rem] tablet:px-10">
-        {startTest !== questStartData._id ? (
-          <div className="mb-[15px] flex w-full justify-end gap-2 tablet:mb-6 tablet:gap-4">
-            <Button
-              variant={'submit-green'}
-              onClick={() => {
-                navigate('/shared-links/result', {
-                  state: { questId: questStartData._id, link: questStartData.userQuestSetting.link },
-                });
-              }}
-              className={'w-full tablet:w-full'}
-            >
-              Show My Link Results
-            </Button>
-            {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
-              <Button
-                variant="danger"
-                onClick={showDisableSharedLinkPopup}
-                className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
-              >
-                Disable Sharing
-              </Button>
-            ) : (
-              <Button variant="submit" className={'w-full !px-0 laptop:!px-0'} onClick={showEnableSharedLinkPopup}>
-                Enable Sharing
-              </Button>
-            )}
-            <UnHidePostPopup
-              handleClose={showHidePostClose}
-              modalVisible={modalVisible}
-              questStartData={questStartData}
-            />
-          </div>
-        ) : (
-          <div className="mb-[15px] flex w-full justify-end gap-2 pr-[14.4px] tablet:mb-6 tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-            <Button
-              variant="cancel"
-              onClick={() => {
-                handleViewResults(null);
-                handleStartTest('');
-              }}
-            >
-              Go Back
-            </Button>
-          </div>
-        )}
-      </div>
-    );
-  }
+  // if (postProperties === 'SharedLinks') {
+  //   return (
+  //     <div className="w-full px-[0.87rem] tablet:px-10">
+  //       {startTest !== questStartData._id ? (
+  //         <div className="mb-[15px] flex w-full justify-end gap-2 tablet:mb-6 tablet:gap-4">
+  //           <Button
+  //             variant={'submit-green'}
+  //             onClick={() => {
+  //               navigate('/shared-links/result', {
+  //                 state: { questId: questStartData._id, link: questStartData.userQuestSetting.link },
+  //               });
+  //             }}
+  //             className={'w-full tablet:w-full'}
+  //           >
+  //             Show My Link Results
+  //           </Button>
+  //           {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
+  //             <Button
+  //               variant="danger"
+  //               onClick={showDisableSharedLinkPopup}
+  //               className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
+  //             >
+  //               Disable Sharing
+  //             </Button>
+  //           ) : (
+  //             <Button variant="submit" className={'w-full !px-0 laptop:!px-0'} onClick={showEnableSharedLinkPopup}>
+  //               Enable Sharing
+  //             </Button>
+  //           )}
+  //           <UnHidePostPopup
+  //             handleClose={showHidePostClose}
+  //             modalVisible={modalVisible}
+  //             questStartData={questStartData}
+  //           />
+  //         </div>
+  //       ) : (
+  //         <div className="mb-[15px] flex w-full justify-end gap-2 pr-[14.4px] tablet:mb-6 tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+  //           <Button
+  //             variant="cancel"
+  //             onClick={() => {
+  //               handleViewResults(null);
+  //               handleStartTest('');
+  //             }}
+  //           >
+  //             Go Back
+  //           </Button>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // }
 
   if (SharedLinkButton === 'shared-links-results-button') {
     return (

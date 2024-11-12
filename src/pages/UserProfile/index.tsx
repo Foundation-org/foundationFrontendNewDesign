@@ -71,7 +71,7 @@ export default function UserProfile() {
             <Spotlight spotlight={data?.spotLight} />
           )}
           <SharedPosts domain={domain} />
-          {/* <SharedLists domain={domain} /> */}
+          <SharedLists domain={domain} />
           <NewsArticles domain={domain} />
         </div>
       )}
