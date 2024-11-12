@@ -11,6 +11,7 @@ import Loader from '../../components/ui/Loader';
 import { Button } from '../../components/ui/Button';
 import LinkHub from './LinkHub';
 import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/HomepageBadge';
+import SummaryCard from '../../components/SummaryCard';
 
 export default function UserProfile() {
   const location = useLocation();
@@ -63,6 +64,38 @@ export default function UserProfile() {
         </div>
       ) : (
         <div className="mb-4 flex flex-col gap-3 pb-3 tablet:gap-6 tablet:pb-6">
+          <SummaryCard
+            headerIcon="/assets/profile/homepagebadges.svg"
+            headerTitle="Domain"
+            isPublicProfile={isPublicProfile}
+          >
+            {!isPublicProfile && (
+              <>
+                <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+                  Need Copy
+                </h1>
+                <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
+                  <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+                    <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                      Profile Views
+                    </h1>
+                    <h5 className="text-center text-[18px] font-normal">{data?.profile?.domain.viewers?.length}</h5>
+                  </div>
+                  <div>
+                    <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                      Total profile engagements
+                    </h1>
+                    <h5 className="text-center text-[18px] font-normal">0</h5>
+                  </div>
+                </div>
+                <div className="mt-3 flex w-full justify-center tablet:mt-5">
+                  <Button variant={'submit'} onClick={() => navigate('/profile/shared-links')}>
+                    Manage Domain
+                  </Button>
+                </div>
+              </>
+            )}
+          </SummaryCard>
           <ProfileCard profile={data?.profile} />
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} />

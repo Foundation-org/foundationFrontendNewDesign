@@ -24,42 +24,50 @@ export default function SharedLists({ domain }: { domain: string }) {
 
   return (
     <>
-      <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Lists">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Creating and sharing lists extends your reach. The more engagement your lists receive, the more FDX you earn.
-          Lists you share are displayed on your Home Page for everyone to see.
-        </h1>
-        <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Lists you’ve shared
+      <SummaryCard
+        headerIcon="/assets/summary/my-list-logo.svg"
+        headerTitle="My Lists"
+        isPublicProfile={isPublicProfile}
+      >
+        {!isPublicProfile && (
+          <>
+            <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+              Creating and sharing lists extends your reach. The more engagement your lists receive, the more FDX you
+              earn. Lists you share are displayed on your Home Page for everyone to see.
             </h1>
-            <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
-            </h5>
-          </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total shared list clicks
-            </h1>
-            <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
-            </h5>
-          </div>
-          <div>
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total list engagements
-            </h1>
-            <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
-            </h5>
-          </div>
-        </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5">
-          <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
-            View all shared lists
-          </Button>
-        </div>
+            <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
+              <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+                <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                  Lists you’ve shared
+                </h1>
+                <h5 className="text-center text-[18px] font-normal">
+                  {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
+                </h5>
+              </div>
+              <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+                <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                  Total shared list clicks
+                </h1>
+                <h5 className="text-center text-[18px] font-normal">
+                  {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
+                </h5>
+              </div>
+              <div>
+                <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                  Total list engagements
+                </h1>
+                <h5 className="text-center text-[18px] font-normal">
+                  {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
+                </h5>
+              </div>
+            </div>
+            <div className="mt-3 flex w-full justify-center tablet:mt-5">
+              <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
+                View all shared lists
+              </Button>
+            </div>
+          </>
+        )}
       </SummaryCard>
 
       <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">

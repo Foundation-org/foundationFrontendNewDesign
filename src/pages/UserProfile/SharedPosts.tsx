@@ -75,45 +75,51 @@ export default function SharedPosts({ domain }: { domain: string }) {
 
   return (
     <>
-      {!isPublicProfile && (
-        <SummaryCard headerIcon="/assets/summary/share-posts-logo.svg" headerTitle="Shared Posts">
-          <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-            Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you earn.
-            Shared posts are displayed on your Home Page for all to see.
-          </h1>
-          <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
-            <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                Posts you’ve shared
-              </h1>
-              <h5 className="text-center text-[18px] font-normal">
-                {persistedUserInfo?.sharedQuestsStatistics?.sharedQuests}
-              </h5>
+      <SummaryCard
+        headerIcon="/assets/summary/share-posts-logo.svg"
+        headerTitle="Shared Posts"
+        isPublicProfile={isPublicProfile}
+      >
+        {!isPublicProfile && (
+          <>
+            <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+              Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you earn.
+              Shared posts are displayed on your Home Page for all to see.
+            </h1>
+            <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
+              <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+                <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                  Posts you’ve shared
+                </h1>
+                <h5 className="text-center text-[18px] font-normal">
+                  {persistedUserInfo?.sharedQuestsStatistics?.sharedQuests}
+                </h5>
+              </div>
+              <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+                <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                  Total shared link clicks
+                </h1>
+                <h5 className="text-center text-[18px] font-normal">
+                  {persistedUserInfo?.sharedQuestsStatistics?.totalQuestsImpression}
+                </h5>
+              </div>
+              <div>
+                <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                  Total post engagements
+                </h1>
+                <h5 className="text-center text-[18px] font-normal">
+                  {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
+                </h5>
+              </div>
             </div>
-            <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                Total shared link clicks
-              </h1>
-              <h5 className="text-center text-[18px] font-normal">
-                {persistedUserInfo?.sharedQuestsStatistics?.totalQuestsImpression}
-              </h5>
+            <div className="mt-3 flex w-full justify-center tablet:mt-5">
+              <Button variant={'submit'} onClick={() => navigate('/profile/shared-links')}>
+                View all shared posts
+              </Button>
             </div>
-            <div>
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                Total post engagements
-              </h1>
-              <h5 className="text-center text-[18px] font-normal">
-                {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
-              </h5>
-            </div>
-          </div>
-          <div className="mt-3 flex w-full justify-center tablet:mt-5">
-            <Button variant={'submit'} onClick={() => navigate('/profile/shared-links')}>
-              View all shared posts
-            </Button>
-          </div>
-        </SummaryCard>
-      )}
+          </>
+        )}
+      </SummaryCard>
       <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
         {/* <div className="flex h-[25px] w-full items-center justify-between bg-blue-200 px-5 text-[12px] font-medium text-white tablet:h-[43.2px] tablet:px-7 tablet:text-[18px]">
           <h1>Shared Posts</h1>
