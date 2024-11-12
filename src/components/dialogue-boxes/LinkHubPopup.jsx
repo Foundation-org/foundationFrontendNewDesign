@@ -179,6 +179,28 @@ const LinkHubPopup = ({
     }
   };
 
+  function getBadgeIcon(badge) {
+    const iconMap = {
+      twitter: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
+      farcaster: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+      github: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
+      facebook: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
+      linkedin: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
+      instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
+    };
+
+    const title = badge.title.toLowerCase();
+    const link = badge.link.toLowerCase();
+
+    for (const [keyword, icon] of Object.entries(iconMap)) {
+      if (title.includes(keyword) || link.includes(keyword)) {
+        return icon;
+      }
+    }
+
+    return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/default-link.svg`;
+  }
+
   const checkHollow = () => {
     if (field1Data === '' || field2Data === '') {
       return true;
@@ -228,13 +250,22 @@ const LinkHubPopup = ({
                   className="mb-[15px] flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
                 >
                   <div className="py-3 tablet:py-[25px]">
-                    <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
-                      {item.title}
-                    </h4>
-                    <div className="mt-[2px] max-w-[270px] pr-[30px] tablet:mt-2 tablet:pr-0">
-                      <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                        {item.link}
-                      </h6>
+                    <div className="flex items-center gap-2 tablet:gap-4">
+                      <img
+                        src={getBadgeIcon({ title: item.title, link: item.link })}
+                        alt="save icon"
+                        className="size-[20.5px] tablet:size-[35px]"
+                      />
+                      <div>
+                        <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+                          {item.title}
+                        </h4>
+                        <div className="mt-[2px] max-w-[270px] pr-[30px] tablet:mt-2 tablet:pr-0">
+                          <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                            {item.link}
+                          </h6>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   {deleteItem === item.id ? (
@@ -290,7 +321,7 @@ const LinkHubPopup = ({
                   )}
                 </div>
               ))}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-start">
               <Button
                 variant="addOption"
                 onClick={() => {
@@ -299,10 +330,12 @@ const LinkHubPopup = ({
                 }}
               >
                 <span className="text-[16px] tablet:text-[32px]">+</span>
-                {existingData ? 'Add another' : 'Add Link'}
+                {existingData ? 'Add New Link' : 'Add Link'}
               </Button>
+            </div>
 
-              {existingData ? (
+            {existingData ? (
+              <div className="flex items-center justify-end">
                 <Button
                   variant="badge-remove"
                   onClick={() => {
@@ -316,10 +349,10 @@ const LinkHubPopup = ({
                 >
                   {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
-              ) : (
-                <div></div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         ) : (
           <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
