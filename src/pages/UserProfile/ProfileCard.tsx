@@ -53,14 +53,14 @@ export default function ProfileCard({ profile }: any) {
         </div>
         {!isPublicProfile && (
           <>
-            <img
+            {/* <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
               alt="Edit Icon"
               className="absolute right-4 top-4 h-[12px] w-[12px] cursor-pointer tablet:h-[23px] tablet:w-[23px]"
               onClick={() => {
                 setIsPersonalPopup(true);
               }}
-            />
+            /> */}
             {isPersonalPopup && (
               <HomepageBadgePopup
                 isPopup={isPersonalPopup}
@@ -77,13 +77,13 @@ export default function ProfileCard({ profile }: any) {
           </>
         )}
       </div>
-      {!isPublicProfile && (
+      {/* {!isPublicProfile && (
         <div className="flex w-full items-center justify-end">
           <Link to={`/h/${profile?.domain.name}`}>
             <Button variant="submit">View as public</Button>
           </Link>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

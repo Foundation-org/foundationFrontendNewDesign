@@ -519,7 +519,7 @@ const WorkBadgePopup = ({
               )}
             </div>
           ) : (
-            <div className="mt-[15px] px-5 tablet:px-[60px] laptop:px-[72px]">
+            <div className="px-5 pt-[15px] tablet:px-[60px] laptop:px-[72px]">
               <div className="mb-[5px] tablet:mb-[15px]">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field1.label}

@@ -6,16 +6,18 @@ import NewsArticles from './NewsArticles';
 import { useFetchMyProfile } from '../../services/api/profile';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../../components/ui/Loader';
 import { Button } from '../../components/ui/Button';
 import LinkHub from './LinkHub';
 import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/HomepageBadge';
 import SummaryCard from '../../components/SummaryCard';
+import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePopup';
 
 export default function UserProfile() {
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
+  const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [domain, setDomain] = useState('');
@@ -34,6 +36,19 @@ export default function UserProfile() {
 
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col gap-3 px-4 tablet:gap-6 tablet:px-0">
+      {isPersonalPopup && (
+        <HomepageBadgePopup
+          isPopup={isPersonalPopup}
+          setIsPopup={setIsPersonalPopup}
+          title="Domain"
+          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
+          edit={true}
+          setIsPersonalPopup={setIsPersonalPopup}
+          handleSkip={null}
+          onboarding={null}
+          progress={null}
+        />
+      )}
       {isLoading ? (
         <div className="mt-10 flex h-fit w-full justify-center">
           <Loader />
@@ -88,10 +103,15 @@ export default function UserProfile() {
                     <h5 className="text-center text-[18px] font-normal">0</h5>
                   </div>
                 </div>
-                <div className="mt-3 flex w-full justify-center tablet:mt-5">
-                  <Button variant={'submit'} onClick={() => navigate('/profile/shared-links')}>
+                <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
+                  <Button variant={'submit'} onClick={() => setIsPersonalPopup(true)}>
                     Manage Domain
                   </Button>
+                  {!isPublicProfile && (
+                    <Link to={`/h/${data?.profile?.domain.name}`}>
+                      <Button variant="submit">View as public</Button>
+                    </Link>
+                  )}
                 </div>
               </>
             )}

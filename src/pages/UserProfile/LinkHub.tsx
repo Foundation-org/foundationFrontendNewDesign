@@ -3,12 +3,15 @@ import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/
 import SummaryCard from '../../components/SummaryCard';
 import { Button } from '../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
+import LinkHubPopup from '../../components/dialogue-boxes/LinkHubPopup';
+import { useState } from 'react';
 
 export default function LinkHub({ linkHub }: { linkHub: any }) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
   const isPublicProfile = location.pathname.startsWith('/h/');
   const navigate = useNavigate();
+  const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
   function getBadgeIcon(badge: { title: string; link: string }) {
     const iconMap = {
@@ -34,6 +37,15 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
 
   return (
     <>
+      {/* @ts-ignore */}
+      <LinkHubPopup
+        isPopup={isPersonalPopup}
+        setIsPopup={setIsPersonalPopup}
+        title="Link Hub"
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`}
+        type={'linkHub'}
+        setIsPersonalPopup={setIsPersonalPopup}
+      />
       <SummaryCard
         headerIcon="/assets/summary/share-posts-logo.svg"
         headerTitle="Link Hub"
@@ -59,7 +71,7 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
               </div>
             </div>
             <div className="mt-3 flex w-full justify-center tablet:mt-5">
-              <Button variant={'submit'} onClick={() => navigate('/profile/shared-links')}>
+              <Button variant={'submit'} onClick={() => setIsPersonalPopup(true)}>
                 Manage all shared links
               </Button>
             </div>
@@ -81,7 +93,9 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
           ) : (
             <>
               {linkHub?.personal.linkHub?.map((badge: any) => (
-                <div
+                <a
+                  href={badge.link}
+                  target="_blank"
                   key={badge.id}
                   className="mx-auto flex w-full max-w-[95%] items-center gap-[10px] rounded-[9.228px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:max-w-[80%] tablet:gap-[15px] tablet:px-6"
                 >
@@ -89,7 +103,7 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
                   <h1 className="text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[18px]">
                     {badge.title}
                   </h1>
-                </div>
+                </a>
               ))}
             </>
           )}

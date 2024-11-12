@@ -11,17 +11,7 @@ import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
 import { useSelector } from 'react-redux';
 
-const LinkHubPopup = ({
-  isPopup,
-  setIsPopup,
-  type,
-  title,
-  logo,
-  setIsPersonalPopup,
-  handleSkip,
-  onboarding,
-  progress,
-}) => {
+const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPopup, handleSkip, onboarding }) => {
   const queryClient = useQueryClient();
   const [field1Data, setField1Data] = useState('');
   const [field2Data, setField2Data] = useState('');
@@ -357,7 +347,7 @@ const LinkHubPopup = ({
             </div>
           ) : (
             <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
-              <div className="mb-4 mt-[15px] flex flex-col gap-[19.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[38px]">
+              <div className="mb-4 flex flex-col gap-[19.5px] pt-[15px] tablet:mb-5 tablet:gap-[38px] tablet:pt-[25px]">
                 <div className="w-full">
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field1.label}
