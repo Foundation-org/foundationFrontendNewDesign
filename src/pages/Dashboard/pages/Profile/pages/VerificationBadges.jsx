@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../../../Signup/components/Loader';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 import Personal from './verification-badges/Personal';
@@ -19,10 +19,12 @@ import HomepageBadge from './verification-badges/HomepageBadge';
 import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
 import ProgressBar from '../../../../../components/ProgressBar';
 import { Button } from '../../../../../components/ui/Button';
+import { setProgress } from '../../../../../features/progress/progressSlice';
 
 const VerificationBadges = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
@@ -33,11 +35,18 @@ const VerificationBadges = () => {
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
-  const progress = Math.floor(
-    ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
-      badgesTotalLength) *
-      100
-  );
+
+  useEffect(() => {
+    dispatch(
+      setProgress(
+        Math.floor(
+          ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
+            badgesTotalLength) *
+            100
+        )
+      )
+    );
+  }, [persistedUserInfo?.badges]);
 
   const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
 
@@ -78,6 +87,7 @@ const VerificationBadges = () => {
     const verificationJSON = await verificationResp.json();
     return verificationJSON.verified;
   };
+
   return (
     <div className="pb-8">
       <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
@@ -122,7 +132,7 @@ const VerificationBadges = () => {
           unlock more earning opportunities within the Foundation community.
         </h1>
         <div className="py-[10px] tablet:pt-[18.73px]">
-          <ProgressBar progress={progress} />
+          <ProgressBar />
         </div>
         <div className="flex w-full justify-center">
           <Button variant={'submit'} onClick={() => setIsPopup(true)}>

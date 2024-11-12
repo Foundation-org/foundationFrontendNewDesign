@@ -28,6 +28,8 @@ import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
 import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
 import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
 import SharedArticlesSearch from '../pages/Profile/pages/share-articles/SharedArticlesSearch';
+import { badgesTotalLength } from '../../../constants/varification-badges';
+import { setProgress } from '../../../features/progress/progressSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -48,6 +50,7 @@ export default function DashboardLayout({ children }) {
   const persistedConstants = useSelector(getConstantsValues);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const [isPopup, setIsPopup] = useState(localStorage.getItem('onBoarding') === 'true' ? true : false);
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   useEffect(() => {
     if (localStorage.getItem('onBoarding') === 'true') {
@@ -232,6 +235,18 @@ export default function DashboardLayout({ children }) {
       setFeedbackSearch('');
     }
   }, [getFeedbackFilters.searchData]);
+
+  useEffect(() => {
+    dispatch(
+      setProgress(
+        Math.floor(
+          ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
+            badgesTotalLength) *
+            100
+        )
+      )
+    );
+  }, [persistedUserInfo?.badges]);
 
   return (
     <div className="mx-auto w-full max-w-[1440px]">

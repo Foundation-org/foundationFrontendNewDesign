@@ -89,7 +89,7 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
           </div>
         </div>
 
-        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
+        {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
     </>
   );

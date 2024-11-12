@@ -134,7 +134,7 @@ const SocialConnectPopup = ({
             </Button>
           </div>
         </div>
-        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
+        {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
     </>
   );

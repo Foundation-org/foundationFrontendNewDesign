@@ -392,7 +392,7 @@ const PersonalBadgesPopup = ({
         showToast('success', 'badgeAdded');
         setName('');
         if (onboarding) {
-          handleSkip();
+          handleSkip(type);
           return;
         }
         queryClient.invalidateQueries(['userInfo']);
@@ -901,7 +901,7 @@ const PersonalBadgesPopup = ({
             'Write your answer here',
             'Your security question helps in recovering your account if you get locked out.'
           )}
-        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} />}
+        {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
     </>
   );

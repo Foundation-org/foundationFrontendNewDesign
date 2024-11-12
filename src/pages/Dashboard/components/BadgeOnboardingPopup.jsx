@@ -9,14 +9,16 @@ import InfoPopup from '../../../components/dialogue-boxes/InfoPopup';
 import SocialConnectPopup from '../pages/Profile/pages/verification-badges/SocialConnectPopup';
 import LegacyBadgePopup from '../../../components/dialogue-boxes/LegacyBadgePopup';
 import Web3ConnectPopup from '../pages/Profile/pages/verification-badges/Web3ConnectPopup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
+import { updateProgress } from '../../../features/progress/progressSlice';
 
 export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => {
   const fetchUser = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const checkPersonalBadge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
 
@@ -336,9 +338,12 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     }
   };
 
-  const handleSkip = () => {
+  const handleSkip = (type) => {
     if (actionableBadges[currentIndex]?.buttonText === 'Finish') {
       queryClient.invalidateQueries(['userInfo']);
+    }
+    if (type) {
+      dispatch(updateProgress());
     }
     handleNext();
   };
@@ -373,7 +378,6 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       buttonText={actionableBadges[currentIndex].buttonText}
       accountName={actionableBadges[currentIndex].accountName}
       link={actionableBadges[currentIndex].link}
-      progress={progress}
     />
   );
 };

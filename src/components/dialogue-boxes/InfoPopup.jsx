@@ -32,7 +32,7 @@ const InfoPopup = ({
             </h1>
           )}
         </div>
-        {onboarding && <ProgressBar progress={progress} handleSkip={handleSkip} buttonText={buttonText} />}
+        {onboarding && <ProgressBar handleSkip={handleSkip} buttonText={buttonText} />}
       </PopUp>
     </>
   );

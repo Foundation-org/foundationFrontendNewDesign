@@ -63,7 +63,7 @@ export default function VerificationBadgeScore({ isMobile, children }) {
           unlock more earning opportunities within the Foundation community.
         </h1>
         <div className="pt-[10px] tablet:pt-[18.73px]">
-          <ProgressBar progress={progress} />
+          <ProgressBar />
         </div>
         {location.pathname === '/profile' && (
           <div className="flex w-full justify-center">
