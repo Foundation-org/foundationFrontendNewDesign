@@ -74,11 +74,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
         type={'linkHub'}
         setIsPersonalPopup={setIsPersonalPopup}
       />
-      <SummaryCard
-        headerIcon="/assets/summary/share-posts-logo.svg"
-        headerTitle="Link Hub"
-        isPublicProfile={isPublicProfile}
-      >
+      <SummaryCard headerIcon="/assets/svgs/linkhub-logo.svg" headerTitle="Link Hub" isPublicProfile={isPublicProfile}>
         {!isPublicProfile && (
           <>
             <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">

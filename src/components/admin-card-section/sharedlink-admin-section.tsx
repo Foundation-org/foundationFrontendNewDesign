@@ -70,7 +70,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               className="h-2 w-2 tablet:h-6 tablet:w-6"
             />
             <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
-              {questStartData.userQuestSetting.questImpression} Impressions{' '}
+              {questStartData?.userQuestSetting?.questImpression} Impressions{' '}
             </h2>
           </div>
           <div className="flex items-center gap-[1px] tablet:gap-2">
@@ -80,7 +80,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
             />
             <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
-              {questStartData.userQuestSetting.questsCompleted} Completed{' '}
+              {questStartData?.userQuestSetting?.questsCompleted} Completed{' '}
             </h2>
           </div>
         </div>
@@ -131,7 +131,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
             >
               Delete
             </Button>
-            {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
+            {questStartData?.userQuestSetting?.linkStatus === 'Enable' ? (
               <Button
                 variant="danger"
                 onClick={showDisableSharedLinkPopup}

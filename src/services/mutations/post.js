@@ -121,7 +121,7 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
         updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
       }
 
-      if (location.pathname === '/profile/me' || location.pathname.startsWith('/h/')) {
+      if (location.pathname === '/profile' || location.pathname.startsWith('/h/')) {
         // queryClient.setQueryData(['my-profile', domain], (oldData) => {
         //   const updatedSpotLight =
         //     oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
@@ -223,7 +223,7 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
           }));
         }
 
-        if (location.pathname === '/profile/me' || location.pathname.startsWith('/h/')) {
+        if (location.pathname === '/profile' || location.pathname.startsWith('/h/')) {
           // queryClient.setQueryData(['my-profile', domain], (oldData) => {
           //   const updatedSpotLight =
           //     oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
@@ -244,6 +244,7 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
           //   };
           // });
           queryClient.setQueryData(['sharedLink', ''], (oldData) => {
+            console.log(oldData);
             return {
               ...oldData,
               pages: oldData?.pages?.map((page) =>
