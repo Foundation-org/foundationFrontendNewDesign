@@ -97,7 +97,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
             />
             <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
-              {questStartData?.userQuestSetting?.questsCompleted} Completed{' '}
+              {questStartData?.userQuestSetting?.questsCompleted} Engagements{' '}
             </h2>
           </div>
         </div>

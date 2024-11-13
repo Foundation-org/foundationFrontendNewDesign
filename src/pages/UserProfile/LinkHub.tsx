@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/HomepageBadge';
 import SummaryCard from '../../components/SummaryCard';
 import { Button } from '../../components/ui/Button';
-import { useNavigate } from 'react-router-dom';
 import LinkHubPopup from '../../components/dialogue-boxes/LinkHubPopup';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
@@ -13,7 +12,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
   const isPublicProfile = location.pathname.startsWith('/h/');
-  const navigate = useNavigate();
+  const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
   function getBadgeIcon(badge: { title: string; link: string }) {
@@ -126,7 +125,13 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                       badgeLinkId: badge.id,
                       viewerUuid: persistedUserInfo?.uuid,
                     });
-                    window.open(`https://${badge.link}`, '_blank');
+                    let link = null;
+                    if (badge.link.includes('https://')) {
+                      link = badge.link;
+                    } else {
+                      link = `https://${badge.link}`;
+                    }
+                    window.open(link, '_blank');
                   }}
                 >
                   <div className="flex items-center gap-[10px] tablet:gap-[15px]">
@@ -136,10 +141,16 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                     </h1>
                   </div>
                   {!isPublicProfile && (
-                    <h1 className="text-[12px] leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[16px]">
-                      {formatCountNumber(badge?.viewerCount?.length || 0)}{' '}
-                      {badge?.viwerCount?.length > 1 || badge?.viewerCount?.length === 0 ? 'viewers' : 'viewer'}
-                    </h1>
+                    <div className="flex items-center justify-center gap-2">
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
+                        alt="clicks"
+                        className="h-3 w-3 tablet:h-6 tablet:w-6"
+                      />
+                      <h1 className="text-[12px] leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[16px]">
+                        {formatCountNumber(badge?.viewerCount?.length || 0)}
+                      </h1>
+                    </div>
                   )}
                 </button>
               ))}

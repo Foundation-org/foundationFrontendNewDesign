@@ -248,6 +248,14 @@ const HomepageBadgePopup = ({
                       const file = e.target.files[0];
                       const reader = new FileReader();
 
+                      const maxSize = 1 * 1024 * 1024; // 1 MB in bytes
+
+                      if (file.size > maxSize) {
+                        toast.warning('File size must be below 1 MB.');
+                        e.target.value = '';
+                        return;
+                      }
+
                       reader.onload = (event) => {
                         const result = event.target?.result;
                         if (!result) {

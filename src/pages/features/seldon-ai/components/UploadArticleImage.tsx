@@ -22,6 +22,13 @@ export default function UploadArticleImage({
         if (!result) {
           return;
         }
+        const maxSize = 1 * 1024 * 1024; // 1 MB in bytes
+
+        if (file.size > maxSize) {
+          toast.warning('File size must be below 1 MB.');
+          e.target.value = '';
+          return;
+        }
 
         const img = new Image();
         img.onload = () => {
