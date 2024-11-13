@@ -67,6 +67,7 @@ import NewsFeed from '../pages/features/news-feed';
 import DMPreview from '../pages/features/DirectMessaging/DMPreview';
 import Unsubscribe from '../pages/Emails/Unsubscrbe';
 import Withdraws from '../pages/Dashboard/pages/Treasury/pages/withdraws';
+import Deposits from '../pages/Dashboard/pages/Treasury/pages/deposits';
 import UserProfile from '../pages/UserProfile';
 import { OtherProfiles } from '../pages/UserProfile/OtherProfiles';
 import OtherProfilesLayout from '../pages/UserProfile/OtherProfilesLayout';
@@ -176,6 +177,7 @@ export function Router() {
                 <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
                 <Route path="withdrawls" element={<Withdraws />} />
+                <Route path="deposits" element={<Deposits />} />
               </Route>
               {/* <Route path="treasury/:code" element={<TreasuryLayout />}>
                 <Route path="" element={<TreasurySummary />} />

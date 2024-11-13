@@ -65,7 +65,7 @@ export default function NewsArticles({ domain }: { domain: string }) {
                   </div>
                   <div>
                     <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
-                      Total shared article engagements
+                      Total engagements
                     </h1>
                     <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
                       {persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}

@@ -48,7 +48,7 @@ export default function SharedLists({ domain }: { domain: string }) {
                   </div>
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
                     <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                      Total shared list clicks
+                      Total clicks
                     </h1>
                     <h5 className="text-center text-[18px] font-normal">
                       {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
@@ -56,7 +56,7 @@ export default function SharedLists({ domain }: { domain: string }) {
                   </div>
                   <div>
                     <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                      Total list engagements
+                      Total engagements
                     </h1>
                     <h5 className="text-center text-[18px] font-normal">
                       {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}

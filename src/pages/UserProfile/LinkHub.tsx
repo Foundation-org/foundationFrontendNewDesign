@@ -65,7 +65,7 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
               </div>
               <div>
                 <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                  Total shared link engagements
+                  Total clicks
                 </h1>
                 <h5 className="text-center text-[18px] font-normal">0</h5>
               </div>

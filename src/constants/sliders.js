@@ -30,6 +30,7 @@ export const treasuryItems = [
   // { id: 3, title: 'Redemption center', path: '/treasury/redemption-center' },
   { id: 4, title: 'Treasury Activity', path: '/treasury/ledger' },
   { id: 5, title: 'Withdrawals', path: '/treasury/withdrawls' },
+  { id: 6, title: 'Deposits', path: '/treasury/deposits' },
 ];
 
 export const helpItems = [

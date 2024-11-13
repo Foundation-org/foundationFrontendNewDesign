@@ -79,12 +79,12 @@ export default function UserProfile() {
         </div>
       ) : (
         <div className="mb-4 flex flex-col gap-3 pb-3 tablet:gap-6 tablet:pb-6">
-          <SummaryCard
-            headerIcon="/assets/profile/homepagebadges.svg"
-            headerTitle="Domain"
-            isPublicProfile={isPublicProfile}
-          >
-            {!isPublicProfile && (
+          {!isPublicProfile && (
+            <SummaryCard
+              headerIcon="/assets/profile/homepagebadges.svg"
+              headerTitle="Domain"
+              isPublicProfile={isPublicProfile}
+            >
               <>
                 <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
                   Need Copy
@@ -98,9 +98,13 @@ export default function UserProfile() {
                   </div>
                   <div>
                     <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                      Total profile engagements
+                      Total engagements
                     </h1>
-                    <h5 className="text-center text-[18px] font-normal">0</h5>
+                    <h5 className="text-center text-[18px] font-normal">
+                      {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted +
+                        persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount +
+                        persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
+                    </h5>
                   </div>
                 </div>
                 <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
@@ -114,8 +118,8 @@ export default function UserProfile() {
                   )}
                 </div>
               </>
-            )}
-          </SummaryCard>
+            </SummaryCard>
+          )}
           <ProfileCard profile={data?.profile} />
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} />
