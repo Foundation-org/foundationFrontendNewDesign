@@ -126,9 +126,8 @@ export default function ShareArticleCard({ data, innerRef }) {
       </div>
       {/* Footer */}
       {/* Share */}
-      {/* Created At */}
-      {/* <div className="relative flex items-center justify-between border-t border-gray-250 px-[0.57rem] py-[5px] tablet:border-t-[1.846px] tablet:px-5 tablet:py-3">
-        <button
+      <div className="relative flex items-center justify-end border-t border-gray-250 px-[0.57rem] py-[5px] tablet:border-t-[1.846px] tablet:px-5 tablet:py-3">
+        {/* <button
           className={`flex w-fit items-center gap-1 tablet:gap-2`}
           onClick={() => {
             setType('delete');
@@ -140,11 +139,12 @@ export default function ShareArticleCard({ data, innerRef }) {
             alt="trash"
             className="h-3 w-[9px] cursor-pointer tablet:h-[30px] tablet:w-[25px]"
           />
-        </button>
+        </button> */}
+        {/* Created At */}
         <p className="text-[10px] font-normal text-[#9C9C9C] dark:text-white tablet:text-[20px]">
           Shared {calculateTimeAgo(data?.articleSetting?.createdAt)}
         </p>
-      </div> */}
+      </div>
       <DeleteShareArticleLink
         handleClose={() => setDeleteModal(false)}
         modalVisible={deleteModal}

@@ -10,7 +10,6 @@ interface IAdminSectionProps {
   setCategoryId: (arg?: any) => void;
   setAddPostModal: (arg?: any) => void;
   hasReordered: any;
-  handleSavePostsOrder: (arg1?: any, arg2?: any) => void;
   listData: any;
   categoryIndex: any;
   setEnableDisableType: (arg?: any) => void;
@@ -18,6 +17,7 @@ interface IAdminSectionProps {
   setCopyModal: (arg?: any) => void;
   notPublicProfile: any;
   setModalVisible: (arg?: any) => void;
+  copyToClipboard: (arg?: any) => void;
 }
 
 export default function SharedListAdminSection(props: IAdminSectionProps) {
@@ -29,7 +29,6 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
     setCategoryId,
     setAddPostModal,
     hasReordered,
-    handleSavePostsOrder,
     listData,
     categoryIndex,
     setEnableDisableType,
@@ -37,6 +36,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
     setCopyModal,
     notPublicProfile,
     setModalVisible,
+    copyToClipboard,
   } = props;
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   // const plusImg = `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-white.svg`;
@@ -84,24 +84,6 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
         <div className="my-6 flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
           {/* Buttons Row 1 */}
           <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
-            {categoryItem._id === hasReordered && hasReordered !== '' ? (
-              <Button
-                variant="submit"
-                className="w-full min-w-full"
-                onClick={() => {
-                  handleSavePostsOrder(categoryItem.post, categoryItem._id);
-                }}
-              >
-                Save
-              </Button>
-            ) : (
-              <Button variant="hollow-submit" className="w-full tablet:max-w-[320px]" disabled={true}>
-                Save
-              </Button>
-            )}
-          </div>
-          {/* Buttons Row 2 */}
-          <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
             <Button
               variant={'submit-green'}
               className={'w-full tablet:w-full'}
@@ -116,6 +98,34 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
               }}
             >
               View My List Results
+            </Button>
+            <Button
+              variant="submit"
+              className="w-full min-w-full"
+              onClick={() => {
+                if (categoryItem.link === null) {
+                  setSelectedItem(categoryItem);
+                  setCopyModal(true);
+                } else {
+                  copyToClipboard(categoryItem.link);
+                  showToast('success', 'copyLink');
+                }
+              }}
+            >
+              Copy Link
+            </Button>
+          </div>
+          {/* Buttons Row 3 */}
+          <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
+            <Button
+              variant="danger"
+              className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
+              onClick={() => {
+                setCategoryId(categoryItem._id);
+                setModalVisible(true);
+              }}
+            >
+              Delete
             </Button>
             <Button
               variant={categoryItem.isEnable && categoryItem.link !== null ? 'danger' : 'submit'}
@@ -136,28 +146,6 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
               }
             >
               {categoryItem.isEnable && categoryItem.link !== null ? 'Disable Sharing' : 'Enable Sharing'}
-            </Button>
-          </div>
-          {/* Buttons Row 3 */}
-          <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
-            <Button
-              variant="danger"
-              className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
-              onClick={() => {
-                setCategoryId(categoryItem._id);
-                setModalVisible(true);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              variant="submit"
-              className="w-full min-w-full"
-              onClick={() => {
-                handleSavePostsOrder(categoryItem.post, categoryItem._id);
-              }}
-            >
-              Copy Link
             </Button>
           </div>
         </div>

@@ -5,6 +5,7 @@ import * as questUtilsActions from '../../features/quest/utilsSlice';
 import { calculateTimeAgo } from '../../utils/utils';
 import { Button } from '../ui/Button';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
+import showToast from '../ui/Toast';
 
 interface IAdminSectionProps {
   questStartData: any;
@@ -22,7 +23,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
     props;
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
-
+  const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
   const showHidePostClose = () => setModalVisible({ state: false, type: '' });
 
   const calculateTime = () => {
@@ -45,6 +46,17 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
         id: questStartData._id,
       })
     );
+  };
+
+  const copyToClipboard = async () => {
+    const { protocol, host } = window.location;
+    const textToCopy = `${protocol}//${host}/p/` + postLink;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
   };
 
   return (
@@ -75,7 +87,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
         {/* Buttons */}
         <div className="flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
           {startTest !== questStartData._id ? (
-            <div className="flex w-full justify-end gap-2 tablet:gap-4">
+            <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
               <Button
                 variant={'submit-green'}
                 onClick={() => {
@@ -87,24 +99,16 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               >
                 View My Post Results
               </Button>
-              {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
-                <Button
-                  variant="danger"
-                  onClick={showDisableSharedLinkPopup}
-                  className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
-                >
-                  Disable Sharing
-                </Button>
-              ) : (
-                <Button variant="submit" className={'w-full !px-0 laptop:!px-0'} onClick={showEnableSharedLinkPopup}>
-                  Enable Sharing
-                </Button>
-              )}
-              <UnHidePostPopup
-                handleClose={showHidePostClose}
-                modalVisible={modalVisible}
-                questStartData={questStartData}
-              />
+              <Button
+                variant="submit"
+                className="w-full min-w-full"
+                onClick={() => {
+                  copyToClipboard();
+                  showToast('success', 'copyLink');
+                }}
+              >
+                Copy Link
+              </Button>
             </div>
           ) : (
             <div className="mb-[15px] flex w-full justify-end gap-2 pr-[14.4px] tablet:mb-6 tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
@@ -119,7 +123,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               </Button>
             </div>
           )}
-          <div className="grid grid-cols-2 gap-2 tablet:gap-4">
+          <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
             <Button
               variant="danger"
               onClick={showDisableSharedLinkPopup}
@@ -127,30 +131,48 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
             >
               Delete
             </Button>
+            {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
+              <Button
+                variant="danger"
+                onClick={showDisableSharedLinkPopup}
+                className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
+              >
+                Disable Sharing
+              </Button>
+            ) : (
+              <Button variant="submit" className={'w-full !px-0 laptop:!px-0'} onClick={showEnableSharedLinkPopup}>
+                Enable Sharing
+              </Button>
+            )}
+            <UnHidePostPopup
+              handleClose={showHidePostClose}
+              modalVisible={modalVisible}
+              questStartData={questStartData}
+            />
           </div>
         </div>
       </div>
-      {/* <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
-        <div className="flex w-full items-center justify-between">
-          <img
+      <div className="relative flex items-center justify-end border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
+        {/* <div className="flex w-full items-center justify-between"> */}
+        {/* <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
             alt="trash"
             className="h-3 w-[9px] cursor-pointer tablet:h-[30px] tablet:w-[25px]"
             onClick={showDisableSharedLinkPopup}
+          /> */}
+        <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
+            alt="clock"
+            className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
-              alt="clock"
-              className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
-            />
-            <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-              {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
-              {calculateTime()}
-            </h4>
-          </div>
+          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+            {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
+            {calculateTime()}
+          </h4>
         </div>
-      </div> */}
+      </div>
+      {/* </div> */}
     </div>
   );
 }

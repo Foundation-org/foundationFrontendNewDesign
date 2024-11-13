@@ -78,9 +78,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
             className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
           <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-            {postType === 'sharedArticles'
-              ? calculateTimeAgo(data?.articleSetting?.createdAt)
-              : calculateTimeAgo(data?.createdAt)}
+            {calculateTimeAgo(data?.createdAt)}
           </h4>
         </div>
         {/* Pin To SpotLight */}

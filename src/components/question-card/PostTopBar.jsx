@@ -11,10 +11,6 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const timeAgo = useMemo(() => calculateTimeAgo(questStartData?.createdAt), [questStartData?.createdAt]);
-  const sharedPostTimeAgo = useMemo(
-    () => calculateTimeAgo(questStartData?.userQuestSetting?.sharedTime),
-    [questStartData?.userQuestSetting?.sharedTime]
-  );
 
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
@@ -81,7 +77,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                 className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
               />
               <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-                {postProperties === 'SharedLinks' ? sharedPostTimeAgo : timeAgo}
+                {timeAgo}
               </h4>
             </div>
           )}

@@ -95,11 +95,6 @@ const ListCard = ({ listData }) => {
     },
   });
 
-  const handleSavePostsOrder = (posts, categoryId) => {
-    const ids = posts?.map((item) => item._id);
-    updatePostsOrder({ order: ids, userUuid: persistedUserInfo.uuid, categoryId });
-  };
-
   const handleOnDragEnd = (event, categoryIndex, categoryId) => {
     const { active, over } = event;
 
@@ -122,6 +117,9 @@ const ListCard = ({ listData }) => {
         } else {
           setHasReordered(categoryId);
         }
+
+        const ids = updatedItems[0].post?.map((item) => item._id);
+        updatePostsOrder({ order: ids, userUuid: persistedUserInfo.uuid, categoryId });
 
         return [...items.slice(0, categoryIndex), ...updatedItems, ...items.slice(categoryIndex + 1)];
       });
@@ -490,7 +488,6 @@ const ListCard = ({ listData }) => {
                     setCategoryId={setCategoryId}
                     setAddPostModal={setAddPostModal}
                     hasReordered={hasReordered}
-                    handleSavePostsOrder={handleSavePostsOrder}
                     listData={listData}
                     categoryIndex={categoryIndex}
                     setCopyModal={setCopyModal}
@@ -498,6 +495,7 @@ const ListCard = ({ listData }) => {
                     setEnableDisableType={setEnableDisableType}
                     notPublicProfile={notPublicProfile}
                     setModalVisible={setModalVisible}
+                    copyToClipboard={copyToClipboard}
                   />
                 )}
               </div>
