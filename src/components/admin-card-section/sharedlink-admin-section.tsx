@@ -6,11 +6,11 @@ import { calculateTimeAgo } from '../../utils/utils';
 import { Button } from '../ui/Button';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import showToast from '../ui/Toast';
+import DisabledLinkPopup from '../dialogue-boxes/DisabledLinkPopup';
 
 interface IAdminSectionProps {
   questStartData: any;
   postProperties: string;
-  showDisableSharedLinkPopup: () => void;
   handleStartTest: (arg?: string) => void;
   handleViewResults: (arg?: any) => void;
   startTest: string;
@@ -19,22 +19,12 @@ interface IAdminSectionProps {
 export default function SharedLinkAdminSection(props: IAdminSectionProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { questStartData, postProperties, showDisableSharedLinkPopup, handleStartTest, handleViewResults, startTest } =
-    props;
+  const { questStartData, postProperties, handleStartTest, handleViewResults, startTest } = props;
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [modalVisible, setModalVisible] = useState({ state: false, type: '' });
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
   const showHidePostClose = () => setModalVisible({ state: false, type: '' });
-
-  const calculateTime = () => {
-    if (postProperties === 'HiddenPosts') {
-      return calculateTimeAgo(questStartData.userQuestSetting.feedbackTime);
-    } else if (postProperties === 'SharedLinks') {
-      return calculateTimeAgo(questStartData.userQuestSetting.sharedTime);
-    } else {
-      return calculateTimeAgo(questStartData.createdAt);
-    }
-  };
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
   const showEnableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addEnablePostId(null));
@@ -57,6 +47,33 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
     } catch (err) {
       console.error('Unable to copy text to clipboard:', err);
     }
+  };
+
+  const handleDeleteSharedPost = () => {
+    dispatch(questUtilsActions.updateDialogueBox({ type: null, status: false, link: null, id: null }));
+  };
+
+  const showDisableSharedLinkPopup = () => {
+    dispatch(questUtilsActions.addDisabledPostId(null)),
+      dispatch(
+        questUtilsActions.updateDialogueBox({
+          type: 'Disable',
+          status: true,
+          link: questStartData.userQuestSetting.link,
+          id: questStartData._id,
+        })
+      );
+  };
+
+  const showDeleteSharedLinkPopup = () => {
+    dispatch(
+      questUtilsActions.updateDialogueBox({
+        type: 'Delete',
+        status: true,
+        link: questStartData.userQuestSetting.link,
+        id: questStartData._id,
+      })
+    );
   };
 
   return (
@@ -126,7 +143,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
           <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
             <Button
               variant="danger"
-              onClick={showDisableSharedLinkPopup}
+              onClick={showDeleteSharedLinkPopup}
               className="col-span-1 w-full max-w-full laptop:w-full"
             >
               Delete
@@ -167,12 +184,16 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
             className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
           <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-            {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
-            {calculateTime()}
+            {/* {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '} */}
+            Shared {calculateTimeAgo(questStartData.userQuestSetting.sharedTime)}
           </h4>
         </div>
       </div>
-      {/* </div> */}
+      {/* Enable Disable and Delete Popup */}
+      <DisabledLinkPopup
+        handleClose={handleDeleteSharedPost}
+        modalVisible={questUtils.sharedQuestStatus.isDialogueBox}
+      />
     </div>
   );
 }

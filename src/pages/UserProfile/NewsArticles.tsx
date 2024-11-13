@@ -103,7 +103,7 @@ export default function NewsArticles({ domain }: { domain: string }) {
           )}
         </div> */}
             <div className="flex w-full flex-col gap-3 tablet:gap-5">{content}</div>
-            {!showAll && (
+            {!showAll && data?.pages[0]?.data?.length === 5 && data?.pages[1]?.data?.length > 0 && (
               <Button variant="submit" onClick={() => setShowAll(true)}>
                 See All Articles
               </Button>

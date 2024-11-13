@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 import { EmbededImage } from './EmbededImage';
 import { EmbededVideo } from './EmbededVideo';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { isImageUrl } from '../../utils/embeddedutils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateDialogueBox } from '../../features/quest/utilsSlice';
 import showToast from '../ui/Toast';
 import CardTopbar from './CardTopbar';
 import PostTopBar from './PostTopBar';
@@ -26,7 +25,6 @@ const QuestCardLayout = ({
   startTest,
   children,
 }) => {
-  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
@@ -89,17 +87,6 @@ const QuestCardLayout = ({
     }
   };
 
-  const showDisableSharedLinkPopup = () => {
-    dispatch(
-      updateDialogueBox({
-        type: 'Delete',
-        status: true,
-        link: questStartData.userQuestSetting.link,
-        id: questStartData._id,
-      })
-    );
-  };
-
   const handleClose = () => setModalVisible(false);
 
   return (
@@ -153,20 +140,14 @@ const QuestCardLayout = ({
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
         postProperties={postProperties}
-        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
       {children}
-      <QuestBottombar
-        questStartData={questStartData}
-        postProperties={postProperties}
-        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
-      />
+      <QuestBottombar questStartData={questStartData} postProperties={postProperties} />
       <PostArticlesCard questStartData={questStartData} />
       {(postProperties === 'SharedLinks' || postProperties === 'user-profile') && (
         <SharedLinkAdminSection
           questStartData={questStartData}
           postProperties={postProperties}
-          showDisableSharedLinkPopup={showDisableSharedLinkPopup}
           handleStartTest={handleStartTest}
           handleViewResults={handleViewResults}
           startTest={startTest}

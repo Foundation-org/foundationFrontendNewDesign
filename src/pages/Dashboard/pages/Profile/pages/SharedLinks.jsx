@@ -147,7 +147,7 @@ export default function SharedLinks() {
       </ContentCard>
 
       <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
-        <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
+        {/* <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} /> */}
         <div className="relative">
           <div className="relative h-[15.96px] w-[128px] tablet:h-[45px] tablet:w-[337px]">
             <input

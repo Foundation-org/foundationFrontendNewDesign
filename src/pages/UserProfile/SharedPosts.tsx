@@ -133,7 +133,7 @@ export default function SharedPosts({ domain }: { domain: string }) {
           )}
         </div> */}
             <div className="flex w-full flex-col gap-3 tablet:gap-5">{content}</div>
-            {!showAll && (
+            {!showAll && data?.pages[0]?.length === 5 && data?.pages[1]?.length > 0 && (
               <Button variant="submit" onClick={() => setShowAll(true)}>
                 See All Posts
               </Button>
