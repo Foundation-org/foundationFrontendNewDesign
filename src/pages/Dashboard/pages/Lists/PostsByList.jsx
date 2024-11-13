@@ -39,6 +39,8 @@ const PostsByList = () => {
     }
   }, [isSuccess, listData]);
 
+  console.log('listData', listData);
+
   const content =
     listData?.post?.map((item, index) => {
       if (item.id === 'system_notification') {

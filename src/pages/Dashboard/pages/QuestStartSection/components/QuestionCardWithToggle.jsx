@@ -368,6 +368,7 @@ const QuestionCardWithToggle = (props) => {
         addedAnswer: '',
         uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
         ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
+        ...(location.pathname !== '/' && { page: location.pathname }),
       };
 
       if (props.articleId) {
@@ -461,6 +462,7 @@ const QuestionCardWithToggle = (props) => {
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
+            ...(location.pathname !== '/' && { page: location.pathname }),
           };
           if (props.articleId) {
             params.articleRef = props.articleId;
@@ -510,6 +512,7 @@ const QuestionCardWithToggle = (props) => {
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
           ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
           isAddedAnsSelected: isAddedAnsSelected,
+          ...(location.pathname !== '/' && { page: location.pathname }),
         };
         if (props.articleId) {
           params.articleRef = props.articleId;
@@ -603,6 +606,7 @@ const QuestionCardWithToggle = (props) => {
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
+            ...(location.pathname !== '/' && { page: location.pathname }),
           };
           if (props.articleId) {
             params.articleRef = props.articleId;
@@ -638,6 +642,7 @@ const QuestionCardWithToggle = (props) => {
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
           ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
           isAddedAnsSelected: isAddedAnsSelected,
+          ...(location.pathname !== '/' && { page: location.pathname }),
         };
         if (props.articleId) {
           params.articleRef = props.articleId;

@@ -15,6 +15,11 @@ export const updateChangeAnsStartQuest = async (data) => {
     uuid: data.uuid,
     isAddedAnsSelected: data.isAddedAnsSelected,
   };
+
+  if (data.page === '/profile' || data.page === '/profile/shared-links') {
+    params.Page = 'SharedLink';
+  }
+
   return await api.post('/startQuest/updateChangeAnsStartQuest', params);
 };
 
@@ -30,9 +35,15 @@ export const createStartQuest = async (data) => {
     isSharedLinkAns: data.isSharedLinkAns,
     postLink: data.postLink,
   };
+
   if (data.articleRef) {
     params.articleRef = data.articleRef;
   }
+
+  if (data.page === '/profile' || data.page === '/profile/shared-links') {
+    params.Page = 'SharedLink';
+  }
+
   return await api.post('/startQuest/createStartQuest', params);
 };
 // creation of a quest of all types

@@ -148,6 +148,7 @@ Button.propTypes = {
     'verification-badge-edit',
     'verification-badge-remove',
     'verification-badge-hollow',
+    'badge-remove',
     'submit2',
     'submit-hollow',
     'getintouch',
