@@ -29,7 +29,7 @@ export default function SeldonView() {
     isError,
   } = useQuery({
     queryKey: ['articles', location.pathname.split('/').pop()],
-    queryFn: () => getArticles(location.pathname.split('/').pop()),
+    queryFn: () => getArticles(location.pathname.split('/').pop(), persistedUserInfo.uuid),
     refetchOnWindowFocus: false,
   });
 
