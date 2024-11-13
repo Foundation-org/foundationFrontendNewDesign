@@ -55,6 +55,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
         data,
         type,
         uuid: localStorage.getItem('uuid'),
+        viewerCount: [],
       };
       if (localStorage.getItem('legacyHash')) {
         payload.infoc = localStorage.getItem('legacyHash');

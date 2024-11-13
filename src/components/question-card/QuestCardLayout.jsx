@@ -162,7 +162,7 @@ const QuestCardLayout = ({
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
       <PostArticlesCard questStartData={questStartData} />
-      {postProperties === 'SharedLinks' && (
+      {(postProperties === 'SharedLinks' || postProperties === 'user-profile') && (
         <SharedLinkAdminSection
           questStartData={questStartData}
           postProperties={postProperties}

@@ -67,6 +67,7 @@ export default function SharedPosts({ domain }: { domain: string }) {
             innerRef={isLastPost ? ref : null}
             questStartData={post}
             playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+            postProperties={!isPublicProfile && 'user-profile'}
           />
         );
       })

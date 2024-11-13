@@ -34,7 +34,14 @@ export default function NewsArticles({ domain }: { domain: string }) {
     return pagesToShow.map((posts) =>
       posts?.data?.map((post: any, index: number) => {
         const isLastPost = index === posts.data.length - 1;
-        return <NewsFeedCard key={post._id} data={post} innerRef={isLastPost ? ref : null} />;
+        return (
+          <NewsFeedCard
+            key={post._id}
+            data={post}
+            innerRef={isLastPost ? ref : null}
+            postType={!isPublicProfile ? 'user-profile' : undefined}
+          />
+        );
       })
     );
   }, [data, ref, showAll]);

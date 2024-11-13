@@ -5,8 +5,11 @@ import { Button } from '../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import LinkHubPopup from '../../components/dialogue-boxes/LinkHubPopup';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import api from '../../services/api/Axios';
+import { formatCountNumber } from '../../utils/utils';
 
-export default function LinkHub({ linkHub }: { linkHub: any }) {
+export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: string }) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
   const isPublicProfile = location.pathname.startsWith('/h/');
@@ -34,6 +37,31 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
 
     return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/default-link.svg`;
   }
+
+  const linkHubInc = async ({
+    domainName,
+    badgeLinkId,
+    viewerUuid,
+  }: {
+    domainName: string;
+    badgeLinkId: string;
+    viewerUuid: string;
+  }) => {
+    const response = await api.post('/linkhubInc', {
+      domainName,
+      badgeLinkId,
+      viewerUuid,
+    });
+
+    return response.data;
+  };
+
+  const { mutateAsync: handleLinkHubIncrement } = useMutation({
+    mutationFn: linkHubInc,
+    onError: (err) => {
+      console.log(err.message);
+    },
+  });
 
   return (
     <>
@@ -72,7 +100,7 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
             </div>
             <div className="mt-3 flex w-full justify-center tablet:mt-5">
               <Button variant={'submit'} onClick={() => setIsPersonalPopup(true)}>
-                Manage all shared links
+                Manage shared links
               </Button>
             </div>
           </>
@@ -93,17 +121,31 @@ export default function LinkHub({ linkHub }: { linkHub: any }) {
           ) : (
             <>
               {linkHub?.personal.linkHub?.map((badge: any) => (
-                <a
-                  href={badge.link}
-                  target="_blank"
+                <button
                   key={badge.id}
-                  className="mx-auto flex w-full max-w-[95%] items-center gap-[10px] rounded-[9.228px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:max-w-[80%] tablet:gap-[15px] tablet:px-6"
+                  className="mx-auto flex w-full max-w-[95%] items-center justify-between rounded-[9.228px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:max-w-[80%] tablet:px-6"
+                  onClick={() => {
+                    handleLinkHubIncrement({
+                      domainName: domain,
+                      badgeLinkId: badge.id,
+                      viewerUuid: persistedUserInfo?.uuid,
+                    });
+                    window.open(`https://${badge.link}`, '_blank');
+                  }}
                 >
-                  <img src={getBadgeIcon(badge)} alt="save icon" className="size-[24.5px] tablet:size-[35px]" />
-                  <h1 className="text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[18px]">
-                    {badge.title}
-                  </h1>
-                </a>
+                  <div className="flex items-center gap-[10px] tablet:gap-[15px]">
+                    <img src={getBadgeIcon(badge)} alt="save icon" className="size-[24.5px] tablet:size-[35px]" />
+                    <h1 className="text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[18px]">
+                      {badge.title}
+                    </h1>
+                  </div>
+                  {!isPublicProfile && (
+                    <h1 className="text-[12px] leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[16px]">
+                      {formatCountNumber(badge?.viewerCount?.length || 0)}{' '}
+                      {badge?.viwerCount?.length > 1 || badge?.viewerCount?.length === 0 ? 'viewers' : 'viewer'}
+                    </h1>
+                  )}
+                </button>
               ))}
             </>
           )}

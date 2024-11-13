@@ -14,6 +14,11 @@ const ListItem = ({ post, setCategoryId, categoryItem, setPostId, setDeletePostP
     transform: CSS.Transform.toString(transform),
   };
 
+  const imagePath =
+    persistedTheme === 'dark'
+      ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
+      : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`;
+
   return (
     <div
       ref={setNodeRef}
@@ -33,11 +38,7 @@ const ListItem = ({ post, setCategoryId, categoryItem, setPostId, setDeletePostP
               isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
             } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
             style={{
-              backgroundImage: `url(${
-                persistedTheme === 'dark'
-                  ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
-                  : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
-              })`,
+              backgroundImage: `url(${notPublicProfile && imagePath})`,
             }}
           />
           <div

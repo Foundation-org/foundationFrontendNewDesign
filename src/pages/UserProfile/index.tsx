@@ -35,7 +35,7 @@ export default function UserProfile() {
   const { data, isLoading, error } = useFetchMyProfile(domain, persistedUserInfo.uuid);
 
   return (
-    <div className="mx-auto flex w-full max-w-[730px] flex-col gap-3 px-4 tablet:gap-6 tablet:px-0">
+    <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {isPersonalPopup && (
         <HomepageBadgePopup
           isPopup={isPersonalPopup}
@@ -122,7 +122,7 @@ export default function UserProfile() {
           )}
           <ProfileCard profile={data?.profile} />
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
-            <LinkHub linkHub={data?.linkHub} />
+            <LinkHub linkHub={data?.linkHub} domain={domain} />
           )}
           {data?.spotLight && data?.spotLight.message !== 'No list exists yet.' && (
             <Spotlight spotlight={data?.spotLight} />

@@ -149,7 +149,9 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           questStartData={data}
         />
       )}
-      {postType === 'sharedArticles' && <ShareArticleCard key={data._id} data={data} innerRef={null} />}
+      {(postType === 'sharedArticles' || postType === 'user-profile') && (
+        <ShareArticleCard key={data._id} data={data} innerRef={null} />
+      )}
     </div>
   );
 }

@@ -248,9 +248,11 @@ const ListCard = ({ listData }) => {
                     </div>
                   </div>
                 </div>
-                <div className="mx-7 my-[10px] tablet:mx-10 tablet:mb-6 tablet:mt-4">
-                  <div className="flex gap-2">
-                    <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+                <div className="mx-7 mb-[15px] mt-[10px] tablet:mx-10 tablet:mb-6 tablet:mt-4">
+                  <div className="flex items-center gap-2">
+                    <h4
+                      className={`text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px] ${notPublicProfile ? '' : 'mb-5 tablet:mb-10'}`}
+                    >
                       {categoryItem.category}
                     </h4>
                     {notPublicProfile && (
@@ -298,23 +300,25 @@ const ListCard = ({ listData }) => {
                     </DndContext>
                   </ul>
 
-                  <div className="grid grid-cols-2 gap-2 pt-[5.7px] tablet:gap-4 tablet:pl-7 tablet:pt-[9px]">
-                    <Button
-                      variant={'addOption'}
-                      onClick={() => {
-                        setSelectedItem(categoryItem);
-                        setCategoryId(categoryItem._id);
-                        setAddPostModal(true);
-                      }}
-                      className="px-5"
-                    >
-                      <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
-                      Add Post
-                    </Button>
-                  </div>
+                  {notPublicProfile && (
+                    <div className="grid grid-cols-2 gap-2 pt-[5.7px] tablet:gap-4 tablet:pl-7 tablet:pt-[9px]">
+                      <Button
+                        variant={'addOption'}
+                        onClick={() => {
+                          setSelectedItem(categoryItem);
+                          setCategoryId(categoryItem._id);
+                          setAddPostModal(true);
+                        }}
+                        className="px-5"
+                      >
+                        <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
+                        Add Post
+                      </Button>
+                    </div>
+                  )}
 
-                  <div className="mt-[50px] grid grid-cols-2 gap-2 tablet:gap-4">
-                    <dir className="col-span-1"></dir>
+                  <div className="mt-6 grid grid-cols-2 gap-2 tablet:mt-[50px] tablet:gap-4">
+                    <div className="col-span-1"></div>
                     <Button
                       variant={'submit-green'}
                       className={'w-full tablet:w-full'}
