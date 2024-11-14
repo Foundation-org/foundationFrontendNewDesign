@@ -192,7 +192,9 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
       {/* Enable Disable and Delete Popup */}
       <DisabledLinkPopup
         handleClose={handleDeleteSharedPost}
-        modalVisible={questUtils.sharedQuestStatus.isDialogueBox}
+        modalVisible={
+          questUtils.sharedQuestStatus.id === questStartData._id ? questUtils.sharedQuestStatus.isDialogueBox : false
+        }
       />
     </div>
   );
