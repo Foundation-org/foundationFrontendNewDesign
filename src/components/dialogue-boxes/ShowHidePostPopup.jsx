@@ -106,7 +106,6 @@ export default function ShowHidePostPopup({
       }
     }
   };
-  console.log(questStartData);
 
   return (
     <PopUp
@@ -120,7 +119,9 @@ export default function ShowHidePostPopup({
       handleClose={handleClose}
       customStyle={{
         width:
-          questStartData?.userQuestSetting && questStartData.userQuestSetting.feedbackMessage !== ''
+          (questStartData?.userQuestSetting && questStartData.userQuestSetting.feedbackMessage !== '') ||
+          questStartData.startQuestData.feedbackReverted ||
+          questStartData.startStatus === 'continue'
             ? '100%'
             : 'fit-content',
         minWidth: 'auto',
