@@ -120,8 +120,8 @@ export default function ShowHidePostPopup({
       customStyle={{
         width:
           (questStartData?.userQuestSetting && questStartData.userQuestSetting.feedbackMessage !== '') ||
-          questStartData.startQuestData.feedbackReverted ||
-          questStartData.startStatus === 'continue'
+          questStartData?.startQuestData?.feedbackReverted ||
+          questStartData?.startStatus === 'continue'
             ? '100%'
             : 'fit-content',
         minWidth: 'auto',
@@ -131,7 +131,7 @@ export default function ShowHidePostPopup({
         questStartData?.userQuestSetting &&
         questStartData.userQuestSetting.feedbackMessage !== '') ||
       (feature === 'Hide' &&
-        (questStartData.startQuestData.feedbackReverted || questStartData.startStatus === 'continue')) ? (
+        (questStartData?.startQuestData?.feedbackReverted || questStartData?.startStatus === 'continue')) ? (
         <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
           <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
             Are you sure you want to hide this post?
