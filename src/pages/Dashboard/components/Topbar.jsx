@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { TopbarItems } from '../../../constants/topbar';
+import { MobileTopbarItems, TopbarItems } from '../../../constants/topbar';
 import {
   addSharedLinkPost,
   resetPlayingIds,
@@ -16,17 +16,17 @@ import { appVersion } from '../../../version';
 import { getRecievedMessages } from '../../../services/api/directMessagingApi';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import GuestDialogueScreen from '../../../components/GuestDialogueScreen';
-import { FaBullseye } from 'react-icons/fa';
 import { getSeldonState, handleSeldonInput, resetSeldonState } from '../../../features/seldon-ai/seldonSlice';
 import { resetSeldonDataState } from '../../../features/seldon-ai/seldonDataSlice';
+import NavMobileMenu from './NavMobileMenu';
 
 const Topbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(homeFilterActions.getFilters);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const seldonState = useSelector(getSeldonState);
 
@@ -93,7 +93,7 @@ const Topbar = () => {
                   />
                 </div>
                 <div
-                  className="relative flex justify-center"
+                  className="relative hidden justify-center laptop:flex"
                   onClick={() => {
                     navigate('/news');
                   }}
@@ -117,15 +117,10 @@ const Topbar = () => {
               </div>
               {/* Mobile */}
               <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[14rem] tablet:min-w-[14rem] tablet:gap-2 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
-                {TopbarItems.filter((item) => {
+                {MobileTopbarItems.filter((item) => {
                   if (persistedUserInfo.role === 'guest' || persistedUserInfo.role === 'visitor') {
-                    // Hide both item.id 5 and 6 for guest or visitor roles
-                    return item.id !== 5 && item.id !== 6;
-                  }
-
-                  // Hide item.id 6 only if isPseudoBadge is true
-                  if (!isPseudoBadge) {
-                    return item.id !== 6;
+                    // Hide both item.id 2 for guest or visitor roles
+                    return item.id !== 2;
                   }
 
                   // For all other cases, show the item
@@ -156,21 +151,12 @@ const Topbar = () => {
                         item.id === 1
                       ) {
                         dispatch(
-                          setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'),
+                          setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.')
                         );
-                      }
-
-                      if (item.id === 6) {
-                        if (seldonState.isTitle) {
-                          dispatch(resetSeldonState());
-                          dispatch(handleSeldonInput({ name: 'isTitle', value: false }));
-                          dispatch(handleSeldonInput({ name: 'question', value: '' }));
-                          dispatch(resetSeldonDataState());
-                        }
                       }
                     }}
                   >
-                    {item.id === 5 && receivedMsg?.data?.count > 0 && (
+                    {item.id === 2 && receivedMsg?.data?.count > 0 && (
                       <div className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600 tablet:size-5">
                         <p className="text-[10px] leading-[10px] text-white">{receivedMsg?.data?.count}</p>
                       </div>
@@ -189,6 +175,7 @@ const Topbar = () => {
                     />
                   </Link>
                 ))}
+                <NavMobileMenu />
               </div>
             </div>
           </div>
@@ -230,7 +217,7 @@ const Topbar = () => {
 
                   if ((persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor') && item.id === 1) {
                     dispatch(
-                      setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'),
+                      setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.')
                     );
                   }
                   if (item.id === 6) {

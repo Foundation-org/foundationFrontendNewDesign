@@ -14,6 +14,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
   const isPublicProfile = location.pathname.startsWith('/h/');
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   function getBadgeIcon(badge: { title: string; link: string }) {
     const iconMap = {
@@ -61,6 +62,8 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
       console.log(err.message);
     },
   });
+
+  const displayedBadges = showAll ? linkHub?.personal.linkHub : linkHub?.personal.linkHub.slice(0, 5);
 
   return (
     <>
@@ -116,7 +119,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
             </>
           ) : (
             <>
-              {linkHub?.personal.linkHub?.map((badge: any) => (
+              {displayedBadges?.map((badge: any) => (
                 <button
                   key={badge.id}
                   className="mx-auto flex w-full max-w-[95%] items-center justify-between rounded-[9.228px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:max-w-[80%] tablet:px-6"
@@ -155,6 +158,11 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                   )}
                 </button>
               ))}
+              {!showAll && linkHub?.personal.linkHub?.length > 5 && (
+                <Button variant="submit" onClick={() => setShowAll(true)}>
+                  See All Links
+                </Button>
+              )}
             </>
           )}
         </div>

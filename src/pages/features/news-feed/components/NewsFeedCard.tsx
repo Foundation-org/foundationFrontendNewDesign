@@ -1,13 +1,12 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { calculateTimeAgo, formatDateMDY } from '../../../../utils/utils';
-import { Button } from '../../../../components/ui/Button';
-import { NewsFeedPropsType } from '../../../../types/news-feed';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
-import { handleSeldonInput, setInputState } from '../../../../features/seldon-ai/seldonSlice';
-import { useUpdateSpotLight } from '../../../../services/api/profile';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '../../../../components/ui/Button';
+import { calculateTimeAgo } from '../../../../utils/utils';
+import { NewsFeedPropsType } from '../../../../types/news-feed';
+import { setSeldonData } from '../../../../features/seldon-ai/seldonDataSlice';
 import { setGuestSignUpDialogue } from '../../../../features/extras/extrasSlice';
+import { handleSeldonInput, setInputState } from '../../../../features/seldon-ai/seldonSlice';
 import Copy from '../../../../assets/Copy';
 import ShareNewsArticle from './ShareNewsArticle';
 import ShareArticleCard from '../../../Dashboard/pages/Profile/pages/share-articles/ShareArticleCard';
@@ -16,8 +15,6 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   const { data, innerRef, postType } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const isProfilePage = location.pathname === '/profile/me';
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
@@ -26,8 +23,6 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
   const handleCopyClose = () => {
     setCopyModal(false);
   };
-
-  const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   const handleUpdateArticle = () => {
     dispatch(
@@ -81,18 +76,6 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
             {calculateTimeAgo(data?.createdAt)}
           </h4>
         </div>
-        {/* Pin To SpotLight */}
-        {isProfilePage && !data?.spotLightType && (
-          <button
-            className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
-            onClick={() => {
-              const domain = persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain.name;
-              handleSpotLight({ domain, type: 'news', id: data._id, status: 'set' });
-            }}
-          >
-            Pin to Spotlight
-          </button>
-        )}
       </div>
       {/* Body */}
       <div className="flex flex-col justify-between gap-2 px-[13.92px] pb-[15px] pt-2 tablet:gap-4 tablet:px-10 tablet:pb-6 tablet:pt-4">
@@ -135,10 +118,6 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
             Share
           </h1>
         </button>
-        {/* Created At */}
-        {/* <p className="text-[10px] font-normal text-[#9C9C9C] dark:text-white tablet:text-[20px]">
-          Published {formatDateMDY(data.createdAt)}
-        </p> */}
       </div>
       {copyModal && (
         <ShareNewsArticle

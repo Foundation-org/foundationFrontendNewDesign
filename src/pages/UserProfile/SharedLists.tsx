@@ -80,7 +80,7 @@ export default function SharedLists({ domain }: { domain: string }) {
 
           <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
             <div className="flex w-full flex-col gap-3 tablet:gap-5">
-              <ListCard listData={showAll ? listData : listData?.slice(0, 5)} />
+              <ListCard listData={showAll ? listData : listData?.slice(0, 5)} page={''} />
               <div className="mx-auto w-fit">
                 {!showAll && listData?.length > 5 && (
                   <Button variant="submit" onClick={() => setShowAll(true)}>

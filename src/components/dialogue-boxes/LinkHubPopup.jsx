@@ -253,7 +253,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                             {item.title}
                           </h4>
                           <div className="mt-[2px] max-w-[270px] pr-[30px] tablet:mt-2 tablet:pr-0">
-                            <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                            <h6 className="break-words text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
                               {item.link}
                             </h6>
                           </div>

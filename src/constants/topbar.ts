@@ -65,3 +65,41 @@ export const TopbarItems = [
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/seldon.svg`,
   },
 ];
+
+export const MobileTopbarItems = [
+  {
+    id: 1,
+    title: 'Profile',
+    path: '/profile',
+    signupPath: '/guest-signup',
+    activePaths: [
+      '/profile',
+      '/profile/verification-badges',
+      '/profile/post-activity',
+      '/profile/feedback',
+      '/profile/ledger',
+      '/profile/feedback-given',
+      '/profile/shared-links',
+      '/profile/user-settings',
+      '/profile/lists',
+      '/profile/me',
+    ],
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile-filled.svg`,
+    signupIcon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/signup.svg`,
+  },
+  {
+    id: 2,
+    title: 'Chat',
+    path: '/direct-messaging',
+    activePaths: [
+      '/direct-messaging',
+      '/direct-messaging/sent',
+      '/direct-messaging/deleted',
+      '/direct-messaging/draft',
+      '/direct-messaging/new-message',
+    ],
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/chat.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/chat-active.svg`,
+  },
+];

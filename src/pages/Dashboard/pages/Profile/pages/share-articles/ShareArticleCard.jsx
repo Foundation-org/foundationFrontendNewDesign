@@ -5,25 +5,31 @@ import { calculateTimeAgo } from '../../../../../../utils/utils';
 import showToast from '../../../../../../components/ui/Toast';
 import DeleteShareArticleLink from '../../../../../../components/dialogue-boxes/DeleteShareArticleLink';
 // import SharedArticleAdminSection from '../../../../../../components/admin-card-section/sharedarticle-admin-section';
-import NewsFeedCard from '../../../../../features/news-feed/components/NewsFeedCard';
+// import NewsFeedCard from '../../../../../features/news-feed/components/NewsFeedCard';
+import { useUpdateSpotLight } from '../../../../../../services/api/profile';
+import { useLocation } from 'react-router-dom';
 
 export default function ShareArticleCard({ data, innerRef }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [deleteModal, setDeleteModal] = useState(false);
   const [type, setType] = useState('');
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile';
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
-  // const { protocol, host } = window.location;
-  // let sharedPostUrl = `${protocol}//${host}/r/${data?.articleSetting?.uniqueLink}`;
+  const { protocol, host } = window.location;
+  let sharedPostUrl = `${protocol}//${host}/r/${data?.articleSetting?.uniqueLink}`;
 
-  // const copyToClipboard = async () => {
-  //   const textToCopy = sharedPostUrl;
+  const copyToClipboard = async () => {
+    const textToCopy = sharedPostUrl;
 
-  //   try {
-  //     await navigator.clipboard.writeText(textToCopy);
-  //   } catch (err) {
-  //     console.error('Unable to copy text to clipboard:', err);
-  //   }
-  // };
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
+  };
 
   return (
     <div
@@ -85,7 +91,34 @@ export default function ShareArticleCard({ data, innerRef }) {
           </div>
         </div>
         <div className="flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
-          <div className="flex w-full justify-end gap-2 tablet:gap-4">
+          {isProfilePage && !data?.spotLightType && (
+            <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
+              <Button
+                variant="submit"
+                onClick={() => {
+                  const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
+                  handleSpotLight({ domain, type: 'news', id: data._id, status: 'set' });
+                }}
+                className={'w-full max-w-full bg-[#DC1010] tablet:w-full laptop:w-full'}
+              >
+                Pin to Spotlight
+              </Button>
+            </div>
+          )}
+          <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
+            <div></div>
+            <Button
+              variant="submit"
+              className="w-full min-w-full"
+              onClick={() => {
+                copyToClipboard();
+                showToast('success', 'copyLink');
+              }}
+            >
+              Copy Link
+            </Button>
+          </div>
+          <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
             <div className="w-full">
               <Button
                 variant="danger"

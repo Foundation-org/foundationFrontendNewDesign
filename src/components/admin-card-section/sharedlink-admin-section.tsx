@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import { calculateTimeAgo } from '../../utils/utils';
@@ -7,6 +7,7 @@ import { Button } from '../ui/Button';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import showToast from '../ui/Toast';
 import DisabledLinkPopup from '../dialogue-boxes/DisabledLinkPopup';
+import { useUpdateSpotLight } from '../../services/api/profile';
 
 interface IAdminSectionProps {
   questStartData: any;
@@ -25,6 +26,11 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
   const showHidePostClose = () => setModalVisible({ state: false, type: '' });
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile';
+  const persistedUserInfo = useSelector((state: any) => state.auth.user);
+
+  const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   const showEnableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addEnablePostId(null));
@@ -103,6 +109,22 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
         </div>
         {/* Buttons */}
         <div className="flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
+          {/* Row 1 */}
+          {isProfilePage && !questStartData.spotLightType && (
+            <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
+              <Button
+                variant="submit"
+                onClick={() => {
+                  const domain = persistedUserInfo.badges.find((badge: any) => badge.domain)?.domain.name;
+                  handleSpotLight({ domain, type: 'posts', id: questStartData._id, status: 'set' });
+                }}
+                className="col-span-1 w-full max-w-full laptop:w-full"
+              >
+                Pin to spotlight
+              </Button>
+            </div>
+          )}
+          {/* Row 2 */}
           {startTest !== questStartData._id ? (
             <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
               <Button
@@ -140,6 +162,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               </Button>
             </div>
           )}
+          {/* Row 3 */}
           <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
             <Button
               variant="danger"

@@ -113,4 +113,5 @@ export const toastMessages = {
   spotLightRemoved: 'Spotlight removed successfully',
   spotLightAlreadyExists: 'Only single spotlight is allowed at once.',
   noPostsInList: 'Please add posts to view results',
+  noListLink: 'This list is not shared yet',
 } as const;

@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import showToast from '../../components/ui/Toast';
 import api from './Axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -11,6 +12,7 @@ const handleCreateUniqueLink = async (data) => {
 };
 
 export const useGenerateArticleLink = (setPostLink) => {
+  const location = useLocation();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -19,6 +21,11 @@ export const useGenerateArticleLink = (setPostLink) => {
       const { customLink } = variables;
       setPostLink(resp?.article?.articleSetting.uniqueLink);
       queryClient.invalidateQueries({ queryKey: ['news-feed', ''] });
+
+      if (location.pathname.startsWith('/r/')) {
+        queryClient.invalidateQueries(['articles']);
+      }
+
       if (customLink) {
         showToast('success', 'customLinkGenerated');
       } else {

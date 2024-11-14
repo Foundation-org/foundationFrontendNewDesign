@@ -74,6 +74,30 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
           });
         }
 
+        if (location.pathname.startsWith('/r/')) {
+          queryClient.invalidateQueries({
+            queryKey: ['articles', location.pathname.split('/').pop()],
+          });
+          queryClient.setQueriesData(['sourcePosts'], (oldData) => {
+            if (Array.isArray(oldData)) {
+              return oldData.map((item) => {
+                if (item._id === resp.data.data.questForeignKey) {
+                  return {
+                    ...item,
+                    userQuestSetting: {
+                      ...item.userQuestSetting,
+                      ...resp.data.data,
+                    },
+                  };
+                } else {
+                  return item;
+                }
+              });
+            }
+            return oldData;
+          });
+        }
+
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
@@ -110,6 +134,30 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
           queryKey: ['userInfo', uuid],
           exact: true,
         });
+
+        if (location.pathname.startsWith('/r/')) {
+          queryClient.invalidateQueries({
+            queryKey: ['articles', location.pathname.split('/').pop()],
+          });
+          queryClient.setQueriesData(['sourcePosts'], (oldData) => {
+            if (Array.isArray(oldData)) {
+              return oldData.map((item) => {
+                if (item._id === resp.data.data.questForeignKey) {
+                  return {
+                    ...item,
+                    userQuestSetting: {
+                      ...item.userQuestSetting,
+                      ...resp.data.data,
+                    },
+                  };
+                } else {
+                  return item;
+                }
+              });
+            }
+            return oldData;
+          });
+        }
       }
     } else {
       setIsLoading(false);

@@ -22,11 +22,11 @@ import { useUpdateSpotLight } from '../../../../../services/api/profile';
 import SharedListAdminSection from '../../../../../components/admin-card-section/sharedlist-admin-section';
 import Copy from '../../../../../assets/Copy';
 
-const ListCard = ({ listData }) => {
+const ListCard = ({ listData, page }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const location = useLocation();
-  const isProfilePage = location.pathname === '/profile/me';
+  // const isProfilePage = location.pathname === '/profile/me';
   const notPublicProfile = !location.pathname.startsWith('/h/');
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -73,7 +73,7 @@ const ListCard = ({ listData }) => {
     }
   };
 
-  const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
+  // const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   useEffect(() => {
     if (listData) {
@@ -204,17 +204,17 @@ const ListCard = ({ listData }) => {
                 <div className="flex items-center justify-end gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
                   {/* Pin To SpotLight */}
                   {
-                    isProfilePage && !categoryItem?.spotLight ? (
-                      <button
-                        className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
-                        onClick={() => {
-                          const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
-                          handleSpotLight({ domain, type: 'lists', id: categoryItem._id, status: 'set' });
-                        }}
-                      >
-                        Pin to Spotlight
-                      </button>
-                    ) : null
+                    // isProfilePage && !categoryItem?.spotLight ? (
+                    //   <button
+                    //     className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
+                    //     onClick={() => {
+                    //       const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
+                    //       handleSpotLight({ domain, type: 'lists', id: categoryItem._id, status: 'set' });
+                    //     }}
+                    //   >
+                    //     Pin to Spotlight
+                    //   </button>
+                    // ) : null
                     // <div
                     //   className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
                     //   onClick={() => {
@@ -443,15 +443,15 @@ const ListCard = ({ listData }) => {
 
                 <div className="flex items-center justify-between border-t-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
                   <button
-                    className={`${'w-fit'} flex items-center gap-1 tablet:gap-2`}
+                    className={`${'w-fit'} flex h-[14.5px] items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
                     onClick={() => {
-                      if (categoryItem.link === null) {
-                        setSelectedItem(categoryItem);
-                        setCopyModal(true);
-                      } else {
-                        copyToClipboard(categoryItem.link);
-                        showToast('success', 'copyLink');
-                      }
+                      // if (categoryItem.link === null) {
+                      setSelectedItem(categoryItem);
+                      setCopyModal(true);
+                      // } else {
+                      //   copyToClipboard(categoryItem.link);
+                      //   showToast('success', 'copyLink');
+                      // }
                     }}
                   >
                     {persistedTheme === 'dark' ? <Copy /> : <Copy />}
@@ -485,7 +485,7 @@ const ListCard = ({ listData }) => {
                     </div>
                   </div> */}
                 </div>
-                {notPublicProfile && (
+                {notPublicProfile && page !== 'spotlight' && (
                   <SharedListAdminSection
                     categoryItem={categoryItem}
                     setSelectedItem={setSelectedItem}

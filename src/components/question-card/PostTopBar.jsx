@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { calculateTimeAgo } from '../../utils/utils';
-import showToast from '../ui/Toast';
-import { useUpdateSpotLight } from '../../services/api/profile';
+// import showToast from '../ui/Toast';
+// import { useUpdateSpotLight } from '../../services/api/profile';
 
 export default function PostTopBar({ questStartData, postProperties, setDelModalVisible }) {
   const location = useLocation();
@@ -12,7 +12,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const timeAgo = useMemo(() => calculateTimeAgo(questStartData?.createdAt), [questStartData?.createdAt]);
 
-  const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
+  // const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   let ratingImage = null;
 
@@ -20,18 +20,18 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
     ratingImage = 'post-e.svg';
   } else ratingImage = 'post-a.svg';
 
-  const { protocol, host } = window.location;
-  let sharedPostUrl = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
+  // const { protocol, host } = window.location;
+  // let sharedPostUrl = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
 
-  const copyToClipboard = async () => {
-    const textToCopy = sharedPostUrl;
+  // const copyToClipboard = async () => {
+  //   const textToCopy = sharedPostUrl;
 
-    try {
-      await navigator.clipboard.writeText(textToCopy);
-    } catch (err) {
-      console.error('Unable to copy text to clipboard:', err);
-    }
-  };
+  //   try {
+  //     await navigator.clipboard.writeText(textToCopy);
+  //   } catch (err) {
+  //     console.error('Unable to copy text to clipboard:', err);
+  //   }
+  // };
 
   return (
     <>
@@ -80,18 +80,6 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
                 {timeAgo}
               </h4>
             </div>
-          )}
-          {/* Pin To SpotLight */}
-          {isProfilePage && !questStartData.spotLightType && (
-            <button
-              className="text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
-              onClick={() => {
-                const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
-                handleSpotLight({ domain, type: 'posts', id: questStartData._id, status: 'set' });
-              }}
-            >
-              Pin to Spotlight
-            </button>
           )}
         </div>
       )}
