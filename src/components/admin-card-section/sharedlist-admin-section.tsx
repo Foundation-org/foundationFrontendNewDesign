@@ -92,6 +92,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
           <div className="flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
             {isProfilePage && !categoryItem?.spotLight && (
               <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
+                <div></div>
                 <Button
                   variant={'submit'}
                   className={'w-full tablet:w-full'}
@@ -142,8 +143,9 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
                 variant="danger"
                 className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
                 onClick={() => {
-                  setCategoryId(categoryItem._id);
-                  setModalVisible(true);
+                  showToast('info', 'featureComingSoon');
+                  // setCategoryId(categoryItem._id);
+                  // setModalVisible(true);
                 }}
               >
                 Delete

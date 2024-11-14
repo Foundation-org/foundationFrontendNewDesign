@@ -93,6 +93,7 @@ export default function ShareArticleCard({ data, innerRef }) {
         <div className="flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
           {isProfilePage && !data?.spotLightType && (
             <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
+              <div></div>
               <Button
                 variant="submit"
                 onClick={() => {

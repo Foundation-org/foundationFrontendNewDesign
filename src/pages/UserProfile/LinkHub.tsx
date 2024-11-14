@@ -79,7 +79,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
       <SummaryCard headerIcon="/assets/svgs/linkhub-logo.svg" headerTitle="Link Hub" isPublicProfile={isPublicProfile}>
         {!isPublicProfile && (
           <>
-            <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
               Put all your essential links in one place on your Home Page, making it easier for others to find and
               connect with you across platforms
             </h1>

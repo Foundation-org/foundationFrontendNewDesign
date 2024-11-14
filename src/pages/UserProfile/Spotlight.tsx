@@ -25,9 +25,9 @@ export default function Spotlight({ spotlight }: any) {
       >
         {!isPublicProfile && (
           <>
-            <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+            {/* <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
               Need Copy
-            </h1>
+            </h1> */}
 
             <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
               <Button

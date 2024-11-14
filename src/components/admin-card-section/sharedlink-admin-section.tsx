@@ -112,6 +112,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
           {/* Row 1 */}
           {isProfilePage && !questStartData.spotLightType && (
             <div className="grid w-full grid-cols-2 gap-3 tablet:gap-[1.4rem]">
+              <div></div>
               <Button
                 variant="submit"
                 onClick={() => {

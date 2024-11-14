@@ -59,7 +59,7 @@ export const toastMessages = {
   supportRequest: 'Support request received!',
   orderUpdated: 'Order updated successfully',
   verifyEmail: 'Please check your Email to verify',
-  featureComingSoon: 'Feature coming soon.',
+  featureComingSoon: 'Feature coming soon!',
   switchDesktop: 'Please switch to desktop!',
   switchMobile: 'Please switch to mobile!',
   youtubePlaylistNot: 'We do not support YouTube playlists',

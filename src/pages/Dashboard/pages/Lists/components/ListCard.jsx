@@ -201,7 +201,24 @@ const ListCard = ({ listData, page }) => {
                 key={categoryItem._id}
                 className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
               >
-                <div className="flex items-center justify-end gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                <div className="relative flex items-center justify-end gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                  {/* Delete List */}
+                  <button
+                    className="absolute left-1/2 flex min-w-[83px] -translate-x-1/2 items-center justify-center gap-1 tablet:gap-2"
+                    onClick={() => {
+                      setCategoryId(categoryItem._id);
+                      setModalVisible(true);
+                    }}
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/hiddenposts/unhide/deletePost.png'}`}
+                      alt="eye-latest"
+                      className="h-3 w-[9px] tablet:h-[22px] tablet:w-[17px]"
+                    />
+                    <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                      Delete
+                    </h1>
+                  </button>
                   {/* Pin To SpotLight */}
                   {
                     // isProfilePage && !categoryItem?.spotLight ? (
