@@ -38,7 +38,7 @@ export default function ShowHidePostPopup({
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,
           pages: oldData?.pages?.map((page) =>
-            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item))
           ),
         }));
         queryClient.invalidateQueries(['userInfo', { exact: true }]);
@@ -106,6 +106,7 @@ export default function ShowHidePostPopup({
       }
     }
   };
+  console.log(questStartData);
 
   return (
     <PopUp
@@ -125,9 +126,11 @@ export default function ShowHidePostPopup({
         minWidth: 'auto',
       }}
     >
-      {feature === 'Hide' &&
-      questStartData?.userQuestSetting &&
-      questStartData.userQuestSetting.feedbackMessage !== '' ? (
+      {(feature === 'Hide' &&
+        questStartData?.userQuestSetting &&
+        questStartData.userQuestSetting.feedbackMessage !== '') ||
+      (feature === 'Hide' &&
+        (questStartData.startQuestData.feedbackReverted || questStartData.startStatus === 'continue')) ? (
         <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
           <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
             Are you sure you want to hide this post?
@@ -168,7 +171,7 @@ export default function ShowHidePostPopup({
                 questStartData.whichTypeQuestion === 'agree/disagree' ||
                 questStartData.whichTypeQuestion === 'yes/no'
                   ? ![3].includes(filterItem.id)
-                  : true,
+                  : true
               )
               .map((item, index) => (
                 <div
