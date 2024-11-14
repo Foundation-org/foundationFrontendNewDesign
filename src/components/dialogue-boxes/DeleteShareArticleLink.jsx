@@ -81,9 +81,7 @@ export default function DeleteShareArticleLink({ handleClose, modalVisible, arti
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/link.svg`}
-      title={
-        type === 'Delete' ? 'Delete Shared Link' : type === 'Enable' ? 'Enable Shared Link' : 'Disable Shared Link'
-      }
+      title={type === 'Delete' ? 'Delete Share Data' : type === 'Enable' ? 'Enable Sharing' : 'Disable Sharing'}
       open={modalVisible}
       handleClose={handleClose}
     >
@@ -91,15 +89,16 @@ export default function DeleteShareArticleLink({ handleClose, modalVisible, arti
         <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           {type === 'delete' ? (
             <span>
-              Are you sure you want to delete this Shared news? The link will no longer work and all related results and
-              statistics will be lost.
+              Are you sure you want to delete this share data? You will no longer be managing this content for your
+              audience, and all associated links and insights data will be removed. You can share this content again
+              later if you’d like to start over.
             </span>
           ) : type === 'enable' ? (
             <span>Are you sure you want to Enable this link? You can disable it again anytime.</span>
           ) : (
             <span>
-              Are you sure you want to disable this link? It will no longer be publicly available. You can enable it
-              again in the future.
+              Are you sure you want to disable sharing? This content will no longer be public on your Home Page, and all
+              associated shared links will be disabled. You can re-enable it anytime.
             </span>
           )}
         </h1>

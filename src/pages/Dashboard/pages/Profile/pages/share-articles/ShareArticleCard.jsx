@@ -70,7 +70,7 @@ export default function ShareArticleCard({ data, innerRef }) {
               className="h-2 w-2 tablet:h-6 tablet:w-6"
             />
             <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
-              {data?.articleSetting?.viewCount} Impressions{' '}
+              {data?.articleSetting?.viewCount} Views{' '}
             </h2>
           </div>
           <div className="flex items-center gap-[1px] tablet:gap-2">

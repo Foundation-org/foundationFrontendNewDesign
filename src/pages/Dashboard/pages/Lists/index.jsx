@@ -30,13 +30,7 @@ const Lists = () => {
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total lists
-            </h1>
-            <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.myListStatistics?.totalLists}</h5>
-          </div>
-          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Shared lists
+              Lists you’ve shared
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
@@ -44,18 +38,25 @@ const Lists = () => {
           </div>
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total list clicks
+              Total lists
             </h1>
-            <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
-            </h5>
+            <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.myListStatistics?.totalLists}</h5>
           </div>
-          <div>
+
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Total list engagement
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
+            </h5>
+          </div>
+          <div>
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Total list views
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">
+              {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
             </h5>
           </div>
         </div>

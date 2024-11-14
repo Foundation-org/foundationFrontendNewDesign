@@ -86,8 +86,9 @@ export default function UserProfile() {
               isPublicProfile={isPublicProfile}
             >
               <>
-                <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-                  Need Copy
+                <h1 className="summary-text">
+                  Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily
+                  with your audience.
                 </h1>
                 <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">

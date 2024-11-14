@@ -39,7 +39,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                     className="h-2 w-2 tablet:h-6 tablet:w-6"
                   />
                   <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
-                    {questStartData.userQuestSetting.questImpression} Impressions{' '}
+                    {questStartData.userQuestSetting.questImpression} Views{' '}
                   </h2>
                 </div>
                 <div className="flex items-center gap-[1px] tablet:gap-2">
@@ -70,7 +70,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                       className="h-2 w-2 tablet:h-6 tablet:w-6"
                     />
                     <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px] dark:text-white-400">
-                      {questStartData.userQuestSetting.questImpression} Impressions{' '}
+                      {questStartData.userQuestSetting.questImpression} Views{' '}
                     </h2>
                   </div>
                   <div className="flex items-center gap-[1px] tablet:gap-2">

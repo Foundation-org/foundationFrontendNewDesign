@@ -50,7 +50,7 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/link.svg`}
-      title={type === 'disable' ? 'Disable Shared List' : 'Enable Shared List'}
+      title={type === 'disable' ? 'Disable Sharing' : 'Enable Sharing'}
       open={modalVisible}
       handleClose={handleClose}
     >
@@ -58,8 +58,8 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
         <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           {type === 'disable' ? (
             <span>
-              Are you sure you want to disable this link? It will no longer be publicly available. You can enable it
-              again in the future.
+              Are you sure you want to disable sharing? This content will no longer be public on your Home Page, and all
+              associated shared links will be disabled. You can re-enable it anytime.
             </span>
           ) : (
             <span>Are you sure you want to Enable this link? You can disable it again anytime.</span>

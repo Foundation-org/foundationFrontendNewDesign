@@ -127,20 +127,21 @@ export default function SharedLinks() {
               {persistedUserInfo?.sharedQuestsStatistics.sharedQuests}
             </h5>
           </div>
+
           <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
-              Total shared link clicks
-            </h1>
-            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
-              {persistedUserInfo?.sharedQuestsStatistics.totalQuestsImpression}
-            </h5>
-          </div>
-          <div>
             <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
               Total post engagement
             </h1>
             <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
               {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
+            </h5>
+          </div>
+          <div>
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+              Total views
+            </h1>
+            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+              {persistedUserInfo?.sharedQuestsStatistics.totalQuestsImpression}
             </h5>
           </div>
         </div>

@@ -40,7 +40,9 @@ export default function DeleteListPopup({ handleClose, modalVisible, title, imag
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
-          Are you sure you want to delete this List?
+          Are you sure you want to delete this share data? You will no longer be managing this content for your
+          audience, and all associated links and insights data will be removed. You can share this content again later
+          if you’d like to start over.
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button

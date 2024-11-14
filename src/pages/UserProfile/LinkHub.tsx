@@ -76,8 +76,9 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
       <SummaryCard headerIcon="/assets/svgs/linkhub-logo.svg" headerTitle="Link Hub" isPublicProfile={isPublicProfile}>
         {!isPublicProfile && (
           <>
-            <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-              Need Copy
+            <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+              Put all your essential links in one place on your Home Page, making it easier for others to find and
+              connect with you across platforms
             </h1>
             <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
               <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
@@ -88,7 +89,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
               </div>
               <div>
                 <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                  Total clicks
+                  Total views
                 </h1>
                 <h5 className="text-center text-[18px] font-normal">0</h5>
               </div>

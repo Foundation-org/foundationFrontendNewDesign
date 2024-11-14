@@ -98,20 +98,21 @@ export default function SharedPosts({ domain }: { domain: string }) {
                       {persistedUserInfo?.sharedQuestsStatistics?.sharedQuests}
                     </h5>
                   </div>
+
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
-                    <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                      Total clicks
-                    </h1>
-                    <h5 className="text-center text-[18px] font-normal">
-                      {persistedUserInfo?.sharedQuestsStatistics?.totalQuestsImpression}
-                    </h5>
-                  </div>
-                  <div>
                     <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
                       Total engagements
                     </h1>
                     <h5 className="text-center text-[18px] font-normal">
                       {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
+                    </h5>
+                  </div>
+                  <div>
+                    <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                      Total views
+                    </h1>
+                    <h5 className="text-center text-[18px] font-normal">
+                      {persistedUserInfo?.sharedQuestsStatistics?.totalQuestsImpression}
                     </h5>
                   </div>
                 </div>
