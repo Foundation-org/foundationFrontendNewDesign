@@ -115,6 +115,9 @@ export default function UserProfile() {
                   </div>
                 </div>
                 <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
+                  <Button variant={'submit'} onClick={() => navigate('/profile-others')}>
+                    Other Profiles
+                  </Button>
                   <Button variant={'submit'} onClick={() => setIsPersonalPopup(true)}>
                     Manage Domain
                   </Button>
