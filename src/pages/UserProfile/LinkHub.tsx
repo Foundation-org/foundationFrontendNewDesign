@@ -65,6 +65,11 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
 
   const displayedBadges = showAll ? linkHub?.personal?.linkHub : linkHub?.personal?.linkHub?.slice(0, 5);
 
+  const totalViewerCount =
+    linkHub?.personal?.linkHub?.reduce((sum: number, item: { viewerCount: any[] }) => {
+      return sum + (Array.isArray(item.viewerCount) ? item.viewerCount.length : 0);
+    }, 0) || 0;
+
   return (
     <>
       {/* @ts-ignore */}
@@ -94,12 +99,8 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                 <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
                   Total views
                 </h1>
-                <h5 className="text-center text-[18px] font-normal">
-                  {linkHub?.personal?.linkHub?.reduce(
-                    (sum: number, item: { viewCount: any[] }) => sum + item?.viewCount?.length,
-                    0
-                  ) || 0}
-                </h5>
+
+                <h5 className="text-center text-[18px] font-normal">{totalViewerCount}</h5>
               </div>
             </div>
             <div className="mt-3 flex w-full justify-center tablet:mt-5">

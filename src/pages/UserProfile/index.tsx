@@ -34,6 +34,11 @@ export default function UserProfile() {
 
   const { data, isLoading, error } = useFetchMyProfile(domain, persistedUserInfo.uuid);
 
+  const totalViewerCount =
+    data?.linkHub?.personal?.linkHub?.reduce((sum: number, item: { viewerCount: any[] }) => {
+      return sum + (Array.isArray(item.viewerCount) ? item.viewerCount.length : 0);
+    }, 0) || 0;
+
   return (
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {isPersonalPopup && (
@@ -102,11 +107,7 @@ export default function UserProfile() {
                       Total engagements
                     </h1>
                     <h5 className="text-center text-[18px] font-normal">
-                      {data?.linkHub?.personal?.linkHub?.reduce(
-                        (sum: number, item: { viewCount?: any[] }) =>
-                          sum + (item.viewCount ? item.viewCount.length : 0),
-                        0
-                      ) +
+                      {totalViewerCount +
                         persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted +
                         persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount +
                         persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
