@@ -51,8 +51,6 @@ const ListCard = ({ listData, page }) => {
       tolerance: 0,
     },
   });
-  console.log(items);
-
   const plusImg = `${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`;
 
   const handleCopyClose = () => setCopyModal(false);

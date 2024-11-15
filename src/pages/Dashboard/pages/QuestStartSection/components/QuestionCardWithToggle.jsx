@@ -326,7 +326,8 @@ const QuestionCardWithToggle = (props) => {
       persistedUserInfo.role === 'guest' &&
       !location.pathname.startsWith('/p') &&
       !location.pathname.startsWith('/l') &&
-      !location.pathname.startsWith('/r')
+      !location.pathname.startsWith('/r') &&
+      !location.pathname.startsWith('/h')
     ) {
       dispatch(setGuestSignUpDialogue(true));
       return;

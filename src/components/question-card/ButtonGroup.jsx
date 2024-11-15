@@ -496,6 +496,7 @@ const ButtonGroup = ({
       location.pathname.includes('/p/') ||
       location.pathname.includes('/l/') ||
       location.pathname.includes('/r/') ||
+      location.pathname.includes('/h/') ||
       location.pathname === '/post/isfullscreen'
     ) {
       return (
