@@ -7,30 +7,76 @@ const navMenuList = [
     title: 'News',
     path: '/news',
     icon: `/assets/mobilenav/news.svg`,
+    darkicon: `/assets/mobilenav/news-dark.svg`,
     allowedRole: 'public',
   },
-  { title: 'Treasury', path: '/treasury', icon: `/assets/mobilenav/treasury.svg`, allowedRole: 'public' },
+  {
+    title: 'Treasury',
+    path: '/treasury',
+    icon: `/assets/mobilenav/treasury.svg`,
+    darkicon: `/assets/mobilenav/treasury-dark.svg`,
+    allowedRole: 'public',
+  },
   {
     title: 'Verification Badges',
     path: '/profile/verification-badges',
     icon: `/assets/mobilenav/verificationbadges.svg`,
+    darkicon: `/assets/mobilenav/verificationbadges-dark.svg`,
   },
-  { title: 'Feedback Given', path: '/profile/feedback-given', icon: `/assets/mobilenav/feedback-given.svg` },
-  { title: 'Feedback received', path: '/profile/feedback', icon: `/assets/mobilenav/feedback-received.svg` },
+  {
+    title: 'Feedback Given',
+    path: '/profile/feedback-given',
+    icon: `/assets/mobilenav/feedback-given.svg`,
+    darkicon: `/assets/mobilenav/feedback-given-dark.svg`,
+  },
+  {
+    title: 'Feedback Received',
+    path: '/profile/feedback',
+    icon: `/assets/mobilenav/feedback-received.svg`,
+    darkicon: `/assets/mobilenav/feedback-received-dark.svg`,
+  },
   {
     title: 'Shared Posts',
     path: '/profile/shared-links',
-    icon: `/assets/svgs/sharelink.svg`,
+    icon: `/assets/mobilenav/sharedpost.svg`,
+    darkicon: `/assets/mobilenav/sharedpost-dark.svg`,
   },
-  { title: 'My Lists', path: '/profile/lists', icon: `/assets/mobilenav/my-list-logo1.svg` },
-  { title: 'Shared Articles', path: '/profile/shared-articles', icon: `/assets/mobilenav/sharedarticles.svg` },
-  { title: 'Post Activity', path: '/profile/post-activity', icon: `/assets/mobilenav/post-activity-logo2.svg` },
-  { title: 'User Setting', path: '/profile/user-settings', icon: `/assets/mobilenav/user setting.svg` },
-  { title: 'Help', path: '/help/about', icon: `/assets/mobilenav/help.svg`, allowedRole: 'public' },
+  {
+    title: 'My Lists',
+    path: '/profile/lists',
+    icon: `/assets/mobilenav/my-list.svg`,
+    darkicon: `/assets/mobilenav/my-list-dark.svg`,
+  },
+  {
+    title: 'Shared Articles',
+    path: '/profile/shared-articles',
+    icon: `/assets/mobilenav/sharedarticles.svg`,
+    darkicon: `/assets/mobilenav/sharedarticles-dark.svg`,
+  },
+  {
+    title: 'Post Activity',
+    path: '/profile/post-activity',
+    icon: `/assets/mobilenav/post-activity-logo2.svg`,
+    darkicon: `/assets/mobilenav/post-activity-logo2-dark.svg`,
+  },
+  {
+    title: 'User Setting',
+    path: '/profile/user-settings',
+    icon: `/assets/mobilenav/usersetting.svg`,
+    darkicon: `/assets/mobilenav/usersetting-dark.svg`,
+  },
+  {
+    title: 'Help',
+    path: '/help/about',
+    icon: `/assets/mobilenav/help.svg`,
+    darkicon: `/assets/mobilenav/help-dark.svg`,
+    allowedRole: 'public',
+  },
   {
     title: 'Seldon',
     path: 'seldon-ai',
     icon: `/assets/mobilenav/seldon.svg`,
+    darkicon: `/assets/mobilenav/seldon-dark.svg`,
   },
 ];
 
@@ -38,6 +84,7 @@ export default function NavMobileMenu() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const isUser = persistedUserInfo?.role === 'user';
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
     <Menu as="div" className="relative inline-block h-5 text-left tablet:h-8">
@@ -68,7 +115,7 @@ export default function NavMobileMenu() {
                 className="flex items-center gap-2 text-[12px] font-semibold leading-normal text-[#7C7C7C] dark:text-white-400"
               >
                 <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}${item.icon}`}
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}${persistedTheme === 'dark' ? item.darkicon : item.icon}`}
                   alt={item.title}
                   className="size-[17px]"
                 />
