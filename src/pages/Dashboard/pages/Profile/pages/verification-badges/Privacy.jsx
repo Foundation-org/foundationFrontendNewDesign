@@ -60,7 +60,7 @@ const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup })
         setIsPersonalPopup={setIsPersonalPopup}
       />
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        Add an extra layer of protection to your personal data so only you can access it.
+        Enhance your data security to ensure that only you have access to your personal information.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
@@ -102,13 +102,13 @@ const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup })
                       setIsPersonalPopup(true);
                     } else {
                       toast.warning(
-                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`,
+                        `You need to wait just ${timeRemaining} more days before you can unlock this badge.`
                       );
                     }
                   }
                 }}
               >
-                {checkLegacyBadge() ? 'Remove' : 'Add'}
+                {checkLegacyBadge() ? 'Remove Badge' : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                   {checkLegacyBadge() ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
@@ -147,9 +147,9 @@ const Privacy = ({ checkLegacyBadge, checkPseudoBadge, handleRemoveBadgePopup })
                   {pseudoLoading ? (
                     <FaSpinner className="animate-spin text-[#EAEAEA]" />
                   ) : checkPseudoBadge() ? (
-                    'Remove'
+                    'Remove Badge'
                   ) : (
-                    'Add'
+                    'Add Badge'
                   )}
                 </Button>
               </div>

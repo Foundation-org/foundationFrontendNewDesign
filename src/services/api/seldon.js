@@ -1,10 +1,10 @@
 import api from './Axios';
 
-export const getArticles = async (id) => {
+export const getArticles = async (id, userUuid) => {
   try {
-    return await api.get(`/article/getArticleById?id=${id}`);
-  } catch (err) {
-    console.log(err);
+    return await api.get(`/article/getArticleById?id=${id}&userUuid=${userUuid}`);
+  } catch (error) {
+    throw new Error(error);
   }
 };
 

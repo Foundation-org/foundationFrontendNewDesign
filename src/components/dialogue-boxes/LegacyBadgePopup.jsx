@@ -7,8 +7,9 @@ import PopUp from '../ui/PopUp';
 import showToast from '../ui/Toast';
 import api from '../../services/api/Axios';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import ProgressBar from '../ProgressBar';
 
-const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
+const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo, handleSkip, onboarding, progress }) => {
   const handleClose = () => setIsPopup(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -68,9 +69,13 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        <h1 className="summary-text mb-[10px] tablet:mb-5">
+          Data encryption keeps your information private and secure. Your personal data will remain protected and
+          completely inaccessible to anyone, including Foundation.
+        </h1>
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <div className="flex flex-col tablet:gap-5">
-            <div className="w-full ">
+            <div className="w-full">
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 Password
               </p>
@@ -87,14 +92,14 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
                     alt="blind"
-                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
+                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer 2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                     onClick={togglePasswordVisibility}
                   />
                 ) : (
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
                     alt="blind"
-                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
+                    className="absolute right-2 h-[17px] w-[17px] cursor-pointer 2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                     onClick={togglePasswordVisibility}
                   />
                 )}
@@ -122,14 +127,14 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
                       alt="blind"
-                      className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
+                      className="absolute right-2 h-[17px] w-[17px] cursor-pointer 2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                       onClick={toggleCnfmPasswordVisibility}
                     />
                   ) : (
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
                       alt="blind"
-                      className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
+                      className="absolute right-2 h-[17px] w-[17px] cursor-pointer 2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                       onClick={toggleCnfmPasswordVisibility}
                     />
                   )}
@@ -143,11 +148,12 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
 
           <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
             <Button variant="submit" onClick={addPasswordBadge}>
-              {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+              {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add Badge'}
             </Button>
           </div>
         </div>
       </div>
+      {onboarding && <ProgressBar handleSkip={handleSkip} />}
     </PopUp>
   );
 };

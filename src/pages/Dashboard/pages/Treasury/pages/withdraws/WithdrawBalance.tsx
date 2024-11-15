@@ -5,11 +5,17 @@ import { toast } from 'sonner';
 import ABI from '../../../../../../contracts/TokenTransfer/TokenTransfer.json';
 import { useSDK } from '@metamask/sdk-react';
 import Web3 from 'web3';
+import SummaryCard from '../../../../../../components/SummaryCard';
+import ConfirmWithdrawDialogue from './ConfirmWithdrawDialogue';
 
 export default function WithdrawBalance() {
   const [dollar, setDollar] = useState(0);
+  const [confirmWithdraw, setConfirmWithdraw] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { sdk, connected, connecting, provider, chainId } = useSDK();
+
+  const toAddress = persistedUserInfo?.badges?.find((badge: any) => badge?.web3?.hasOwnProperty('etherium-wallet'))
+    ?.web3['etherium-wallet'];
 
   const handleFdxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fdxValue = parseFloat(e.target.value);
@@ -19,8 +25,11 @@ export default function WithdrawBalance() {
   const checkWeb3Badge = () =>
     persistedUserInfo?.badges?.some((badge: any) => badge?.web3?.hasOwnProperty('etherium-wallet') || false) || false;
 
-  const handleWithdraw = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleWithdraw = async () => {
+    if (!checkWeb3Badge()) {
+      toast.warning('Please add Ethereum badge first!');
+      return;
+    }
 
     if (dollar <= 0 || Number.isNaN(dollar)) {
       toast.warning('Please enter a valid value');
@@ -40,20 +49,9 @@ export default function WithdrawBalance() {
         return;
       }
 
-      console.log(accounts);
-
       if (connected && provider) {
-        console.log(connected, provider);
-
         const web3 = new Web3(provider);
-
         const contract = new web3.eth.Contract(ABI, import.meta.env.VITE_TRANSFERTOKEN_AGREEMENT);
-
-        const toAddress = persistedUserInfo?.badges?.find((badge: any) =>
-          badge?.web3?.hasOwnProperty('etherium-wallet'),
-        )?.web3['etherium-wallet'];
-
-        console.log({ toAddress });
 
         // Convert dollar value to Wei
         const amountInWei = web3.utils.toWei(dollar.toString(), 'ether');
@@ -65,20 +63,6 @@ export default function WithdrawBalance() {
 
         console.log({ transaction });
         toast.success('withdraw successful');
-
-        // const provider = new ethers.BrowserProvider(window.ethereum);
-        // const signer = await provider.getSigner();
-        // const contract = new ethers.Contract(import.meta.env.VITE_TRANSFERTOKEN_AGREEMENT, ABI, signer);
-        // const toAddress = persistedUserInfo?.badges?.find((badge: any) =>
-        //   badge?.web3?.hasOwnProperty('etherium-wallet'),
-        // )?.web3['etherium-wallet'];
-        // const transaction = await contract.transferTokens(toAddress, {
-        //   value: ethers.utils.parseEther('0.0000000000000001'),
-        // });
-        // const receipt = await transaction.wait();
-        // console.log('Withdrawl Successfull', receipt);
-        // toast.success('Withdrawl Successfull');
-        // window.location.reload();
       } else {
         toast.error('Please install metamask first');
       }
@@ -87,43 +71,98 @@ export default function WithdrawBalance() {
     }
   };
 
+  const closeConfirmWithdraw = () => {
+    setConfirmWithdraw(false);
+  };
+
   return (
-    <form
-      className="mt-3 flex flex-col items-center justify-center gap-[6px] tablet:mt-5 tablet:gap-3"
-      onSubmit={handleWithdraw}
-    >
-      <div className="flex w-full items-center justify-center gap-2 tablet:gap-6">
-        <h1 className="text-[9px] font-semibold leading-[113%] text-[#85898C] tablet:text-[20px] tablet:leading-normal">
-          FDX
-        </h1>
-        <input
-          type="number"
-          placeholder="e.g 10"
-          value={dollar}
-          onChange={handleFdxChange}
-          className="w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 py-[4.5px] text-[9.053px] font-semibold leading-normal focus:outline-none tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:py-[9px] tablet:text-[20px]"
-        />
-      </div>
-      <div className="flex w-full justify-between">
-        <div className="flex items-end">
-          {!checkWeb3Badge() ? (
-            <p className="text-[9px] font-normal leading-[113%] text-red-500 tablet:text-[16px] tablet:font-medium tablet:leading-normal">
-              Please add Ethereum badge first!
-            </p>
-          ) : (
-            <></>
-          )}
+    <SummaryCard headerIcon="/assets/svgs/crypto-withdraw.svg" headerTitle="Crypto Withdraw">
+      <div className="flex flex-col gap-[10px] text-[#707175] tablet:gap-[25px]">
+        <div className="flex flex-col gap-2 tablet:gap-[15px]">
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+            Token Name
+          </p>
+          <input
+            type="text"
+            value="FDX"
+            disabled
+            className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+          />
         </div>
-        {checkWeb3Badge() ? (
-          <Button variant="submit" type="submit">
-            Withdraw
-          </Button>
-        ) : (
-          <Button variant="hollow-submit" type="submit" disabled={true}>
-            Withdraw
-          </Button>
-        )}
+        <div className="flex flex-col gap-2 tablet:gap-[15px]">
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+            Withdraw to
+          </p>
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+            Address
+          </p>
+          <input
+            type="text"
+            value={toAddress}
+            disabled
+            className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+          />
+        </div>
+        <div className="flex flex-col gap-2 tablet:gap-[15px]">
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+            Withdrawal Network
+          </p>
+          <input
+            type="text"
+            value="ERC20"
+            disabled
+            className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+          />
+        </div>
+        <div className="flex flex-col gap-2 tablet:gap-[15px]">
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+            Amount Withdraw
+          </p>
+          <div className="flex items-center gap-5">
+            <div className="relative w-full max-w-[380px]">
+              <input
+                type="number"
+                value={dollar}
+                onChange={handleFdxChange}
+                className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+              />
+              <div className="absolute flex w-full justify-between gap-2 tablet:gap-[15px]">
+                <p className="text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
+                  Remaining Amount
+                </p>
+                <p className="text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
+                  {Number(persistedUserInfo?.balance || 0) - Number(dollar || 0)} FDX
+                </p>
+              </div>
+            </div>
+            <p className="text-nowrap text-end text-[9px] font-semibold leading-[113%] text-green-200 tablet:text-[15px] tablet:leading-[15px]">
+              Available Amount = {persistedUserInfo.balance.toFixed(2)} FDX
+            </p>
+          </div>
+        </div>
+        <Button
+          variant={checkWeb3Badge() ? 'submit' : 'hollow-submit'}
+          type="submit"
+          disabled={checkWeb3Badge() ? false : true}
+          onClick={() => {
+            setConfirmWithdraw(true);
+          }}
+          className="max-w-1/2 tablet:max-w-1/2 mx-auto mt-[10px] w-1/2 tablet:mt-[25px] tablet:min-w-[50%]"
+        >
+          Withdraw
+        </Button>
       </div>
-    </form>
+      {confirmWithdraw && (
+        <ConfirmWithdrawDialogue
+          handleClose={closeConfirmWithdraw}
+          modalVisible={confirmWithdraw}
+          title={'Confirm Withdrawal'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/confirm-withdraw.svg`}
+          handleWithdraw={handleWithdraw}
+          address={toAddress}
+          amount={dollar}
+        />
+      )}
+    </SummaryCard>
   );
 }

@@ -66,7 +66,7 @@ const Authenticating = () => {
           ? userData?.States.moderationRatingFilter?.initial
           : 0,
         final: userData?.States.moderationRatingFilter?.final ? userData?.States.moderationRatingFilter?.final : 0,
-      }),
+      })
     );
     localStorage.setItem('selectedButtonId', userData?.States.selectedBtnId);
   };
@@ -105,7 +105,7 @@ const Authenticating = () => {
             >
               Sign in
             </button>{' '}
-          </div>,
+          </div>
         );
       } else {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -180,7 +180,7 @@ const Authenticating = () => {
             <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/signup')}>
               Create an Account
             </span>{' '}
-          </p>,
+          </p>
         );
       } else {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -265,7 +265,7 @@ const Authenticating = () => {
     if (!isLoading && !isError && isSuccess) {
       if (localStorage.getItem('authMode') === 'Login') {
         handleSignInSocial(authSuccessResp.data.user, authSuccessResp.data.user.provider);
-      } else if (pathname === '/profile/verification-badges') {
+      } else if (pathname === '/profile/verification-badges' || localStorage.getItem('onBoarding') === 'true') {
         if (authSuccessResp.data.user.provider === 'google') {
           handleAddContactBadge({ provider: authSuccessResp.data.user.provider, data: authSuccessResp.data.user });
         } else {

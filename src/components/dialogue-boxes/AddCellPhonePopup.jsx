@@ -12,8 +12,19 @@ import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { setAskPassword } from '../../features/profile/userSettingSlice';
+import ProgressBar from '../ProgressBar';
 
-const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verification }) => {
+const AddCellPhonePopup = ({
+  isPopup,
+  title,
+  logo,
+  setIsPopup,
+  type,
+  verification,
+  onboarding,
+  handleSkip,
+  progress,
+}) => {
   const queryClient = useQueryClient();
   const [phone, setPhone] = useState();
   const [otpResp, setOtpResp] = useState();
@@ -21,6 +32,10 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
   const refs = Array.from({ length: 6 }).map(() => useRef());
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
+  const handleClose = () => {
+    setIsPopup(false);
+  };
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -128,9 +143,13 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
         if (!verification) {
           showToast('success', 'badgeAdded');
         }
+        setLoading(false);
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -144,8 +163,11 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       {!otpResp ? (
-        <div className="pb-[15px] pt-2 tablet:py-[25px]">
-          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+        <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+          <h1 className="pb-[15px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+            Ensure you can recover your account easily if needed.
+          </h1>
+          <div>
             <p
               htmlFor="email"
               className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[24.2px]"
@@ -251,6 +273,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, verificati
           </div>
         </div>
       )}
+      {onboarding && <ProgressBar handleSkip={handleSkip} />}
     </PopUp>
   );
 };

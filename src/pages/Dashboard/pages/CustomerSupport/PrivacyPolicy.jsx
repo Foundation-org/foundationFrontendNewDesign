@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
         Privacy Policy
       </h1>
       <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] dark:text-gray-300 tablet:text-[1.125rem] tablet:leading-[1.125rem]">
-        Last Updated: January 19, 2024
+        Last Updated: October 18, 2024
       </p>
       <div className="term_policy_paragraph mt-[5px] space-y-[0.2rem] px-8 text-[#707175] dark:text-gray-300 tablet:mt-[15px] tablet:space-y-2 tablet:px-16">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">

@@ -201,7 +201,7 @@ const RankChoice = () => {
     answerVerification(
       `index-${optionsValue.length - 2}`,
       optionsValue.length - 2,
-      optionsValue[optionsValue.length - 1].question,
+      optionsValue[optionsValue.length - 1].question
     );
   };
 
@@ -217,7 +217,7 @@ const RankChoice = () => {
         optionsCount: optionsValue.length,
         addOption,
         options: tempOptions,
-      }),
+      })
     );
   }, [createQuestSlice.question, changedOption, changeState, addOption, optionsValue.length, optionsValue]);
 
@@ -299,7 +299,7 @@ const RankChoice = () => {
             value.question !== '' &&
             createQuestSlice.question !== '' &&
             // getMediaStates.desctiption !== '' &&
-            getMediaStates.url !== '',
+            getMediaStates.url !== ''
         )
       ) {
         setHollow(false);
@@ -353,6 +353,10 @@ const RankChoice = () => {
     }
   };
 
+  useEffect(() => {
+    document.getElementById(`input-${optionsValue.length + 2}`).blur();
+  }, []);
+
   return (
     <CreateQuestWrapper
       quest="M/R"
@@ -377,15 +381,15 @@ const RankChoice = () => {
                 label={`Option ${index + 1} #`}
                 trash={true}
                 dragable={true}
-                handleChange={(value) => handleChange(index, value, optionsArray)}
+                handleChange={(value) => handleChange(index, value, optionsValue)}
                 handleOptionSelect={() => handleOptionSelect(index)}
                 typedValue={item.question}
                 isTyping={item?.isTyping}
                 isSelected={item.selected}
-                optionsCount={optionsArray.length}
+                optionsCount={optionsValue.length}
                 removeOption={removeOption}
                 number={index + 3}
-                optionStatus={optionsArray[index].optionStatus}
+                optionStatus={optionsValue[index].optionStatus}
                 answerVerification={(value) => answerVerification(item.id, index, value)}
                 handleTab={handleTab}
               />

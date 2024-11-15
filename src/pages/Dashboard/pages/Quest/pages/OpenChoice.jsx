@@ -197,7 +197,7 @@ const OpenChoice = () => {
     answerVerification(
       `index-${optionsValue.length - 2}`,
       optionsValue.length - 2,
-      optionsValue[optionsValue.length - 1].question,
+      optionsValue[optionsValue.length - 1].question
     );
   };
 
@@ -214,7 +214,7 @@ const OpenChoice = () => {
         addOption,
         options: tempOptions,
         multipleOption,
-      }),
+      })
     );
   }, [
     createQuestSlice.question,
@@ -305,7 +305,7 @@ const OpenChoice = () => {
             value.question !== '' &&
             createQuestSlice.question !== '' &&
             // getMediaStates.desctiption !== '' &&
-            getMediaStates.url !== '',
+            getMediaStates.url !== ''
         )
       ) {
         setHollow(false);
@@ -359,6 +359,10 @@ const OpenChoice = () => {
     }
   };
 
+  useEffect(() => {
+    document.getElementById(`input-${optionsValue.length + 2}`).blur();
+  }, []);
+
   return (
     <CreateQuestWrapper
       quest="OpenChoice"
@@ -384,14 +388,14 @@ const OpenChoice = () => {
                 trash={true}
                 options={false}
                 dragable={true}
-                handleChange={(value) => handleChange(index, value, optionsArray)}
+                handleChange={(value) => handleChange(index, value, optionsValue)}
                 typedValue={item.question}
                 isTyping={item?.isTyping}
                 isSelected={item.selected}
-                optionsCount={optionsArray.length}
+                optionsCount={optionsValue.length}
                 removeOption={removeOption}
                 number={index + 3}
-                optionStatus={optionsArray[index].optionStatus}
+                optionStatus={optionsValue[index].optionStatus}
                 answerVerification={(value) => answerVerification(item.id, index, value)}
                 handleTab={handleTab}
               />

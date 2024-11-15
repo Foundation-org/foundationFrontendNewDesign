@@ -2,14 +2,22 @@ import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { badgesTotalLength } from '../../constants/varification-badges';
+import ProgressBar from '../ProgressBar';
 
 export default function VerificationBadgeScore({ isMobile, children }) {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const location = useLocation();
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+
+  const progress = Math.floor(
+    ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
+      badgesTotalLength) *
+      100
+  );
 
   return (
-    <div className={`${isMobile ? 'mx-4 tablet:mx-6 ' : ''}`}>
+    <div className={`${isMobile ? 'mx-4 tablet:mx-6' : ''}`}>
       <div
         className={`flex items-center justify-between rounded-t-[10px] border-blue-200 bg-blue-200 px-5 py-[10px] dark:border-x-[1.85px] dark:border-t-[1.85px] dark:border-gray-100 dark:bg-accent-100 ${isMobile ? 'tablet:hidden' : ''}`}
       >
@@ -46,15 +54,19 @@ export default function VerificationBadgeScore({ isMobile, children }) {
         </h1>
       </div>
       <div
-        className={`border-x-[1.85px]  border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:py-[18.73px] dark:border-gray-100 dark:bg-gray-200 ${isMobile ? 'rounded-[10px]' : 'rounded-b-[10px]'}`}
+        className={`border-x-[1.85px] border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:py-[18.73px] ${isMobile ? 'rounded-[10px]' : 'rounded-b-[10px]'}`}
       >
         <h1
-          className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal dark:text-gray-300 ${isMobile ? 'tablet:hidden' : ''}`}
+          className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal ${isMobile ? 'tablet:hidden' : ''}`}
         >
-          Boost your earnings now and in the future by adding more verified badges to your profile.
+          Enhance your profile by adding verification badges. These badges not only increase your credibility but also
+          unlock more earning opportunities within the Foundation community.
         </h1>
+        <div className="pt-[10px] tablet:pt-[18.73px]">
+          <ProgressBar />
+        </div>
         {location.pathname === '/profile' && (
-          <div className="mt-3 flex w-full justify-center tablet:mt-5">
+          <div className="flex w-full justify-center">
             <Button variant={'submit'} onClick={() => navigate('/profile/verification-badges')}>
               Add badge
             </Button>

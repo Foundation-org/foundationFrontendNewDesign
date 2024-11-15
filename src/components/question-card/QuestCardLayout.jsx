@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 import { EmbededImage } from './EmbededImage';
 import { EmbededVideo } from './EmbededVideo';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { isImageUrl } from '../../utils/embeddedutils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateDialogueBox } from '../../features/quest/utilsSlice';
 import showToast from '../ui/Toast';
 import CardTopbar from './CardTopbar';
 import PostTopBar from './PostTopBar';
@@ -14,9 +13,18 @@ import EmbedStatusBar from '../../pages/Embed/EmbedStatusBar';
 import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 import PostArticlesCard from '../../pages/features/seldon-ai/components/PostArticlesCard';
 import * as HomepageApis from '../../services/api/homepageApis';
+import SharedLinkAdminSection from '../admin-card-section/sharedlink-admin-section';
 
-const QuestCardLayout = ({ questStartData, playing, postProperties, questType, children }) => {
-  const dispatch = useDispatch();
+const QuestCardLayout = ({
+  questStartData,
+  playing,
+  postProperties,
+  questType,
+  handleViewResults,
+  handleStartTest,
+  startTest,
+  children,
+}) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
@@ -33,7 +41,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       queryClient.setQueryData(['posts'], (oldData) => ({
         ...oldData,
         pages: oldData?.pages?.map((page) =>
-          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: true } : item)),
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: true } : item))
         ),
       }));
     },
@@ -48,7 +56,7 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       queryClient.setQueryData(['posts'], (oldData) => ({
         ...oldData,
         pages: oldData?.pages?.map((page) =>
-          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: false } : item)),
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: false } : item))
         ),
       }));
     },
@@ -77,17 +85,6 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
       };
       AddBookmark(params);
     }
-  };
-
-  const showDisableSharedLinkPopup = () => {
-    dispatch(
-      updateDialogueBox({
-        type: 'Delete',
-        status: true,
-        link: questStartData.userQuestSetting.link,
-        id: questStartData._id,
-      }),
-    );
   };
 
   const handleClose = () => setModalVisible(false);
@@ -143,15 +140,19 @@ const QuestCardLayout = ({ questStartData, playing, postProperties, questType, c
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
         postProperties={postProperties}
-        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
       {children}
-      <QuestBottombar
-        questStartData={questStartData}
-        postProperties={postProperties}
-        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
-      />
+      <QuestBottombar questStartData={questStartData} postProperties={postProperties} />
       <PostArticlesCard questStartData={questStartData} />
+      {(postProperties === 'SharedLinks' || postProperties === 'user-profile') && (
+        <SharedLinkAdminSection
+          questStartData={questStartData}
+          postProperties={postProperties}
+          handleStartTest={handleStartTest}
+          handleViewResults={handleViewResults}
+          startTest={startTest}
+        />
+      )}
     </div>
   );
 };

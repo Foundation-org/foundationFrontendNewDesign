@@ -108,7 +108,7 @@ export default function Contact({
           onClick={() => item.ButtonColor !== 'gray' && handleClickContactBadgeEmail(item.type, item.title, item.image)}
           disabled={checkPrimary(item.type)}
         >
-          {checkContact(item.type) ? (checkPrimary(item.type) ? 'Added' : 'Remove') : item.ButtonText}
+          {checkContact(item.type) ? (checkPrimary(item.type) ? 'Added' : 'Remove Badge') : item.ButtonText}
           <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
             {checkContact(item.type) ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
           </span>
@@ -178,7 +178,6 @@ export default function Contact({
               title="Phone Number"
               logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
               selectedBadge={seletedBadge}
-              handleClose={handleClose}
               type={'cell-phone'}
             />
           </>
@@ -202,7 +201,8 @@ export default function Contact({
         setIsPersonalPopup={setIsPersonalPopup}
       />
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        Contact badges increase your verification status and give you more options for account recovery.
+        Contact badges enhance your verification status and improve your account security, ensuring you have reliable
+        options for recovery when needed.
       </h1>
       <div className="flex flex-col items-center justify-between pt-[10px] tablet:pt-[18.73px]">
         {renderContactBadgesPopup()}

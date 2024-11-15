@@ -11,6 +11,7 @@ import Listbox from '../ui/ListBox';
 import { useDebounce } from '../../utils/useDebounce';
 import BadgeRemovePopup from './badgeRemovePopup';
 import showToast from '../ui/Toast';
+import ProgressBar from '../ProgressBar';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -46,6 +47,9 @@ const PersonalBadgesPopup = ({
   edit,
   fetchUser,
   setIsPersonalPopup,
+  handleSkip,
+  onboarding,
+  progress,
 }) => {
   const queryClient = useQueryClient();
   const [selected, setSelected] = useState();
@@ -386,6 +390,11 @@ const PersonalBadgesPopup = ({
       const addBadge = await api.post(`/addBadge/personal/add`, payload);
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
+        setName('');
+        if (onboarding) {
+          handleSkip(type);
+          return;
+        }
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
       }
@@ -404,11 +413,12 @@ const PersonalBadgesPopup = ({
 
   const handleBadgesClose = () => setModalVisible(false);
 
-  const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data, placeholder2) => {
+  const renderInputField = (title, name, placeholder, apiResp, data, placeholder2, summaryText) => {
     const isError = apiResp?.data?.message === 'No';
 
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -460,16 +470,28 @@ const PersonalBadgesPopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               )}
               {hollow ? (
-                <Button variant="hollow-submit" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                <Button variant="submit-hollow" disabled={true}>
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               ) : (
                 <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>
@@ -500,16 +522,28 @@ const PersonalBadgesPopup = ({
                       });
                     }}
                   >
-                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                   </Button>
                 )}
                 {hollow ? (
-                  <Button variant="hollow-submit" disabled={true}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  <Button variant="submit-hollow" disabled={true}>
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 ) : (
                   <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 )}
               </div>
@@ -544,19 +578,31 @@ const PersonalBadgesPopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               )}
               {hollow ? (
                 <div className="flex gap-2">
-                  <Button variant="hollow-submit" disabled={true}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  <Button variant="submit-hollow" disabled={true}>
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 </div>
               ) : (
                 <div className="flex gap-2">
                   <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
                   </Button>
                 </div>
               )}
@@ -567,10 +613,11 @@ const PersonalBadgesPopup = ({
     );
   };
 
-  const renderCurrentCity = (title, name, handleNameChange, placeholder, apiResp, data) => {
+  const renderCurrentCity = (title, name, placeholder, apiResp, summaryText) => {
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <CustomCombobox
             items={cities}
@@ -599,16 +646,28 @@ const PersonalBadgesPopup = ({
                 });
               }}
             >
-              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
             </Button>
           )}
           {hollow ? (
-            <Button variant="hollow-submit" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+            <Button variant="submit-hollow" disabled={true}>
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           ) : (
             <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           )}
         </div>
@@ -616,12 +675,11 @@ const PersonalBadgesPopup = ({
     );
   };
 
-  const renderRelationship = (title, data, placeholder, apiResp) => {
+  const renderRelationship = (title, data, placeholder, apiResp, summaryText) => {
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        {/* {data && data.length >= 1 ? (
-          <> */}
+        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <Listbox
             items={data}
@@ -647,16 +705,28 @@ const PersonalBadgesPopup = ({
                 });
               }}
             >
-              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
             </Button>
           )}
           {hollow ? (
-            <Button variant="hollow-submit" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+            <Button variant="submit-hollow" disabled={true}>
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           ) : (
             <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
             </Button>
           )}
         </div>
@@ -701,10 +771,32 @@ const PersonalBadgesPopup = ({
         />
       )}
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-        {title === 'First Name' && renderInputField('First Name', name, handleNameChange, placeholder, apiResp)}
-        {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
+        {title === 'First Name' &&
+          renderInputField(
+            'First Name',
+            name,
+            placeholder,
+            apiResp,
+            null,
+            null,
+            'Your first name is a simple way to begin enhancing your value.'
+          )}
+        {title === 'Last Name' &&
+          renderInputField(
+            'Last Name',
+            name,
+            placeholder,
+            apiResp,
+            null,
+            null,
+            'Your last name further strengthens your authenticity.'
+          )}
         {title === 'Date of Birth' && (
           <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+            <h1 className="summary-text mb-[10px] tablet:mb-5">
+              Your date of birth strengthens your identity verification, boosting your trustworthiness and creating
+              opportunities for age-related rewards.
+            </h1>
             {fetchingEdit ? (
               <input
                 type="text"
@@ -721,6 +813,7 @@ const PersonalBadgesPopup = ({
                 className="verification_badge_input"
               />
             )}
+
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
                 <Button
@@ -734,38 +827,81 @@ const PersonalBadgesPopup = ({
                     });
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
                 </Button>
               )}
               {hollow ? (
-                <Button variant="hollow-submit" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                <Button variant="submit-hollow" disabled={true}>
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               ) : (
                 <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
                 </Button>
               )}
             </div>
           </div>
         )}
-        {title === 'Current City' && renderCurrentCity('Current City', name, handleNameChange, placeholder, apiResp)}
-        {title === 'Home Town' && renderCurrentCity('Home Town', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Current City' &&
+          renderCurrentCity(
+            'Current City',
+            name,
+            placeholder,
+            apiResp,
+            'Your current location qualifies you for location-specific rewards.'
+          )}
+        {title === 'Home Town' &&
+          renderCurrentCity('Home Town', name, placeholder, apiResp, 'Enhance your chances for personalized rewards.')}
         {title === 'Relationship Status' &&
-          renderRelationship('Relationship Status', relationshipData, placeholder, apiResp)}
-        {title === 'Sex' && renderRelationship('Sex', sexOtpions, placeholder, apiResp)}
+          renderRelationship(
+            'Relationship Status',
+            relationshipData,
+            placeholder,
+            apiResp,
+            'Enhance your credibility, value and opportunities to earn rewards.'
+          )}
+        {title === 'Sex' &&
+          renderRelationship(
+            'Sex',
+            sexOtpions,
+            placeholder,
+            apiResp,
+            'Increase your credibility, value and earning potential.'
+          )}
         {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
-        {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Geolocation' &&
+          renderInputField(
+            'Geolocation',
+            name,
+            placeholder,
+            apiResp,
+            null,
+            null,
+            'Keeping your location up to date ensures you receive rewards tailored to your travel tendencies and interests, enhancing your overall experience on the platform.'
+          )}
         {title === 'Security Question' &&
           renderInputField(
             'Security Question',
             name,
-            handleSecurityQuestionChange,
             'Security question here',
             apiResp,
             data,
             'Write your answer here',
+            'Your security question helps in recovering your account if you get locked out.'
           )}
+        {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
     </>
   );

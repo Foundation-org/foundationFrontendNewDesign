@@ -8,8 +8,19 @@ import PopUp from '../../../../../components/ui/PopUp';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../../../../../components/ui/Toast';
 import { isWebview } from '../../../../../utils/helper';
+import ProgressBar from '../../../../../components/ProgressBar';
 const REDIRECT_URI = window.location.href;
-const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge }) => {
+const VerificationPopups = ({
+  isPopup,
+  setIsPopup,
+  title,
+  logo,
+  placeholder,
+  selectedBadge,
+  onboarding,
+  handleSkip,
+  progress,
+}) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
@@ -43,12 +54,20 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
       }
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
       }
       if (addBadge.status === 201) {
         showToast('success', 'verifyEmail');
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
@@ -65,7 +84,12 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
   return (
     <div>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-        <div className="pb-[15px] pt-2 tablet:pb-5 tablet:pt-[30px]">
+        <div className="px-5 py-[15px] tablet:px-[60px] tablet:pb-5 tablet:pt-[30px] laptop:px-[80px]">
+          <h1 className="summary-text mb-[10px] tablet:mb-5">
+            {title === 'Work Email'
+              ? 'Your professional identity is more credible with a work email.'
+              : 'Your education email strengthens your academic credentials.'}
+          </h1>
           {!isWebview() && (
             <div className="flex w-full justify-center">
               <Button
@@ -86,7 +110,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
             </div>
           )}
 
-          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
+          <div>
             {!isWebview() && (
               <h1 className="my-2 text-center text-[10px] font-medium leading-[12.1px] text-[#707175] tablet:my-[15px] tablet:text-[25px] tablet:leading-[30px]">
                 -OR-
@@ -112,6 +136,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
             </div>
           </div>
         </div>
+        {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
     </div>
   );

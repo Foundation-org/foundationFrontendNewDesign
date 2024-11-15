@@ -39,7 +39,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                     className="h-2 w-2 tablet:h-6 tablet:w-6"
                   />
                   <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
-                    {questStartData.userQuestSetting.questImpression} Impressions{' '}
+                    {questStartData.userQuestSetting.questImpression} Views{' '}
                   </h2>
                 </div>
                 <div className="flex items-center gap-[1px] tablet:gap-2">
@@ -61,7 +61,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
             )
           ) : (
             <>
-              {postProperties === 'SharedLinks' ? (
+              {/* {postProperties === 'SharedLinks' ? (
                 <div className="my-2 ml-10 flex gap-1 tablet:mb-[25px] tablet:ml-16 tablet:mt-[15px] tablet:gap-20">
                   <div className="flex items-center gap-[1px] tablet:gap-2">
                     <img
@@ -70,7 +70,7 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                       className="h-2 w-2 tablet:h-6 tablet:w-6"
                     />
                     <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px] dark:text-white-400">
-                      {questStartData.userQuestSetting.questImpression} Impressions{' '}
+                      {questStartData.userQuestSetting.questImpression} Views{' '}
                     </h2>
                   </div>
                   <div className="flex items-center gap-[1px] tablet:gap-2">
@@ -84,12 +84,12 @@ const QuestInfoText = ({ questStartData, show, postProperties }) => {
                     </h2>
                   </div>
                 </div>
-              ) : (
-                <h4 className="conditional-text">
-                  &#x200B;
-                  {/* You can select only one option */}
-                </h4>
-              )}
+              ) : ( */}
+              {/* )} */}
+              <h4 className="conditional-text">
+                &#x200B;
+                {/* You can select only one option */}
+              </h4>
             </>
           )}
         </>

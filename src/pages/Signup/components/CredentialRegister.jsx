@@ -16,7 +16,11 @@ import { signUpGuest } from '../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../components/ui/Button';
-import { setCredentialRegister, setGuestSignInDialogue } from '../../../features/extras/extrasSlice';
+import {
+  resetAuthModalState,
+  setCredentialRegister,
+  setGuestSignInDialogue,
+} from '../../../features/extras/extrasSlice';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -235,15 +239,21 @@ const CredentialRegister = () => {
           <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
             Creating an account means you have agreed with our{` `}
             <Link
-              to="/term-of-service"
+              to="/help/terms-of-service"
               className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+              onClick={() => {
+                dispatch(resetAuthModalState());
+              }}
             >
               Terms of Service
             </Link>
             {` `}&{' '}
             <Link
-              to="/privacy-policy"
+              to="/help/privacy-policy"
               className="cursor-pointer text-[8.158px] font-normal leading-[8.158px] text-blue-100 hover:underline dark:text-white md:text-[16px] tablet:leading-[22px] short:text-[12px]"
+              onClick={() => {
+                dispatch(resetAuthModalState());
+              }}
             >
               Privacy Policy
             </Link>

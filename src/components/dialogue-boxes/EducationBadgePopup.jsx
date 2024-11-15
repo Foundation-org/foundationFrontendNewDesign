@@ -10,6 +10,7 @@ import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
 import showToast from '../ui/Toast';
+import ProgressBar from '../ProgressBar';
 
 const School = {
   label: 'School',
@@ -48,6 +49,9 @@ const EducationBadgePopup = ({
   placeholder,
   fetchUser,
   setIsPersonalPopup,
+  handleSkip,
+  onboarding,
+  progress,
 }) => {
   const queryClient = useQueryClient();
   const [universities, setUniversities] = useState([]);
@@ -73,6 +77,7 @@ const EducationBadgePopup = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [fetchingEdit, setFetchingEdit] = useState(false);
+  const [addAnotherForm, setAddAnotherForm] = useState(false);
 
   const searchDegreeAndFields = async (type, query) => {
     try {
@@ -184,8 +189,6 @@ const EducationBadgePopup = ({
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
-        showToast('success', 'badgeAdded');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
@@ -206,13 +209,19 @@ const EducationBadgePopup = ({
             console.log(dataSaved2);
           }
         }
-        document.getElementById('cancalTheForm').click();
+        showToast('success', 'badgeAdded');
+        if (onboarding) {
+          handleSkip();
+          return;
+        }
+        queryClient.invalidateQueries(['userInfo']);
         setLoading(false);
         setDelLoading(false);
+        setAddAnotherForm(false);
       }
     } catch (error) {
       console.log(error);
-      handleClose();
+      setAddAnotherForm(false);
     }
   };
   const handleDelete = async (id) => {
@@ -302,12 +311,13 @@ const EducationBadgePopup = ({
             console.log(dataSaved2);
           }
         }
-        handleClose();
+
         setLoading(false);
+        setAddAnotherForm(false);
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-      handleClose();
+      setAddAnotherForm(false);
     }
 
     setFetchingEdit(false);
@@ -422,164 +432,175 @@ const EducationBadgePopup = ({
     const [edit, setEdit] = useState(false);
 
     return (
-      <div className="pb-[15px] pt-2 tablet:py-[25px]">
-        {modalVisible && (
-          <BadgeRemovePopup
-            handleClose={handleBadgesClose}
-            modalVisible={modalVisible}
-            title={deleteModalState?.title}
-            image={deleteModalState?.image}
-            type={deleteModalState?.type}
-            badgeType={deleteModalState?.badgeType}
-            fetchUser={fetchUser}
-            setIsPersonalPopup={setIsPersonalPopup}
-            setIsLoading={setRemoveLoading}
-            loading={RemoveLoading}
-          />
-        )}
-        {/* To View Already Added Info */}
-        {existingData && !addAnotherForm ? (
-          <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-            {existingData.map((item, index) => (
-              <div
-                key={index}
-                className="flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
-              >
-                <div className="py-3 tablet:py-[25px]">
-                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
-                    {item.school}
-                  </h4>
-                  <div className="mt-[2px] max-w-[270px] tablet:mt-2">
-                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                      {item.degreeProgram + ' ' + 'in' + ' ' + item.fieldOfStudy}
-                    </h5>
-                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
-                      {item.country}
-                    </h6>
-                  </div>
-                </div>
-                {deleteItem === item.id ? (
-                  <div className="max-w-[160px] rounded-[10.06px] border-l border-white-500 px-[9px] py-2 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
-                    <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
-                      Are you sure you want to delete your experience?
-                    </h1>
-                    <div className="flex justify-end gap-2 tablet:gap-[25px]">
-                      <Button
-                        className={'min-w-[2.875rem] tablet:min-w-[80px]'}
-                        variant="submit"
-                        onClick={() => {
-                          setDelLoading(item.id);
-                          handleDelete(deleteItem);
-                        }}
-                      >
-                        {delloading === item.id ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
-                      </Button>
-                      <Button
-                        className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
-                        variant="cancel"
-                        onClick={() => {
-                          setDeleteItem('');
-                        }}
-                      >
-                        No
-                      </Button>
+      <>
+        <div className="pb-[15px] tablet:pb-[25px]">
+          {modalVisible && (
+            <BadgeRemovePopup
+              handleClose={handleBadgesClose}
+              modalVisible={modalVisible}
+              title={deleteModalState?.title}
+              image={deleteModalState?.image}
+              type={deleteModalState?.type}
+              badgeType={deleteModalState?.badgeType}
+              fetchUser={fetchUser}
+              setIsPersonalPopup={setIsPersonalPopup}
+              setIsLoading={setRemoveLoading}
+              loading={RemoveLoading}
+            />
+          )}
+          {/* To View Already Added Info */}
+          {!addAnotherForm ? (
+            <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
+              <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+                Your educational background paves the way for reward opportunities aligned with your expertise.
+              </h1>
+              {existingData &&
+                existingData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
+                  >
+                    <div className="py-3 tablet:py-[25px]">
+                      <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+                        {item.school}
+                      </h4>
+                      <div className="mt-[2px] max-w-[270px] tablet:mt-2">
+                        <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
+                          {item.degreeProgram + ' ' + 'in' + ' ' + item.fieldOfStudy}
+                        </h5>
+                        <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                          {item.country}
+                        </h6>
+                      </div>
                     </div>
+                    {deleteItem === item.id ? (
+                      <div className="max-w-[160px] rounded-[10.06px] border-l border-white-500 px-[9px] py-2 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
+                        <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
+                          Are you sure you want to delete your experience?
+                        </h1>
+                        <div className="flex justify-end gap-2 tablet:gap-[25px]">
+                          <Button
+                            className={'min-w-[2.875rem] tablet:min-w-[80px]'}
+                            variant="submit"
+                            onClick={() => {
+                              setDelLoading(item.id);
+                              handleDelete(deleteItem);
+                            }}
+                          >
+                            {delloading === item.id ? (
+                              <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
+                            ) : (
+                              'Yes'
+                            )}
+                          </Button>
+                          <Button
+                            className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
+                            variant="cancel"
+                            onClick={() => {
+                              setDeleteItem('');
+                            }}
+                          >
+                            No
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
+                        <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                          <img
+                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                            alt="Edit Icon"
+                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                            onClick={() => {
+                              setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                            }}
+                          />
+                          <img
+                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                            alt="Edit Icon"
+                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                            onClick={() => setDeleteItem(item.id)}
+                          />
+                        </div>
+                        <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                          {item.startingYear + '-' + item.graduationYear}
+                        </h4>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
-                    <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                        alt="Edit Icon"
-                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                        onClick={() => {
-                          setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
-                        }}
-                      />
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                        alt="Edit Icon"
-                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                        onClick={() => setDeleteItem(item.id)}
-                      />
-                    </div>
-                    <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
-                      {item.startingYear + '-' + item.graduationYear}
-                    </h4>
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className="mt-4 flex items-center justify-between">
-              <Button
-                variant="addOption"
-                onClick={() => {
-                  setEdit(false);
-                  setAddAnotherForm(true);
-                }}
-              >
-                <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
-              </Button>
-
-              {existingData ? (
+                ))}
+              <div className="flex items-center justify-start">
                 <Button
-                  variant="badge-remove"
+                  variant="addOption"
                   onClick={() => {
-                    handleRemoveBadgePopup({
-                      title: title,
-                      type: type,
-                      badgeType: 'personal',
-                      image: logo,
-                    });
+                    setEdit(false);
+                    setAddAnotherForm(true);
                   }}
                 >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  <span className="text-[16px] tablet:text-[32px]">+</span>
+                  {existingData ? 'Add New Education' : 'Add Education'}
                 </Button>
+              </div>
+              {existingData ? (
+                <div className="flex items-center justify-end">
+                  <Button
+                    variant="badge-remove"
+                    onClick={() => {
+                      handleRemoveBadgePopup({
+                        title: title,
+                        type: type,
+                        badgeType: 'personal',
+                        image: logo,
+                      });
+                    }}
+                  >
+                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  </Button>
+                </div>
               ) : (
                 <div></div>
               )}
             </div>
-          </div>
-        ) : (
-          <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
-            <div className="mb-[5px] tablet:mb-[15px]">
-              <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                {field1.label}
-              </p>
-              <CustomCombobox
-                items={universities}
-                placeholder={edit ? (field1Data?.name ? field1.placeholder : 'Loading...') : field1.placeholder}
-                selected={field1Data}
-                setSelected={setField1Data}
-                query={query}
-                setQuery={setQuery}
-                id={1}
-                handleTab={handleTab}
-                disabled={edit ? (field1Data.name ? false : true) : false}
-              />
-            </div>
-            <div className="mb-4 mt-[15px] flex gap-[6.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[10px]">
-              <div className="w-full">
+          ) : (
+            <div className="px-5 pt-[15px] tablet:px-[60px] laptop:px-[72px]">
+              <div className="mb-[5px] tablet:mb-[15px]">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field2.label}
+                  {field1.label}
                 </p>
                 <CustomCombobox
-                  items={eduData}
-                  placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
-                  selected={field2Data}
-                  setSelected={setField2Data}
-                  query={query2}
-                  verify={verifyDegree}
-                  setQuery={setQuery2}
-                  setHollow={setHollow}
-                  setError={setIsError}
-                  id={2}
+                  items={universities}
+                  placeholder={edit ? (field1Data?.name ? field1.placeholder : 'Loading...') : field1.placeholder}
+                  selected={field1Data}
+                  setSelected={setField1Data}
+                  query={query}
+                  setQuery={setQuery}
+                  id={1}
                   handleTab={handleTab}
-                  verification={true}
-                  wordsCheck={true}
-                  disabled={edit ? (field2Data.name ? false : true) : false}
+                  disabled={edit ? (field1Data.name ? false : true) : false}
                 />
-                {/* <input
+              </div>
+              <div className="mb-4 mt-[15px] flex gap-[6.5px] tablet:mb-5 tablet:gap-[10px] tablet:pt-[25px]">
+                <div className="w-full">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                    {field2.label}
+                  </p>
+                  <CustomCombobox
+                    items={eduData}
+                    placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
+                    selected={field2Data}
+                    setSelected={setField2Data}
+                    query={query2}
+                    verify={verifyDegree}
+                    setQuery={setQuery2}
+                    setHollow={setHollow}
+                    setError={setIsError}
+                    id={2}
+                    handleTab={handleTab}
+                    verification={true}
+                    wordsCheck={true}
+                    disabled={edit ? (field2Data.name ? false : true) : false}
+                  />
+                  {/* <input
                   id="input-2"
                   type="text"
                   value={field2Data}
@@ -597,33 +618,33 @@ const EducationBadgePopup = ({
                   placeholder={field2.placeholder}
                   className="verification_badge_input"
                 /> */}
-                {isError && (
-                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
-                )}
-              </div>
-              <p className="flex items-center pt-4 text-[9.28px]  font-medium leading-[11.23px] text-[#7C7C7C] tablet:pt-10 tablet:text-[20px]">
-                in
-              </p>
-              <div className="w-full">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field5.label}
+                  {isError && (
+                    <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
+                  )}
+                </div>
+                <p className="flex items-center pt-4 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:pt-10 tablet:text-[20px]">
+                  in
                 </p>
-                <CustomCombobox
-                  items={eduData}
-                  placeholder={edit ? (field5Data?.name ? field5.placeholder : 'Loading...') : field5.placeholder}
-                  selected={field5Data}
-                  setSelected={setField5Data}
-                  query={query3}
-                  verify={verifyFieldOfStudy}
-                  setQuery={setQuery3}
-                  setHollow={setHollow}
-                  setError={setIsError2}
-                  id={3}
-                  handleTab={handleTab}
-                  verification={true}
-                  disabled={edit ? (field5Data.name ? false : true) : false}
-                />
-                {/* <input
+                <div className="w-full">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                    {field5.label}
+                  </p>
+                  <CustomCombobox
+                    items={eduData}
+                    placeholder={edit ? (field5Data?.name ? field5.placeholder : 'Loading...') : field5.placeholder}
+                    selected={field5Data}
+                    setSelected={setField5Data}
+                    query={query3}
+                    verify={verifyFieldOfStudy}
+                    setQuery={setQuery3}
+                    setHollow={setHollow}
+                    setError={setIsError2}
+                    id={3}
+                    handleTab={handleTab}
+                    verification={true}
+                    disabled={edit ? (field5Data.name ? false : true) : false}
+                  />
+                  {/* <input
                   id="input-3"
                   type="text"
                   onBlur={() => {
@@ -641,53 +662,28 @@ const EducationBadgePopup = ({
                   placeholder={field5.placeholder}
                   className="verification_badge_input"
                 /> */}
-                {isError2 && (
-                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field5.label}!`}</p>
-                )}
+                  {isError2 && (
+                    <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field5.label}!`}</p>
+                  )}
+                </div>
               </div>
-            </div>
-            <label
-              id="custom-square-checkbox"
-              className="flex items-center gap-2 text-[10px] font-medium text-[#7C7C7C] tablet:gap-[15px] tablet:text-[20px]"
-            >
-              <input
-                type="checkbox"
-                checked={isPresent}
-                onChange={handlePresentToggle}
-                className="checkbox size-[14px] tablet:size-[25px]"
-              />
-              Not Completed
-            </label>
+              <label
+                id="custom-square-checkbox"
+                className="flex items-center gap-2 text-[10px] font-medium text-[#7C7C7C] tablet:gap-[15px] tablet:text-[20px]"
+              >
+                <input
+                  type="checkbox"
+                  checked={isPresent}
+                  onChange={handlePresentToggle}
+                  className="checkbox size-[14px] tablet:size-[25px]"
+                />
+                Not Completed
+              </label>
 
-            <div className="mb-4 mt-[15px] flex gap-[19.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[38px]">
-              <div className="w-full">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field3.label}
-                </p>
-                {fetchingEdit ? (
-                  <input
-                    type="text"
-                    value="Loading..."
-                    disabled={true}
-                    className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
-                  />
-                ) : (
-                  <input
-                    id="input-4"
-                    onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
-                    type="date"
-                    value={field3Data}
-                    onChange={handlefield3Change}
-                    className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
-                  />
-                )}
-              </div>
-              {isPresent ? (
-                <div className="w-full"></div>
-              ) : (
+              <div className="mb-4 mt-[15px] flex gap-[19.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[38px]">
                 <div className="w-full">
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                    {field4.label}
+                    {field3.label}
                   </p>
                   {fetchingEdit ? (
                     <input
@@ -698,23 +694,50 @@ const EducationBadgePopup = ({
                     />
                   ) : (
                     <input
-                      id="input-5"
+                      id="input-4"
                       onKeyDown={(e) =>
                         (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))
                       }
                       type="date"
-                      value={field4Data}
-                      onChange={handlefield4Change}
-                      placeholder={field4.placeholder}
+                      value={field3Data}
+                      onChange={handlefield3Change}
                       className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   )}
                 </div>
-              )}
-            </div>
+                {isPresent ? (
+                  <div className="w-full"></div>
+                ) : (
+                  <div className="w-full">
+                    <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                      {field4.label}
+                    </p>
+                    {fetchingEdit ? (
+                      <input
+                        type="text"
+                        value="Loading..."
+                        disabled={true}
+                        className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      />
+                    ) : (
+                      <input
+                        id="input-5"
+                        onKeyDown={(e) =>
+                          (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))
+                        }
+                        type="date"
+                        value={field4Data}
+                        onChange={handlefield4Change}
+                        placeholder={field4.placeholder}
+                        className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
 
-            <div className="flex justify-between">
-              {existingData && existingData.lenght !== 0 ? (
+              <div className="flex justify-between">
+                {/* {existingData && existingData.lenght !== 0 ? ( */}
                 <Button
                   variant="addOption"
                   onClick={() => {
@@ -732,43 +755,51 @@ const EducationBadgePopup = ({
                 >
                   Cancel
                 </Button>
-              ) : (
+                {/* ) : (
                 <div></div>
-              )}
-              {hollow || isError || isError2 || checkHollow() ? (
-                <Button variant="hollow-submit" id="submitButton" disabled={true}>
-                  Add
-                </Button>
-              ) : (
-                <Button
-                  disabled={loading}
-                  variant="submit"
-                  onClick={() => {
-                    const allFieldObject = {
-                      ['id']: field1Data.id,
-                      [field1.type]: field1Data.name,
-                      [field2.type]: field2Data.name,
-                      [field5.type]: field5Data.name,
-                      ['country']: field1Data.country,
-                      [field3.type]: field3Data,
-                      [field4.type]: field4Data,
-                    };
-                    if (edit) {
-                      setLoading(true);
-                      handleUpdateBadge(allFieldObject);
-                    } else {
-                      setLoading(true);
-                      handleAddPersonalBadge(allFieldObject);
-                    }
-                  }}
-                >
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-                </Button>
-              )}
+              )} */}
+                {hollow || isError || isError2 || checkHollow() ? (
+                  <Button variant="submit-hollow" id="submitButton" disabled={true}>
+                    {edit ? 'Update Badge' : 'Add Badge'}
+                  </Button>
+                ) : (
+                  <Button
+                    disabled={loading}
+                    variant="submit"
+                    onClick={() => {
+                      const allFieldObject = {
+                        ['id']: field1Data.id,
+                        [field1.type]: field1Data.name,
+                        [field2.type]: field2Data.name,
+                        [field5.type]: field5Data.name,
+                        ['country']: field1Data.country,
+                        [field3.type]: field3Data,
+                        [field4.type]: field4Data,
+                      };
+                      if (edit) {
+                        setLoading(true);
+                        handleUpdateBadge(allFieldObject);
+                      } else {
+                        setLoading(true);
+                        handleAddPersonalBadge(allFieldObject);
+                      }
+                    }}
+                  >
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
+                  </Button>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+        {onboarding && <ProgressBar handleSkip={handleSkip} />}
+      </>
     );
   };
 

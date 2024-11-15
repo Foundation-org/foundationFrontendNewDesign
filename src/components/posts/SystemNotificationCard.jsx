@@ -29,7 +29,7 @@ const SystemNotificationCard = ({ post, innerRef }) => {
             variant="hollow-submit"
             className="w-fit bg-white dark:bg-transparent"
             onClick={() => {
-              if (post.buttonUrl === '/guest-signup') {
+              if (post.buttonUrl === '/guest-signup' || post.buttonUrl === '/sign-up-modal') {
                 dispatch(setGuestSignUpDialogue('Please create an account to unlock all features and claim your FDX.'));
               } else {
                 navigate(post.buttonUrl);

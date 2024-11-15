@@ -46,7 +46,9 @@ export const useFetchPosts = (filterStates, persistedUserInfo) => {
       const response = await api.get('/infoquestions/getQuestsAll', { params, signal });
       return response.data.data;
     },
-    getNextPageParam: (lastPage, allPages) => (lastPage.length ? allPages.length + 1 : undefined),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length >= 1 ? allPages.length + 1 : undefined;
+    },
     refetchOnWindowFocus: false,
   });
 };

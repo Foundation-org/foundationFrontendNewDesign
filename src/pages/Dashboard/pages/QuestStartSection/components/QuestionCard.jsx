@@ -81,14 +81,14 @@ const QuestionCard = (props) => {
       check: false,
       contend: false,
       uuid: answer.uuid,
-    })),
+    }))
   );
 
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
       id: `unique-${index}`,
       ...item,
-    })),
+    }))
   );
 
   const cardSize = useMemo(() => {
@@ -134,7 +134,7 @@ const QuestionCard = (props) => {
       answersSelection?.map((item, index) => ({
         id: `unique-${index}`,
         ...item,
-      })),
+      }))
     );
   }, [answersSelection]);
 
@@ -180,7 +180,7 @@ const QuestionCard = (props) => {
             ? true
             : false
           : null,
-        questStartData._id,
+        questStartData._id
       );
     }
     if (questStartData.whichTypeQuestion === 'agree/disagree') {
@@ -196,7 +196,7 @@ const QuestionCard = (props) => {
             ? true
             : true
           : null,
-        questStartData._id,
+        questStartData._id
       );
     }
     if (questStartData.whichTypeQuestion === 'like/dislike') {
@@ -213,7 +213,7 @@ const QuestionCard = (props) => {
             ? true
             : false
           : null,
-        questStartData._id,
+        questStartData._id
       );
     }
   }, [questStartData]);
@@ -668,6 +668,8 @@ const QuestionCard = (props) => {
         isBookmarked={isBookmarked}
         handleStartTest={handleStartTest}
         postProperties={postProperties}
+        handleViewResults={handleViewResults}
+        startTest={startTest}
       >
         {renderQuestContent()}
 

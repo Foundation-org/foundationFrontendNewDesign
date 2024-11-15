@@ -24,7 +24,7 @@ const CustomCombobox = ({
       : items.filter(
           type === 'city'
             ? (item) => item?.name?.toLowerCase()
-            : (item) => item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
+            : (item) => item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, ''))
         );
   const validateSelection = (selection) => {
     const wordCount = selection?.name?.split(' ').filter((word) => word.length > 0).length;

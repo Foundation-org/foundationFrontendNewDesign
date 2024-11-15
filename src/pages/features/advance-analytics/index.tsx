@@ -8,6 +8,7 @@ import { closestCorners, DndContext, DragEndEvent, MouseSensor, TouchSensor, use
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { useAnalyzeOrderMutation } from '../../../services/mutations/advance-analytics';
+import { toast } from 'sonner';
 
 export default function AdvanceAnalytics({ questStartData }: any) {
   const persistedTheme = useSelector((state: any) => state.utils.theme);
@@ -83,7 +84,11 @@ export default function AdvanceAnalytics({ questStartData }: any) {
         <Button
           variant={'addOption'}
           onClick={() => {
-            setAnalyzePopup(true);
+            if (questStartData?.participantsCount > 0) {
+              setAnalyzePopup(true);
+            } else {
+              toast.warning('There are no participants to filter out');
+            }
           }}
         >
           <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />

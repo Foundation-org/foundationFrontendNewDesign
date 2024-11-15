@@ -1,12 +1,18 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { calculateTimeAgo } from '../../utils/utils';
-import showToast from '../ui/Toast';
+// import showToast from '../ui/Toast';
+// import { useUpdateSpotLight } from '../../services/api/profile';
 
 export default function PostTopBar({ questStartData, postProperties, setDelModalVisible }) {
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile/me';
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const timeAgo = useMemo(() => calculateTimeAgo(questStartData?.createdAt), [questStartData?.createdAt]);
+
+  // const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
 
   let ratingImage = null;
 
@@ -14,22 +20,22 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
     ratingImage = 'post-e.svg';
   } else ratingImage = 'post-a.svg';
 
-  const { protocol, host } = window.location;
-  let sharedPostUrl = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
+  // const { protocol, host } = window.location;
+  // let sharedPostUrl = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
 
-  const copyToClipboard = async () => {
-    const textToCopy = sharedPostUrl;
+  // const copyToClipboard = async () => {
+  //   const textToCopy = sharedPostUrl;
 
-    try {
-      await navigator.clipboard.writeText(textToCopy);
-    } catch (err) {
-      console.error('Unable to copy text to clipboard:', err);
-    }
-  };
+  //   try {
+  //     await navigator.clipboard.writeText(textToCopy);
+  //   } catch (err) {
+  //     console.error('Unable to copy text to clipboard:', err);
+  //   }
+  // };
 
   return (
     <>
-      {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
+      {postProperties !== 'HiddenPosts' && (
         <div className="relative flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           {/* Topic */}
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
@@ -63,7 +69,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
               </button>
             )}
           {/* TimeStamp */}
-          {postProperties !== 'SharedLinks' && postProperties !== 'HiddenPosts' && (
+          {postProperties !== 'HiddenPosts' && !isProfilePage && (
             <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
@@ -107,7 +113,8 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
           </div>
         </div>
       )}
-      {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
+
+      {/* {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
         <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
           <div className="flex w-full justify-between">
             <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
@@ -131,7 +138,7 @@ export default function PostTopBar({ questStartData, postProperties, setDelModal
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }

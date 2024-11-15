@@ -38,7 +38,6 @@ export default function Signup({ allowSignUp }) {
   const [isLoading, setIsLoading] = useState(false);
   const [referralCode, setReferralCode] = useState('');
   const [isReferral, setIsReferral] = useState(false);
-  const [isLoadingSocial, setIsLoadingSocial] = useState(false);
   const [isPopup, setIspopup] = useState(false);
   const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
   const [clickedButtonName, setClickedButtonName] = useState('');
@@ -54,7 +53,6 @@ export default function Signup({ allowSignUp }) {
     // if (isWebview(window.navigator.userAgent)) {
     //   if (provider === 'google') {
     //     showToast('info', 'webViewSignUp');
-    //     setIsLoadingSocial(false);
     //   } else {
     //     setIsReferral(true);
     //   }
@@ -69,12 +67,9 @@ export default function Signup({ allowSignUp }) {
   };
 
   const triggerLogin = async (clickedButtonName) => {
-    setIsLoadingSocial(true);
-
     if (clickedButtonName === 'google') {
       // if (isWebview(window.navigator.userAgent)) {
       //   showToast('info', 'webViewSignUp');
-      //   setIsLoadingSocial(false);
       // } else {
       window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
       // }
@@ -83,7 +78,6 @@ export default function Signup({ allowSignUp }) {
     if (clickedButtonName === 'linkedin') {
       // if (isWebview(window.navigator.userAgent)) {
       //   showToast('info', 'webViewSignUp');
-      //   setIsLoadingSocial(false);
       // } else {
       window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
       // }
@@ -92,7 +86,6 @@ export default function Signup({ allowSignUp }) {
     if (clickedButtonName === 'github') {
       // if (isWebview(window.navigator.userAgent)) {
       //   showToast('info', 'webViewSignUp');
-      //   setIsLoadingSocial(false);
       // } else {
       window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
       // }
@@ -101,7 +94,6 @@ export default function Signup({ allowSignUp }) {
     if (clickedButtonName === 'facebook') {
       // if (isWebview(window.navigator.userAgent)) {
       //   showToast('info', 'webViewSignUp');
-      //   setIsLoadingSocial(false);
       // } else {
       window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
       // }
@@ -110,7 +102,6 @@ export default function Signup({ allowSignUp }) {
     if (clickedButtonName === 'twitter') {
       // if (isWebview(window.navigator.userAgent)) {
       //   showToast('info', 'webViewSignUp');
-      //   setIsLoadingSocial(false);
       // } else {
       window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
       // }
@@ -144,13 +135,13 @@ export default function Signup({ allowSignUp }) {
         <p className="dark:text-gray px-4 text-center text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
           {text}
         </p>
-        {isLoadingSocial ? (
+        {/* {isLoadingSocial ? (
           <div className="my-5 flex flex-col items-center justify-center gap-4 tablet:my-10">
             <FaSpinner className="animate-spin text-[8vw] text-blue-200 tablet:text-[4vw]" />
           </div>
-        ) : (
-          <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
-        )}
+        ) : ( */}
+        <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
+        {/* )} */}
         <div className="flex gap-3">
           <p className="dark:text-gray text-[11.21px] font-[500] text-gray-100 dark:text-gray-300 tablet:text-[20px] laptop:text-[22px]">
             Already have an account?
@@ -184,7 +175,6 @@ export default function Signup({ allowSignUp }) {
           setReferralCode={setReferralCode}
           handlePopupOpen={handlePopupOpen}
           socialAccount={socialAccount}
-          setIsLoadingSocial={setIsLoadingSocial}
           triggerLogin={triggerLogin}
         />
       </BasicModal>

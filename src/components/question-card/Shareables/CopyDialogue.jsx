@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -6,7 +5,7 @@ import { createCustomLink, createUpdateUniqueLink, generateImage } from '../../.
 import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 import { getConstantsValues } from '../../../features/constants/constantsSlice';
@@ -16,6 +15,7 @@ import EmbedPostDialogue from '../../../pages/Embed/EmbedPostDialogue';
 const CopyDialogue = ({ handleClose, questStartData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const persistedContants = useSelector(getConstantsValues);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -63,6 +63,41 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         ) {
           sendImage({ questStartData, link: resp.data.data.link });
         }
+
+        if (location.pathname === '/shared-list-link/result') {
+          queryClient.invalidateQueries({
+            queryKey: ['postsByCategory', persistedUserInfo.uuid],
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: ['allPostsByCategory', persistedUserInfo.uuid],
+          });
+        }
+
+        if (location.pathname.startsWith('/r/')) {
+          queryClient.invalidateQueries({
+            queryKey: ['articles', location.pathname.split('/').pop()],
+          });
+          queryClient.setQueriesData(['sourcePosts'], (oldData) => {
+            if (Array.isArray(oldData)) {
+              return oldData.map((item) => {
+                if (item._id === resp.data.data.questForeignKey) {
+                  return {
+                    ...item,
+                    userQuestSetting: {
+                      ...item.userQuestSetting,
+                      ...resp.data.data,
+                    },
+                  };
+                } else {
+                  return item;
+                }
+              });
+            }
+            return oldData;
+          });
+        }
+
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
@@ -99,6 +134,30 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
           queryKey: ['userInfo', uuid],
           exact: true,
         });
+
+        if (location.pathname.startsWith('/r/')) {
+          queryClient.invalidateQueries({
+            queryKey: ['articles', location.pathname.split('/').pop()],
+          });
+          queryClient.setQueriesData(['sourcePosts'], (oldData) => {
+            if (Array.isArray(oldData)) {
+              return oldData.map((item) => {
+                if (item._id === resp.data.data.questForeignKey) {
+                  return {
+                    ...item,
+                    userQuestSetting: {
+                      ...item.userQuestSetting,
+                      ...resp.data.data,
+                    },
+                  };
+                } else {
+                  return item;
+                }
+              });
+            }
+            return oldData;
+          });
+        }
       }
     } else {
       setIsLoading(false);
@@ -195,36 +254,18 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
           </svg>
         </div>
       </div>
-      {/* {createdBy === persistedUserInfo?.uuid ? (
-          <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[10px]">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-              alt={alt}
-              className="h-[50px] w-[48px] tablet:h-[80px] tablet:w-[64px]"
-            />
-            <p className="absolute left-[50%] top-[37%] z-50 -translate-x-1/2 -translate-y-1/2 transform text-[19px] font-[400] leading-normal text-[#7A7016] tablet:pb-3 tablet:text-[42.5px] laptop:top-[39%]">
-              {persistedUserInfo?.badges?.length}
-            </p>
-          </div>
-        ) : (
-          <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[15px]">
-            <img src={img} alt={alt} className="h-[48.8px] w-[39px] tablet:h-[106px] tablet:w-[85px]" />
-            <p className="absolute left-[50%] top-[30%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[19.5px] font-[400] leading-normal text-[#F6F6F6] tablet:top-[42%] tablet:pb-3 tablet:text-[42.5px] laptop:top-[39%]">
-              {badgeCount}
-            </p>
-          </div>
-        )}
-        <h1 className="mb-[1.15rem] text-center text-[12px] font-semibold text-[#5B5B5B] tablet:mb-5 tablet:text-[25px]">
-          Say Thanks to Contributor
-        </h1> */}
       <div className="flex flex-col justify-center py-[15px] dark:rounded-b-[0.5rem] dark:border dark:border-gray-100 tablet:py-[25px] dark:tablet:rounded-b-[1.5rem]">
         <div className="px-[20px] laptop:px-[80px]">
           <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             {createCustom
               ? 'Custom Link Address'
-              : 'Copy the link below to share this post on other platforms. When other people engage with your shared posts, you will earn FDX. '}
+              : 'Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you earn. Shared posts are displayed on your Home Page for all to see. '}
+          </p>
+          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
+            Copy the link below to share this post on other platforms.
           </p>
           <div className="flex rounded-[9.42px] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[15px] tablet:border-[3px]">
+            {/* Generate Link || Custom Link Input */}
             {createCustom ? (
               <div className="flex h-[28.38px] items-center tablet:h-[62.92px]">
                 <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] dark:text-gray-300 tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]">
@@ -252,6 +293,8 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 </p>
               </div>
             )}
+
+            {/* Copy Button */}
             {!createCustom && (
               <button
                 className="rounded-r-[9px] bg-white-500 px-[11px] py-[6px] dark:bg-gray-100 tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
@@ -265,6 +308,18 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
               </button>
             )}
           </div>
+          {questStartData?.whichTypeQuestion === 'yes/no' ||
+            questStartData?.whichTypeQuestion === 'agree/disagree' ||
+            (questStartData?.whichTypeQuestion === 'like/dislike' && (
+              <div className="mt-[8px] flex items-center gap-2 tablet:mt-3">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`}
+                  alt={'farcaster logo'}
+                  className="size-4 tablet:size-8"
+                />
+                <h1 className="summary-text">This link has Farcaster Frames support</h1>
+              </div>
+            ))}
         </div>
         <div className={'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
           {!createCustom ? (
@@ -301,7 +356,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 className={'w-fit min-w-fit whitespace-nowrap'}
                 onClick={() => navigate('/profile/shared-links')}
               >
-                Manage My Shared Links
+                Manage My Shared Posts
               </Button>
             </div>
           ) : (

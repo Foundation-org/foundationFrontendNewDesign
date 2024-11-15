@@ -111,6 +111,11 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       isBackground={false}
     >
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
+        <p className="summary-text mb-2 tablet:mb-[25px]">
+          Lists allow you to organize posts by topic and can function like surveys or playlists. Use the “Manage My
+          Lists” button to share them on other platforms. Shared lists will also be visible on your Home Page for
+          everyone to see.
+        </p>
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
           {/* <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             {listData?.length === 0
@@ -250,7 +255,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                 </Button>
               ) : (
                 <Button
-                  variant="hollow-submit"
+                  variant="submit-hollow"
                   onClick={() => {
                     showToast('warning', 'emptyPostList');
                   }}

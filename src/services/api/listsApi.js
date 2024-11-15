@@ -3,7 +3,7 @@ import api from './Axios';
 
 export const fetchLists = async (search) => {
   const userUuid = localStorage.getItem('uuid');
-  const url = search ? `/userlists/userList/${userUuid}` : `/userlists/userList/${userUuid}`;
+  const url = search ? `/userlists/userList?userUuid=${userUuid}` : `/userlists/userList?userUuid=${userUuid}`;
 
   try {
     const resp = await api.get(url);
@@ -43,7 +43,7 @@ export const findPostsByCategoryId = async (data) => {
 export const deleteList = async (categoryId) => {
   try {
     const resp = await api.delete(
-      `/userlists/userList/deleteCategoryFromList/${localStorage.getItem('uuid')}/${categoryId}`,
+      `/userlists/userList/deleteCategoryFromList/${localStorage.getItem('uuid')}/${categoryId}`
     );
     return resp.data;
   } catch (err) {
@@ -63,7 +63,7 @@ export const findCategoryByName = async (data) => {
 export const updateCategory = async ({ userUuid, categoryId, postId }) => {
   try {
     const resp = await api.patch(
-      `/userlists/userList/updateCategoryInUserList/${userUuid}/${categoryId}/?postId=${postId}`,
+      `/userlists/userList/updateCategoryInUserList/${userUuid}/${categoryId}/?postId=${postId}`
     );
     return resp.data;
   } catch (err) {
@@ -180,6 +180,15 @@ export const viewListResults = async ({ categoryId }) => {
 export const viewListAllResults = async ({ categoryId }) => {
   try {
     return await api.get(`/userlists/viewListAll/${categoryId}/${localStorage.getItem('uuid')}`);
+  } catch (err) {
+    return err;
+  }
+};
+
+export const fetchListsExpended = async (domain) => {
+  try {
+    const resp = await api.get(`/userlists/userList?domain=${domain}&enable=true`);
+    return resp.data.userList;
   } catch (err) {
     return err;
   }

@@ -43,7 +43,7 @@ const LedgerTableTopbar = ({
   let x = 10000000000000;
 
   return (
-    <div className="mb-[10.27px] flex w-full justify-between tablet:mb-8">
+    <div className="relative mb-[10.27px] flex w-full justify-between tablet:mb-8">
       {!isTreasury ? (
         <div className="flex gap-[10.97px] tablet:gap-5 laptop:gap-[63px]">
           {/* profile */}
@@ -111,13 +111,13 @@ const LedgerTableTopbar = ({
             className="h-full w-[54px] gap-1 whitespace-nowrap px-[2px] tablet:w-full tablet:px-[10px] laptop:px-[17px]"
           >
             <h1 className="relative -top-[10.4px] whitespace-nowrap text-[5.77px] font-normal leading-normal -tracking-[0.2px] text-[#7E7E7E] dark:text-gray-300 tablet:top-[1px] tablet:text-[10px] laptop:text-[20.021px]">
-              Sort by : <span className=" font-semibold capitalize  text-[#3D3C42] dark:text-gray-300">{sort}</span>
+              Sort by : <span className="font-semibold capitalize text-[#3D3C42] dark:text-gray-300">{sort}</span>
             </h1>
           </button>
           <div
             className={`${
               selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
-            } bg-silver-100 absolute z-50 -mt-3 w-10 flex-col gap-1 rounded-md px-1 py-[5px] text-left text-black tablet:mt-1 tablet:w-20 laptop:mt-2 laptop:w-32 laptop:gap-2 laptop:py-2`}
+            } absolute z-50 -mt-3 w-10 flex-col gap-1 rounded-md bg-silver-100 px-1 py-[5px] text-left text-black tablet:mt-1 tablet:w-20 laptop:mt-2 laptop:w-32 laptop:gap-2 laptop:py-2`}
           >
             <p
               className="cursor-pointer rounded-md text-[7px] duration-200 ease-in-out hover:bg-white tablet:text-[10px] laptop:px-2 laptop:text-[16px]"

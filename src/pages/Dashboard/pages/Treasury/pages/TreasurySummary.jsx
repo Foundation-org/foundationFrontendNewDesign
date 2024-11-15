@@ -12,7 +12,7 @@ const TreasurySummary = () => {
   const persistedConstants = useSelector(getConstantsValues);
 
   return (
-    <div className=" mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
+    <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       <SummaryCard headerIcon="/assets/svgs/your-fdx.svg" headerTitle="Your FDX">
         <div className="flex items-center justify-between tablet:px-[45.27px]">
           <div className="space-y-2">
@@ -49,8 +49,7 @@ const TreasurySummary = () => {
       <SummaryCard headerIcon="/assets/svgs/reward-and-fees.svg" headerTitle="Rewards & Fees">
         <div className="flex flex-col justify-between">
           <h1 className="text-[12px] font-normal leading-[133%] tablet:text-[16px] tablet:leading-normal">
-            When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward and
-            fee values below.
+            Below, you'll find the latest values for rewards and fees associated with your activities.
           </h1>
           <p className="mt-1 text-[10px] font-normal leading-[160%] tablet:text-[16px] tablet:leading-normal">
             *Values subject to change.
@@ -82,7 +81,7 @@ const TreasurySummary = () => {
             </div>
           </div>
         </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
           <Button variant={'submit'} onClick={() => navigate('/treasury/reward-schedule')}>
             View all
           </Button>

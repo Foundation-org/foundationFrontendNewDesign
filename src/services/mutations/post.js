@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { createStartQuest, undoFeedback, updateChangeAnsStartQuest } from '../api/questsApi';
 import { resetaddOptionLimit } from '../../features/quest/utilsSlice';
@@ -23,7 +23,7 @@ export const useStartGuestListPost = (setLoading) => {
           return {
             ...oldData,
             post: oldData.post.map((item) =>
-              item._id === resp.data.category.post._id ? resp.data.category.post : item,
+              item._id === resp.data.category.post._id ? resp.data.category.post : item
             ),
           };
         });
@@ -51,6 +51,8 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
   const location = useLocation();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
 
   const { mutateAsync: startPost } = useMutation({
     mutationFn: createStartQuest,
@@ -72,7 +74,7 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,
           pages: oldData?.pages?.map((page) =>
-            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item))
           ),
         }));
       }
@@ -110,6 +112,7 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
       if (location.pathname.startsWith('/post/')) {
         setSubmitResponse(resp.data.data);
       }
+
       if (!location.pathname.startsWith('/p/' || !location.pathname.startsWith('/l'))) {
         handleViewResults(questStartData._id);
       }
@@ -117,6 +120,41 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
       if (location.pathname.startsWith('/l/')) {
         updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
       }
+
+      if (
+        location.pathname === '/profile' ||
+        location.pathname.startsWith('/h/') ||
+        location.pathname === '/profile/shared-links'
+      ) {
+        // queryClient.setQueryData(['my-profile', domain], (oldData) => {
+        //   const updatedSpotLight =
+        //     oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
+        //       ? { ...oldData.spotLight, ...resp.data.data }
+        //       : oldData.spotLight;
+
+        //   const updatedPosts = {
+        //     ...oldData.posts,
+        //     data: oldData?.posts?.data?.map((post) =>
+        //       post._id === resp.data.data._id ? { ...post, ...resp.data.data } : post
+        //     ),
+        //   };
+
+        //   return {
+        //     ...oldData,
+        //     spotLight: updatedSpotLight,
+        //     posts: updatedPosts,
+        //   };
+        // });
+        queryClient.setQueryData(['sharedLink', ''], (oldData) => {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item))
+            ),
+          };
+        });
+      }
+
       dispatch(resetaddOptionLimit());
     },
     onError: (err) => {
@@ -151,6 +189,8 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   const dispatch = useDispatch();
   let { id } = useParams();
   const postId = id?.split('=')[1];
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
 
   const { mutateAsync: changePost } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
@@ -182,9 +222,43 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
           queryClient.setQueriesData(['posts'], (oldData) => ({
             ...oldData,
             pages: oldData?.pages?.map((page) =>
-              page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+              page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item))
             ),
           }));
+        }
+
+        if (
+          location.pathname === '/profile' ||
+          location.pathname.startsWith('/h/') ||
+          location.pathname === '/profile/shared-links'
+        ) {
+          // queryClient.setQueryData(['my-profile', domain], (oldData) => {
+          //   const updatedSpotLight =
+          //     oldData.spotLight?.spotLightType === 'posts' && oldData.spotLight._id === resp.data.data._id
+          //       ? { ...oldData.spotLight, ...resp.data.data }
+          //       : oldData.spotLight;
+
+          //   const updatedPosts = {
+          //     ...oldData.posts,
+          //     data: oldData?.posts?.data?.map((post) =>
+          //       post._id === resp.data.data._id ? { ...post, ...resp.data.data } : post
+          //     ),
+          //   };
+
+          //   return {
+          //     ...oldData,
+          //     spotLight: updatedSpotLight,
+          //     posts: updatedPosts,
+          //   };
+          // });
+          queryClient.setQueryData(['sharedLink', ''], (oldData) => {
+            return {
+              ...oldData,
+              pages: oldData?.pages?.map((page) =>
+                page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item))
+              ),
+            };
+          });
         }
 
         if (location.pathname.startsWith('/p/')) {
@@ -244,7 +318,7 @@ export const useUndoFeedBackMutation = () => {
           queryClient.setQueriesData(['posts'], (oldData) => ({
             ...oldData,
             pages: oldData?.pages?.map((page) =>
-              page.map((item) => (item._id === resp.data.data[0]._id ? resp.data.data[0] : item)),
+              page.map((item) => (item._id === resp.data.data[0]._id ? resp.data.data[0] : item))
             ),
           }));
         } else if (location.pathname.startsWith('/l')) {

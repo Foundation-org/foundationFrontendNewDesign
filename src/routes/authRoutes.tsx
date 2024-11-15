@@ -28,7 +28,7 @@ import Lists from '../pages/Dashboard/pages/Lists';
 import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
 import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
 import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
-import TermOfService from '../pages/Signup/pages/TermOfService';
+// import TermOfService from '../pages/Signup/pages/TermOfService';
 // QUESTS
 import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import YesNo from '../pages/Dashboard/pages/Quest/pages/YesNo';
@@ -46,7 +46,7 @@ import RedemptionCenter from '../pages/Dashboard/pages/Treasury/pages/Redemption
 import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
 // TEST
 import Test from '../components/Test';
-import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
+// import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Authenticating from '../components/Authenticating';
 import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
 import EmbedPost from '../pages/Embed/EmbedPost';
@@ -170,8 +170,8 @@ const authRoutes = [
       { path: '/iframe', element: <Iframe /> },
       { path: '/embed/:link', element: <EmbedPost /> },
       { path: '/authenticating', element: <Authenticating /> },
-      { path: '/term-of-service', element: <TermOfService /> },
-      { path: '/privacy-policy', element: <SignUpPrivacyPolicy /> },
+      // { path: '/term-of-service', element: <TermOfService /> },
+      // { path: '/privacy-policy', element: <SignUpPrivacyPolicy /> },
       { path: '/r/:id', element: <SeldonView /> },
       { path: '/p/:id', element: <SingleQuest /> },
       { path: '/l/:id', element: <PostsByList /> },

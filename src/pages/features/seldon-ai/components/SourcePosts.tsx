@@ -22,6 +22,7 @@ import ViewMyLists from './ViewMyLists';
 export default function SourcePosts({ apiResp }: { apiResp?: any }) {
   const dispatch = useDispatch();
   const location = useLocation();
+  const link = location.pathname.split('/');
   const getSeldonDataState = useSelector(getSeldonDataStates);
   const [seldonsData, setSeldonsData] = useState(location.pathname.startsWith('/r') ? apiResp : getSeldonDataState);
   const questUtils = useSelector(getQuestUtils);
@@ -78,7 +79,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
         <div className="space-y-1">
           <h1 className="text-center text-[16px] font-bold tablet:text-[24px]">Posts that informed this article</h1>{' '}
           <h5 className="text-center text-[14px] tablet:text-[20px]">
-            See what posts you contributed to that were used or engage with posts and earn
+            Engage with these posts to further shape or refine this article's findings.
           </h5>
         </div>
       )}
@@ -156,6 +157,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
                 key={post._id}
                 questStartData={post}
                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+                articleId={location.pathname.startsWith('/r') ? link[link.length - 1] : apiResp?.articleId}
               />
             </div>
           ))

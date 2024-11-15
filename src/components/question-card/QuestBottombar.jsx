@@ -1,7 +1,5 @@
-import { toast } from 'sonner';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { calculateTimeAgo } from '../../utils/utils';
 import { referralModalStyle } from '../../constants/styles';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { feedBackAndHideOptions } from '../../constants/feedbackAndHide';
@@ -13,7 +11,7 @@ import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import { setGuestSignUpDialogue } from '../../features/extras/extrasSlice';
 
-const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkPopup }) => {
+const QuestBottombar = ({ questStartData, postProperties }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -64,21 +62,7 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
-      if (questStartData?.startStatus === '') {
-        showToast('warning', 'analyzeParticipatedPost');
-      } else {
-        navigate('/post/isfullscreen', { state: { questId: questStartData._id } });
-      }
-    }
-  };
-
-  const calculateTime = () => {
-    if (postProperties === 'HiddenPosts') {
-      return calculateTimeAgo(questStartData.userQuestSetting.feedbackTime);
-    } else if (postProperties === 'SharedLinks') {
-      return calculateTimeAgo(questStartData.userQuestSetting.sharedTime);
-    } else {
-      return calculateTimeAgo(questStartData.createdAt);
+      navigate('/post/isfullscreen', { state: { questId: questStartData._id } });
     }
   };
 
@@ -101,29 +85,9 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                     : questStartData.userQuestSetting.hiddenMessage}
                 </h1>
               </div>
-            ) : postProperties === 'SharedLinks' ? (
-              <div className="flex w-full items-center justify-between">
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/dashboard/trash2.svg'}`}
-                  alt="trash"
-                  className="h-3 w-[9px] cursor-pointer tablet:h-[30px] tablet:w-[25px]"
-                  onClick={showDisableSharedLinkPopup}
-                />
-                <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
-                    alt="clock"
-                    className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
-                  />
-                  <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-                    {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '}
-                    {calculateTime()}
-                  </h4>
-                </div>
-              </div>
             ) : null}
 
-            {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
+            {postProperties !== 'HiddenPosts' && (
               <div
                 className={`grid w-full ${
                   postProperties !== 'sharedlink-results' &&
@@ -133,17 +97,6 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                     : 'grid-cols-3'
                 }`}
               >
-                {/* Hide Post */}
-                <button className="flex w-fit items-center gap-1 tablet:gap-2" onClick={handleHidePostClick}>
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
-                    alt="eye-latest"
-                    className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
-                  />
-                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
-                    Hide
-                  </h1>
-                </button>
                 {/* Share */}
                 <button
                   className={`${
@@ -160,6 +113,17 @@ const QuestBottombar = ({ questStartData, postProperties, showDisableSharedLinkP
                   {persistedTheme === 'dark' ? <Copy /> : <Copy />}
                   <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                     Share
+                  </h1>
+                </button>
+                {/* Hide Post */}
+                <button className="flex w-fit items-center gap-1 tablet:gap-2" onClick={handleHidePostClick}>
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/hide-icon.svg' : 'assets/hiddenposts/unhide/icon1.png'}`}
+                    alt="eye-latest"
+                    className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
+                  />
+                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                    Hide
                   </h1>
                 </button>
                 {/* Add to list */}

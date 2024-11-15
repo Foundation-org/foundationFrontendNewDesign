@@ -20,12 +20,17 @@ interface articleType {
   userUuid: string;
   seoSummary: string;
   suggestions: suggestions[];
-  settings: any
-  s3Urls:string[]
+  settings: any;
+  s3Urls: string[];
+  spotLightType?: string;
   __v: number;
+  articleSetting?: {
+    createdAt?: string;
+  };
 }
 
 export interface NewsFeedPropsType {
   data: articleType;
   innerRef: any;
+  postType?: string;
 }

@@ -7,19 +7,25 @@ import { toast } from 'sonner';
 
 // change ans submit
 export const updateChangeAnsStartQuest = async (data) => {
-  return await api.post('/startQuest/updateChangeAnsStartQuest', {
+  const params = {
     questId: data.questId,
     changeAnswerAddedObj: data.answer,
     addedAnswer: data.addedAnswer,
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
     isAddedAnsSelected: data.isAddedAnsSelected,
-  });
+  };
+
+  if (data.page === '/profile' || data.page === '/profile/shared-links') {
+    params.Page = 'SharedLink';
+  }
+
+  return await api.post('/startQuest/updateChangeAnsStartQuest', params);
 };
 
 // start submit button
 export const createStartQuest = async (data) => {
-  return await api.post('/startQuest/createStartQuest', {
+  const params = {
     questForeignKey: data.questId,
     data: data.answer,
     addedAnswer: data.addedAnswer,
@@ -28,9 +34,18 @@ export const createStartQuest = async (data) => {
     isAddedAnsSelected: data.isAddedAnsSelected,
     isSharedLinkAns: data.isSharedLinkAns,
     postLink: data.postLink,
-  });
-};
+  };
 
+  if (data.articleRef) {
+    params.articleRef = data.articleRef;
+  }
+
+  if (data.page === '/profile' || data.page === '/profile/shared-links') {
+    params.Page = 'SharedLink';
+  }
+
+  return await api.post('/startQuest/createStartQuest', params);
+};
 // creation of a quest of all types
 export const createInfoQuest = async (data) => {
   try {
@@ -177,7 +192,7 @@ export const answerValidation = async ({ answer }) => {
     if (answer.split(' ').length === 1) {
       val = 10;
     }
-    const response = await api.get(`/ai-validation/${val}?userMessage=${answer}`);
+    const response = await api.get(`/ai-validation/${val}?userMessage=${encodeURIComponent(answer)}`);
 
     if (response.data.status === 'VIOLATION') {
       await updateViolationCounterAPI();
@@ -353,7 +368,7 @@ export const gifUrlCheck = async ({ url }) => {
 
 export const moderationRating = async ({ validatedQuestion }) => {
   try {
-    const response = await api.post(`/ai-validation/moderator?userMessage=${validatedQuestion}`);
+    const response = await api.post(`/ai-validation/moderator?userMessage=${encodeURIComponent(validatedQuestion)}`);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -368,7 +383,7 @@ export const checkAnswerExistCreateQuest = ({ answersArray, answer, index, start
   return answersArray.some((item, i) =>
     startQuest
       ? item.label.toLowerCase() === answer.toLowerCase() && i !== index
-      : item?.question?.toLowerCase() === answer.toLowerCase() && i !== index,
+      : item?.question?.toLowerCase() === answer.toLowerCase() && i !== index
   );
 };
 
@@ -377,7 +392,7 @@ export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) =>
     (item, i) =>
       i !== index &&
       ((startQuest && item.label.toLowerCase() === answer.toLowerCase()) ||
-        (!startQuest && item?.question?.toLowerCase() === answer.toLowerCase())),
+        (!startQuest && item?.question?.toLowerCase() === answer.toLowerCase()))
   );
 };
 

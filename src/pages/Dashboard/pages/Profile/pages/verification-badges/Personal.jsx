@@ -143,7 +143,7 @@ export default function Personal({
             title="Sex"
             type={'sex'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`}
-            placeholder="Sex Here"
+            placeholder="Choose"
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
@@ -158,7 +158,7 @@ export default function Personal({
             title="Relationship Status"
             type={'relationshipStatus'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`}
-            placeholder="Relationship Here"
+            placeholder="Choose"
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
@@ -173,7 +173,7 @@ export default function Personal({
             title="Work"
             type={'work'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`}
-            placeholder="Work Here"
+            placeholder="Choose"
             fetchUser={fetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
@@ -186,7 +186,7 @@ export default function Personal({
             title="Education"
             type={'education'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
-            placeholder="Education Here"
+            placeholder="Choose"
             fetchUser={fetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
@@ -274,7 +274,8 @@ export default function Personal({
   return (
     <>
       <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-        The more personal information you add, the stronger your data profile and the more FDX you earn.
+        The more personal information you provide, the stronger your data profile and the greater your opportunities for
+        FDX earnings.
       </h1>
       {renderPersonalBadgesPopup()}
       {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-white-500 py-[17px] tablet:flex tablet:flex-row">

@@ -1,11 +1,11 @@
 export const summaryPoints = [
-  'Personal Information We Process: This occurs when you visit, use, or navigate our Services. The personal information processed depends on your interactions, choices, and the products and features used. ',
+  'Personal Information We Process: This occurs when you visit, use, or navigate our Services. The personal information processed depends on your interactions, choices, and the products and features used.',
   'Sensitive Personal Information: We do not process sensitive personal information.',
   'Third-Party Information: We may receive information from third-party verifications.',
   'Processing Your Information: Our processing activities include providing, improving, administering Services, communicating with you, for security, fraud prevention, and legal compliance. We process your information with valid legal reasons.',
-  'Sharing Personal Information: Information may be shared in specific situations with certain third parties. ',
+  'Sharing Personal Information: Information may be shared in specific situations with certain third parties.',
   'Data Safety: We implement organizational and technical measures to protect your information, acknowledging that no method is 100% secure.',
-  'Your Rights: Depending on your location, you have certain rights regarding personal information. ',
+  'Your Rights: Depending on your location, you have certain rights regarding personal information.',
   'Exercising Your Rights: Submit a data subject access request or contact us to exercise your rights, in line with data protection laws.',
 ];
 
@@ -150,5 +150,25 @@ export const privacyPolicyData = [
         content: 'To review, update, or delete your personal information, submit a data subject access request.',
       },
     ],
+  },
+  {
+    point: 'DATA WE COLLECT:',
+    content:
+      'Foundation collects anonymous data from users, including but not limited to the answers provided in polls, filters applied to news feeds, and overall engagement with the platform. This data is aggregated and anonymized before being used to power our AI systems, which deliver personalized news content. Any personal data that users may choose to provide, such as registration information, is kept separate from anonymous usage data.',
+  },
+  {
+    point: 'HOW WE USE DATA:',
+    content:
+      'The anonymous data collected is used to enhance the AI-driven features of Foundation, including the personalized news feeds that adapt to your preferences over time. This data helps us improve the accuracy and relevance of content delivered to you, as well as refine our AI algorithms for the benefit of all users. Foundation never sells personal or anonymous data to third parties for marketing purposes.',
+  },
+  {
+    point: 'DATA SHARING AND DISCLOSURE:',
+    content:
+      'Foundation may share anonymized data with trusted third-party service providers to support the functioning of the platform. However, no personally identifiable information (PII) is shared unless explicitly authorized by the user. Anonymized data used by third parties cannot be traced back to individual users.',
+  },
+  {
+    point: 'USER RIGHTS AND DATA CONTROL',
+    content:
+      'Users retain full control over the data they contribute to Foundation. At any time, users may request access to the data they have shared, ask for modifications, or request deletion. Users also have the option to opt-out of certain data collection methods used to personalize content.',
   },
 ];

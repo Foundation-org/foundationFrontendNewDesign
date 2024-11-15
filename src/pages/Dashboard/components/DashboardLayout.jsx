@@ -24,6 +24,12 @@ import { changeThemeTo } from '../../../features/utils/utilsSlice';
 import SeldonInputs from '../../features/seldon-ai/components/SeldonInputs';
 import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
+import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
+import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
+import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
+import SharedArticlesSearch from '../pages/Profile/pages/share-articles/SharedArticlesSearch';
+import { badgesTotalLength } from '../../../constants/varification-badges';
+import { setProgress } from '../../../features/progress/progressSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -43,6 +49,14 @@ export default function DashboardLayout({ children }) {
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const persistedConstants = useSelector(getConstantsValues);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+  const [isPopup, setIsPopup] = useState(localStorage.getItem('onBoarding') === 'true' ? true : false);
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+
+  useEffect(() => {
+    if (localStorage.getItem('onBoarding') === 'true') {
+      setIsPopup(true);
+    }
+  }, [localStorage.getItem('onBoarding')]);
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
@@ -162,6 +176,8 @@ export default function DashboardLayout({ children }) {
         } else {
           navigate('/');
         }
+        setIsPopup(true);
+        localStorage.setItem('onBoarding', 'true');
       }
     } catch (error) {
       console.log(error);
@@ -220,11 +236,23 @@ export default function DashboardLayout({ children }) {
     }
   }, [getFeedbackFilters.searchData]);
 
+  useEffect(() => {
+    dispatch(
+      setProgress(
+        Math.floor(
+          ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
+            badgesTotalLength) *
+            100
+        )
+      )
+    );
+  }, [persistedUserInfo?.badges]);
+
   return (
     <div className="mx-auto w-full max-w-[1440px]">
       <PopUp
         logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email.svg`}
-        title={'Email'}
+        title={'Your account has been created!'}
         open={modalVisible}
         closeIcon={true}
       >
@@ -233,7 +261,7 @@ export default function DashboardLayout({ children }) {
             {persistedUserInfo?.email}
           </p>
           <p className="mb-[10px] mt-[10px] text-center text-[10px] font-medium text-[#838383] tablet:mb-[22px] tablet:mt-[14px] tablet:text-[25px]">
-            Please select if this email is personal or professional.
+            Choose an email type to complete your first verification badge and earn 10 FDX tokens!
           </p>
           <div className="flex items-center justify-center gap-[30px] tablet:gap-[65px]">
             <Button
@@ -259,6 +287,8 @@ export default function DashboardLayout({ children }) {
           </div>
         </div>
       </PopUp>
+
+      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
@@ -353,10 +383,13 @@ export default function DashboardLayout({ children }) {
               )}
             </div>
             {location.pathname !== '/profile' &&
+              !location.pathname.startsWith('/h/') &&
               !location.pathname.startsWith('/seldon-ai') &&
+              location.pathname !== '/profile/me' &&
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
               location.pathname !== '/profile/shared-links' &&
+              location.pathname !== '/profile/shared-articles' &&
               location.pathname !== '/profile/user-settings' &&
               location.pathname !== '/profile/post-activity' &&
               location.pathname !== '/profile/verification-badges' &&
@@ -372,7 +405,7 @@ export default function DashboardLayout({ children }) {
                   {persistedUserInfo?.role === 'user' ? (
                     <>
                       {location.pathname === '/direct-messaging/new-message' ? null : location.pathname.startsWith(
-                          '/direct-messaging',
+                          '/direct-messaging'
                         ) && isPseudoBadge ? (
                         <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
                           <Button
@@ -421,6 +454,32 @@ export default function DashboardLayout({ children }) {
                   )}
                 </>
               )}
+
+            {(location.pathname === '/profile/me' || location.pathname.startsWith('/h/')) && (
+              <>
+                {persistedUserInfo?.role === 'user' ? (
+                  <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
+                    <Button
+                      variant="hollow-submit2"
+                      className="bg-white tablet:w-fit"
+                      onClick={() => navigate('/profile-others')}
+                    >
+                      Find other Profiles
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="hollow-submit2"
+                    className="bg-white"
+                    onClick={() => {
+                      dispatch(setGuestSignUpDialogue(true));
+                    }}
+                  >
+                    Sign up
+                  </Button>
+                )}
+              </>
+            )}
           </div>
         </div>
 
@@ -446,12 +505,17 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
           {/* Sidebar Left */}
-          {!location.pathname.startsWith('/post') &&
+          {!localStorage.getItem('isSubDomain') &&
+            location.pathname !== '/profile/me' &&
+            location.pathname !== '/profile-others' &&
+            !location.pathname.startsWith('/h/') &&
+            !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile' &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/feedback-given' &&
             location.pathname !== '/profile/shared-links' &&
+            location.pathname !== '/profile/shared-articles' &&
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/feedback' &&
             location.pathname !== '/profile/post-activity' &&
@@ -478,7 +542,13 @@ export default function DashboardLayout({ children }) {
 
           <NewsFeedSearch />
 
+          <SearchOtherProfiles />
+          <FindOtherProfiles />
+
           {location.pathname !== '/treasury' &&
+            !location.pathname.startsWith('/h/') &&
+            location.pathname !== '/profile/me' &&
+            location.pathname !== '/profile-others' &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/treasury/reward-schedule' &&
             location.pathname !== '/treasury/buy-fdx' &&
@@ -490,6 +560,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/feedback-given' &&
             location.pathname !== '/profile/shared-links' &&
+            location.pathname !== '/profile/shared-articles' &&
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/post-activity' &&
             location.pathname !== '/profile/feedback' &&
@@ -646,6 +717,8 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
           )}
+
+          <SharedArticlesSearch />
         </div>
         {children}
         {/* Desktop Right Side */}
@@ -713,7 +786,11 @@ export default function DashboardLayout({ children }) {
             )}
           </div>
 
-          {!location.pathname.startsWith('/post') &&
+          {!localStorage.getItem('isSubDomain') &&
+            location.pathname !== '/profile-others' &&
+            !location.pathname.startsWith('/h/') &&
+            location.pathname !== '/profile/me' &&
+            !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile/ledger' &&
             location.pathname !== '/profile/post-activity' &&

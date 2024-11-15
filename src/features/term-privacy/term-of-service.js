@@ -861,7 +861,7 @@ export const termsAndConditionsArray = [
     content: [
       {
         heading: 'Collection and Use of Data',
-        text: 'Foundation Internet Organization, Inc. may collect and store information, including personal data, that you provide or that is generated through your use of the Services. This may include account registration details, transactional data, and other user-generated content.',
+        text: 'By using Foundation, you agree to the collection of anonymous data, which includes but is not limited to the answers you provide, filters you use, and overall engagement with the platform. This data is anonymized and aggregated to power our AI systems, which generate personalized news feeds tailored to your preferences. Your data remains your property, and Foundation will never sell your personal data to third parties.',
       },
       {
         heading: 'Responsibility for Data',
@@ -980,6 +980,10 @@ export const termsAndConditionsArray = [
         heading: 'Notices',
         text: 'Any notices or other communications provided by Foundation Internet Organization, Inc. under these Terms, including those regarding modifications to these Terms, will be given by posting to the Services and/or by email.',
       },
+      {
+        heading: 'AI Interaction and Limits:',
+        text: 'Foundation’s AI is designed to curate personalized news content based on anonymous data aggregated from users. While we strive for accuracy and relevance, the AI systems may not always deliver perfect or objective results. By using Foundation, you acknowledge that the AI-generated content may contain inaccuracies or incomplete information, and it is provided "as is" without warranty.',
+      },
     ],
   },
   {
@@ -991,6 +995,7 @@ export const termsAndConditionsArray = [
         list: [
           'Respectful Interaction: Treat all users with respect, dignity, and consideration, irrespective of differing opinions, backgrounds, or beliefs.',
           'No Harassment or Discrimination: Strictly refrain from engaging in harassment, bullying, or any form of discrimination.',
+          'It is possible to have questions while being respectful. Let’s try that.',
         ],
       },
       {
@@ -1047,6 +1052,12 @@ export const termsAndConditionsArray = [
         list: [
           'Compliance with Laws: Comply with all applicable laws and regulations in your use of the platform.',
           'Reporting Illegal Activities: Report any illegal activities or content you encounter on the platform.',
+        ],
+      },
+      {
+        heading: 'Prohibited Uses',
+        list: [
+          'Users are prohibited from attempting to reverse-engineer, de-anonymize, or misuse Foundation’s AI-driven features. Any effort to compromise the anonymity of other users’ data or manipulate the AI systems for malicious purposes will result in termination of the account and potential legal action.',
         ],
       },
     ],

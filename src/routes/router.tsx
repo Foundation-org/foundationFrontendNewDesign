@@ -32,7 +32,7 @@ import Lists from '../pages/Dashboard/pages/Lists';
 import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
 import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
 import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
-import TermOfService from '../pages/Signup/pages/TermOfService';
+// import TermOfService from '../pages/Signup/pages/TermOfService';
 // QUESTS
 import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import YesNo from '../pages/Dashboard/pages/Quest/pages/YesNo';
@@ -50,7 +50,7 @@ import RedemptionCenter from '../pages/Dashboard/pages/Treasury/pages/Redemption
 import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
 // TEST
 import Test from '../components/Test';
-import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
+// import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Authenticating from '../components/Authenticating';
 import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
 import EmbedPost from '../pages/Embed/EmbedPost';
@@ -67,8 +67,48 @@ import NewsFeed from '../pages/features/news-feed';
 import DMPreview from '../pages/features/DirectMessaging/DMPreview';
 import Unsubscribe from '../pages/Emails/Unsubscrbe';
 import Withdraws from '../pages/Dashboard/pages/Treasury/pages/withdraws';
+import Deposits from '../pages/Dashboard/pages/Treasury/pages/deposits';
+import UserProfile from '../pages/UserProfile';
+import { OtherProfiles } from '../pages/UserProfile/OtherProfiles';
+import OtherProfilesLayout from '../pages/UserProfile/OtherProfilesLayout';
+import PublicProfile from '../pages/UserProfile/PublicProfile';
+import SharedArticles from '../pages/Dashboard/pages/Profile/pages/share-articles/SharedArticles';
+
+export const getSubDomain = (location: string) => {
+  const locationParts = location.split('.');
+
+  const isLocalHost = locationParts.slice(-1)[0] === 'localhost';
+  const isDevelopmentDomain = location.endsWith('development.on.foundation');
+  const isFoundationDomain = location.endsWith('on.foundation');
+
+  // Check if it's a bare localhost or on.foundation or development.on.foundation
+  if (isLocalHost && locationParts.length === 1) {
+    return '';
+  }
+
+  if (isDevelopmentDomain && locationParts.length === 3) {
+    return ''; // Return empty for development.on.foundation
+  }
+
+  if (isFoundationDomain && locationParts.length === 2) {
+    return ''; // Return empty for on.foundation
+  }
+
+  // If anything precedes these, return the subdomain
+  if (isLocalHost || isDevelopmentDomain || isFoundationDomain) {
+    return locationParts.slice(0, locationParts.length - (isLocalHost ? 1 : isDevelopmentDomain ? 3 : 2)).join('.');
+  }
+
+  return '';
+};
 
 export function Router() {
+  const subDomain = getSubDomain(window.location.hostname);
+
+  if (subDomain !== '') {
+    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/h/${subDomain}`;
+  }
+
   const persistedUser = useSelector((state: any) => state.auth.user);
   const ROLES = {
     User: 'user',
@@ -88,14 +128,15 @@ export function Router() {
           />
           <Route path="/iframe" element={<Iframe />} />
           <Route path="/embed/:link" element={<EmbedPost />} />
-          <Route path="/term-of-service" element={<TermOfService />} />
-          <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
+          {/* <Route path="/term-of-service" element={<TermOfService />} /> */}
+          {/* <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} /> */}
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/verify-phone" element={<VerifyPhone />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id/:fid?" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/l/:id" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/r/:id" element={<GuestRedirect redirectUrl={null} />} />
+          <Route path="/h/:domain" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="/authenticating" element={<Authenticating />} />
           <Route path="/test" element={<Test />} />
@@ -107,8 +148,8 @@ export function Router() {
             <Route path="/iframe" element={<Iframe />} />
             <Route path="/embed/:link" element={<EmbedPost />} />
             <Route path="/authenticating" element={<Authenticating />} />
-            <Route path="/term-of-service" element={<TermOfService />} />
-            <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
+            {/* <Route path="/term-of-service" element={<TermOfService />} /> */}
+            {/* <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} /> */}
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/test" element={<Test />} />
             <Route path="/" element={<Dashboard />}>
@@ -129,12 +170,14 @@ export function Router() {
                 <Route path="ranked-choice" element={<RankChoice />} />
               </Route>
               <Route path="treasury/" element={<TreasuryLayout />}>
-                <Route path="" element={<TreasurySummary />} />
-                <Route path="reward-schedule" element={<RewardSchedule />} />
+                {/* <Route path="" element={<TreasurySummary />} /> */}
+                {/* <Route path="reward-schedule" element={<RewardSchedule />} /> */}
+                <Route path="" element={<RewardSchedule />} />
                 <Route path="buy-fdx" element={<BuyFDX />} />
                 <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
                 <Route path="withdrawls" element={<Withdraws />} />
+                <Route path="deposits" element={<Deposits />} />
               </Route>
               {/* <Route path="treasury/:code" element={<TreasuryLayout />}>
                 <Route path="" element={<TreasurySummary />} />
@@ -145,7 +188,9 @@ export function Router() {
               </Route> */}
               <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
                 <Route path="profile/" element={<Profile />}>
-                  <Route path="" element={<Summary />} />
+                  <Route path="summary" element={<Summary />} />
+                  {/* <Route path="me" element={<UserProfile />} /> */}
+                  <Route path="" element={<UserProfile />} />
                   <Route path="verification-badges" element={<VerificationBadges />} />
                   <Route path="post-activity" element={<Contributions />} />
                   <Route path="lists" element={<Lists />} />
@@ -154,6 +199,7 @@ export function Router() {
                   <Route path="feedback-given" element={<HiddenPosts />} />
                   <Route path="feedback" element={<Feedback />} />
                   <Route path="shared-links" element={<SharedLinks />} />
+                  <Route path="shared-articles" element={<SharedArticles />} />
                   <Route path="user-settings" element={<UserSettings />} />
                   <Route path="change-password" element={<ChangePassword />} />
                 </Route>
@@ -170,6 +216,9 @@ export function Router() {
               <Route path="/news/" element={<NewsFeedLayout />}>
                 <Route path="" element={<NewsFeed />} />
               </Route>
+              <Route path="/profile-others/" element={<OtherProfilesLayout />}>
+                <Route path="" element={<OtherProfiles />} />
+              </Route>
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
@@ -178,6 +227,7 @@ export function Router() {
             <Route path="/p/:id" element={<SingleQuest />} />
             <Route path="/l/:id" element={<PostsByList />} />
             <Route path="/r/:id" element={<SeldonView />} />
+            <Route path="/h/:domain" element={<PublicProfile />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/verifycode" element={<VerifyCode />} />

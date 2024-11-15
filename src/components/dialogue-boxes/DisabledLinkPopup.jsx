@@ -34,8 +34,8 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
             page.map((item) =>
               item._id === resp.data.data.questForeignKey
                 ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Disable' } }
-                : item,
-            ),
+                : item
+            )
           ),
         }));
       }
@@ -46,8 +46,8 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
             page.map((item) =>
               item._id === resp.data.data.questForeignKey
                 ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Enable' } }
-                : item,
-            ),
+                : item
+            )
           ),
         }));
       }
@@ -70,10 +70,10 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/link.svg`}
       title={
         questUtils.sharedQuestStatus.type === 'Delete'
-          ? 'Delete Shared Link'
+          ? 'Delete Share Data'
           : questUtils.sharedQuestStatus.type === 'Enable'
-            ? 'Enable Shared Link'
-            : 'Disable Shared Link'
+            ? 'Enable Sharing'
+            : 'Disable Sharing'
       }
       open={modalVisible}
       handleClose={handleClose}
@@ -82,15 +82,16 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
         <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           {questUtils.sharedQuestStatus.type === 'Delete' ? (
             <span>
-              Are you sure you want to delete this Shared Link? The link will no longer work and all related results and
-              statistics will be lost.
+              Are you sure you want to delete this share data? You will no longer be managing this content for your
+              audience, and all associated links and insights data will be removed. You can share this content again
+              later if you’d like to start over.
             </span>
           ) : questUtils.sharedQuestStatus.type === 'Enable' ? (
             <span>Are you sure you want to Enable this link? You can disable it again anytime.</span>
           ) : (
             <span>
-              Are you sure you want to disable this link? It will no longer be publicly available. You can enable it
-              again in the future.
+              Are you sure you want to disable sharing? This content will no longer be public on your Home Page, and all
+              associated shared links will be disabled. You can re-enable it anytime.
             </span>
           )}
         </h1>

@@ -17,7 +17,6 @@ const CardTopbar = ({ questStartData, bookmarkStatus, handleBookmark, postProper
         </div>
 
         {postProperties !== 'HiddenPosts' &&
-          postProperties !== 'SharedLinks' &&
           postProperties !== 'preview' &&
           questStartData?.type !== 'embed' &&
           questStartData?.page !== 'advance-analytics' && (

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import saveAs from 'file-saver';
 
 // components
 import Topbar from '../Dashboard/components/Topbar';
@@ -13,6 +14,8 @@ import Loader from '../../components/ui/Loader';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import AdvanceAnalytics from '../features/advance-analytics';
 import AAParticipate from '../features/advance-analytics/AAParticipate';
+import { convertToAdvanceAnalyticsCSV, generateAdvanceAnalyticsCSV } from '../../utils/utils';
+import { Button } from '../../components/ui/Button';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
@@ -42,7 +45,7 @@ const Guests = () => {
       setViewResult(null);
       setStartTest((prev) => (prev === testId ? null : testId));
     },
-    [setViewResult, setStartTest],
+    [setViewResult, setStartTest]
   );
 
   const handleViewResults = useCallback(
@@ -50,8 +53,18 @@ const Guests = () => {
       setStartTest(null);
       setViewResult((prev) => (prev === testId ? null : testId));
     },
-    [setStartTest, setViewResult],
+    [setStartTest, setViewResult]
   );
+
+  function downloadCSV(singleQuestResp) {
+    const csvData = generateAdvanceAnalyticsCSV(singleQuestResp);
+    const csvContent = convertToAdvanceAnalyticsCSV(csvData);
+
+    const filename = singleQuestResp?.Question.replace(/[.?\s]/g, '_').replace(/_+$/, '');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, `${filename}.csv`);
+  }
 
   return (
     <>
@@ -136,6 +149,17 @@ const Guests = () => {
                     </div>
                     <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px]">
                       <AdvanceAnalytics questStartData={singleQuestResp} />
+                    </div>
+                    <div className="mx-auto mt-4 flex max-w-[730px] justify-end px-4 tablet:px-[0px]">
+                      {singleQuestResp?.participantsCount > 0 ? (
+                        <Button variant="submit" onClick={() => downloadCSV(singleQuestResp)}>
+                          Export results
+                        </Button>
+                      ) : (
+                        <Button variant="hollow-submit" disabled={true}>
+                          Export results
+                        </Button>
+                      )}
                     </div>
                   </>
                 )}

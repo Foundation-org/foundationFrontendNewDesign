@@ -13,35 +13,23 @@ const Summary = () => {
       <VerificationBadgeScore />
       <SummaryCard headerIcon="/assets/summary/post-activity-logo2.svg" headerTitle="Post Activity">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Creating posts is a great way to earn FDX. Especially if others engage with them.
+          Creating posts is a great way to earn FDX. Your contributions gain value as others engage with them, enhancing
+          your impact within the Foundation community.
         </h1>
-        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
-          <div className="flex w-full justify-end">
-            <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
-              <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                Posts you've created
-              </h1>
-              <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsCreated}</h5>
-            </div>
+        <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Posts you've created
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.questsCreated}</h5>
           </div>
-          <div className="w-full max-w-28 pl-2 tablet:max-w-[200px] tablet:pl-4">
-            <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Engagements with your posts
             </h1>
-            <h5 className="text-[18px] font-normal">{persistedUserInfo?.yourPostEngaged}</h5>
+            <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.yourPostEngaged}</h5>
           </div>
-        </div>
-        {/* <div className="my-3 flex w-full justify-center tablet:my-5">
-          <Button variant={'submit'} onClick={() => navigate('/profile/post-activity')}>
-            View all post activity
-          </Button>
-        </div> */}
-        <h1 className="my-3 text-[12px] font-medium leading-[13.56px] tablet:my-5 tablet:text-[16px] tablet:leading-normal">
-          Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
-          with it.
-        </h1>
-        <div className="my-3 flex w-full justify-center tablet:my-5">
-          <div className="max-w-28 border-[#707175] tablet:max-w-full">
+          <div className="max-w-28 border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
               Posts I've engaged with
             </h1>
@@ -50,6 +38,7 @@ const Summary = () => {
             </h5>
           </div>
         </div>
+
         <div className="mt-3 flex w-full justify-center tablet:mt-5">
           <Button variant={'submit'} onClick={() => navigate('/profile/post-activity')}>
             View all post activity
@@ -59,10 +48,36 @@ const Summary = () => {
           </Button> */}
         </div>
       </SummaryCard>
+      <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
+        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+          See the feedback you've given on other's posts, including those you've chosen to hide.
+        </h1>
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
+          <div className="flex w-full justify-end">
+            <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
+              <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+                Posts I have given feedback on
+              </h1>
+              <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.feedbackGiven}</h5>
+            </div>
+          </div>
+          <div className="w-full max-w-28 pl-2 tablet:max-w-[200px] tablet:pl-4">
+            <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Posts I have hidden
+            </h1>
+            <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.myHiddenQuestsCount}</h5>
+          </div>
+        </div>
+        <div className="mt-3 flex w-full justify-center tablet:mt-5">
+          <Button variant={'submit'} onClick={() => navigate('/profile/feedback-given')}>
+            View all feedback given
+          </Button>
+        </div>
+      </SummaryCard>
       <SummaryCard headerIcon="/assets/summary/feedback-received.svg" headerTitle="Feedback Received">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Not everything you post may be everyone’s cup of tea. See what posts you’ve created others have decided to
-          hide and why.
+          Here’s a look at the posts you’ve created that others have provided feedback on, including those they've
+          chosen to hide.
         </h1>
         <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
           <div className="flex w-full justify-end">
@@ -88,36 +103,11 @@ const Summary = () => {
           </Button>
         </div>
       </SummaryCard>
-      <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
-          with it.
-        </h1>
-        <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
-          <div className="flex w-full justify-end">
-            <div className="w-full max-w-28 pr-2 tablet:max-w-[200px] tablet:pr-4">
-              <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                Posts I have given feedback on
-              </h1>
-              <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.feedbackGiven}</h5>
-            </div>
-          </div>
-          <div className="w-full max-w-28 pl-2 tablet:max-w-[200px] tablet:pl-4">
-            <h1 className="text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Posts I have hidden
-            </h1>
-            <h5 className="text-[18px] font-normal">{persistedUserInfo?.questsActivity?.myHiddenQuestsCount}</h5>
-          </div>
-        </div>
-        <div className="mt-3 flex w-full justify-center tablet:mt-5">
-          <Button variant={'submit'} onClick={() => navigate('/profile/feedback-given')}>
-            View all feedback given
-          </Button>
-        </div>
-      </SummaryCard>
+
       <SummaryCard headerIcon="/assets/summary/share-posts-logo.svg" headerTitle="Shared Posts">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Sharing posts is a great way to earn FDX - especially if people engage with them.
+          Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you earn. Shared
+          posts are displayed on your Home Page for all to see.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
@@ -128,20 +118,21 @@ const Summary = () => {
               {persistedUserInfo?.sharedQuestsStatistics?.sharedQuests}
             </h5>
           </div>
+
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total shared link clicks
+              Total engagements
             </h1>
             <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.sharedQuestsStatistics?.totalQuestsImpression}
+              {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
             </h5>
           </div>
           <div>
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total post engagement
+              Total views
             </h1>
             <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
+              {persistedUserInfo?.sharedQuestsStatistics?.totalQuestsImpression}
             </h5>
           </div>
         </div>
@@ -153,7 +144,8 @@ const Summary = () => {
       </SummaryCard>
       <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Lists">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Sharing lists is a great way to earn FDX - especially if people engage with them.
+          Creating and sharing lists extends your reach. The more engagement your lists receive, the more FDX you earn.
+          Lists you share are displayed on your Home Page for everyone to see.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
@@ -166,24 +158,63 @@ const Summary = () => {
           </div>
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total shared list clicks
+              Total lists
             </h1>
-            <h5 className="text-center text-[18px] font-normal">
-              {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
-            </h5>
+            <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.myListStatistics?.totalLists}</h5>
           </div>
-          <div>
+
+          <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total list engagements
+              Total list engagement
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
             </h5>
           </div>
+          <div>
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Total list views
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">
+              {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
+            </h5>
+          </div>
+        </div>
+      </SummaryCard>
+      <SummaryCard headerIcon="/assets/topbar/news.svg" headerTitle="Shared Articles">
+        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+          Manage news articles you’ve shared and track engagement metrics. Shared articles also appear on your Home Page
+          for your audience to see.
+        </h1>
+        <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
+          <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+              Articles you’ve shared
+            </h1>
+            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+              {persistedUserInfo?.myArticleStatistics.totalSharedArticlesCount}
+            </h5>
+          </div>
+          <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+              Total engagements
+            </h1>
+            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+              {persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
+            </h5>
+          </div>
+          <div>
+            <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
+              Total views
+            </h1>
+            <h5 className="text-center text-[18px] font-normal">
+              {persistedUserInfo?.myArticleStatistics?.totalSharedArticleViews}
+            </h5>
+          </div>
         </div>
         <div className="mt-3 flex w-full justify-center tablet:mt-5">
-          <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
-            View all shared lists
+          <Button variant={'submit'} onClick={() => navigate('/profile/shared-articles')}>
+            View all shared articles
           </Button>
         </div>
       </SummaryCard>

@@ -21,7 +21,7 @@ const QuestStartSection = () => {
 
   const { data, status, error, fetchNextPage, hasNextPage, isFetching } = useFetchPosts(
     filterStates,
-    persistedUserInfo,
+    persistedUserInfo
   );
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const QuestStartSection = () => {
     () =>
       data?.pages.map((posts) =>
         posts.map((post, index) => {
-          const isLastPost = posts.length === index + 1;
+          const isLastPost = index === posts.length - 1;
 
           if (post.id === 'system_notification') {
             return <SystemNotificationCard key={index + 1} post={post} innerRef={isLastPost ? ref : null} />;
@@ -53,9 +53,9 @@ const QuestStartSection = () => {
               playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
             />
           );
-        }),
+        })
       ),
-    [data, ref, questUtils],
+    [data, ref, questUtils]
   );
 
   return (
@@ -70,7 +70,7 @@ const QuestStartSection = () => {
           </div>
           <div
             id="post-container"
-            className="mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full"
+            className="mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full laptop:max-h-[calc(100dvh-147px)]"
           >
             {content}
             {printEndMessage(data?.pages[0], filterStates.bookmarks, isFetching)}

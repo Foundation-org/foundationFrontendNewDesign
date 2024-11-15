@@ -36,7 +36,7 @@ export default function AAParticipate({ questStartData }: { questStartData: any 
           }}
           className="border-b border-blue-100 text-blue-100"
         >
-          Direct Message participants
+          Message these participants
         </button>
       </p>
     </div>

@@ -30,12 +30,12 @@ const LocationService = () => {
   };
 
   const failedToGet = (err: GeolocationPositionError) => {
-    console.error(err);
+    // console.error(err);
   };
 
   const getLocation = () => {
     const hasGeolocationBadge = persistedUserInfo.badges.some(
-      (badge: any) => badge.personal && badge.personal.geolocation,
+      (badge: any) => badge.personal && badge.personal.geolocation
     );
 
     if (hasGeolocationBadge) {
