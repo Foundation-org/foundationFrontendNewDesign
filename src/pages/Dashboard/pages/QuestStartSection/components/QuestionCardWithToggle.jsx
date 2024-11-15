@@ -16,7 +16,12 @@ import showToast from '../../../../../components/ui/Toast';
 import AddOptions from '../../../../../components/question-card/AddOptions';
 import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 import { tooltipDefaultStatus } from '../../../../../utils/extras';
-import { useChangePost, useStartGuestListPost, useStartPost } from '../../../../../services/mutations/post';
+import {
+  useChangeGuestListPost,
+  useChangePost,
+  useStartGuestListPost,
+  useStartPost,
+} from '../../../../../services/mutations/post';
 import { sortAnswers } from '../../../../../utils/utils';
 
 const QuestionCardWithToggle = (props) => {
@@ -314,6 +319,7 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData]);
 
   const { startGuestListPost } = useStartGuestListPost(setLoading);
+  const { changeGuestListPost } = useChangeGuestListPost(setLoading);
   const { startPost } = useStartPost(setLoading, props.setSubmitResponse, handleViewResults, questStartData);
   const { changePost } = useChangePost(setLoading, props.setSubmitResponse, handleViewResults, questStartData);
 
@@ -390,7 +396,11 @@ const QuestionCardWithToggle = (props) => {
           toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
         } else {
-          changePost(params);
+          if (location.pathname.startsWith('/l/')) {
+            changeGuestListPost({ params, categoryId, categoryLink: location.pathname.split('/')[2] });
+          } else {
+            changePost(params);
+          }
         }
       } else {
         if (location.pathname.startsWith('/l/')) {
@@ -485,7 +495,11 @@ const QuestionCardWithToggle = (props) => {
           }
 
           if (length !== 0) {
-            changePost(params); // Change Answer API Call
+            if (location.pathname.startsWith('/l/')) {
+              changeGuestListPost({ params, categoryId, categoryLink: location.pathname.split('/')[2] });
+            } else {
+              changePost(params);
+            }
 
             const updatedArray = answersSelection.map((item, index) => {
               if (index === answersSelection.length - 1) {
@@ -619,7 +633,11 @@ const QuestionCardWithToggle = (props) => {
             setLoading(false);
             return;
           }
-          changePost(params);
+          if (location.pathname.startsWith('/l/')) {
+            changeGuestListPost({ params, categoryId, categoryLink: location.pathname.split('/')[2] });
+          } else {
+            changePost(params);
+          }
 
           const updatedArray = rankedAnswers.map((item, index) => {
             if (item?.addedOptionByUser === true) {

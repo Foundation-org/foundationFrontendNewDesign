@@ -169,6 +169,23 @@ export const submitListResponse = async ({ params, categoryId, categoryLink }) =
   }
 };
 
+export const changeListResponse = async ({ params, categoryId, categoryLink }) => {
+  try {
+    const resp = await api.post(`/userlists/changeAnswer`, {
+      postId: categoryId,
+      changeAnswerAddedObj: params.answer,
+      addedAnswer: params.addedAnswer,
+      addedAnswerUuid: params.addedAnswer ? params.uuid : '',
+      uuid: params.uuid,
+      isAddedAnsSelected: params.isAddedAnsSelected,
+      categoryLink,
+    });
+    return resp;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const viewListResults = async ({ categoryId }) => {
   try {
     return await api.get(`/userlists/viewList/${categoryId}/${localStorage.getItem('uuid')}`);
