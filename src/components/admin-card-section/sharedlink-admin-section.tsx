@@ -168,7 +168,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
             <Button
               variant="danger"
               onClick={showDeleteSharedLinkPopup}
-              className="col-span-1 w-full max-w-full laptop:w-full"
+              className="col-span-1 w-full max-w-full tablet:w-full laptop:w-full"
             >
               Delete
             </Button>
