@@ -102,7 +102,12 @@ export default function UserProfile() {
                       Total engagements
                     </h1>
                     <h5 className="text-center text-[18px] font-normal">
-                      {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted +
+                      {data?.linkHub?.personal?.linkHub?.reduce(
+                        (sum: number, item: { viewCount?: any[] }) =>
+                          sum + (item.viewCount ? item.viewCount.length : 0),
+                        0
+                      ) +
+                        persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted +
                         persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount +
                         persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
                     </h5>
