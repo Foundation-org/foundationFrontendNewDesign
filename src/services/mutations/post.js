@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { createStartQuest, undoFeedback, updateChangeAnsStartQuest } from '../api/questsApi';
 import { resetaddOptionLimit } from '../../features/quest/utilsSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { submitListResponse, updateCategoryParticipentsCount } from '../api/listsApi';
+import { changeListResponse, submitListResponse, updateCategoryParticipentsCount } from '../api/listsApi';
 import showToast from '../../components/ui/Toast';
 
 export const useStartGuestListPost = (setLoading) => {
@@ -43,6 +43,40 @@ export const useStartGuestListPost = (setLoading) => {
   });
 
   return { startGuestListPost };
+};
+
+export const useChangeGuestListPost = (setLoading) => {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: changeGuestListPost } = useMutation({
+    mutationFn: changeListResponse,
+    onSuccess: (resp) => {
+      if (resp.status === 200) {
+        queryClient.invalidateQueries(['userInfo']);
+        queryClient.setQueriesData(['postsByCategory'], (oldData) => {
+          if (!oldData || !oldData.post) {
+            return oldData;
+          }
+
+          return {
+            ...oldData,
+            post: oldData.post.map((item) =>
+              item._id === resp.data.category.post._id ? resp.data.category.post : item
+            ),
+          };
+        });
+
+        setLoading(false);
+      }
+    },
+    onError: (err) => {
+      console.log({ err });
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
+      setLoading(false);
+    },
+  });
+
+  return { changeGuestListPost };
 };
 
 export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, questStartData) => {
