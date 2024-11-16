@@ -106,7 +106,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                     !location.pathname.includes('/l/') &&
                     location.pathname !== '/post/isfullscreen'
                       ? 'w-fit'
-                      : 'w-full justify-center'
+                      : 'w-full justify-start'
                   } flex items-center gap-1 tablet:gap-2`}
                   onClick={handleSharePostClick}
                 >
@@ -135,7 +135,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                     !location.pathname.includes('/l/') &&
                     location.pathname !== '/post/isfullscreen'
                       ? 'justify-center'
-                      : 'justify-end'
+                      : 'justify-start'
                   } flex items-center gap-1 tablet:gap-2`}
                   onClick={handleAddToListClick}
                 >
