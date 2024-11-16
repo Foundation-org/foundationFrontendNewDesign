@@ -26,7 +26,6 @@ const ListCard = ({ listData, page }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const location = useLocation();
-  // const isProfilePage = location.pathname === '/profile/me';
   const notPublicProfile = !location.pathname.startsWith('/h/');
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);

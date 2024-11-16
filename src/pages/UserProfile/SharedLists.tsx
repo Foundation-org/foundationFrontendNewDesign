@@ -71,7 +71,7 @@ export default function SharedLists({ domain }: { domain: string }) {
                 </div>
                 <div className="mt-3 flex w-full justify-center tablet:mt-5">
                   <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
-                    View all shared lists
+                    Manage all shared lists
                   </Button>
                 </div>
               </>

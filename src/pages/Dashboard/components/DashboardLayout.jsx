@@ -385,7 +385,7 @@ export default function DashboardLayout({ children }) {
             {location.pathname !== '/profile' &&
               !location.pathname.startsWith('/h/') &&
               !location.pathname.startsWith('/seldon-ai') &&
-              location.pathname !== '/profile/me' &&
+              location.pathname !== '/profile' &&
               location.pathname !== '/profile/ledger' &&
               location.pathname !== '/profile/feedback-given' &&
               location.pathname !== '/profile/shared-links' &&
@@ -455,7 +455,7 @@ export default function DashboardLayout({ children }) {
                 </>
               )}
 
-            {(location.pathname === '/profile/me' || location.pathname.startsWith('/h/')) && (
+            {(location.pathname === '/profile' || location.pathname.startsWith('/h/')) && (
               <>
                 {persistedUserInfo?.role === 'user' ? (
                   <div className="flex w-fit items-center gap-1 tablet:justify-end tablet:gap-[15px] laptop:flex-col">
@@ -506,7 +506,7 @@ export default function DashboardLayout({ children }) {
           </div>
           {/* Sidebar Left */}
           {!localStorage.getItem('isSubDomain') &&
-            location.pathname !== '/profile/me' &&
+            location.pathname !== '/profile' &&
             location.pathname !== '/profile-others' &&
             !location.pathname.startsWith('/h/') &&
             !location.pathname.startsWith('/post') &&
@@ -547,7 +547,7 @@ export default function DashboardLayout({ children }) {
 
           {location.pathname !== '/treasury' &&
             !location.pathname.startsWith('/h/') &&
-            location.pathname !== '/profile/me' &&
+            location.pathname !== '/profile' &&
             location.pathname !== '/profile-others' &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/treasury/reward-schedule' &&
@@ -789,7 +789,7 @@ export default function DashboardLayout({ children }) {
           {!localStorage.getItem('isSubDomain') &&
             location.pathname !== '/profile-others' &&
             !location.pathname.startsWith('/h/') &&
-            location.pathname !== '/profile/me' &&
+            location.pathname !== '/profile' &&
             !location.pathname.startsWith('/post') &&
             !location.pathname.startsWith('/seldon-ai') &&
             location.pathname !== '/profile/ledger' &&
