@@ -62,7 +62,11 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        showToast('success', 'badgeAdded');
+        if (existingData) {
+          showToast('success', 'infoUpdated');
+        } else {
+          showToast('success', 'badgeAdded');
+        }
         if (onboarding) {
           handleSkip();
           return;
@@ -419,7 +423,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
 
                 {hollow || checkHollow() ? (
                   <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                    Add Badge
+                    {edit || existingData ? 'Update Badge' : 'Add Badge'}
                   </Button>
                 ) : (
                   <Button
@@ -442,7 +446,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                   >
                     {loading === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit ? (
+                    ) : edit || existingData ? (
                       'Update Badge'
                     ) : (
                       'Add Badge'
