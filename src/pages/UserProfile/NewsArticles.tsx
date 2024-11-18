@@ -7,6 +7,7 @@ import showToast from '../../components/ui/Toast';
 import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 import SummaryCard from '../../components/SummaryCard';
 import { useSelector } from 'react-redux';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function NewsArticles({ domain }: { domain: string }) {
   const location = useLocation();
@@ -15,6 +16,12 @@ export default function NewsArticles({ domain }: { domain: string }) {
   const [showAll, setShowAll] = useState(false);
   const isPublicProfile = location.pathname.startsWith('/h/');
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    // Clear cache when the page changes
+    queryClient.resetQueries({ queryKey: ['sharedArticles'] });
+  }, []);
 
   const { data, fetchNextPage, hasNextPage } = useFetchNewsFeed('', 'sharedArticles', domain);
 

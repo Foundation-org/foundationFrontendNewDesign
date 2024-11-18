@@ -209,7 +209,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
           />
           <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {/* {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '} */}
-            Shared {calculateTimeAgo(questStartData.userQuestSetting.sharedTime)}
+            Shared {calculateTimeAgo(questStartData.userQuestSetting?.sharedTime)}
           </h4>
         </div>
       </div>

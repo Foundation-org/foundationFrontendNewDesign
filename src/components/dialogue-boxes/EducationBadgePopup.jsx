@@ -209,7 +209,11 @@ const EducationBadgePopup = ({
             console.log(dataSaved2);
           }
         }
-        showToast('success', 'badgeAdded');
+        if (existingData) {
+          showToast('success', 'infoUpdated');
+        } else {
+          showToast('success', 'badgeAdded');
+        }
         if (onboarding) {
           handleSkip();
           return;
@@ -760,7 +764,7 @@ const EducationBadgePopup = ({
               )} */}
                 {hollow || isError || isError2 || checkHollow() ? (
                   <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                    {edit ? 'Update Badge' : 'Add Badge'}
+                    {edit || existingData ? 'Update Badge' : 'Add Badge'}
                   </Button>
                 ) : (
                   <Button
@@ -787,7 +791,7 @@ const EducationBadgePopup = ({
                   >
                     {loading === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit ? (
+                    ) : edit || existingData ? (
                       'Update Badge'
                     ) : (
                       'Add Badge'

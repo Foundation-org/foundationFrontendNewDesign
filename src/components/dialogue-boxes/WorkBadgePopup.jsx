@@ -231,7 +231,11 @@ const WorkBadgePopup = ({
             console.log(jobsSaved);
           }
         }
-        showToast('success', 'badgeAdded');
+        if (existingData) {
+          showToast('success', 'infoUpdated');
+        } else {
+          showToast('success', 'badgeAdded');
+        }
         if (onboarding) {
           handleSkip();
           return;
@@ -686,7 +690,7 @@ const WorkBadgePopup = ({
               )} */}
                 {hollow || checkHollow() ? (
                   <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                    {edit ? 'Update Badge' : 'Add Badge'}
+                    {edit || existingData ? 'Update Badge' : 'Add Badge'}
                   </Button>
                 ) : (
                   <Button
@@ -715,7 +719,7 @@ const WorkBadgePopup = ({
                   >
                     {loading === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit ? (
+                    ) : edit || existingData ? (
                       'Update Badge'
                     ) : (
                       'Add Badge'

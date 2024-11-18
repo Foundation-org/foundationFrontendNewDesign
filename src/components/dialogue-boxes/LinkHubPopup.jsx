@@ -33,7 +33,10 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
     setExistingData(param?.personal[type]);
   }, [persistedUserInfo.badges]);
 
-  const handleClose = () => setIsPopup(false);
+  const handleClose = () => {
+    queryClient.invalidateQueries({ queryKey: ['my-profile'] }, { exact: true });
+    setIsPopup(false);
+  };
 
   const handlefield1Change = (event) => {
     const value = event.target.value;
@@ -62,17 +65,21 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        showToast('success', 'badgeAdded');
+        if (existingData) {
+          showToast('success', 'infoUpdated');
+        } else {
+          showToast('success', 'badgeAdded');
+        }
         if (onboarding) {
           handleSkip();
           return;
         }
-        queryClient.invalidateQueries(['userInfo']);
-        queryClient.invalidateQueries(['my-profile']);
-
+        queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
         setLoading(false);
         setDelLoading(false);
         setAddAnotherForm(false);
+        setField1Data('');
+        setField2Data('');
       }
     } catch (error) {
       console.log(error);
@@ -90,7 +97,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
     }
     const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
-      queryClient.invalidateQueries(['userInfo']);
+      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
     }
   };
 
@@ -119,7 +126,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
 
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
         showToast('success', 'infoUpdated');
         setLoading(false);
         setAddAnotherForm(false);
@@ -419,7 +426,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
 
                 {hollow || checkHollow() ? (
                   <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                    Add Badge
+                    {edit || existingData ? 'Update Badge' : 'Add Badge'}
                   </Button>
                 ) : (
                   <Button
@@ -442,7 +449,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                   >
                     {loading === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit ? (
+                    ) : edit || existingData ? (
                       'Update Badge'
                     ) : (
                       'Add Badge'

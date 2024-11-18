@@ -53,6 +53,7 @@ export const useFetchMyProfile = (domain, viewerUuid) => {
       return await fetchMyProfile(domain, viewerUuid);
     },
     enabled: !!domain,
+    refetchOnWindowFocus: false,
   });
 };
 

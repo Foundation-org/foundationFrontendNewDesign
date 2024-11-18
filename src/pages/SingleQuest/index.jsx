@@ -9,6 +9,7 @@ import Topbar from '../Dashboard/components/Topbar';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import SystemNotificationCard from '../../components/posts/SystemNotificationCard';
+import Loader from '../../components/ui/Loader';
 
 const SingleQuest = () => {
   let { id } = useParams();
@@ -20,12 +21,15 @@ const SingleQuest = () => {
   const {
     data: singleQuestData,
     error,
+    isError,
     isLoading,
     isSuccess,
+    isFetching,
   } = useQuery({
     queryKey: ['questByShareLink'],
     queryFn: () => getQuestByUniqueShareLink(id),
     enabled: persistedUserInfo !== null && postId === undefined,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -35,7 +39,13 @@ const SingleQuest = () => {
     }
   }, [isSuccess, singleQuestData?.data?.data]);
 
-  const { data: sourcePosts, isSuccess: singlePostSuccess } = useQuery({
+  const {
+    data: sourcePosts,
+    isSuccess: singlePostSuccess,
+    isFetching: postByIdLoading,
+    isError: postByIdError,
+    error: postByIdErrorData,
+  } = useQuery({
     queryKey: ['singlePostById'],
     queryFn: () => getQuestsCustom({ ids: [postId], uuid: persistedUserInfo?.uuid }),
     enabled: postId !== undefined,
@@ -153,17 +163,23 @@ const SingleQuest = () => {
       <div className="w-full bg-[#F2F3F5] dark:bg-black">
         <DashboardLayout>
           <div className="relative mx-auto flex h-[calc(100dvh-91px)] w-full max-w-[778px] flex-col gap-2 overflow-y-auto py-2 no-scrollbar tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:py-5">
-            {isLoading ? (
+            {(isLoading || isFetching || postByIdLoading) && (
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
+                <Loader />
+              </div>
+            )}
+            {(isError || postByIdError) && (
               <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
-                Loading...
+                {error?.response?.data?.message || postByIdErrorData?.response?.data?.message}
               </p>
-            ) : !postData && error !== '' ? (
+            )}
+            {/* {!postData && error !== '' ? (
               <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
                 {error?.response?.data?.message
                   ? error?.response?.data?.message
                   : 'An error occurred while fetching the quest.'}
               </p>
-            ) : null}
+            ) : null} */}
             {postData &&
               postData?.map((item, index) =>
                 item.id === 'guest_notification' ? (

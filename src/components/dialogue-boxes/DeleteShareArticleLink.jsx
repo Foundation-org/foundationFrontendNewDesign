@@ -28,13 +28,13 @@ export default function DeleteShareArticleLink({ handleClose, modalVisible, arti
   const { mutateAsync: deleteShareArticleLink, isPending } = useMutation({
     mutationFn: deleteShareLink,
     onSuccess: (resp) => {
-      if (type === 'delete') {
-        toast.success('Article link deleted successfully');
-      } else if (type === 'enable') {
-        toast.success('Article link enabled successfully');
-      } else {
-        toast.success('Article link disabled successfully');
-      }
+      // if (type === 'delete') {
+      //   toast.success('Article link deleted successfully');
+      // } else if (type === 'enable') {
+      //   toast.success('Article link enabled successfully');
+      // } else {
+      //   toast.success('Article link disabled successfully');
+      // }
 
       queryClient.invalidateQueries({ queryKey: ['news-feed', ''] }, { exact: true });
       // queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
@@ -94,7 +94,10 @@ export default function DeleteShareArticleLink({ handleClose, modalVisible, arti
               later if you’d like to start over.
             </span>
           ) : type === 'enable' ? (
-            <span>Are you sure you want to Enable this link? You can disable it again anytime.</span>
+            <span>
+              Are you sure you want to enable sharing? This content will be public on your Home Page, and all associated
+              shared links will be re-enabled. You can disable it again at anytime.
+            </span>
           ) : (
             <span>
               Are you sure you want to disable sharing? This content will no longer be public on your Home Page, and all

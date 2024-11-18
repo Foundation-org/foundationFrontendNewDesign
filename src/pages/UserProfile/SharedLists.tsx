@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ListCard from '../Dashboard/pages/Lists/components/ListCard';
 import { Button } from '../../components/ui/Button';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchListsExpended } from '../../services/api/listsApi';
 import { useSelector } from 'react-redux';
 import SummaryCard from '../../components/SummaryCard';
@@ -12,8 +12,12 @@ export default function SharedLists({ domain }: { domain: string }) {
   const navigate = useNavigate();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const [showAll, setShowAll] = useState(false);
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-
+  useEffect(() => {
+    // Clear cache when the page changes
+    queryClient.resetQueries({ queryKey: ['lists'] });
+  }, []);
   const { data: listData, isError } = useQuery({
     queryFn: () => fetchListsExpended(domain),
     queryKey: ['lists'],

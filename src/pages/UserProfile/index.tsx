@@ -32,15 +32,40 @@ export default function UserProfile() {
     }
   }, [isDomainBadge]);
 
-  const { data, isLoading, error } = useFetchMyProfile(domain, persistedUserInfo.uuid);
+  const { data, isLoading, error, isFetching, isError } = useFetchMyProfile(domain, persistedUserInfo.uuid);
 
   const totalViewerCount =
     data?.linkHub?.personal?.linkHub?.reduce((sum: number, item: { viewerCount: any[] }) => {
       return sum + (Array.isArray(item.viewerCount) ? item.viewerCount.length : 0);
     }, 0) || 0;
 
+  if (isLoading || isFetching) {
+    return (
+      <div className="mt-10 flex h-fit w-full justify-center">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error?.message === 'No such page exists.' || isError) {
+    return (
+      <div className="mt-16 flex h-full flex-col items-center text-[#616161] dark:text-[#f1f1f1]">
+        <h1 className="text-[32px] font-bold leading-normal">Sorry!</h1>
+        <h2 className="text-[26px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1]">Page not found</h2>
+        <Button variant="submit" className="mt-10" onClick={() => navigate('/')}>
+          Go to Homepage
+        </Button>
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/404.svg`}
+          alt="page not found"
+          className="h-[286px] w-full max-w-[333px] tablet:max-w-[444px]"
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
+    <div className="mx-auto mb-4 flex w-full max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {isPersonalPopup && (
         <HomepageBadgePopup
           isPopup={isPersonalPopup}
@@ -54,11 +79,7 @@ export default function UserProfile() {
           progress={null}
         />
       )}
-      {isLoading ? (
-        <div className="mt-10 flex h-fit w-full justify-center">
-          <Loader />
-        </div>
-      ) : !domain ? (
+      {!domain ? (
         <div className="dar flex flex-col items-center justify-center gap-2 rounded-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-3 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
           <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
             Claim your domain name to enable your Home Page and create a personalized hub. Share posts, lists, news
@@ -66,21 +87,6 @@ export default function UserProfile() {
           </h1>
 
           <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={false} isDomain={true} />
-        </div>
-      ) : error?.message === 'No such page exists.' ? (
-        <div className="mt-16 flex h-full flex-col items-center text-[#616161] dark:text-[#f1f1f1]">
-          <h1 className="text-[32px] font-bold leading-normal">Sorry!</h1>
-          <h2 className="text-[26px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1]">
-            Page not found
-          </h2>
-          <Button variant="submit" className="mt-10" onClick={() => navigate('/')}>
-            Go to Homepage
-          </Button>
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/404.svg`}
-            alt="page not found"
-            className="h-[286px] w-full max-w-[333px] tablet:max-w-[444px]"
-          />
         </div>
       ) : (
         <div className="mb-4 flex flex-col gap-3 pb-3 tablet:gap-6 tablet:pb-6">
