@@ -40,7 +40,7 @@ export default function UserProfile() {
     }, 0) || 0;
 
   return (
-    <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
+    <div className="mx-auto mb-4 flex w-full max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {isPersonalPopup && (
         <HomepageBadgePopup
           isPopup={isPersonalPopup}
