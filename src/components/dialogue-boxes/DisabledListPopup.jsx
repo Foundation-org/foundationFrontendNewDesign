@@ -62,7 +62,10 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
               associated shared links will be disabled. You can re-enable it anytime.
             </span>
           ) : (
-            <span>Are you sure you want to Enable this link? You can disable it again anytime.</span>
+            <span>
+              Are you sure you want to enable sharing? This content will be public on your Home Page, and all associated
+              shared links will be re-enabled. You can disable it again at anytime.
+            </span>
           )}
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">

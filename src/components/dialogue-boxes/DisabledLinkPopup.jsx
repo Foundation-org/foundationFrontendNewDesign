@@ -89,7 +89,10 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
               later if you’d like to start over.
             </span>
           ) : questUtils.sharedQuestStatus.type === 'Enable' ? (
-            <span>Are you sure you want to Enable this link? You can disable it again anytime.</span>
+            <span>
+              Are you sure you want to enable sharing? This content will be public on your Home Page, and all associated
+              shared links will be re-enabled. You can disable it again at anytime.
+            </span>
           ) : (
             <span>
               Are you sure you want to disable sharing? This content will no longer be public on your Home Page, and all
