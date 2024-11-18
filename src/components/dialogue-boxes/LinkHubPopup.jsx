@@ -78,6 +78,8 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
         setLoading(false);
         setDelLoading(false);
         setAddAnotherForm(false);
+        setField1Data('');
+        setField2Data('');
       }
     } catch (error) {
       console.log(error);

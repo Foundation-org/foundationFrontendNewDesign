@@ -3,7 +3,7 @@ import { Button } from '../../components/ui/Button';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { getQuestUtils } from '../../features/quest/utilsSlice';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import api from '../../services/api/Axios';
@@ -17,7 +17,7 @@ export default function SharedPosts({ domain }: { domain: string }) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const questUtils = useSelector(getQuestUtils);
   const [showAll, setShowAll] = useState(false);
-
+  const queryClient = useQueryClient();
   const fetchPosts = async function getInfoQuestions({ pageParam }: { pageParam: number }) {
     const params = {
       _page: pageParam,
@@ -37,6 +37,10 @@ export default function SharedPosts({ domain }: { domain: string }) {
     const response = await api.get('/infoquestions/getQuestsAll', { params });
     return response.data.data;
   };
+  useEffect(() => {
+    // Clear cache when the page changes
+    queryClient.resetQueries({ queryKey: ['sharedLink'] });
+  }, []);
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['sharedLink', ''],
