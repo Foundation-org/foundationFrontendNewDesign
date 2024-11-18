@@ -28,13 +28,13 @@ export default function DeleteShareArticleLink({ handleClose, modalVisible, arti
   const { mutateAsync: deleteShareArticleLink, isPending } = useMutation({
     mutationFn: deleteShareLink,
     onSuccess: (resp) => {
-      if (type === 'delete') {
-        toast.success('Article link deleted successfully');
-      } else if (type === 'enable') {
-        toast.success('Article link enabled successfully');
-      } else {
-        toast.success('Article link disabled successfully');
-      }
+      // if (type === 'delete') {
+      //   toast.success('Article link deleted successfully');
+      // } else if (type === 'enable') {
+      //   toast.success('Article link enabled successfully');
+      // } else {
+      //   toast.success('Article link disabled successfully');
+      // }
 
       queryClient.invalidateQueries({ queryKey: ['news-feed', ''] }, { exact: true });
       // queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });

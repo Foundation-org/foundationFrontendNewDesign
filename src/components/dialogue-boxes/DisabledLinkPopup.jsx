@@ -17,7 +17,7 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
   const { mutateAsync: updateStatus } = useMutation({
     mutationFn: updateSharedLinkStatus,
     onSuccess: (resp) => {
-      toast.success(resp?.data.message);
+      // toast.success(resp?.data.message);
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
 
       if (questUtils.sharedQuestStatus.type === 'Delete') {

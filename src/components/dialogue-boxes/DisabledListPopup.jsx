@@ -21,7 +21,7 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
         enable: type === 'disable' ? 'false' : 'true',
       }),
     onSuccess: (resp) => {
-      toast.success(resp?.data.message);
+      // toast.success(resp?.data.message);
 
       queryClient.invalidateQueries(['lists']);
       // queryClient.setQueryData(['lists'], (oldData) => {
