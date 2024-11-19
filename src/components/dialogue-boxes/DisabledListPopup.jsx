@@ -9,7 +9,6 @@ import api from '../../services/api/Axios';
 import { deleteListSettings } from '../../services/api/listsApi';
 
 export default function DisabledListPopup({ handleClose, modalVisible, type, categoryId }) {
-  console.log(type);
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,17 +21,12 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
         enable: type === 'disable' ? 'false' : 'true',
       }),
     onSuccess: (resp) => {
-      // toast.success(resp?.data.message);
-
-      queryClient.invalidateQueries(['lists']);
-      // queryClient.setQueryData(['lists'], (oldData) => {
-      //   const updatedData = {
-      //     ...oldData,
-      //     ...resp.data.userList.userList, // Merging changes from the API response
-      //   };
-      //   setItems(updatedData); // Sync local state with the new data
-      //   return updatedData; // Return updated data for query cache
-      // });
+      queryClient.setQueryData(['lists'], (oldData) => {
+        const updatedList = resp.data.userList.userList.map((item) =>
+          item._id === categoryId ? { ...item, ...resp.data.userList.userList } : item
+        );
+        return updatedList;
+      });
 
       setIsLoading(false);
       handleClose();
@@ -47,15 +41,16 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
     mutationFn: deleteListSettings,
     onSuccess: (resp) => {
       // toast.success(resp?.data.message);
-
       queryClient.invalidateQueries(['lists']);
       // queryClient.setQueryData(['lists'], (oldData) => {
-      //   const updatedData = {
-      //     ...oldData,
-      //     ...resp.data.userList.userList, // Merging changes from the API response
-      //   };
-      //   setItems(updatedData); // Sync local state with the new data
-      //   return updatedData; // Return updated data for query cache
+      //   console.log('oldData', oldData);
+      //   console.log('newData', resp.data);
+      //   // const updatedData = {
+      //   //   ...oldData,
+      //   //   ...resp.data.userList.userList, // Merging changes from the API response
+      //   // };
+      //   // setItems(updatedData); // Sync local state with the new data
+      //   // return updatedData; // Return updated data for query cache
       // });
 
       setIsLoading(false);
