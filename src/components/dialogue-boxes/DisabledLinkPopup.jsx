@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
@@ -7,9 +6,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateSharedLinkStatus } from '../../services/api/questsApi';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import PopUp from '../ui/PopUp';
+import { useLocation } from 'react-router-dom';
 
 export default function DisabledLinkPopup({ handleClose, modalVisible }) {
   const queryClient = useQueryClient();
+  const location = useLocation();
 
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +18,6 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
   const { mutateAsync: updateStatus } = useMutation({
     mutationFn: updateSharedLinkStatus,
     onSuccess: (resp) => {
-      // toast.success(resp?.data.message);
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
 
       if (questUtils.sharedQuestStatus.type === 'Delete') {
@@ -29,16 +29,25 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
         });
       }
       if (questUtils.sharedQuestStatus.type === 'Disable') {
-        queryClient.setQueriesData(['sharedLink'], (oldData) => ({
-          ...oldData,
-          pages: oldData?.pages?.map((page) =>
-            page.map((item) =>
-              item._id === resp.data.data.questForeignKey
-                ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Disable' } }
-                : item
-            )
-          ),
-        }));
+        if (location.pathname === '/profile') {
+          queryClient.setQueryData(['sharedLink', ''], (oldData) => {
+            return {
+              ...oldData,
+              pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+            };
+          });
+        } else {
+          queryClient.setQueryData(['sharedLink', ''], (oldData) => ({
+            ...oldData,
+            pages: oldData?.pages?.map((page) =>
+              page.map((item) =>
+                item._id === resp.data.data.questForeignKey
+                  ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Disable' } }
+                  : item
+              )
+            ),
+          }));
+        }
       }
       if (questUtils.sharedQuestStatus.type === 'Enable') {
         queryClient.setQueriesData(['sharedLink'], (oldData) => ({

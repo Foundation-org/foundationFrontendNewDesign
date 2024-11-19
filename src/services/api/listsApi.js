@@ -51,15 +51,8 @@ export const deleteList = async (categoryId) => {
   }
 };
 
-export const deleteListSettings = async (categoryId) => {
-  try {
-    const resp = await api.delete(
-      `/userlists/userList/deleteSharedListSettings/${localStorage.getItem('uuid')}/${categoryId}`
-    );
-    return resp.data;
-  } catch (err) {
-    return err;
-  }
+export const deleteListSettings = async ({ userUuid, categoryId }) => {
+  return await api.delete(`/userlists/userList/deleteSharedListSettings/${userUuid}/${categoryId}`);
 };
 
 export const findCategoryByName = async (data) => {

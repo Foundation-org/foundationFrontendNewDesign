@@ -51,20 +51,6 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
     <>
       <div className="border-t-2 border-gray-250">
         <div className="my-[15px] tablet:my-6">
-          {/* <div className="my-6 flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
-          <Button
-            variant="cancel"
-            className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
-            onClick={() => {
-              setSelectedItem(categoryItem);
-              setCategoryId(categoryItem._id);
-              setAddPostModal(true);
-            }}
-          >
-            <img src={plusImg} alt="add" className="size-[7.398px] tablet:size-[15.6px]" />
-            Add Post
-          </Button>
-        </div> */}
           <div className="my-[15px] ml-10 flex items-center gap-1 tablet:my-6 tablet:ml-16 tablet:gap-20">
             <div className="flex items-center gap-[1px] tablet:gap-2">
               <img
@@ -87,7 +73,6 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
               </h2>
             </div>
           </div>
-          {/* Buttons */}
           {/* Button Row 1 */}
           <div className="flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
             {isProfilePage && !categoryItem?.spotLight && (
@@ -143,9 +128,9 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
                 variant="danger"
                 className="w-full max-w-[320px] bg-[#A3A3A3] tablet:w-full laptop:w-full"
                 onClick={() => {
-                  showToast('info', 'featureComingSoon');
-                  // setCategoryId(categoryItem._id);
-                  // setModalVisible(true);
+                  setEnableDisableType('delete-shared-data');
+                  setCategoryId(categoryItem._id);
+                  setEnableDisableModal(true);
                 }}
               >
                 Delete

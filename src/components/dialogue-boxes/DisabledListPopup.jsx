@@ -6,6 +6,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
+import { deleteListSettings } from '../../services/api/listsApi';
 
 export default function DisabledListPopup({ handleClose, modalVisible, type, categoryId }) {
   console.log(type);
@@ -42,15 +43,42 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
     },
   });
 
+  const { mutateAsync: deleteSharedData } = useMutation({
+    mutationFn: deleteListSettings,
+    onSuccess: (resp) => {
+      // toast.success(resp?.data.message);
+
+      queryClient.invalidateQueries(['lists']);
+      // queryClient.setQueryData(['lists'], (oldData) => {
+      //   const updatedData = {
+      //     ...oldData,
+      //     ...resp.data.userList.userList, // Merging changes from the API response
+      //   };
+      //   setItems(updatedData); // Sync local state with the new data
+      //   return updatedData; // Return updated data for query cache
+      // });
+
+      setIsLoading(false);
+      handleClose();
+    },
+    onError: (err) => {
+      setIsLoading(false);
+    },
+  });
+
   const handleLinkStatusApi = () => {
     setIsLoading(true);
-    updateStatus();
+    if (type === 'delete-shared-data') {
+      deleteSharedData({ userUuid: persistedUserInfo.uuid, categoryId });
+    } else {
+      updateStatus();
+    }
   };
 
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/link.svg`}
-      title={type === 'disable' ? 'Disable Sharing' : 'Enable Sharing'}
+      title={type === 'disable' ? 'Disable Sharing' : type === 'enable' ? 'Enable Sharing' : 'Delete Share Data'}
       open={modalVisible}
       handleClose={handleClose}
     >
@@ -61,10 +89,16 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
               Are you sure you want to disable sharing? This content will no longer be public on your Home Page, and all
               associated shared links will be disabled. You can re-enable it anytime.
             </span>
-          ) : (
+          ) : type === 'enable' ? (
             <span>
               Are you sure you want to enable sharing? This content will be public on your Home Page, and all associated
               shared links will be re-enabled. You can disable it again at anytime.
+            </span>
+          ) : (
+            <span>
+              Are you sure you want to delete this share data? You will no longer be managing this content for your
+              audience, and all associated links and insights data will be removed. You can share this content again
+              later if you’d like to start over.
             </span>
           )}
         </h1>
