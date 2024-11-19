@@ -207,6 +207,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                     <div
                       key={item._id}
                       className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
+                      onClick={() => handleCheckboxChange(item._id)}
                     >
                       <div className="w-fit space-y-2 tablet:space-y-5">
                         <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
@@ -222,7 +223,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                           type="checkbox"
                           className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
                           checked={selectedOption.includes(item._id)}
-                          onChange={() => handleCheckboxChange(item._id)}
                           readOnly
                         />
                       </div>

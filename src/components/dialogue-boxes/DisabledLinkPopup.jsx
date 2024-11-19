@@ -29,25 +29,25 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
         });
       }
       if (questUtils.sharedQuestStatus.type === 'Disable') {
-        if (location.pathname === '/profile') {
-          queryClient.setQueryData(['sharedLink', ''], (oldData) => {
-            return {
-              ...oldData,
-              pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-            };
-          });
-        } else {
-          queryClient.setQueryData(['sharedLink', ''], (oldData) => ({
-            ...oldData,
-            pages: oldData?.pages?.map((page) =>
-              page.map((item) =>
-                item._id === resp.data.data.questForeignKey
-                  ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Disable' } }
-                  : item
-              )
-            ),
-          }));
-        }
+        // if (location.pathname === '/profile') {
+        //   queryClient.setQueryData(['sharedLink', ''], (oldData) => {
+        //     return {
+        //       ...oldData,
+        //       pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        //     };
+        //   });
+        // } else {
+        queryClient.setQueryData(['sharedLink', ''], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) =>
+              item._id === resp.data.data.questForeignKey
+                ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Disable' } }
+                : item
+            )
+          ),
+        }));
+        // }
       }
       if (questUtils.sharedQuestStatus.type === 'Enable') {
         queryClient.setQueriesData(['sharedLink'], (oldData) => ({

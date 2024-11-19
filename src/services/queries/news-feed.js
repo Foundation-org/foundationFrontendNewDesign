@@ -9,7 +9,8 @@ const fetchArticles = async (
   terms = '',
   pageType = '',
   uuid,
-  domain = ''
+  domain = '',
+  isPublicProfile = 'false'
 ) => {
   let params = {
     _page: pageNo,
@@ -17,6 +18,7 @@ const fetchArticles = async (
     sort,
     terms,
     uuid: uuid,
+    isPublicProfile,
   };
 
   if (pageType !== '') {
@@ -31,13 +33,22 @@ const fetchArticles = async (
   return response.data;
 };
 
-export const useFetchNewsFeed = (terms = '', pageType = '', domain = '') => {
+export const useFetchNewsFeed = (terms = '', pageType = '', domain = '', isPublicProfile = false) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return useInfiniteQuery({
     queryKey: ['news-feed', terms],
     queryFn: async ({ pageParam = 1 }) => {
-      return await fetchArticles(pageParam, 5, 'Newest First', terms, pageType, persistedUserInfo.uuid, domain);
+      return await fetchArticles(
+        pageParam,
+        5,
+        'Newest First',
+        terms,
+        pageType,
+        persistedUserInfo.uuid,
+        domain,
+        isPublicProfile
+      );
     },
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.data.length ? allPages.length + 1 : undefined;

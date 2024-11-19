@@ -19,7 +19,8 @@ export default function SharedLists({ domain }: { domain: string }) {
     queryClient.resetQueries({ queryKey: ['lists'] });
   }, []);
   const { data: listData, isError } = useQuery({
-    queryFn: () => fetchListsExpended(domain),
+    queryFn: () =>
+      fetchListsExpended(domain, persistedUserInfo.uuid, location.pathname.startsWith('/h/') ? true : false),
     queryKey: ['lists'],
   });
 

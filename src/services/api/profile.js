@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import showToast from '../../components/ui/Toast';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 // FETCH ALL PROFILES
 const fetchProfiles = async (pageNo, limit = 5, sort = 'Newest First', terms = '') => {
@@ -28,12 +29,13 @@ export const useFetchOtherProfiles = (terms = '') => {
 };
 
 // FETCH MY PROFILE
-const fetchMyProfile = async (domain, viewerUuid) => {
+const fetchMyProfile = async (domain, viewerUuid, isPublicProfile) => {
   try {
     const response = await api.get(`/user/fetchUserProfile`, {
       params: {
         domain,
         viewerUuid,
+        isPublicProfile,
       },
     });
     return response.data;
@@ -46,11 +48,13 @@ const fetchMyProfile = async (domain, viewerUuid) => {
   }
 };
 
-export const useFetchMyProfile = (domain, viewerUuid) => {
+export const useFetchMyProfile = (domain, viewerUuid, isPublicProfile) => {
+  console.log(isPublicProfile);
+
   return useQuery({
-    queryKey: ['my-profile', domain, viewerUuid],
+    queryKey: ['my-profile', domain, viewerUuid, isPublicProfile],
     queryFn: async () => {
-      return await fetchMyProfile(domain, viewerUuid);
+      return await fetchMyProfile(domain, viewerUuid, isPublicProfile);
     },
     enabled: !!domain,
     refetchOnWindowFocus: false,
@@ -71,7 +75,7 @@ export const useUpdateSpotLight = () => {
   return useMutation({
     mutationFn: updateSpotLight,
     onError: (error) => {
-      showToast('warning', 'spotLightAlreadyExists');
+      if (error?.response?.data?.message) toast.warning(error?.response?.data?.message);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['my-profile', domain] });

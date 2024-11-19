@@ -40,12 +40,16 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
   const { mutateAsync: deleteSharedData } = useMutation({
     mutationFn: deleteListSettings,
     onSuccess: (resp) => {
-      queryClient.setQueryData(['lists'], (oldData) => {
-        const updatedList = resp.data.updatedSharedList.map((item) =>
-          item._id === categoryId ? { ...item, ...resp.data.updatedSharedList } : item
-        );
-        return updatedList;
-      });
+      if (location.pathname === '/profile') {
+        queryClient.invalidateQueries({ queryKey: ['lists'] }, { exact: true });
+      } else {
+        queryClient.setQueryData(['lists'], () => {
+          const updatedList = resp.data.updatedSharedList.map((item) =>
+            item._id === categoryId ? { ...item, ...resp.data.updatedSharedList } : item
+          );
+          return updatedList;
+        });
+      }
 
       setIsLoading(false);
       handleClose();

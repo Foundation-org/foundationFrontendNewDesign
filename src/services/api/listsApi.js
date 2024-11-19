@@ -206,9 +206,9 @@ export const viewListAllResults = async ({ categoryId }) => {
   }
 };
 
-export const fetchListsExpended = async (domain) => {
+export const fetchListsExpended = async (domain, uuid, publicView) => {
   try {
-    const resp = await api.get(`/userlists/userList?domain=${domain}&enable=true`);
+    const resp = await api.get(`/userlists/userList?domain=${domain}&homepage=true&publicView=${publicView}`);
     return resp.data.userList;
   } catch (err) {
     return err;

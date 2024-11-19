@@ -111,7 +111,7 @@ export const toastMessages = {
   noEncryptionBadgeAdded: 'You need to have the encryption badge to use this feature',
   spotLightAdded: 'Spotlight added successfully',
   spotLightRemoved: 'Spotlight removed successfully',
-  spotLightAlreadyExists: 'Only single spotlight is allowed at once.',
+  spotLightAlreadyExists: "Only one spotlight is allowed at a time.",
   noPostsInList: 'Please add posts to view results',
   noListLink: 'This list is not shared yet',
 } as const;

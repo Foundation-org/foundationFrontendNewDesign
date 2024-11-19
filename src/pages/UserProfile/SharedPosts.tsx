@@ -32,6 +32,7 @@ export default function SharedPosts({ domain }: { domain: string }) {
       moderationRatingFinal: 100,
       domain: domain,
       viewerUuid: persistedUserInfo.uuid,
+      isPublicProfile: location.pathname.startsWith('/h/') ? true : false,
     };
 
     const response = await api.get('/infoquestions/getQuestsAll', { params });
