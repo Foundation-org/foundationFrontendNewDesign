@@ -40,18 +40,12 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
   const { mutateAsync: deleteSharedData } = useMutation({
     mutationFn: deleteListSettings,
     onSuccess: (resp) => {
-      // toast.success(resp?.data.message);
-      queryClient.invalidateQueries(['lists']);
-      // queryClient.setQueryData(['lists'], (oldData) => {
-      //   console.log('oldData', oldData);
-      //   console.log('newData', resp.data);
-      //   // const updatedData = {
-      //   //   ...oldData,
-      //   //   ...resp.data.userList.userList, // Merging changes from the API response
-      //   // };
-      //   // setItems(updatedData); // Sync local state with the new data
-      //   // return updatedData; // Return updated data for query cache
-      // });
+      queryClient.setQueryData(['lists'], (oldData) => {
+        const updatedList = resp.data.updatedSharedList.map((item) =>
+          item._id === categoryId ? { ...item, ...resp.data.updatedSharedList } : item
+        );
+        return updatedList;
+      });
 
       setIsLoading(false);
       handleClose();
