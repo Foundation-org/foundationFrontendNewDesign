@@ -23,7 +23,12 @@ export default function NewsArticles({ domain }: { domain: string }) {
     queryClient.resetQueries({ queryKey: ['sharedArticles'] });
   }, []);
 
-  const { data, fetchNextPage, hasNextPage } = useFetchNewsFeed('', 'sharedArticles', domain);
+  const { data, fetchNextPage, hasNextPage } = useFetchNewsFeed(
+    '',
+    'sharedArticles',
+    domain,
+    location.pathname.startsWith('/h/') ? true : false
+  );
 
   useEffect(() => {
     if (inView && hasNextPage) {

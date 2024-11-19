@@ -32,7 +32,11 @@ export default function UserProfile() {
     }
   }, [isDomainBadge]);
 
-  const { data, isLoading, error, isFetching, isError } = useFetchMyProfile(domain, persistedUserInfo.uuid);
+  const { data, isLoading, error, isFetching, isError } = useFetchMyProfile(
+    domain,
+    persistedUserInfo.uuid,
+    location.pathname.startsWith('/h/') ? true : false
+  );
 
   const totalViewerCount =
     data?.linkHub?.personal?.linkHub?.reduce((sum: number, item: { viewerCount: any[] }) => {

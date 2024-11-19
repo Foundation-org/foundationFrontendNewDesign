@@ -51,6 +51,10 @@ export const deleteList = async (categoryId) => {
   }
 };
 
+export const deleteListSettings = async ({ userUuid, categoryId }) => {
+  return await api.delete(`/userlists/userList/deleteSharedListSettings/${userUuid}/${categoryId}`);
+};
+
 export const findCategoryByName = async (data) => {
   try {
     const resp = await api.get(`/userlists/userList/findCategoryByName/${data.userUuid}/${data.categoryName}`);
@@ -202,9 +206,9 @@ export const viewListAllResults = async ({ categoryId }) => {
   }
 };
 
-export const fetchListsExpended = async (domain) => {
+export const fetchListsExpended = async (domain, uuid, publicView) => {
   try {
-    const resp = await api.get(`/userlists/userList?domain=${domain}&enable=true`);
+    const resp = await api.get(`/userlists/userList?domain=${domain}&homepage=true&publicView=${publicView}`);
     return resp.data.userList;
   } catch (err) {
     return err;
