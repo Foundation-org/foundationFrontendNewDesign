@@ -66,7 +66,7 @@ const Lists = () => {
         </div>
         <div className="mt-3 flex justify-center tablet:mt-5">
           <Button variant="submit" onClick={() => setAddToList(true)}>
-            Create new list
+            Create a new list
           </Button>
           {addToList && (
             <AddToListPopup handleClose={() => setAddToList(false)} modalVisible={addToList} page={'my-lists'} />

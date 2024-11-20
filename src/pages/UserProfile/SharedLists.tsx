@@ -6,12 +6,14 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchListsExpended } from '../../services/api/listsApi';
 import { useSelector } from 'react-redux';
 import SummaryCard from '../../components/SummaryCard';
+import AddToListPopup from '../../components/dialogue-boxes/AddToListPopup';
 
 export default function SharedLists({ domain }: { domain: string }) {
   const location = useLocation();
   const navigate = useNavigate();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const [showAll, setShowAll] = useState(false);
+  const [addToList, setAddToList] = useState(false);
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   useEffect(() => {
@@ -74,12 +76,24 @@ export default function SharedLists({ domain }: { domain: string }) {
                     </h5>
                   </div>
                 </div>
-                <div className="mt-3 flex w-full justify-center tablet:mt-5">
+                <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
+                  <Button variant="submit" onClick={() => setAddToList(true)}>
+                    Create a new list
+                  </Button>
+
                   <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
                     Manage all shared lists
                   </Button>
                 </div>
               </>
+            )}
+            {addToList && (
+              <AddToListPopup
+                handleClose={() => setAddToList(false)}
+                modalVisible={addToList}
+                questStartData={null}
+                page={'my-lists'}
+              />
             )}
           </SummaryCard>
 

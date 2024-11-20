@@ -108,7 +108,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToListWhite.svg`}
-      title={page === 'my-lists' ? 'Create new list' : 'Add to My Lists'}
+      title={page === 'my-lists' ? 'Create a new list' : 'Add to My Lists'}
       open={modalVisible}
       handleClose={handleClose}
       isBackground={false}
@@ -137,7 +137,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
         </div>
         <div className="mt-2 flex justify-end tablet:mt-[25px]">
           <Button
-            variant={'cancel'}
+            variant={'submit'}
             className={'bg-[#7C7C7C]'}
             onClick={() => {
               if (!listName) {
