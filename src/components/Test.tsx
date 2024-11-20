@@ -28,15 +28,29 @@ const Test = () => {
           try {
             // Convert Blob to ArrayBuffer
             const arrayBuffer = await blob.arrayBuffer();
+            const buffer = new Uint8Array(arrayBuffer); // Convert to Uint8Array
+
+            // Create FormData
+            const formData = new FormData();
+            formData.append('file', new Blob([buffer]), 'image.png'); // Add Blob with a file name
 
             // Send ArrayBuffer directly in the request body (without wrapping in an object)
-            const response = await api.post('/devscript/upload', arrayBuffer, {
-              headers: {
-                'Content-Type': 'application/octet-stream', // Sending raw binary data
-              },
-            });
+            // const response = await api.post('/devscript/upload', arrayBuffer, {
+            //   headers: {
+            //     'Content-Type': 'application/octet-stream', // Sending raw binary data
+            //   },
+            // });
 
-            console.log('Image uploaded successfully:', response.data);
+                // Send FormData to the backend
+    const response = await api.post('/devscript/upload', formData,{
+      headers: {
+        'Content-Type': 'application/octet-stream', // Sending raw binary data
+      },
+    });
+
+  const result = await response.json();
+  console.log(result);
+
           } catch (error) {
             console.error('Error uploading image:', error);
           }
