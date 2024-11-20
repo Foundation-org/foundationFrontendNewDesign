@@ -48,8 +48,6 @@ import RewardSchedule from '../pages/Dashboard/pages/Treasury/pages/RewardSchedu
 import BuyFDX from '../pages/Dashboard/pages/Treasury/pages/BuyFDX';
 import RedemptionCenter from '../pages/Dashboard/pages/Treasury/pages/RedemptionCenter';
 import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
-// TEST
-import Test from '../components/Test';
 // import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Authenticating from '../components/Authenticating';
 import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
@@ -73,6 +71,7 @@ import { OtherProfiles } from '../pages/UserProfile/OtherProfiles';
 import OtherProfilesLayout from '../pages/UserProfile/OtherProfilesLayout';
 import PublicProfile from '../pages/UserProfile/PublicProfile';
 import SharedArticles from '../pages/Dashboard/pages/Profile/pages/share-articles/SharedArticles';
+import Test from '../components/Test';
 
 export const getSubDomain = (location: string) => {
   const locationParts = location.split('.');
