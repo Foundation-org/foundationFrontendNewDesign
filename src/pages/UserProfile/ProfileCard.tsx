@@ -33,8 +33,8 @@ export default function ProfileCard({ profile }: any) {
         </div>
         <div className="flex flex-col gap-2 text-[#7C7C7C] dark:text-[#f1f1f1] tablet:gap-4">
           <div>
-            <h1 className="text-[12px] font-semibold tablet:text-[20px]"> {profile?.domain.title}</h1>
-            <p className="text-[10px] leading-normal tablet:text-[16px]"> {profile?.domain.name}.on.foundation</p>
+            <h1 className="text-[14px] font-semibold tablet:text-[20px]"> {profile?.domain.title}</h1>
+            <p className="text-[12px] leading-normal tablet:text-[16px]"> {profile?.domain.name}.on.foundation</p>
           </div>
         </div>
         {!isPublicProfile && (
@@ -55,7 +55,9 @@ export default function ProfileCard({ profile }: any) {
           </>
         )}
       </div>
-      <p className="text-[11px] leading-normal tablet:text-[18px]">{profile?.domain.description}</p>
+      <p className="text-[11px] leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[18px]">
+        {profile?.domain.description}
+      </p>
     </div>
   );
 }

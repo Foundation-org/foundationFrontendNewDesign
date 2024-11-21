@@ -28,6 +28,7 @@ import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from 
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
+import Checkbox from '../../../../../components/ui/Checkbox';
 
 const OpenChoice = () => {
   const navigate = useNavigate();
@@ -47,6 +48,8 @@ const OpenChoice = () => {
   const [optionsArray, setOptionsArray] = useState(optionsValue || []);
   const [multipleOption, setMultipleOption] = useState(true);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
+  const [spotlight, setSpotlight] = useState(createQuestSlice.spotlight);
+  const [sharePost, setSharePost] = useState(createQuestSlice.sharePost);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
@@ -60,7 +63,9 @@ const OpenChoice = () => {
     },
   });
   const getArticleId = useSelector(createQuestAction.getArticleId);
-
+  const checkDomainBadge = () => {
+    return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
+  };
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: createInfoQuest,
   //   onSuccess: (resp) => {
@@ -148,6 +153,8 @@ const OpenChoice = () => {
           : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'choice',
+      spotlight: spotlight ? 'true' : 'false',
+      sharePost: sharePost ? 'true' : 'false',
     };
 
     if (getArticleId !== '') {
@@ -214,6 +221,8 @@ const OpenChoice = () => {
         addOption,
         options: tempOptions,
         multipleOption,
+        sharePost,
+        spotlight,
       })
     );
   }, [
@@ -224,6 +233,8 @@ const OpenChoice = () => {
     optionsValue.length,
     optionsValue,
     multipleOption,
+    sharePost,
+    spotlight,
   ]);
 
   const handleTab = (index, key) => {
@@ -363,6 +374,27 @@ const OpenChoice = () => {
     document.getElementById(`input-${optionsValue.length + 2}`).blur();
   }, []);
 
+  const handleSharePostChange = (e) => {
+    const isChecked = e.target.checked;
+    setSharePost(isChecked);
+
+    if (!isChecked) {
+      setSpotlight(false);
+    }
+  };
+
+  const handleSpotlightChange = (e) => {
+    if (!checkDomainBadge()) {
+      toast.warning('Please add the Domain Badge to enable this feature');
+      return;
+    }
+    const isChecked = e.target.checked;
+    if (isChecked && !sharePost) {
+      setSharePost(true);
+    }
+    setSpotlight(isChecked);
+  };
+
   return (
     <CreateQuestWrapper
       quest="OpenChoice"
@@ -437,12 +469,24 @@ const OpenChoice = () => {
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
-          {/* <ChangeChoiceOption
-            changedOption={changedOption}
-            changeState={changeState}
-            setChangeState={setChangeState}
-            setChangedOption={setChangedOption}
-          /> */}
+          <label
+            className="mx-[15px] flex cursor-pointer items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]"
+            htmlFor="share-post-checkbox"
+          >
+            <Checkbox checked={sharePost} onChange={handleSharePostChange} id="share-post-checkbox" />
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically share this post.
+            </h5>
+          </label>
+          <label
+            className="mx-[15px] flex cursor-pointer items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]"
+            htmlFor="spotlight-checkbox"
+          >
+            <Checkbox checked={spotlight} onChange={handleSpotlightChange} id="spotlight-checkbox" />
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically pin this post to spotlight.aaaa
+            </h5>
+          </label>
         </div>
       </div>
       <div className="flex w-full justify-end">

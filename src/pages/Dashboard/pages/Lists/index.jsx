@@ -3,9 +3,13 @@ import { fetchLists } from '../../../../services/api/listsApi';
 import { useQuery } from '@tanstack/react-query';
 import SummaryCard from '../../../../components/SummaryCard';
 import { useSelector } from 'react-redux';
+import { Button } from '../../../../components/ui/Button';
+import AddToListPopup from '../../../../components/dialogue-boxes/AddToListPopup';
+import { useState } from 'react';
 
 const Lists = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [addToList, setAddToList] = useState(false);
 
   const {
     data: listData = [],
@@ -59,6 +63,14 @@ const Lists = () => {
               {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
             </h5>
           </div>
+        </div>
+        <div className="mt-3 flex justify-center tablet:mt-5">
+          <Button variant="submit" onClick={() => setAddToList(true)}>
+            Create a new list
+          </Button>
+          {addToList && (
+            <AddToListPopup handleClose={() => setAddToList(false)} modalVisible={addToList} page={'my-lists'} />
+          )}
         </div>
       </SummaryCard>
       {isSuccess && <ListCard listData={listData} />}

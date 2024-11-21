@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../../components/ui/Button';
 import VerificationBadgeScore from '../../../../../../components/summary/VerificationBadgeScore';
 import SummaryCard from '../../../../../../components/SummaryCard';
+import AddToListPopup from '../../../../../../components/dialogue-boxes/AddToListPopup';
 
 const Summary = () => {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [addToList, setAddToList] = useState(false);
 
   return (
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
@@ -179,6 +181,14 @@ const Summary = () => {
               {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
             </h5>
           </div>
+        </div>
+        <div className="mt-3 flex justify-center tablet:mt-5">
+          <Button variant="submit" onClick={() => setAddToList(true)}>
+            Create a new list
+          </Button>
+          {addToList && (
+            <AddToListPopup handleClose={() => setAddToList(false)} modalVisible={addToList} page={'my-lists'} />
+          )}
         </div>
       </SummaryCard>
       <SummaryCard headerIcon="/assets/topbar/news.svg" headerTitle="Shared Articles">

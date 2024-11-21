@@ -1,7 +1,7 @@
 {
   "name": "foundation_app",
   "private": true,
-  "version": "2.3.22",
+  "version": "2.3.28",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -38,6 +38,7 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
+    "react-advanced-cropper": "^0.20.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
     "react-facebook": "^9.0.12",

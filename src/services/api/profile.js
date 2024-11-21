@@ -49,8 +49,6 @@ const fetchMyProfile = async (domain, viewerUuid, isPublicProfile) => {
 };
 
 export const useFetchMyProfile = (domain, viewerUuid, isPublicProfile) => {
-  console.log(isPublicProfile);
-
   return useQuery({
     queryKey: ['my-profile', domain, viewerUuid, isPublicProfile],
     queryFn: async () => {

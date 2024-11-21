@@ -6,19 +6,28 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchListsExpended } from '../../services/api/listsApi';
 import { useSelector } from 'react-redux';
 import SummaryCard from '../../components/SummaryCard';
+import AddToListPopup from '../../components/dialogue-boxes/AddToListPopup';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function SharedLists({ domain }: { domain: string }) {
   const location = useLocation();
   const navigate = useNavigate();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const [showAll, setShowAll] = useState(false);
+  const [addToList, setAddToList] = useState(false);
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+
   useEffect(() => {
     // Clear cache when the page changes
     queryClient.resetQueries({ queryKey: ['lists'] });
   }, []);
-  const { data: listData, isError } = useQuery({
+
+  const {
+    data: listData,
+    isError,
+    isLoading,
+  } = useQuery({
     queryFn: () =>
       fetchListsExpended(domain, persistedUserInfo.uuid, location.pathname.startsWith('/h/') ? true : false),
     queryKey: ['lists'],
@@ -74,12 +83,24 @@ export default function SharedLists({ domain }: { domain: string }) {
                     </h5>
                   </div>
                 </div>
-                <div className="mt-3 flex w-full justify-center tablet:mt-5">
+                <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
+                  <Button variant="submit" onClick={() => setAddToList(true)}>
+                    Create a new list
+                  </Button>
+
                   <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
                     Manage all shared lists
                   </Button>
                 </div>
               </>
+            )}
+            {addToList && (
+              <AddToListPopup
+                handleClose={() => setAddToList(false)}
+                modalVisible={addToList}
+                questStartData={null}
+                page={'my-lists'}
+              />
             )}
           </SummaryCard>
 
@@ -96,6 +117,11 @@ export default function SharedLists({ domain }: { domain: string }) {
             </div>
           </div>
         </>
+      )}
+      {isLoading && (
+        <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">
+          <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[8vw] laptop:text-[4vw]" />
+        </div>
       )}
     </>
   );

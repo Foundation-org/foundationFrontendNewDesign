@@ -14,7 +14,9 @@ export default function SharedListResults() {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState(
-    persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor' ? 'All of Foundation' : 'My Group Only',
+    persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor'
+      ? 'All of Foundation'
+      : 'My Audience Results'
   );
 
   const {
@@ -61,13 +63,13 @@ export default function SharedListResults() {
                 <Button
                   variant={'topics'}
                   className={`${
-                    tab === 'My Group Only'
+                    tab === 'My Audience Results'
                       ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
                       : 'border-[#ACACAC] bg-white text-[#707175]'
                   }`}
-                  onClick={() => setTab('My Group Only')}
+                  onClick={() => setTab('My Audience Results')}
                 >
-                  My Group Only
+                  My Audience Results
                 </Button>
               </div>
             )}
@@ -104,7 +106,7 @@ export default function SharedListResults() {
               )
             ) : null}
 
-            {tab === 'My Group Only' ? (
+            {tab === 'My Audience Results' ? (
               isPending ? (
                 <Loader />
               ) : (

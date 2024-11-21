@@ -12,7 +12,7 @@ import { useDebounce } from '../../utils/useDebounce';
 import showToast from '../ui/Toast';
 import { useNavigate } from 'react-router-dom';
 
-export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
+export default function AddToListPopup({ handleClose, modalVisible, questStartData, page }) {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [listName, setListName] = useState('');
@@ -33,6 +33,9 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
         queryClient.invalidateQueries(['lists']);
         setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
+        if (page === 'my-lists') {
+          handleClose();
+        }
       }
 
       if (resp?.response?.status === 500) {
@@ -105,23 +108,20 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToListWhite.svg`}
-      title={'Add to My Lists'}
+      title={page === 'my-lists' ? 'Create a new list' : 'Add to My Lists'}
       open={modalVisible}
       handleClose={handleClose}
       isBackground={false}
     >
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
-        <p className="summary-text mb-2 tablet:mb-[25px]">
-          Lists allow you to organize posts by topic and can function like surveys or playlists. Use the “Manage My
-          Lists” button to share them on other platforms. Shared lists will also be visible on your Home Page for
-          everyone to see.
-        </p>
+        {page !== 'my-lists' && (
+          <p className="summary-text mb-2 tablet:mb-[25px]">
+            Lists allow you to organize posts by topic and can function like surveys or playlists. Use the “Manage My
+            Lists” button to share them on other platforms. Shared lists will also be visible on your Home Page for
+            everyone to see.
+          </p>
+        )}
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
-          {/* <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
-            {listData?.length === 0
-              ? 'You currently have no lists created. Enter a list name below and the post will be added to it.'
-              : 'Create List'}
-          </p> */}
           {listData?.length === 0 && (
             <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
               You currently have no lists created. Enter a list name below and the post will be added to it.
@@ -137,7 +137,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
         </div>
         <div className="mt-2 flex justify-end tablet:mt-[25px]">
           <Button
-            variant={'cancel'}
+            variant={'submit'}
             className={'bg-[#7C7C7C]'}
             onClick={() => {
               if (!listName) {
@@ -154,7 +154,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
           </Button>
         </div>
 
-        {listData?.length >= 1 && (
+        {page !== 'my-lists' && listData?.length >= 1 && (
           <>
             <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] dark:bg-white tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
             <div>

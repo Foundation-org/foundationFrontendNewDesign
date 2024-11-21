@@ -8,8 +8,8 @@ import BadgeRemovePopup from './badgeRemovePopup';
 import useAddDomainBadge from '../../services/mutations/verification-adges';
 import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
-import DynamicBadgeImageCropper from '../DynamicBadgeImageCropper';
 import ProgressBar from '../ProgressBar';
+import ImageCropper from '../ImageCropper';
 
 const HomepageBadgePopup = ({
   isPopup,
@@ -28,13 +28,13 @@ const HomepageBadgePopup = ({
     title: '',
     domain: '',
     description: '',
-    image: '',
+    image: [],
   });
   const [prevState, setPrevState] = useState({
     title: '',
     domain: '',
     description: '',
-    image: '',
+    image: [],
   });
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
@@ -60,17 +60,23 @@ const HomepageBadgePopup = ({
     if (checkDomainBadge()) {
       const domainBadge = persistedUserInfo?.badges.find((badge) => badge?.domain);
 
+      const image = [
+        domainBadge?.domain?.s3Urls[0], // 1:1 image
+        domainBadge?.domain?.s3Urls[1], // 16:9 image
+        domainBadge?.domain?.s3Urls[1], // 16:9 image again
+      ];
+
       setDomainBadge({
         title: domainBadge?.domain?.title,
         domain: domainBadge?.domain?.name,
         description: domainBadge?.domain?.description,
-        image: domainBadge?.domain?.s3Urls,
+        image: image,
       });
       setPrevState({
         title: domainBadge?.domain?.title,
         domain: domainBadge?.domain?.name,
         description: domainBadge?.domain?.description,
-        image: domainBadge?.domain?.s3Urls,
+        image: image,
       });
     }
   }, [persistedUserInfo]);
@@ -111,36 +117,83 @@ const HomepageBadgePopup = ({
         validatedQuestion: cleanedDomain,
       });
 
-      if (moderationRatingResult.moderationRatingCount === 0) {
-        setDomainBadge({ ...domainBadge, domain: cleanedDomain });
-      } else {
+      if (moderationRatingResult.moderationRatingCount !== 0) {
         toast.warning('Domain is not allowed');
-        setDomainBadge({ ...domainBadge, domain: '' });
+        setDomainBadge((prevBadge) => ({
+          ...prevBadge,
+          domain: '',
+        }));
         return;
       }
-      console.log('Moderation rating result:', moderationRatingResult);
     } catch (error) {
       console.error('Error checking moderation rating:', error);
     }
   };
 
   const checkHollow = () => {
-    if (
-      domainBadge.title === '' ||
-      domainBadge.domain === '' ||
-      domainBadge.description === '' ||
-      domainBadge.image === '' ||
-      JSON.stringify(prevState) === JSON.stringify(domainBadge)
-    ) {
-      return true;
+    if (edit) {
+      if (JSON.stringify(prevState) === JSON.stringify(domainBadge)) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      if (
+        domainBadge.title === '' ||
+        domainBadge.domain === '' ||
+        domainBadge.description === '' ||
+        domainBadge.image?.length == 0 ||
+        (domainBadge.image[0] &&
+          typeof domainBadge.image[0] === 'string' &&
+          domainBadge.image[0].startsWith('blob:')) ||
+        (domainBadge.image[1] && typeof domainBadge.image[1] === 'string' && domainBadge.image[1].startsWith('blob:'))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   };
 
   useEffect(() => {
     checkHollow();
   }, [domainBadge.title, domainBadge.domain, domainBadge.description, domainBadge.image]);
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 1000000) {
+        toast.warning('File size is too large. Please upload a file less than 1MB.');
+        return;
+      }
+      const image = URL.createObjectURL(file);
+      setDomainBadge({ ...domainBadge, image: [image, image, image] });
+    }
+  };
+
+  const handleCropComplete = async (blob) => {
+    if (blob) {
+      setDomainBadge((prev) => {
+        const updatedImages = [...prev.image];
+        updatedImages[0] = blob; // Set the blob at index 1
+        return { ...prev, image: updatedImages };
+      });
+    } else {
+      console.error('Crop failed or returned null Blob');
+    }
+  };
+
+  const handleCropComplete2 = async (blob) => {
+    if (blob) {
+      setDomainBadge((prev) => {
+        const updatedImages = [...prev.image];
+        updatedImages[1] = blob; // Set the blob at index 2
+        return { ...prev, image: updatedImages };
+      });
+    } else {
+      console.error('Crop failed or returned null Blob');
+    }
+  };
 
   return (
     <>
@@ -160,8 +213,8 @@ const HomepageBadgePopup = ({
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
           <h1 className="summary-text">
-            Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily
-            with your audience.
+            Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily with your
+            audience.
           </h1>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
@@ -220,6 +273,7 @@ const HomepageBadgePopup = ({
             <p className="text-[9.28px] tablet:text-[20px]">
               Characters Remaining: {300 - domainBadge.description.length}
             </p>
+            <p className="text-[9.28px] tablet:text-[20px]">For best SEO results, use 100+ characters</p>
           </div>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
@@ -228,71 +282,40 @@ const HomepageBadgePopup = ({
             <div className="flex w-full items-center justify-center">
               <label
                 htmlFor="dropzone-file"
-                className={`verification_badge_input resize-none py-5 ${edit ? (domainBadge.image ? '' : 'caret-hidden') : ''}`}
+                className={`verification_badge_input relative resize-none py-5 ${edit ? (domainBadge.image ? '' : 'caret-hidden') : ''} `}
               >
                 <div className="flex flex-col items-center justify-center">
                   <p>Upload Your Image</p>
-                  <p className="text-[10px] font-normal tablet:text-[16px]">
-                    Please upload your image or drag and drop it here.
-                  </p>
-                  <p className="text-[10px] font-normal tablet:text-[16px]">
-                    Ensure the image has a 16:9 aspect ratio.
+                  <p className="max-w-lg text-center text-[10px] font-normal tablet:text-[16px]">
+                    Foundation wants your SEO to look its best. For best results upload an image that is 1280x720
                   </p>
                 </div>
                 <input
                   id="dropzone-file"
                   type="file"
-                  className="hidden"
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      const file = e.target.files[0];
-                      const reader = new FileReader();
-
-                      const maxSize = 1 * 1024 * 1024; // 1 MB in bytes
-
-                      if (file.size > maxSize) {
-                        toast.warning('File size must be below 1 MB.');
-                        e.target.value = '';
-                        return;
-                      }
-
-                      reader.onload = (event) => {
-                        const result = event.target?.result;
-                        if (!result) {
-                          return;
-                        }
-
-                        const img = new Image();
-                        img.onload = () => {
-                          const width = img.width;
-                          const height = img.height;
-                          if (width / height >= 1.7 && width / height <= 2) {
-                            setDomainBadge({ ...domainBadge, image: e.target.files[0] });
-                          } else {
-                            toast.error('Please upload an image with a 16:9 aspect ratio.');
-                          }
-                        };
-
-                        img.src = result; // Set image source to the data URL
-                      };
-
-                      reader.readAsDataURL(file);
-                    }
-                  }}
+                  className="absolute left-0 top-0 hidden w-full"
+                  onChange={handleFileUpload}
                 />
               </label>
             </div>
           </div>
-          <DynamicBadgeImageCropper imgSrc={domainBadge.image} setDomainBadge={setDomainBadge} />
-          {/* {domainBadge.image && (
-            <div className="flex items-center">
-              <img
-                src={domainBadge.image?.length === 2 ? domainBadge.image[0] : URL.createObjectURL(domainBadge.image)}
-                alt="badge"
-                className="aspect-video rounded-md object-contain"
-              />
+          {/* Image Cropper */}
+          {domainBadge.image?.length > 0 && (
+            <div className="space-y-6">
+              <div className="space-y-1 tablet:space-y-3">
+                <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                  Seo Image:
+                </p>
+                <ImageCropper type="16:9" onCropComplete={handleCropComplete} image={domainBadge.image[2]} />
+              </div>
+              <div className="space-y-1 tablet:space-y-3">
+                <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                  Profile Image:
+                </p>
+                <ImageCropper type="rounded" onCropComplete={handleCropComplete2} image={domainBadge.image[2]} />
+              </div>
             </div>
-          )} */}
+          )}
           <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
             {edit && (
               <Button
@@ -309,34 +332,21 @@ const HomepageBadgePopup = ({
                 {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
               </Button>
             )}
-            <div className="flex gap-2">
-              {checkHollow() ? (
-                <Button variant={'submit-hollow'} disabled={true}>
-                  {edit ? 'Update Badge' : 'Add Badge'}
-                </Button>
+            <Button
+              variant={checkHollow() ? 'submit-hollow' : 'submit'}
+              onClick={() => {
+                addDomainBadge();
+              }}
+              disabled={checkHollow()}
+            >
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
               ) : (
-                <Button
-                  variant={'submit'}
-                  onClick={() => {
-                    if (Array.isArray(domainBadge.image)) {
-                      addDomainBadge();
-                    } else if (!Array.isArray(domainBadge.image) && domainBadge.croppedImage) {
-                      addDomainBadge();
-                    } else {
-                      toast.warning('Please crop the image for your profile.');
-                    }
-                  }}
-                >
-                  {loading === true ? (
-                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                  ) : edit ? (
-                    'Update Badge'
-                  ) : (
-                    'Add Badge'
-                  )}
-                </Button>
+                'Add Badge'
               )}
-            </div>
+            </Button>
           </div>
         </div>
         {onboarding && <ProgressBar handleSkip={handleSkip} />}

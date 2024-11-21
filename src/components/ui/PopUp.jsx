@@ -33,7 +33,7 @@ const PopUp = ({
     >
       <Box
         sx={mergedStyle}
-        className={`${customClasses} ${remove ? 'z-[2000]' : 'z-[1000]'} max-h-[90vh] w-fit min-w-[334px] max-w-[676px] overflow-y-auto border-none outline-none no-scrollbar tablet:w-full laptop:max-w-[845px]`}
+        className={`${customClasses} ${remove ? 'z-[2000]' : 'z-[1000]'} max-h-[90vh] w-fit min-w-[334px] max-w-[87vw] overflow-y-auto border-none outline-none no-scrollbar tablet:w-full tablet:max-w-[676px] laptop:max-w-[845px]`}
       >
         <div className="bg-blue-gradiant flex items-center justify-between rounded-t-[9.76px] px-[15px] py-1 dark:border dark:border-gray-100 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-2">
           <div className="flex items-center gap-[10px] tablet:gap-[17px]">

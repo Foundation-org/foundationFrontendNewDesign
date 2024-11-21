@@ -13,7 +13,9 @@ export default function SharedLinkResults() {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState(
-    persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor' ? 'All of Foundation' : 'My Group Only',
+    persistedUserInfo.role === 'guest' || persistedUserInfo?.role === 'visitor'
+      ? 'All of Foundation'
+      : 'My Audience Results'
   );
   const [questData, setQuestData] = useState();
   const [allQuestData, setAllQuestData] = useState();
@@ -35,7 +37,7 @@ export default function SharedLinkResults() {
         persistedUserInfo?.uuid,
         location.state.questId,
         sharedLink,
-        location.state.link,
+        location.state.link
       );
       setQuestData(response.data.data[0]);
     } catch (error) {
@@ -75,20 +77,20 @@ export default function SharedLinkResults() {
                 <Button
                   variant={'topics'}
                   className={`${
-                    tab === 'My Group Only'
+                    tab === 'My Audience Results'
                       ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
                       : 'border-[#ACACAC] bg-white text-[#707175]'
                   }`}
-                  onClick={() => setTab('My Group Only')}
+                  onClick={() => setTab('My Audience Results')}
                 >
-                  My Group Only
+                  My Audience Results
                 </Button>
               </div>
             )}
 
             {loading ? (
               <Loader />
-            ) : tab === 'My Group Only' ? (
+            ) : tab === 'My Audience Results' ? (
               questData && (
                 <div className="mx-auto px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]">
                   <QuestionCardWithToggle
