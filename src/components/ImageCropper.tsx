@@ -1,5 +1,4 @@
-import { Button } from './ui/Button';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { CircleStencil, Cropper, CropperRef } from 'react-advanced-cropper';
 import 'react-advanced-cropper/dist/style.css';
 
@@ -9,11 +8,20 @@ interface ImageCropperProps {
   image: string;
 }
 
+// Utility debounce function
+const debounce = (func: (...args: any[]) => void, delay: number) => {
+  let timer: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...args), delay);
+  };
+};
+
 const ImageCropper = (props: ImageCropperProps) => {
   const { type, onCropComplete, image } = props;
   const cropperRef = useRef<CropperRef>(null);
 
-  const onCrop = async () => {
+  const handleCrop = async () => {
     const cropper = cropperRef.current;
     if (cropper) {
       const canvas = cropper.getCanvas();
@@ -26,6 +34,9 @@ const ImageCropper = (props: ImageCropperProps) => {
     }
   };
 
+  // Debounced version of handleCrop
+  const debouncedHandleCrop = useCallback(debounce(handleCrop, 500), []);
+
   useEffect(() => {
     // Clean up the image URL when the component unmounts
     return () => {
@@ -34,6 +45,10 @@ const ImageCropper = (props: ImageCropperProps) => {
       }
     };
   }, [image]);
+
+  const onCropUpdate = () => {
+    debouncedHandleCrop();
+  };
 
   return (
     <div className="w-full space-y-1 tablet:space-y-3">
@@ -45,6 +60,7 @@ const ImageCropper = (props: ImageCropperProps) => {
           stencilProps={{
             aspectRatio: 16 / 9,
           }}
+          onChange={onCropUpdate}
         />
       )}
       {type === 'rounded' && (
@@ -53,12 +69,9 @@ const ImageCropper = (props: ImageCropperProps) => {
           src={image}
           className="h-[220px] w-full tablet:h-[380px]"
           stencilComponent={CircleStencil}
+          onChange={onCropUpdate}
         />
       )}
-
-      <Button variant="submit" onClick={onCrop}>
-        Confirm Crop
-      </Button>
     </div>
   );
 };

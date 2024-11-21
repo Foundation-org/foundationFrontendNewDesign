@@ -34,7 +34,7 @@ const HomepageBadgePopup = ({
     title: '',
     domain: '',
     description: '',
-    image: '',
+    image: [],
   });
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
@@ -76,7 +76,7 @@ const HomepageBadgePopup = ({
         title: domainBadge?.domain?.title,
         domain: domainBadge?.domain?.name,
         description: domainBadge?.domain?.description,
-        image: domainBadge?.domain?.s3Urls,
+        image: image,
       });
     }
   }, [persistedUserInfo]);
@@ -131,16 +131,25 @@ const HomepageBadgePopup = ({
   };
 
   const checkHollow = () => {
-    if (
-      domainBadge.title === '' ||
-      domainBadge.domain === '' ||
-      domainBadge.description === '' ||
-      (domainBadge.image[0] && typeof domainBadge.image[0] === 'string' && domainBadge.image[0].startsWith('blob:')) ||
-      JSON.stringify(prevState) === JSON.stringify(domainBadge)
-    ) {
-      return true;
+    // console.log('A', JSON.stringify(prevState));
+    // console.log('B', JSON.stringify(domainBadge));
+    if (edit) {
+      if (JSON.stringify(prevState) === JSON.stringify(domainBadge)) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      if (
+        domainBadge.title === '' ||
+        domainBadge.domain === '' ||
+        domainBadge.description === '' ||
+        (domainBadge.image[0] && typeof domainBadge.image[0] === 'string' && domainBadge.image[0].startsWith('blob:'))
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   };
 
@@ -184,6 +193,8 @@ const HomepageBadgePopup = ({
     }
   };
 
+  console.log(domainBadge.image);
+
   return (
     <>
       {modalVisible && (
@@ -202,8 +213,8 @@ const HomepageBadgePopup = ({
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
           <h1 className="summary-text">
-            Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily
-            with your audience.
+            Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily with your
+            audience.
           </h1>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
@@ -321,23 +332,21 @@ const HomepageBadgePopup = ({
                 {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
               </Button>
             )}
-            <div className="flex gap-2">
-              <Button
-                variant={checkHollow() ? 'submit-hollow' : 'submit'}
-                onClick={() => {
-                  addDomainBadge();
-                }}
-                disabled={checkHollow()}
-              >
-                {loading === true ? (
-                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                ) : edit ? (
-                  'Update Badge'
-                ) : (
-                  'Add Badge'
-                )}
-              </Button>
-            </div>
+            <Button
+              variant={checkHollow() ? 'submit-hollow' : 'submit'}
+              onClick={() => {
+                addDomainBadge();
+              }}
+              disabled={checkHollow()}
+            >
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : edit ? (
+                'Update Badge'
+              ) : (
+                'Add Badge'
+              )}
+            </Button>
           </div>
         </div>
         {onboarding && <ProgressBar handleSkip={handleSkip} />}
