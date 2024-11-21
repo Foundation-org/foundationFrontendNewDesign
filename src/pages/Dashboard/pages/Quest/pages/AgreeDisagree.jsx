@@ -24,7 +24,7 @@ import {
   setPlayingPlayerId,
 } from '../../../../../features/quest/utilsSlice';
 import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
-import CustomSwitch from '../../../../../components/CustomSwitch';
+import Checkbox from '../../../../../components/ui/Checkbox';
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
@@ -265,19 +265,6 @@ const AgreeDisagree = () => {
     dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState, sharePost, spotlight }));
   }, [createQuestSlice.question, changedOption, changeState, sharePost, spotlight]);
 
-  const handleSpotlightChange = (newValue) => {
-    setSpotlight(newValue);
-    if (newValue) {
-      setSharePost(true);
-    }
-  };
-  const handleSharePostChange = (newValue) => {
-    setSharePost(newValue);
-    if (!newValue) {
-      setSpotlight(false);
-    }
-  };
-
   return (
     <CreateQuestWrapper
       quest="Statement"
@@ -319,17 +306,25 @@ const AgreeDisagree = () => {
           Post Settings
         </h5>
         <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px]">
-          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+          <div className="mx-[15px] flex items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <Checkbox
+              checked={sharePost}
+              onChange={(e) => setSharePost(e.target.checked)}
+              id="Automatically share this post."
+            />
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Automatically share this post.
             </h5>
-            <CustomSwitch enabled={sharePost} setEnabled={handleSharePostChange} />
           </div>
-          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+          <div className="mx-[15px] flex items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <Checkbox
+              checked={spotlight}
+              onChange={(e) => setSpotlight(e.target.checked)}
+              id="Automatically pin this post to spotlight."
+            />
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Automatically pin this post to spotlight.
             </h5>
-            <CustomSwitch enabled={spotlight} setEnabled={handleSpotlightChange} />
           </div>
         </div>
       </div>

@@ -183,8 +183,6 @@ const HomepageBadgePopup = ({
     }
   };
 
-  console.log(domainBadge.image[0]);
-
   return (
     <>
       {modalVisible && (
@@ -263,6 +261,7 @@ const HomepageBadgePopup = ({
             <p className="text-[9.28px] tablet:text-[20px]">
               Characters Remaining: {300 - domainBadge.description.length}
             </p>
+            <p className="text-[9.28px] tablet:text-[20px]">For best SEO results, use 100+ characters</p>
           </div>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
@@ -289,7 +288,7 @@ const HomepageBadgePopup = ({
             </div>
           </div>
           {/* Image Cropper */}
-          {domainBadge.image && (
+          {domainBadge.image?.length > 0 && (
             <div className="space-y-6">
               <div className="space-y-1 tablet:space-y-3">
                 <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
