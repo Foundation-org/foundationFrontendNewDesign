@@ -49,6 +49,10 @@ const LikeDislike = () => {
   const [sharePost, setSharePost] = useState(createQuestSlice.sharePost);
   const persistedContants = useSelector(getConstantsValues);
   const getArticleId = useSelector(createQuestAction.getArticleId);
+
+  const checkDomainBadge = () => {
+    return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
+  };
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: questServices.createInfoQuest,
   //   onSuccess: (resp) => {
@@ -267,6 +271,10 @@ const LikeDislike = () => {
   };
 
   const handleSpotlightChange = (e) => {
+    if (!checkDomainBadge()) {
+      toast.warning('Please add the Domain Badge to enable this feature');
+      return;
+    }
     const isChecked = e.target.checked;
     if (isChecked && !sharePost) {
       setSharePost(true);
