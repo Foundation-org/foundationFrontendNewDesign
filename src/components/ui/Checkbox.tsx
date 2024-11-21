@@ -12,7 +12,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ id, label, checked, onChange }) => 
         <input
           type="checkbox"
           className="peer size-3 cursor-pointer appearance-none rounded-full border border-green-200 shadow transition-all checked:border-green-200 checked:bg-green-200 hover:shadow-md tablet:size-[25px]"
-          id="check1"
+          id={id}
           checked={checked}
           onChange={onChange}
         />

@@ -7,6 +7,7 @@ import { fetchListsExpended } from '../../services/api/listsApi';
 import { useSelector } from 'react-redux';
 import SummaryCard from '../../components/SummaryCard';
 import AddToListPopup from '../../components/dialogue-boxes/AddToListPopup';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function SharedLists({ domain }: { domain: string }) {
   const location = useLocation();
@@ -16,11 +17,17 @@ export default function SharedLists({ domain }: { domain: string }) {
   const [addToList, setAddToList] = useState(false);
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+
   useEffect(() => {
     // Clear cache when the page changes
     queryClient.resetQueries({ queryKey: ['lists'] });
   }, []);
-  const { data: listData, isError } = useQuery({
+
+  const {
+    data: listData,
+    isError,
+    isLoading,
+  } = useQuery({
     queryFn: () =>
       fetchListsExpended(domain, persistedUserInfo.uuid, location.pathname.startsWith('/h/') ? true : false),
     queryKey: ['lists'],
@@ -110,6 +117,11 @@ export default function SharedLists({ domain }: { domain: string }) {
             </div>
           </div>
         </>
+      )}
+      {isLoading && (
+        <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">
+          <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[8vw] laptop:text-[4vw]" />
+        </div>
       )}
     </>
   );

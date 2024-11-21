@@ -8,6 +8,7 @@ import { getQuestUtils } from '../../features/quest/utilsSlice';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import api from '../../services/api/Axios';
 import SummaryCard from '../../components/SummaryCard';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function SharedPosts({ domain }: { domain: string }) {
   const { ref, inView } = useInView();
@@ -18,6 +19,7 @@ export default function SharedPosts({ domain }: { domain: string }) {
   const questUtils = useSelector(getQuestUtils);
   const [showAll, setShowAll] = useState(false);
   const queryClient = useQueryClient();
+
   const fetchPosts = async function getInfoQuestions({ pageParam }: { pageParam: number }) {
     const params = {
       _page: pageParam,
@@ -38,12 +40,13 @@ export default function SharedPosts({ domain }: { domain: string }) {
     const response = await api.get('/infoquestions/getQuestsAll', { params });
     return response.data.data;
   };
+
   useEffect(() => {
     // Clear cache when the page changes
     queryClient.resetQueries({ queryKey: ['sharedLink'] });
   }, []);
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
     queryKey: ['sharedLink', ''],
     queryFn: fetchPosts,
     initialPageParam: 1,
@@ -130,14 +133,6 @@ export default function SharedPosts({ domain }: { domain: string }) {
             )}
           </SummaryCard>
           <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
-            {/* <div className="flex h-[25px] w-full items-center justify-between bg-blue-200 px-5 text-[12px] font-medium text-white tablet:h-[43.2px] tablet:px-7 tablet:text-[18px]">
-          <h1>Shared Posts</h1>
-          {!isPublicProfile && (
-            <Link to="/profile/shared-links" className="underline">
-              Manage my Shared Posts
-            </Link>
-          )}
-        </div> */}
             <div className="flex w-full flex-col gap-3 tablet:gap-5">{content}</div>
             {!showAll && data?.pages[0]?.length === 5 && data?.pages[1]?.length > 0 && (
               <Button variant="submit" onClick={() => setShowAll(true)}>
@@ -146,6 +141,11 @@ export default function SharedPosts({ domain }: { domain: string }) {
             )}
           </div>
         </>
+      )}
+      {isLoading && (
+        <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">
+          <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[8vw] laptop:text-[4vw]" />
+        </div>
       )}
     </>
   );

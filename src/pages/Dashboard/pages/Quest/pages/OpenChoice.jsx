@@ -372,6 +372,23 @@ const OpenChoice = () => {
     document.getElementById(`input-${optionsValue.length + 2}`).blur();
   }, []);
 
+  const handleSharePostChange = (e) => {
+    const isChecked = e.target.checked;
+    setSharePost(isChecked);
+
+    if (!isChecked) {
+      setSpotlight(false);
+    }
+  };
+
+  const handleSpotlightChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked && !sharePost) {
+      setSharePost(true);
+    }
+    setSpotlight(isChecked);
+  };
+
   return (
     <CreateQuestWrapper
       quest="OpenChoice"
@@ -446,26 +463,24 @@ const OpenChoice = () => {
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
-          <div className="mx-[15px] flex items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
-            <Checkbox
-              checked={sharePost}
-              onChange={(e) => setSharePost(e.target.checked)}
-              id="Automatically share this post."
-            />
+          <label
+            className="mx-[15px] flex cursor-pointer items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]"
+            htmlFor="share-post-checkbox"
+          >
+            <Checkbox checked={sharePost} onChange={handleSharePostChange} id="share-post-checkbox" />
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Automatically share this post.
             </h5>
-          </div>
-          <div className="mx-[15px] flex items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
-            <Checkbox
-              checked={spotlight}
-              onChange={(e) => setSpotlight(e.target.checked)}
-              id="Automatically pin this post to spotlight."
-            />
+          </label>
+          <label
+            className="mx-[15px] flex cursor-pointer items-center gap-2 rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-3 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]"
+            htmlFor="spotlight-checkbox"
+          >
+            <Checkbox checked={spotlight} onChange={handleSpotlightChange} id="spotlight-checkbox" />
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
-              Automatically pin this post to spotlight.
+              Automatically pin this post to spotlight.aaaa
             </h5>
-          </div>
+          </label>
         </div>
       </div>
       <div className="flex w-full justify-end">

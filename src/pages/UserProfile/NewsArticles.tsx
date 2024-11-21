@@ -8,6 +8,7 @@ import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 import SummaryCard from '../../components/SummaryCard';
 import { useSelector } from 'react-redux';
 import { useQueryClient } from '@tanstack/react-query';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function NewsArticles({ domain }: { domain: string }) {
   const location = useLocation();
@@ -23,7 +24,7 @@ export default function NewsArticles({ domain }: { domain: string }) {
     queryClient.resetQueries({ queryKey: ['sharedArticles'] });
   }, []);
 
-  const { data, fetchNextPage, hasNextPage } = useFetchNewsFeed(
+  const { data, fetchNextPage, hasNextPage, isLoading } = useFetchNewsFeed(
     '',
     'sharedArticles',
     domain,
@@ -130,6 +131,11 @@ export default function NewsArticles({ domain }: { domain: string }) {
             )}
           </div>
         </>
+      )}
+      {isLoading && (
+        <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">
+          <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[8vw] laptop:text-[4vw]" />
+        </div>
       )}
     </>
   );
