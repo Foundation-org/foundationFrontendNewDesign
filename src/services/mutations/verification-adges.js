@@ -16,18 +16,13 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
       formData.append('description', domainBadge.description);
       formData.append('uuid', persistedUserInfo.uuid);
 
-      // Convert the Blob URL to a Blob
-      if (domainBadge.croppedImage) {
-        const blobResponse = await fetch(domainBadge.croppedImage);
-        const blob = await blobResponse.blob();
-        formData.append('files', blob, 'croppedImage.png');
-      }
-      if (edit) {
-        formData.append('update', true);
+      if (domainBadge.image[0] instanceof Blob) {
+        formData.append('file16x9', domainBadge.image[0], 'seoCroppedImage.png');
+        formData.append('file1x1', domainBadge.image[1], 'profileImage.png');
       }
 
-      if (domainBadge.image.length !== 2) {
-        formData.append('files', domainBadge.image);
+      if (edit) {
+        formData.append('update', true);
       }
 
       return api.post(`/addDomainBadge`, formData, {
