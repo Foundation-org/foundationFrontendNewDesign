@@ -65,6 +65,9 @@ const RankChoice = () => {
       tolerance: 0,
     },
   });
+  const checkDomainBadge = () => {
+    return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
+  };
   const getArticleId = useSelector(createQuestAction.getArticleId);
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: createInfoQuest,
@@ -383,6 +386,10 @@ const RankChoice = () => {
   };
 
   const handleSpotlightChange = (e) => {
+    if (!checkDomainBadge()) {
+      toast.warning('Please add the Domain Badge to enable this feature');
+      return;
+    }
     const isChecked = e.target.checked;
     if (isChecked && !sharePost) {
       setSharePost(true);

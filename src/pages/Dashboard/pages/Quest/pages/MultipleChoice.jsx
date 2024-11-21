@@ -31,6 +31,7 @@ import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
 import Checkbox from '../../../../../components/ui/Checkbox';
+import { toast } from 'sonner';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -64,7 +65,9 @@ const MultipleChoice = () => {
       tolerance: 0,
     },
   });
-
+  const checkDomainBadge = () => {
+    return persistedUserInfo?.badges?.some((badge) => !!badge?.domain) || false;
+  };
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: createInfoQuest,
   //   onSuccess: (resp) => {
@@ -398,6 +401,10 @@ const MultipleChoice = () => {
   };
 
   const handleSpotlightChange = (e) => {
+    if (!checkDomainBadge()) {
+      toast.warning('Please add the Domain Badge to enable this feature');
+      return;
+    }
     const isChecked = e.target.checked;
     if (isChecked && !sharePost) {
       setSharePost(true);
@@ -494,7 +501,7 @@ const MultipleChoice = () => {
           >
             <Checkbox checked={spotlight} onChange={handleSpotlightChange} id="spotlight-checkbox" />
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
-              Automatically pin this post to spotlight.aaaa
+              Automatically pin this post to spotlight.
             </h5>
           </label>
           {/* <ChangeChoiceOption
