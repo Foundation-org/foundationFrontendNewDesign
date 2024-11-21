@@ -117,11 +117,12 @@ const HomepageBadgePopup = ({
         validatedQuestion: cleanedDomain,
       });
 
-      if (moderationRatingResult.moderationRatingCount === 0) {
-        setDomainBadge({ ...domainBadge, domain: cleanedDomain });
-      } else {
+      if (moderationRatingResult.moderationRatingCount !== 0) {
         toast.warning('Domain is not allowed');
-        setDomainBadge({ ...domainBadge, domain: '' });
+        setDomainBadge((prevBadge) => ({
+          ...prevBadge,
+          domain: '',
+        }));
         return;
       }
     } catch (error) {
