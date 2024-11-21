@@ -18,6 +18,8 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
 
       if (domainBadge.image[0] instanceof Blob) {
         formData.append('file16x9', domainBadge.image[0], 'seoCroppedImage.png');
+      }
+      if (domainBadge.image[1] instanceof Blob) {
         formData.append('file1x1', domainBadge.image[1], 'profileImage.png');
       }
 

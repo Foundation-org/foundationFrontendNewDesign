@@ -35,7 +35,7 @@ const ImageCropper = (props: ImageCropperProps) => {
   };
 
   // Debounced version of handleCrop
-  const debouncedHandleCrop = useCallback(debounce(handleCrop, 500), []);
+  // const debouncedHandleCrop = useCallback(debounce(handleCrop, 500), []);
 
   useEffect(() => {
     // Clean up the image URL when the component unmounts
@@ -46,9 +46,9 @@ const ImageCropper = (props: ImageCropperProps) => {
     };
   }, [image]);
 
-  const onCropUpdate = () => {
-    debouncedHandleCrop();
-  };
+  // const onCropUpdate = () => {
+  //   debouncedHandleCrop();
+  // };
 
   return (
     <div className="w-full space-y-1 tablet:space-y-3">
@@ -60,7 +60,7 @@ const ImageCropper = (props: ImageCropperProps) => {
           stencilProps={{
             aspectRatio: 16 / 9,
           }}
-          onChange={onCropUpdate}
+          onInteractionEnd={() => handleCrop()}
         />
       )}
       {type === 'rounded' && (
@@ -69,7 +69,7 @@ const ImageCropper = (props: ImageCropperProps) => {
           src={image}
           className="h-[220px] w-full tablet:h-[380px]"
           stencilComponent={CircleStencil}
-          onChange={onCropUpdate}
+          onInteractionEnd={() => handleCrop()}
         />
       )}
     </div>

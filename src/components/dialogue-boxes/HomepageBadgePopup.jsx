@@ -131,8 +131,6 @@ const HomepageBadgePopup = ({
   };
 
   const checkHollow = () => {
-    // console.log('A', JSON.stringify(prevState));
-    // console.log('B', JSON.stringify(domainBadge));
     if (edit) {
       if (JSON.stringify(prevState) === JSON.stringify(domainBadge)) {
         return true;
@@ -144,7 +142,11 @@ const HomepageBadgePopup = ({
         domainBadge.title === '' ||
         domainBadge.domain === '' ||
         domainBadge.description === '' ||
-        (domainBadge.image[0] && typeof domainBadge.image[0] === 'string' && domainBadge.image[0].startsWith('blob:'))
+        domainBadge.image?.length == 0 ||
+        (domainBadge.image[0] &&
+          typeof domainBadge.image[0] === 'string' &&
+          domainBadge.image[0].startsWith('blob:')) ||
+        (domainBadge.image[1] && typeof domainBadge.image[1] === 'string' && domainBadge.image[1].startsWith('blob:'))
       ) {
         return true;
       } else {
@@ -192,8 +194,6 @@ const HomepageBadgePopup = ({
       console.error('Crop failed or returned null Blob');
     }
   };
-
-  console.log(domainBadge.image);
 
   return (
     <>
