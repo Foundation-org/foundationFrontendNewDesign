@@ -24,6 +24,7 @@ import {
   setPlayingPlayerId,
 } from '../../../../../features/quest/utilsSlice';
 import { setGuestSignUpDialogue } from '../../../../../features/extras/extrasSlice';
+import CustomSwitch from '../../../../../components/CustomSwitch';
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
@@ -44,8 +45,9 @@ const AgreeDisagree = () => {
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
+  const [spotlight, setSpotlight] = useState(createQuestSlice.spotlight);
+  const [sharePost, setSharePost] = useState(createQuestSlice.sharePost);
   const getArticleId = useSelector(createQuestAction.getArticleId);
-  console.log(getArticleId);
 
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: questServices.createInfoQuest,
@@ -144,6 +146,8 @@ const AgreeDisagree = () => {
           : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'binary',
+      spotlight: spotlight ? 'true' : 'false',
+      sharePost: sharePost ? 'true' : 'false',
     };
 
     if (location?.state?.articleId && location?.state?.postData?.question) {
@@ -258,8 +262,8 @@ const AgreeDisagree = () => {
   ]);
 
   useEffect(() => {
-    dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState }));
-  }, [createQuestSlice.question, changedOption, changeState]);
+    dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState, sharePost, spotlight }));
+  }, [createQuestSlice.question, changedOption, changeState, sharePost, spotlight]);
 
   return (
     <CreateQuestWrapper
@@ -297,6 +301,25 @@ const AgreeDisagree = () => {
                   <span style={{ opacity: 0 }}>Submit</span>
                 )}
               </button> */}
+      <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12">
+        <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+          Post Settings
+        </h5>
+        <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px]">
+          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically share this post.
+            </h5>
+            <CustomSwitch enabled={sharePost} setEnabled={setSharePost} />
+          </div>
+          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically pin this post to spotlight.
+            </h5>
+            <CustomSwitch enabled={spotlight} setEnabled={setSpotlight} />
+          </div>
+        </div>
+      </div>
       <div className="mt-[10px] flex w-full justify-end tablet:mt-[25px]">
         <Button
           variant={hollow ? 'hollow-submit' : 'submit'}

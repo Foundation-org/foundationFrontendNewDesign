@@ -159,6 +159,8 @@ const initialState = {
     changeState: true,
     multipleOption: false,
     addOption: false,
+    sharePost: false,
+    spotlight: false,
     optionsCount: 2,
     options: [],
   },
@@ -295,15 +297,25 @@ export const createQuestSlice = createSlice({
       state.questionReset = { ...defaultStatus };
     },
     updateQuestion: (state, action) => {
-      const { question, changedOption, changeState } = action.payload;
+      const { question, changedOption, changeState, sharePost, spotlight } = action.payload;
       return {
         ...state,
-        questions: { ...state.questions, question, changedOption, changeState },
+        questions: { ...state.questions, question, changedOption, changeState, sharePost, spotlight },
       };
     },
     // Options
     updateMultipleChoice: (state, action) => {
-      const { question, changedOption, changeState, multipleOption, addOption, optionsCount, options } = action.payload;
+      const {
+        question,
+        changedOption,
+        changeState,
+        multipleOption,
+        addOption,
+        sharePost,
+        spotlight,
+        optionsCount,
+        options,
+      } = action.payload;
       return {
         ...state,
         questions: {
@@ -313,16 +325,29 @@ export const createQuestSlice = createSlice({
           changeState,
           multipleOption,
           addOption,
+          sharePost,
+          spotlight,
           optionsCount,
           options,
         },
       };
     },
     updateRankedChoice: (state, action) => {
-      const { question, changedOption, changeState, addOption, optionsCount, options } = action.payload;
+      const { question, changedOption, changeState, addOption, sharePost, spotlight, optionsCount, options } =
+        action.payload;
       return {
         ...state,
-        questions: { ...state.questions, question, changedOption, changeState, addOption, optionsCount, options },
+        questions: {
+          ...state.questions,
+          question,
+          changedOption,
+          changeState,
+          addOption,
+          sharePost,
+          spotlight,
+          optionsCount,
+          options,
+        },
       };
     },
     addOptionById: (state, action) => {
@@ -1554,7 +1579,7 @@ export const createQuestSlice = createSlice({
               chatgptOptionStatus: statusChecking(),
               isTyping: false,
             }
-          : option,
+          : option
       );
       state.optionsValue = updatedOptions;
     });
@@ -1582,7 +1607,7 @@ export const createQuestSlice = createSlice({
                 isTyping: false,
                 duplication: duplicate,
               }
-            : option,
+            : option
         );
         state.optionsValue = updatedOptions;
       } else {
@@ -1594,7 +1619,7 @@ export const createQuestSlice = createSlice({
                 chatgptOptionStatus: statusRejected(),
                 isTyping: false,
               }
-            : option,
+            : option
         );
         state.optionsValue = updatedOptions;
       }

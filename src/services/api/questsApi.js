@@ -64,6 +64,8 @@ export const createInfoQuest = async (data) => {
       url: data.url,
       description: data.description,
       type: data.type,
+      sharePost: data.sharePost,
+      spotlight: data.spotlight,
     };
     if (data.articleId && data.suggestionTitle) {
       params.articleId = data.articleId;

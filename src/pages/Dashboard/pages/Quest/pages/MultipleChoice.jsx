@@ -49,6 +49,8 @@ const MultipleChoice = () => {
   const [optionsArray, setOptionsArray] = useState(optionsValue || []);
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
+  const [spotlight, setSpotlight] = useState(createQuestSlice.spotlight);
+  const [sharePost, setSharePost] = useState(createQuestSlice.sharePost);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
@@ -61,6 +63,7 @@ const MultipleChoice = () => {
       tolerance: 0,
     },
   });
+  console.log(createQuestSlice);
 
   // const { mutateAsync: createQuest } = useMutation({
   //   mutationFn: createInfoQuest,
@@ -152,6 +155,8 @@ const MultipleChoice = () => {
           : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       type: 'choice',
+      spotlight: spotlight ? 'true' : 'false',
+      sharePost: sharePost ? 'true' : 'false',
     };
     if (getArticleId !== '') {
       params.articleId = getArticleId;
@@ -218,6 +223,8 @@ const MultipleChoice = () => {
         addOption,
         options: tempOptions,
         multipleOption,
+        sharePost,
+        spotlight,
       })
     );
   }, [
@@ -228,6 +235,8 @@ const MultipleChoice = () => {
     optionsValue.length,
     optionsValue,
     multipleOption,
+    sharePost,
+    spotlight,
   ]);
 
   const handleTab = (index, key) => {
@@ -452,6 +461,18 @@ const MultipleChoice = () => {
               Participants can add their own options.
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
+          </div>
+          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically share this post.
+            </h5>
+            <CustomSwitch enabled={sharePost} setEnabled={setSharePost} />
+          </div>
+          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically pin this post to spotlight.
+            </h5>
+            <CustomSwitch enabled={spotlight} setEnabled={setSpotlight} />
           </div>
           {/* <ChangeChoiceOption
             changedOption={changedOption}
