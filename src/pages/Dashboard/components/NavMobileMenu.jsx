@@ -60,7 +60,7 @@ const navMenuList = [
     darkicon: `/assets/mobilenav/post-activity-logo2-dark.svg`,
   },
   {
-    title: 'User Setting',
+    title: 'User Settings',
     path: '/profile/user-settings',
     icon: `/assets/mobilenav/usersetting.svg`,
     darkicon: `/assets/mobilenav/usersetting-dark.svg`,

@@ -460,7 +460,7 @@ const RankChoice = () => {
         </h5>
         <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px]">
           <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-white-500 px-[8.62px] py-[6px] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
-            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+            <h5 className="text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Participants can add their own options.
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
@@ -470,7 +470,7 @@ const RankChoice = () => {
             htmlFor="share-post-checkbox"
           >
             <Checkbox checked={sharePost} onChange={handleSharePostChange} id="share-post-checkbox" />
-            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+            <h5 className="text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Automatically share this post.
             </h5>
           </label>
@@ -479,8 +479,8 @@ const RankChoice = () => {
             htmlFor="spotlight-checkbox"
           >
             <Checkbox checked={spotlight} onChange={handleSpotlightChange} id="spotlight-checkbox" />
-            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
-              Automatically pin this post to spotlight.aaaa
+            <h5 className="text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically pin this post to spotlight.
             </h5>
           </label>
           {/* <ChangeChoiceOption

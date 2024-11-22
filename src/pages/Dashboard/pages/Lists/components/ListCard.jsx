@@ -265,8 +265,8 @@ const ListCard = ({ listData, page }) => {
                     </div>
                   </div>
                 </div>
-                <div className="mx-7 mb-[15px] mt-[10px] tablet:mx-10 tablet:mb-6 tablet:mt-4">
-                  <div className="flex items-center gap-2">
+                <div className="mb-[15px] mt-[10px] tablet:mb-6 tablet:mt-4">
+                  <div className="mx-[0.87rem] flex items-center gap-2 tablet:mx-10">
                     <h4
                       className={`text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px] ${notPublicProfile ? '' : 'mb-5 tablet:mb-10'}`}
                     >
@@ -286,14 +286,14 @@ const ListCard = ({ listData, page }) => {
                     )}
                   </div>
                   {notPublicProfile && (
-                    <h4 className="py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:pl-7 tablet:text-[1rem] tablet:leading-[30px]">
+                    <h4 className="py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:pl-[69px] tablet:text-[1rem] tablet:leading-[30px]">
                       {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''} (drag and drop to change
                       order)
                     </h4>
                   )}
 
                   {/* Posts Statements */}
-                  <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
+                  <ul className="space-y-[5.34px] pl-7 pr-12 tablet:space-y-[0.69rem] tablet:pl-[69px] tablet:pr-[100.800px]">
                     <DndContext
                       sensors={[touchSensor, mouseSensor, keyboardSensor]}
                       modifiers={[restrictToVerticalAxis, restrictToParentElement]}
@@ -318,7 +318,7 @@ const ListCard = ({ listData, page }) => {
                   </ul>
 
                   {notPublicProfile && (
-                    <div className="grid grid-cols-2 gap-2 pt-[5.7px] tablet:gap-4 tablet:pl-7 tablet:pt-[9px]">
+                    <div className="grid grid-cols-2 gap-2 pl-7 pr-12 pt-[5.7px] tablet:gap-4 tablet:pl-[69px] tablet:pr-[100.800px] tablet:pt-[9px]">
                       <Button
                         variant={'addOption'}
                         onClick={() => {
@@ -334,7 +334,7 @@ const ListCard = ({ listData, page }) => {
                     </div>
                   )}
 
-                  <div className="mt-6 grid grid-cols-2 gap-2 tablet:mt-[50px] tablet:gap-4">
+                  <div className="mt-6 grid grid-cols-2 gap-2 px-[13.92px] tablet:mt-[50px] tablet:gap-4 tablet:px-10">
                     <div className="col-span-1"></div>
                     <Button
                       variant={'submit-green'}

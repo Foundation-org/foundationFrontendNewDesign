@@ -29,7 +29,13 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
         formData.append('update', true);
       }
 
-      if (prevState.image[2] !== domainBadge.image[2]) {
+      if (edit) {
+        if (prevState.image[2] !== domainBadge.image[2]) {
+          const blobResponse = await fetch(domainBadge.image[2]);
+          const blob = await blobResponse.blob();
+          formData.append('originalFile', blob, 'originalImage.png');
+        }
+      } else {
         const blobResponse = await fetch(domainBadge.image[2]);
         const blob = await blobResponse.blob();
         formData.append('originalFile', blob, 'originalImage.png');
