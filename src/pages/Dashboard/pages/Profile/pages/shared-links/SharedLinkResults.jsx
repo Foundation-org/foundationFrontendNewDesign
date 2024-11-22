@@ -28,7 +28,7 @@ export default function SharedLinkResults() {
 
   const { data: questData, isLoading: questDataLoading } = useQuery({
     queryKey: ['sharedLinkResultShared'],
-    queryFn: () => getQuestById(persistedUserInfo?.uuid, location.state.questId),
+    queryFn: () => getQuestById(persistedUserInfo?.uuid, location.state.questId, 'SharedLink', location.state.link),
   });
 
   function downloadCSV(singleQuestResp) {
@@ -44,7 +44,7 @@ export default function SharedLinkResults() {
   return (
     <>
       <Topbar />
-      <div className="dark:bg-background-dark bg-[#F2F3F5]">
+      <div className="bg-[#F2F3F5] dark:bg-background-dark">
         <DashboardLayout>
           <div className="mx-auto h-[calc(100dvh-91px)] w-full max-w-[1440px] overflow-y-auto no-scrollbar tablet:h-[calc(100vh-70px)] laptop:mx-[331px] laptop:px-4 desktop:mx-auto desktop:px-0">
             {persistedUserInfo?.role === 'user' && (
