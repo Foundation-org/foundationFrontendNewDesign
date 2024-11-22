@@ -11,7 +11,7 @@
 }
 
 @layer components {
-  .bg-blue-gradiant {
+  .bg-blue-gradient {
     @apply bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] dark:from-accent-100 dark:to-accent-100;
   }
 
@@ -368,12 +368,12 @@ body {
 }
 
 @media (max-width: 744px) {
-  .splide__arrow--prev{
-    left:0.2rem !important
+  .splide__arrow--prev {
+    left: 0.2rem !important;
   }
-  
+
   .splide__arrow--next {
-  right: 0.2rem !important;
+    right: 0.2rem !important;
   }
   .MuiFormControlLabel-labelPlacementEnd > span:last-child {
     font-size: 10px;
@@ -1030,5 +1030,4 @@ input[type='number'] {
   .scrollable-tabs-container ul {
     @apply gap-4;
   }
-
 }

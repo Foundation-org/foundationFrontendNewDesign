@@ -1,24 +1,23 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { CircleStencil, Cropper, CropperRef } from 'react-advanced-cropper';
 import 'react-advanced-cropper/dist/style.css';
 
-interface ImageCropperProps {
-  type: '16:9' | 'rounded';
-  onCropComplete: (blob: Blob | null) => void;
-  image: string;
+interface ICoordinates {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
 }
 
-// Utility debounce function
-const debounce = (func: (...args: any[]) => void, delay: number) => {
-  let timer: NodeJS.Timeout;
-  return (...args: any[]) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => func(...args), delay);
-  };
-};
+interface ImageCropperProps {
+  type: '16:9' | 'rounded';
+  onCropComplete: (blob: Blob | null, coordinates: ICoordinates | null) => void;
+  image: string;
+  coordinates?: ICoordinates | null;
+}
 
 const ImageCropper = (props: ImageCropperProps) => {
-  const { type, onCropComplete, image } = props;
+  const { type, onCropComplete, image, coordinates } = props;
   const cropperRef = useRef<CropperRef>(null);
 
   const handleCrop = async () => {
@@ -27,15 +26,12 @@ const ImageCropper = (props: ImageCropperProps) => {
       const canvas = cropper.getCanvas();
       if (canvas) {
         const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob((blob) => resolve(blob), 'image/jpeg'));
-        onCropComplete(blob);
+        onCropComplete(blob, cropperRef.current?.getCoordinates());
       } else {
-        onCropComplete(null);
+        onCropComplete(null, null);
       }
     }
   };
-
-  // Debounced version of handleCrop
-  // const debouncedHandleCrop = useCallback(debounce(handleCrop, 500), []);
 
   useEffect(() => {
     // Clean up the image URL when the component unmounts
@@ -45,10 +41,6 @@ const ImageCropper = (props: ImageCropperProps) => {
       }
     };
   }, [image]);
-
-  // const onCropUpdate = () => {
-  //   debouncedHandleCrop();
-  // };
 
   return (
     <div className="w-full space-y-1 tablet:space-y-3">
@@ -60,6 +52,11 @@ const ImageCropper = (props: ImageCropperProps) => {
           stencilProps={{
             aspectRatio: 16 / 9,
           }}
+          onReady={() => {
+            if (coordinates && cropperRef.current) {
+              cropperRef.current.setCoordinates(coordinates);
+            }
+          }}
           onInteractionEnd={() => handleCrop()}
         />
       )}
@@ -69,6 +66,11 @@ const ImageCropper = (props: ImageCropperProps) => {
           src={image}
           className="h-[220px] w-full tablet:h-[380px]"
           stencilComponent={CircleStencil}
+          onReady={() => {
+            if (coordinates && cropperRef.current) {
+              cropperRef.current.setCoordinates(coordinates);
+            }
+          }}
           onInteractionEnd={() => handleCrop()}
         />
       )}

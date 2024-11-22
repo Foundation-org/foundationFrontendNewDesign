@@ -29,12 +29,14 @@ const HomepageBadgePopup = ({
     domain: '',
     description: '',
     image: [],
+    coordinates: [],
   });
   const [prevState, setPrevState] = useState({
     title: '',
     domain: '',
     description: '',
     image: [],
+    coordinates: [],
   });
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
@@ -51,7 +53,8 @@ const HomepageBadgePopup = ({
     setLoading,
     handleClose,
     onboarding,
-    handleSkip
+    handleSkip,
+    prevState
   );
 
   const checkDomainBadge = () => {
@@ -65,7 +68,7 @@ const HomepageBadgePopup = ({
       const image = [
         domainBadge?.domain?.s3Urls[0], // 1:1 image
         domainBadge?.domain?.s3Urls[1], // 16:9 image
-        domainBadge?.domain?.s3Urls[1], // 16:9 image again
+        domainBadge?.domain?.s3Urls[2], // original image again
       ];
 
       setDomainBadge({
@@ -73,12 +76,14 @@ const HomepageBadgePopup = ({
         domain: domainBadge?.domain?.name,
         description: domainBadge?.domain?.description,
         image: image,
+        coordinates: domainBadge?.domain?.coordinates,
       });
       setPrevState({
         title: domainBadge?.domain?.title,
         domain: domainBadge?.domain?.name,
         description: domainBadge?.domain?.description,
         image: image,
+        coordinates: domainBadge?.domain?.coordinates,
       });
     }
   }, [persistedUserInfo]);
@@ -174,27 +179,51 @@ const HomepageBadgePopup = ({
     }
   };
 
-  const handleCropComplete = async (blob) => {
+  const handleCropComplete = async (blob, coordinates) => {
     if (blob) {
       setDomainBadge((prev) => {
         const updatedImages = [...prev.image];
-        updatedImages[0] = blob; // Set the blob at index 1
-        return { ...prev, image: updatedImages };
+        updatedImages[0] = blob;
+
+        const updatedCoordinates = Array.isArray(prev.coordinates) ? [...prev.coordinates] : [];
+        updatedCoordinates[0] = coordinates;
+
+        return {
+          ...prev,
+          image: updatedImages,
+          coordinates: updatedCoordinates,
+        };
       });
     } else {
       console.error('Crop failed or returned null Blob');
     }
   };
 
-  const handleCropComplete2 = async (blob) => {
+  const handleCropComplete2 = async (blob, coordinates) => {
     if (blob) {
       setDomainBadge((prev) => {
         const updatedImages = [...prev.image];
-        updatedImages[1] = blob; // Set the blob at index 2
-        return { ...prev, image: updatedImages };
+        updatedImages[1] = blob;
+
+        const updatedCoordinates = Array.isArray(prev.coordinates) ? [...prev.coordinates] : [];
+        updatedCoordinates[1] = coordinates;
+
+        return {
+          ...prev,
+          image: updatedImages,
+          coordinates: updatedCoordinates,
+        };
       });
     } else {
       console.error('Crop failed or returned null Blob');
+    }
+  };
+
+  const checkFinishHollow = () => {
+    if (JSON.stringify(prevState.coordinates) === JSON.stringify(domainBadge.coordinates)) {
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -213,7 +242,7 @@ const HomepageBadgePopup = ({
           loading={RemoveLoading}
         />
       )}
-      <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
+      <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo} customClasses={'overflow-y-auto'}>
         <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
           <h1 className="summary-text">
             Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily with your
@@ -348,13 +377,23 @@ const HomepageBadgePopup = ({
                     <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
                       SEO Image:
                     </p>
-                    <ImageCropper type="16:9" onCropComplete={handleCropComplete} image={domainBadge.image[2]} />
+                    <ImageCropper
+                      type="16:9"
+                      onCropComplete={handleCropComplete}
+                      image={domainBadge.image[2]}
+                      coordinates={domainBadge.coordinates[0]}
+                    />
                   </div>
                   <div className="space-y-1 tablet:space-y-3">
                     <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
                       Profile Image:
                     </p>
-                    <ImageCropper type="rounded" onCropComplete={handleCropComplete2} image={domainBadge.image[2]} />
+                    <ImageCropper
+                      type="rounded"
+                      onCropComplete={handleCropComplete2}
+                      image={domainBadge.image[2]}
+                      coordinates={domainBadge.coordinates[1]}
+                    />
                   </div>
                 </div>
               )
@@ -365,7 +404,8 @@ const HomepageBadgePopup = ({
                 Cancel
               </Button>
               <Button
-                variant="submit"
+                variant={checkFinishHollow() ? 'submit-hollow' : 'submit'}
+                disabled={checkFinishHollow()}
                 onClick={() => {
                   setIsFinished(true);
                   setChangeCrop(false);

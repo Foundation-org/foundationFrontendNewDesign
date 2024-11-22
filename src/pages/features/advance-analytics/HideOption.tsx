@@ -47,7 +47,7 @@ export default function HideOption({ handleClose, questStartData, update, select
                     >
                       {item.name}
                     </li>
-                  ),
+                  )
                 )
               : questStartData?.QuestAnswers.map((post: PostAnswer) => (
                   <li

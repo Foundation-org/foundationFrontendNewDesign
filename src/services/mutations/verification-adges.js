@@ -3,7 +3,7 @@ import api from '../api/Axios';
 import showToast from '../../components/ui/Toast';
 import { useSelector } from 'react-redux';
 
-const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboarding, handleSkip) => {
+const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboarding, handleSkip, prevState) => {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -18,13 +18,21 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
 
       if (domainBadge.image[0] instanceof Blob) {
         formData.append('file16x9', domainBadge.image[0], 'seoCroppedImage.png');
+        formData.append('coordinate16x9', JSON.stringify(domainBadge.coordinates[0]));
       }
       if (domainBadge.image[1] instanceof Blob) {
         formData.append('file1x1', domainBadge.image[1], 'profileImage.png');
+        formData.append('coordinate1x1', JSON.stringify(domainBadge.coordinates[1]));
       }
 
       if (edit) {
         formData.append('update', true);
+      }
+
+      if (prevState.image[2] !== domainBadge.image[2]) {
+        const blobResponse = await fetch(domainBadge.image[2]);
+        const blob = await blobResponse.blob();
+        formData.append('originalFile', blob, 'originalImage.png');
       }
 
       return api.post(`/addDomainBadge`, formData, {
