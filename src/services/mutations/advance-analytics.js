@@ -87,6 +87,8 @@ export const useDeleteAllAnalyzeMutation = ({ handleClose }) => {
           return resp.data?.data[0] || oldData;
         });
 
+        queryClient.invalidateQueries({ queryKey: ['sharedLinkResultShared'], exact: true });
+
         // Optionally close the modal or perform other UI updates
         handleClose();
       }
@@ -116,6 +118,8 @@ export const useDeleteAnalyzeMutation = ({ handleClose }) => {
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
           return resp.data?.data[0] || oldData;
         });
+
+        queryClient.invalidateQueries({ queryKey: ['sharedLinkResultShared'], exact: true });
 
         // Optionally close the modal or perform other UI updates
         handleClose();
@@ -147,6 +151,8 @@ export const useAnalyzePostMutation = ({ handleClose }) => {
           return resp.data?.data[0] || oldData;
         });
 
+        queryClient.invalidateQueries({ queryKey: ['sharedLinkResultShared'], exact: true });
+
         // Optionally close the modal or perform other UI updates
         handleClose();
       }
@@ -177,6 +183,8 @@ export const useAnalyzeBadgeMutation = ({ handleClose }) => {
           return resp.data?.data[0] || oldData;
         });
 
+        queryClient.invalidateQueries({ queryKey: ['sharedLinkResultShared'], exact: true });
+
         // Optionally close the modal or perform other UI updates
         handleClose();
       }
@@ -206,6 +214,8 @@ export const useAnalyzeTargetMutation = ({ handleClose }) => {
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
           return resp.data?.data[0] || oldData;
         });
+
+        queryClient.invalidateQueries({ queryKey: ['sharedLinkResultShared'], exact: true });
 
         // Optionally close the modal or perform other UI updates
         handleClose();
@@ -240,6 +250,8 @@ export const useAnalyzeActivityMutation = ({ handleClose }) => {
           return resp.data?.data[0] || oldData;
         });
 
+        queryClient.invalidateQueries({ queryKey: ['sharedLinkResultShared'], exact: true });
+
         // Optionally close the modal or perform other UI updates
         handleClose();
       }
@@ -271,6 +283,8 @@ export const useAnalyzeOrderMutation = () => {
         queryClient.setQueryData(['SingleQuest'], (oldData) => {
           return resp.data?.data[0] || oldData;
         });
+
+        queryClient.invalidateQueries({ queryKey: ['sharedLinkResultShared'], exact: true });
       }
     },
     onError: (error) => {
