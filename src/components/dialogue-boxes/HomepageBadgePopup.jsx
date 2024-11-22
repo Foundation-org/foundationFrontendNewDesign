@@ -39,6 +39,8 @@ const HomepageBadgePopup = ({
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+  const [changeCrop, setChangeCrop] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   const handleClose = () => setIsPopup(false);
   const handleBadgesClose = () => setModalVisible(false);
@@ -168,6 +170,7 @@ const HomepageBadgePopup = ({
       }
       const image = URL.createObjectURL(file);
       setDomainBadge({ ...domainBadge, image: [image, image, image] });
+      setPrevState({ ...domainBadge, image: [image, image, image] });
     }
   };
 
@@ -300,54 +303,120 @@ const HomepageBadgePopup = ({
             </div>
           </div>
           {/* Image Cropper */}
-          {domainBadge.image?.length > 0 && (
-            <div className="space-y-6">
-              <div className="space-y-1 tablet:space-y-3">
-                <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
-                  Seo Image:
-                </p>
-                <ImageCropper type="16:9" onCropComplete={handleCropComplete} image={domainBadge.image[2]} />
+          {domainBadge.image.length > 0 &&
+            (!changeCrop && !prevState.image[0]?.startsWith('blob:') ? (
+              <div className="space-y-6">
+                <div className="space-y-1 tablet:space-y-3">
+                  <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                    SEO Image:
+                  </p>
+                  <img
+                    src={
+                      isFinished
+                        ? domainBadge.image[0] instanceof Blob
+                          ? URL.createObjectURL(domainBadge.image[0])
+                          : ''
+                        : prevState.image[1]
+                    }
+                    alt="1st"
+                    className="aspect-video w-full object-cover"
+                  />
+                </div>
+                <div className="space-y-1 tablet:space-y-3">
+                  <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                    Profile Image:
+                  </p>
+                  <div className="flex justify-center">
+                    <img
+                      src={
+                        isFinished
+                          ? domainBadge.image[1] instanceof Blob
+                            ? URL.createObjectURL(domainBadge.image[1])
+                            : ''
+                          : prevState.image[0]
+                      }
+                      alt="1st"
+                      className="size-[150px] rounded-full tablet:size-[320px]"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="space-y-1 tablet:space-y-3">
-                <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
-                  Profile Image:
-                </p>
-                <ImageCropper type="rounded" onCropComplete={handleCropComplete2} image={domainBadge.image[2]} />
+            ) : (
+              domainBadge.image?.length > 0 && (
+                <div className="space-y-6">
+                  <div className="space-y-1 tablet:space-y-3">
+                    <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                      SEO Image:
+                    </p>
+                    <ImageCropper type="16:9" onCropComplete={handleCropComplete} image={domainBadge.image[2]} />
+                  </div>
+                  <div className="space-y-1 tablet:space-y-3">
+                    <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                      Profile Image:
+                    </p>
+                    <ImageCropper type="rounded" onCropComplete={handleCropComplete2} image={domainBadge.image[2]} />
+                  </div>
+                </div>
+              )
+            ))}
+          {changeCrop ? (
+            <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]">
+              <Button variant="cancel" onClick={() => setChangeCrop(false)}>
+                Cancel
+              </Button>
+              <Button
+                variant="submit"
+                onClick={() => {
+                  setIsFinished(true);
+                  setChangeCrop(false);
+                }}
+              >
+                Finish
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between">
+              {!prevState.image[0]?.startsWith('blob:') && domainBadge.image.length > 0 ? (
+                <Button variant="submit" onClick={() => setChangeCrop(true)}>
+                  Change Crop
+                </Button>
+              ) : (
+                <div></div>
+              )}
+              <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
+                {edit && (
+                  <Button
+                    variant="badge-remove"
+                    onClick={() => {
+                      handleRemoveBadgePopup({
+                        title: 'Domain',
+                        type: 'domainBadge',
+                        badgeType: 'homepage',
+                        image: logo,
+                      });
+                    }}
+                  >
+                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+                  </Button>
+                )}
+                <Button
+                  variant={checkHollow() ? 'submit-hollow' : 'submit'}
+                  onClick={() => {
+                    addDomainBadge();
+                  }}
+                  disabled={checkHollow()}
+                >
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : edit ? (
+                    'Update Badge'
+                  ) : (
+                    'Add Badge'
+                  )}
+                </Button>
               </div>
             </div>
           )}
-          <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
-            {edit && (
-              <Button
-                variant="badge-remove"
-                onClick={() => {
-                  handleRemoveBadgePopup({
-                    title: 'Domain',
-                    type: 'domainBadge',
-                    badgeType: 'homepage',
-                    image: logo,
-                  });
-                }}
-              >
-                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
-              </Button>
-            )}
-            <Button
-              variant={checkHollow() ? 'submit-hollow' : 'submit'}
-              onClick={() => {
-                addDomainBadge();
-              }}
-              disabled={checkHollow()}
-            >
-              {loading === true ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : edit ? (
-                'Update Badge'
-              ) : (
-                'Add Badge'
-              )}
-            </Button>
-          </div>
         </div>
         {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
