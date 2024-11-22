@@ -93,7 +93,7 @@ const Topbar = () => {
                   />
                 </div>
                 <div
-                  className="relative hidden justify-center laptop:flex"
+                  className="relative justify-center laptop:flex"
                   onClick={() => {
                     navigate('/news');
                   }}

@@ -3,13 +3,13 @@ import { Menu } from '@headlessui/react';
 import { useSelector } from 'react-redux';
 
 const navMenuList = [
-  {
-    title: 'News',
-    path: '/news',
-    icon: `/assets/mobilenav/news.svg`,
-    darkicon: `/assets/mobilenav/news-dark.svg`,
-    allowedRole: 'public',
-  },
+  // {
+  //   title: 'News',
+  //   path: '/news',
+  //   icon: `/assets/mobilenav/news.svg`,
+  //   darkicon: `/assets/mobilenav/news-dark.svg`,
+  //   allowedRole: 'public',
+  // },
   {
     title: 'Treasury',
     path: '/treasury',
