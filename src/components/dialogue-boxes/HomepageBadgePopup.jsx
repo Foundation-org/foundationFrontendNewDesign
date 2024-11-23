@@ -100,6 +100,8 @@ const HomepageBadgePopup = ({
   };
 
   const handleDomainChange = (e) => {
+    console.log('domain change ran');
+
     const input = e.target.value;
 
     if (validateDomainInput(input)) {
@@ -108,6 +110,8 @@ const HomepageBadgePopup = ({
   };
 
   const handleDomainInputBlur = async () => {
+    console.log('domain blur ran');
+
     if (!domainBadge.domain.trim()) {
       return;
     }
