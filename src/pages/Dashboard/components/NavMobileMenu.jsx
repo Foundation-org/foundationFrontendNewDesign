@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu } from '@headlessui/react';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const navMenuList = [
-  {
-    title: 'News',
-    path: '/news',
-    icon: `/assets/mobilenav/news.svg`,
-    darkicon: `/assets/mobilenav/news-dark.svg`,
-    allowedRole: 'public',
-  },
+  // {
+  //   title: 'News',
+  //   path: '/news',
+  //   icon: `/assets/mobilenav/news.svg`,
+  //   darkicon: `/assets/mobilenav/news-dark.svg`,
+  //   allowedRole: 'public',
+  // },
   {
     title: 'Treasury',
     path: '/treasury',
@@ -60,7 +61,7 @@ const navMenuList = [
     darkicon: `/assets/mobilenav/post-activity-logo2-dark.svg`,
   },
   {
-    title: 'User Setting',
+    title: 'User Settings',
     path: '/profile/user-settings',
     icon: `/assets/mobilenav/usersetting.svg`,
     darkicon: `/assets/mobilenav/usersetting-dark.svg`,
@@ -85,19 +86,27 @@ export default function NavMobileMenu() {
   const isUser = persistedUserInfo?.role === 'user';
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const location = useLocation();
+
+  useEffect(() => {
+    const activeMenu = document.querySelector('[data-headlessui-state="open"]');
+    if (activeMenu) {
+      document.getElementById('menu-button').click();
+    }
+  }, [location]);
 
   return (
     <Menu as="div" className="relative inline-block h-5 text-left tablet:h-8">
-      <Menu.Button className="size-5 h-5 min-w-5 tablet:size-8 tablet:min-w-8">
+      <Menu.Button className="size-5 h-5 min-w-5 tablet:size-8 tablet:min-w-8" id="menu-button">
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/hamburger.svg`}
-          alt="arrow-right"
+          alt="menu"
           className="size-full"
         />
       </Menu.Button>
       <Menu.Items
         transition="true"
-        className="absolute -right-[15px] z-[1000] mt-2 w-48 origin-top-right rounded-bl-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in dark:bg-gray-200 dark:ring-gray-100 tablet:mt-4"
+        className="absolute -right-[15px] z-[1000] mt-2 w-48 origin-top-right rounded-bl-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in dark:bg-gray-200 dark:ring-gray-100 tablet:w-60"
       >
         {navMenuList
           .filter((item) => isUser || item.allowedRole === 'public')
@@ -107,17 +116,19 @@ export default function NavMobileMenu() {
           })
           .map((item, index) => (
             <Menu.Item
-              className={`border-b border-b-[#D9D9D9] px-5 py-2 hover:bg-[#F2F3F5] dark:border-b-gray-100 ${navMenuList.length === index + 1 ? 'border-b-0' : ''}`}
+              className={`border-b border-b-[#D9D9D9] px-5 py-2 hover:bg-[#F2F3F5] dark:border-b-gray-100 dark:hover:bg-black tablet:py-3 ${
+                navMenuList.length === index + 1 ? 'border-b-0' : ''
+              }`}
               key={index + 1}
             >
               <Link
                 to={item.path}
-                className="flex items-center gap-2 text-[12px] font-semibold leading-normal text-[#7C7C7C] dark:text-white-400"
+                className="flex items-center gap-2 text-[12px] font-semibold leading-normal text-[#7C7C7C] dark:text-white-400 tablet:text-[16px]"
               >
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}${persistedTheme === 'dark' ? item.darkicon : item.icon}`}
                   alt={item.title}
-                  className="size-[17px]"
+                  className="size-[17px] tablet:size-6"
                 />
                 {item.title}
               </Link>

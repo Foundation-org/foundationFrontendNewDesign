@@ -334,7 +334,7 @@ const AgreeDisagree = () => {
             htmlFor="share-post-checkbox"
           >
             <Checkbox checked={sharePost} onChange={handleSharePostChange} id="share-post-checkbox" />
-            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+            <h5 className="text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Automatically share this post.
             </h5>
           </label>
@@ -343,8 +343,8 @@ const AgreeDisagree = () => {
             htmlFor="spotlight-checkbox"
           >
             <Checkbox checked={spotlight} onChange={handleSpotlightChange} id="spotlight-checkbox" />
-            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
-              Automatically pin this post to spotlight.aaaa
+            <h5 className="text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+              Automatically pin this post to spotlight.
             </h5>
           </label>
         </div>

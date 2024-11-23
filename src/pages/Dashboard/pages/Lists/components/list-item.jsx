@@ -20,13 +20,7 @@ const ListItem = ({ post, setCategoryId, categoryItem, setPostId, setDeletePostP
       : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`;
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]"
-    >
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="flex items-center tablet:gap-[10px]">
       <div
         className={`${
           isDragging ? 'border-blue-300' : 'border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'

@@ -6,6 +6,7 @@ export default {
     colors: {
       black: '#000',
       white: '#FFF',
+      'background-dark': '#242424',
       'white-100': '#F0F0F0',
       'white-200': '#E9E9E9',
       'white-300': '#FEECEC',
