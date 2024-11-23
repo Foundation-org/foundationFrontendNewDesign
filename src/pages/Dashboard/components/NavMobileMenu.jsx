@@ -116,7 +116,7 @@ export default function NavMobileMenu() {
           })
           .map((item, index) => (
             <Menu.Item
-              className={`border-b border-b-[#D9D9D9] px-5 py-2 hover:bg-[#F2F3F5] dark:border-b-gray-100 tablet:py-3 ${
+              className={`border-b border-b-[#D9D9D9] px-5 py-2 hover:bg-[#F2F3F5] dark:border-b-gray-100 dark:hover:bg-black tablet:py-3 ${
                 navMenuList.length === index + 1 ? 'border-b-0' : ''
               }`}
               key={index + 1}
