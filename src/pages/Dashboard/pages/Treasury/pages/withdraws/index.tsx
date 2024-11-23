@@ -85,7 +85,7 @@ export default function Withdraws() {
       )} */}
 
       <p className="font-inter dark:text-gray mt-[3.319vh] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[4vw] laptop:text-[2.083vw]">
-        🚀 Withdrawals open on Nov 20, 2024! Get ready!
+        🚀 Withdrawals will be opening soon!
       </p>
     </div>
   );
