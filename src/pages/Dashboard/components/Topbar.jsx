@@ -181,7 +181,7 @@ const Topbar = () => {
           </div>
 
           {/* Desktop */}
-          <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
+          <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-end gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px] laptop:px-0 laptop:py-0 laptop:pr-[31px] desktop:pr-0">
             {TopbarItems.filter((item) => {
               if (persistedUserInfo.role === 'guest' || persistedUserInfo.role === 'visitor') {
                 // Hide both item.id 5 and 6 for guest or visitor roles
@@ -249,6 +249,8 @@ const Topbar = () => {
                 />
               </Link>
             ))}
+
+            <NavMobileMenu />
           </div>
         </div>
       </div>
