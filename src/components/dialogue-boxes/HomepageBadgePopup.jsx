@@ -42,7 +42,6 @@ const HomepageBadgePopup = ({
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [changeCrop, setChangeCrop] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
 
   const handleClose = () => setIsPopup(false);
   const handleBadgesClose = () => setModalVisible(false);
@@ -341,10 +340,8 @@ const HomepageBadgePopup = ({
                   </p>
                   <img
                     src={
-                      isFinished
-                        ? domainBadge.image[0] instanceof Blob
-                          ? URL.createObjectURL(domainBadge.image[0])
-                          : ''
+                      domainBadge.image[0] instanceof Blob
+                        ? URL.createObjectURL(domainBadge.image[0])
                         : prevState.image[1]
                     }
                     alt="1st"
@@ -358,10 +355,8 @@ const HomepageBadgePopup = ({
                   <div className="flex justify-center">
                     <img
                       src={
-                        isFinished
-                          ? domainBadge.image[1] instanceof Blob
-                            ? URL.createObjectURL(domainBadge.image[1])
-                            : ''
+                        domainBadge.image[1] instanceof Blob
+                          ? URL.createObjectURL(domainBadge.image[1])
                           : prevState.image[0]
                       }
                       alt="1st"
@@ -400,14 +395,19 @@ const HomepageBadgePopup = ({
             ))}
           {changeCrop ? (
             <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]">
-              <Button variant="cancel" onClick={() => setChangeCrop(false)}>
+              <Button
+                variant="cancel"
+                onClick={() => {
+                  setDomainBadge(prevState);
+                  setChangeCrop(false);
+                }}
+              >
                 Cancel
               </Button>
               <Button
                 variant={checkFinishHollow() ? 'submit-hollow' : 'submit'}
                 disabled={checkFinishHollow()}
                 onClick={() => {
-                  setIsFinished(true);
                   setChangeCrop(false);
                 }}
               >
