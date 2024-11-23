@@ -49,7 +49,11 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
     },
     onSuccess: (data) => {
       if (data.status === 200) {
-        showToast('success', 'badgeAdded');
+        if (edit) {
+          showToast('success', 'badgeUpdated');
+        } else {
+          showToast('success', 'badgeAdded');
+        }
         if (onboarding) {
           handleSkip();
           return;

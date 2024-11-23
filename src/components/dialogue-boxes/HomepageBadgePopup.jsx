@@ -108,15 +108,18 @@ const HomepageBadgePopup = ({
   };
 
   const handleDomainInputBlur = async () => {
-    if (domainBadge.domain === '') {
+    if (!domainBadge.domain.trim()) {
       return;
     }
-    const cleanedDomain = domainBadge.domain.replace(/^-+|-+$/g, '');
-    setDomainBadge({ ...domainBadge, domain: cleanedDomain });
 
-    if (cleanedDomain.startsWith('-') || cleanedDomain.endsWith('-')) {
+    // Clean and validate domain
+    const cleanedDomain = domainBadge.domain.trim().replace(/^-+|-+$/g, '');
+    if (!/^[a-zA-Z0-9.-]+$/.test(cleanedDomain)) {
+      setDomainBadge({ ...domainBadge, domain: '' });
       return;
     }
+
+    setDomainBadge({ ...domainBadge, domain: cleanedDomain });
 
     try {
       const moderationRatingResult = await moderationRating({
@@ -124,7 +127,7 @@ const HomepageBadgePopup = ({
       });
 
       if (moderationRatingResult.moderationRatingCount !== 0) {
-        toast.warning('Domain is not allowed');
+        toast.warning('Domain not allowed');
         setDomainBadge((prevBadge) => ({
           ...prevBadge,
           domain: '',
