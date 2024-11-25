@@ -10,7 +10,7 @@ import AnalyticResults from './AnalyticResults';
 import ClearAllAnalytics from '../../../components/dialogue-boxes/ClearAllAnalytics';
 import AnalyzeDialogueBox from '../../../components/dialogue-boxes/AnalyzeDialogueBox';
 
-export default function AdvanceAnalytics({ questStartData }: any) {
+export default function AdvanceAnalytics({ questStartData, userQuestSettingRef }: any) {
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const plusImg = `${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/plus.svg' : 'assets/svgs/dashboard/add.svg'}`;
@@ -113,6 +113,7 @@ export default function AdvanceAnalytics({ questStartData }: any) {
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
           questStartData={questStartData}
           update={false}
+          userQuestSettingRef={userQuestSettingRef}
         />
       )}
       {clearAnalyticsPopup && (

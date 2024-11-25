@@ -86,17 +86,30 @@ export const updateCategoryName = async ({ userUuid, categoryId, category }) => 
   }
 };
 
-export const searchPosts = async (term, uuid) => {
+export const searchPosts = async (term, uuid, userQuestSettingRef) => {
   try {
     if (term !== '') {
-      const response = await api.post(`/search/easySearch?term=${term}`, {
-        moderationRatingFilter: {
-          initial: 0,
-          final: 100,
-        },
-        uuid,
-      });
-      return response.data;
+      if (userQuestSettingRef !== "") {
+        const response = await api.post(`/search/easySearch?term=${term}`, {
+          page: userQuestSettingRef,
+          moderationRatingFilter: {
+            initial: 0,
+            final: 100,
+          },
+          uuid,
+        });
+        return response.data;
+      }
+      else {
+        const response = await api.post(`/search/easySearch?term=${term}`, {
+          moderationRatingFilter: {
+            initial: 0,
+            final: 100,
+          },
+          uuid,
+        });
+        return response.data;
+      }
     }
   } catch (err) {
     console.log('err', err);

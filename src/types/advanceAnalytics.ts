@@ -6,6 +6,7 @@ export interface AnalyzeModalProps {
   questStartData: any;
   update: boolean;
   selectedItem?: any | undefined;
+  userQuestSettingRef?: any
 }
 
 export type PostAnswer = {
@@ -18,6 +19,7 @@ export type AddBadgeProps = {
   questStartData: any;
   update?: boolean;
   selectedItem?: any;
+  userQuestSettingRef?: any
 };
 
 export interface ActivityType {
@@ -34,7 +36,7 @@ export interface ActivityProps {
   state?: any;
   dispatch: any;
   type?: any;
-  selectedItem?:any,
-  update?:any,
+  selectedItem?: any,
+  update?: any,
   parentDropdown?: boolean;
 }
