@@ -10,7 +10,7 @@ import ProgressBar from '../ProgressBar';
 import api from '../../services/api/Axios';
 import BadgeRemovePopup from './badgeRemovePopup';
 import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
-import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -30,10 +30,11 @@ const LinkHubItem = ({
   setAddAnotherForm,
   setEdit,
 }) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
   const style = {
     transition,
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
   };
 
   return (
@@ -42,8 +43,15 @@ const LinkHubItem = ({
       style={style}
       {...attributes}
       {...listeners}
-      className={`mb-[15px] flex w-full justify-between rounded-[8.62px] border bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px] ${isDragging ? 'border-blue-300 dark:border-blue-500' : 'border-white-500 dark:border-gray-100'} `}
+      className={`relative mb-[15px] flex w-full justify-between rounded-[8.62px] border bg-[#FBFBFB] pl-7 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-14 tablet:text-[18px] tablet:leading-[21px] ${isDragging ? 'border-blue-300 dark:border-blue-500' : 'border-white-500 dark:border-gray-100'} `}
     >
+      <div className="absolute left-0 flex h-full w-4 items-center justify-center rounded-l-[8.62px] bg-white-500 dark:bg-accent-500 tablet:w-[25px] tablet:rounded-l-[21.06px]">
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/${persistedTheme === 'dark' ? 'six-dots-dark.svg' : 'six-dots.svg'}`}
+          alt="six dots"
+          className="size-3 tablet:size-5"
+        />
+      </div>
       <div className="py-3 tablet:py-[25px]">
         <div className="flex items-center gap-2 tablet:gap-4">
           <img
@@ -55,8 +63,8 @@ const LinkHubItem = ({
             <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
               {item.title}
             </h4>
-            <div className="mt-[2px] max-w-[270px] pr-[30px] tablet:mt-2 tablet:pr-0">
-              <h6 className="break-words text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+            <div className="mt-[2px] tablet:mt-2">
+              <h6 className="break-all text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
                 {item.link}
               </h6>
             </div>
@@ -384,7 +392,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                   collisionDetection={closestCorners}
                   onDragEnd={handleOnDragEnd}
                 >
-                  <SortableContext items={existingData}>
+                  <SortableContext items={existingData} strategy={verticalListSortingStrategy}>
                     {existingData?.map((item) => (
                       <LinkHubItem
                         key={item.id}
