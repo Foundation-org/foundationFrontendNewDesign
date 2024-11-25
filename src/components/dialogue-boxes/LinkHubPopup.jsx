@@ -57,7 +57,7 @@ const LinkHubItem = ({
           <img
             src={getBadgeIcon({ title: item.title, link: item.link })}
             alt="save icon"
-            className="size-[20.5px] tablet:size-[35px]"
+            className="size-[20.5px] rounded-full tablet:size-[35px]"
           />
           <div>
             <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
@@ -311,6 +311,8 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
       facebook: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
       linkedin: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
       instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
+      soundcloud: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/soundcloud-fav.png`,
+      'ultimate-guitar': `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ultimate-guitar-fav.png`,
     };
 
     const title = badge.title.toLowerCase();
