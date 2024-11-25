@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
-import { Button } from '../ui/Button';
-import { useQueryClient } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
-
-import PopUp from '../ui/PopUp';
-import api from '../../services/api/Axios';
+import { Button } from '../ui/Button';
+import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import BadgeRemovePopup from './badgeRemovePopup';
+import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import PopUp from '../ui/PopUp';
 import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
-import { useSelector } from 'react-redux';
+import api from '../../services/api/Axios';
+import BadgeRemovePopup from './badgeRemovePopup';
 
 const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPopup, handleSkip, onboarding }) => {
   const queryClient = useQueryClient();
@@ -19,7 +18,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
   const [existingData, setExistingData] = useState();
   const [deleteItem, setDeleteItem] = useState('');
   const [loading, setLoading] = useState(false);
-  const [delloading, setDelLoading] = useState(false);
+  const [delLoading, setDelLoading] = useState(false);
   const [hollow, setHollow] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
@@ -42,6 +41,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
     const value = event.target.value;
     setField1Data(value);
   };
+
   const handlefield2Change = (event) => {
     const value = event.target.value;
     setField2Data(value);
@@ -86,6 +86,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
       setAddAnotherForm(false);
     }
   };
+
   const handleDelete = async (id) => {
     const payload = {
       id: id,
@@ -206,13 +207,16 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
       return false;
     }
   };
+
   useEffect(() => {
     checkHollow();
   }, [field1Data, field2Data]);
+
   const handleRemoveBadgePopup = (item) => {
     setDeleteModalState(item);
     setModalVisible(true);
   };
+
   const handleBadgesClose = () => setModalVisible(false);
 
   const renderWorkField = (field1, field2) => {
@@ -281,7 +285,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                               handleDelete(deleteItem);
                             }}
                           >
-                            {delloading === item.id ? (
+                            {delLoading === item.id ? (
                               <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
                             ) : (
                               'Yes'
