@@ -356,7 +356,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 className={'w-fit min-w-fit whitespace-nowrap'}
                 onClick={() => navigate('/profile/shared-links')}
               >
-                Manage My Shared Posts
+                Manage Shared Posts
               </Button>
             </div>
           ) : (

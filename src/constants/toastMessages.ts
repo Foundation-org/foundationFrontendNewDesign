@@ -14,7 +14,6 @@ export const toastMessages = {
   badgeRemoval: 'Badge Removed Successfully!',
   badgeUpdated: 'Badge Updated Successfully!',
   errorAddingBadge: 'An error occurred while adding badge',
-  newList: 'New list created.',
   listAlreadyExists: 'List with a similar name already exists.',
   postAddedtoList: 'Post added in a list.',
   postAlreadyinList: 'Post already added in a list.',

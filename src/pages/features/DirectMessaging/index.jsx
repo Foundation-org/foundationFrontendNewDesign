@@ -161,7 +161,7 @@ export default function DirectMessaging() {
         <div className="mt-5 flex flex-col gap-2 tablet:gap-5">
           {messages?.data?.data.length <= 0 ? (
             <div className="flex h-[calc(100%-68px)] w-full items-center justify-center">
-              <p className="text-[12px] font-semibold text-[#BBB] tablet:text-[24px]">No Message Yet!</p>
+              <p className="text-[12px] font-semibold text-[#BBB] tablet:text-[24px]">No messages yet!</p>
             </div>
           ) : (
             messages?.data?.data

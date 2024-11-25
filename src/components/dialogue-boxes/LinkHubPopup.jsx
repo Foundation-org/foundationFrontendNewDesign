@@ -348,8 +348,6 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
     }
   };
 
-  console.log('first', existingData);
-
   const renderWorkField = (field1, field2) => {
     const [edit, setEdit] = useState(false);
 
@@ -379,32 +377,34 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
               </h1>
 
               {/* LinkHub Items */}
-              <DndContext
-                sensors={[touchSensor, mouseSensor, keyboardSensor]}
-                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-                collisionDetection={closestCorners}
-                onDragEnd={handleOnDragEnd}
-              >
-                <SortableContext items={existingData}>
-                  {existingData?.map((item) => (
-                    <LinkHubItem
-                      key={item.id}
-                      id={item.id}
-                      getBadgeIcon={getBadgeIcon}
-                      item={item}
-                      deleteItem={deleteItem}
-                      setDeleteItem={setDeleteItem}
-                      delLoading={delLoading}
-                      setDelLoading={setDelLoading}
-                      handleEdit={handleEdit}
-                      handleDelete={handleDelete}
-                      setFetchingEdit={setFetchingEdit}
-                      setAddAnotherForm={setAddAnotherForm}
-                      setEdit={setEdit}
-                    />
-                  ))}
-                </SortableContext>
-              </DndContext>
+              {existingData && (
+                <DndContext
+                  sensors={[touchSensor, mouseSensor, keyboardSensor]}
+                  modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+                  collisionDetection={closestCorners}
+                  onDragEnd={handleOnDragEnd}
+                >
+                  <SortableContext items={existingData}>
+                    {existingData?.map((item) => (
+                      <LinkHubItem
+                        key={item.id}
+                        id={item.id}
+                        getBadgeIcon={getBadgeIcon}
+                        item={item}
+                        deleteItem={deleteItem}
+                        setDeleteItem={setDeleteItem}
+                        delLoading={delLoading}
+                        setDelLoading={setDelLoading}
+                        handleEdit={handleEdit}
+                        handleDelete={handleDelete}
+                        setFetchingEdit={setFetchingEdit}
+                        setAddAnotherForm={setAddAnotherForm}
+                        setEdit={setEdit}
+                      />
+                    ))}
+                  </SortableContext>
+                </DndContext>
+              )}
 
               {/* Add New Link Button*/}
               <div className="flex items-center justify-start">

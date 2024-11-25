@@ -427,14 +427,16 @@ const HomepageBadgePopup = ({
               </Button>
             </div>
           ) : (
-            <div className="flex items-center justify-between">
-              {!prevState.image[0]?.startsWith('blob:') && domainBadge.image.length > 0 ? (
-                <Button variant="submit" onClick={() => setChangeCrop(true)}>
-                  Change Crop
-                </Button>
-              ) : (
-                <div></div>
-              )}
+            <>
+              <div>
+                {!prevState.image[0]?.startsWith('blob:') && domainBadge.image.length > 0 ? (
+                  <Button variant="submit" onClick={() => setChangeCrop(true)}>
+                    Change Crop
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
+              </div>
               <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
                 {edit && (
                   <Button
@@ -467,7 +469,7 @@ const HomepageBadgePopup = ({
                   )}
                 </Button>
               </div>
-            </div>
+            </>
           )}
         </div>
         {onboarding && <ProgressBar handleSkip={handleSkip} />}

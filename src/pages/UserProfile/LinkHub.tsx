@@ -125,7 +125,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
             {displayedBadges?.map((badge: any) => (
               <button
                 key={badge.id}
-                className="flex w-full items-center justify-between rounded-[9.228px] border-[2.768px] border-[#DEE6F7] bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:px-6 tablet:py-2"
+                className="flex w-full items-center justify-between rounded-[9.228px] border-[2.768px] border-gray-250 bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:px-6 tablet:py-2"
                 onClick={() => {
                   handleLinkHubIncrement({
                     domainName: domain,
