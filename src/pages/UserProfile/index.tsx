@@ -53,7 +53,7 @@ export default function UserProfile() {
 
   if (error?.message === 'No such page exists.' || isError) {
     return (
-      <div className="mt-16 flex h-full flex-col items-center text-[#616161] dark:text-[#f1f1f1]">
+      <div className="mt-16 flex h-full w-full flex-col items-center text-[#616161] dark:text-[#f1f1f1]">
         <h1 className="text-[32px] font-bold leading-normal">Sorry!</h1>
         <h2 className="text-[26px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1]">Page not found</h2>
         <Button variant="submit" className="mt-10" onClick={() => navigate('/')}>
