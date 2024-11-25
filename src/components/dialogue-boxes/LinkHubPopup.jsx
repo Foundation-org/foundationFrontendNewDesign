@@ -9,6 +9,114 @@ import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
 import api from '../../services/api/Axios';
 import BadgeRemovePopup from './badgeRemovePopup';
+import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { useReOrderLinHubLinks } from '../../services/mutations/verification-adges';
+
+const LinkHubItem = ({
+  id,
+  getBadgeIcon,
+  item,
+  deleteItem,
+  setDeleteItem,
+  handleDelete,
+  handleEdit,
+  delLoading,
+  setDelLoading,
+  setFetchingEdit,
+  setAddAnotherForm,
+  setEdit,
+}) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`mb-[15px] flex w-full justify-between rounded-[8.62px] border bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px] ${isDragging ? 'border-blue-300 dark:border-blue-500' : 'border-white-500 dark:border-gray-100'} `}
+    >
+      <div className="py-3 tablet:py-[25px]">
+        <div className="flex items-center gap-2 tablet:gap-4">
+          <img
+            src={getBadgeIcon({ title: item.title, link: item.link })}
+            alt="save icon"
+            className="size-[20.5px] tablet:size-[35px]"
+          />
+          <div>
+            <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+              {item.title}
+            </h4>
+            <div className="mt-[2px] max-w-[270px] pr-[30px] tablet:mt-2 tablet:pr-0">
+              <h6 className="break-words text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                {item.link}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      {deleteItem === item.id ? (
+        <div className="max-w-[160px] rounded-[10.06px] border-l border-white-500 px-[9px] py-2 dark:border-gray-100 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
+          <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
+            Are you sure you want to delete your experience?
+          </h1>
+          <div className="flex justify-end gap-2 tablet:gap-[25px]">
+            <Button
+              className={'min-w-[2.875rem] tablet:min-w-[80px]'}
+              variant="submit"
+              onClick={() => {
+                setDelLoading(item.id);
+                handleDelete(deleteItem);
+              }}
+            >
+              {delLoading === item.id ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
+              ) : (
+                'Yes'
+              )}
+            </Button>
+            <Button
+              className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
+              variant="cancel"
+              onClick={() => {
+                setDeleteItem('');
+              }}
+            >
+              No
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
+          <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+              alt="Edit Icon"
+              className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+              onClick={() => {
+                setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+              }}
+            />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+              alt="Edit Icon"
+              className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+              onClick={() => setDeleteItem(item.id)}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPopup, handleSkip, onboarding }) => {
   const queryClient = useQueryClient();
@@ -26,6 +134,15 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
   const [fetchingEdit, setFetchingEdit] = useState(false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [addAnotherForm, setAddAnotherForm] = useState(false);
+  const mouseSensor = useSensor(MouseSensor);
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 500,
+      tolerance: 0,
+    },
+  });
+  const { mutateAsync: reOrderLinkHubLinks } = useReOrderLinHubLinks();
 
   useEffect(() => {
     const param = persistedUserInfo?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
@@ -219,6 +336,20 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
 
   const handleBadgesClose = () => setModalVisible(false);
 
+  const handleOnDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = existingData.findIndex((item) => item.id === active.id);
+      const newIndex = existingData.findIndex((item) => item.id === over.id);
+      const newData = arrayMove(existingData, oldIndex, newIndex);
+      reOrderLinkHubLinks(newData);
+      setExistingData(newData);
+    }
+  };
+
+  console.log('first', existingData);
+
   const renderWorkField = (field1, field2) => {
     const [edit, setEdit] = useState(false);
 
@@ -246,84 +377,36 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                 Put all your essential links in one place on your Home Page, making it easier for others to find and
                 connect with you across platforms
               </h1>
-              {existingData &&
-                existingData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="mb-[15px] flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
-                  >
-                    <div className="py-3 tablet:py-[25px]">
-                      <div className="flex items-center gap-2 tablet:gap-4">
-                        <img
-                          src={getBadgeIcon({ title: item.title, link: item.link })}
-                          alt="save icon"
-                          className="size-[20.5px] tablet:size-[35px]"
-                        />
-                        <div>
-                          <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
-                            {item.title}
-                          </h4>
-                          <div className="mt-[2px] max-w-[270px] pr-[30px] tablet:mt-2 tablet:pr-0">
-                            <h6 className="break-words text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                              {item.link}
-                            </h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {deleteItem === item.id ? (
-                      <div className="max-w-[160px] rounded-[10.06px] border-l border-white-500 px-[9px] py-2 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
-                        <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
-                          Are you sure you want to delete your experience?
-                        </h1>
-                        <div className="flex justify-end gap-2 tablet:gap-[25px]">
-                          <Button
-                            className={'min-w-[2.875rem] tablet:min-w-[80px]'}
-                            variant="submit"
-                            onClick={() => {
-                              setDelLoading(item.id);
-                              handleDelete(deleteItem);
-                            }}
-                          >
-                            {delLoading === item.id ? (
-                              <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
-                            ) : (
-                              'Yes'
-                            )}
-                          </Button>
-                          <Button
-                            className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
-                            variant="cancel"
-                            onClick={() => {
-                              setDeleteItem('');
-                            }}
-                          >
-                            No
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
-                        <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                            alt="Edit Icon"
-                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                            onClick={() => {
-                              setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
-                            }}
-                          />
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                            alt="Edit Icon"
-                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                            onClick={() => setDeleteItem(item.id)}
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
+
+              {/* LinkHub Items */}
+              <DndContext
+                sensors={[touchSensor, mouseSensor, keyboardSensor]}
+                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+                collisionDetection={closestCorners}
+                onDragEnd={handleOnDragEnd}
+              >
+                <SortableContext items={existingData}>
+                  {existingData?.map((item) => (
+                    <LinkHubItem
+                      key={item.id}
+                      id={item.id}
+                      getBadgeIcon={getBadgeIcon}
+                      item={item}
+                      deleteItem={deleteItem}
+                      setDeleteItem={setDeleteItem}
+                      delLoading={delLoading}
+                      setDelLoading={setDelLoading}
+                      handleEdit={handleEdit}
+                      handleDelete={handleDelete}
+                      setFetchingEdit={setFetchingEdit}
+                      setAddAnotherForm={setAddAnotherForm}
+                      setEdit={setEdit}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
+
+              {/* Add New Link Button*/}
               <div className="flex items-center justify-start">
                 <Button
                   variant="addOption"
@@ -337,6 +420,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                 </Button>
               </div>
 
+              {/* Remove Badge Button */}
               {existingData ? (
                 <div className="flex items-center justify-end">
                   <Button
