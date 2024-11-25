@@ -239,9 +239,16 @@ const HomepageBadgePopup = ({
   };
 
   useEffect(() => {
-    const selectedButton = document.getElementById('finish-button');
-    if (selectedButton && changeCrop) {
-      selectedButton.scrollIntoView({ behavior: 'smooth' });
+    if (changeCrop) {
+      const timeoutId = setTimeout(() => {
+        const selectedButton = document.getElementById('finish-button');
+        if (selectedButton) {
+          selectedButton.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 500); // Delay in milliseconds (e.g., 500ms)
+
+      // Cleanup timeout when component unmounts or `changeCrop` changes
+      return () => clearTimeout(timeoutId);
     }
   }, [changeCrop]);
 
@@ -413,7 +420,7 @@ const HomepageBadgePopup = ({
               )
             ))}
           {changeCrop ? (
-            <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]" id="finish-button">
+            <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]">
               <Button
                 variant="cancel"
                 onClick={() => {
@@ -484,6 +491,7 @@ const HomepageBadgePopup = ({
             </>
           )}
         </div>
+        <div id="finish-button"></div>
         {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
     </>
