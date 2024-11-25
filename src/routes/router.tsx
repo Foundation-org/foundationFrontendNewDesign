@@ -79,8 +79,15 @@ export const getSubDomain = (location: string) => {
   const isLocalHost = locationParts.slice(-1)[0] === 'localhost';
   const isDevelopmentDomain = location.endsWith('development.on.foundation');
   const isFoundationDomain = location.endsWith('on.foundation');
+  const isWWWSubdomain = location.startsWith('www.');
+
+  console.log(isWWWSubdomain);
 
   // Check if it's a bare localhost or on.foundation or development.on.foundation
+  if (isWWWSubdomain) {
+    return 'www';
+  }
+
   if (isLocalHost && locationParts.length === 1) {
     return '';
   }
@@ -104,7 +111,10 @@ export const getSubDomain = (location: string) => {
 export function Router() {
   const subDomain = getSubDomain(window.location.hostname);
 
-  if (subDomain !== '') {
+  if (subDomain === 'www') {
+    window.location.href = `${import.meta.env.VITE_FRONTEND_URL}`;
+  }
+  if (subDomain !== '' && subDomain !== 'www') {
     window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/h/${subDomain}`;
   }
 
