@@ -238,6 +238,13 @@ const HomepageBadgePopup = ({
     }
   };
 
+  useEffect(() => {
+    const selectedButton = document.getElementById('finish-button');
+    if (selectedButton && changeCrop) {
+      selectedButton.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [changeCrop]);
+
   return (
     <>
       {modalVisible && (
@@ -406,7 +413,7 @@ const HomepageBadgePopup = ({
               )
             ))}
           {changeCrop ? (
-            <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]">
+            <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]" id="finish-button">
               <Button
                 variant="cancel"
                 onClick={() => {
@@ -430,7 +437,12 @@ const HomepageBadgePopup = ({
             <>
               <div>
                 {!prevState.image[0]?.startsWith('blob:') && domainBadge.image.length > 0 ? (
-                  <Button variant="submit" onClick={() => setChangeCrop(true)}>
+                  <Button
+                    variant="submit"
+                    onClick={() => {
+                      setChangeCrop(true);
+                    }}
+                  >
                     Change Crop
                   </Button>
                 ) : (
