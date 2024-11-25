@@ -81,8 +81,6 @@ export const getSubDomain = (location: string) => {
   const isFoundationDomain = location.endsWith('on.foundation');
   const isWWWSubdomain = location.startsWith('www.');
 
-  console.log(isWWWSubdomain);
-
   // Check if it's a bare localhost or on.foundation or development.on.foundation
   if (isWWWSubdomain) {
     return 'www';
