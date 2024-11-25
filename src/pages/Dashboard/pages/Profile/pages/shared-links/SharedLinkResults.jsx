@@ -23,12 +23,12 @@ export default function SharedLinkResults() {
 
   const { data: allQuestData, isLoading } = useQuery({
     queryKey: ['sharedLinkResultAll'],
-    queryFn: () => getQuestById(persistedUserInfo?.uuid, location.state.questId),
+    queryFn: () => getQuestById(persistedUserInfo?.uuid, location.state.questId, null, location.state.link, location.state.link),
   });
 
   const { data: questData, isLoading: questDataLoading } = useQuery({
     queryKey: ['sharedLinkResultShared'],
-    queryFn: () => getQuestById(persistedUserInfo?.uuid, location.state.questId, 'SharedLink', location.state.link),
+    queryFn: () => getQuestById(persistedUserInfo?.uuid, location.state.questId, 'SharedLink', location.state.link, location.state.link),
   });
 
   function downloadCSV(singleQuestResp) {
@@ -51,22 +51,20 @@ export default function SharedLinkResults() {
               <div className="my-2 flex justify-center gap-[15px] tablet:gap-5 laptop:my-[14.82px] laptop:gap-[35px]">
                 <Button
                   variant={'topics'}
-                  className={`${
-                    tab === 'All of Foundation'
-                      ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
-                      : 'border-[#ACACAC] bg-white text-[#707175]'
-                  }`}
+                  className={`${tab === 'All of Foundation'
+                    ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
+                    : 'border-[#ACACAC] bg-white text-[#707175]'
+                    }`}
                   onClick={() => setTab('All of Foundation')}
                 >
                   All of Foundation
                 </Button>
                 <Button
                   variant={'topics'}
-                  className={`${
-                    tab === 'My Audience Results'
-                      ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
-                      : 'border-[#ACACAC] bg-white text-[#707175]'
-                  }`}
+                  className={`${tab === 'My Audience Results'
+                    ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
+                    : 'border-[#ACACAC] bg-white text-[#707175]'
+                    }`}
                   onClick={() => setTab('My Audience Results')}
                 >
                   My Audience Results
@@ -90,7 +88,7 @@ export default function SharedLinkResults() {
                         <AAParticipate questStartData={questData?.data.data[0]} />
                       </div>
                       <div className="mx-auto max-w-[730px]">
-                        <AdvanceAnalytics questStartData={questData?.data.data[0]} />
+                        <AdvanceAnalytics questStartData={questData?.data.data[0]} userQuestSettingRef={"true"} />
                       </div>
                       <div className="mx-auto mt-4 flex max-w-[730px] justify-end px-4 tablet:px-[0px]">
                         {questData?.data.data[0]?.participantsCount > 0 ? (

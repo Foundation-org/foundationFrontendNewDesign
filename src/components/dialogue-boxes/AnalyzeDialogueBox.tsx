@@ -15,6 +15,7 @@ export default function AnalyzeDialogueBox({
   questStartData,
   update,
   selectedItem,
+  userQuestSettingRef
 }: AnalyzeModalProps) {
   const [selectedBtn, setSelectedBtn] = useState(update ? selectedItem.type : 'hide');
 
@@ -45,6 +46,7 @@ export default function AnalyzeDialogueBox({
             questStartData={questStartData}
             update={update}
             selectedItem={selectedItem}
+            userQuestSettingRef={userQuestSettingRef}
           />
         );
       case 'activity':
