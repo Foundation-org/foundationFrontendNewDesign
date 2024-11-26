@@ -81,7 +81,7 @@ export default function DeleteShareArticleLink({ handleClose, modalVisible, arti
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/link.svg`}
-      title={type === 'Delete' ? 'Delete Share Data' : type === 'Enable' ? 'Enable Sharing' : 'Disable Sharing'}
+      title={type === 'delete' ? 'Delete Share Data' : type === 'Enable' ? 'Enable Sharing' : 'Disable Sharing'}
       open={modalVisible}
       handleClose={handleClose}
     >
