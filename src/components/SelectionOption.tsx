@@ -28,7 +28,13 @@ export default function SelectionOption({ data, handleSelection, page, questStar
         <div className="flex w-fit items-center">
           <h1 className="whitespace-nowrap px-2 py-[5.7px] text-[8.52px] font-normal italic leading-none text-[#435059] dark:text-[#D3D3D3] tablet:px-[18px] tablet:py-3 tablet:text-[19px]">
             {(() => {
-              const totalParticipants = (questStartData?.result[0].selected[data?.question] || 0) + (questStartData?.result[0]?.contended?.[data?.question] || 0);
+              let totalParticipants;
+              if (type === "sharedResults") {
+                totalParticipants = (questStartData?.userQuestSetting?.result[0].selected[data?.question] || 0) + (questStartData?.userQuestSetting?.result[0]?.contended?.[data?.question] || 0);
+              }
+              else {
+                totalParticipants = (questStartData?.result[0].selected[data?.question] || 0) + (questStartData?.result[0]?.contended?.[data?.question] || 0);
+              }
               return `${totalParticipants} ${totalParticipants === 1 ? 'Participant' : 'Participants'}`;
             })()}
           </h1>
