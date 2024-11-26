@@ -20,6 +20,8 @@ export default function DMPreview() {
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const [participants, setParticipants] = useState(0);
+  const urlParams = new URLSearchParams(window.location.search);
+  const uniqueLink = urlParams.get('link');
 
   const selectedOptions = directMessageState.options
     .filter((option: any) => option.selected)
@@ -123,6 +125,7 @@ export default function DMPreview() {
             readReward: directMessageState?.readReward,
             createdAt: currentDate.toISOString(),
             platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+            sharedLinkOnly: uniqueLink ? uniqueLink : ""
           }}
           filter="receive"
           questStartData={{ ...directMessageState.questStartData, questAnswers: filterOutOptions() }}
@@ -154,6 +157,7 @@ export default function DMPreview() {
               questForeignKey: directMessageState.questForeignKey,
               platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
               type: 'new',
+              sharedLinkOnly: uniqueLink ? uniqueLink : ""
             });
           }}
         >

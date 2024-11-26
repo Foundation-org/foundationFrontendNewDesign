@@ -34,6 +34,7 @@ export const createStartQuest = async (data) => {
     isAddedAnsSelected: data.isAddedAnsSelected,
     isSharedLinkAns: data.isSharedLinkAns,
     postLink: data.postLink,
+    userQuestSettingRef: data?.userQuestSettingRef
   };
 
   if (data.articleRef) {

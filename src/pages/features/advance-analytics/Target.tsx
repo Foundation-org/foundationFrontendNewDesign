@@ -12,7 +12,7 @@ import { useAnalyzeTargetMutation } from '../../../services/mutations/advance-an
 import SelectionOption from '../../../components/SelectionOption';
 import QuestionCardWithToggle from '../../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 
-export default function Target({ handleClose, questStartData, update, selectedItem }: AddBadgeProps) {
+export default function Target({ handleClose, questStartData, update, selectedItem, userQuestSettingRef = "false" }: AddBadgeProps) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [selectedPost, setSelectedPost] = useState<any>(null);
   const [searchPost, setSearchPost] = useState('');
@@ -67,7 +67,7 @@ export default function Target({ handleClose, questStartData, update, selectedIt
     const handleSearchPost = async () => {
       setSearchPostLoad(true);
       if (debouncedSearch) {
-        const resp = await searchPosts(debouncedSearch, persistedUserInfo.uuid);
+        const resp = await searchPosts(debouncedSearch, persistedUserInfo.uuid, userQuestSettingRef === "true" ? "SharedLink" : "");
         setSearchResult(resp?.data);
       }
       setSearchPostLoad(false);

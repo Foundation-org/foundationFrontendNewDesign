@@ -33,9 +33,9 @@ export const getAllQuestsWithDefaultStatus = async (params) => {
 };
 
 // Get Quest By Id
-export const getQuestById = async (id, qId, sharedLinkRes, link) => {
+export const getQuestById = async (id, qId, sharedLinkRes, link, sharedLinkOnly) => {
   if (sharedLinkRes) {
-    return await api.get(`/infoquestions/getQuest/${id}/${qId}/SharedLink?postLink=${link}`);
+    return await api.get(`/infoquestions/getQuest/${id}/${qId}/SharedLink?postLink=${link}&sharedLinkOnly=${sharedLinkOnly}`);
   } else {
     return await api.get(`/infoquestions/getQuest/${id}/${qId}`);
   }

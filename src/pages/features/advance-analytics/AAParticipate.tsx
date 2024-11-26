@@ -20,24 +20,29 @@ export default function AAParticipate({ questStartData }: { questStartData: any 
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/send-message.svg`}
           questStartData={questStartData}
           submitBtn="Continue"
+          type={(window.location.pathname.includes('/shared-links/result')) ? "sharedResults" : "all"}
         />
       )}
       <p className="summary-text mt-[10px] text-center tablet:mt-[15px]">
-        <span className="font-bold">{questStartData?.participantsCount}</span> total participants engaged -{' '}
-        <button
-          onClick={() => {
-            if (questStartData.whichTypeQuestion !== 'ranked choise' && questStartData?.participantsCount > 0) {
-              setShowModal(true);
-            } else if (questStartData.whichTypeQuestion === 'ranked choise') {
-              showToast('warning', 'rankChoiceParticipantNotAllowed');
-            } else {
-              showToast('warning', 'noParticipants');
-            }
-          }}
-          className="border-b border-blue-100 text-blue-100"
-        >
-          Message these participants
-        </button>
+        {
+          <>
+            <span className="font-bold">{questStartData?.participantsCount}</span> total participants engaged -{' '}
+            <button
+              onClick={() => {
+                if (questStartData.whichTypeQuestion !== 'ranked choise' && questStartData?.participantsCount > 0) {
+                  setShowModal(true);
+                } else if (questStartData.whichTypeQuestion === 'ranked choise') {
+                  showToast('warning', 'rankChoiceParticipantNotAllowed');
+                } else {
+                  showToast('warning', 'noParticipants');
+                }
+              }}
+              className="border-b border-blue-100 text-blue-100"
+            >
+              Message these participants
+            </button>
+          </>
+        }
       </p>
     </div>
   );

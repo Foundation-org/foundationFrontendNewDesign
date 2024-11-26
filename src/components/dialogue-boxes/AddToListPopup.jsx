@@ -29,7 +29,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     mutationFn: createList,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'newList');
         queryClient.invalidateQueries(['lists']);
         setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');

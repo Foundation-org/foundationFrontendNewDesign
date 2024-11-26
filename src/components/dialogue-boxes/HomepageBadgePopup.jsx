@@ -238,6 +238,20 @@ const HomepageBadgePopup = ({
     }
   };
 
+  useEffect(() => {
+    if (changeCrop) {
+      const timeoutId = setTimeout(() => {
+        const selectedButton = document.getElementById('finish-button');
+        if (selectedButton) {
+          selectedButton.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 500); // Delay in milliseconds (e.g., 500ms)
+
+      // Cleanup timeout when component unmounts or `changeCrop` changes
+      return () => clearTimeout(timeoutId);
+    }
+  }, [changeCrop]);
+
   return (
     <>
       {modalVisible && (
@@ -427,14 +441,21 @@ const HomepageBadgePopup = ({
               </Button>
             </div>
           ) : (
-            <div className="flex items-center justify-between">
-              {!prevState.image[0]?.startsWith('blob:') && domainBadge.image.length > 0 ? (
-                <Button variant="submit" onClick={() => setChangeCrop(true)}>
-                  Change Crop
-                </Button>
-              ) : (
-                <div></div>
-              )}
+            <>
+              <div>
+                {!prevState.image[0]?.startsWith('blob:') && domainBadge.image.length > 0 ? (
+                  <Button
+                    variant="submit"
+                    onClick={() => {
+                      setChangeCrop(true);
+                    }}
+                  >
+                    Change Crop
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
+              </div>
               <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
                 {edit && (
                   <Button
@@ -467,9 +488,10 @@ const HomepageBadgePopup = ({
                   )}
                 </Button>
               </div>
-            </div>
+            </>
           )}
         </div>
+        <div id="finish-button"></div>
         {onboarding && <ProgressBar handleSkip={handleSkip} />}
       </PopUp>
     </>

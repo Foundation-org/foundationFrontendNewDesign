@@ -72,4 +72,28 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
   });
 };
 
+const reOrderLinHubLinks = async (data) => {
+  const response = await api.post('/updateBadgeDataArray', {
+    type: 'linkHub',
+    data,
+  });
+
+  return response.data;
+};
+
+export const useReOrderLinHubLinks = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: reOrderLinHubLinks,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['userInfo', { exact: true }]);
+      showToast('success', 'orderUpdated');
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
+
 export default useAddDomainBadge;

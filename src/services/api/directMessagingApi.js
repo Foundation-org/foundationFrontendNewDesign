@@ -20,6 +20,7 @@ export const createMessage = async (data) => {
     ...(data?.options?.length > 0 && { options: data.options }),
     ...(data.to === 'Participants' || data.to === 'All' ? { readReward: data.readReward } : {}),
     platform: data.platform,
+    sharedLinkOnly: data?.sharedLinkOnly,
   };
 
   return await api.post('/directMessage/send', payload);
@@ -89,6 +90,7 @@ export const fetchOptionParticipants = async (data) => {
     uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
     ...(data?.options?.length > 0 && { options: data.options }),
+    sharedLinkOnly: data?.sharedLinkOnly,
   };
 
   return await api.post('/directMessage/getCountForOptions', payload);

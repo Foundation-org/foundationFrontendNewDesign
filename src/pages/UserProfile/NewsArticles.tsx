@@ -3,7 +3,6 @@ import { Button } from '../../components/ui/Button';
 import { useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useFetchNewsFeed } from '../../services/queries/news-feed';
-import showToast from '../../components/ui/Toast';
 import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 import SummaryCard from '../../components/SummaryCard';
 import { useSelector } from 'react-redux';
@@ -110,19 +109,6 @@ export default function NewsArticles({ domain }: { domain: string }) {
           </SummaryCard>
 
           <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
-            {/* <div className="flex h-[25px] w-full items-center justify-between bg-blue-200 px-5 text-[12px] font-medium text-white tablet:h-[43.2px] tablet:px-7 tablet:text-[18px]">
-          <h1>News Articles</h1>
-          {!isPublicProfile && (
-            <button
-            className="underline"
-            onClick={() => {
-              showToast('warning', 'featureComingSoon');
-              }}
-            >
-              Manage my News Articles
-            </button>
-          )}
-        </div> */}
             <div className="flex w-full flex-col gap-3 tablet:gap-5">{content}</div>
             {!showAll && data?.pages[0]?.data?.length === 5 && data?.pages[1]?.data?.length > 0 && (
               <Button variant="submit" onClick={() => setShowAll(true)}>

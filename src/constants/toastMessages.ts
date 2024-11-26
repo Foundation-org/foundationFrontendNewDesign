@@ -14,7 +14,6 @@ export const toastMessages = {
   badgeRemoval: 'Badge Removed Successfully!',
   badgeUpdated: 'Badge Updated Successfully!',
   errorAddingBadge: 'An error occurred while adding badge',
-  newList: 'New list created.',
   listAlreadyExists: 'List with a similar name already exists.',
   postAddedtoList: 'Post added in a list.',
   postAlreadyinList: 'Post already added in a list.',
@@ -111,7 +110,7 @@ export const toastMessages = {
   noEncryptionBadgeAdded: 'You need to have the encryption badge to use this feature',
   spotLightAdded: 'Spotlight added successfully',
   spotLightRemoved: 'Spotlight removed successfully',
-  spotLightAlreadyExists: "Only one spotlight is allowed at a time.",
+  spotLightAlreadyExists: 'Only one spotlight is allowed at a time.',
   noPostsInList: 'Please add posts to view results',
   noListLink: 'This list is not shared yet',
 } as const;

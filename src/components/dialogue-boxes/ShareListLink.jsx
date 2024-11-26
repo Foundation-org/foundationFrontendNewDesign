@@ -64,7 +64,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
           setPostLink(res.data.link);
           setCreateCustom(false);
           queryClient.invalidateQueries(['userInfo']);
-          showToast('success', 'linkCreated');
+          // showToast('success', 'linkCreated');
         }
       } else {
         showToast('warning', 'linkAlready');
@@ -195,7 +195,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
                     })
                   }
                 >
-                  Manage My Shared Lists
+                  Manage Shared Lists
                 </Button>
               )}
             </div>

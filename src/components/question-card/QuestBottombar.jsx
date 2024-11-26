@@ -36,7 +36,6 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
     setCheckboxStates(feedBackAndHideOptions.map(() => false));
     setModalVisible(true);
   };
-
   const handleSharePostClick = () => {
     if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
@@ -70,6 +69,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
     <>
       {questStartData?.type !== 'embed' &&
         questStartData?.page !== 'advance-analytics' &&
+        location.pathname !== '/shared-links/result' &&
         postProperties !== 'preview' && (
           <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
             {postProperties === 'HiddenPosts' ? (

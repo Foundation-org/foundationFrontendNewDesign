@@ -635,6 +635,7 @@ const WorkBadgePopup = ({
                       onChange={handlefield5Change}
                       placeholder={field5.placeholder}
                       className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      style={{ textTransform: 'uppercase' }}
                     />
                   )}
                 </div>
@@ -660,6 +661,7 @@ const WorkBadgePopup = ({
                         disabled={isPresent}
                         placeholder={field6.placeholder}
                         className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                        style={{ textTransform: 'uppercase' }}
                       />
                     )}
                   </div>
