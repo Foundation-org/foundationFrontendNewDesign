@@ -26,6 +26,8 @@ export default function NewMessageForm() {
   const [searchParams] = useSearchParams();
   const advanceAnalytics = searchParams.get('advance-analytics');
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+  const urlParams = new URLSearchParams(window.location.search);
+  const uniqueLink = urlParams.get('link');
 
   const handleHideModal = () => setShowModal(false);
 
@@ -61,6 +63,7 @@ export default function NewMessageForm() {
         questForeignKey: directMessageState.questForeignKey,
         uuid: persistedUserInfo.uuid,
         options: directMessageState.options?.filter((option) => option.selected).map((option) => option.question),
+        sharedLinkOnly: uniqueLink ? uniqueLink : ""
       };
 
       fetchParticipants(params);
@@ -183,6 +186,7 @@ export default function NewMessageForm() {
                     data={post}
                     page="filterAnalyzedOptions"
                     questStartData={singlePost?.data?.data[0]}
+                    type={uniqueLink ? "sharedResults" : "all"}
                   />
                 ))}
             </ul>

@@ -164,7 +164,7 @@ export default function FilterAnalyzedOptions({
                   options: selectedQuestions,
                 }),
               );
-              navigate('/direct-messaging/new-message?advance-analytics=true');
+              type === "sharedResults" ? navigate(`/direct-messaging/new-message?advance-analytics=true&link=${questStartData?.userQuestSetting?.link}`) : navigate('/direct-messaging/new-message?advance-analytics=true')
               if (submitBtn === 'Update') {
                 handleClose();
               }
