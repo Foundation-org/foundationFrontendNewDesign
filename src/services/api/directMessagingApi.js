@@ -89,6 +89,7 @@ export const fetchOptionParticipants = async (data) => {
     uuid: data.uuid,
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
     ...(data?.options?.length > 0 && { options: data.options }),
+    sharedLinkOnly: data?.sharedLinkOnly,
   };
 
   return await api.post('/directMessage/getCountForOptions', payload);

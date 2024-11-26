@@ -16,6 +16,7 @@ type ClearAllAnalyticsProps = {
   questStartData: any;
   submitBtn: string;
   optionsArr?: any;
+  type?: any;
 };
 
 export default function FilterAnalyzedOptions({
@@ -26,6 +27,7 @@ export default function FilterAnalyzedOptions({
   questStartData,
   submitBtn,
   optionsArr,
+  type,
 }: ClearAllAnalyticsProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -79,6 +81,7 @@ export default function FilterAnalyzedOptions({
       questForeignKey: questStartData?._id,
       uuid: persistedUserInfo.uuid,
       options: selectedQuestions,
+      sharedLinkOnly: type === "sharedResults" ? questStartData?.userQuestSetting?.link : ""
     };
 
     if (selectedOptions?.filter((option: any) => option.selected).length !== 0) {
@@ -116,6 +119,7 @@ export default function FilterAnalyzedOptions({
                 handleSelection={handleOptionSelection}
                 page="filterAnalyzedOptions"
                 questStartData={questStartData}
+                type={type}
               />
             ))}
           </ul>
