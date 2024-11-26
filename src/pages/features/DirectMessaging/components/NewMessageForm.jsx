@@ -168,6 +168,7 @@ export default function NewMessageForm() {
           questStartData={singlePost?.data?.data[0]}
           submitBtn="Update"
           optionsArr={updatedQuestAnswers}
+          type={uniqueLink ? "sharedResults" : "all"}
         />
       )}
       {/* Selected Post */}
