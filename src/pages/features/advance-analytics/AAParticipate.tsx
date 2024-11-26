@@ -25,43 +25,23 @@ export default function AAParticipate({ questStartData }: { questStartData: any 
       )}
       <p className="summary-text mt-[10px] text-center tablet:mt-[15px]">
         {
-          (window.location.pathname.includes('/shared-links/result'))
-            ?
-            <>
-              <span className="font-bold">{questStartData?.shareLinkTotalStartQuest}</span> total participants engaged -{' '}
-              <button
-                onClick={() => {
-                  if (questStartData.whichTypeQuestion !== 'ranked choise' && questStartData?.shareLinkTotalStartQuest > 0) {
-                    setShowModal(true);
-                  } else if (questStartData.whichTypeQuestion === 'ranked choise') {
-                    showToast('warning', 'rankChoiceParticipantNotAllowed');
-                  } else {
-                    showToast('warning', 'noParticipants');
-                  }
-                }}
-                className="border-b border-blue-100 text-blue-100"
-              >
-                Message these participants
-              </button>
-            </>
-            :
-            <>
-              <span className="font-bold">{questStartData?.participantsCount}</span> total participants engaged -{' '}
-              <button
-                onClick={() => {
-                  if (questStartData.whichTypeQuestion !== 'ranked choise' && questStartData?.participantsCount > 0) {
-                    setShowModal(true);
-                  } else if (questStartData.whichTypeQuestion === 'ranked choise') {
-                    showToast('warning', 'rankChoiceParticipantNotAllowed');
-                  } else {
-                    showToast('warning', 'noParticipants');
-                  }
-                }}
-                className="border-b border-blue-100 text-blue-100"
-              >
-                Message these participants
-              </button>
-            </>
+          <>
+            <span className="font-bold">{questStartData?.participantsCount}</span> total participants engaged -{' '}
+            <button
+              onClick={() => {
+                if (questStartData.whichTypeQuestion !== 'ranked choise' && questStartData?.participantsCount > 0) {
+                  setShowModal(true);
+                } else if (questStartData.whichTypeQuestion === 'ranked choise') {
+                  showToast('warning', 'rankChoiceParticipantNotAllowed');
+                } else {
+                  showToast('warning', 'noParticipants');
+                }
+              }}
+              className="border-b border-blue-100 text-blue-100"
+            >
+              Message these participants
+            </button>
+          </>
         }
       </p>
     </div>
