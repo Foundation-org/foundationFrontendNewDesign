@@ -171,7 +171,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
   const { mutateAsync: handleCreateCustomLink, isPending } = useMutation({
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
-      showToast('success', 'customLinkGenerated');
+      // showToast('success', 'customLinkGenerated');
       const uuid = localStorage.getItem('uuid');
       queryClient.invalidateQueries({
         queryKey: ['userInfo', uuid],
