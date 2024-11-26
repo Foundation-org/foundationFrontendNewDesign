@@ -124,7 +124,12 @@ export default function NewMessageForm() {
       return;
     }
 
-    navigate('/direct-messaging/preview');
+    if (uniqueLink && uniqueLink !== "") {
+      navigate(`/direct-messaging/preview?link=${uniqueLink}`);
+    }
+    else {
+      navigate('/direct-messaging/preview');
+    }
   };
 
   function formatRecipient(to) {

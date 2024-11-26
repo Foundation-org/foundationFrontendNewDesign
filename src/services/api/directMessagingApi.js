@@ -20,6 +20,7 @@ export const createMessage = async (data) => {
     ...(data?.options?.length > 0 && { options: data.options }),
     ...(data.to === 'Participants' || data.to === 'All' ? { readReward: data.readReward } : {}),
     platform: data.platform,
+    sharedLinkOnly: data?.sharedLinkOnly,
   };
 
   return await api.post('/directMessage/send', payload);
