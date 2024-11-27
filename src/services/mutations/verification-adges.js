@@ -87,7 +87,7 @@ export const useReOrderLinHubLinks = () => {
   return useMutation({
     mutationFn: reOrderLinHubLinks,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['userInfo', { exact: true }]);
+      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
       showToast('success', 'orderUpdated');
     },
     onError: (error) => {
