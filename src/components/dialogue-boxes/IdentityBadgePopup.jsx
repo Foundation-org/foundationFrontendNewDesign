@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import api from '../../services/api/Axios';
 import { useState, useRef, useEffect } from 'react';
 
+// Descriptions for each step
 const stepDescriptions = [
   'Step 1: Upload the front image of your identity card.',
   'Step 2: Upload the back image of your identity card.',
@@ -14,73 +15,97 @@ const stepDescriptions = [
   'Step 4: Review and submit your identity for verification.',
 ];
 
+// Helper component for file upload button
+const FileUploadButton = ({ label, onChange }) => (
+  <label className="cursor-pointer bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
+    {label}
+    <input type="file" onChange={onChange} className="hidden" />
+  </label>
+);
+
 const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
+  // Redux states
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
+
+  // Local states for managing the process
   const [currentStep, setCurrentStep] = useState(1);
   const [frontImage, setFrontImage] = useState(null);
   const [backImage, setBackImage] = useState(null);
-  const [video, setVideo] = useState(null); // This will hold the File object
+  const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [countdown, setCountdown] = useState(5); // Countdown timer state
+  const [countdown, setCountdown] = useState(5);
   const videoRef = useRef(null);
   const [recording, setRecording] = useState(false);
   const mediaRecorderRef = useRef(null);
   const recordedChunks = useRef([]);
 
+  // Close popup handler
   const handleClose = () => setIsPopup(false);
 
   // Reset state when popup is closed
   useEffect(() => {
-    if (!isPopup) {
-      setCurrentStep(1);
-      setFrontImage(null);
-      setBackImage(null);
-      setVideo(null);
-      setLoading(false);
-      setRecording(false);
-      recordedChunks.current = [];
-    }
+    if (!isPopup) resetState();
   }, [isPopup]);
 
-  // Move between steps
+  // Reset form state
+  const resetState = () => {
+    setCurrentStep(1);
+    setFrontImage(null);
+    setBackImage(null);
+    setVideo(null);
+    setLoading(false);
+    setRecording(false);
+    recordedChunks.current = [];
+  };
+
+  // Step navigation handlers
   const goToNextStep = () => setCurrentStep((prev) => prev + 1);
   const goToPreviousStep = () => setCurrentStep((prev) => prev - 1);
 
-  // Handle video recording
+  // Handle video recording start
   const handleStartRecording = async () => {
-    if (video) {
-      // Clear the existing video if there is one
-      setVideo(null);
-      recordedChunks.current = [];
-    }
-
+    resetVideo(); // Clear previous video if any
     setRecording(true);
     setCountdown(5); // Reset countdown to 5 seconds
 
-    // Request both video and audio streams
+    // Request video/audio streams
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-
     videoRef.current.srcObject = stream;
     mediaRecorderRef.current = new MediaRecorder(stream);
 
+    // Handle video data available
     mediaRecorderRef.current.ondataavailable = (e) => recordedChunks.current.push(e.data);
+
+    // When recording stops, save the video as a file
     mediaRecorderRef.current.onstop = () => {
-      // Convert recorded video Blob to a File object
       const videoBlob = new Blob(recordedChunks.current, { type: 'video/mp4' });
       const videoFile = new File([videoBlob], 'video.mp4', { type: 'video/mp4' });
-      setVideo(videoFile);  // Store the video file object
+      setVideo(videoFile);  // Store the video file
       setRecording(false);
     };
 
     mediaRecorderRef.current.start();
 
-    // Start countdown timer
+    // Countdown timer logic
+    startCountdown();
+  };
+
+  // Handle video recording stop
+  const handleStopRecording = () => {
+    if (mediaRecorderRef.current?.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+      videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+    }
+  };
+
+  // Start countdown logic
+  const startCountdown = () => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
           clearInterval(timer);
-          handleStopRecording(); // Stop recording after countdown reaches 0
+          handleStopRecording();
           return 0;
         }
         return prev - 1;
@@ -88,39 +113,24 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
     }, 1000);
   };
 
-  // Handle video stop recording
-  const handleStopRecording = () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      mediaRecorderRef.current.stop();
-      videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
-    }
-  };
-
-  // Handle file uploads
+  // Handle file upload (front, back images)
   const handleImageUpload = (e, setImage) => {
-    const file = e.target.files[0];  // Get the actual file from the input
-    if (file) setImage(file);        // Set it to the state as the file object
+    const file = e.target.files[0];
+    if (file) setImage(file);
   };
 
-  // Handle the form submission and send FormData to the backend
+  // Handle the form submission
   const handleSubmit = async () => {
     setLoading(true);
     try {
       const formData = new FormData();
-
-      // Append files to FormData
-      if (frontImage) formData.append('frontImage', frontImage);  // Append file object
-      if (backImage) formData.append('backImage', backImage);     // Append file object
-      if (video) formData.append('video', video);                 // Append the video file object (not URL)
-
-      // Append other form data
-      formData.append('identity[identity-badge]', true);
+      if (frontImage) formData.append('frontImage', frontImage);
+      if (backImage) formData.append('backImage', backImage);
+      if (video) formData.append('video', video);
       formData.append('uuid', persistedUserInfo.uuid);
 
-      const response = await api.post(`/addBadge/identity/add`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Telling the server it's multipart form data
-        },
+      const response = await api.post(`/addIdentityBadge`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       if (response.status === 200) {
@@ -135,23 +145,17 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
     setLoading(false);
   };
 
-  // Generic Navigation Buttons
+  // Render step navigation buttons
   const renderNavigationButtons = () => (
     <div className={`w-full flex ${currentStep === 1 ? 'justify-center' : 'justify-between'}`}>
       {currentStep > 1 && (
-        <Button variant="submit" onClick={goToPreviousStep}>
-          Previous Step
-        </Button>
+        <Button variant="submit" onClick={goToPreviousStep}>Previous Step</Button>
       )}
       {currentStep < 4 ? (
         <Button
           variant="submit"
           onClick={goToNextStep}
-          disabled={
-            (currentStep === 1 && !frontImage) ||
-            (currentStep === 2 && !backImage) ||
-            (currentStep === 3 && !video)
-          }
+          disabled={isNextStepDisabled()}
         >
           Next Step
         </Button>
@@ -163,6 +167,21 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
     </div>
   );
 
+  // Check if the Next Step button should be disabled based on current step
+  const isNextStepDisabled = () => {
+    return (
+      (currentStep === 1 && !frontImage) ||
+      (currentStep === 2 && !backImage) ||
+      (currentStep === 3 && !video)
+    );
+  };
+
+  // Reset video data when starting a new recording
+  const resetVideo = () => {
+    if (video) setVideo(null); // Clear previous video
+    recordedChunks.current = []; // Reset video chunks
+  };
+
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       <div className="relative overflow-hidden h-[400px] flex items-center justify-center">
@@ -171,46 +190,23 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
           <div className="min-w-full p-5 flex flex-col items-center space-y-4">
             <p className="text-center">{stepDescriptions[currentStep - 1]}</p>
 
+            {/* Step 1: Front Image Upload */}
             {currentStep === 1 && (
               <>
-                <label className="cursor-pointer bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
-                  Choose Front Image
-                  <input
-                    type="file"
-                    onChange={(e) => handleImageUpload(e, setFrontImage)}
-                    className="hidden"
-                  />
-                </label>
-                {frontImage && (
-                  <img
-                    src={URL.createObjectURL(frontImage)}
-                    alt="Front of ID"
-                    className="max-w-full max-h-40 object-contain mt-4"
-                  />
-                )}
+                <FileUploadButton label="Choose Front Image" onChange={(e) => handleImageUpload(e, setFrontImage)} />
+                {frontImage && <img src={URL.createObjectURL(frontImage)} alt="Front of ID" className="max-w-full max-h-40 object-contain mt-4" />}
               </>
             )}
 
+            {/* Step 2: Back Image Upload */}
             {currentStep === 2 && (
               <>
-                <label className="cursor-pointer bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
-                  Choose Back Image
-                  <input
-                    type="file"
-                    onChange={(e) => handleImageUpload(e, setBackImage)}
-                    className="hidden"
-                  />
-                </label>
-                {backImage && (
-                  <img
-                    src={URL.createObjectURL(backImage)}
-                    alt="Back of ID"
-                    className="max-w-full max-h-40 object-contain mt-4"
-                  />
-                )}
+                <FileUploadButton label="Choose Back Image" onChange={(e) => handleImageUpload(e, setBackImage)} />
+                {backImage && <img src={URL.createObjectURL(backImage)} alt="Back of ID" className="max-w-full max-h-40 object-contain mt-4" />}
               </>
             )}
 
+            {/* Step 3: Video Recording */}
             {currentStep === 3 && (
               <>
                 <Button
@@ -222,17 +218,11 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
                   {countdown > 0 ? `Record Video (${countdown}s)` : 'Record Video'}
                 </Button>
                 <video ref={videoRef} autoPlay muted className="max-w-full max-h-40 mt-4" hidden={!recording} />
-                {video && (
-                  <video
-                    src={URL.createObjectURL(video)} // Render the video
-                    controls
-                    className="max-w-full max-h-40 mt-4"
-                  />
-                )}
+                {video && <video src={URL.createObjectURL(video)} controls className="max-w-full max-h-40 mt-4" />}
               </>
             )}
 
-            {/* Render Generic Navigation Buttons */}
+            {/* Render Navigation Buttons */}
             {renderNavigationButtons()}
           </div>
         </div>
