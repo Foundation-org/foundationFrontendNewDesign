@@ -159,6 +159,20 @@ export const web3 = [
   // },
 ];
 
+export const identityBadge = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Ethereum-Wallet-2x.png`,
+    title: 'Identity',
+    ButtonColor: 'submit',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    type: 'identity',
+    disabled: false,
+    accountName: '',
+    badgeType: '',
+  }
+];
+
 export const legacy = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
