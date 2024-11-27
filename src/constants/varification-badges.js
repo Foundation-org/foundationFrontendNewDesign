@@ -2,7 +2,7 @@ import { IoAccessibility } from 'react-icons/io5';
 
 export const contacts = [
   {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Personal-Email-2xa.png`,
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/personal.svg`,
     title: 'Personal Email',
     ButtonColor: 'submit',
     ButtonText: 'Add Badge',
@@ -11,7 +11,7 @@ export const contacts = [
     type: 'personal',
   },
   {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Work-Email-2xa.png`,
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work.svg`,
     title: 'Work Email',
     ButtonColor: 'submit',
     ButtonText: 'Add Badge',
