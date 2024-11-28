@@ -12,15 +12,24 @@ const stepDescriptions = [
   'Step 1: Upload the front image of your identity card.',
   'Step 2: Upload the back image of your identity card.',
   'Step 3: Upload a face video or record it live.',
-  'Step 4: Review and submit your identity for verification.',
+  'Step 4: Review and submit your identity for verification. (Please confirm the following details before submitting)',
 ];
 
 // Helper component for file upload button
 const FileUploadButton = ({ label, onChange }) => (
-  <label className="cursor-pointer bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
-    {label}
-    <input type="file" onChange={onChange} className="hidden" />
-  </label>
+  <div>
+    <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+      Image
+    </p>
+    <div className="flex w-full items-center justify-center">
+      <label htmlFor="dropzone-file" className={`verification_badge_input relative resize-none py-5`}>
+        <div className="flex flex-col items-center justify-center">
+          <p>{label}</p>
+        </div>
+        <input id="dropzone-file" type="file" className="absolute left-0 top-0 hidden w-full" onChange={onChange} />
+      </label>
+    </div>
+  </div>
 );
 
 const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
@@ -81,7 +90,7 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
     mediaRecorderRef.current.onstop = () => {
       const videoBlob = new Blob(recordedChunks.current, { type: 'video/mp4' });
       const videoFile = new File([videoBlob], 'video.mp4', { type: 'video/mp4' });
-      setVideo(videoFile);  // Store the video file
+      setVideo(videoFile); // Store the video file
       setRecording(false);
     };
 
@@ -147,16 +156,14 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
 
   // Render step navigation buttons
   const renderNavigationButtons = () => (
-    <div className={`w-full flex ${currentStep === 1 ? 'justify-center' : 'justify-between'}`}>
+    <div className={`flex w-full ${currentStep === 1 ? 'justify-end' : 'justify-between'}`}>
       {currentStep > 1 && (
-        <Button variant="submit" onClick={goToPreviousStep}>Previous Step</Button>
+        <Button variant="submit" onClick={goToPreviousStep}>
+          Previous Step
+        </Button>
       )}
       {currentStep < 4 ? (
-        <Button
-          variant="submit"
-          onClick={goToNextStep}
-          disabled={isNextStepDisabled()}
-        >
+        <Button variant="submit" onClick={goToNextStep} disabled={isNextStepDisabled()}>
           Next Step
         </Button>
       ) : (
@@ -169,11 +176,7 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
 
   // Check if the Next Step button should be disabled based on current step
   const isNextStepDisabled = () => {
-    return (
-      (currentStep === 1 && !frontImage) ||
-      (currentStep === 2 && !backImage) ||
-      (currentStep === 3 && !video)
-    );
+    return (currentStep === 1 && !frontImage) || (currentStep === 2 && !backImage) || (currentStep === 3 && !video);
   };
 
   // Reset video data when starting a new recording
@@ -184,41 +187,112 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
 
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-      <div className="relative overflow-hidden h-[400px] flex items-center justify-center">
-        <div className={`transition-transform duration-500 transform -translate-x-${(currentStep - 1) * 100}% flex w-full`}>
+      <div className="relative flex items-center justify-center overflow-hidden">
+        <div
+          className={`transform transition-transform duration-500 -translate-x-${(currentStep - 1) * 100}% flex w-full`}
+        >
           {/* Step Content */}
-          <div className="min-w-full p-5 flex flex-col items-center space-y-4">
-            <p className="text-center">{stepDescriptions[currentStep - 1]}</p>
+          <div className="flex min-w-full flex-col space-y-4 p-3 tablet:px-10 tablet:py-5">
+            <p className="summary-text">{stepDescriptions[currentStep - 1]}</p>
 
             {/* Step 1: Front Image Upload */}
             {currentStep === 1 && (
               <>
-                <FileUploadButton label="Choose Front Image" onChange={(e) => handleImageUpload(e, setFrontImage)} />
-                {frontImage && <img src={URL.createObjectURL(frontImage)} alt="Front of ID" className="max-w-full max-h-40 object-contain mt-4" />}
+                <FileUploadButton
+                  label="Upload the Front Side of Your Identity Card"
+                  onChange={(e) => handleImageUpload(e, setFrontImage)}
+                />
+                {frontImage && (
+                  <img
+                    src={URL.createObjectURL(frontImage)}
+                    alt="Front of ID"
+                    className="mt-4 aspect-video max-h-40 w-full object-contain tablet:max-h-80"
+                  />
+                )}
               </>
             )}
 
             {/* Step 2: Back Image Upload */}
             {currentStep === 2 && (
               <>
-                <FileUploadButton label="Choose Back Image" onChange={(e) => handleImageUpload(e, setBackImage)} />
-                {backImage && <img src={URL.createObjectURL(backImage)} alt="Back of ID" className="max-w-full max-h-40 object-contain mt-4" />}
+                <FileUploadButton
+                  label="Upload the Back Side of Your Identity Card"
+                  onChange={(e) => handleImageUpload(e, setBackImage)}
+                />
+                {backImage && (
+                  <img
+                    src={URL.createObjectURL(backImage)}
+                    alt="Back of ID"
+                    className="mt-4 max-h-40 max-w-full object-contain tablet:max-h-80"
+                  />
+                )}
               </>
             )}
 
             {/* Step 3: Video Recording */}
             {currentStep === 3 && (
               <>
-                <Button
-                  onClick={handleStartRecording}
-                  className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-200"
-                  disabled={recording}
-                >
-                  <FaCamera className="mr-2" />
-                  {countdown > 0 ? `Record Video (${countdown}s)` : 'Record Video'}
-                </Button>
-                <video ref={videoRef} autoPlay muted className="max-w-full max-h-40 mt-4" hidden={!recording} />
-                {video && <video src={URL.createObjectURL(video)} controls className="max-w-full max-h-40 mt-4" />}
+                <div className="flex items-center justify-center">
+                  <Button
+                    variant="submit"
+                    onClick={handleStartRecording}
+                    className="bg-green-500 hover:bg-green-600 w-fit min-w-fit rounded-lg px-4 py-2 text-white transition duration-200"
+                    disabled={recording}
+                  >
+                    <FaCamera className="mr-2" />
+                    {countdown > 0 ? `Record Video (${countdown}s)` : 'Record Video'}
+                  </Button>
+                </div>
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  className="mt-4 max-h-40 max-w-full tablet:max-h-80"
+                  hidden={!recording}
+                />
+                {video && (
+                  <video
+                    src={URL.createObjectURL(video)}
+                    controls
+                    className="mt-4 max-h-40 max-w-full tablet:max-h-80"
+                  />
+                )}
+              </>
+            )}
+
+            {/* Step 4: Confirmation */}
+            {currentStep === 4 && (
+              <>
+                <div>
+                  <p className="summary-text">{stepDescriptions[0]}</p>
+                  {frontImage && (
+                    <img
+                      src={URL.createObjectURL(frontImage)}
+                      alt="Front of ID"
+                      className="mt-4 aspect-video max-h-40 w-full object-contain tablet:max-h-80"
+                    />
+                  )}
+                </div>
+                <div>
+                  <p className="summary-text">{stepDescriptions[1]}</p>
+                  {backImage && (
+                    <img
+                      src={URL.createObjectURL(backImage)}
+                      alt="Back of ID"
+                      className="mt-4 max-h-40 w-full max-w-full object-contain tablet:max-h-80"
+                    />
+                  )}
+                </div>
+                <div>
+                  <p className="summary-text">{stepDescriptions[2]}</p>
+                  {video && (
+                    <video
+                      src={URL.createObjectURL(video)}
+                      controls
+                      className="mt-4 max-h-40 w-full max-w-full tablet:max-h-80"
+                    />
+                  )}
+                </div>
               </>
             )}
 
