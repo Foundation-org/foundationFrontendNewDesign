@@ -86,8 +86,9 @@ export default function UserProfile() {
       {!domain ? (
         <div className="dar flex flex-col items-center justify-center gap-2 rounded-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-3 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
           <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
-            Claim your domain name to enable your Home Page and create a personalized hub. Share posts, lists, news
-            articles, and important links. Gain insights into your audience through key metrics and engagement results.
+            Claim your domain name to enable your Home Page and create a personalized hub. Share posts, collections,
+            news articles, and important links. Gain insights into your audience through key metrics and engagement
+            results.
           </h1>
 
           <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={false} isDomain={true} />
@@ -102,7 +103,7 @@ export default function UserProfile() {
             >
               <>
                 <h1 className="summary-text">
-                  Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily
+                  Your Home Page is the hub for connecting with your audience. Share posts, collections and news easily
                   with your audience.
                 </h1>
                 <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">

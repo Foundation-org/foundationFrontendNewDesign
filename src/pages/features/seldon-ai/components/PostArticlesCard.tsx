@@ -29,7 +29,7 @@ export default function PostArticlesCard({ questStartData }: PostArticlesCardPro
   return (
     <>
       {articles?.length > 0 && (
-        <div className="flex flex-col gap-2 border-t-2 border-gray-250 py-2 dark:border-gray-100 tablet:gap-4 tablet:py-4">
+        <div className="flex flex-col gap-2 border-t-2 border-gray-100 py-2 dark:border-gray-100 tablet:gap-4 tablet:py-4">
           <h4 className="px-4 text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white tablet:text-[1.25rem] tablet:leading-[23px]">
             Related articles {`(${articles?.length})`}
           </h4>

@@ -164,7 +164,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                     options: item.options,
                     questForeignKey: item.questForeignKey,
                     readReward: item.readReward,
-                  }),
+                  })
                 );
                 if (item.to === 'Participants') {
                   navigate('/direct-messaging/new-message?advance-analytics=true');
@@ -207,7 +207,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               />
               <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {item.send
-                  ? item.to === 'Participants' || item.to === 'All' || item.to === 'List'
+                  ? item.to === 'Participants' || item.to === 'All' || item.to === 'Collection'
                     ? `${item.receiversIds.length} Sent`
                     : '1 Sent'
                   : '0 Sent'}

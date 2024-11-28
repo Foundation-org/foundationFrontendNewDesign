@@ -1,7 +1,7 @@
 {
   "name": "foundation_app",
   "private": true,
-  "version": "2.3.56",
+  "version": "2.3.58",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -31,6 +31,7 @@
     "@tanstack/react-query": "^5.52.0",
     "@tanstack/react-table": "^8.20.1",
     "axios": "^1.7.4",
+    "browser-image-compression": "^2.0.2",
     "classnames": "^2.3.2",
     "date-fns": "^3.6.0",
     "ethers": "^6.13.4",

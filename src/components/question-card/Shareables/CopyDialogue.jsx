@@ -64,7 +64,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
           sendImage({ questStartData, link: resp.data.data.link });
         }
 
-        if (location.pathname === '/shared-list-link/result') {
+        if (location.pathname === '/shared-collection-link/result') {
           queryClient.invalidateQueries({
             queryKey: ['postsByCategory', persistedUserInfo.uuid],
           });

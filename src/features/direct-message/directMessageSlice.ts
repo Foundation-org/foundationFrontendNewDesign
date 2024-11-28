@@ -41,8 +41,8 @@ const formatRecipient = (to: string) => {
 
   if (trimmedTo === 'all') {
     return 'All';
-  } else if (trimmedTo === 'list') {
-    return 'List';
+  } else if (trimmedTo === 'collection') {
+    return 'Collection';
   } else if (trimmedTo === 'participants') {
     return 'Participants';
   } else {

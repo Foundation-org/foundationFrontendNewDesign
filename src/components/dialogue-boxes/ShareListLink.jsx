@@ -40,7 +40,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
       if (resp.status === 200) {
         setPostLink(resp.data.link);
         setIsLoading(false);
-        queryClient.invalidateQueries(['lists']);
+        queryClient.invalidateQueries(['collection']);
       }
     } else {
       setPostLink(selectedItem?.link);
@@ -95,7 +95,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
             />
           </svg>
         </div>
-        <p className="text-[12px] font-bold text-white tablet:text-[20px] tablet:font-medium">Share List</p>
+        <p className="text-[12px] font-bold text-white tablet:text-[20px] tablet:font-medium">Share Collection</p>
         <div
           className="absolute right-[12px] top-1/2 -translate-y-1/2 cursor-pointer tablet:right-[26px]"
           onClick={handleClose}
@@ -120,10 +120,10 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
           <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:bg-gray-200 dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             {createCustom
               ? 'Custom Link Address'
-              : 'When people engage with posts in your Shared list, you will earn FDX. Lists you share are displayed on your Home Page for everyone to see. '}
+              : 'When people engage with posts in your Shared collection, you will earn FDX. Collections you share are displayed on your Home Page for everyone to see. '}
           </p>
           <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:bg-gray-200 dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
-            Copy the link below to share this list on other platforms.
+            Copy the link below to share this collection on other platforms.
           </p>
           <div className="flex rounded-[9.42px] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
@@ -185,17 +185,17 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
               >
                 Create Custom Link
               </Button>
-              {location.pathname !== '/profile/lists' && (
+              {location.pathname !== '/profile/collections' && (
                 <Button
                   variant={'submit'}
                   className={'w-fit min-w-fit whitespace-nowrap'}
                   onClick={() =>
-                    navigate('/shared-list-link/result', {
+                    navigate('/shared-collection-link/result', {
                       state: { categoryItem: selectedItem?._id },
                     })
                   }
                 >
-                  Manage Shared Lists
+                  Manage Shared Collections
                 </Button>
               )}
             </div>

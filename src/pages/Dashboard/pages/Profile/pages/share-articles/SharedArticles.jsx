@@ -20,7 +20,7 @@ export default function SharedArticles() {
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const [sharedArticlesSearch, setSharedArticlesSearch] = useState('');
 
-  // Search for shared lists
+  // Search for shared collections
   const handleSharedLinkSearch = (e) => {
     setSharedArticlesSearch(e.target.value);
   };

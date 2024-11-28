@@ -62,7 +62,7 @@ export const faqData2 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/1.png`,
     title: 'How can I earn FDX tokens?',
     desc: [
-      'You earn FDX tokens through various actions, such as creating posts, engaging with others’ posts, sharing insights, adding verification badges, creating and sharing lists, and interacting with news articles.',
+      'You earn FDX tokens through various actions, such as creating posts, engaging with others’ posts, sharing insights, adding verification badges, creating and sharing collections, and interacting with news articles.',
     ],
   },
   {
@@ -78,7 +78,7 @@ export const faqData2 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/2.png`,
     title: 'How are FDX tokens distributed?',
     desc: [
-      'FDX tokens are distributed based on your level of engagement with the platform. The more you contribute and interact—whether by creating engaging posts, sharing lists, or distributing news—the more FDX you can earn. Rewards are calculated based on the value each action adds, including providing feedback and sharing content.',
+      'FDX tokens are distributed based on your level of engagement with the platform. The more you contribute and interact—whether by creating engaging posts, sharing collections, or distributing news—the more FDX you can earn. Rewards are calculated based on the value each action adds, including providing feedback and sharing content.',
     ],
   },
   {
@@ -102,7 +102,7 @@ export const faqData2 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'Are there any other ways to maximize my FDX earnings?',
     desc: [
-      'Yes, beyond creating and engaging with posts, you can earn additional FDX by sharing posts, news articles, and lists with your audience, embedding content on external sites, and enhancing your credibility with verification badges.',
+      'Yes, beyond creating and engaging with posts, you can earn additional FDX by sharing posts, news articles, and collections with your audience, embedding content on external sites, and enhancing your credibility with verification badges.',
     ],
   },
 ];
@@ -142,9 +142,9 @@ export const faqs3 = [
   {
     id: 18,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
-    title: 'What are Lists, and how do they work with posts?',
+    title: 'What are Collection, and how do they work with posts?',
     desc: [
-      'Lists allow you to group related posts by topic or interest, making it easy to create comprehensive surveys or thematic collections. When you share these lists, each interaction earns FDX for both you and participants, and you’ll receive insights specific to your audience. Shared lists are also displayed on your Home Page, enhancing engagement and reach.',
+      'Collection allow you to group related posts by topic or interest, making it easy to create comprehensive surveys or thematic collections. When you share these collections, each interaction earns FDX for both you and participants, and you’ll receive insights specific to your audience. Shared collection are also displayed on your Home Page, enhancing engagement and reach.',
     ],
   },
   {
@@ -361,21 +361,21 @@ export const faqs7 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'How can I use my Foundation Home Page for sharing?',
     desc: [
-      'Your Foundation Home Page, featuring a unique domain like [yourname.on.foundation], serves as your personal sharing hub. You can utilize this page to showcase posts, lists, news articles, and custom links to all your relevant external websites. This allows you to engage meaningfully with your audience and gain valuable insights while earning FDX tokens for both you and your audience.',
+      'Your Foundation Home Page, featuring a unique domain like [yourname.on.foundation], serves as your personal sharing hub. You can utilize this page to showcase posts, collections, news articles, and custom links to all your relevant external websites. This allows you to engage meaningfully with your audience and gain valuable insights while earning FDX tokens for both you and your audience.',
     ],
   },
   {
     id: 45,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
-    title: 'What are Shared Lists, and how do I use them?',
+    title: 'What are Shared Collections, and how do I use them?',
     desc: [
-      'Shared Lists are customizable lists you can create around specific topics or themes. They allow you to gather insights, run surveys, or even curate playlists with multimedia posts. Sharing a list is similar to sharing a post—you can earn FDX for each engagement, and you’ll see results and insights specific to your audience.',
+      'Shared collections are customizable collections you can create around specific topics or themes. They allow you to gather insights, run surveys, or even curate playlists with multimedia posts. Sharing a list is similar to sharing a post—you can earn FDX for each engagement, and you’ll see results and insights specific to your audience.',
     ],
   },
   {
     id: 46,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
-    title: 'Do participants earn rewards when I share posts, lists and news with them?',
+    title: 'Do participants earn rewards when I share posts, collections and news with them?',
     desc: [
       'Yes, when your audience engages with your shared content, both you and the participants earn FDX tokens. This collaborative approach fosters meaningful participation and creates shared value across the Foundation network.',
     ],
@@ -412,7 +412,7 @@ export const faqs8 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'What is the Foundation Home Page?',
     desc: [
-      'The Foundation Home Page is a personalized space with a unique domain (like [yourname.on.foundation]) where you can showcase your posts, lists, and news articles. This dedicated page enhances your ability to connect effectively with your audience, allowing both you and your audience to earn FDX tokens for each interaction that takes place here.',
+      'The Foundation Home Page is a personalized space with a unique domain (like [yourname.on.foundation]) where you can showcase your posts, collections, and news articles. This dedicated page enhances your ability to connect effectively with your audience, allowing both you and your audience to earn FDX tokens for each interaction that takes place here.',
     ],
   },
   {
@@ -436,7 +436,7 @@ export const faqs8 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'Who can see my Home Page?',
     desc: [
-      'Your Home Page is publicly accessible via your unique Foundation domain link. Anyone who visits this link can view your curated posts, lists, news articles, and links, as well as engage with the content you share.',
+      'Your Home Page is publicly accessible via your unique Foundation domain link. Anyone who visits this link can view your curated posts, collections, news articles, and links, as well as engage with the content you share.',
     ],
   },
   {
@@ -460,7 +460,7 @@ export const faqs8 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'Do I have to add my Home Page and Link Hub Badges?',
     desc: [
-      'While adding your Home Page and Link Hub Badges is not mandatory, it is highly recommended. These badges enhance your credibility and help you connect more effectively with your audience by providing a centralized location for your posts, lists, news, and relevant links. This not only improves your visibility on the platform but also increases your potential to earn FDX tokens through engagement.',
+      'While adding your Home Page and Link Hub Badges is not mandatory, it is highly recommended. These badges enhance your credibility and help you connect more effectively with your audience by providing a centralized location for your posts, collections, news, and relevant links. This not only improves your visibility on the platform but also increases your potential to earn FDX tokens through engagement.',
     ],
   },
 ];
@@ -501,9 +501,9 @@ export const faqs9 = [
   {
     id: 61,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
-    title: 'What insights are available from the responses to my shared posts and lists?',
+    title: 'What insights are available from the responses to my shared posts and collections?',
     desc: [
-      'Shared posts and lists provide detailed engagement metrics, highlighting which options resonate most with your audience. The anonymous results from your audience are visible only to you, ensuring privacy. By analyzing these metrics, you can refine your future posts and lists to make them even more relevant and engaging, enhancing your overall interaction with the community.',
+      'Shared posts and collections provide detailed engagement metrics, highlighting which options resonate most with your audience. The anonymous results from your audience are visible only to you, ensuring privacy. By analyzing these metrics, you can refine your future posts and collections to make them even more relevant and engaging, enhancing your overall interaction with the community.',
     ],
   },
   {

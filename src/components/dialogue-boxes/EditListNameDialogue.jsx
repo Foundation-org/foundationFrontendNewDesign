@@ -20,28 +20,13 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
 
   const { mutateAsync: handleChangeCategoryName, isPending } = useMutation({
     mutationFn: updateCategoryName,
-    onSuccess: (resp) => {
-      console.log('resp', resp);
-      console.log('List name updated Successfully');
-
-      // if (resp.response.status === 500) {
-      //   toast.warning('Something goes wrong.');
-      //   return;
-      // }
+    onSuccess: () => {
       showToast('success', 'listNameUpdate');
-
-      // queryClient.setQueriesData(['lists'], (oldData) => {
-      //   console.log('old', oldData);
-      //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
-      // });
-
-      queryClient.invalidateQueries(['lists']);
-
+      queryClient.invalidateQueries(['collection']);
       handleClose();
     },
     onError: (error) => {
       console.log(error);
-      // toast.warning(error.response.data.message);
     },
   });
 
@@ -49,7 +34,7 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <div className="mb-2 flex tablet:mb-5">
-          <div className="border-white-500 w-full rounded-[5.387px] border tablet:rounded-[15px] tablet:border-[3px]">
+          <div className="w-full rounded-[5.387px] border border-white-500 tablet:rounded-[15px] tablet:border-[3px]">
             {' '}
             <TextareaAutosize
               onChange={(e) => setCategoryName(e.target.value)}

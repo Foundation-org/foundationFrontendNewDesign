@@ -63,7 +63,7 @@ export default function NewMessageForm() {
         questForeignKey: directMessageState.questForeignKey,
         uuid: persistedUserInfo.uuid,
         options: directMessageState.options?.filter((option) => option.selected).map((option) => option.question),
-        sharedLinkOnly: uniqueLink ? uniqueLink : ""
+        sharedLinkOnly: uniqueLink ? uniqueLink : '',
       };
 
       fetchParticipants(params);
@@ -124,10 +124,9 @@ export default function NewMessageForm() {
       return;
     }
 
-    if (uniqueLink && uniqueLink !== "") {
+    if (uniqueLink && uniqueLink !== '') {
       navigate(`/direct-messaging/preview?link=${uniqueLink}`);
-    }
-    else {
+    } else {
       navigate('/direct-messaging/preview');
     }
   };
@@ -138,7 +137,7 @@ export default function NewMessageForm() {
     if (trimmedTo === 'all') {
       return 'All';
     } else if (trimmedTo === 'list') {
-      return 'List';
+      return 'Collection';
     } else if (trimmedTo) {
       return to;
     } else {
@@ -153,7 +152,7 @@ export default function NewMessageForm() {
       return participants;
     } else if (formatRecipient(directMessageState.to) === 'All') {
       return persistedUserInfo?.allCount;
-    } else if (formatRecipient(directMessageState.to) === 'List') {
+    } else if (formatRecipient(directMessageState.to) === 'Collection') {
       return persistedUserInfo?.mailCount;
     } else if (emailRegex.test(directMessageState.to)) {
       return 1;
@@ -173,7 +172,7 @@ export default function NewMessageForm() {
           questStartData={singlePost?.data?.data[0]}
           submitBtn="Update"
           optionsArr={updatedQuestAnswers}
-          type={uniqueLink ? "sharedResults" : "all"}
+          type={uniqueLink ? 'sharedResults' : 'all'}
         />
       )}
       {/* Selected Post */}
@@ -192,7 +191,7 @@ export default function NewMessageForm() {
                     data={post}
                     page="filterAnalyzedOptions"
                     questStartData={singlePost?.data?.data[0]}
-                    type={uniqueLink ? "sharedResults" : "all"}
+                    type={uniqueLink ? 'sharedResults' : 'all'}
                   />
                 ))}
             </ul>
@@ -303,7 +302,7 @@ export default function NewMessageForm() {
             Total FDX to send message
           </p>
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {`${handleNoOfUsers()} participants = ${directMessageState.to === 'List' ? `0 FDX` : `${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}`}
+            {`${handleNoOfUsers()} participants = ${directMessageState.to === 'Collection' ? `0 FDX` : `${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}`}
           </p>
         </div>
       </div>

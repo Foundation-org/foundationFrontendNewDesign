@@ -29,7 +29,7 @@ export default function DMPreview() {
 
   const filterOutOptions = () => {
     return directMessageState.questStartData?.QuestAnswers.filter((answer: any) =>
-      directMessageState.options.includes(answer.question),
+      directMessageState.options.includes(answer.question)
     );
   };
 
@@ -54,7 +54,7 @@ export default function DMPreview() {
       return participants;
     } else if (directMessageState.to === 'All') {
       return persistedUserInfo?.allCount;
-    } else if (directMessageState.to === 'List') {
+    } else if (directMessageState.to === 'Collection') {
       return persistedUserInfo?.mailCount;
     } else if (emailRegex.test(directMessageState.to)) {
       return 1;
@@ -125,7 +125,7 @@ export default function DMPreview() {
             readReward: directMessageState?.readReward,
             createdAt: currentDate.toISOString(),
             platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
-            sharedLinkOnly: uniqueLink ? uniqueLink : ""
+            sharedLinkOnly: uniqueLink ? uniqueLink : '',
           }}
           filter="receive"
           questStartData={{ ...directMessageState.questStartData, questAnswers: filterOutOptions() }}
@@ -157,7 +157,7 @@ export default function DMPreview() {
               questForeignKey: directMessageState.questForeignKey,
               platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
               type: 'new',
-              sharedLinkOnly: uniqueLink ? uniqueLink : ""
+              sharedLinkOnly: uniqueLink ? uniqueLink : '',
             });
           }}
         >
@@ -167,7 +167,9 @@ export default function DMPreview() {
             <>
               Send
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                {directMessageState.to === 'List' ? `+0 FDX` : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
+                {directMessageState.to === 'Collection'
+                  ? `+0 FDX`
+                  : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
               </span>
             </>
           )}

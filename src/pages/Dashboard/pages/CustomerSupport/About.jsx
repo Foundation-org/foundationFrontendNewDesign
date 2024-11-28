@@ -120,8 +120,8 @@ const About = () => {
             </h5>
             <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
               For creators, influencers, and professionals, Foundation offers a unique Home Page where you can share
-              posts, lists, news, and all your essential links in one place. Connect with audiences meaningfully and
-              streamline your online presence in a dedicated space designed for engagement.
+              posts, collection, news, and all your essential links in one place. Connect with audiences meaningfully
+              and streamline your online presence in a dedicated space designed for engagement.
             </p>
           </div>
           <div className="w-full space-y-[0.6rem] text-left tablet:space-y-1">
