@@ -34,7 +34,7 @@ export default function ShareArticleCard({ data, innerRef }) {
   return (
     <div
       ref={innerRef}
-      className="h-full max-w-[730px] rounded-b-[12.3px] border-t-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-b-[15px]"
+      className="h-full max-w-[730px] rounded-b-[12.3px] border-t-2 border-gray-100 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-b-[15px]"
     >
       {/* Header */}
       {/* <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">

@@ -28,9 +28,8 @@ import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
 import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
-import Lists from '../pages/Dashboard/pages/Lists';
-import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
-import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
+import PostsByList from '../pages/Dashboard/pages/Collection/PostsByList';
+import SharedListResults from '../pages/Dashboard/pages/Collection/SharedListResults';
 import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
 // import TermOfService from '../pages/Signup/pages/TermOfService';
 // QUESTS
@@ -72,6 +71,7 @@ import OtherProfilesLayout from '../pages/UserProfile/OtherProfilesLayout';
 import PublicProfile from '../pages/UserProfile/PublicProfile';
 import SharedArticles from '../pages/Dashboard/pages/Profile/pages/share-articles/SharedArticles';
 import Test from '../components/Test';
+import Collection from '../pages/Dashboard/pages/Collection';
 
 export const getSubDomain = (location: string) => {
   const locationParts = location.split('.');
@@ -200,7 +200,7 @@ export function Router() {
                   <Route path="" element={<UserProfile />} />
                   <Route path="verification-badges" element={<VerificationBadges />} />
                   <Route path="post-activity" element={<Contributions />} />
-                  <Route path="lists" element={<Lists />} />
+                  <Route path="collections" element={<Collection />} />
                   <Route path="postsbylist/:categoryId" element={<PostsByList />} />
                   <Route path="ledger" element={<BasicTable />} />
                   <Route path="feedback-given" element={<HiddenPosts />} />
@@ -229,7 +229,7 @@ export function Router() {
             </Route>
             <Route path="/post-preview" element={<PreviewPost />} />
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
-            <Route path="/shared-list-link/result" element={<SharedListResults />} />
+            <Route path="/shared-collection-link/result" element={<SharedListResults />} />
             <Route path="/post/:isFullScreen" element={<Guests />} />
             <Route path="/p/:id" element={<SingleQuest />} />
             <Route path="/l/:id" element={<PostsByList />} />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ListCard from '../Dashboard/pages/Lists/components/ListCard';
+import CollectionCard from '../Dashboard/pages/Collection/components/CollectionCard';
 import { Button } from '../../components/ui/Button';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchListsExpended } from '../../services/api/listsApi';
@@ -20,7 +20,7 @@ export default function SharedLists({ domain }: { domain: string }) {
 
   useEffect(() => {
     // Clear cache when the page changes
-    queryClient.resetQueries({ queryKey: ['lists'] });
+    queryClient.resetQueries({ queryKey: ['collection'] });
   }, []);
 
   const {
@@ -30,7 +30,7 @@ export default function SharedLists({ domain }: { domain: string }) {
   } = useQuery({
     queryFn: () =>
       fetchListsExpended(domain, persistedUserInfo.uuid, location.pathname.startsWith('/h/') ? true : false),
-    queryKey: ['lists'],
+    queryKey: ['collection'],
   });
 
   return (
@@ -39,19 +39,19 @@ export default function SharedLists({ domain }: { domain: string }) {
         <>
           <SummaryCard
             headerIcon="/assets/summary/my-list-logo.svg"
-            headerTitle="My Lists"
+            headerTitle="Collections"
             isPublicProfile={isPublicProfile}
           >
             {!isPublicProfile && (
               <>
                 <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-                  Creating and sharing lists extends your reach. The more engagement your lists receive, the more FDX
-                  you earn. Lists you share are displayed on your Home Page for everyone to see.
+                  Creating and sharing collections extends your reach. The more engagement your collections receive, the
+                  more FDX you earn. Collections you share are displayed on your Home Page for everyone to see.
                 </h1>
                 <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
                     <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                      Total lists
+                      Total Collections
                     </h1>
                     <h5 className="text-center text-[18px] font-normal">
                       {persistedUserInfo?.myListStatistics?.totalLists}
@@ -59,7 +59,7 @@ export default function SharedLists({ domain }: { domain: string }) {
                   </div>
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
                     <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-                      Lists you’ve shared
+                      Collections you’ve shared
                     </h1>
                     <h5 className="text-center text-[18px] font-normal">
                       {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
@@ -85,11 +85,11 @@ export default function SharedLists({ domain }: { domain: string }) {
                 </div>
                 <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
                   <Button variant="submit" onClick={() => setAddToList(true)}>
-                    Create a new list
+                    Create a new collection
                   </Button>
 
-                  <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
-                    Manage all shared lists
+                  <Button variant={'submit'} onClick={() => navigate('/profile/collections')}>
+                    Manage all shared collections
                   </Button>
                 </div>
               </>
@@ -99,18 +99,18 @@ export default function SharedLists({ domain }: { domain: string }) {
                 handleClose={() => setAddToList(false)}
                 modalVisible={addToList}
                 questStartData={null}
-                page={'my-lists'}
+                page={'my-collection'}
               />
             )}
           </SummaryCard>
 
           <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
             <div className="flex w-full flex-col gap-3 tablet:gap-5">
-              <ListCard listData={showAll ? listData : listData?.slice(0, 5)} page={''} />
+              <CollectionCard listData={showAll ? listData : listData?.slice(0, 5)} page={''} />
               <div className="mx-auto w-fit">
                 {!showAll && listData?.length > 5 && (
                   <Button variant="submit" onClick={() => setShowAll(true)}>
-                    See All Lists
+                    See All Collection
                   </Button>
                 )}
               </div>

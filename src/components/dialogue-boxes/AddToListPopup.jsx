@@ -29,10 +29,10 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     mutationFn: createList,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        queryClient.invalidateQueries(['lists']);
+        queryClient.invalidateQueries(['collection']);
         setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
-        if (page === 'my-lists') {
+        if (page === 'my-collection') {
           handleClose();
         }
       }
@@ -54,7 +54,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       }
       if (resp.status === 200) {
         showToast('success', 'postAddedtoList');
-        queryClient.invalidateQueries(['lists']);
+        queryClient.invalidateQueries(['collection']);
         handleClose();
       }
     },
@@ -69,7 +69,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     isPending,
   } = useQuery({
     queryFn: fetchLists,
-    queryKey: ['lists'],
+    queryKey: ['collection'],
   });
 
   if (isError) {
@@ -90,10 +90,10 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     const selectedItems =
       listData &&
       listData
-        ?.map((list) => {
-          if (Array.isArray(list?.post)) {
-            const matchingPosts = list?.post.filter((post) => post?.questForeginKey?._id === questStartData?._id);
-            return matchingPosts.length > 0 ? list._id : null;
+        ?.map((collection) => {
+          if (Array.isArray(collection?.post)) {
+            const matchingPosts = collection?.post.filter((post) => post?.questForeginKey?._id === questStartData?._id);
+            return matchingPosts.length > 0 ? collection._id : null;
           }
           return null;
         })
@@ -107,30 +107,30 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToListWhite.svg`}
-      title={page === 'my-lists' ? 'Create a new list' : 'Add to My Lists'}
+      title={page === 'my-collection' ? 'Create a new collection' : 'Add to Collections'}
       open={modalVisible}
       handleClose={handleClose}
       isBackground={false}
     >
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
-        {page !== 'my-lists' && (
+        {page !== 'my-collection' && (
           <p className="summary-text mb-2 tablet:mb-[25px]">
-            Lists allow you to organize posts by topic and can function like surveys or playlists. Use the “Manage My
-            Lists” button to share them on other platforms. Shared lists will also be visible on your Home Page for
-            everyone to see.
+            Collections allow you to organize posts by topic and can function like surveys or playlists. Use the “Manage
+            Collections” button to share them on other platforms. Shared collections will also be visible on your Home
+            Page for everyone to see.
           </p>
         )}
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
           {listData?.length === 0 && (
             <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
-              You currently have no lists created. Enter a list name below and the post will be added to it.
+              You currently have no collections created. Enter a collection name below and the post will be added to it.
             </label>
           )}
           <input
             type="text"
             className="peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-white-500 bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px]"
             value={listName}
-            placeholder="List name"
+            placeholder="Collection name"
             onChange={(e) => setListName(e.target.value)}
           />
         </div>
@@ -153,12 +153,12 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
           </Button>
         </div>
 
-        {page !== 'my-lists' && listData?.length >= 1 && (
+        {page !== 'my-collection' && listData?.length >= 1 && (
           <>
             <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] dark:bg-white tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
             <div>
               <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
-                My lists
+                Collections
               </h4>
               <div className="relative my-3 tablet:my-[25px]">
                 <div className="relative h-[23px] w-full tablet:h-[46px]">
@@ -196,11 +196,11 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               <div className="mt-3 h-fit max-h-[160px] space-y-3 overflow-y-auto no-scrollbar tablet:mt-[15px] tablet:max-h-[280px] tablet:space-y-[15px]">
                 {listData
                   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                  ?.filter((list) => {
+                  ?.filter((collection) => {
                     if (debouncedSearch === '') {
                       return true;
                     }
-                    return list.category.toLowerCase().includes(debouncedSearch.toLowerCase());
+                    return collection.category.toLowerCase().includes(debouncedSearch.toLowerCase());
                   })
                   .map((item) => (
                     <div
@@ -234,10 +234,10 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                 variant="submit"
                 className={'bg-[#7C7C7C]'}
                 onClick={() => {
-                  navigate('/profile/lists');
+                  navigate('/profile/collection');
                 }}
               >
-                Manage My Lists
+                Manage Collections
               </Button>
               {selectedOption.length !== 0 ? (
                 <Button

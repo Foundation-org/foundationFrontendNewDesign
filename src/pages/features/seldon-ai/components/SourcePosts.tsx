@@ -124,7 +124,7 @@ export default function SourcePosts({ apiResp }: { apiResp?: any }) {
           <div className="w-fit">
             {viewLists && <ViewMyLists handleClose={closeViewList} modalVisible={viewLists} />}
             <Button variant="submit" onClick={() => setViewLists(true)}>
-              View my lists
+              View collections
             </Button>
           </div>
         </>

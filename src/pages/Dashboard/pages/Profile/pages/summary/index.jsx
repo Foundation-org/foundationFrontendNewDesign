@@ -144,15 +144,15 @@ const Summary = () => {
           </Button>
         </div>
       </SummaryCard>
-      <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Lists">
+      <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="Collections">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Creating and sharing lists extends your reach. The more engagement your lists receive, the more FDX you earn.
-          Lists you share are displayed on your Home Page for everyone to see.
+          Creating and sharing collections extends your reach. The more engagement your collections receive, the more
+          FDX you earn. Collections you share are displayed on your Home Page for everyone to see.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Lists you’ve shared
+              Collections you’ve shared
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
@@ -160,14 +160,14 @@ const Summary = () => {
           </div>
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total lists
+              Total collections
             </h1>
             <h5 className="text-center text-[18px] font-normal">{persistedUserInfo?.myListStatistics?.totalLists}</h5>
           </div>
 
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total list engagement
+              Total collection engagement
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
@@ -175,7 +175,7 @@ const Summary = () => {
           </div>
           <div>
             <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
-              Total list views
+              Total collection views
             </h1>
             <h5 className="text-center text-[18px] font-normal">
               {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
@@ -184,10 +184,10 @@ const Summary = () => {
         </div>
         <div className="mt-3 flex justify-center tablet:mt-5">
           <Button variant="submit" onClick={() => setAddToList(true)}>
-            Create a new list
+            Create a new collection
           </Button>
           {addToList && (
-            <AddToListPopup handleClose={() => setAddToList(false)} modalVisible={addToList} page={'my-lists'} />
+            <AddToListPopup handleClose={() => setAddToList(false)} modalVisible={addToList} page={'my-collection'} />
           )}
         </div>
       </SummaryCard>

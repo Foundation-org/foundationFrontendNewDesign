@@ -1,5 +1,4 @@
 import PopUp from '../ui/PopUp';
-import { toast } from 'sonner';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { deleteList } from '../../services/api/listsApi';
@@ -12,27 +11,12 @@ export default function DeleteListPopup({ handleClose, modalVisible, title, imag
   const { mutateAsync: handleDeleteList, isPending } = useMutation({
     mutationFn: deleteList,
     onSuccess: (resp) => {
-      console.log('resp', resp);
-      console.log('Post deleted Successfully');
-
-      // if (resp.response.status === 500) {
-      //   toast.warning('Something goes wrong.');
-      //   return;
-      // }
-
       showToast('success', 'deleteList');
-      // queryClient.setQueriesData(['lists'], (oldData) => {
-      //   console.log('old', oldData);
-      //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
-      // });
-
-      queryClient.invalidateQueries(['lists']);
-
+      queryClient.invalidateQueries(['collection']);
       handleClose();
     },
     onError: (error) => {
       console.log(error);
-      // toast.warning(error.response.data.message);
     },
   });
 
@@ -40,7 +24,7 @@ export default function DeleteListPopup({ handleClose, modalVisible, title, imag
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
-          Are you sure you want to delete this List?
+          Are you sure you want to delete this Collection?
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button

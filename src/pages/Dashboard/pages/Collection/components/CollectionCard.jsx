@@ -22,7 +22,7 @@ import { useUpdateSpotLight } from '../../../../../services/api/profile';
 import SharedListAdminSection from '../../../../../components/admin-card-section/sharedlist-admin-section';
 import Copy from '../../../../../assets/Copy';
 
-const ListCard = ({ listData, page }) => {
+const CollectionCard = ({ listData, page }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const location = useLocation();
@@ -86,7 +86,7 @@ const ListCard = ({ listData, page }) => {
         showToast('success', 'orderUpdated');
         setHasReordered(false);
       }
-      queryClient.invalidateQueries('lists');
+      queryClient.invalidateQueries('collection');
     },
     onError: (err) => {
       console.log('err', err);
@@ -138,7 +138,7 @@ const ListCard = ({ listData, page }) => {
         <DeleteListPopup
           handleClose={handleClose}
           modalVisible={modalVisible}
-          title={'Delete List'}
+          title={'Delete Collection'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
           categoryId={categoryId}
         />
@@ -188,7 +188,7 @@ const ListCard = ({ listData, page }) => {
       {items.length < 1 ? (
         <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
           <p className="text-center text-[4vw] laptop:text-[2vw]">
-            <b>No shared lists found!</b>
+            <b>No shared collection found!</b>
           </p>
         </div>
       ) : (
@@ -200,7 +200,7 @@ const ListCard = ({ listData, page }) => {
                 className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
               >
                 <div className="relative flex items-center justify-end gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
-                  {/* Delete List */}
+                  {/* Delete Collection */}
                   {categoryItem?.userUuid === persistedUserInfo.uuid && notPublicProfile && (
                     <button
                       className="absolute left-1/2 flex min-w-[83px] -translate-x-1/2 items-center justify-center gap-1 tablet:gap-2"
@@ -226,7 +226,7 @@ const ListCard = ({ listData, page }) => {
                     //     className="whitespace-nowrap text-[12px] font-medium text-[#6BA5CF] underline tablet:text-[18px]"
                     //     onClick={() => {
                     //       const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
-                    //       handleSpotLight({ domain, type: 'lists', id: categoryItem._id, status: 'set' });
+                    //       handleSpotLight({ domain, type: 'collection', id: categoryItem._id, status: 'set' });
                     //     }}
                     //   >
                     //     Pin to Spotlight
@@ -350,7 +350,7 @@ const ListCard = ({ listData, page }) => {
                   {listData[categoryIndex]?.post?.length <= 0 && (
                     <div className="flex w-full items-center gap-1 tablet:gap-20">
                       <h2 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
-                        This list has no posts
+                        This collection has no posts
                       </h2>
                     </div>
                   )}
@@ -421,7 +421,7 @@ const ListCard = ({ listData, page }) => {
                           className={'w-full tablet:w-full'}
                           onClick={() => {
                             if (listData[categoryIndex]?.post?.length > 0) {
-                              navigate('/shared-list-link/result', {
+                              navigate('/shared-collection-link/result', {
                                 state: { categoryItem: categoryItem._id },
                               });
                             } else {
@@ -429,7 +429,7 @@ const ListCard = ({ listData, page }) => {
                             }
                           }}
                         >
-                          View My List Results
+                          View Collection Results
                         </Button>
                         <Button
                           variant={categoryItem.isEnable && categoryItem.link !== null ? 'danger' : 'submit'}
@@ -527,4 +527,4 @@ const ListCard = ({ listData, page }) => {
   );
 };
 
-export default ListCard;
+export default CollectionCard;

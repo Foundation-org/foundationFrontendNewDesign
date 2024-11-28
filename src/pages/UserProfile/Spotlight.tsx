@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getQuestUtils } from '../../features/quest/utilsSlice';
 import { useUpdateSpotLight } from '../../services/api/profile';
-import ListCard from '../Dashboard/pages/Lists/components/ListCard';
+import CollectionCard from '../Dashboard/pages/Collection/components/CollectionCard';
 import NewsFeedCard from '../features/news-feed/components/NewsFeedCard';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import SummaryCard from '../../components/SummaryCard';
@@ -57,7 +57,7 @@ export default function Spotlight({ spotlight }: any) {
           ) : spotlight?.spotLightType === 'news' ? (
             <NewsFeedCard key={spotlight._id} data={spotlight} innerRef={null} />
           ) : spotlight?.spotLightType === 'lists' ? (
-            <ListCard listData={[spotlight.category]} page="spotlight" />
+            <CollectionCard listData={[spotlight.category]} page="spotlight" />
           ) : null}
         </div>
       </div>
