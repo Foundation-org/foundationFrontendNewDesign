@@ -10,6 +10,7 @@ import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 import ProgressBar from '../ProgressBar';
 import ImageCropper from '../ImageCropper';
+import imageCompression from 'browser-image-compression';
 
 const HomepageBadgePopup = ({
   isPopup,
@@ -24,6 +25,7 @@ const HomepageBadgePopup = ({
 }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
   const [domainBadge, setDomainBadge] = useState({
     title: '',
     domain: '',
@@ -177,16 +179,59 @@ const HomepageBadgePopup = ({
     checkHollow();
   }, [domainBadge.title, domainBadge.domain, domainBadge.description, domainBadge.image]);
 
-  const handleFileUpload = (event) => {
+  const compressImage = async (file) => {
+    const options = {
+      maxSizeMB: 1, // Compress to a maximum of 1MB
+      useWebWorker: true, // Use web workers for better performance
+      maxIteration: 5, // Adjust iterations for compression balance
+      initialQuality: 0.8, // Initial compression quality
+    };
+
+    try {
+      const compressedFile = await imageCompression(file, options);
+      const compressedImageURL = URL.createObjectURL(compressedFile);
+      return { compressedFile, compressedImageURL };
+    } catch (error) {
+      throw new Error('Image compression failed: ' + error.message);
+    }
+  };
+
+  const handleFileUpload = async (event) => {
     const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast.warning('File size is too large. Please upload a file less than 1MB.');
-        return;
-      }
-      const image = URL.createObjectURL(file);
-      setDomainBadge({ ...domainBadge, image: [image, image, image] });
-      setPrevState({ ...domainBadge, image: [image, image, image] });
+
+    if (!file) return;
+
+    // Check if the file size exceeds 5MB
+    if (file.size > 5 * 1024 * 1024) {
+      toast.warning('File size is too large. Please upload a file less than 5MB.');
+      return;
+    }
+
+    try {
+      setImageLoading(true);
+
+      // Call the compression service
+      const { compressedFile, compressedImageURL } = await compressImage(file);
+
+      // Set compressed images
+      setDomainBadge({
+        ...domainBadge,
+        image: [compressedImageURL, compressedImageURL, compressedImageURL],
+      });
+
+      setPrevState({
+        ...domainBadge,
+        image: [compressedImageURL, compressedImageURL, compressedImageURL],
+      });
+
+      setImageLoading(false);
+
+      // Optionally, upload compressed file directly here
+      // uploadToS3(compressedFile);
+
+    } catch (error) {
+      console.error('Image compression failed:', error);
+      toast.error('Image compression failed. Please try again.');
     }
   };
 
@@ -342,10 +387,17 @@ const HomepageBadgePopup = ({
                 className={`verification_badge_input relative resize-none py-5 ${edit ? (domainBadge.image ? '' : 'caret-hidden') : ''} `}
               >
                 <div className="flex flex-col items-center justify-center">
-                  <p>Upload Your Image</p>
-                  <p className="max-w-lg text-center text-[10px] font-normal tablet:text-[16px]">
-                    Foundation wants your SEO to look its best. For best results upload an image that is 1280x720
-                  </p>
+                  {imageLoading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : (
+                    <>
+                      <p>Upload Your Image</p>
+                      <p className="max-w-lg text-center text-[10px] font-normal tablet:text-[16px]">
+                        Foundation wants your SEO to look its best. For best results upload an image that is 1280x720
+                      </p>
+                    </>
+                  )
+                  }
                 </div>
                 <input
                   id="dropzone-file"
