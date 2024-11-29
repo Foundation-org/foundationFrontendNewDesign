@@ -1,8 +1,8 @@
-import PopUp from '../../components/ui/PopUp';
-import { Button } from '../../components/ui/Button';
+import PopUp from '../ui/PopUp';
+import { Button } from '../ui/Button';
 import { FaSpinner, FaCamera } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import showToast from '../../components/ui/Toast';
+import showToast from '../ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
 import api from '../../services/api/Axios';
 import { useState, useRef, useEffect } from 'react';
@@ -32,7 +32,20 @@ const FileUploadButton = ({ label, onChange }) => (
   </div>
 );
 
-const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
+const SubscriptionBadgesPopup = ({
+  isPopup,
+  setIsPopup,
+  type,
+  title,
+  logo,
+  placeholder,
+  edit,
+  fetchUser,
+  setIsPersonalPopup,
+  handleSkip,
+  onboarding,
+  progress,
+}) => {
   // Redux states
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
@@ -305,4 +318,4 @@ const IdentityBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
   );
 };
 
-export default IdentityBadgePopup;
+export default SubscriptionBadgesPopup;

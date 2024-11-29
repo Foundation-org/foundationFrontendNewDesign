@@ -201,7 +201,7 @@ const VerificationBadges = () => {
       <ContentCard icon="assets/profile/homepagebadges.svg" title="Homepage">
         <HomepageBadge checkPseudoBadge={checkPseudoBadge} />
       </ContentCard>
-      <ContentCard icon="assets/profile/homepagebadges.svg" title="Identity">
+      {/* <ContentCard icon="assets/profile/homepagebadges.svg" title="Identity">
         <IdentityBadge
           handleRemoveBadgePopup={handleRemoveBadgePopup}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
@@ -209,9 +209,16 @@ const VerificationBadges = () => {
           checkPseudoBadge={checkPseudoBadge}
           getAskPassword={getAskPasswordFromRedux}
         />
-      </ContentCard>
+      </ContentCard> */}
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
-        <Subscription />
+        <Subscription
+          fetchUser={persistedUserInfo}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          handlePasskeyConfirmation={handlePasskeyConfirmation}
+          getAskPassword={getAskPasswordFromRedux}
+          checkPseudoBadge={checkPseudoBadge}
+        />
       </ContentCard>
     </div>
   );
