@@ -58,7 +58,7 @@ export default function Subscription({
     }
 
     switch (seletedSubscriptionBadge) {
-      case 'identity':
+      case 'currentTypeToBeBuilt':
         return (
           <SubscriptionBadgesPopup
             isPopup={isSubscriptionPopup}
@@ -92,7 +92,7 @@ export default function Subscription({
       </div>
 
       {
-        item?.type === "identity" ?
+        item?.type === "currentTypeToBeBuilt" ?
           <Button
             variant={checkSubscriptionBadge(item.type) ? 'verification-badge-edit' : item.ButtonColor}
             onClick={() => {
