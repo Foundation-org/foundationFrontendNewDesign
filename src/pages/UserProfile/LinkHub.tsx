@@ -24,6 +24,8 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
       facebook: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
       linkedin: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
       instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
+      soundcloud: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/soundcloud-fav.png`,
+      'ultimate-guitar': `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ultimate-guitar-fav.png`,
     };
 
     const title = badge.title.toLowerCase();
@@ -142,7 +144,11 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                 }}
               >
                 <div className="flex items-center gap-[10px] tablet:gap-[15px]">
-                  <img src={getBadgeIcon(badge)} alt="save icon" className="size-[24.5px] tablet:size-[35px]" />
+                  <img
+                    src={getBadgeIcon(badge)}
+                    alt="save icon"
+                    className="size-[24.5px] rounded-full tablet:size-[35px]"
+                  />
                   <h1 className="text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[18px]">
                     {badge.title}
                   </h1>

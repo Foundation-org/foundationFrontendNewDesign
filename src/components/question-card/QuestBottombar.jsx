@@ -71,7 +71,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
         questStartData?.page !== 'advance-analytics' &&
         location.pathname !== '/shared-links/result' &&
         postProperties !== 'preview' && (
-          <div className="relative flex items-center justify-between border-t-2 border-gray-100 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
+          <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
             {postProperties === 'HiddenPosts' ? (
               <div className="flex items-center gap-[2px] tablet:gap-2">
                 <img
