@@ -63,6 +63,9 @@ const IdentityBadgePopup = ({
     const [countdown, setCountdown] = useState(5);
     const videoRef = useRef(null);
     const [recording, setRecording] = useState(false);
+    const [isVerified, setIsVerified] = useState(false);
+    const [addIdentity, setAddIdentity] = useState(false);
+    const [isAdding, setIsAdding] = useState(false);
     const mediaRecorderRef = useRef(null);
     const recordedChunks = useRef([]);
 
@@ -145,7 +148,7 @@ const IdentityBadgePopup = ({
     };
 
     // Use the custom hook for identity verification
-    const { mutate: verifyIdentity, isLoading: isSubmitting, isError, isSuccess } = useVerifyIdentity({
+    const { mutateAsync: verifyIdentity, isLoading: isSubmitting, isError, isSuccess } = useVerifyIdentity({
         frontImage,
         backImage,
         video,
@@ -153,9 +156,43 @@ const IdentityBadgePopup = ({
         handleClose,
     });
 
-    // Handle the form submission
-    const handleSubmit = () => {
-        verifyIdentity();
+    // Handle identity verification submission
+    const handleSubmit = async () => {
+        try {
+            const response = await verifyIdentity();
+            setIsVerified(true);
+            setAddIdentity(response)
+            console.log("Verification successful:", response); // Optionally log the response
+        } catch (error) {
+            console.error("Verification failed:", error);
+            showToast('error', error.message || 'Verification failed');
+        }
+    };
+
+    // Handle adding badge after verification
+    const handleAddBadge = async () => {
+        setIsAdding(true); // Start loading for adding the badge
+        try {
+            // Call addIdentity API with the data from verifyIdentity
+            const addIdentityResponse = await api.post('/addIdentityBadge', {
+                ...addIdentity,
+                uuid: persistedUserInfo?.uuid
+            });
+
+            if (addIdentityResponse.status === 200) {
+                // On success, show success message and close the popup
+                showToast('success', 'Badge added successfully!');
+                // handleClose(); // Close the modal or perform any other action
+            } else {
+                // Handle error from the addIdentity API
+                showToast('error', 'Failed to add badge.');
+            }
+        } catch (error) {
+            console.error("Failed to add badge:", error);
+            showToast('error', error.message || 'Failed to add badge');
+        } finally {
+            setIsAdding(false); // End loading for adding the badge
+        }
     };
 
     // Render step navigation buttons
@@ -171,9 +208,15 @@ const IdentityBadgePopup = ({
                     Next Step
                 </Button>
             ) : (
-                <Button variant="submit" onClick={handleSubmit} disabled={isSubmitting}>
-                    {isSubmitting ? <FaSpinner className="animate-spin" /> : 'Submit'}
-                </Button>
+                isVerified ? (
+                    <Button variant="submit" onClick={addIdentity && handleAddBadge} disabled={isAdding}>
+                        {isAdding ? <FaSpinner className="animate-spin" /> : 'Add Badge'}
+                    </Button>
+                ) : (
+                    <Button variant="submit" onClick={handleSubmit} disabled={isSubmitting}>
+                        {isSubmitting ? <FaSpinner className="animate-spin" /> : 'Verify'}
+                    </Button>
+                )
             )}
         </div>
     );
