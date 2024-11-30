@@ -10,7 +10,7 @@ import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 import ProgressBar from '../ProgressBar';
 import ImageCropper from '../ImageCropper';
-import imageCompression from 'browser-image-compression';
+import { compressImageFileService } from '../../services/imageProcessing';
 
 const HomepageBadgePopup = ({
   isPopup,
@@ -179,57 +179,22 @@ const HomepageBadgePopup = ({
     checkHollow();
   }, [domainBadge.title, domainBadge.domain, domainBadge.description, domainBadge.image]);
 
-  const compressImage = async (file) => {
-    const targetSizeKB = 500; // 500 KB
-    const options = {
-      maxSizeMB: 0.5, // Compress to a maximum of 0.5 MB (500 KB)
-      useWebWorker: true, // Use web workers for better performance
-      maxIteration: 5, // Adjust iterations for compression balance
-      initialQuality: 0.8, // Initial compression quality
-    };
-
-    try {
-      let compressedFile = file;
-      let compressedImageURL = URL.createObjectURL(compressedFile);
-
-      // Compress the file until the size is under the target size (500 KB)
-      let fileSizeKB = compressedFile.size / 1024; // Convert file size to KB
-
-      // Continue compressing if the file is larger than the target size
-      while (fileSizeKB > targetSizeKB && options.maxSizeMB > 0.1) {
-        // Compress the image using the specified options
-        compressedFile = await imageCompression(file, options);
-        compressedImageURL = URL.createObjectURL(compressedFile);
-
-        // Update the file size
-        fileSizeKB = compressedFile.size / 1024;
-
-        // Optionally, reduce quality slightly after each iteration
-        options.initialQuality = Math.max(0.5, options.initialQuality - 0.1); // Prevent quality from going below 0.5
-      }
-
-      return { compressedFile, compressedImageURL };
-    } catch (error) {
-      throw new Error('Image compression failed: ' + error.message);
-    }
-  };
-
   const handleFileUpload = async (event) => {
     const file = event.target.files?.[0];
 
     if (!file) return;
 
-    // // Check if the file size exceeds 5MB
-    // if (file.size > 5 * 1024 * 1024) {
-    //   toast.warning('File size is too large. Please upload a file less than 5MB.');
-    //   return;
-    // }
+    // Check if the file size exceeds 5MB
+    if (file.size > 10 * 1024 * 1024) {
+      toast.warning('File size is too large. Please upload a file less than 5MB.');
+      return;
+    }
 
     try {
       setImageLoading(true);
 
       // Call the compression service
-      const { compressedFile, compressedImageURL } = await compressImage(file);
+      const { compressedFile, compressedImageURL } = await compressImageFileService(file);
 
       // Set compressed images
       setDomainBadge({
