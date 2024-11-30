@@ -18,12 +18,12 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
       formData.append('uuid', persistedUserInfo.uuid);
 
       if (domainBadge.image[0] instanceof Blob) {
-        const compress16x9 = await compressImageBlobService(domainBadge.image[0]);
+        const compress16x9 = await compressImageBlobService(domainBadge.image[0], domainBadge.coordinates[0].width, domainBadge.coordinates[0].height);
         formData.append('file16x9', compress16x9, 'seoCroppedImage.png');
         formData.append('coordinate16x9', JSON.stringify(domainBadge.coordinates[0]));
       }
       if (domainBadge.image[1] instanceof Blob) {
-        const compress1x1 = await compressImageBlobService(domainBadge.image[1]);
+        const compress1x1 = await compressImageBlobService(domainBadge.image[1], domainBadge.coordinates[1].width, domainBadge.coordinates[1].height);
         formData.append('file1x1', compress1x1, 'profileImage.png');
         formData.append('coordinate1x1', JSON.stringify(domainBadge.coordinates[1]));
       }

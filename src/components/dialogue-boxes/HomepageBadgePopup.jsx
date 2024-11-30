@@ -179,42 +179,55 @@ const HomepageBadgePopup = ({
     checkHollow();
   }, [domainBadge.title, domainBadge.domain, domainBadge.description, domainBadge.image]);
 
-  const handleFileUpload = async (event) => {
+  const handleFileUpload = (event) => {
     const file = event.target.files?.[0];
-
     if (!file) return;
-
     // Check if the file size exceeds 5MB
-    // if (file.size > 10 * 1024 * 1024) {
-    //   toast.warning('File size is too large. Please upload a file less than 5MB.');
-    //   return;
-    // }
+    if (file.size > 8 * 1024 * 1024) {
+      toast.warning('File size is too large. Please upload a file less than 5MB.');
+      return;
+    }
 
-    try {
+    // Create an Image element to read the dimensions
+    const img = new Image();
+    const imageURL = URL.createObjectURL(file);
+
+    img.src = imageURL;
+
+    // Wait for the image to load and get its dimensions
+    img.onload = () => {
+      // Once the image is loaded, get its width and height
+      const width = img.width;
+      const height = img.height;
       setImageLoading(true);
 
       // Call the compression service
-      const { compressedFile, compressedImageURL } = await compressImageFileService(file);
+      compressImageFileService(file, width, height).then(({ compressedFile, compressedImageURL }) => {
+        // Set compressed images
+        setDomainBadge({
+          ...domainBadge,
+          image: [compressedImageURL, compressedImageURL, compressedImageURL],
+        });
 
-      // Set compressed images
-      setDomainBadge({
-        ...domainBadge,
-        image: [compressedImageURL, compressedImageURL, compressedImageURL],
+        setPrevState({
+          ...domainBadge,
+          image: [compressedImageURL, compressedImageURL, compressedImageURL],
+        });
+
+        setImageLoading(false);
+
+        // Optionally, upload compressed file directly here
+        // uploadToS3(compressedFile);
+      }).catch((error) => {
+        console.error('Image compression failed:', error);
+        toast.error('Image compression failed. Please try again.');
       });
+    };
 
-      setPrevState({
-        ...domainBadge,
-        image: [compressedImageURL, compressedImageURL, compressedImageURL],
-      });
-
-      setImageLoading(false);
-
-      // Optionally, upload compressed file directly here
-      // uploadToS3(compressedFile);
-    } catch (error) {
-      console.error('Image compression failed:', error);
-      toast.error('Image compression failed. Please try again.');
-    }
+    img.onerror = () => {
+      console.error('Error loading the image');
+      toast.error('Failed to load the image.');
+    };
   };
 
   const handleCropComplete = async (blob, coordinates) => {
