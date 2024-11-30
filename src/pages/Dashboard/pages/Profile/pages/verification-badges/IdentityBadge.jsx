@@ -5,7 +5,7 @@ import { getConstantsValues } from '../../../../../../features/constants/constan
 import { Button } from '../../../../../../components/ui/Button';
 import { CanAdd } from './badgeUtils';
 import { toast } from 'sonner';
-import IdentityBadgePopup from '../../../../../../components/dialogue-boxes/IdentityBadgePopup';
+import IdentityBadgePopup from '../../../../../../components/dialogue-boxes/SubscriptionBadgesPopup';
 
 export default function IdentityBadge({
   isVerificationBadge = true,

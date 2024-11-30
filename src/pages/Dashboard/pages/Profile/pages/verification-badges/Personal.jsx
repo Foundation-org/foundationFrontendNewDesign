@@ -10,6 +10,7 @@ import { getConstantsValues } from '../../../../../../features/constants/constan
 import { Button } from '../../../../../../components/ui/Button';
 import { CanAdd } from './badgeUtils';
 import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
+import IdentityBadgePopup from '../../../../../../components/dialogue-boxes/IdentityBadgePopup';
 
 export default function Personal({
   fetchUser,
@@ -234,6 +235,21 @@ export default function Personal({
             setEdit={setEdit}
             fetchUser={fetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
+          />
+        );
+      case 'identity':
+        return (
+          <IdentityBadgePopup
+            isPopup={isPersonalPopup}
+            setIsPopup={setIsPersonalPopup}
+            title="Identity"
+            type={'identity'}
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`}
+            placeholder="Identity Here"
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setIsSubscriptionPopup={setIsPersonalPopup}
           />
         );
       default:

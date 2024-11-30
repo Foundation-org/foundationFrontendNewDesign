@@ -311,6 +311,15 @@ export const personal = [
     type: 'security-question',
     disabled: false,
   },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+    title: 'Identity',
+    ButtonColor: 'submit',
+    NoOfButton: 5,
+    ButtonText: 'Add Badge',
+    type: 'identity',
+    disabled: false,
+  },
 ];
 
 export const homepageBadges = [
@@ -372,7 +381,7 @@ export const subscription = [
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/employement.svg`,
     title: 'Employment',
     ButtonColor: 'submit',
-    NoOfButton: 1,
+    NoOfButton: 2,
     ButtonText: 'Add Badge',
     type: 'lastName',
     disabled: false,
@@ -381,7 +390,7 @@ export const subscription = [
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/collageDegree.svg`,
     title: 'College Degree',
     ButtonColor: 'submit',
-    NoOfButton: 1,
+    NoOfButton: 3,
     ButtonText: 'Add Badge',
     type: 'dateOfBirth',
     disabled: false,
@@ -390,7 +399,7 @@ export const subscription = [
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/income.svg`,
     title: 'Income',
     ButtonColor: 'submit',
-    NoOfButton: 1,
+    NoOfButton: 4,
     ButtonText: 'Add Badge',
     type: 'dateOfBirth',
     disabled: false,
@@ -404,15 +413,6 @@ export const subscription = [
   //   type: 'dateOfBirth',
   //   disabled: false,
   // },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
-    title: 'Identity',
-    ButtonColor: 'submit',
-    NoOfButton: 1,
-    ButtonText: 'Add Badge',
-    type: 'dateOfBirth',
-    disabled: false,
-  },
 ];
 
 export const badgesTotalLength =
