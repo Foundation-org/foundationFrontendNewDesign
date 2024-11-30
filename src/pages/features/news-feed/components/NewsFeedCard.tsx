@@ -65,7 +65,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
       className="h-full max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
     >
       {/* Header */}
-      <div className="flex items-center justify-end gap-4 border-b-2 border-gray-100 px-[0.57rem] py-[5px] tablet:px-[15px] tablet:py-3">
+      <div className="flex items-center justify-end gap-4 border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-[15px] tablet:py-3">
         <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
@@ -107,7 +107,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
         </div>
       </div>
       {/* Footer */}
-      <div className="relative flex items-center justify-between border-t-2 border-gray-100 px-[0.57rem] py-[5px] tablet:px-5 tablet:py-3">
+      <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-3">
         {/* Share */}
         <button
           className={`flex h-[14.5px] w-fit items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}

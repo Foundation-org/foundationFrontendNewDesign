@@ -49,7 +49,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
 
   return (
     <>
-      <div className="border-t-2 border-gray-100">
+      <div className="border-t-2 border-gray-250 dark:border-gray-100">
         <div className="my-[15px] tablet:my-6">
           <div className="my-[15px] ml-10 flex items-center gap-1 tablet:my-6 tablet:ml-16 tablet:gap-20">
             <div className="flex items-center gap-[1px] tablet:gap-2">
@@ -160,7 +160,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
         </div>
       </div>
       {/* Footer */}
-      {/* <div className="relative flex items-center justify-between border-t-2 border-gray-100 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
+      {/* <div className="relative flex items-center justify-between border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
         {notPublicProfile ? (
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
