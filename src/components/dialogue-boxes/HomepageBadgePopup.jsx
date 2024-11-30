@@ -185,10 +185,10 @@ const HomepageBadgePopup = ({
     if (!file) return;
 
     // Check if the file size exceeds 5MB
-    if (file.size > 10 * 1024 * 1024) {
-      toast.warning('File size is too large. Please upload a file less than 5MB.');
-      return;
-    }
+    // if (file.size > 10 * 1024 * 1024) {
+    //   toast.warning('File size is too large. Please upload a file less than 5MB.');
+    //   return;
+    // }
 
     try {
       setImageLoading(true);
