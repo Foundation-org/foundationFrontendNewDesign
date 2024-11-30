@@ -393,7 +393,7 @@ export default function DashboardLayout({ children }) {
               location.pathname !== '/profile/user-settings' &&
               location.pathname !== '/profile/post-activity' &&
               location.pathname !== '/profile/verification-badges' &&
-              location.pathname !== '/profile/lists' &&
+              location.pathname !== '/profile/collections' &&
               location.pathname !== '/profile/feedback' &&
               !location.pathname.startsWith('/post') &&
               location.pathname !== '/treasury' &&
@@ -534,9 +534,9 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/l/') &&
             !location.pathname.startsWith('/r/') &&
             !location.pathname.startsWith('/profile/postsbylist/') &&
-            location.pathname !== '/shared-list-link/result' &&
+            location.pathname !== '/shared-collection-link/result' &&
             location.pathname !== '/profile/verification-badges' &&
-            location.pathname !== '/profile/lists' &&
+            location.pathname !== '/profile/collections' &&
             !location.pathname.startsWith('/direct-messaging') &&
             !location.pathname.startsWith('/news') && <SidebarLeft />}
 
@@ -564,11 +564,11 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/profile/user-settings' &&
             location.pathname !== '/profile/post-activity' &&
             location.pathname !== '/profile/feedback' &&
-            location.pathname !== '/shared-list-link/result' &&
+            location.pathname !== '/shared-collection-link/result' &&
             !location.pathname.startsWith('/profile/postsbylist/') &&
             location.pathname !== '/profile/verification-badges' &&
             !location.pathname.startsWith('/direct-messaging') &&
-            location.pathname !== '/profile/lists' && <SideNavbar />}
+            location.pathname !== '/profile/collections' && <SideNavbar />}
 
           {/* Seldon Inputs */}
           {location.pathname.startsWith('/seldon-ai') && (

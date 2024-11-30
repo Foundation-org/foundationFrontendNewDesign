@@ -477,8 +477,8 @@ const ButtonGroup = ({
             if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
               dispatch(setGuestSignUpDialogue(true));
             } else {
-              if (location.pathname === '/shared-list-link/result') {
-                navigate('/profile/lists');
+              if (location.pathname === '/shared-collection-link/result') {
+                navigate('/profile/collections');
               } else {
                 navigate('/profile/shared-links');
               }

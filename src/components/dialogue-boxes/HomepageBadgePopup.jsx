@@ -10,6 +10,7 @@ import { moderationRating } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 import ProgressBar from '../ProgressBar';
 import ImageCropper from '../ImageCropper';
+import { compressImageFileService } from '../../services/imageProcessing';
 
 const HomepageBadgePopup = ({
   isPopup,
@@ -24,6 +25,7 @@ const HomepageBadgePopup = ({
 }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
   const [domainBadge, setDomainBadge] = useState({
     title: '',
     domain: '',
@@ -179,15 +181,57 @@ const HomepageBadgePopup = ({
 
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 1000000) {
-        toast.warning('File size is too large. Please upload a file less than 1MB.');
-        return;
-      }
-      const image = URL.createObjectURL(file);
-      setDomainBadge({ ...domainBadge, image: [image, image, image] });
-      setPrevState({ ...domainBadge, image: [image, image, image] });
+    if (!file) return;
+    // Check if the file size exceeds 5MB
+    if (file.size > 8 * 1024 * 1024) {
+      toast.warning('File size is too large. Please upload a file less than 5MB.');
+      return;
     }
+
+    // Create an Image element to read the dimensions
+    const img = new Image();
+    const imageURL = URL.createObjectURL(file);
+
+    img.src = imageURL;
+
+    // Wait for the image to load and get its dimensions
+    img.onload = () => {
+      // Once the image is loaded, get its width and height
+      const width = img.width;
+      const height = img.height;
+      setImageLoading(true);
+
+      // Call the compression service
+      compressImageFileService(file, width, height)
+        .then(({ compressedFile, compressedImageURL }) => {
+          // Set compressed images
+          setDomainBadge({
+            ...domainBadge,
+            image: [compressedImageURL, compressedImageURL, compressedImageURL],
+            coordinates: [0, 0, 0, 0],
+          });
+
+          setPrevState({
+            ...domainBadge,
+            image: [compressedImageURL, compressedImageURL, compressedImageURL],
+            coordinates: [0, 0, 0, 0],
+          });
+
+          setImageLoading(false);
+
+          // Optionally, upload compressed file directly here
+          // uploadToS3(compressedFile);
+        })
+        .catch((error) => {
+          console.error('Image compression failed:', error);
+          toast.error('Image compression failed. Please try again.');
+        });
+    };
+
+    img.onerror = () => {
+      console.error('Error loading the image');
+      toast.error('Failed to load the image.');
+    };
   };
 
   const handleCropComplete = async (blob, coordinates) => {
@@ -231,11 +275,28 @@ const HomepageBadgePopup = ({
   };
 
   const checkFinishHollow = () => {
-    if (JSON.stringify(prevState.coordinates) === JSON.stringify(domainBadge.coordinates)) {
+    const isZeroCoordinates = (coordinates) => coordinates.length === 4 && coordinates.every((value) => value === 0);
+
+    // 1. If both are [0, 0, 0, 0], return true
+    if (isZeroCoordinates(prevState.coordinates) && isZeroCoordinates(domainBadge.coordinates)) {
       return true;
-    } else {
-      return false;
     }
+
+    // 2. Ensure domainBadge.coordinates[0] or domainBadge.coordinates[1] are not [0, 0]
+    if (domainBadge.coordinates[0] === 0 || domainBadge.coordinates[1] === 0) {
+      return true;
+    }
+
+    // 3. Check if prevState.coordinates and domainBadge.coordinates are identical, return true if identical
+    const arraysAreEqual = (arr1, arr2) =>
+      arr1.length === arr2.length && arr1.every((val, index) => JSON.stringify(val) === JSON.stringify(arr2[index]));
+
+    if (arraysAreEqual(prevState.coordinates, domainBadge.coordinates)) {
+      return true; // Identical arrays, return true
+    }
+
+    // Default return if no condition is met
+    return false;
   };
 
   useEffect(() => {
@@ -251,6 +312,9 @@ const HomepageBadgePopup = ({
       return () => clearTimeout(timeoutId);
     }
   }, [changeCrop]);
+
+  console.log('prevState:', JSON.stringify(prevState.coordinates));
+  console.log('domainBadge:', JSON.stringify(domainBadge.coordinates));
 
   return (
     <>
@@ -270,8 +334,8 @@ const HomepageBadgePopup = ({
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo} customClasses={'overflow-y-auto'}>
         <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
           <h1 className="summary-text">
-            Your Home Page is the hub for connecting with your audience. Share posts, lists and news easily with your
-            audience.
+            Your Home Page is the hub for connecting with your audience. Share posts, collections and news easily with
+            your audience.
           </h1>
           <div>
             <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
@@ -342,10 +406,16 @@ const HomepageBadgePopup = ({
                 className={`verification_badge_input relative resize-none py-5 ${edit ? (domainBadge.image ? '' : 'caret-hidden') : ''} `}
               >
                 <div className="flex flex-col items-center justify-center">
-                  <p>Upload Your Image</p>
-                  <p className="max-w-lg text-center text-[10px] font-normal tablet:text-[16px]">
-                    Foundation wants your SEO to look its best. For best results upload an image that is 1280x720
-                  </p>
+                  {imageLoading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : (
+                    <>
+                      <p>Upload Your Image</p>
+                      <p className="max-w-lg text-center text-[10px] font-normal tablet:text-[16px]">
+                        Foundation wants your SEO to look its best. For best results upload an image that is 1280x720
+                      </p>
+                    </>
+                  )}
                 </div>
                 <input
                   id="dropzone-file"

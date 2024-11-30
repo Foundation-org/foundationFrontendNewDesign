@@ -161,7 +161,7 @@ const RewardSchedule = () => {
               Create custom link
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              Sharing lists
+              Sharing collections
             </p>
           </div>
           <div className="space-y-2 text-end">

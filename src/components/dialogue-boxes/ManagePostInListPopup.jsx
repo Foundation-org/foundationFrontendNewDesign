@@ -51,14 +51,14 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
   //     //   return;
   //     // }
 
-  //     toast.success('List deleted successfully');
+  //     toast.success('Collection deleted successfully');
 
-  //     // queryClient.setQueriesData(['lists'], (oldData) => {
+  //     // queryClient.setQueriesData(['collection'], (oldData) => {
   //     //   console.log('old', oldData);
   //     //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
   //     // });
 
-  //     queryClient.invalidateQueries(['lists']);
+  //     queryClient.invalidateQueries(['collection']);
 
   //     handleClose();
   //   },
@@ -81,12 +81,12 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
 
   //     toast.success('Category name updated successfully');
 
-  //     // queryClient.setQueriesData(['lists'], (oldData) => {
+  //     // queryClient.setQueriesData(['collection'], (oldData) => {
   //     //   console.log('old', oldData);
   //     //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
   //     // });
 
-  //     queryClient.invalidateQueries(['lists']);
+  //     queryClient.invalidateQueries(['collection']);
 
   //     // handleClose();
   //   },
@@ -102,7 +102,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
       if (resp.status === 200) {
         showToast('success', 'postAddedtoList');
 
-        queryClient.invalidateQueries(['lists']);
+        queryClient.invalidateQueries(['collection']);
         setSearchPost('');
         setSearchResult([]);
         handleClose();

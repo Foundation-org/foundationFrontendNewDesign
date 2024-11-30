@@ -12,7 +12,7 @@ export const profileItems = [
   // { id: 9, title: 'Home Page', path: '/profile/me', to: '' },
   { id: 9, title: 'Home Page', path: '/profile', to: '' },
   { id: 4, title: 'Shared Posts', path: '/profile/shared-links', to: 'shared-links' },
-  { id: 7, title: 'My Lists', path: '/profile/lists', to: 'lists' },
+  { id: 7, title: 'My Collections', path: '/profile/collections', to: 'collections' },
   { id: 10, title: 'Shared Articles', path: '/profile/shared-articles', to: 'shared-articles' },
   { id: 1, title: 'Verification Badges', path: '/profile/verification-badges', to: '' },
   { id: 0, title: 'Post Activity', path: '/profile/post-activity', to: 'post-activity' },

@@ -49,7 +49,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
 
   return (
     <>
-      <div className="border-t-2 border-gray-250">
+      <div className="border-t-2 border-gray-250 dark:border-gray-100">
         <div className="my-[15px] tablet:my-6">
           <div className="my-[15px] ml-10 flex items-center gap-1 tablet:my-6 tablet:ml-16 tablet:gap-20">
             <div className="flex items-center gap-[1px] tablet:gap-2">
@@ -97,7 +97,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
                 className={'w-full tablet:w-full'}
                 onClick={() => {
                   if (listData[categoryIndex]?.post?.length > 0) {
-                    navigate('/shared-list-link/result', {
+                    navigate('/shared-collection-link/result', {
                       state: { categoryItem: categoryItem._id },
                     });
                   } else {
@@ -105,7 +105,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
                   }
                 }}
               >
-                View My List Results
+                View Collection Results
               </Button>
               <Button
                 variant="submit"
@@ -182,7 +182,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
               className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
             />
             <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-              {`Created list ${calculateTimeAgo(categoryItem.createdAt)}`}
+              {`Created collection ${calculateTimeAgo(categoryItem.createdAt)}`}
             </h4>
           </div>
         </div>

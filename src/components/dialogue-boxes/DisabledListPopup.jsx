@@ -21,7 +21,7 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
         enable: type === 'disable' ? 'false' : 'true',
       }),
     onSuccess: (resp) => {
-      queryClient.setQueryData(['lists'], (oldData) => {
+      queryClient.setQueryData(['collection'], (oldData) => {
         const updatedList = resp.data.userList.userList.map((item) =>
           item._id === categoryId ? { ...item, ...resp.data.userList.userList } : item
         );
@@ -41,9 +41,9 @@ export default function DisabledListPopup({ handleClose, modalVisible, type, cat
     mutationFn: deleteListSettings,
     onSuccess: (resp) => {
       if (location.pathname === '/profile') {
-        queryClient.invalidateQueries({ queryKey: ['lists'] }, { exact: true });
+        queryClient.invalidateQueries({ queryKey: ['collection'] }, { exact: true });
       } else {
-        queryClient.setQueryData(['lists'], () => {
+        queryClient.setQueryData(['collection'], () => {
           const updatedList = resp.data.updatedSharedList.map((item) =>
             item._id === categoryId ? { ...item, ...resp.data.updatedSharedList } : item
           );

@@ -126,7 +126,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                     Hide
                   </h1>
                 </button>
-                {/* Add to list */}
+                {/* Add to collection */}
                 <button
                   className={`${
                     postProperties !== 'sharedlink-results' &&
@@ -141,11 +141,11 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                 >
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/list.svg' : 'assets/svgs/addToList.svg'}`}
-                    alt="addToList"
+                    alt="addToCollection"
                     className="h-auto w-3 cursor-pointer tablet:w-[22px]"
                   />
-                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
-                    Add to list
+                  <h1 className="whitespace-nowrap text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                    Add to collection
                   </h1>
                 </button>
                 {/* Analyze Post */}

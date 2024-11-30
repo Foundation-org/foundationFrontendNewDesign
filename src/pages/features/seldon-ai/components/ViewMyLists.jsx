@@ -21,7 +21,7 @@ export default function ViewMyLists({ handleClose, modalVisible }) {
 
   const { data: listData, isError } = useQuery({
     queryFn: fetchLists,
-    queryKey: ['lists'],
+    queryKey: ['collection'],
   });
 
   if (isError) {
@@ -52,7 +52,7 @@ export default function ViewMyLists({ handleClose, modalVisible }) {
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToListWhite.svg`}
-      title={'My Lists'}
+      title={'Collections'}
       open={modalVisible}
       handleClose={handleClose}
       isBackground={false}
@@ -61,7 +61,7 @@ export default function ViewMyLists({ handleClose, modalVisible }) {
         {listData?.length >= 1 && (
           <>
             <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
-              My lists
+              Collections
             </h4>
             <div className="relative my-3 tablet:my-[25px]">
               <div className="relative h-[23px] w-full tablet:h-[46px]">

@@ -43,8 +43,8 @@ const navMenuList = [
     darkicon: `/assets/mobilenav/sharedpost-dark.svg`,
   },
   {
-    title: 'My Lists',
-    path: '/profile/lists',
+    title: 'My Collections',
+    path: '/profile/collections',
     icon: `/assets/mobilenav/my-list.svg`,
     darkicon: `/assets/mobilenav/my-list-dark.svg`,
   },

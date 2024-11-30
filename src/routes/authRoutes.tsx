@@ -24,9 +24,8 @@ import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
 import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
-import Lists from '../pages/Dashboard/pages/Lists';
-import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
-import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
+import PostsByList from '../pages/Dashboard/pages/Collection/PostsByList';
+import SharedListResults from '../pages/Dashboard/pages/Collection/SharedListResults';
 import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
 // import TermOfService from '../pages/Signup/pages/TermOfService';
 // QUESTS
@@ -61,6 +60,7 @@ import SeldonView from '../pages/features/seldon-ai/SeldonView';
 import NewsFeedLayout from '../pages/features/news-feed/NewsFeedLayout';
 import NewsFeed from '../pages/features/news-feed';
 import DMPreview from '../pages/features/DirectMessaging/DMPreview';
+import Collection from '../pages/Dashboard/pages/Collection';
 
 const authRoutes = [
   {
@@ -98,7 +98,7 @@ const authRoutes = [
                   { path: '', element: <Summary /> },
                   { path: 'verification-badges', element: <VerificationBadges /> },
                   { path: 'post-activity', element: <Contributions /> },
-                  { path: 'lists', element: <Lists /> },
+                  { path: 'collections', element: <Collection /> },
                   { path: 'postsbylist/:categoryId', element: <PostsByList /> },
                   { path: 'ledger', element: <BasicTable /> },
                   { path: 'feedback-given', element: <HiddenPosts /> },
@@ -182,7 +182,7 @@ const authRoutes = [
       { path: '/verifycode', element: <VerifyCode /> },
       { path: '/verify-phone', element: <VerifyPhone /> },
       { path: '/shared-links/result', element: <SharedLinkResults /> },
-      { path: '/shared-list-link/result', element: <SharedListResults /> },
+      { path: '/shared-collection-link/result', element: <SharedListResults /> },
       { path: '/test', element: <Test /> },
     ],
   },

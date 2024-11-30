@@ -160,7 +160,7 @@ export default function ShareArticleCard({ data, innerRef }) {
       </div>
       {/* Footer */}
       {/* Share */}
-      <div className="relative flex items-center justify-end border-t border-gray-250 px-[0.57rem] py-[5px] tablet:border-t-[1.846px] tablet:px-5 tablet:py-3">
+      <div className="relative flex items-center justify-end border-t-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-3">
         {/* <button
           className={`flex w-fit items-center gap-1 tablet:gap-2`}
           onClick={() => {
