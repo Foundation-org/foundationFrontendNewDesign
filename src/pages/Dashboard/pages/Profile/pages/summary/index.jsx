@@ -144,10 +144,11 @@ const Summary = () => {
           </Button>
         </div>
       </SummaryCard>
-      <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="Collections">
+      <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Collections">
         <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-          Creating and sharing collections extends your reach. The more engagement your collections receive, the more
-          FDX you earn. Collections you share are displayed on your Home Page for everyone to see.
+          Organize what posts matter most and get a deeper understanding of your audience with Collections. The more
+          engagement your Collections receive, the more FDX you’ll earn! Shared collections will appear on your home
+          page for all to see.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">

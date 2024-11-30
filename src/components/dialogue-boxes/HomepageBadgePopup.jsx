@@ -219,11 +219,11 @@ const HomepageBadgePopup = ({
 
     if (!file) return;
 
-    // Check if the file size exceeds 5MB
-    if (file.size > 5 * 1024 * 1024) {
-      toast.warning('File size is too large. Please upload a file less than 5MB.');
-      return;
-    }
+    // // Check if the file size exceeds 5MB
+    // if (file.size > 5 * 1024 * 1024) {
+    //   toast.warning('File size is too large. Please upload a file less than 5MB.');
+    //   return;
+    // }
 
     try {
       setImageLoading(true);
@@ -246,7 +246,6 @@ const HomepageBadgePopup = ({
 
       // Optionally, upload compressed file directly here
       // uploadToS3(compressedFile);
-
     } catch (error) {
       console.error('Image compression failed:', error);
       toast.error('Image compression failed. Please try again.');
@@ -414,8 +413,7 @@ const HomepageBadgePopup = ({
                         Foundation wants your SEO to look its best. For best results upload an image that is 1280x720
                       </p>
                     </>
-                  )
-                  }
+                  )}
                 </div>
                 <input
                   id="dropzone-file"
