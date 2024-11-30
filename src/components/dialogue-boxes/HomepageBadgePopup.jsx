@@ -202,26 +202,30 @@ const HomepageBadgePopup = ({
       setImageLoading(true);
 
       // Call the compression service
-      compressImageFileService(file, width, height).then(({ compressedFile, compressedImageURL }) => {
-        // Set compressed images
-        setDomainBadge({
-          ...domainBadge,
-          image: [compressedImageURL, compressedImageURL, compressedImageURL],
+      compressImageFileService(file, width, height)
+        .then(({ compressedFile, compressedImageURL }) => {
+          // Set compressed images
+          setDomainBadge({
+            ...domainBadge,
+            image: [compressedImageURL, compressedImageURL, compressedImageURL],
+            coordinates: [0, 0, 0, 0],
+          });
+
+          setPrevState({
+            ...domainBadge,
+            image: [compressedImageURL, compressedImageURL, compressedImageURL],
+            coordinates: [0, 0, 0, 0],
+          });
+
+          setImageLoading(false);
+
+          // Optionally, upload compressed file directly here
+          // uploadToS3(compressedFile);
+        })
+        .catch((error) => {
+          console.error('Image compression failed:', error);
+          toast.error('Image compression failed. Please try again.');
         });
-
-        setPrevState({
-          ...domainBadge,
-          image: [compressedImageURL, compressedImageURL, compressedImageURL],
-        });
-
-        setImageLoading(false);
-
-        // Optionally, upload compressed file directly here
-        // uploadToS3(compressedFile);
-      }).catch((error) => {
-        console.error('Image compression failed:', error);
-        toast.error('Image compression failed. Please try again.');
-      });
     };
 
     img.onerror = () => {
@@ -271,11 +275,28 @@ const HomepageBadgePopup = ({
   };
 
   const checkFinishHollow = () => {
-    if (JSON.stringify(prevState.coordinates) === JSON.stringify(domainBadge.coordinates)) {
+    const isZeroCoordinates = (coordinates) => coordinates.length === 4 && coordinates.every((value) => value === 0);
+
+    // 1. If both are [0, 0, 0, 0], return true
+    if (isZeroCoordinates(prevState.coordinates) && isZeroCoordinates(domainBadge.coordinates)) {
       return true;
-    } else {
-      return false;
     }
+
+    // 2. Ensure domainBadge.coordinates[0] or domainBadge.coordinates[1] are not [0, 0]
+    if (domainBadge.coordinates[0] === 0 || domainBadge.coordinates[1] === 0) {
+      return true;
+    }
+
+    // 3. Check if prevState.coordinates and domainBadge.coordinates are identical, return true if identical
+    const arraysAreEqual = (arr1, arr2) =>
+      arr1.length === arr2.length && arr1.every((val, index) => JSON.stringify(val) === JSON.stringify(arr2[index]));
+
+    if (arraysAreEqual(prevState.coordinates, domainBadge.coordinates)) {
+      return true; // Identical arrays, return true
+    }
+
+    // Default return if no condition is met
+    return false;
   };
 
   useEffect(() => {
@@ -291,6 +312,9 @@ const HomepageBadgePopup = ({
       return () => clearTimeout(timeoutId);
     }
   }, [changeCrop]);
+
+  console.log('prevState:', JSON.stringify(prevState.coordinates));
+  console.log('domainBadge:', JSON.stringify(domainBadge.coordinates));
 
   return (
     <>
