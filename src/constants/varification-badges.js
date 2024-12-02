@@ -1,5 +1,3 @@
-import { IoAccessibility } from 'react-icons/io5';
-
 export const contacts = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/personal.svg`,
@@ -170,7 +168,7 @@ export const identityBadge = [
     disabled: false,
     accountName: '',
     badgeType: '',
-  }
+  },
 ];
 
 export const legacy = [
@@ -311,15 +309,15 @@ export const personal = [
     type: 'security-question',
     disabled: false,
   },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
-    title: 'Identity',
-    ButtonColor: 'submit',
-    NoOfButton: 5,
-    ButtonText: 'Add Badge',
-    type: 'identity',
-    disabled: false,
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+  //   title: 'Identity',
+  //   ButtonColor: 'submit',
+  //   NoOfButton: 5,
+  //   ButtonText: 'Add Badge',
+  //   type: 'identity',
+  //   disabled: false,
+  // },
 ];
 
 export const homepageBadges = [
