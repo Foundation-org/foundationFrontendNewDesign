@@ -21,6 +21,7 @@ import DisabledListPopup from '../../../../../components/dialogue-boxes/Disabled
 import { useUpdateSpotLight } from '../../../../../services/api/profile';
 import SharedListAdminSection from '../../../../../components/admin-card-section/sharedlist-admin-section';
 import Copy from '../../../../../assets/Copy';
+import CopyCollection from '../../../../../components/dialogue-boxes/CopyCollection';
 
 const CollectionCard = ({ listData, page }) => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const CollectionCard = ({ listData, page }) => {
   const [selectedItem, setSelectedItem] = useState();
   const [postId, setPostId] = useState('');
   const [listName, setListName] = useState('');
+  const [addToList, setAddToList] = useState(false);
   const [hasReordered, setHasReordered] = useState('');
   const mouseSensor = useSensor(MouseSensor);
   const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
@@ -481,12 +483,8 @@ const CollectionCard = ({ listData, page }) => {
                     <button
                       className={`${'w-fit'} flex h-[14.5px] items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
                       onClick={() => {
-                        // if (categoryItem.link === null) {
-                        showToast('info', 'featureComingSoon');
-                        // } else {
-                        //   copyToClipboard(categoryItem.link);
-                        //   showToast('success', 'copyLink');
-                        // }
+                        setSelectedItem(categoryItem);
+                        setAddToList(true);
                       }}
                     >
                       <svg
@@ -552,6 +550,13 @@ const CollectionCard = ({ listData, page }) => {
                     notPublicProfile={notPublicProfile}
                     setModalVisible={setModalVisible}
                     copyToClipboard={copyToClipboard}
+                  />
+                )}
+                {addToList && (
+                  <CopyCollection
+                    handleClose={() => setAddToList(false)}
+                    modalVisible={addToList}
+                    categoryItem={categoryItem}
                   />
                 )}
               </div>

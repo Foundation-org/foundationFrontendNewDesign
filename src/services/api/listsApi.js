@@ -1,5 +1,8 @@
+import { useSelector } from 'react-redux';
 import showToast from '../../components/ui/Toast';
 import api from './Axios';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 export const fetchLists = async (search) => {
   const userUuid = localStorage.getItem('uuid');
@@ -89,7 +92,7 @@ export const updateCategoryName = async ({ userUuid, categoryId, category }) => 
 export const searchPosts = async (term, uuid, userQuestSettingRef) => {
   try {
     if (term !== '') {
-      if (userQuestSettingRef !== "") {
+      if (userQuestSettingRef !== '') {
         const response = await api.post(`/search/easySearch?term=${term}`, {
           page: userQuestSettingRef,
           moderationRatingFilter: {
@@ -99,8 +102,7 @@ export const searchPosts = async (term, uuid, userQuestSettingRef) => {
           uuid,
         });
         return response.data;
-      }
-      else {
+      } else {
         const response = await api.post(`/search/easySearch?term=${term}`, {
           moderationRatingFilter: {
             initial: 0,
@@ -226,4 +228,30 @@ export const fetchListsExpended = async (domain, uuid, publicView) => {
   } catch (err) {
     return err;
   }
+};
+
+export const copyCollection = async (collectionId, collectionName, viewerUuid) => {
+  const resp = await api.post(`/userlists/userList/addCategoryInUserListViewProfile`, {
+    collectionId,
+    collectionName,
+    viewerUuid,
+  });
+  return resp.data;
+};
+
+export const useCopyCollection = (handleClose) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  return useMutation({
+    mutationFn: (data) => {
+      copyCollection(data.collectionId, data.collectionName, persistedUserInfo.uuid);
+    },
+    onSuccess: () => {
+      toast.success('Collection copied successfully');
+      handleClose();
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 };
