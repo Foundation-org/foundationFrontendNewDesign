@@ -91,11 +91,6 @@ export default function UserProfile() {
           setIsPopup={setIsBadgeHubPopup}
           title="Badge Hub"
           logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
-          edit={true}
-          setIsPersonalPopup={setIsPersonalPopup}
-          handleSkip={null}
-          onboarding={null}
-          progress={null}
         />
       )}
       {!domain ? (

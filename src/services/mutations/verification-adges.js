@@ -18,12 +18,20 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
       formData.append('uuid', persistedUserInfo.uuid);
 
       if (domainBadge.image[0] instanceof Blob) {
-        const compress16x9 = await compressImageBlobService(domainBadge.image[0], domainBadge.coordinates[0].width, domainBadge.coordinates[0].height);
+        const compress16x9 = await compressImageBlobService(
+          domainBadge.image[0],
+          domainBadge.coordinates[0].width,
+          domainBadge.coordinates[0].height
+        );
         formData.append('file16x9', compress16x9, 'seoCroppedImage.png');
         formData.append('coordinate16x9', JSON.stringify(domainBadge.coordinates[0]));
       }
       if (domainBadge.image[1] instanceof Blob) {
-        const compress1x1 = await compressImageBlobService(domainBadge.image[1], domainBadge.coordinates[1].width, domainBadge.coordinates[1].height);
+        const compress1x1 = await compressImageBlobService(
+          domainBadge.image[1],
+          domainBadge.coordinates[1].width,
+          domainBadge.coordinates[1].height
+        );
         formData.append('file1x1', compress1x1, 'profileImage.png');
         formData.append('coordinate1x1', JSON.stringify(domainBadge.coordinates[1]));
       }
@@ -44,7 +52,9 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
       //   formData.append('originalFile', blob, 'originalImage.png');
       // }
 
-      const blobResponse = await fetch(domainBadge.image[2] && domainBadge.image[2] !== prevState.image[2] ? domainBadge.image[2] : prevState.image[2]);
+      const blobResponse = await fetch(
+        domainBadge.image[2] && domainBadge.image[2] !== prevState.image[2] ? domainBadge.image[2] : prevState.image[2]
+      );
       const blob = await blobResponse.blob();
       formData.append('originalFile', blob, 'originalImage.png');
 
@@ -94,6 +104,31 @@ export const useReOrderLinHubLinks = () => {
   return useMutation({
     mutationFn: reOrderLinHubLinks,
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+      showToast('success', 'orderUpdated');
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
+
+const addBadgeHub = async (userUuid, badgeIds) => {
+  const response = await api.patch('/addProfileBadges', {
+    userUuid,
+    badgeIds,
+  });
+
+  return response.data;
+};
+
+export const useAddBadgeHub = () => {
+  const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  return useMutation({
+    mutationFn: (selectedIds) => addBadgeHub(persistedUserInfo.uuid, selectedIds),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
       showToast('success', 'orderUpdated');
     },
