@@ -13,11 +13,13 @@ import LinkHub from './LinkHub';
 import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/HomepageBadge';
 import SummaryCard from '../../components/SummaryCard';
 import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePopup';
+import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
 
 export default function UserProfile() {
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
+  const [isBadgeHubPopup, setIsBadgeHubPopup] = useState(false);
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [domain, setDomain] = useState('');
@@ -83,6 +85,19 @@ export default function UserProfile() {
           progress={null}
         />
       )}
+      {isBadgeHubPopup && (
+        <BadgeHubPopup
+          isPopup={isBadgeHubPopup}
+          setIsPopup={setIsBadgeHubPopup}
+          title="Badge Hub"
+          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
+          edit={true}
+          setIsPersonalPopup={setIsPersonalPopup}
+          handleSkip={null}
+          onboarding={null}
+          progress={null}
+        />
+      )}
       {!domain ? (
         <div className="dar flex flex-col items-center justify-center gap-2 rounded-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-3 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
           <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
@@ -126,9 +141,9 @@ export default function UserProfile() {
                   </div>
                 </div>
                 <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
-                  {/* <Button variant={'submit'} onClick={() => navigate('/profile-others')}>
-                    Find Other Profiles
-                  </Button> */}
+                  <Button variant={'submit'} onClick={() => setIsBadgeHubPopup(true)}>
+                    Show Badges
+                  </Button>
                   <Button variant={'submit'} onClick={() => setIsPersonalPopup(true)}>
                     Manage Domain
                   </Button>
