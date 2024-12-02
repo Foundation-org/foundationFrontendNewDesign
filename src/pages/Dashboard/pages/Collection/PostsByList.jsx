@@ -99,7 +99,7 @@ const PostsByList = () => {
                     </p>
                   ) : listData?.response?.data?.message?.includes('An error occurred while getting the userList') ? (
                     <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">
-                      Link not found.
+                      Sharing is disabled for this collection.
                     </p>
                   ) : listData?.post?.length === 0 ? (
                     <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[24px] font-bold tablet:text-[25px]">

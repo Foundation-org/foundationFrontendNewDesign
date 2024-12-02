@@ -31,7 +31,7 @@ export default function BadgeRemovePopup({
           uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
-      } else if (badgeType === 'personal') {
+      } else if (badgeType === 'personal' || badgeType === 'identity') {
         removeBadge = await api.post(`/removePersonalBadge`, {
           type: type,
           uuid: persistedUserInfo.uuid,

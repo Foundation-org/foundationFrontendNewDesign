@@ -15,8 +15,8 @@ export const toastMessages = {
   badgeUpdated: 'Badge Updated Successfully!',
   errorAddingBadge: 'An error occurred while adding badge',
   listAlreadyExists: 'Collection with a similar name already exists.',
-  postAddedtoList: 'Post added in a list.',
-  postAlreadyinList: 'Post already added in a list.',
+  postAddedtoList: 'Post added in a collection.',
+  postAlreadyinList: 'Post already exists in collection.',
   emailNotificationClosed: 'Email notification closed successfully',
   emptyEmail: 'Email cannot be empty.',
   deleteHistory: 'History Removed Successfully',
@@ -90,7 +90,7 @@ export const toastMessages = {
   verifyCode: 'Please Open the verification Page from the email',
   termsAndConditions: 'Please accept the terms and conditions to continue!',
   emailVerified: 'Email verified successfully.',
-  emptyPostList: 'You cannot save without selecting a list!',
+  emptyPostList: 'You cannot save without selecting a collection!',
   recaptaFailed: 'Google recaptcha failed',
   emptyList: 'Collection name can not be empty',
   webViewLogin:
@@ -112,5 +112,5 @@ export const toastMessages = {
   spotLightRemoved: 'Spotlight removed successfully',
   spotLightAlreadyExists: 'Only one spotlight is allowed at a time.',
   noPostsInList: 'Please add posts to view results',
-  noListLink: 'This list is not shared yet',
+  noListLink: 'This collection is not shared yet',
 } as const;

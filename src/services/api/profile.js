@@ -86,3 +86,44 @@ export const useUpdateSpotLight = () => {
     },
   });
 };
+
+
+// Separate verifyIdentity function using useMutation
+export const useVerifyIdentity = ({ frontImage, backImage, video, persistedUserInfo, handleClose }) => {
+  const queryClient = useQueryClient();
+
+  const verifyIdentity = async () => {
+    const formData = new FormData();
+    if (frontImage) formData.append('frontImage', frontImage);
+    if (backImage) formData.append('backImage', backImage);
+    if (video) formData.append('video', video);
+    formData.append('uuid', persistedUserInfo.uuid);
+
+    const response = await api.post('/verifyIdentity', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    if (response.status === 200) {
+      return response.data.data; // This will be returned to the onSuccess handler
+    } else {
+      throw new Error('Verification failed');
+    }
+  }
+
+  // The mutation function for submitting the identity verification
+  const mutation = useMutation({
+    mutationFn: verifyIdentity,
+    onError: (error) => {
+      // Handle the error scenario
+      showToast('error', error.message || 'Submission failed');
+    },
+    onSuccess: (data) => {
+      // On successful mutation, handle success (data is the response.data)
+      console.log('Verification success:', data); // Use the response data here
+      showToast('success', 'Verification successful');
+      queryClient.invalidateQueries(['userInfo']); // Refetch user info
+    },
+  });
+
+  return mutation;
+};

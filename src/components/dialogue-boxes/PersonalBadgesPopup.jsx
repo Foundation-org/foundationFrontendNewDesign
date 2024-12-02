@@ -74,7 +74,7 @@ const PersonalBadgesPopup = ({
     setDate(selectedDate);
   };
 
-  const handleSecurityQuestionChange = (event) => {};
+  const handleSecurityQuestionChange = (event) => { };
   const [query, setQuery] = useState('');
   const [questions, setQuestion] = useState();
 
@@ -84,12 +84,12 @@ const PersonalBadgesPopup = ({
     const newArr = queryExists
       ? [...jb]
       : [
-          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-          ...jb.map((jb) => ({
-            ...jb,
-            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-          })),
-        ];
+        { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+        ...jb.map((jb) => ({
+          ...jb,
+          id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+        })),
+      ];
     setQuestion(newArr);
   }, [query]);
 

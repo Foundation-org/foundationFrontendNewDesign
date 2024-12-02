@@ -1,5 +1,3 @@
-import { IoAccessibility } from 'react-icons/io5';
-
 export const contacts = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/personal.svg`,
@@ -159,6 +157,20 @@ export const web3 = [
   // },
 ];
 
+export const identityBadge = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Ethereum-Wallet-2x.png`,
+    title: 'Identity',
+    ButtonColor: 'submit',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    type: 'identity',
+    disabled: false,
+    accountName: '',
+    badgeType: '',
+  },
+];
+
 export const legacy = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
@@ -297,6 +309,15 @@ export const personal = [
     type: 'security-question',
     disabled: false,
   },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+  //   title: 'Identity',
+  //   ButtonColor: 'submit',
+  //   NoOfButton: 5,
+  //   ButtonText: 'Add Badge',
+  //   type: 'identity',
+  //   disabled: false,
+  // },
 ];
 
 export const homepageBadges = [
@@ -358,7 +379,7 @@ export const subscription = [
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/employement.svg`,
     title: 'Employment',
     ButtonColor: 'submit',
-    NoOfButton: 1,
+    NoOfButton: 2,
     ButtonText: 'Add Badge',
     type: 'lastName',
     disabled: false,
@@ -367,7 +388,7 @@ export const subscription = [
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/collageDegree.svg`,
     title: 'College Degree',
     ButtonColor: 'submit',
-    NoOfButton: 1,
+    NoOfButton: 3,
     ButtonText: 'Add Badge',
     type: 'dateOfBirth',
     disabled: false,
@@ -376,7 +397,7 @@ export const subscription = [
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/income.svg`,
     title: 'Income',
     ButtonColor: 'submit',
-    NoOfButton: 1,
+    NoOfButton: 4,
     ButtonText: 'Add Badge',
     type: 'dateOfBirth',
     disabled: false,
@@ -390,15 +411,6 @@ export const subscription = [
   //   type: 'dateOfBirth',
   //   disabled: false,
   // },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
-    title: 'Identity',
-    ButtonColor: 'submit',
-    NoOfButton: 1,
-    ButtonText: 'Add Badge',
-    type: 'dateOfBirth',
-    disabled: false,
-  },
 ];
 
 export const badgesTotalLength =

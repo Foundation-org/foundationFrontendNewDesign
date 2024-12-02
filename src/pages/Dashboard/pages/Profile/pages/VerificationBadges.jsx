@@ -20,6 +20,7 @@ import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
 import ProgressBar from '../../../../../components/ProgressBar';
 import { Button } from '../../../../../components/ui/Button';
 import { setProgress } from '../../../../../features/progress/progressSlice';
+import IdentityBadge from './verification-badges/IdentityBadge';
 
 const VerificationBadges = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -42,7 +43,7 @@ const VerificationBadges = () => {
         Math.floor(
           ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
             badgesTotalLength) *
-            100
+          100
         )
       )
     );
@@ -200,8 +201,24 @@ const VerificationBadges = () => {
       <ContentCard icon="assets/profile/homepagebadges.svg" title="Homepage">
         <HomepageBadge checkPseudoBadge={checkPseudoBadge} />
       </ContentCard>
+      {/* <ContentCard icon="assets/profile/homepagebadges.svg" title="Identity">
+        <IdentityBadge
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          checkPseudoBadge={checkPseudoBadge}
+          getAskPassword={getAskPasswordFromRedux}
+        />
+      </ContentCard> */}
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
-        <Subscription />
+        <Subscription
+          fetchUser={persistedUserInfo}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          handlePasskeyConfirmation={handlePasskeyConfirmation}
+          getAskPassword={getAskPasswordFromRedux}
+          checkPseudoBadge={checkPseudoBadge}
+        />
       </ContentCard>
     </div>
   );
