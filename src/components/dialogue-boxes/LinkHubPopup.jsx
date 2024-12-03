@@ -313,6 +313,9 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
       instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
       soundcloud: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/soundcloud-fav.png`,
       'ultimate-guitar': `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ultimate-guitar-fav.png`,
+      amazon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/amazon.png`,
+      ltk: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ltk.png`,
+      tiktok: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/tiktok.png`,
     };
 
     const title = badge.title.toLowerCase();
