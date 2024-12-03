@@ -92,7 +92,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               alt="clicks"
               className="h-2 w-2 tablet:h-6 tablet:w-6"
             />
-            <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
               {questStartData?.userQuestSetting?.questImpression} Views{' '}
             </h2>
           </div>
@@ -102,7 +102,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               alt="participants"
               className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
             />
-            <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
               {questStartData?.userQuestSetting?.questsCompleted} Engagements{' '}
             </h2>
           </div>
@@ -207,7 +207,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+          <h4 className="text-gray-1 whitespace-nowrap text-[0.6rem] font-normal dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {/* {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '} */}
             Shared {calculateTimeAgo(questStartData.userQuestSetting?.sharedTime)}
           </h4>

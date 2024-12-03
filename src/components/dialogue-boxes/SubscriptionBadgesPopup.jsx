@@ -7,7 +7,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import api from '../../services/api/Axios';
 import { useState, useRef, useEffect } from 'react';
 
-
 /**************************** Section Identiy Badge ****************************/
 // Descriptions for each step
 const stepDescriptions = [
@@ -20,7 +19,7 @@ const stepDescriptions = [
 // Helper component for file upload button
 const FileUploadButton = ({ label, onChange }) => (
   <div>
-    <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+    <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
       Image
     </p>
     <div className="flex w-full items-center justify-center">
@@ -49,7 +48,6 @@ const SubscriptionBadgesPopup = ({
   onboarding,
   progress,
 }) => {
-
   /**************************** Section Identiy Badge ****************************/
   // Redux states
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -206,8 +204,7 @@ const SubscriptionBadgesPopup = ({
 
   return (
     <>
-      {type === "identity"
-        &&
+      {type === 'identity' && (
         <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
           <div className="relative flex items-center justify-center overflow-hidden">
             <div
@@ -324,7 +321,7 @@ const SubscriptionBadgesPopup = ({
             </div>
           </div>
         </PopUp>
-      }
+      )}
     </>
   );
 };

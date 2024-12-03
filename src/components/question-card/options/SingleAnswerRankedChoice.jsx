@@ -79,14 +79,14 @@ const SingleAnswerRankedChoice = (props) => {
     setPrevValue(value);
     props.setCheckOptionStatus({
       name: 'Checking',
-      color: 'text-[#0FB063]',
+      color: 'text-green-200',
       tooltipName: 'Verifying your option. Please wait...',
       tooltipStyle: 'tooltip-success',
       showToolTipMsg: true,
     });
     setPrevStatus({
       name: 'Checking',
-      color: 'text-[#0FB063]',
+      color: 'text-green-200',
       tooltipName: 'Verifying your option. Please wait...',
       tooltipStyle: 'tooltip-success',
       showToolTipMsg: true,
@@ -143,7 +143,7 @@ const SingleAnswerRankedChoice = (props) => {
       setPrevValue(validatedAnswer);
       setPrevStatus({
         name: 'Ok',
-        color: 'text-[#0FB063]',
+        color: 'text-green-200',
         tooltipName: 'Answer is Verified',
         tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
@@ -151,7 +151,7 @@ const SingleAnswerRankedChoice = (props) => {
       });
       props.setCheckOptionStatus({
         name: 'Ok',
-        color: 'text-[#0FB063]',
+        color: 'text-green-200',
         tooltipName: 'Answer is Verified',
         tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
@@ -273,7 +273,7 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
         {/* Six Dots */}
         <div
-          className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} flex w-[12.3px] min-w-[12.3px] items-center justify-center rounded-l-[4.734px] border-y border-l bg-white-500 tablet:w-[25px] tablet:min-w-[25px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-l-[3px] dark:bg-gray-100`}
+          className={`${isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-100'} flex w-[12.3px] min-w-[12.3px] items-center justify-center rounded-l-[4.734px] border-y border-l bg-white-500 dark:bg-gray-100 tablet:w-[25px] tablet:min-w-[25px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-l-[3px]`}
         >
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/${persistedTheme === 'dark' ? 'six-dots-dark.svg' : 'six-dots.svg'}`}
@@ -304,17 +304,17 @@ const SingleAnswerRankedChoice = (props) => {
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className={`${
                   isDragging ? 'bg-[#F2F6FF] dark:bg-accent-100' : 'bg-white dark:bg-accent-100'
-                } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]`}
+                } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]`}
               />
             ) : (
-              <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
+              <h1 className="text-gray px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                 {props.answer}
               </h1>
             )}
             {props.deleteable && (
               <div
                 className={`${
-                  isDragging ? 'bg-[#F2F6FF] dark:bg-accent-100 ' : 'bg-white dark:bg-accent-100'
+                  isDragging ? 'bg-[#F2F6FF] dark:bg-accent-100' : 'bg-white dark:bg-accent-100'
                 } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
                   props.checkOptionStatus.color
                 }`}
@@ -329,7 +329,7 @@ const SingleAnswerRankedChoice = (props) => {
           <div
             className={`${
               isDragging ? 'border-blue-300' : 'border-white-500 dark:border-gray-250'
-            } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white tablet:h-full tablet:rounded-r-[10px] dark:bg-accent-100`}
+            } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-accent-100 tablet:h-full tablet:rounded-r-[10px]`}
           >
             <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
           </div>

@@ -120,7 +120,7 @@ const ReferralCode = ({
         <h2 className="text-[9px] font-normal leading-none tracking-[0.15px] text-[#828282] dark:text-gray-300 tablet:text-[20px] tablet:leading-6">
           Enter your registration code for completing registration process.
         </h2>
-        <h1 className="mt-1 text-[12px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:mb-7 tablet:mt-5 tablet:text-[25px]">
+        <h1 className="text-gray-1 mt-1 text-[12px] font-medium leading-normal dark:text-gray-300 tablet:mb-7 tablet:mt-5 tablet:text-[25px]">
           Referral Code
         </h1>
         <input

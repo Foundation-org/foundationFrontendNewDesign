@@ -92,7 +92,7 @@ export default function Contact({
             persistedTheme === 'dark' ? 'dark-shadow-input' : ''
           } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
         >
-          <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] dark:text-gray-400 tablet:text-[20px]">
+          <h1 className="text-gray text-[2.11vw] font-medium leading-normal dark:text-gray-400 tablet:text-[20px]">
             {item.title}
           </h1>
         </div>
@@ -200,7 +200,7 @@ export default function Contact({
         fetchUser={fetchUser}
         setIsPersonalPopup={setIsPersonalPopup}
       />
-      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+      <h1 className="summary-text">
         Contact badges enhance your verification status and improve your account security, ensuring you have reliable
         options for recovery when needed.
       </h1>

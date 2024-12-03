@@ -12,13 +12,13 @@ const SystemNotificationCard = ({ post, innerRef }) => {
       className="flex flex-col gap-2 rounded-[13.842px] border-2 border-blue-500 bg-white-800 px-7 pb-[15px] pt-[14px] dark:border-gray-300 dark:bg-blue-400 tablet:gap-4 tablet:border-[3.5px] tablet:px-[44px] tablet:py-6"
       ref={innerRef}
     >
-      <h1 className="text-[13px] font-bold leading-normal text-accent-700 dark:text-gray-300 tablet:text-[22px]">
+      <h1 className="text-[13px] font-bold leading-normal text-gray dark:text-gray-300 tablet:text-[22px]">
         {post.header}
       </h1>
       {post?.text?.map((item, index) => (
         <p
           key={index + 1}
-          className="text-[13px] font-normal leading-normal text-gray-900 dark:text-gray-300 tablet:text-[18px] tablet:leading-[25px]"
+          className="text-[13px] font-normal leading-normal text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-[25px]"
         >
           {item}
         </p>

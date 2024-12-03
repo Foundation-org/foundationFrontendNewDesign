@@ -76,7 +76,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo, handleSkip, onboar
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <div className="flex flex-col tablet:gap-5">
             <div className="w-full">
-              <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+              <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 Password
               </p>
               <div className="relative grid w-full grid-cols-[1fr] items-center">
@@ -111,7 +111,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo, handleSkip, onboar
 
             <div className="w-full">
               <div className="relative grid w-full grid-cols-[1fr] items-center">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   Confirm Password
                 </p>
                 <div className="relative grid w-full grid-cols-[1fr] items-center">

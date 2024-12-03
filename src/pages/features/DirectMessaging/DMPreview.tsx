@@ -98,7 +98,7 @@ export default function DMPreview() {
   return (
     <div className="space-y-[9px] tablet:space-y-[15px]">
       <div className="relative h-fit w-full max-w-[730px] space-y-[9px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:space-y-[15px] tablet:px-5 tablet:py-6">
-        <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+        <h1 className="text-gray-1 text-[0.75rem] font-semibold leading-[15px] dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
           Subject Preview
         </h1>
         <MessageCard
@@ -114,7 +114,7 @@ export default function DMPreview() {
           setViewMsg={null}
           handleViewMessage={null}
         />
-        <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+        <h1 className="text-gray-1 text-[0.75rem] font-semibold leading-[15px] dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
           Message Preview
         </h1>
         <ViewMessage

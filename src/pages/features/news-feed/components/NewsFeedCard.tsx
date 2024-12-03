@@ -72,15 +72,15 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+          <h4 className="text-gray-1 whitespace-nowrap text-[0.6rem] font-normal dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {calculateTimeAgo(data?.createdAt)}
           </h4>
         </div>
       </div>
       {/* Body */}
       <div className="flex flex-col justify-between gap-2 px-[13.92px] pb-[15px] pt-2 tablet:gap-4 tablet:px-10 tablet:pb-6 tablet:pt-4">
-        <h4 className="text-[12px] font-semibold text-gray-150 dark:text-white tablet:text-[18px]">{data?.title}</h4>
-        <p className="text-[10px] font-medium leading-[13.56px] text-accent-600 dark:text-white tablet:text-[17px] tablet:leading-normal">
+        <h4 className="text-gray text-[12px] font-semibold dark:text-white tablet:text-[18px]">{data?.title}</h4>
+        <p className="text-gray-1 text-[10px] font-medium leading-[13.56px] dark:text-white tablet:text-[17px] tablet:leading-normal">
           {data?.seoSummary}
         </p>
         <div className="flex w-full items-center justify-between gap-4">
@@ -114,7 +114,7 @@ export default function NewsFeedCard(props: NewsFeedPropsType) {
           onClick={handleSharePostClick}
         >
           {persistedTheme === 'dark' ? <Copy /> : <Copy />}
-          <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+          <h1 className="text-gray-1 text-[0.6rem] font-medium leading-[0.6rem] dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
             Share
           </h1>
         </button>

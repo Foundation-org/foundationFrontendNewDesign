@@ -4,7 +4,7 @@ const Copy = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem]">
+    <div className="text-gray-1 flex cursor-pointer items-center justify-end gap-1 dark:text-[#ACACAC] tablet:gap-[0.66rem]">
       <img
         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/share.svg' : 'assets/svgs/sharelink.svg'}`}
         alt="copy"

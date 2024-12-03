@@ -21,7 +21,7 @@ export default function SummaryCard({ headerIcon, headerTitle, headerRight, isPu
         <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">{headerRight}</h1>
       </div>
       {!isPublicProfile && (
-        <div className="rounded-b-[10px] border-x-[1.85px] border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+        <div className="text-gray-1 rounded-b-[10px] border-x-[1.85px] border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
           {children}
         </div>
       )}

@@ -154,7 +154,7 @@ export default function WithdrawBalance() {
           <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Withdraw to
           </p>
-          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+          <p className="text-gray-1 min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Address
           </p>
           <input
@@ -165,7 +165,7 @@ export default function WithdrawBalance() {
           />
         </div>
         <div className="flex flex-col gap-2 tablet:gap-[15px]">
-          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+          <p className="text-gray-1 min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Withdrawal Network
           </p>
           <input
@@ -176,7 +176,7 @@ export default function WithdrawBalance() {
           />
         </div>
         <div className="flex flex-col gap-2 tablet:gap-[15px]">
-          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+          <p className="text-gray-1 min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Amount Withdraw
           </p>
           <div className="flex items-center gap-5">

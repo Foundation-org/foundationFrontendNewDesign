@@ -89,7 +89,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
       <SummaryCard headerIcon="/assets/svgs/linkhub-logo.svg" headerTitle="Link Hub" isPublicProfile={isPublicProfile}>
         {!isPublicProfile && (
           <>
-            <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+            <h1 className="summary-text">
               Put all your essential links in one place on your Home Page, making it easier for others to find and
               connect with you across platforms
             </h1>
@@ -120,7 +120,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
         {/* <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[6px] rounded-[13.84px] border-2 border-[#D9D9D9] bg-white p-[18px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-[10px] tablet:p-5"> */}
         {linkHub === 'No Link Hub badge added yet!' ? (
           <>
-            <h1 className="text-[11px] leading-normal text-[#85898C] dark:text-[#f1f1f1] tablet:text-[18px]">
+            <h1 className="text-gray-1 text-[11px] leading-normal dark:text-[#f1f1f1] tablet:text-[18px]">
               You must add this badge to enable this feature.
             </h1>
             <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={true} isDomain={false} />
@@ -152,7 +152,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                     alt="save icon"
                     className="size-[24.5px] rounded-full tablet:size-[35px]"
                   />
-                  <h1 className="text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[18px]">
+                  <h1 className="text-gray text-[12px] font-semibold leading-normal dark:text-[#f1f1f1] tablet:text-[18px]">
                     {badge.title}
                   </h1>
                 </div>
@@ -163,7 +163,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                       alt="clicks"
                       className="h-3 w-3 tablet:h-6 tablet:w-6"
                     />
-                    <h1 className="text-[12px] leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:text-[16px]">
+                    <h1 className="text-gray text-[12px] leading-normal dark:text-[#f1f1f1] tablet:text-[16px]">
                       {formatCountNumber(badge?.viewerCount?.length || 0)}
                     </h1>
                   </div>

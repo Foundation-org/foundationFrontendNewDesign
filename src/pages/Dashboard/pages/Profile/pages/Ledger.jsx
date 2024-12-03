@@ -194,7 +194,7 @@ export default function BasicTable() {
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.4rem] text-[#bbb] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
+              className="text-gray-1 text-[0.4rem] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
@@ -260,7 +260,7 @@ export default function BasicTable() {
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-gray-300"
+                    className="text-gray whitespace-nowrap border-0 border-b border-[#EEEEEE] dark:text-gray-300"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
@@ -334,7 +334,7 @@ export default function BasicTable() {
                         className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${
                           pageNumber === currentPage
                             ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-gray-500'
-                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-gray-300'
+                            : 'text-gray bg-[#F5F5F5] dark:bg-gray-300'
                         }`}
                         key={pageNumber}
                         onClick={() => handlePageClick(pageNumber)}

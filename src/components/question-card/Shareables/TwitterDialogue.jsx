@@ -40,7 +40,7 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
           <CardTopbar badgeCount={5} QuestTopic="Technology" />
           <div className="pt-[12px] pb-4 tablet:pb-5 tablet:pt-[0.94rem]">
             <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
-              <h4 className="text-[7.26px] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
+              <h4 className="text-[7.26px] font-semibold text-gray-1 tablet:text-[1.25rem] leading-none">
                 {question?.endsWith('?') ? 'Q.' : 'S.'} {question}
               </h4>
             </div>

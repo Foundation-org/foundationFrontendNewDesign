@@ -60,7 +60,7 @@ const LinkHubItem = ({
             className="size-[20.5px] rounded-full tablet:size-[35px]"
           />
           <div>
-            <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+            <h4 className="text-gray-1 max-w-[324px] text-[9.28px] font-medium leading-[11.23px] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
               {item.title}
             </h4>
             <div className="mt-[2px] tablet:mt-2">
@@ -384,7 +384,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
           {/* To View Already Added Info */}
           {!addAnotherForm ? (
             <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-              <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+              <h1 className="text-gray-1 py-3 text-[12px] font-medium leading-[13.56px] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
                 Put all your essential links in one place on your Home Page, making it easier for others to find and
                 connect with you across platforms
               </h1>
@@ -458,7 +458,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
             <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
               <div className="mb-4 flex flex-col gap-[19.5px] pt-[15px] tablet:mb-5 tablet:gap-[38px] tablet:pt-[25px]">
                 <div className="w-full">
-                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field1.label}
                   </p>
                   {fetchingEdit ? (
@@ -484,7 +484,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                 </div>
 
                 <div className="w-full">
-                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field2.label}
                   </p>
                   {fetchingEdit ? (

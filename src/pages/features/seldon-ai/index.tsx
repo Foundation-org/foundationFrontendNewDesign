@@ -53,7 +53,7 @@ export default function SeldonAi() {
               updatedAt: response.data.response?.articleInfo?.updatedAt
                 ? response.data.response?.articleInfo?.updatedAt
                 : null,
-            }),
+            })
           );
         }
       }
@@ -83,7 +83,7 @@ export default function SeldonAi() {
       </div>
       <form className="relative flex gap-4" onSubmit={handleFormSubmit}>
         <TextareaAutosize
-          className="focus:shadow-outline w-full resize-none appearance-none rounded-lg border bg-white py-1.5 pl-3 pr-12 text-[14px] leading-[14px] text-gray-900 shadow focus:outline-none dark:bg-gray-200 tablet:rounded-[10px] tablet:text-[20px] tablet:leading-tight"
+          className="focus:shadow-outline text-gray-1 w-full resize-none appearance-none rounded-lg border bg-white py-1.5 pl-3 pr-12 text-[14px] leading-[14px] shadow focus:outline-none dark:bg-gray-200 tablet:rounded-[10px] tablet:text-[20px] tablet:leading-tight"
           placeholder="Message Seldon"
           onChange={(e) => {
             dispatch(handleSeldonInput({ name: 'question', value: e.target.value }));
@@ -95,7 +95,7 @@ export default function SeldonAi() {
           type="submit"
           className="absolute right-4 top-1/2 size-4 -translate-y-1/2 tablet:bottom-2.5 tablet:size-6"
         >
-          <FaCircleArrowUp className="size-4 rotate-180 text-gray-900 hover:text-black tablet:size-6" />
+          <FaCircleArrowUp className="text-gray-1 size-4 rotate-180 hover:text-black tablet:size-6" />
         </button>
       </form>
 
@@ -104,7 +104,7 @@ export default function SeldonAi() {
       ) : (
         <div className="flex flex-col gap-4 pt-4 text-gray-500 dark:text-white tablet:pt-8">
           {getSeldonDataState.debug ? (
-            <div className="rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+            <div className="text-gray-1 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
               <h1 className="text-[16px] font-bold">Debug Mode:</h1>
               <br></br>
               <Markdown>{getSeldonDataState.debug}</Markdown>
@@ -164,7 +164,7 @@ export default function SeldonAi() {
                       <li key={index} className="ml-6 text-[12px] tablet:ml-10 tablet:text-[20px]">
                         <strong className="font-bold">{item.heading}:</strong> {item.content}
                       </li>
-                    ),
+                    )
                   )}
                 </ol>
                 <div>

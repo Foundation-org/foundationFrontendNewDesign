@@ -152,7 +152,7 @@ export default function Ledger() {
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.4rem] text-[#bbb] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
+              className="text-gray-1 text-[0.4rem] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -191,7 +191,7 @@ export default function Ledger() {
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-gray-300"
+                    className="text-gray whitespace-nowrap border-0 border-b border-[#EEEEEE] dark:text-gray-300"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td

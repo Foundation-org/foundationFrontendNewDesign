@@ -318,7 +318,6 @@ export default function DashboardLayout({ children }) {
                 </div>
               ) : persistedUserInfo?.role === 'visitor' ? (
                 <div className="flex cursor-pointer items-center gap-2">
-                  {/* <div className="relative h-fit w-fit"> */}
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/visitor.svg`}
                     alt="badge"

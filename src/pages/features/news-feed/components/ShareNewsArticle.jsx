@@ -45,7 +45,7 @@ const ShareNewsArticle = ({ handleClose, modalVisible, title, image, questStartD
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="flex flex-col justify-center py-[15px] dark:rounded-b-[0.5rem] dark:border dark:border-gray-100 tablet:py-[25px] dark:tablet:rounded-b-[1.5rem]">
         <div className="px-[20px] laptop:px-[80px]">
-          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
+          <p className="text-gray-1 mb-[10px] text-[12px] font-medium leading-[13.56px] dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             {createCustom
               ? 'Custom Link Address'
               : 'Copy the link below to share this article across other platforms and expand its reach. Shared articles will also appear on your Home Page.'}

@@ -30,7 +30,7 @@ export default function PostArticlesCard({ questStartData }: PostArticlesCardPro
     <>
       {articles?.length > 0 && (
         <div className="flex flex-col gap-2 border-t-2 border-gray-250 py-2 dark:border-gray-100 tablet:gap-4 tablet:py-4">
-          <h4 className="px-4 text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white tablet:text-[1.25rem] tablet:leading-[23px]">
+          <h4 className="text-gray-1 px-4 text-[0.75rem] font-semibold leading-[15px] dark:text-white tablet:text-[1.25rem] tablet:leading-[23px]">
             Related articles {`(${articles?.length})`}
           </h4>
           {articles?.length > 1 ? (
@@ -38,7 +38,7 @@ export default function PostArticlesCard({ questStartData }: PostArticlesCardPro
               {articles?.map((article: any) => (
                 <SplideSlide key={article._id}>
                   <div className="flex h-[90px] max-h-[90px] w-full flex-col justify-between gap-[10px] rounded-lg border border-l-[16px] border-white-500 p-2 dark:border-gray-100 tablet:h-[140px] tablet:max-h-[140px] tablet:gap-3 tablet:rounded-2xl tablet:border-y-2 tablet:border-l-[25px] tablet:border-r-2 tablet:p-4">
-                    <h5 className="line-clamp-3 overflow-hidden text-ellipsis break-words text-[10px] font-semibold italic leading-normal text-gray-900 dark:text-white-400 tablet:text-[1rem]">
+                    <h5 className="text-gray line-clamp-3 overflow-hidden text-ellipsis break-words text-[10px] font-semibold italic leading-normal dark:text-white-400 tablet:text-[1rem]">
                       {article.title}
                     </h5>
                     <div className="flex w-full justify-end">
@@ -56,7 +56,7 @@ export default function PostArticlesCard({ questStartData }: PostArticlesCardPro
           ) : (
             <div className="px-4">
               <div className="flex h-[90px] max-h-[90px] w-full flex-col justify-between gap-[10px] rounded-lg border border-l-[16px] border-white-500 p-2 dark:border-gray-100 tablet:h-[140px] tablet:max-h-[140px] tablet:gap-3 tablet:rounded-2xl tablet:border-y-2 tablet:border-l-[25px] tablet:border-r-2 tablet:p-4">
-                <h5 className="line-clamp-3 overflow-hidden text-ellipsis break-words text-[10px] font-semibold italic leading-normal text-gray-900 dark:text-white-400 tablet:text-[1rem]">
+                <h5 className="text-gray line-clamp-3 overflow-hidden text-ellipsis break-words text-[10px] font-semibold italic leading-normal dark:text-white-400 tablet:text-[1rem]">
                   {articles[0].title}
                 </h5>
                 <div className="flex w-full justify-end">

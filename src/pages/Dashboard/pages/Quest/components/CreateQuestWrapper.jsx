@@ -43,22 +43,15 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   return (
     <>
       <div className="mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white px-[30px] py-3 dark:border dark:border-gray-100 dark:bg-gray-200 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:px-[50px] tablet:py-[27px] laptop:px-4 laptop:py-[25px] desktop:px-[50px]">
-        {/* <h1 className="hidden text-[10px] font-semibold leading-normal text-gray-900 tablet:block tablet:text-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-white-400">
-          Create a {type}
-        </h1> */}
-        <h1 className="text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+        <h1 className="text-gray-1 text-[10px] font-semibold leading-[10px] dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
           Add Media (optional)
         </h1>
         <h4 className="mt-2 text-[8px] font-medium leading-[8px] text-gray-800 tablet:mt-3 tablet:text-[16px] tablet:leading-[16px]">
           More ways to add media are coming soon.
         </h4>
-        {/* <h4 className="mt-1 text-[8px] font-medium leading-normal text-gray-800 tablet:mt-[25px] tablet:text-[16px] tablet:leading-[16px]">
-          {msg}
-        </h4> */}
         {getMediaStates?.isMedia?.isMedia === false &&
           getPicMediaStates?.isPicMedia === false &&
           getGifStates?.isGifMedia === false && (
-            // getPicMediaStates.isGifMedia === false &&
             <div className="mt-2 flex items-center justify-between tablet:mt-3">
               <Button
                 variant="addEmbeded"
@@ -130,7 +123,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         <AddPictureUrls handleTab={handleTab} />
         <AddGif handleTab={handleTab} />
         <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12">
-          <h1 className="text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+          <h1 className="text-gray-1 text-[10px] font-semibold leading-[10px] dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
             {quest === 'M/R' || quest === 'OpenChoice'
               ? 'Make a statement or pose a question'
               : quest === 'Statement'
@@ -146,7 +139,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
               value={createQuestSlice.question}
               tabIndex={3}
               onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(2, 'Enter'))}
-              className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[7px] text-[10px] font-medium leading-3 tracking-wide text-[#7C7C7C] focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
+              className="text-gray-1 w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[7px] text-[10px] font-medium leading-3 tracking-wide focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             />
 
             <button
@@ -160,7 +153,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             </button>
           </div>
         </div>
-        <h1 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+        <h1 className="text-gray-1 mt-4 text-[10px] font-semibold leading-[10px] dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
           Options
         </h1>
         <h4 className="my-2 text-[8px] font-medium leading-normal text-gray-800 tablet:my-3 tablet:text-[16px] tablet:leading-[16px]">

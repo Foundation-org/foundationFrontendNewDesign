@@ -56,11 +56,11 @@ const SummarySidebar = ({ userData }) => {
   return (
     <div>
       <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border laptop:block">
-        <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Your posts</h1>
+        <h1 className="text-[18px] font-semibold text-blue-100 dark:text-white-100">Your posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {yourPosts.map((item) => (
             <React.Fragment key={item.id}>
-              <div className="flex items-center justify-between text-gray-900 dark:text-white-100">
+              <div className="text-gray flex items-center justify-between dark:text-white-100">
                 <p className="max-w-[180px] text-[16px] font-medium leading-[118.75%]">{item.title}</p>
                 <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
               </div>
@@ -72,7 +72,7 @@ const SummarySidebar = ({ userData }) => {
                     dispatch(setGuestSignUpDialogue(true));
                   }
                 }}
-                className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3"
+                className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-100 hover:underline dark:text-blue-600 tablet:-mt-3"
               >
                 <span dangerouslySetInnerHTML={{ __html: item.text }} />
               </Link>
@@ -82,11 +82,11 @@ const SummarySidebar = ({ userData }) => {
       </div>
       {/* Other posts */}
       <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] dark:border-gray-100 dark:bg-gray-200 tablet:dark:border laptop:block">
-        <h1 className="text-[18px] font-semibold text-blue-200 dark:text-white-100">Others Posts</h1>
+        <h1 className="text-[18px] font-semibold text-blue-100 dark:text-white-100">Others Posts</h1>
         <div className="mt-5 flex flex-col gap-[17px]">
           {othersPosts.map((item) => (
             <React.Fragment key={item.id}>
-              <div className="flex items-center justify-between text-gray-900 dark:text-white-100">
+              <div className="text-gray flex items-center justify-between dark:text-white-100">
                 <p className="max-w-[180px] text-[16px] font-medium leading-[118.75%]">{item.title}</p>
                 <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
               </div>
@@ -98,7 +98,7 @@ const SummarySidebar = ({ userData }) => {
                     dispatch(setGuestSignUpDialogue(true));
                   }
                 }}
-                className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-200 hover:underline dark:text-blue-600 tablet:-mt-3"
+                className="cursor-pointer text-[14px] font-normal leading-[121.4%] text-blue-100 hover:underline dark:text-blue-600 tablet:-mt-3"
               >
                 <span dangerouslySetInnerHTML={{ __html: item.text }} />
               </Link>

@@ -152,7 +152,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
           <TextareaAutosize
             onChange={(e) => setCategoryName(e.target.value)}
             value={categoryName}
-            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[4px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] laptop:rounded-l-[0.625rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[4px] text-[0.625rem] font-medium leading-[13px] text-gray-1 focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] laptop:rounded-l-[0.625rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-gray-1"
           />
           <button
             className={`relative rounded-r-[5.128px] border-y border-r border-white-500 bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012]`}
@@ -195,7 +195,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                 placeholder="Search Post"
                 className={`${
                   selectedPostId === '' && searchPost !== '' ? 'border-b border-white-500 tablet:border-b-[3px]' : ''
-                } flex w-full resize-none items-center rounded-[5.387px] bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px]`}
+                } text-gray-1 flex w-full resize-none items-center rounded-[5.387px] bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px]`}
               />
               {/* </div> */}
               {/* To Render and Select The Post */}

@@ -60,7 +60,7 @@ export default function ViewMyLists({ handleClose, modalVisible }) {
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
         {listData?.length >= 1 && (
           <>
-            <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
+            <h4 className="text-gray-1 text-[10px] font-medium leading-normal dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
               Collections
             </h4>
             <div className="relative my-3 tablet:my-[25px]">
@@ -108,7 +108,7 @@ export default function ViewMyLists({ handleClose, modalVisible }) {
                     className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-white-500 bg-[#FBFBFB] p-2 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
                   >
                     <div className="w-fit space-y-2 tablet:space-y-5">
-                      <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                      <h4 className="text-gray-1 text-[10px] font-normal leading-[10px] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
                         {item.category}
                       </h4>
                       <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] dark:text-gray-300 tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">

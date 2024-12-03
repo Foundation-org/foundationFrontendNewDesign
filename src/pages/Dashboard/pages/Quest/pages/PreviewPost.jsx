@@ -73,7 +73,7 @@ export default function PreviewPost() {
                 />
                 <QuestionCardWithToggle questStartData={post} />
                 {state.state.moderationRatingCount !== 0 && (
-                  <p className="pb-3 pt-5 text-[12px] italic text-gray-900 dark:text-accent-300 tablet:pb-5 tablet:pt-8 tablet:text-[24px] tablet:leading-[30px]">
+                  <p className="text-gray-1 pb-3 pt-5 text-[12px] italic dark:text-accent-300 tablet:pb-5 tablet:pt-8 tablet:text-[24px] tablet:leading-[30px]">
                     Your post will show under the Adult content category. You can try rephrasing to make the post show
                     to everyone, or continue as-is.
                   </p>

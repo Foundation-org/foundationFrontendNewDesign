@@ -40,9 +40,7 @@ export default function Web3({
         onboarding={onboarding}
       />
       {isVerificationBadge && (
-        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-          Linking your wallet offers additional FDX transaction options.
-        </h1>
+        <h1 className="summary-text">Linking your wallet offers additional FDX transaction options.</h1>
       )}
       <div className="flex flex-col items-center gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">
         {web3.map((item, index) => (
@@ -61,7 +59,7 @@ export default function Web3({
             <div
               className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
             >
-              <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
+              <h1 className="text-gray text-[2.11vw] font-medium leading-normal dark:text-gray-400 tablet:text-[20px]">
                 {item.title}
               </h1>
             </div>

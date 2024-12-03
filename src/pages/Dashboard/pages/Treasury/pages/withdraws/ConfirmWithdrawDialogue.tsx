@@ -39,47 +39,47 @@ export default function ConfirmWithdrawDialogue({
       isBackground={false}
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-[25px]">
+        <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-[25px]">
           Please carefully review all your details. Once confirmed, no further changes can be made. Click "Confirm
           Withdrawal" to finalize your action.
         </h1>
         <div className="mb-[15px] mt-10 flex justify-between">
           <div className="flex-col">
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               Address
             </h1>
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               Network
             </h1>
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               Withdrawal Amount
             </h1>
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               Remaining Amount
             </h1>
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               Transaction Fee
             </h1>
-            {/* <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            {/* <h1 className="text-gray-1 text-[10px] leading-[12px] dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               Source
             </h1> */}
           </div>
           <div className="flex-col">
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               {address}
             </h1>
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               Base
             </h1>
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               {amount}
             </h1>
-            <h1 className="text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
+            <h1 className="text-[10px] leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal">
               {remainingAmount}
             </h1>
 
             <h1
-              className={`${txFee ? 'text-green-200' : 'text-[#F93838]'} text-[10px] leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[18px] tablet:leading-normal`}
+              className={`${txFee ? 'text-green-200' : 'text-[#F93838]'} text-gray-150 text-[10px] leading-[12px] dark:text-gray-300 tablet:text-[18px] tablet:leading-normal`}
             >
               {txFee ? 'No fee applied' : 'Applied'}
             </h1>
