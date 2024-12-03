@@ -66,6 +66,11 @@ export default function PreviewPost() {
           <Breadcrumb />
           <div className="mx-auto flex h-[calc(100dvh-134px)] w-full max-w-[1440px] tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 desktop:mx-auto desktop:px-0">
             <div className="w-full overflow-y-auto py-2 no-scrollbar tablet:px-6 tablet:py-5 laptop:px-0">
+              {persistedUserInfo?.notificationSettings?.systemNotifications ? (
+                <div className="mx-auto mb-4 max-w-[730px] px-4 tablet:px-0">
+                  <SystemNotificationCard post={dyk[0]} />
+                </div>
+              ) : null}
               <div className="relative mx-auto max-w-[730px] px-4 tablet:px-0">
                 <div
                   className="absolute left-0 top-0 z-20 size-full cursor-default"
@@ -73,7 +78,7 @@ export default function PreviewPost() {
                 />
                 <QuestionCardWithToggle questStartData={post} />
                 {state.state.moderationRatingCount !== 0 && (
-                  <p className="text-gray-1 pb-3 pt-5 text-[12px] italic dark:text-accent-300 tablet:pb-5 tablet:pt-8 tablet:text-[24px] tablet:leading-[30px]">
+                  <p className="pb-3 pt-5 text-[12px] italic text-gray-1 dark:text-accent-300 tablet:pb-5 tablet:pt-8 tablet:text-[24px] tablet:leading-[30px]">
                     Your post will show under the Adult content category. You can try rephrasing to make the post show
                     to everyone, or continue as-is.
                   </p>
@@ -103,7 +108,7 @@ export default function PreviewPost() {
               </div>
               {persistedUserInfo?.notificationSettings?.systemNotifications ? (
                 <div className="mx-auto mb-4 max-w-[730px] px-4 tablet:px-0">
-                  <SystemNotificationCard post={dyk} />
+                  <SystemNotificationCard post={dyk[1]} />
                 </div>
               ) : null}
             </div>
