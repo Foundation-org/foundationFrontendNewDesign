@@ -61,6 +61,7 @@ const IdentityBadgePopup = ({
   const [currentStep, setCurrentStep] = useState(1);
   const [frontImage, setFrontImage] = useState(null);
   const [backImage, setBackImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [video, setVideo] = useState(null);
   const [countdown, setCountdown] = useState(5);
   const videoRef = useRef(null);
@@ -145,10 +146,96 @@ const IdentityBadgePopup = ({
     }, 1000);
   };
 
-  // Handle file upload (front, back images)
-  const handleImageUpload = (e, setImage) => {
+  // Function to check if the image is blurry
+  const checkIfBlurry = (imageData) => {
+    const width = imageData.width;
+    const height = imageData.height;
+    let sumLaplacian = 0;
+    let count = 0;
+
+    // Loop through the image data to apply Laplacian filter
+    for (let y = 1; y < height - 1; y++) {
+      for (let x = 1; x < width - 1; x++) {
+        const idx = (y * width + x) * 4; // RGBA index
+
+        // Pixel values: Current, Right, Bottom, Diagonal (Bottom-Right)
+        const currentPixel = imageData.data[idx];
+        const rightPixel = imageData.data[idx + 4];
+        const bottomPixel = imageData.data[idx + width * 4];
+        const bottomRightPixel = imageData.data[idx + (width + 1) * 4];
+
+        // Compute the Laplacian (sum of absolute differences in all directions)
+        const laplacian =
+          Math.abs(currentPixel - rightPixel) +
+          Math.abs(currentPixel - bottomPixel) +
+          Math.abs(currentPixel - bottomRightPixel);
+
+        sumLaplacian += laplacian;
+        count++;
+      }
+    }
+
+    // Calculate the average Laplacian value (variance proxy)
+    const averageLaplacian = sumLaplacian / count;
+
+    // Adjust threshold based on experiments
+    const threshold = 1; // More sensitive than before
+    return averageLaplacian < threshold;
+  };
+
+  const handleImageUpload = async (e, setImage, type) => {
     const file = e.target.files[0];
-    if (file) setImage(file);
+    if (file) {
+      setLoading(true);
+      const reader = new FileReader();
+
+      reader.onload = async () => {
+        const img = new Image();
+        img.onload = async () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+          if (checkIfBlurry(imageData)) {
+            showToast('error', 'blurryImage');
+            setLoading(false);
+            return;
+          }
+
+          // Now use the file in FormData
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('type', type);
+
+          try {
+            const response = await api.post('/app/detectLabels', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            });
+
+            if (response.status === 200) {
+              setImage(file);
+              showToast('success', 'verifiedIdentity');
+              goToNextStep();
+            } else if (response.status === 403) {
+              showToast('error', 'unVerifiedIdentity');
+            }
+          } catch (error) {
+            console.error('Error detecting labels:', error);
+            showToast('error', 'documentDetectionError');
+          } finally {
+            setLoading(false);
+          }
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // Use the custom hook for identity verification
@@ -174,7 +261,7 @@ const IdentityBadgePopup = ({
       console.log('Verification successful:', response); // Optionally log the response
     } catch (error) {
       console.error('Verification failed:', error);
-      showToast('error', error.message || 'Verification failed');
+      showToast('error', 'verificationFailed');
     }
   };
 
@@ -195,11 +282,11 @@ const IdentityBadgePopup = ({
         handleClose(); // Close the modal or perform any other action
       } else {
         // Handle error from the addIdentity API
-        showToast('error', 'Failed to add badge.');
+        showToast('error', 'errorAddingBadge');
       }
     } catch (error) {
       console.error('Failed to add badge:', error);
-      showToast('error', error.message || 'Failed to add badge');
+      showToast('error', 'errorAddingBadge');
     } finally {
       setIsAdding(false); // End loading for adding the badge
     }
@@ -214,9 +301,14 @@ const IdentityBadgePopup = ({
         </Button>
       )}
       {currentStep < 4 ? (
-        <Button variant="submit" onClick={goToNextStep} disabled={isNextStepDisabled()}>
-          Next Step
-        </Button>
+        loading ?
+          <Button variant="submit">
+            <FaSpinner className="animate-spin" />
+          </Button>
+          :
+          <Button variant="submit" onClick={goToNextStep} disabled={isNextStepDisabled()}>
+            Next Step
+          </Button>
       ) : isVerified ? (
         <Button variant="submit" onClick={addIdentity && handleAddBadge} disabled={isAdding}>
           {isAdding ? <FaSpinner className="animate-spin" /> : 'Add Badge'}
@@ -276,7 +368,7 @@ const IdentityBadgePopup = ({
                     <>
                       <FileUploadButton
                         label="Upload the Front Side of Your Identity Card"
-                        onChange={(e) => handleImageUpload(e, setFrontImage)}
+                        onChange={(e) => handleImageUpload(e, setFrontImage, "front")}
                       />
                       {frontImage && (
                         <img
@@ -293,7 +385,7 @@ const IdentityBadgePopup = ({
                     <>
                       <FileUploadButton
                         label="Upload the Back Side of Your Identity Card"
-                        onChange={(e) => handleImageUpload(e, setBackImage)}
+                        onChange={(e) => handleImageUpload(e, setBackImage, "back")}
                       />
                       {backImage && (
                         <img
