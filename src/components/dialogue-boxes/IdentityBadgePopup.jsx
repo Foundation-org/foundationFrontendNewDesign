@@ -212,7 +212,7 @@ const IdentityBadgePopup = ({
           formData.append('type', type);
 
           try {
-            const response = await api.post('/app/detectLabels', formData, {
+            const response = await api.post('/app/detectDocument', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
