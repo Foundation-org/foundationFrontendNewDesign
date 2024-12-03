@@ -38,7 +38,7 @@ export default function Withdraws() {
   };
 
   return (
-    <div className="h-[calc(100dvh-174px)] overflow-y-auto px-4 no-scrollbar tablet:h-[calc(100dvh-173.63px)] tablet:px-6 laptop:h-[calc(100dvh-96px)]">
+    <div className="mb-6 h-[calc(100dvh-174px)] overflow-y-auto px-4 no-scrollbar tablet:h-[calc(100dvh-173.63px)] tablet:px-6 laptop:h-[calc(100dvh-96px)]">
       {checkWeb3Badge() ? (
         <div className="flex flex-col gap-3 tablet:gap-6">
           <MetaMaskProvider

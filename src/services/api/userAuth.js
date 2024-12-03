@@ -95,11 +95,16 @@ export const changePassword = async (params) => {
   return await api.put('/user/changePassword', params);
 };
 
-export const getAllLedgerData = async (page, limit, sort) => {
+export const getAllLedgerData = async (page, limit, sort, type) => {
   const uuid = localStorage.getItem('uuid');
-  return await api.get('/ledger/ledgerById', {
-    params: { page, limit, sort, uuid },
-  });
+
+  const params = { page, limit, sort, uuid };
+
+  if (type === 'withdraw') {
+    params.type = type;
+  }
+
+  return await api.get('/ledger/ledgerById', { params });
 };
 
 export const getAllRadeemLedgerData = async (page, limit, sort) => {

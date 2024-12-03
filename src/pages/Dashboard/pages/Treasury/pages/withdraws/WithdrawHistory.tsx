@@ -8,6 +8,7 @@ import {
   flexRender,
   ColumnResizeDirection,
 } from '@tanstack/react-table';
+import WithdrawLedger from '../../../Profile/pages/WithdrawLedger';
 
 type Person = {
   firstName: string;
@@ -99,8 +100,8 @@ export default function WithdrawHistory() {
 
   return (
     <SummaryCard headerIcon="/assets/svgs/withdraw-ledger.svg" headerTitle="Withdraw History">
-      {/* <div className="overflow-x-auto">
-        <table
+      <WithdrawLedger />
+      {/* <table
           {...{
             style: {
               width: table.getCenterTotalSize(),
@@ -163,9 +164,7 @@ export default function WithdrawHistory() {
               </tr>
             ))}
           </tbody>
-        </table>
-      </div> */}
-      Coming Soon
+        </table> */}
     </SummaryCard>
   );
 }

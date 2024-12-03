@@ -42,8 +42,14 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
 
   return (
     <>
+      {persistedUserInfo?.notificationSettings?.systemNotifications ? (
+        <div className="mx-auto mb-4 max-w-[730px] px-4 tablet:px-0">
+          <SystemNotificationCard post={dyk[0]} />
+        </div>
+      ) : null}
+
       <div className="mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white px-[30px] py-3 dark:border dark:border-gray-100 dark:bg-gray-200 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:px-[50px] tablet:py-[27px] laptop:px-4 laptop:py-[25px] desktop:px-[50px]">
-        <h1 className="text-gray-1 text-[10px] font-semibold leading-[10px] dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+        <h1 className="text-[10px] font-semibold leading-[10px] text-gray-1 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
           Add Media (optional)
         </h1>
         <h4 className="mt-2 text-[8px] font-medium leading-[8px] text-gray-800 tablet:mt-3 tablet:text-[16px] tablet:leading-[16px]">
@@ -123,7 +129,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         <AddPictureUrls handleTab={handleTab} />
         <AddGif handleTab={handleTab} />
         <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12">
-          <h1 className="text-gray-1 text-[10px] font-semibold leading-[10px] dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+          <h1 className="text-[10px] font-semibold leading-[10px] text-gray-1 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
             {quest === 'M/R' || quest === 'OpenChoice'
               ? 'Make a statement or pose a question'
               : quest === 'Statement'
@@ -139,7 +145,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
               value={createQuestSlice.question}
               tabIndex={3}
               onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(2, 'Enter'))}
-              className="text-gray-1 w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[7px] text-[10px] font-medium leading-3 tracking-wide focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
+              className="w-full resize-none rounded-l-[5.128px] border-y border-l border-white-500 bg-white px-[9.24px] py-[7px] text-[10px] font-medium leading-3 tracking-wide text-gray-1 focus-visible:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             />
 
             <button
@@ -153,7 +159,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             </button>
           </div>
         </div>
-        <h1 className="text-gray-1 mt-4 text-[10px] font-semibold leading-[10px] dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+        <h1 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-1 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
           Options
         </h1>
         <h4 className="my-2 text-[8px] font-medium leading-normal text-gray-800 tablet:my-3 tablet:text-[16px] tablet:leading-[16px]">
@@ -164,7 +170,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
 
       {persistedUserInfo?.notificationSettings?.systemNotifications ? (
         <div className="mx-auto mb-4 max-w-[730px] px-4 tablet:px-0">
-          <SystemNotificationCard post={dyk} />
+          <SystemNotificationCard post={dyk[1]} />
         </div>
       ) : null}
     </>

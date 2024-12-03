@@ -147,36 +147,36 @@ export default function WithdrawBalance() {
             type="text"
             value="FDX"
             disabled
-            className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+            className="w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
           />
         </div>
         <div className="flex flex-col gap-2 tablet:gap-[15px]">
           <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Withdraw to
           </p>
-          <p className="text-gray-1 min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-gray-1 tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Address
           </p>
           <input
             type="text"
             value={toAddress}
             disabled
-            className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+            className="w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
           />
         </div>
         <div className="flex flex-col gap-2 tablet:gap-[15px]">
-          <p className="text-gray-1 min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-gray-1 tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Withdrawal Network
           </p>
           <input
             type="text"
             value="Base"
             disabled
-            className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+            className="w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
           />
         </div>
         <div className="flex flex-col gap-2 tablet:gap-[15px]">
-          <p className="text-gray-1 min-w-[120px] text-[12px] font-semibold leading-[113%] tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
+          <p className="min-w-[120px] text-[12px] font-semibold leading-[113%] text-gray-1 tablet:min-w-[180px] tablet:text-[18px] tablet:leading-normal">
             Amount Withdraw
           </p>
           <div className="flex items-center gap-5">
@@ -185,7 +185,7 @@ export default function WithdrawBalance() {
                 type="number"
                 value={amount}
                 onChange={handleFdxChange}
-                className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
+                className="w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
               />
               <div className="absolute flex w-full justify-between gap-2 tablet:gap-[15px]">
                 <p className="text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
