@@ -309,15 +309,15 @@ export const personal = [
     type: 'security-question',
     disabled: false,
   },
-  // {
-  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
-  //   title: 'Identity',
-  //   ButtonColor: 'submit',
-  //   NoOfButton: 5,
-  //   ButtonText: 'Add Badge',
-  //   type: 'identity',
-  //   disabled: false,
-  // },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+    title: 'Identity',
+    ButtonColor: 'submit',
+    NoOfButton: 5,
+    ButtonText: 'Add Badge',
+    type: 'identity',
+    disabled: false,
+  },
 ];
 
 export const homepageBadges = [
