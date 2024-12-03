@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../../../../../../components/ui/Button';
 import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
@@ -7,65 +7,126 @@ import { useSDK } from '@metamask/sdk-react';
 import Web3 from 'web3';
 import SummaryCard from '../../../../../../components/SummaryCard';
 import ConfirmWithdrawDialogue from './ConfirmWithdrawDialogue';
+import { useMutation } from '@tanstack/react-query';
+import { fetchFeeBalance, widthrawFdx } from '../../../../../../services/api/widthrawls';
+import showToast from '../../../../../../components/ui/Toast';
 
 export default function WithdrawBalance() {
-  const [dollar, setDollar] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [confirmWithdraw, setConfirmWithdraw] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { sdk, connected, connecting, provider, chainId } = useSDK();
+  const [txFee, setTxFee] = useState(false);
+  const { mutateAsync: createWidthrawl } = useMutation({
+    mutationFn: widthrawFdx,
+    onSuccess: async (response) => {
+      showToast('success', 'widthrawlSuccessful');
+      console.log(response);
+    },
+    onError: (err: any) => {
+      console.log(err);
+
+      showToast('error', 'error', {}, err?.response?.data?.message);
+    },
+  });
+
+  const { mutateAsync: checkFeeInitial } = useMutation({
+    mutationFn: fetchFeeBalance,
+    onSuccess: async (response) => {
+      setTxFee(response?.data?.feeByFoundation);
+      console.log(response?.data);
+    },
+    onError: (err: any) => {
+      console.log(err);
+
+      showToast('error', 'error', {}, err?.response?.data?.message);
+    },
+  });
+
+  const { mutateAsync: checkFee } = useMutation({
+    mutationFn: fetchFeeBalance,
+    onSuccess: async (response) => {
+      setTxFee(response?.data?.feeByFoundation);
+      if (response?.data?.issuerBalance > amount) {
+        handleWithdraw(response?.data?.feeByFoundation);
+      }
+    },
+    onError: (err: any) => {
+      console.log(err);
+
+      showToast('error', 'error', {}, err?.response?.data?.message);
+    },
+  });
 
   const toAddress = persistedUserInfo?.badges?.find((badge: any) => badge?.web3?.hasOwnProperty('etherium-wallet'))
     ?.web3['etherium-wallet'];
 
   const handleFdxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fdxValue = parseFloat(e.target.value);
-    setDollar(fdxValue);
+    setAmount(fdxValue);
   };
 
   const checkWeb3Badge = () =>
     persistedUserInfo?.badges?.some((badge: any) => badge?.web3?.hasOwnProperty('etherium-wallet') || false) || false;
 
-  const handleWithdraw = async () => {
+  function stringifyBigInt(obj: any) {
+    return JSON.stringify(obj, (key, value) => (typeof value === 'bigint' ? value.toString() : value));
+  }
+
+  const handleWithdraw = async (feeByFoundation: boolean) => {
     if (!checkWeb3Badge()) {
       toast.warning('Please add Ethereum badge first!');
       return;
     }
 
-    if (dollar <= 0 || Number.isNaN(dollar)) {
+    if (amount <= 0 || Number.isNaN(amount)) {
       toast.warning('Please enter a valid value');
       return;
     }
 
-    if (dollar > persistedUserInfo?.balance) {
+    if (amount > persistedUserInfo?.balance) {
       toast.warning('Insufficient balance');
       return;
     }
 
     try {
-      const accounts = (await sdk?.connect()) as string[] | null;
+      let transaction;
+      if (!feeByFoundation) {
+        const accounts = (await sdk?.connect()) as string[] | null;
 
-      if (!accounts || accounts.length === 0) {
-        toast.error('No accounts found. Please connect your wallet.');
-        return;
+        if (!accounts || accounts.length === 0) {
+          toast.error('No accounts found. Please connect your wallet.');
+          return;
+        }
+
+        if (connected && provider) {
+          const web3 = new Web3(provider);
+          const contract = new web3.eth.Contract(ABI, import.meta.env.VITE_TRANSFERTOKEN_AGREEMENT);
+
+          // Convert amount value to Wei
+          const amountInWei = web3.utils.toWei(amount.toString(), 'ether');
+
+          // Calling the transferTokens method on the contract
+          const transaction = await contract.methods
+            .transferTokens(import.meta.env.VITE_DEPLOYER_ACCOUNT, toAddress, amountInWei)
+            .send({
+              from: accounts[0],
+            });
+
+          console.log({ transaction });
+        } else {
+          toast.error('Please install metamask first');
+        }
       }
 
-      if (connected && provider) {
-        const web3 = new Web3(provider);
-        const contract = new web3.eth.Contract(ABI, import.meta.env.VITE_TRANSFERTOKEN_AGREEMENT);
-
-        // Convert dollar value to Wei
-        const amountInWei = web3.utils.toWei(dollar.toString(), 'ether');
-
-        // Calling the transferTokens method on the contract
-        const transaction = await contract.methods.transferTokens(toAddress, amountInWei).send({
-          from: accounts[0],
-        });
-
-        console.log({ transaction });
-        toast.success('withdraw successful');
-      } else {
-        toast.error('Please install metamask first');
-      }
+      createWidthrawl({
+        uuid: persistedUserInfo?.uuid,
+        amount: amount,
+        data: stringifyBigInt(transaction),
+        from: import.meta.env.VITE_DEPLOYER_ACCOUNT,
+        to: toAddress,
+        feesPaid: false,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +170,7 @@ export default function WithdrawBalance() {
           </p>
           <input
             type="text"
-            value="ERC20"
+            value="Base"
             disabled
             className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
           />
@@ -122,7 +183,7 @@ export default function WithdrawBalance() {
             <div className="relative w-full max-w-[380px]">
               <input
                 type="number"
-                value={dollar}
+                value={amount}
                 onChange={handleFdxChange}
                 className="h-[24px] w-full rounded-[3.204px] border-[1.358px] border-white-500 bg-[#F9F9F9] px-2 text-[9.053px] font-semibold leading-normal focus:outline-none tablet:h-[44px] tablet:rounded-[9.228px] tablet:border-[3px] tablet:px-4 tablet:text-[18px]"
               />
@@ -131,7 +192,7 @@ export default function WithdrawBalance() {
                   Remaining Amount
                 </p>
                 <p className="text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
-                  {Number(persistedUserInfo?.balance || 0) - Number(dollar || 0)} FDX
+                  {Number(persistedUserInfo?.balance || 0) - Number(amount || 0)} FDX
                 </p>
               </div>
             </div>
@@ -141,10 +202,11 @@ export default function WithdrawBalance() {
           </div>
         </div>
         <Button
-          variant={checkWeb3Badge() ? 'submit' : 'hollow-submit'}
-          type="submit"
-          disabled={checkWeb3Badge() ? false : true}
+          variant={amount > 0 ? 'submit' : 'hollow-submit'}
+          type={'submit'}
+          disabled={checkWeb3Badge() && amount > 0 ? false : true}
           onClick={() => {
+            checkFeeInitial();
             setConfirmWithdraw(true);
           }}
           className="max-w-1/2 tablet:max-w-1/2 mx-auto mt-[10px] w-1/2 tablet:mt-[25px] tablet:min-w-[50%]"
@@ -158,9 +220,11 @@ export default function WithdrawBalance() {
           modalVisible={confirmWithdraw}
           title={'Confirm Withdrawal'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/confirm-withdraw.svg`}
-          handleWithdraw={handleWithdraw}
+          handleWithdraw={checkFee}
           address={toAddress}
-          amount={dollar}
+          amount={amount}
+          remainingAmount={Number(persistedUserInfo?.balance || 0) - Number(amount || 0)}
+          txFee={txFee}
         />
       )}
     </SummaryCard>

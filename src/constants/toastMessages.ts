@@ -113,4 +113,5 @@ export const toastMessages = {
   spotLightAlreadyExists: 'Only one spotlight is allowed at a time.',
   noPostsInList: 'Please add posts to view results',
   noListLink: 'This collection is not shared yet',
+  widthrawlSuccessful:'Widthrawl Successful'
 } as const;
