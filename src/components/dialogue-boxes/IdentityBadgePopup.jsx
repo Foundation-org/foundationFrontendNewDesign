@@ -68,6 +68,7 @@ const IdentityBadgePopup = ({
   const [recording, setRecording] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [addIdentity, setAddIdentity] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const mediaRecorderRef = useRef(null);
   const recordedChunks = useRef([]);
@@ -241,7 +242,7 @@ const IdentityBadgePopup = ({
   // Use the custom hook for identity verification
   const {
     mutateAsync: verifyIdentity,
-    isLoading: isSubmitting,
+    isLoading,
     isError,
     isSuccess,
   } = useVerifyIdentity({
@@ -255,10 +256,11 @@ const IdentityBadgePopup = ({
   // Handle identity verification submission
   const handleSubmit = async () => {
     try {
+      setIsSubmitting(true);
       const response = await verifyIdentity();
       setIsVerified(true);
       setAddIdentity(response);
-      console.log('Verification successful:', response); // Optionally log the response
+      setIsSubmitting(false);
     } catch (error) {
       console.error('Verification failed:', error);
       showToast('error', 'verificationFailed');
@@ -310,13 +312,23 @@ const IdentityBadgePopup = ({
             Next Step
           </Button>
       ) : isVerified ? (
-        <Button variant="submit" onClick={addIdentity && handleAddBadge} disabled={isAdding}>
-          {isAdding ? <FaSpinner className="animate-spin" /> : 'Add Badge'}
-        </Button>
+        isAdding ?
+          <Button variant="submit">
+            <FaSpinner className="animate-spin" />
+          </Button>
+          :
+          <Button variant="submit" onClick={addIdentity && handleAddBadge} disabled={isAdding}>
+            Add Badge
+          </Button>
       ) : (
-        <Button variant="submit" onClick={handleSubmit} disabled={isSubmitting}>
-          {isSubmitting ? <FaSpinner className="animate-spin" /> : 'Verify'}
-        </Button>
+        isSubmitting ?
+          <Button variant="submit">
+            <FaSpinner className="animate-spin" />
+          </Button>
+          :
+          <Button variant="submit" onClick={handleSubmit} disabled={isSubmitting}>
+            Verify
+          </Button>
       )}
     </div>
   );
@@ -475,6 +487,7 @@ const IdentityBadgePopup = ({
                 <p className="summary-text">Your identity information</p>
                 {identityBadge &&
                   Object.entries(identityBadge).map(([key, value]) => (
+                    key !== "isExpired" &&
                     <div key={key} className="flex justify-between">
                       <span className="text-xs font-bold capitalize tablet:text-base">
                         {key.replace(/([A-Z])/g, ' $1')}
