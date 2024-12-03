@@ -113,5 +113,10 @@ export const toastMessages = {
   spotLightAlreadyExists: 'Only one spotlight is allowed at a time.',
   noPostsInList: 'Please add posts to view results',
   noListLink: 'This collection is not shared yet',
-  widthrawlSuccessful:'Widthrawl Successful'
+  blurryImage: 'Image too blurry, Please try clear image again.',
+  verifiedIdentity: 'Identity Varified!',
+  unVerifiedIdentity: 'The image does not appear to be a valid document.',
+  documentDetectionError: 'An error occurred while detecting the document. Please try again.',
+  verificationFailed: 'Verification failed',
+  widthrawlSuccessful: 'Widthrawl Successful'
 } as const;
