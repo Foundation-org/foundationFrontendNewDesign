@@ -542,15 +542,11 @@ const CollectionCard = ({ listData, page }) => {
                     categoryItem={categoryItem}
                     setSelectedItem={setSelectedItem}
                     setCategoryId={setCategoryId}
-                    setAddPostModal={setAddPostModal}
-                    hasReordered={hasReordered}
                     listData={listData}
                     categoryIndex={categoryIndex}
                     setCopyModal={setCopyModal}
                     setEnableDisableModal={setEnableDisableModal}
                     setEnableDisableType={setEnableDisableType}
-                    notPublicProfile={notPublicProfile}
-                    setModalVisible={setModalVisible}
                     copyToClipboard={copyToClipboard}
                   />
                 )}

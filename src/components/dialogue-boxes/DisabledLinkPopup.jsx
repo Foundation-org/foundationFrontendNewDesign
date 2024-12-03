@@ -21,10 +21,25 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
 
       if (questUtils.sharedQuestStatus.type === 'Delete') {
+        // queryClient.setQueriesData(['sharedLink'], (oldData) => {
+        //   return {
+        //     ...oldData,
+        //     pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        //   };
+        // });
         queryClient.setQueriesData(['sharedLink'], (oldData) => {
+          if (!oldData || !oldData.pages) return oldData;
+
+          const updatedPages = oldData.pages.map((page, index) => {
+            if (!Array.isArray(page)) {
+              return page;
+            }
+            return page.filter((item) => item._id !== resp.data.data.questForeignKey);
+          });
+
           return {
             ...oldData,
-            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+            pages: updatedPages,
           };
         });
       }
@@ -68,6 +83,14 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       setIsLoading(false);
       handleClose();
       console.log(err);
+    },
+    onSettled: () => {
+      const updatedLinks = queryClient.getQueryData(['sharedLink', '']);
+
+      // Invalidate if no pages or all pages are empty
+      if (!updatedLinks || updatedLinks.pages?.every((page) => page.length === 0)) {
+        queryClient.invalidateQueries(['sharedLink']);
+      }
     },
   });
 
