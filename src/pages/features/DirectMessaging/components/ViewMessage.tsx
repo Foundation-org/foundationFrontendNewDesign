@@ -69,7 +69,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
             {viewMessageData?.postQuestion && filter !== 'sent' && (
               <div className="mt-5 space-y-5">
                 <h1 className="text-gray-1 text-[12px] font-semibold leading-[12px] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
-                  You receive this message because of you engagement in the below post.
+                  You are receiving this message because you participated in the post below.
                 </h1>
                 {questStartData || singlePostData?.data.data[0] ? (
                   <QuestionCardWithToggle
