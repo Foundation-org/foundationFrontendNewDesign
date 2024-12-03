@@ -39,7 +39,7 @@ export default function Withdraws() {
 
   return (
     <div className="h-[calc(100dvh-174px)] overflow-y-auto px-4 no-scrollbar tablet:h-[calc(100dvh-173.63px)] tablet:px-6 laptop:h-[calc(100dvh-96px)]">
-      {/* {checkWeb3Badge() ? (
+      {checkWeb3Badge() ? (
         <div className="flex flex-col gap-3 tablet:gap-6">
           <MetaMaskProvider
             debug={false}
@@ -82,11 +82,11 @@ export default function Withdraws() {
             />
           </MetaMaskProvider>
         </div>
-      )} */}
+      )}
 
-      <p className="font-inter dark:text-gray mt-[3.319vh] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[4vw] laptop:text-[2.083vw]">
+      {/* <p className="font-inter dark:text-gray mt-[3.319vh] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[4vw] laptop:text-[2.083vw]">
         🚀 Withdrawals will be opening soon!
-      </p>
+      </p> */}
     </div>
   );
 }

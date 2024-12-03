@@ -118,4 +118,5 @@ export const toastMessages = {
   unVerifiedIdentity: 'The image does not appear to be a valid document.',
   documentDetectionError: 'An error occurred while detecting the document. Please try again.',
   verificationFailed: 'Verification failed',
+  widthrawlSuccessful: 'Widthrawl Successful'
 } as const;
