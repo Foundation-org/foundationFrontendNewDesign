@@ -19,7 +19,7 @@ const FeedEndStatus = ({
         <div className="flex items-center justify-center">
           <FaSpinner className="text-blue animate-spin text-[10vw] tablet:text-[4vw]" />
         </div>
-      ) : searchData && data?.pages[0].length === 0 ? (
+      ) : searchData && (data.pages.length === 0 || data?.pages[0].length) === 0 ? (
         <div className="my-[15vh] flex flex-col items-center justify-center">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
