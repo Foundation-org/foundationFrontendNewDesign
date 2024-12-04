@@ -63,7 +63,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
           </div>
         ) : (
           <>
-            <h1 className="text-[12px] font-semibold leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[22px] tablet:leading-[22px]">
+            <h1 className="text-[10px] font-medium leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[22px]">
               Subject: {viewMessageData?.subject}
             </h1>
             <p className="flex flex-col text-[10px] font-medium leading-[16px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[32px]">
