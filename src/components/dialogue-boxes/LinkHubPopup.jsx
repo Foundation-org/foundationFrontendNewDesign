@@ -15,10 +15,11 @@ import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifi
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useReOrderLinHubLinks } from '../../services/mutations/verification-adges';
+import { getIcon } from '../../services/imageProcessing';
 
 const LinkHubItem = ({
   id,
-  getBadgeIcon,
+  getIcon,
   item,
   deleteItem,
   setDeleteItem,
@@ -55,8 +56,11 @@ const LinkHubItem = ({
       <div className="py-3 tablet:py-[25px]">
         <div className="flex items-center gap-2 tablet:gap-4">
           <img
-            src={getBadgeIcon({ title: item.title, link: item.link })}
+            src={getIcon(item.link)}
             alt="save icon"
+            onError={(e) => {
+              e.target.src = "../../../public/assets/profile/default-link.svg";
+            }}
             className="size-[20.5px] rounded-full tablet:size-[35px]"
           />
           <div>
@@ -303,33 +307,6 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
     }
   };
 
-  function getBadgeIcon(badge) {
-    const iconMap = {
-      twitter: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
-      farcaster: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
-      github: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
-      facebook: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
-      linkedin: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
-      instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
-      soundcloud: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/soundcloud-fav.png`,
-      'ultimate-guitar': `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ultimate-guitar-fav.png`,
-      amazon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/amazon.png`,
-      ltk: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ltk.png`,
-      tiktok: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/tiktok.png`,
-    };
-
-    const title = badge.title.toLowerCase();
-    const link = badge.link.toLowerCase();
-
-    for (const [keyword, icon] of Object.entries(iconMap)) {
-      if (title.includes(keyword) || link.includes(keyword)) {
-        return icon;
-      }
-    }
-
-    return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/default-link.svg`;
-  }
-
   const checkHollow = () => {
     if (field1Data === '' || field2Data === '') {
       return true;
@@ -402,7 +379,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                       <LinkHubItem
                         key={item.id}
                         id={item.id}
-                        getBadgeIcon={getBadgeIcon}
+                        getIcon={getIcon}
                         item={item}
                         deleteItem={deleteItem}
                         setDeleteItem={setDeleteItem}

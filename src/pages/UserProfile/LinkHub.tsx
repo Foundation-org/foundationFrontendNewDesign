@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import api from '../../services/api/Axios';
 import { formatCountNumber } from '../../utils/utils';
+import { getIcon } from '../../services/imageProcessing';
 
 export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: string }) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
@@ -15,33 +16,6 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [showAll, setShowAll] = useState(false);
-
-  function getBadgeIcon(badge: { title: string; link: string }) {
-    const iconMap = {
-      twitter: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
-      farcaster: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
-      github: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
-      facebook: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
-      linkedin: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
-      instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
-      soundcloud: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/soundcloud-fav.png`,
-      'ultimate-guitar': `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ultimate-guitar-fav.png`,
-      amazon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/amazon.png`,
-      ltk: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ltk.png`,
-      tiktok: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/tiktok.png`,
-    };
-
-    const title = badge.title.toLowerCase();
-    const link = badge.link.toLowerCase();
-
-    for (const [keyword, icon] of Object.entries(iconMap)) {
-      if (title.includes(keyword) || link.includes(keyword)) {
-        return icon;
-      }
-    }
-
-    return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/default-link.svg`;
-  }
 
   const linkHubInc = async ({
     domainName,
@@ -146,8 +120,12 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
               >
                 <div className="flex items-center gap-[10px] tablet:gap-[15px]">
                   <img
-                    src={getBadgeIcon(badge)}
+                    src={getIcon(badge.link)}
                     alt="save icon"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "../../../public/assets/profile/default-link.svg";
+                    }}
                     className="size-[24.5px] rounded-full tablet:size-[35px]"
                   />
                   <h1 className="text-[12px] font-semibold leading-normal text-gray dark:text-[#f1f1f1] tablet:text-[18px]">

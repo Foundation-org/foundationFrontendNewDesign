@@ -117,8 +117,6 @@ const HomepageBadgePopup = ({
   };
 
   const handleDomainInputBlur = async () => {
-    console.log('domain blur ran');
-
     if (!domainBadge.domain.trim()) {
       return;
     }
@@ -312,9 +310,6 @@ const HomepageBadgePopup = ({
       return () => clearTimeout(timeoutId);
     }
   }, [changeCrop]);
-
-  console.log('prevState:', JSON.stringify(prevState.coordinates));
-  console.log('domainBadge:', JSON.stringify(domainBadge.coordinates));
 
   return (
     <>
