@@ -37,7 +37,11 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
             className="size-[12.325px] tablet:size-5"
           />
           <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? viewMessageData.to : viewMessageData.platform}
+            {filter === 'sent'
+              ? viewMessageData.to
+              : viewMessageData.platform === 'Foundation-IO.com'
+                ? 'Foundation'
+                : viewMessageData.platform}
           </h1>
         </div>
         <div className="flex items-center gap-1">
