@@ -36,7 +36,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
             alt="badge-logo"
             className="size-[12.325px] tablet:size-5"
           />
-          <h1 className="text-gray-1 max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
             {filter === 'sent' ? viewMessageData.to : viewMessageData.platform}
           </h1>
         </div>
@@ -46,7 +46,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <h2 className="text-gray-1 whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] dark:text-white tablet:text-[21.211px] tablet:leading-[13.071px]">
+          <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-gray-1 dark:text-white tablet:text-[21.211px] tablet:leading-[13.071px]">
             {timeAgo}
           </h2>
         </div>
@@ -59,16 +59,17 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
           </div>
         ) : (
           <>
-            <h1 className="text-gray-1 text-[12px] font-semibold leading-[12px] dark:text-gray-300 tablet:text-[22px] tablet:leading-[22px]">
-              {viewMessageData?.subject}
+            <h1 className="text-[12px] font-semibold leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[22px] tablet:leading-[22px]">
+              Subject: {viewMessageData?.subject}
             </h1>
-            <p className="text-gray-1 pl-3 text-[10px] font-medium leading-[16px] dark:text-gray-300 tablet:pl-7 tablet:text-[20px] tablet:leading-[32px]">
+            <p className="flex flex-col text-[10px] font-medium leading-[16px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[32px]">
+              <span>Message:</span>
               {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
             </p>
 
             {viewMessageData?.postQuestion && filter !== 'sent' && (
               <div className="mt-5 space-y-5">
-                <h1 className="text-gray-1 text-[12px] font-semibold leading-[12px] dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
+                <h1 className="text-[12px] font-semibold leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
                   You are receiving this message because you participated in the post below.
                 </h1>
                 {questStartData || singlePostData?.data.data[0] ? (

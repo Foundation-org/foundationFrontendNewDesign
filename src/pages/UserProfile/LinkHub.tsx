@@ -119,12 +119,10 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
       <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
         {/* <div className="relative mx-auto flex w-full max-w-[730px] flex-col items-center gap-[6px] rounded-[13.84px] border-2 border-[#D9D9D9] bg-white p-[18px] dark:border-gray-100 dark:bg-gray-200 tablet:gap-[10px] tablet:p-5"> */}
         {linkHub === 'No Link Hub badge added yet!' ? (
-          <>
-            <h1 className="text-gray-1 text-[11px] leading-normal dark:text-[#f1f1f1] tablet:text-[18px]">
-              You must add this badge to enable this feature.
-            </h1>
+          <div className="w-full rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-gray-1 dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]">
+            <h1 className="summary-text">You must add this badge to enable this feature.</h1>
             <HomepageBadge checkPseudoBadge={checkPseudoBadge} isProfile={true} isDomain={false} />
-          </>
+          </div>
         ) : (
           <>
             {displayedBadges?.map((badge: any) => (
@@ -152,7 +150,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                     alt="save icon"
                     className="size-[24.5px] rounded-full tablet:size-[35px]"
                   />
-                  <h1 className="text-gray text-[12px] font-semibold leading-normal dark:text-[#f1f1f1] tablet:text-[18px]">
+                  <h1 className="text-[12px] font-semibold leading-normal text-gray dark:text-[#f1f1f1] tablet:text-[18px]">
                     {badge.title}
                   </h1>
                 </div>
@@ -163,7 +161,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                       alt="clicks"
                       className="h-3 w-3 tablet:h-6 tablet:w-6"
                     />
-                    <h1 className="text-gray text-[12px] leading-normal dark:text-[#f1f1f1] tablet:text-[16px]">
+                    <h1 className="text-[12px] leading-normal text-gray dark:text-[#f1f1f1] tablet:text-[16px]">
                       {formatCountNumber(badge?.viewerCount?.length || 0)}
                     </h1>
                   </div>
