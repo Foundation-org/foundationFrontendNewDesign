@@ -19,6 +19,9 @@ export default function ProfileCard({ profile }: any) {
       if (badge.type === 'work') {
         return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`;
       }
+      if (badge.type === 'cell-phone') {
+        return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`;
+      }
       if (badge.details?.provider === 'twitter') {
         return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`;
       }
@@ -34,9 +37,6 @@ export default function ProfileCard({ profile }: any) {
       if (badge.details?.provider === 'farcaster') {
         return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`;
       }
-      if (badge.details?.type === 'cell-phone') {
-        return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`;
-      }
       if (badge.personal?.dateOfBirth) {
         return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/dob.svg`;
       }
@@ -49,11 +49,14 @@ export default function ProfileCard({ profile }: any) {
       if (badge.personal?.relationshipStatus) {
         return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`;
       }
+      if (badge.personal?.education) {
+        return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`;
+      }
       if (badge.personal?.work) {
         return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`;
       }
-      if (badge.personal?.education) {
-        return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`;
+      if (badge.personal?.sex) {
+        return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`;
       }
       if (badge.personal?.geolocation) {
         return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Geolocation-2x-1.png`;
