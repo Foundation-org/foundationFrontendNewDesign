@@ -27,7 +27,7 @@ const Collection = () => {
   return (
     <div className="flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:h-[calc(100vh-148px)] tablet:gap-5 tablet:px-6 tablet:pb-5">
       <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Collections">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Organize what posts matter most and get a deeper understanding of your audience with Collections. The more
           engagement your Collections receive, the more FDX you’ll earn! Shared collections will appear on your home
           page for all to see.

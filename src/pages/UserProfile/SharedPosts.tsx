@@ -93,7 +93,7 @@ export default function SharedPosts({ domain }: { domain: string }) {
           >
             {!isPublicProfile && (
               <>
-                <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+                <h1 className="summary-text">
                   Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you
                   earn. Shared posts are displayed on your Home Page for all to see.
                 </h1>

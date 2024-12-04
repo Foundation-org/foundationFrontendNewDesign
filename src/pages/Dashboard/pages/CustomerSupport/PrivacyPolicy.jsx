@@ -1,18 +1,15 @@
-import { useSelector } from 'react-redux';
 import { privacyPolicyData, summaryPoints } from '../../../../features/term-privacy/privacy-policy';
 
 const PrivacyPolicy = () => {
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-
   return (
-    <div className="mb-12 bg-white pb-5 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-t-[0.86513rem] tablet:dark:border">
-      <h1 className="py-3 pb-1 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] dark:text-gray-300 tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+    <div className="text-gray-1 mb-12 bg-white pb-5 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-t-[0.86513rem] tablet:dark:border">
+      <h1 className="py-3 pb-1 text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Privacy Policy
       </h1>
-      <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] dark:text-gray-300 tablet:text-[1.125rem] tablet:leading-[1.125rem]">
+      <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
         Last Updated: October 18, 2024
       </p>
-      <div className="term_policy_paragraph mt-[5px] space-y-[0.2rem] px-8 text-[#707175] dark:text-gray-300 tablet:mt-[15px] tablet:space-y-2 tablet:px-16">
+      <div className="term_policy_paragraph mt-[5px] space-y-[0.2rem] px-8 tablet:mt-[15px] tablet:space-y-2 tablet:px-16">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
           This Privacy Notice for Foundation Internet Organization, Inc. ("we," "us," or "our") outlines how and why we
           might collect, store, use, and/or share ("process") your information when you use our services ("Services").

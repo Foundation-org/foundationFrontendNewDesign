@@ -118,7 +118,7 @@ const VerificationPopups = ({
             )}
             <p
               htmlFor="email"
-              className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[24.2px]"
+              className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[24.2px]"
             >
               {title}
             </p>

@@ -119,7 +119,7 @@ const SidebarRight = ({ userData }) => {
             <img src={item.iconLight} alt={item.alt} className="h-10 w-10" />
           )}
 
-          <div className="flex w-full items-center justify-between text-[14px] font-medium leading-5 text-[#7C7C7C] dark:text-[#878787]">
+          <div className="text-gray-1 flex w-full items-center justify-between text-[14px] font-medium leading-5 dark:text-[#878787]">
             <div>
               <h5>{item.title?.split('-')[0]}</h5>
               <h5>{item.title?.split('-')[1]}</h5>

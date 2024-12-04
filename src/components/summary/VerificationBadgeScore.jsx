@@ -56,9 +56,7 @@ export default function VerificationBadgeScore({ isMobile, children }) {
       <div
         className={`border-x-[1.85px] border-b-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 tablet:py-[18.73px] ${isMobile ? 'rounded-[10px]' : 'rounded-b-[10px]'}`}
       >
-        <h1
-          className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal ${isMobile ? 'tablet:hidden' : ''}`}
-        >
+        <h1 className={`summary-text ${isMobile ? 'tablet:hidden' : ''}`}>
           Enhance your profile by adding verification badges. These badges not only increase your credibility but also
           unlock more earning opportunities within the Foundation community.
         </h1>

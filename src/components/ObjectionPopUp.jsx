@@ -17,7 +17,7 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
       handleClose={handleClose}
     >
       <div className="px-[17px] py-[10px] tablet:px-[80px] tablet:py-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-gray-1 text-[10px] font-medium leading-[12px] dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Are you sure you want to object to this option:
         </h1>
         <p className="mt-2 text-center text-[11px] font-semibold leading-[12.5px] text-[#707175] tablet:mt-[14px] tablet:text-[22px] tablet:leading-[25.63px]">

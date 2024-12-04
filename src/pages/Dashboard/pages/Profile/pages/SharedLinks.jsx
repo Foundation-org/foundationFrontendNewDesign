@@ -114,33 +114,33 @@ export default function SharedLinks() {
     <div>
       {/* Shared Posts Insights */}
       <ContentCard icon="assets/summary/share-posts-logo.svg" title="Shared Posts">
-        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you earn. Shared
           posts are displayed on your Home Page for all to see.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
               Posts you’ve shared
             </h1>
-            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+            <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
               {persistedUserInfo?.sharedQuestsStatistics.sharedQuests}
             </h5>
           </div>
 
           <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
               Total post engagement
             </h1>
-            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+            <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
               {persistedUserInfo?.sharedQuestsStatistics.totalQuestsCompleted}
             </h5>
           </div>
           <div>
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
               Total views
             </h1>
-            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+            <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
               {persistedUserInfo?.sharedQuestsStatistics.totalQuestsImpression}
             </h5>
           </div>

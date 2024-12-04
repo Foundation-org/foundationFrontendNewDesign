@@ -151,24 +151,24 @@ const RewardSchedule = () => {
         </div>
         <div className="flex items-center justify-between rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
           <div className="space-y-2">
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               Creating a post
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               Creating list
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               Create custom link
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               Sharing collections
             </p>
           </div>
           <div className="space-y-2 text-end">
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               +10 FDX
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               +10 FDX
             </p>
           </div>

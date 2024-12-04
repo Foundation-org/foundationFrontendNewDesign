@@ -93,15 +93,15 @@ const BuyBalance = ({ triggerPulse }) => {
           </h1>
         </div>
         <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+          <h1 className="text-gray-1 text-[12px] font-semibold leading-[113%] tablet:text-[16px] tablet:leading-normal">
             Need more FDX?
           </h1>
-          <p className="mt-[10px] text-[9px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:font-medium tablet:leading-normal">
+          <p className="text-gray-1 mt-[10px] text-[9px] font-normal leading-[113%] tablet:text-[16px] tablet:font-medium tablet:leading-normal">
             You can purchase more FDX from the Foundation treasury.
           </p>
           <div className="mt-3 flex flex-col items-center justify-center gap-[6px] tablet:mt-5 tablet:gap-3">
             <div className="flex w-full items-center justify-center gap-2 tablet:gap-6">
-              <h1 className="text-[9px] font-semibold leading-[113%] text-[#85898C] tablet:text-[20px] tablet:leading-normal">
+              <h1 className="text-gray-1 text-[9px] font-semibold leading-[113%] tablet:text-[20px] tablet:leading-normal">
                 FDX
               </h1>
               <input
@@ -118,7 +118,7 @@ const BuyBalance = ({ triggerPulse }) => {
               className="h-[10px] w-[14px] tablet:h-[26px] tablet:w-[36px]"
             />
             <div className="flex w-full items-center justify-center gap-2 tablet:gap-6">
-              <h1 className="w-[3ch] text-[9px] font-semibold leading-[113%] text-[#85898C] tablet:text-[20px] tablet:leading-normal">
+              <h1 className="text-gray-1 w-[3ch] text-[9px] font-semibold leading-[113%] tablet:text-[20px] tablet:leading-normal">
                 $
               </h1>
               <input

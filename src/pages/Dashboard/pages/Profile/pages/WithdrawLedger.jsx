@@ -1,20 +1,15 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDebounce } from '../../../../../utils/useDebounce';
-import {
-  getAllRadeemLedgerData,
-  getAllRedemptionLedgerData,
-  searchRedemptionLedger,
-} from '../../../../../services/api/userAuth';
-import { Columns } from '../../Profile/components/LedgerUtils';
+import { getAllLedgerData, searchLedger } from '../../../../../services/api/userAuth';
+import { withdrawalColumns } from '../components/LedgerUtils';
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import { useSelector, useDispatch } from 'react-redux';
-import LedgerTableTopbar from '../../Profile/components/LedgerTableTopbar';
+import LedgerTableTopbar from '../components/LedgerTableTopbar';
 import { format } from 'date-fns';
 import { updateColumnSize } from '../../../../../features/profile/legerSlice';
 
-export default function Ledger() {
+export default function WithdrawLedger() {
   const dispatch = useDispatch();
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const columnSizes = useSelector((state) => state.ledger);
   const itemsPerPage = 10;
@@ -29,7 +24,8 @@ export default function Ledger() {
 
   const fetchData = async () => {
     try {
-      const data = await getAllRedemptionLedgerData(currentPage, itemsPerPage, sort, persistedUserInfo.uuid);
+      const type = 'widthraw';
+      const data = await getAllLedgerData(currentPage, itemsPerPage, sort, type);
       if (data) {
         setLedgerData(data);
       }
@@ -40,13 +36,8 @@ export default function Ledger() {
 
   const findingLedger = async () => {
     try {
-      const data = await searchRedemptionLedger(
-        currentPage,
-        itemsPerPage,
-        sort,
-        debouncedSearch,
-        persistedUserInfo.uuid
-      );
+      const uuid = localStorage.getItem('uuid');
+      const data = await searchLedger(uuid, currentPage, itemsPerPage, sort, debouncedSearch);
       if (data) {
         setLedgerData(data);
       }
@@ -64,7 +55,7 @@ export default function Ledger() {
   }, [sort, debouncedSearch, currentPage]);
 
   const columns = useMemo(() => {
-    const tempColumns = Columns.map((column) => {
+    const tempColumns = withdrawalColumns.map((column) => {
       const id = column.accessorKey;
       const size = columnSizes[id];
       return {
@@ -74,14 +65,14 @@ export default function Ledger() {
     });
 
     return tempColumns;
-  }, [Columns]);
+  }, [withdrawalColumns]);
 
   const table = useReactTable({
     data: ledgerData?.data?.data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    columnResizeMode: 'onChange', // onChange onEnd
+    columnResizeMode: 'onChange',
   });
 
   //   custom pagination
@@ -91,10 +82,6 @@ export default function Ledger() {
 
   const handlePageClick = async (page) => {
     setCurrentPage(page);
-    // const data = await getAllRadeemLedgerData(page, itemsPerPage, sort);
-    // if (data) {
-    //   setLedgerData(data);
-    // }
   };
 
   const visibleButtons = 5;
@@ -115,44 +102,21 @@ export default function Ledger() {
 
   return (
     <div className="overflow-y-auto">
-      <div className="ledger-light dark:ledger-dark mx-[17px] mb-1 rounded-[7.89px] bg-white px-[0.59rem] py-[13px] text-left dark:border-[2.56px] dark:border-gray-100 dark:bg-gray-200 tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]">
+      <div className="mb-2 bg-white text-left dark:bg-gray-200">
         <LedgerTableTopbar
-          isTreasury={false}
           sort={sort}
           setsort={setsort}
           filterText={filterText}
           setFilterText={setFilterText}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
+          fromPage={'withdrawals'}
         />
-        <div className="relative w-full overflow-auto no-scrollbar tablet:h-[600px]">
-          <table
-            className="w-full"
-            // style={{
-            //   minWidth:
-            //     window.innerWidth <= 1700 && window.innerWidth >= 744
-            //       ? '600px'
-            //       : window.innerWidth <= 744 && window.innerWidth >= 0
-            //         ? '350px'
-            //         : 'auto',
-            //   width:
-            //     window.innerWidth <= 1700 && window.innerWidth >= 900
-            //       ? '100%'
-            //       : window.innerWidth <= 900 && window.innerWidth >= 744
-            //         ? '120%'
-            //         : window.innerWidth <= 744 && window.innerWidth >= 0
-            //           ? '100%'
-            //           : table.getCenterTotalSize(),
-            // }}
-            // {...{
-            //   style: {
-            //     width: table.getCenterTotalSize(),
-            //   },
-            // }}
-          >
+        <div className="w-full overflow-auto no-scrollbar tablet:h-[600px]">
+          <table className="w-full">
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-gray-1 text-[0.4rem] dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
+              className="text-[0.4rem] text-gray-1 dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -191,7 +155,7 @@ export default function Ledger() {
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="text-gray whitespace-nowrap border-0 border-b border-[#EEEEEE] dark:text-gray-300"
+                    className="whitespace-nowrap border-0 border-b border-[#EEEEEE] text-gray dark:text-gray-300"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
@@ -231,10 +195,8 @@ export default function Ledger() {
           </table>
         </div>
         <div className="max-[880px]:justify-center mt-2 flex flex-wrap items-center justify-end gap-3 tablet:-mt-7 laptop:mt-6">
-          {/* <p></p> */}
-
           <div
-            className={`flex items-center gap-2 tablet:gap-3.5 laptop:mr-[3.46rem] ${rangeStart === 1 && (rangeEnd === 0 || rangeEnd === 1) ? 'hidden' : ''}`}
+            className={`flex items-center gap-2 tablet:gap-3.5 ${rangeStart === 1 && rangeEnd === 0 ? 'hidden' : ''}`}
           >
             <button
               onClick={() => handlePageClick(currentPage - 1)}
@@ -261,7 +223,7 @@ export default function Ledger() {
                         className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${
                           pageNumber === currentPage
                             ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-gray-500'
-                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-gray-300'
+                            : 'bg-[#F5F5F5] text-gray dark:bg-gray-300'
                         }`}
                         key={pageNumber}
                         onClick={() => handlePageClick(pageNumber)}
@@ -291,9 +253,6 @@ export default function Ledger() {
           </div>
         </div>
       </div>
-      <p className="mx-[17px] px-[0.59rem] text-end text-[0.4rem] tablet:px-[1.36rem] tablet:text-[1rem] laptop:mx-[116px]">
-        Powered by Foudation Blockchain
-      </p>
     </div>
   );
 }

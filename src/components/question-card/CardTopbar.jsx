@@ -10,7 +10,7 @@ const CardTopbar = ({ questStartData, bookmarkStatus, handleBookmark, postProper
       <div className="flex items-start justify-between border-gray-250">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
           <div className="mt-[1.5px] flex gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
-            <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+            <h4 className="text-gray text-[0.75rem] font-semibold leading-[15px] dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
               {capitalizeFirstLetter(questStartData.Question)}
             </h4>
           </div>

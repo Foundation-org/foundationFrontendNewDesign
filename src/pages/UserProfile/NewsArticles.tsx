@@ -69,24 +69,24 @@ export default function NewsArticles({ domain }: { domain: string }) {
           >
             {!isPublicProfile && (
               <>
-                <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+                <h1 className="summary-text">
                   Manage news articles you’ve shared and track engagement metrics. Shared articles also appear on your
                   Home Page for your audience to see.
                 </h1>
                 <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
                   <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-                    <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+                    <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
                       Articles you’ve shared
                     </h1>
-                    <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+                    <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
                       {persistedUserInfo?.myArticleStatistics.totalSharedArticlesCount}
                     </h5>
                   </div>
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
-                    <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+                    <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
                       Total engagements
                     </h1>
-                    <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+                    <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
                       {persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
                     </h5>
                   </div>

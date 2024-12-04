@@ -75,9 +75,7 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
     <>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-          <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-            {getSummaryText['etheriumWallet']}
-          </h1>
+          <h1 className="summary-text">{getSummaryText['etheriumWallet']}</h1>
           <div className="flex justify-end">
             <Button variant="submit" className="w-fit" onClick={handleConnect}>
               {loading.state === true && loading.badge === accountName ? (

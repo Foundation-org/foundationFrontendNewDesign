@@ -15,10 +15,12 @@ import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifi
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useReOrderLinHubLinks } from '../../services/mutations/verification-adges';
+import { getIcon } from '../../services/imageProcessing';
+import defaultLink from '../../assets/profile/default-link.svg';
 
 const LinkHubItem = ({
   id,
-  getBadgeIcon,
+  getIcon,
   item,
   deleteItem,
   setDeleteItem,
@@ -55,12 +57,15 @@ const LinkHubItem = ({
       <div className="py-3 tablet:py-[25px]">
         <div className="flex items-center gap-2 tablet:gap-4">
           <img
-            src={getBadgeIcon({ title: item.title, link: item.link })}
+            src={getIcon(item.link)}
             alt="save icon"
+            onError={(e) => {
+              e.target.src = defaultLink;
+            }}
             className="size-[20.5px] rounded-full tablet:size-[35px]"
           />
           <div>
-            <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+            <h4 className="text-gray-1 max-w-[324px] text-[9.28px] font-medium leading-[11.23px] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
               {item.title}
             </h4>
             <div className="mt-[2px] tablet:mt-2">
@@ -303,33 +308,6 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
     }
   };
 
-  function getBadgeIcon(badge) {
-    const iconMap = {
-      twitter: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
-      farcaster: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
-      github: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
-      facebook: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
-      linkedin: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
-      instagram: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
-      soundcloud: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/soundcloud-fav.png`,
-      'ultimate-guitar': `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ultimate-guitar-fav.png`,
-      amazon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/amazon.png`,
-      ltk: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ltk.png`,
-      tiktok: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/tiktok.png`,
-    };
-
-    const title = badge.title.toLowerCase();
-    const link = badge.link.toLowerCase();
-
-    for (const [keyword, icon] of Object.entries(iconMap)) {
-      if (title.includes(keyword) || link.includes(keyword)) {
-        return icon;
-      }
-    }
-
-    return `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/default-link.svg`;
-  }
-
   const checkHollow = () => {
     if (field1Data === '' || field2Data === '') {
       return true;
@@ -384,7 +362,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
           {/* To View Already Added Info */}
           {!addAnotherForm ? (
             <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-              <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+              <h1 className="text-gray-1 py-3 text-[12px] font-medium leading-[13.56px] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
                 Put all your essential links in one place on your Home Page, making it easier for others to find and
                 connect with you across platforms
               </h1>
@@ -402,7 +380,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                       <LinkHubItem
                         key={item.id}
                         id={item.id}
-                        getBadgeIcon={getBadgeIcon}
+                        getIcon={getIcon}
                         item={item}
                         deleteItem={deleteItem}
                         setDeleteItem={setDeleteItem}
@@ -458,7 +436,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
             <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
               <div className="mb-4 flex flex-col gap-[19.5px] pt-[15px] tablet:mb-5 tablet:gap-[38px] tablet:pt-[25px]">
                 <div className="w-full">
-                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field1.label}
                   </p>
                   {fetchingEdit ? (
@@ -484,7 +462,7 @@ const LinkHubPopup = ({ isPopup, setIsPopup, type, title, logo, setIsPersonalPop
                 </div>
 
                 <div className="w-full">
-                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field2.label}
                   </p>
                   {fetchingEdit ? (

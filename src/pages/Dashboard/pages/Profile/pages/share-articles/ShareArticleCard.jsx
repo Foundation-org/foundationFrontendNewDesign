@@ -40,7 +40,7 @@ export default function ShareArticleCard({ data, innerRef }) {
       {/* <div className="flex items-center justify-between border-b-2 border-gray-250 px-[0.57rem] py-[5px] dark:border-gray-100 tablet:px-5 tablet:py-[11px]">
         <div className="flex w-full justify-between">
           <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
-            <h1 className="truncate text-wrap text-[10px] font-semibold text-gray-150 dark:text-white-200 tablet:text-[20px] tablet:font-medium">
+            <h1 className="truncate text-wrap text-[10px] font-semibold text-gray-1 dark:text-white-200 tablet:text-[20px] tablet:font-medium">
               {sharedPostUrl}
             </h1>
           </div>
@@ -63,7 +63,7 @@ export default function ShareArticleCard({ data, innerRef }) {
       {/* Body */}
 
       {/* <div className="flex flex-col justify-between border-gray-250 px-[0.87rem] tablet:px-6">
-          <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+          <h4 className="text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
           {data?.title}
           </h4>
           </div> */}
@@ -75,7 +75,7 @@ export default function ShareArticleCard({ data, innerRef }) {
               alt="clicks"
               className="h-2 w-2 tablet:h-6 tablet:w-6"
             />
-            <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
               {data?.articleSetting?.viewCount} Views{' '}
             </h2>
           </div>
@@ -85,7 +85,7 @@ export default function ShareArticleCard({ data, innerRef }) {
               alt="participants"
               className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
             />
-            <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
               {data?.articleSetting?.submitEngagementsOfArticleSharedByUniqueLink.length} Engagements{' '}
             </h2>
           </div>
@@ -175,7 +175,7 @@ export default function ShareArticleCard({ data, innerRef }) {
           />
         </button> */}
         {/* Created At */}
-        <p className="text-[10px] font-normal text-[#9C9C9C] dark:text-white tablet:text-[20px]">
+        <p className="text-gray-1 text-[10px] font-normal dark:text-white tablet:text-[20px]">
           Shared {calculateTimeAgo(data?.articleSetting?.createdAt)}
         </p>
       </div>

@@ -49,7 +49,7 @@ export default function FilterAnalyzedOptions({
   const handleOptionSelection = (data: any) => {
     setSelectedOptions((prevSelected: any[]) => {
       return prevSelected.map((option: any) =>
-        option._id === data._id ? { ...option, selected: !option.selected } : option,
+        option._id === data._id ? { ...option, selected: !option.selected } : option
       );
     });
   };
@@ -81,7 +81,7 @@ export default function FilterAnalyzedOptions({
       questForeignKey: questStartData?._id,
       uuid: persistedUserInfo.uuid,
       options: selectedQuestions,
-      sharedLinkOnly: type === "sharedResults" ? questStartData?.userQuestSetting?.link : ""
+      sharedLinkOnly: type === 'sharedResults' ? questStartData?.userQuestSetting?.link : '',
     };
 
     if (selectedOptions?.filter((option: any) => option.selected).length !== 0) {
@@ -103,13 +103,13 @@ export default function FilterAnalyzedOptions({
       isBackground={false}
     >
       <div className="space-y-3 px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px] laptop:space-y-5">
-        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Select participants to send a message to.
         </h1>
         <hr />
         <div className="flex flex-col items-center justify-center gap-[15px]">
           <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
-            <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+            <h1 className="text-[10px] font-medium leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
               {questStartData.Question}
             </h1>
             {selectedOptions?.map((post: any) => (
@@ -162,9 +162,14 @@ export default function FilterAnalyzedOptions({
                   to: 'Participants',
                   questForeignKey: questStartData._id,
                   options: selectedQuestions,
-                }),
+                  questStartData: questStartData,
+                })
               );
-              type === "sharedResults" ? navigate(`/direct-messaging/new-message?advance-analytics=true&link=${questStartData?.userQuestSetting?.link}`) : navigate('/direct-messaging/new-message?advance-analytics=true')
+              type === 'sharedResults'
+                ? navigate(
+                    `/direct-messaging/new-message?advance-analytics=true&link=${questStartData?.userQuestSetting?.link}`
+                  )
+                : navigate('/direct-messaging/new-message?advance-analytics=true');
               if (submitBtn === 'Update') {
                 handleClose();
               }

@@ -79,7 +79,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                   alt="eye-cut"
                   className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
                 />
-                <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-600 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                <h1 className="text-gray-1 text-[0.6rem] font-medium dark:text-white-600 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
                   {questStartData?.userQuestSetting?.feedbackMessage
                     ? questStartData.userQuestSetting.feedbackMessage
                     : questStartData.userQuestSetting.hiddenMessage}
@@ -111,7 +111,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                   onClick={handleSharePostClick}
                 >
                   {persistedTheme === 'dark' ? <Copy /> : <Copy />}
-                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                  <h1 className="text-gray-1 text-[0.6rem] font-medium leading-[0.6rem] dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                     Share
                   </h1>
                 </button>
@@ -122,7 +122,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                     alt="eye-latest"
                     className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
                   />
-                  <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                  <h1 className="text-gray-1 text-[0.6rem] font-medium leading-[0.6rem] dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                     Hide
                   </h1>
                 </button>
@@ -144,7 +144,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                     alt="addToCollection"
                     className="h-auto w-3 cursor-pointer tablet:w-[22px]"
                   />
-                  <h1 className="whitespace-nowrap text-[0.6rem] font-medium leading-[0.6rem] text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                  <h1 className="text-gray-1 whitespace-nowrap text-[0.6rem] font-medium leading-[0.6rem] dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                     Add to collection
                   </h1>
                 </button>
@@ -156,7 +156,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                     <div className="flex w-full justify-end">
                       {isFullScreen === undefined ? (
                         <div
-                          className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem]"
+                          className="text-gray-1 flex cursor-pointer items-center justify-end gap-1 dark:text-[#ACACAC] tablet:gap-[0.66rem]"
                           onClick={handleAnalyzeClick}
                         >
                           <img
@@ -164,7 +164,7 @@ const QuestBottombar = ({ questStartData, postProperties }) => {
                             alt="full-screen"
                             className="size-3 tablet:h-[23px] tablet:w-5"
                           />
-                          <h1 className="text-[0.6rem] font-medium text-accent-200 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                          <h1 className="text-gray-1 text-[0.6rem] font-medium dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
                             Analyze
                           </h1>
                         </div>

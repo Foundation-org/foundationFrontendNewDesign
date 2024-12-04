@@ -17,7 +17,7 @@ const Faq = () => {
   };
 
   return (
-    <div className="h-[calc(100dvh-98px)] w-full overflow-scroll overflow-y-auto bg-white text-[#707175] no-scrollbar dark:bg-gray-200 dark:text-gray-300 tablet:h-[calc(100dvh-96px)] tablet:rounded-t-[0.86513rem] laptop:h-[calc(100dvh-70px)]">
+    <div className="text-gray-1 h-[calc(100dvh-98px)] w-full overflow-scroll overflow-y-auto bg-white no-scrollbar dark:bg-gray-200 dark:text-gray-300 tablet:h-[calc(100dvh-96px)] tablet:rounded-t-[0.86513rem] laptop:h-[calc(100dvh-70px)]">
       <h1 className="mx-[1.13rem] my-[0.94rem] text-[14px] font-semibold leading-none -tracking-[2%] tablet:mx-[35px] tablet:my-6 tablet:text-[25px]">
         General Information
       </h1>
@@ -461,7 +461,7 @@ const Faq = () => {
           Didn’t find the answer you were looking for?
         </h1>
         <button
-          className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#4A8DBD] dark:text-gray-150 tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
+          className="dark:text-gray-1 w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#4A8DBD] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
           onClick={() => {
             navigate('/help/contact-us');
           }}

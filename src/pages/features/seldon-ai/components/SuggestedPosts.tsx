@@ -137,7 +137,7 @@ export default function SuggestedPosts({ apiResp }: { apiResp?: any }) {
               suggestedPosts?.map((item, index) => (
                 <div
                   key={index}
-                  className="space-y-2 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] text-[#85898C] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]"
+                  className="text-gray-1 space-y-2 rounded-[10px] border-[1.85px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:py-[18.73px]"
                 >
                   <div className="col-span-3">
                     <h5 className="text-[12px] font-semibold tablet:text-[16px]">{item.question}</h5>

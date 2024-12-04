@@ -68,9 +68,7 @@ const Contributions = () => {
       <div className="mx-4 mb-4 flex max-w-[778px] flex-col gap-[15px] overflow-y-auto tablet:mx-6">
         {/* Summary Section */}
         <SummaryCard headerIcon="/assets/summary/post-activity-logo2.svg" headerTitle="Post Activity">
-          <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
-            Track your engagement and influence within the Foundation community.
-          </h1>
+          <h1 className="summary-text">Track your engagement and influence within the Foundation community.</h1>
           <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
             <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] tablet:text-[16px] tablet:leading-normal">
@@ -95,7 +93,7 @@ const Contributions = () => {
         <div className="absolute -top-7 left-[50%] flex w-full -translate-x-[50%] transform gap-[10px] px-[10px] 2xl:justify-center">
           {list?.map((item) => (
             <div className="w-full" key={item.id}>
-              <div className="flex flex-col items-center justify-center text-[#7C7C7C] dark:text-white">
+              <div className="flex flex-col items-center justify-center text-gray-1 dark:text-white">
                 <img
                   src={persistedTheme === 'dark' ? item.icon : item.iconLight}
                   alt={item.alt}
@@ -130,13 +128,13 @@ const Contributions = () => {
                     alt={item.alt}
                     className="mb-[7px] h-[23px] w-[23px] tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
-                  <h4 className="text-center text-[8px] font-semibold leading-[9.68px] text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
+                  <h4 className="text-center text-[8px] font-semibold leading-[9.68px] text-gray-1 tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
                     {item.title.split('-')[0]}
                   </h4>
-                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-[9.68px] text-[#7C7C7C] tablet:mb-6 tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
+                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-[9.68px] text-gray-1 tablet:mb-6 tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
                     {item.title.split('-')[1]}
                   </h4>
-                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] 2xl:text-[35px] tablet:text-[24px] dark:text-[#B8B8B8]">
+                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-gray-1 2xl:text-[35px] tablet:text-[24px] dark:text-[#B8B8B8]">
                     {formatCountNumber(item.value)}
                   </h1>
                 </div>
@@ -158,13 +156,13 @@ const Contributions = () => {
                     alt={item.alt}
                     className="mb-[7px] h-[23px] w-[23px] tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
-                  <h4 className="text-center text-[8px] font-semibold leading-[9.68px] text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
+                  <h4 className="text-center text-[8px] font-semibold leading-[9.68px] text-gray-1 tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
                     {item.title.split('-')[0]}
                   </h4>
-                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-[9.68px] text-[#7C7C7C] tablet:mb-6 tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
+                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-[9.68px] text-gray-1 tablet:mb-6 tablet:text-[18px] tablet:leading-[25px] dark:text-[#B8B8B8]">
                     {item.title.split('-')[1]}
                   </h4>
-                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] 2xl:text-[35px] tablet:text-[24px] dark:text-[#B8B8B8]">
+                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-gray-1 2xl:text-[35px] tablet:text-[24px] dark:text-[#B8B8B8]">
                     {formatCountNumber(item.value)}
                   </h1>
                 </div>
@@ -185,13 +183,13 @@ const Contributions = () => {
         <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
           {yourPosts.map((item) => (
             <>
-              <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
+              <div key={item.id} className="text-gray flex items-center justify-between dark:text-white-100">
                 <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
                 <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
               </div>
               <Link
                 to={item.link}
-                className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+                className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-blue-100 hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
               >
                 {item.text}
               </Link>
@@ -208,13 +206,13 @@ const Contributions = () => {
         <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
           {othersPosts.map((item) => (
             <>
-              <div key={item.id} className="flex items-center justify-between text-gray-900 dark:text-white-100">
+              <div key={item.id} className="text-gray flex items-center justify-between dark:text-white-100">
                 <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
                 <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
               </div>
               <Link
                 to={item.link}
-                className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+                className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-blue-100 hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
               >
                 {item.text}
               </Link>
@@ -224,7 +222,7 @@ const Contributions = () => {
       </ContentCard>
       <ContentCard icon="assets/post-activity/coc-icon.svg" title="Code of Conduct">
         <div className="flex flex-col gap-2 rounded-b-[10px] py-[10px] tablet:gap-[25px] tablet:p-[5px]">
-          <div className="flex items-center justify-between text-gray-900 dark:text-white-100">
+          <div className="text-gray flex items-center justify-between dark:text-white-100">
             <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">
               Number of code of conduct violations
             </h4>
@@ -234,7 +232,7 @@ const Contributions = () => {
           </div>
           <Link
             to={'/help/terms-of-service'}
-            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-blue-100 hover:underline dark:text-blue-600 tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             View code of conduct {'>'}
           </Link>

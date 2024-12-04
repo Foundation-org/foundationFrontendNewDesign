@@ -23,7 +23,7 @@ export const Settings = () => {
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [askPasswordEverytime, setAskPasswordEverytime] = useState(getAskPasswordFromRedux);
   const [systemNotifications, setSystemNotifications] = useState(
-    persistedUserInfo.notificationSettings.systemNotifications || false,
+    persistedUserInfo.notificationSettings.systemNotifications || false
   );
 
   const handleTheme = () => {
@@ -70,10 +70,8 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/display-settings.svg" headerTitle="Display Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div>
-              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
-                Dark Mode
-              </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+              <h1 className="text-gray text-[10px] font-semibold dark:text-gray-300 tablet:text-[20px]">Dark Mode</h1>
+              <p className="text-gray-1 text-[8px] font-medium dark:text-gray-300 tablet:text-[16px]">
                 Switch to Dark Mode
               </p>
             </div>
@@ -96,10 +94,10 @@ export const Settings = () => {
           <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
             <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
               <div>
-                <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                <h1 className="text-gray text-[10px] font-semibold dark:text-gray-300 tablet:text-[20px]">
                   Post results
                 </h1>
-                <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                <p className="text-gray-1 text-[8px] font-medium dark:text-gray-300 tablet:text-[16px]">
                   Show from highest to lowest.
                 </p>
               </div>
@@ -120,10 +118,10 @@ export const Settings = () => {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+                <h1 className="text-gray text-[10px] font-semibold dark:text-gray-300 tablet:text-[20px]">
                   Quick Tips
                 </h1>
-                <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+                <p className="text-gray-1 text-[8px] font-medium dark:text-gray-300 tablet:text-[16px]">
                   View helpful information as you engage across the patform.
                 </p>
               </div>
@@ -151,10 +149,10 @@ export const Settings = () => {
         <SummaryCard headerIcon="/assets/svgs/encrypt.svg" headerTitle="Encryption Settings">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
-              <h1 className="text-[10px] font-semibold text-[#707175] dark:text-gray-300 tablet:text-[20px]">
+              <h1 className="text-gray text-[10px] font-semibold dark:text-gray-300 tablet:text-[20px]">
                 Password Request
               </h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] dark:text-gray-300 tablet:text-[16px]">
+              <p className="text-gray-1 text-[8px] font-medium dark:text-gray-300 tablet:text-[16px]">
                 Request password when encrypting or decrypting. Only appicable if you have the encryption badge.
               </p>
             </div>

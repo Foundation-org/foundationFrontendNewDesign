@@ -140,15 +140,15 @@ export default function HiddenPosts() {
       {/* Summary Section */}
       <div className="mx-4 mb-3 tablet:mx-6 tablet:mb-5">
         <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
-          <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+          <h1 className="summary-text">
             See the feedback you've given on other's posts, including those you've chosen to hide.
           </h1>
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
                 Posts I have given feedback on
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+              <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
                 {persistedUserInfo?.questsActivity?.feedbackGiven || 0}
               </h5>
             </div>

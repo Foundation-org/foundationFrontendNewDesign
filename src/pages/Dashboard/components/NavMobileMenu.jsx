@@ -123,7 +123,7 @@ export default function NavMobileMenu() {
             >
               <Link
                 to={item.path}
-                className="flex items-center gap-2 text-[12px] font-semibold leading-normal text-[#7C7C7C] dark:text-white-400 tablet:text-[16px]"
+                className="text-gray-1 flex items-center gap-2 text-[12px] font-semibold leading-normal dark:text-white-400 tablet:text-[16px]"
               >
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}${persistedTheme === 'dark' ? item.darkicon : item.icon}`}
