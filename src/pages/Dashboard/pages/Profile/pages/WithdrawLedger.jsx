@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDebounce } from '../../../../../utils/useDebounce';
 import { getAllLedgerData, searchLedger } from '../../../../../services/api/userAuth';
-import { Columns } from '../components/LedgerUtils';
+import { withdrawalColumns } from '../components/LedgerUtils';
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import LedgerTableTopbar from '../components/LedgerTableTopbar';
@@ -24,7 +24,7 @@ export default function WithdrawLedger() {
 
   const fetchData = async () => {
     try {
-      const type = 'withdraw';
+      const type = 'widthraw';
       const data = await getAllLedgerData(currentPage, itemsPerPage, sort, type);
       if (data) {
         setLedgerData(data);
@@ -55,7 +55,7 @@ export default function WithdrawLedger() {
   }, [sort, debouncedSearch, currentPage]);
 
   const columns = useMemo(() => {
-    const tempColumns = Columns.map((column) => {
+    const tempColumns = withdrawalColumns.map((column) => {
       const id = column.accessorKey;
       const size = columnSizes[id];
       return {
@@ -65,7 +65,7 @@ export default function WithdrawLedger() {
     });
 
     return tempColumns;
-  }, [Columns]);
+  }, [withdrawalColumns]);
 
   const table = useReactTable({
     data: ledgerData?.data?.data || [],
@@ -110,6 +110,7 @@ export default function WithdrawLedger() {
           setFilterText={setFilterText}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
+          fromPage={'withdrawals'}
         />
         <div className="w-full overflow-auto no-scrollbar tablet:h-[600px]">
           <table className="w-full">
@@ -118,10 +119,7 @@ export default function WithdrawLedger() {
               className="text-[0.4rem] text-gray-1 dark:text-gray-300 tablet:text-[1rem] laptop:text-[1.2rem]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr
-                  key={headerGroup.id}
-                  // className="border-0 border-b border-[#EEEEEE]"
-                >
+                <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       className="relative py-1 font-normal tablet:py-3"
@@ -133,7 +131,6 @@ export default function WithdrawLedger() {
                         },
                       }}
                     >
-                      {/* {header.column.columnDef.header} */}
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                       <div
                         {...{

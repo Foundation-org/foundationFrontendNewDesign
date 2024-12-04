@@ -103,13 +103,13 @@ export default function FilterAnalyzedOptions({
       isBackground={false}
     >
       <div className="space-y-3 px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px] laptop:space-y-5">
-        <h1 className="text-gray-1 text-[10px] font-medium leading-[12px] dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Select participants to send a message to.
         </h1>
         <hr />
         <div className="flex flex-col items-center justify-center gap-[15px]">
           <ul className="flex h-full max-h-[236px] w-full flex-col gap-[5.7px] overflow-y-scroll tablet:max-h-[472px] tablet:gap-[10px]">
-            <h1 className="text-gray-1 text-[10px] font-medium leading-[12px] dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+            <h1 className="text-[10px] font-medium leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
               {questStartData.Question}
             </h1>
             {selectedOptions?.map((post: any) => (
@@ -162,6 +162,7 @@ export default function FilterAnalyzedOptions({
                   to: 'Participants',
                   questForeignKey: questStartData._id,
                   options: selectedQuestions,
+                  questStartData: questStartData,
                 })
               );
               type === 'sharedResults'

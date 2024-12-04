@@ -77,14 +77,12 @@ export default function DMPreview() {
       setParticipants(resp?.data.dynamicParticipantsCount);
     },
     onError: (err: any) => {
-      // console.log(err:any);
       toast.error(err.response.data.message);
     },
   });
 
   useEffect(() => {
     if (directMessageState.to === 'Participants') {
-      console.log('a');
       const params = {
         questForeignKey: directMessageState.questForeignKey,
         uuid: persistedUserInfo.uuid,
@@ -120,6 +118,7 @@ export default function DMPreview() {
         <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
           How your message will appear when a user opens it.
         </h1>
+
         <ViewMessage
           viewMessageData={{
             message: directMessageState?.message,

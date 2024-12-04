@@ -64,9 +64,10 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
             </h1>
             <p className="flex flex-col text-[10px] font-medium leading-[16px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[32px]">
               <span>Message:</span>
-              {filter !== 'sent' ? viewMessageData?.shortMessage : viewMessageData.message}
+              {filter === 'sent' || location.pathname === '/direct-messaging/preview'
+                ? viewMessageData.message
+                : viewMessageData?.shortMessage}
             </p>
-
             {viewMessageData?.postQuestion && filter !== 'sent' && (
               <div className="mt-5 space-y-5">
                 <h1 className="text-[12px] font-semibold leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-[18px]">
@@ -80,7 +81,6 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
                 ) : null}
               </div>
             )}
-
             <div className="flex justify-end">
               <Button
                 variant="cancel"

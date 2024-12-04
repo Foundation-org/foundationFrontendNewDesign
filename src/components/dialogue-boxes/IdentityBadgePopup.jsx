@@ -8,20 +8,21 @@ import api from '../../services/api/Axios';
 import { useState, useRef, useEffect } from 'react';
 import { useVerifyIdentity } from '../../services/api/profile';
 import BadgeRemovePopup from './badgeRemovePopup';
+import MultiStepCounter from '../ui/MultiStepCounter';
 
 /**************************** Section Identiy Badge ****************************/
 // Descriptions for each step
 const stepDescriptions = [
-  'Step 1: Upload the front image of your identity card.',
-  'Step 2: Upload the back image of your identity card.',
-  'Step 3: Upload a face video or record it live.',
-  'Step 4: Review and submit your identity for verification. (Please confirm the following details before submitting)',
+  'Upload the front image of your identity card.',
+  'Upload the back image of your identity card.',
+  'Upload a face video or record it live.',
+  'Review and submit your identity for verification. (Please confirm the following details before submitting)',
 ];
 
 // Helper component for file upload button
 const FileUploadButton = ({ label, onChange }) => (
   <div>
-    <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+    <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
       Image
     </p>
     <div className="flex w-full items-center justify-center">
@@ -303,32 +304,33 @@ const IdentityBadgePopup = ({
         </Button>
       )}
       {currentStep < 4 ? (
-        loading ?
+        loading ? (
           <Button variant="submit">
             <FaSpinner className="animate-spin" />
           </Button>
-          :
+        ) : (
           <Button variant="submit" onClick={goToNextStep} disabled={isNextStepDisabled()}>
             Next Step
           </Button>
+        )
       ) : isVerified ? (
-        isAdding ?
+        isAdding ? (
           <Button variant="submit">
             <FaSpinner className="animate-spin" />
           </Button>
-          :
+        ) : (
           <Button variant="submit" onClick={addIdentity && handleAddBadge} disabled={isAdding}>
             Add Badge
           </Button>
+        )
+      ) : isSubmitting ? (
+        <Button variant="submit">
+          <FaSpinner className="animate-spin" />
+        </Button>
       ) : (
-        isSubmitting ?
-          <Button variant="submit">
-            <FaSpinner className="animate-spin" />
-          </Button>
-          :
-          <Button variant="submit" onClick={handleSubmit} disabled={isSubmitting}>
-            Verify
-          </Button>
+        <Button variant="submit" onClick={handleSubmit} disabled={isSubmitting}>
+          Verify
+        </Button>
       )}
     </div>
   );
@@ -373,14 +375,17 @@ const IdentityBadgePopup = ({
               >
                 {/* Step Content */}
                 <div className="flex min-w-full flex-col space-y-4 p-3 tablet:px-10 tablet:py-5">
-                  <p className="summary-text">{stepDescriptions[currentStep - 1]}</p>
+                  <div>
+                    <MultiStepCounter steps={['1', '2', '3', '4']} currentStep={currentStep - 1} isLabel={false} />
+                    <p className="summary-text text-center">{stepDescriptions[currentStep - 1]}</p>
+                  </div>
 
                   {/* Step 1: Front Image Upload */}
                   {currentStep === 1 && (
                     <>
                       <FileUploadButton
                         label="Upload the Front Side of Your Identity Card"
-                        onChange={(e) => handleImageUpload(e, setFrontImage, "front")}
+                        onChange={(e) => handleImageUpload(e, setFrontImage, 'front')}
                       />
                       {frontImage && (
                         <img
@@ -397,7 +402,7 @@ const IdentityBadgePopup = ({
                     <>
                       <FileUploadButton
                         label="Upload the Back Side of Your Identity Card"
-                        onChange={(e) => handleImageUpload(e, setBackImage, "back")}
+                        onChange={(e) => handleImageUpload(e, setBackImage, 'back')}
                       />
                       {backImage && (
                         <img
@@ -486,15 +491,17 @@ const IdentityBadgePopup = ({
               <div className="flex min-w-full flex-col space-y-4 p-3 tablet:px-10 tablet:py-5">
                 <p className="summary-text">Your identity information</p>
                 {identityBadge &&
-                  Object.entries(identityBadge).map(([key, value]) => (
-                    key !== "isExpired" &&
-                    <div key={key} className="flex justify-between">
-                      <span className="text-xs font-bold capitalize tablet:text-base">
-                        {key.replace(/([A-Z])/g, ' $1')}
-                      </span>
-                      <span className="text-xs tablet:text-base">{value}</span>
-                    </div>
-                  ))}
+                  Object.entries(identityBadge).map(
+                    ([key, value]) =>
+                      key !== 'isExpired' && (
+                        <div key={key} className="flex justify-between">
+                          <span className="text-xs font-bold capitalize tablet:text-base">
+                            {key.replace(/([A-Z])/g, ' $1')}
+                          </span>
+                          <span className="text-xs tablet:text-base">{value}</span>
+                        </div>
+                      )
+                  )}
                 <div className="flex justify-end">
                   <Button variant="badge-remove" onClick={() => setModalVisible(true)}>
                     {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}

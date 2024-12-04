@@ -50,6 +50,44 @@ export const Columns = [
   },
 ];
 
+export const withdrawalColumns = [
+  {
+    accessorKey: 'txFrom',
+    header: 'txFrom',
+    cell: (props) => <p>{props.getValue()}</p>,
+    size: window.innerWidth <= 500 ? 0 : 240,
+    minSize: 40,
+  },
+  {
+    accessorKey: 'txTo',
+    header: 'txTo',
+    cell: (props) => <p>{props.getValue()}</p>,
+    size: window.innerWidth <= 500 ? 0 : 240,
+    minSize: 40,
+  },
+  {
+    accessorKey: 'txAmount',
+    header: 'txAmt',
+    cell: (props) => <p>{props.getValue()}</p>,
+    size: window.innerWidth <= 500 ? 0 : 240,
+    minSize: 20,
+  },
+  {
+    accessorKey: 'txDate',
+    header: 'txDate',
+    cell: (props) => <p>{props.getValue()}</p>,
+    size: window.innerWidth <= 500 ? 0 : 240,
+    minSize: 40,
+  },
+  {
+    accessorKey: 'status',
+    header: 'status',
+    cell: (props) => <p>{props.getValue()}</p>,
+    size: window.innerWidth <= 500 ? 0 : 240,
+    minSize: 40,
+  },
+];
+
 // =================== old
 function capitalize(str) {
   // Check if the input is a string

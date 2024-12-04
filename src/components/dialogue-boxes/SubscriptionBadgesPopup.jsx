@@ -19,7 +19,7 @@ const stepDescriptions = [
 // Helper component for file upload button
 const FileUploadButton = ({ label, onChange }) => (
   <div>
-    <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+    <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
       Image
     </p>
     <div className="flex w-full items-center justify-center">

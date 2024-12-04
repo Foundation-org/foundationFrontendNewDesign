@@ -114,7 +114,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
       {/* Body */}
       <div className="m-3 flex flex-col gap-3 tablet:m-5 tablet:gap-5">
         <h1 className="text-[12.145px] font-semibold leading-[12.145px] text-gray-1 dark:text-gray-300 tablet:text-[22px] tablet:leading-[22px]">
-          {item.subject}
+          Subject: {item.subject}
         </h1>
         <div className="flex justify-end gap-2">
           {item?.type === 'sent' && item?.to === 'Participants' && (

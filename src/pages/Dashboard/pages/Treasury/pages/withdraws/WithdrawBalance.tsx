@@ -17,6 +17,7 @@ export default function WithdrawBalance() {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { sdk, connected, connecting, provider, chainId } = useSDK();
   const [txFee, setTxFee] = useState(false);
+
   const { mutateAsync: createWidthrawl } = useMutation({
     mutationFn: widthrawFdx,
     onSuccess: async (response) => {
@@ -188,10 +189,10 @@ export default function WithdrawBalance() {
                 className="w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
               />
               <div className="absolute flex w-full justify-between gap-2 tablet:gap-[15px]">
-                <p className="text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
+                <p className="whitespace-nowrap text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
                   Remaining Amount
                 </p>
-                <p className="text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
+                <p className="whitespace-nowrap text-[10px] font-normal leading-[113%] tablet:text-[18px] tablet:leading-normal">
                   {Number(persistedUserInfo?.balance || 0) - Number(amount || 0)} FDX
                 </p>
               </div>

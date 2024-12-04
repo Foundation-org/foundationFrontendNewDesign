@@ -56,8 +56,8 @@ export default function Withdraws() {
           <WithdrawHistory />
         </div>
       ) : (
-        <div className="flex flex-col gap-2 border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] tablet:rounded-[10px] tablet:p-5">
-          <h1 className="text-[18px] leading-normal text-gray-1">
+        <div className="flex flex-col gap-2 border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
+          <h1 className="text-[18px] leading-normal text-gray-1 dark:text-gray-300">
             To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
             <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
             identity is linked and helps safeguard your assets.

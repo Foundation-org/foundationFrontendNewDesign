@@ -100,7 +100,7 @@ export const getAllLedgerData = async (page, limit, sort, type) => {
 
   const params = { page, limit, sort, uuid };
 
-  if (type === 'withdraw') {
+  if (type === 'widthraw') {
     params.type = type;
   }
 
