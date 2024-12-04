@@ -16,6 +16,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useReOrderLinHubLinks } from '../../services/mutations/verification-adges';
 import { getIcon } from '../../services/imageProcessing';
+import defaultLink from '../../assets/profile/default-link.svg';
 
 const LinkHubItem = ({
   id,
@@ -59,7 +60,7 @@ const LinkHubItem = ({
             src={getIcon(item.link)}
             alt="save icon"
             onError={(e) => {
-              e.target.src = "../../../public/assets/profile/default-link.svg";
+              e.target.src = defaultLink;
             }}
             className="size-[20.5px] rounded-full tablet:size-[35px]"
           />

@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import api from '../../services/api/Axios';
 import { formatCountNumber } from '../../utils/utils';
 import { getIcon } from '../../services/imageProcessing';
+import defaultLink from '../../assets/profile/default-link.svg';
 
 export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: string }) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
@@ -124,7 +125,7 @@ export default function LinkHub({ linkHub, domain }: { linkHub: any; domain: str
                     alt="save icon"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "../../../public/assets/profile/default-link.svg";
+                      target.src = defaultLink;
                     }}
                     className="size-[24.5px] rounded-full tablet:size-[35px]"
                   />
