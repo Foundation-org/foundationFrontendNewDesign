@@ -106,7 +106,7 @@ export default function DMPreview() {
           filter="receive"
           item={{
             createdAt: currentDate.toISOString(),
-            platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
             subject: directMessageState.subject,
             viewed: false,
             readReward: directMessageState?.readReward,
@@ -126,7 +126,7 @@ export default function DMPreview() {
             postQuestion: directMessageState.questStartData?.Question,
             readReward: directMessageState?.readReward,
             createdAt: currentDate.toISOString(),
-            platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
             sharedLinkOnly: uniqueLink ? uniqueLink : '',
           }}
           filter="receive"
@@ -157,7 +157,7 @@ export default function DMPreview() {
               uuid: persistedUserInfo.uuid,
               options: directMessageState.options,
               questForeignKey: directMessageState.questForeignKey,
-              platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+              platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
               type: 'new',
               sharedLinkOnly: uniqueLink ? uniqueLink : '',
             });
