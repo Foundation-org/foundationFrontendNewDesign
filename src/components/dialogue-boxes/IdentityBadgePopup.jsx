@@ -272,11 +272,24 @@ const IdentityBadgePopup = ({
   const handleAddBadge = async () => {
     setIsAdding(true); // Start loading for adding the badge
     try {
-      // Call addIdentity API with the data from verifyIdentity
-      const addIdentityResponse = await api.post('/addIdentityBadge', {
-        ...addIdentity,
-        uuid: persistedUserInfo?.uuid,
-      });
+      let addIdentityResponse;
+
+      if (persistedUserInfo?.isPasswordEncryption) {
+        if (!localStorage.getItem('legacyHash')) throw new Error("Now legacyHash found in localStorage!");
+        // Call addIdentity API with the data from verifyIdentity
+        addIdentityResponse = await api.post('/addIdentityBadge', {
+          ...addIdentity,
+          uuid: persistedUserInfo?.uuid,
+          infoc: localStorage.getItem('legacyHash'),
+        });
+      }
+      else {
+        // Call addIdentity API with the data from verifyIdentity
+        addIdentityResponse = await api.post('/addIdentityBadge', {
+          ...addIdentity,
+          uuid: persistedUserInfo?.uuid,
+        });
+      }
 
       if (addIdentityResponse.status === 200) {
         // On success, show success message and close the popup
