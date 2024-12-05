@@ -21,3 +21,9 @@ export const checkContact = (persistedUserInfo: any, itemType: string) =>
 
 export const checkWeb3Badge = (persistedUserInfo: any, itemType: string) =>
   persistedUserInfo?.badges?.some((badge: any) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
+
+export const getBadgeIdByType = (persistedUserInfo: any, itemType: string) =>
+  persistedUserInfo?.badges?.find((badge: any) => badge?.type === itemType)?._id || null;
+
+export const checkBadgeExists = (persistedUserInfo: any, itemType: string) =>
+  persistedUserInfo?.badges?.some((badge: any) => badge?.type === itemType) || false;

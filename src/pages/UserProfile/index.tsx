@@ -14,6 +14,7 @@ import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/
 import SummaryCard from '../../components/SummaryCard';
 import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePopup';
 import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
+import BadgeHub from './BadgeHub';
 
 export default function UserProfile() {
   const location = useLocation();
@@ -114,7 +115,7 @@ export default function UserProfile() {
               <>
                 <h1 className="summary-text">
                   Your Home Page is the hub for connecting with your audience. Share posts, collections and news easily
-                  with your audience.
+                  with your audience.
                 </h1>
                 <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
@@ -152,6 +153,7 @@ export default function UserProfile() {
             </SummaryCard>
           )}
           <ProfileCard profile={data?.profile} />
+          {data?.addedBadges && data?.addedBadges.length >= 1 && <BadgeHub badges={data?.addedBadges} />}
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} domain={domain} />
           )}

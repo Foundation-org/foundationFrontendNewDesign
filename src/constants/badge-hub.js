@@ -1,4 +1,4 @@
-export const linkBadges = [
+export const socialBadges = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
     title: 'Twitter',
@@ -31,27 +31,7 @@ export const linkBadges = [
   },
 ];
 
-export const infoBadges = [
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/personal.svg`,
-    title: 'Personal Email',
-    type: 'personal',
-  },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work.svg`,
-    title: 'Work Email',
-    type: 'work',
-  },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Education-Email-2xa.png`,
-    title: 'Education Email',
-    type: 'education',
-  },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`,
-    title: 'Cell Phone',
-    type: 'cell-phone',
-  },
+export const personalBadges = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Ethereum-Wallet-2x.png`,
     title: 'Ethereum Wallet',
@@ -85,12 +65,12 @@ export const infoBadges = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`,
     title: 'Work',
-    type: 'work',
+    type: 'workPersonal',
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`,
     title: 'Education',
-    type: 'education',
+    type: 'educationPersonal',
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Geolocation-2x-1.png`,
@@ -106,5 +86,28 @@ export const infoBadges = [
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
     title: 'Link Hub',
     type: 'linkHub',
+  },
+];
+
+export const contactBadges = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/personal.svg`,
+    title: 'Personal Email',
+    type: 'personal',
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work.svg`,
+    title: 'Work Email',
+    type: 'work',
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Education-Email-2xa.png`,
+    title: 'Education Email',
+    type: 'education',
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`,
+    title: 'Cell Phone',
+    type: 'cell-phone',
   },
 ];
