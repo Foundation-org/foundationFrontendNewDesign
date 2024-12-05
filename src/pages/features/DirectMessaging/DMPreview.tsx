@@ -106,7 +106,7 @@ export default function DMPreview() {
           filter="receive"
           item={{
             createdAt: currentDate.toISOString(),
-            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
+            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Anonymous user',
             subject: directMessageState.subject,
             viewed: false,
             readReward: directMessageState?.readReward,
@@ -126,7 +126,7 @@ export default function DMPreview() {
             postQuestion: directMessageState.questStartData?.Question,
             readReward: directMessageState?.readReward,
             createdAt: currentDate.toISOString(),
-            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
+            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Anonymous user',
             sharedLinkOnly: uniqueLink ? uniqueLink : '',
           }}
           filter="receive"
