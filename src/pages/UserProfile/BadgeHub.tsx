@@ -18,6 +18,23 @@ export default function BadgeHub({ badges }: any) {
       };
     });
 
+  const personalBadgesArray = contactBadges
+    ?.filter(
+      (badge: any) => badges && badges?.some((userBadge: any) => userBadge.type === badge.type && userBadge.isAdded)
+    )
+    .map((badge: any) => {
+      const userBadge = badges && badges?.find((userBadge: any) => userBadge.type === badge.type && userBadge.isAdded);
+      return {
+        ...badge,
+        userBadgeData: userBadge,
+      };
+    });
+
+  console.log(
+    'first',
+    personalBadgesArray.map((item) => item)
+  );
+
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
       <div className="flex w-full items-center gap-3 rounded-[9.228px] border-[2.768px] border-gray-250 bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:gap-5 tablet:px-6 tablet:py-2">
@@ -37,11 +54,30 @@ export default function BadgeHub({ badges }: any) {
           Contacts
         </h1>
         <div className="flex gap-2 tablet:gap-4">
-          {contactBadges?.map((badge: any) => (
-            <button key={badge.id}>
-              <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
-            </button>
-          ))}
+          {personalBadgesArray &&
+            personalBadgesArray?.map((badge: any) => (
+              <a
+                key={badge.id}
+                href={
+                  Array.isArray(badge.userBadgeData.details?.emails) && badge.userBadgeData.details.emails[0]?.value
+                    ? `mailto:${badge.userBadgeData.details.emails[0].value}`
+                    : '#'
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  const emails = badge.userBadgeData.details?.emails;
+                  if (Array.isArray(emails) && emails[0]?.value) {
+                    console.log(emails[0].value); // Debug email
+                  } else {
+                    e.preventDefault(); // Prevent navigation if email is invalid
+                    console.error('Email is missing or invalid');
+                  }
+                }}
+              >
+                <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
+              </a>
+            ))}
         </div>
       </div>
       <div className="flex w-full items-center gap-3 rounded-[9.228px] border-[2.768px] border-gray-250 bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:gap-5 tablet:px-6 tablet:py-2">
