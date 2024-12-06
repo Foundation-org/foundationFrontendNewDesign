@@ -8,7 +8,7 @@ import { useAddBadgeHub } from '../../services/mutations/verification-adges';
 import { contactBadges, financeBadges, personalBadges, socialBadges } from '../../constants/badge-hub';
 import { Link } from 'react-router-dom';
 import * as badgeService from '../../utils/helper-function/badge-service';
-import { toast } from 'sonner';
+import showToast from '../ui/Toast';
 
 const BadgeList = ({
   badges,
@@ -25,7 +25,7 @@ const BadgeList = ({
       {badges.map((badge, index) => (
         <li
           key={index}
-          className="mx-auto flex w-full max-w-[85%] cursor-pointer items-center justify-between gap-[10px] tablet:gap-6"
+          className="mx-auto flex w-full max-w-[90%] cursor-pointer items-center justify-between gap-[10px] tablet:max-w-[85%] tablet:gap-6"
           onClick={() => handleBadgeId(badge.type)}
         >
           {badgeService.checkBadgeExists(persistedUserInfo, badge.type) ? (
@@ -35,7 +35,7 @@ const BadgeList = ({
               id={index}
               checked={false}
               onChange={() => {
-                toast.warning("You don't have this badge yet.");
+                showToast('warning', badgeNotAdded);
               }}
             />
           )}

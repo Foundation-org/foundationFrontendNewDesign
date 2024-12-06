@@ -1,37 +1,22 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PersonalBadgesPopup from '../../../components/dialogue-boxes/PersonalBadgesPopup';
-import EducationBadgePopup from '../../../components/dialogue-boxes/EducationBadgePopup';
-import WorkBadgePopup from '../../../components/dialogue-boxes/WorkBadgePopup';
 import HomepageBadgePopup from '../../../components/dialogue-boxes/HomepageBadgePopup';
-import VerificationPopups from '../pages/Profile/components/VerificationPopups';
-import AddCellPhonePopup from '../../../components/dialogue-boxes/AddCellPhonePopup';
-import InfoPopup from '../../../components/dialogue-boxes/InfoPopup';
-import SocialConnectPopup from '../pages/Profile/pages/verification-badges/SocialConnectPopup';
-import LegacyBadgePopup from '../../../components/dialogue-boxes/LegacyBadgePopup';
-import Web3ConnectPopup from '../pages/Profile/pages/verification-badges/Web3ConnectPopup';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
-import { updateProgress } from '../../../features/progress/progressSlice';
-import { incIndex, setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import AddCellPhonePopup from '../../../components/dialogue-boxes/AddCellPhonePopup';
+import VerificationPopups from '../../Dashboard/pages/Profile/components/VerificationPopups';
+import WorkBadgePopup from '../../../components/dialogue-boxes/WorkBadgePopup';
+import EducationBadgePopup from '../../../components/dialogue-boxes/EducationBadgePopup';
+import LegacyBadgePopup from '../../../components/dialogue-boxes/LegacyBadgePopup';
+import SocialConnectPopup from '../../Dashboard/pages/Profile/pages/verification-badges/SocialConnectPopup';
+import Web3ConnectPopup from '../../Dashboard/pages/Profile/pages/verification-badges/Web3ConnectPopup';
+import { useState } from 'react';
 
-export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => {
+export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, type }) {
   const fetchUser = useSelector((state) => state.auth.user);
-  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
-  const onBoardingIndex = useSelector((state) => state.onBoardingPopup.inedx);
-  const queryClient = useQueryClient();
-  const dispatch = useDispatch();
-  const checkPersonalBadge = (itemType) =>
-    fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
-
-  const checkWorkOrEdu = (itemType) =>
-    fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(itemType));
 
   const checkDomainBadge = () => {
     return fetchUser?.badges?.some((badge) => !!badge?.domain) || false;
   };
-
   const checkSocial = (name) => fetchUser?.badges?.some((i) => i.accountName === name);
 
   const checkContact = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
@@ -41,45 +26,13 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
   const checkWeb3Badge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
-  const location = useLocation();
+  const checkPersonalBadge = (itemType) =>
+    fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
+
+  const checkWorkOrEdu = (itemType) =>
+    fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(itemType));
+
   const badgeData = [
-    {
-      component: InfoPopup,
-      title: 'Continue Where You Left Off!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
-      message: `Add more badges to boost your profile, increase credibility, and easily earn more FDX along the way. Each badge brings you closer to maximizing your earning potential on Foundation!`,
-      buttonText: 'Continue',
-      info: true,
-      check: location.pathname === '/profile/verification-badges' ? false : true,
-    },
-    {
-      component: InfoPopup,
-      title: 'Congratulations!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/congrats.svg`,
-      message:
-        'Congratulations, you’ve earned 10 FDX! Keep adding verification badges and receive an additional 10 FDX for each one! Every badge you add increases your credibility on Foundation. Every badge added increases your value and credibility on the network.',
-      buttonText: 'Continue',
-      info: true,
-      check: location.pathname === '/' ? false : true,
-    },
-    {
-      component: PersonalBadgesPopup,
-      title: 'First Name',
-      type: 'firstName',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`,
-      placeholder: 'First Name Here',
-      info: false,
-      check: checkPersonalBadge('firstName'),
-    },
-    {
-      component: PersonalBadgesPopup,
-      title: 'Last Name',
-      type: 'lastName',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/lastname.png`,
-      placeholder: 'Last Name Here',
-      info: false,
-      check: checkPersonalBadge('lastName'),
-    },
     {
       component: PersonalBadgesPopup,
       title: 'Date of Birth',
@@ -88,15 +41,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'MM/DD/YYYY',
       info: false,
       check: checkPersonalBadge('dateOfBirth'),
-    },
-    {
-      component: HomepageBadgePopup,
-      title: 'Domain',
-      type: 'domainBadge',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
-      placeholder: 'Answer Here',
-      info: false,
-      check: checkDomainBadge(),
+      badgeHubType: 'dateOfBirth',
     },
     {
       component: LinkHubPopup,
@@ -105,15 +50,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
       info: false,
       check: checkPersonalBadge('linkHub'),
-    },
-    {
-      component: InfoPopup,
-      title: 'Onward and upward!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
-      message: `Every badge you add strengthens your validity and improves the quality of crowd-sourced insights on Foundation. Plus, you're stacking up more FDX with each step—keep going!`,
-      buttonText: 'Continue',
-      info: true,
-      check: false,
+      badgeHubType: 'linkHub',
     },
     {
       component: AddCellPhonePopup,
@@ -122,8 +59,8 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`,
       info: false,
       check: checkContact('cell-phone'),
+      badgeHubType: 'cell-phone',
     },
-
     {
       component: PersonalBadgesPopup,
       title: 'Current City',
@@ -132,6 +69,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Current City here',
       info: false,
       check: checkPersonalBadge('currentCity'),
+      badgeHubType: 'currentCity',
     },
     {
       component: PersonalBadgesPopup,
@@ -141,8 +79,8 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Hometown Here',
       info: false,
       check: checkPersonalBadge('homeTown'),
+      badgeHubType: 'homeTown',
     },
-
     {
       component: PersonalBadgesPopup,
       title: 'Geolocation',
@@ -151,6 +89,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Geolocation',
       info: false,
       check: checkPersonalBadge('geolocation'),
+      badgeHubType: 'geolocation',
     },
     {
       component: PersonalBadgesPopup,
@@ -160,6 +99,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Choose',
       info: false,
       check: checkPersonalBadge('sex'),
+      badgeHubType: 'sex',
     },
     {
       component: PersonalBadgesPopup,
@@ -169,16 +109,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Choose',
       info: false,
       check: checkPersonalBadge('relationshipStatus'),
-    },
-
-    {
-      component: InfoPopup,
-      title: 'Lets keep going!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
-      message: `Adding more badges leads to more opportunities and rewards for you on Foundation. Keep the momentum going!`,
-      buttonText: 'Continue',
-      info: true,
-      check: false,
+      badgeHubType: 'relationshipStatus',
     },
     {
       component: VerificationPopups,
@@ -188,6 +119,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Personal email here',
       info: false,
       check: checkContact('personal'),
+      badgeHubType: 'personal',
     },
     {
       component: WorkBadgePopup,
@@ -197,6 +129,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Work Here',
       info: false,
       check: checkWorkOrEdu('work'),
+      badgeHubType: 'workPersonal',
     },
     {
       component: VerificationPopups,
@@ -206,8 +139,8 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Work email here',
       info: false,
       check: checkContact('work'),
+      badgeHubType: 'work',
     },
-
     {
       component: EducationBadgePopup,
       title: 'Education',
@@ -216,6 +149,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Education Here',
       info: false,
       check: checkWorkOrEdu('education'),
+      badgeHubType: 'educationPersonal',
     },
     {
       component: VerificationPopups,
@@ -225,34 +159,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Educational email here',
       info: false,
       check: checkContact('education'),
-    },
-    {
-      component: PersonalBadgesPopup,
-      title: 'Security Question',
-      type: 'security-question',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/securityquestion-a.png`,
-      placeholder: 'Answer Here',
-      info: false,
-      check: checkPersonalBadge('security-question'),
-    },
-
-    {
-      component: InfoPopup,
-      title: 'Let’s take it to the next level!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/leftover.svg`,
-      message: `Adding all these badges starts you off with an impressive FDX balance! Your contributions play a key role in keeping Foundation’s data authentic. Keep it up—more badges and rewards are just ahead!`,
-      buttonText: 'Continue',
-      info: true,
-      check: false,
-    },
-    {
-      component: LegacyBadgePopup,
-      title: 'Password',
-      type: 'password',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
-      placeholder: 'Answer Here',
-      info: false,
-      check: checkLegacyBadge(),
+      badgeHubType: 'education',
     },
     {
       component: SocialConnectPopup,
@@ -263,6 +170,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       link: '/auth/twitter',
       info: false,
       check: checkSocial('twitter'),
+      badgeHubType: 'twitter',
     },
     {
       component: SocialConnectPopup,
@@ -273,6 +181,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       link: '/auth/linkedin',
       info: false,
       check: checkSocial('linkedin'),
+      badgeHubType: 'linkedin',
     },
     {
       component: SocialConnectPopup,
@@ -283,6 +192,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       link: '/auth/facebook',
       info: false,
       check: checkSocial('facebook'),
+      badgeHubType: 'facebook',
     },
     {
       component: SocialConnectPopup,
@@ -293,8 +203,8 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       link: '/auth/github',
       info: false,
       check: checkSocial('github'),
+      badgeHubType: 'github',
     },
-
     {
       component: SocialConnectPopup,
       type: 'farcaster',
@@ -303,6 +213,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       accountName: '',
       link: '',
       check: checkSocial('farcaster'),
+      badgeHubType: 'farcaster',
     },
     {
       component: Web3ConnectPopup,
@@ -312,69 +223,28 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       accountName: '',
       link: '',
       check: checkWeb3Badge('etherium-wallet'),
-    },
-
-    {
-      component: InfoPopup,
-      title: 'Thats all the badges!',
-      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/finish.svg`,
-      message: `Completing all your verification badges gives you a highly verified status on Foundation!`,
-      message2:
-        'Your commitment to completing all badges enhances your credibility and opens the door to more earning opportunities.',
-      message3: 'Thank you for being an essential part of our community!',
-      buttonText: 'Finish',
-      info: true,
-      check: false,
+      badgeHubType: 'etherium-wallet',
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(isOnboardingPopup ? onBoardingIndex + 1 : 0);
-  const actionableBadges = badgeData.filter((badge) => !badge.check);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const actionableBadges = badgeData.filter((badge) => badge.badgeHubType === type);
 
-  const handleNext = () => {
-    if (currentIndex < actionableBadges.length - 1) {
-      dispatch(incIndex());
-      setCurrentIndex((prev) => prev + 1);
-    } else {
-      setIsPopup(false);
-      dispatch(setPopup(false));
-    }
-  };
-
-  const handleSkip = (type) => {
-    if (actionableBadges[currentIndex]?.buttonText === 'Finish') {
-      dispatch(setPopup(false));
-      queryClient.invalidateQueries(['userInfo']);
-    }
-    if (type) {
-      dispatch(updateProgress());
-    }
-    handleNext();
-  };
-
-  const totalBadges = badgeData.filter((badge) => !badge.info);
-  const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
-  // const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
   const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
-  const handlePopupClose = (data) => {
-    setIsPopup(data);
-    dispatch(setPopup(false));
-    queryClient.invalidateQueries(['userInfo']);
-  };
 
   return (
     <CurrentBadgeComponent
       isPopup={isPopup}
-      setIsPopup={handlePopupClose}
+      setIsPopup={() => setIsPopup(false)}
       title={actionableBadges[currentIndex]?.title}
       type={actionableBadges[currentIndex]?.type}
       logo={actionableBadges[currentIndex]?.logo}
       placeholder={actionableBadges[currentIndex]?.placeholder}
-      edit={edit}
+      edit={true}
       setEdit={setEdit}
       fetchUser={fetchUser}
-      handleSkip={handleSkip}
-      onboarding={true}
+      //   handleSkip={handleSkip}
+      onboarding={false}
       selectedBadge={actionableBadges[currentIndex]?.type}
       message={actionableBadges[currentIndex]?.message}
       message2={actionableBadges[currentIndex]?.message2}
@@ -382,6 +252,7 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       buttonText={actionableBadges[currentIndex]?.buttonText}
       accountName={actionableBadges[currentIndex]?.accountName}
       link={actionableBadges[currentIndex]?.link}
+      page={'badgeHub'}
     />
   );
-};
+}

@@ -118,5 +118,6 @@ export const toastMessages = {
   unVerifiedIdentity: 'The image does not appear to be a valid document.',
   documentDetectionError: 'An error occurred while detecting the document. Please try again.',
   verificationFailed: 'Verification failed',
-  widthrawlSuccessful: 'Widthrawl Successful'
+  widthrawlSuccessful: 'Widthrawl Successful',
+  badgeNotAdded: "You don't have this badge yet.",
 } as const;

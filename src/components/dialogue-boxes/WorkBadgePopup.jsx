@@ -68,6 +68,7 @@ const WorkBadgePopup = ({
   handleSkip,
   onboarding,
   progress,
+  page,
 }) => {
   const queryClient = useQueryClient();
   const [field1Data, setField1Data] = useState([]);
@@ -415,18 +416,18 @@ const WorkBadgePopup = ({
           )}
           {!addAnotherForm ? (
             <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-              <h1 className="text-gray-1 py-3 text-[12px] font-medium leading-[13.56px] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+              <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
                 Your work experience opens opportunities tailored to your expertise.
               </h1>
               {existingData &&
                 existingData.map((item, index) => (
                   <div className="mb-4 flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
                     <div className="py-3 tablet:py-[25px]">
-                      <h4 className="text-gray-1 max-w-[324px] text-[9.28px] font-medium leading-[11.23px] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+                      <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
                         {item.companyName}
                       </h4>
                       <div className="max-w-[270px]">
-                        <h5 className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
+                        <h5 className="text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
                           {item.jobTitle}
                         </h5>
                         <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
@@ -467,22 +468,26 @@ const WorkBadgePopup = ({
                       </div>
                     ) : (
                       <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
-                        <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                            alt="Edit Icon"
-                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                            onClick={() => {
-                              setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
-                            }}
-                          />
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                            alt="Edit Icon"
-                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                            onClick={() => setDeleteItem(item.id)}
-                          />
-                        </div>
+                        {page === 'badgeHub' ? (
+                          <div></div>
+                        ) : (
+                          <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                              alt="Edit Icon"
+                              className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                              onClick={() => {
+                                setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                              }}
+                            />
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                              alt="Edit Icon"
+                              className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                              onClick={() => setDeleteItem(item.id)}
+                            />
+                          </div>
+                        )}
                         <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
                           {item.startingYear + '-' + item.endingYear}
                         </h4>
@@ -490,42 +495,56 @@ const WorkBadgePopup = ({
                     )}
                   </div>
                 ))}
-              <div className="flex items-center justify-start">
-                <Button
-                  variant="addOption"
-                  onClick={() => {
-                    setEdit(false);
-                    setAddAnotherForm(true);
-                  }}
-                >
-                  <span className="text-[16px] tablet:text-[32px]">+</span>
-                  {existingData ? 'Add New Work' : 'Add Work'}
-                </Button>
-              </div>
-              {existingData ? (
-                <div className="flex items-center justify-end">
-                  <Button
-                    variant="badge-remove"
-                    onClick={() => {
-                      handleRemoveBadgePopup({
-                        title: title,
-                        type: type,
-                        badgeType: 'personal',
-                        image: logo,
-                      });
-                    }}
-                  >
-                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+              {page === 'badgeHub' ? (
+                <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
+                  <Button variant={'cancel'} onClick={handleClose}>
+                    Close
                   </Button>
                 </div>
               ) : (
-                <></>
+                <>
+                  <div className="flex items-center justify-start">
+                    <Button
+                      variant="addOption"
+                      onClick={() => {
+                        setEdit(false);
+                        setAddAnotherForm(true);
+                      }}
+                    >
+                      <span className="text-[16px] tablet:text-[32px]">+</span>
+                      {existingData ? 'Add New Work' : 'Add Work'}
+                    </Button>
+                  </div>
+                  {existingData ? (
+                    <div className="flex items-center justify-end">
+                      <Button
+                        variant="badge-remove"
+                        onClick={() => {
+                          handleRemoveBadgePopup({
+                            title: title,
+                            type: type,
+                            badgeType: 'personal',
+                            image: logo,
+                          });
+                        }}
+                      >
+                        {RemoveLoading === true ? (
+                          <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                        ) : (
+                          'Remove Badge'
+                        )}
+                      </Button>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </>
               )}
             </div>
           ) : (
             <div className="px-5 pt-[15px] tablet:px-[60px] laptop:px-[72px]">
               <div className="mb-[5px] tablet:mb-[15px]">
-                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field1.label}
                 </p>
                 {/* <CustomCombobox
@@ -552,7 +571,7 @@ const WorkBadgePopup = ({
                 />
               </div>
               <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
-                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field2.label}
                 </p>
                 <CustomCombobox
@@ -589,7 +608,7 @@ const WorkBadgePopup = ({
                 </div>
               </div> */}
                 <div className="my-[5px] w-full tablet:mb-[25px]">
-                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field4.label}
                   </p>
                   <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -605,7 +624,7 @@ const WorkBadgePopup = ({
               </div>
               <label
                 id="custom-square-checkbox"
-                className="text-gray-1 flex items-center gap-2 text-[10px] font-medium tablet:gap-[15px] tablet:text-[20px]"
+                className="flex items-center gap-2 text-[10px] font-medium text-gray-1 tablet:gap-[15px] tablet:text-[20px]"
               >
                 <input
                   type="checkbox"
@@ -618,7 +637,7 @@ const WorkBadgePopup = ({
 
               <div className="mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
                 <div className="w-full">
-                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field5.label}
                   </p>
                   {fetchingEdit ? (
@@ -643,7 +662,7 @@ const WorkBadgePopup = ({
                   <div className="w-full"></div>
                 ) : (
                   <div className="w-full">
-                    <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                    <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                       {field6.label}
                     </p>
                     {fetchingEdit ? (

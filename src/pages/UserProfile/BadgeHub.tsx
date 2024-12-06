@@ -5,8 +5,11 @@ import SummaryCard from '../../components/SummaryCard';
 import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
 import { BadgeOnboardingPopup } from '../Dashboard/components/BadgeOnboardingPopup';
 import { contactBadges, financeBadges, personalBadges, socialBadges } from '../../constants/badge-hub';
+import BadgeHubAddBadge from './components/BadgeHubAddBadge';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function BadgeHub({ badges }: any) {
+  const navigate = useNavigate();
   const [isBadgeHubPopup, setIsBadgeHubPopup] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState('');
   const [isPopup, setIsPopup] = useState(false);
@@ -61,7 +64,17 @@ export default function BadgeHub({ badges }: any) {
         </h1>
         <div className="flex gap-2 tablet:gap-4">
           {linkBadgesArray?.map((badge: any) => (
-            <button key={badge.id}>
+            <button
+              key={badge.type}
+              onClick={() => {
+                if (badge.type === 'twitter') {
+                  window.open(`https://x.com/${badge.userBadgeData.details.username}`, '_blank', 'noopener,noreferrer');
+                }
+                if (badge.type === 'github') {
+                  window.open(badge.userBadgeData.details.profileUrl, '_blank', 'noopener,noreferrer');
+                }
+              }}
+            >
               <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
             </button>
           ))}
@@ -73,29 +86,44 @@ export default function BadgeHub({ badges }: any) {
         </h1>
         <div className="flex gap-2 tablet:gap-4">
           {personalBadgesArray &&
-            personalBadgesArray?.map((badge: any) => (
-              <a
-                key={badge.id}
-                href={
-                  Array.isArray(badge.userBadgeData.details?.emails) && badge.userBadgeData.details.emails[0]?.value
-                    ? `mailto:${badge.userBadgeData.details.emails[0].value}`
-                    : '#'
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => {
-                  const emails = badge.userBadgeData.details?.emails;
-                  if (Array.isArray(emails) && emails[0]?.value) {
-                    console.log(emails[0].value); // Debug email
-                  } else {
-                    e.preventDefault(); // Prevent navigation if email is invalid
-                    console.error('Email is missing or invalid');
-                  }
-                }}
-              >
-                <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
-              </a>
-            ))}
+            personalBadgesArray?.map((badge: any) => {
+              if (badge.type === 'cell-phone') {
+                return (
+                  <button
+                    key={badge.type}
+                    onClick={() => {
+                      window.open(`tel:${badge.userBadgeData.details.data}`, '_self');
+                    }}
+                  >
+                    <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
+                  </button>
+                );
+              } else {
+                return (
+                  <a
+                    key={badge.type}
+                    href={
+                      Array.isArray(badge.userBadgeData.details?.emails) && badge.userBadgeData.details.emails[0]?.value
+                        ? `mailto:${badge.userBadgeData.details.emails[0].value}`
+                        : '#'
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      const emails = badge.userBadgeData.details?.emails;
+                      if (Array.isArray(emails) && emails[0]?.value) {
+                        console.log(emails[0].value);
+                      } else {
+                        e.preventDefault();
+                        console.error('Email is missing or invalid');
+                      }
+                    }}
+                  >
+                    <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
+                  </a>
+                );
+              }
+            })}
         </div>
       </div>
       <div className="flex w-full items-center gap-3 rounded-[9.228px] border-[2.768px] border-gray-250 bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:gap-5 tablet:px-6 tablet:py-2">
@@ -109,10 +137,10 @@ export default function BadgeHub({ badges }: any) {
             )
             .map((badge: any) => (
               <button
-                key={badge.id}
+                key={badge.type}
                 onClick={() => {
-                  setSelectedBadge(badge.type);
-                  setIsBadgeHubPopup(true);
+                  // setSelectedBadge(badge.type);
+                  // setIsPopup(true);
                 }}
               >
                 <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
@@ -131,10 +159,10 @@ export default function BadgeHub({ badges }: any) {
             )
             .map((badge: any) => (
               <button
-                key={badge.id}
+                key={badge.type}
                 onClick={() => {
                   setSelectedBadge(badge.type);
-                  setIsBadgeHubPopup(true);
+                  setIsPopup(true);
                 }}
               >
                 <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
@@ -142,7 +170,9 @@ export default function BadgeHub({ badges }: any) {
             ))}
         </div>
       </div>
-      {isPopup && <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} setEdit={''} />}
+      {isPopup && (
+        <BadgeHubAddBadge isPopup={isPopup} setIsPopup={setIsPopup} edit={false} setEdit={''} type={selectedBadge} />
+      )}
       {/* {isBadgeHubPopup && (
         <BadgeHubDetails
           handleClose={() => setIsBadgeHubPopup(false)}

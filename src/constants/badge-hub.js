@@ -104,11 +104,6 @@ export const personalBadges = [
     type: 'geolocation',
   },
   {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/securityquestion-a.png`,
-    title: 'Security Question',
-    type: 'security-question',
-  },
-  {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
     title: 'Link Hub',
     type: 'linkHub',

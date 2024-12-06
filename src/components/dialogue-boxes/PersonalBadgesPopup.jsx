@@ -50,6 +50,7 @@ const PersonalBadgesPopup = ({
   handleSkip,
   onboarding,
   progress,
+  page,
 }) => {
   const queryClient = useQueryClient();
   const [selected, setSelected] = useState();
@@ -423,7 +424,7 @@ const PersonalBadgesPopup = ({
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
               <div className="my-[5px] w-full">
-                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   Security question
                 </p>
                 <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -439,7 +440,7 @@ const PersonalBadgesPopup = ({
                 </div>
               </div>
               <div className="w-full">
-                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   Answer
                 </p>
                 <input
@@ -505,49 +506,57 @@ const PersonalBadgesPopup = ({
               placeholder={placeholder2}
               className="verification_badge_input"
             />
-            <div className="mt-[10px] flex justify-between gap-2 tablet:mt-5">
-              <Button variant="submit" onClick={() => getLocation()} disabled={edit ? (name ? false : true) : false}>
-                Get Current location
-              </Button>
-              <div className="flex justify-between gap-[13px] tablet:gap-[35px]">
-                {edit && (
-                  <Button
-                    variant="badge-remove"
-                    onClick={() => {
-                      handleRemoveBadgePopup({
-                        title: title,
-                        type: type,
-                        badgeType: 'personal',
-                        image: logo,
-                      });
-                    }}
-                  >
-                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
-                  </Button>
-                )}
-                {hollow ? (
-                  <Button variant="submit-hollow" disabled={true}>
-                    {loading === true ? (
-                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit ? (
-                      'Update Badge'
-                    ) : (
-                      'Add Badge'
-                    )}
-                  </Button>
-                ) : (
-                  <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                    {loading === true ? (
-                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit ? (
-                      'Update Badge'
-                    ) : (
-                      'Add Badge'
-                    )}
-                  </Button>
-                )}
+            {page === 'badgeHub' ? (
+              <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+                <Button variant={'cancel'} onClick={handleClose}>
+                  Close
+                </Button>
               </div>
-            </div>
+            ) : (
+              <div className="mt-[10px] flex justify-between gap-2 tablet:mt-5">
+                <Button variant="submit" onClick={() => getLocation()} disabled={edit ? (name ? false : true) : false}>
+                  Get Current location
+                </Button>
+                <div className="flex justify-between gap-[13px] tablet:gap-[35px]">
+                  {edit && (
+                    <Button
+                      variant="badge-remove"
+                      onClick={() => {
+                        handleRemoveBadgePopup({
+                          title: title,
+                          type: type,
+                          badgeType: 'personal',
+                          image: logo,
+                        });
+                      }}
+                    >
+                      {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+                    </Button>
+                  )}
+                  {hollow ? (
+                    <Button variant="submit-hollow" disabled={true}>
+                      {loading === true ? (
+                        <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                      ) : edit ? (
+                        'Update Badge'
+                      ) : (
+                        'Add Badge'
+                      )}
+                    </Button>
+                  ) : (
+                    <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                      {loading === true ? (
+                        <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                      ) : edit ? (
+                        'Update Badge'
+                      ) : (
+                        'Add Badge'
+                      )}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="relative">
@@ -627,50 +636,58 @@ const PersonalBadgesPopup = ({
             query={query}
             setQuery={setQuery}
             type={'city'}
-            disabled={edit ? (selected?.name ? false : true) : false}
+            disabled={page === 'badgeHub' || (edit ? (selected?.name ? false : true) : false)}
           />
           {isError && (
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
-        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
-          {edit && (
-            <Button
-              variant="badge-remove"
-              onClick={() => {
-                handleRemoveBadgePopup({
-                  title: title,
-                  type: type,
-                  badgeType: 'personal',
-                  image: logo,
-                });
-              }}
-            >
-              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+        {page === 'badgeHub' ? (
+          <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+            <Button variant={'cancel'} onClick={handleClose}>
+              Close
             </Button>
-          )}
-          {hollow ? (
-            <Button variant="submit-hollow" disabled={true}>
-              {loading === true ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : edit ? (
-                'Update Badge'
-              ) : (
-                'Add Badge'
-              )}
-            </Button>
-          ) : (
-            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : edit ? (
-                'Update Badge'
-              ) : (
-                'Add Badge'
-              )}
-            </Button>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+            {edit && (
+              <Button
+                variant="badge-remove"
+                onClick={() => {
+                  handleRemoveBadgePopup({
+                    title: title,
+                    type: type,
+                    badgeType: 'personal',
+                    image: logo,
+                  });
+                }}
+              >
+                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+              </Button>
+            )}
+            {hollow ? (
+              <Button variant="submit-hollow" disabled={true}>
+                {loading === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : edit ? (
+                  'Update Badge'
+                ) : (
+                  'Add Badge'
+                )}
+              </Button>
+            ) : (
+              <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                {loading === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : edit ? (
+                  'Update Badge'
+                ) : (
+                  'Add Badge'
+                )}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -686,70 +703,58 @@ const PersonalBadgesPopup = ({
             selected={selected}
             setSelected={setSelected}
             placeholder={edit ? (selected?.name ? placeholder : 'Loading...') : placeholder}
-            disabled={edit ? (selected?.name ? false : true) : false}
+            disabled={page === 'badgeHub' || (edit ? (selected?.name ? false : true) : false)}
           />
           {isError && (
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
-        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
-          {edit && (
-            <Button
-              variant="badge-remove"
-              onClick={() => {
-                handleRemoveBadgePopup({
-                  title: title,
-                  type: type,
-                  badgeType: 'personal',
-                  image: logo,
-                });
-              }}
-            >
-              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+        {page === 'badgeHub' ? (
+          <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+            <Button variant={'cancel'} onClick={handleClose}>
+              Close
             </Button>
-          )}
-          {hollow ? (
-            <Button variant="submit-hollow" disabled={true}>
-              {loading === true ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : edit ? (
-                'Update Badge'
-              ) : (
-                'Add Badge'
-              )}
-            </Button>
-          ) : (
-            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : edit ? (
-                'Update Badge'
-              ) : (
-                'Add Badge'
-              )}
-            </Button>
-          )}
-        </div>
-        {/* </>
-        ) : (
-          <div className="relative">
-            <input
-              type="text"
-              value={name}
-              onChange={handleNameChange}
-              placeholder={placeholder}
-              className="verification_badge_input"
-            />
-            {isError && (
-              <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
-            )}
-            <div className="mt-[10px] flex justify-end tablet:mt-5">
-              <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
-            </div>
           </div>
-        )} */}
+        ) : (
+          <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+            {edit && (
+              <Button
+                variant="badge-remove"
+                onClick={() => {
+                  handleRemoveBadgePopup({
+                    title: title,
+                    type: type,
+                    badgeType: 'personal',
+                    image: logo,
+                  });
+                }}
+              >
+                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+              </Button>
+            )}
+            {hollow ? (
+              <Button variant="submit-hollow" disabled={true}>
+                {loading === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : edit ? (
+                  'Update Badge'
+                ) : (
+                  'Add Badge'
+                )}
+              </Button>
+            ) : (
+              <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                {loading === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : edit ? (
+                  'Update Badge'
+                ) : (
+                  'Add Badge'
+                )}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -811,47 +816,56 @@ const PersonalBadgesPopup = ({
                 value={date} // Assuming date is a valid string in YYYY-MM-DD format
                 onChange={handleDateChange}
                 className="verification_badge_input"
+                disabled={page === 'badgeHub'}
               />
             )}
 
-            <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
-              {edit && (
-                <Button
-                  variant="badge-remove"
-                  onClick={() => {
-                    handleRemoveBadgePopup({
-                      title: title,
-                      type: type,
-                      badgeType: 'personal',
-                      image: logo,
-                    });
-                  }}
-                >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+            {page === 'badgeHub' ? (
+              <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+                <Button variant={'cancel'} onClick={handleClose}>
+                  Close
                 </Button>
-              )}
-              {hollow ? (
-                <Button variant="submit-hollow" disabled={true}>
-                  {loading === true ? (
-                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                  ) : edit ? (
-                    'Update Badge'
-                  ) : (
-                    'Add Badge'
-                  )}
-                </Button>
-              ) : (
-                <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                  {loading === true ? (
-                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                  ) : edit ? (
-                    'Update Badge'
-                  ) : (
-                    'Add Badge'
-                  )}
-                </Button>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+                {edit && (
+                  <Button
+                    variant="badge-remove"
+                    onClick={() => {
+                      handleRemoveBadgePopup({
+                        title: title,
+                        type: type,
+                        badgeType: 'personal',
+                        image: logo,
+                      });
+                    }}
+                  >
+                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove Badge'}
+                  </Button>
+                )}
+                {hollow ? (
+                  <Button variant="submit-hollow" disabled={true}>
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
+                  </Button>
+                ) : (
+                  <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : edit ? (
+                      'Update Badge'
+                    ) : (
+                      'Add Badge'
+                    )}
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         )}
         {title === 'Current City' &&
