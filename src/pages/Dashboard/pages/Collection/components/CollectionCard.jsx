@@ -465,13 +465,8 @@ const CollectionCard = ({ listData, page }) => {
                     <button
                       className={`${'w-fit'} flex h-[14.5px] items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
                       onClick={() => {
-                        // if (categoryItem.link === null) {
                         setSelectedItem(categoryItem);
                         setCopyModal(true);
-                        // } else {
-                        //   copyToClipboard(categoryItem.link);
-                        //   showToast('success', 'copyLink');
-                        // }
                       }}
                     >
                       {persistedTheme === 'dark' ? <Copy /> : <Copy />}
@@ -509,31 +504,6 @@ const CollectionCard = ({ listData, page }) => {
                       </h1>
                     </button>
                   )}
-                  {/* {notPublicProfile ? (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/trash.svg' : 'assets/svgs/trash-icon.svg'}`}
-                      alt="trash-icon"
-                      className="h-[15px] w-3 cursor-pointer tablet:h-[25px] tablet:w-5"
-                      onClick={() => {
-                        setCategoryId(categoryItem._id);
-                        setModalVisible(true);
-                      }}
-                    />
-                  ) : (
-                    <div />
-                  )}
-                  <div className="flex items-center gap-3 tablet:gap-[1.62rem]">
-                    <div className="flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2">
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clock.svg' : 'assets/svgs/dashboard/clock-outline.svg'}`}
-                        alt="clock"
-                        className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
-                      />
-                      <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
-                        {`Created list ${calculateTimeAgo(categoryItem.createdAt)}`}
-                      </h4>
-                    </div>
-                  </div> */}
                 </div>
                 {notPublicProfile && page !== 'spotlight' && (
                   <SharedListAdminSection
@@ -556,7 +526,7 @@ const CollectionCard = ({ listData, page }) => {
                   <CopyCollection
                     handleClose={() => setAddToList(false)}
                     modalVisible={addToList}
-                    categoryItem={categoryItem}
+                    categoryItem={selectedItem}
                   />
                 )}
               </div>

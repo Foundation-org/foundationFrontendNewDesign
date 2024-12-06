@@ -5,7 +5,7 @@ import { useCopyCollection } from '../../services/api/listsApi';
 import PopUp from '../ui/PopUp';
 
 export default function CopyCollection({ handleClose, modalVisible, categoryItem }) {
-  const [listName, setListName] = useState('');
+  const [listName, setListName] = useState(categoryItem?.category || '');
 
   const { mutateAsync: handleCopyCollection, isPending } = useCopyCollection(handleClose);
 
