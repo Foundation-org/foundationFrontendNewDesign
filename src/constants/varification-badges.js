@@ -108,6 +108,18 @@ export const socials = [
     badgeType: 'farcaster',
     email: true,
   },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Youtube-2x.png`,
+    title: 'Youtube',
+    ButtonColor: 'blue',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    link: '/auth/youtube',
+    accountName: 'youtube',
+    type: 'youtube',
+    disabled: false,
+    email: true,
+  },
 ];
 
 export const web3 = [
