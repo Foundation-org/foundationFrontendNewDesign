@@ -14,9 +14,12 @@ import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
 import { updateProgress } from '../../../features/progress/progressSlice';
+import { incIndex, setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
 
 export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => {
   const fetchUser = useSelector((state) => state.auth.user);
+  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
+  const onBoardingIndex = useSelector((state) => state.onBoardingPopup.inedx);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const checkPersonalBadge = (itemType) =>
@@ -325,21 +328,22 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [currentIndex, setCurrentIndex] = useState(isOnboardingPopup ? onBoardingIndex + 1 : 0);
   const actionableBadges = badgeData.filter((badge) => !badge.check);
 
   const handleNext = () => {
     if (currentIndex < actionableBadges.length - 1) {
+      dispatch(incIndex());
       setCurrentIndex((prev) => prev + 1);
     } else {
       setIsPopup(false);
-      localStorage.removeItem('onBoarding');
+      dispatch(isPopup(false));
     }
   };
 
   const handleSkip = (type) => {
     if (actionableBadges[currentIndex]?.buttonText === 'Finish') {
+      dispatch(setPopup(false));
       queryClient.invalidateQueries(['userInfo']);
     }
     if (type) {
@@ -350,11 +354,11 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
 
   const totalBadges = badgeData.filter((badge) => !badge.info);
   const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
-  const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
+  // const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
   const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
   const handlePopupClose = (data) => {
     setIsPopup(data);
-    localStorage.removeItem('onBoarding');
+    dispatch(isPopup(false));
     queryClient.invalidateQueries(['userInfo']);
   };
 
@@ -362,22 +366,22 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     <CurrentBadgeComponent
       isPopup={isPopup}
       setIsPopup={handlePopupClose}
-      title={actionableBadges[currentIndex].title}
-      type={actionableBadges[currentIndex].type}
-      logo={actionableBadges[currentIndex].logo}
-      placeholder={actionableBadges[currentIndex].placeholder}
+      title={actionableBadges[currentIndex]?.title}
+      type={actionableBadges[currentIndex]?.type}
+      logo={actionableBadges[currentIndex]?.logo}
+      placeholder={actionableBadges[currentIndex]?.placeholder}
       edit={edit}
       setEdit={setEdit}
       fetchUser={fetchUser}
       handleSkip={handleSkip}
       onboarding={true}
-      selectedBadge={actionableBadges[currentIndex].type}
-      message={actionableBadges[currentIndex].message}
-      message2={actionableBadges[currentIndex].message2}
-      message3={actionableBadges[currentIndex].message3}
-      buttonText={actionableBadges[currentIndex].buttonText}
-      accountName={actionableBadges[currentIndex].accountName}
-      link={actionableBadges[currentIndex].link}
+      selectedBadge={actionableBadges[currentIndex]?.type}
+      message={actionableBadges[currentIndex]?.message}
+      message2={actionableBadges[currentIndex]?.message2}
+      message3={actionableBadges[currentIndex]?.message3}
+      buttonText={actionableBadges[currentIndex]?.buttonText}
+      accountName={actionableBadges[currentIndex]?.accountName}
+      link={actionableBadges[currentIndex]?.link}
     />
   );
 };
