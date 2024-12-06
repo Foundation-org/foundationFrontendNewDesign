@@ -9,6 +9,7 @@ import { contactBadges, financeBadges, personalBadges, socialBadges } from '../.
 import { Link } from 'react-router-dom';
 import * as badgeService from '../../utils/helper-function/badge-service';
 import showToast from '../ui/Toast';
+import { formatCountNumber } from '../../utils/utils';
 
 const BadgeList = ({
   badges,
@@ -63,7 +64,9 @@ const BadgeList = ({
               className="h-3 w-3 tablet:h-6 tablet:w-6"
             />
             <h1 className="text-[12px] leading-normal text-gray dark:text-[#f1f1f1] tablet:text-[16px]">
-              10 {/* {formatCountNumber(badge?.viewerCount?.length || 0)} */}
+              {formatCountNumber(
+                badgeService.getBadgeByType(persistedUserInfo, badge.type)?.badgeHubClicksTrack?.length || 0
+              )}
             </h1>
           </div>
         </li>

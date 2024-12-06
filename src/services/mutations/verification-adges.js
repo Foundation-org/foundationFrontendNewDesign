@@ -93,7 +93,7 @@ const reOrderLinHubLinks = async (data) => {
   const response = await api.post('/updateBadgeDataArray', {
     type: 'linkHub',
     data,
-    uuid: localStorage.getItem('uuid')
+    uuid: localStorage.getItem('uuid'),
   });
 
   return response.data;
@@ -129,6 +129,32 @@ export const useAddBadgeHub = () => {
 
   return useMutation({
     mutationFn: (selectedIds) => addBadgeHub(persistedUserInfo.uuid, selectedIds),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+      showToast('success', 'orderUpdated');
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
+
+const badgeHubClicksTrack = async (badgeId, clickerUuid) => {
+  const response = await api.patch('/badgeHubClicksTrack', {
+    badgeId,
+    clickerUuid,
+    clickerTimestamps: new Date().getTime(),
+  });
+
+  return response.data;
+};
+
+export const useBadgeHubClicksTrack = () => {
+  const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  return useMutation({
+    mutationFn: (badgeId) => badgeHubClicksTrack(badgeId, persistedUserInfo.uuid),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
       showToast('success', 'orderUpdated');

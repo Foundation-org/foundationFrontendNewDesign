@@ -27,3 +27,6 @@ export const getBadgeIdByType = (persistedUserInfo: any, itemType: string) =>
 
 export const checkBadgeExists = (persistedUserInfo: any, itemType: string) =>
   persistedUserInfo?.badges?.some((badge: any) => badge?.type === itemType) || false;
+
+export const getBadgeByType = (persistedUserInfo: any, itemType: string) =>
+  persistedUserInfo?.badges?.find((badge: any) => badge?.type === itemType) || null;

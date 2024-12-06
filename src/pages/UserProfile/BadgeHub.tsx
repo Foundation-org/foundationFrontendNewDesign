@@ -3,18 +3,19 @@ import { useSelector } from 'react-redux';
 import { Button } from '../../components/ui/Button';
 import SummaryCard from '../../components/SummaryCard';
 import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
-import { BadgeOnboardingPopup } from '../Dashboard/components/BadgeOnboardingPopup';
 import { contactBadges, financeBadges, personalBadges, socialBadges } from '../../constants/badge-hub';
 import BadgeHubAddBadge from './components/BadgeHubAddBadge';
-import { Link, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useBadgeHubClicksTrack } from '../../services/mutations/verification-adges';
 
 export default function BadgeHub({ badges }: any) {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const isPublicProfile = location.pathname.startsWith('/h/');
   const [isBadgeHubPopup, setIsBadgeHubPopup] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState('');
   const [isPopup, setIsPopup] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
-  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
+  const { mutateAsync: handleBadgeHubClicksTrack } = useBadgeHubClicksTrack();
 
   const linkBadgesArray = socialBadges
     ?.filter(
@@ -28,7 +29,19 @@ export default function BadgeHub({ badges }: any) {
       };
     });
 
-  const personalBadgesArray = contactBadges
+  const contactBadgesArray = contactBadges
+    ?.filter(
+      (badge: any) => badges && badges?.some((userBadge: any) => userBadge.type === badge.type && userBadge.isAdded)
+    )
+    .map((badge: any) => {
+      const userBadge = badges && badges?.find((userBadge: any) => userBadge.type === badge.type && userBadge.isAdded);
+      return {
+        ...badge,
+        userBadgeData: userBadge,
+      };
+    });
+
+  const personalBadgesArray = personalBadges
     ?.filter(
       (badge: any) => badges && badges?.some((userBadge: any) => userBadge.type === badge.type && userBadge.isAdded)
     )
@@ -67,6 +80,9 @@ export default function BadgeHub({ badges }: any) {
             <button
               key={badge.type}
               onClick={() => {
+                if (isPublicProfile) {
+                  handleBadgeHubClicksTrack(badge.userBadgeData._id);
+                }
                 if (badge.type === 'twitter') {
                   window.open(`https://x.com/${badge.userBadgeData.details.username}`, '_blank', 'noopener,noreferrer');
                 }
@@ -85,13 +101,16 @@ export default function BadgeHub({ badges }: any) {
           Contacts
         </h1>
         <div className="flex gap-2 tablet:gap-4">
-          {personalBadgesArray &&
-            personalBadgesArray?.map((badge: any) => {
+          {contactBadgesArray &&
+            contactBadgesArray?.map((badge: any) => {
               if (badge.type === 'cell-phone') {
                 return (
                   <button
                     key={badge.type}
                     onClick={() => {
+                      if (isPublicProfile) {
+                        handleBadgeHubClicksTrack(badge.userBadgeData._id);
+                      }
                       window.open(`tel:${badge.userBadgeData.details.data}`, '_self');
                     }}
                   >
@@ -110,6 +129,9 @@ export default function BadgeHub({ badges }: any) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => {
+                      if (isPublicProfile) {
+                        handleBadgeHubClicksTrack(badge.userBadgeData._id);
+                      }
                       const emails = badge.userBadgeData.details?.emails;
                       if (Array.isArray(emails) && emails[0]?.value) {
                         console.log(emails[0].value);
@@ -153,21 +175,20 @@ export default function BadgeHub({ badges }: any) {
           Personal
         </h1>
         <div className="flex flex-wrap gap-2 tablet:gap-4">
-          {personalBadges
-            ?.filter((badge: any) =>
-              badges?.some((userBadge: any) => userBadge.type === badge.type && userBadge.isAdded)
-            )
-            .map((badge: any) => (
-              <button
-                key={badge.type}
-                onClick={() => {
-                  setSelectedBadge(badge.type);
-                  setIsPopup(true);
-                }}
-              >
-                <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
-              </button>
-            ))}
+          {personalBadgesArray.map((badge: any) => (
+            <button
+              key={badge.type}
+              onClick={() => {
+                if (isPublicProfile) {
+                  handleBadgeHubClicksTrack(badge.userBadgeData._id);
+                }
+                setSelectedBadge(badge.type);
+                setIsPopup(true);
+              }}
+            >
+              <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
+            </button>
+          ))}
         </div>
       </div>
       {isPopup && (
