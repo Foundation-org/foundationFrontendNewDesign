@@ -21,6 +21,7 @@ import DisabledListPopup from '../../../../../components/dialogue-boxes/Disabled
 import { useUpdateSpotLight } from '../../../../../services/api/profile';
 import SharedListAdminSection from '../../../../../components/admin-card-section/sharedlist-admin-section';
 import Copy from '../../../../../assets/Copy';
+import CopyCollection from '../../../../../components/dialogue-boxes/CopyCollection';
 
 const CollectionCard = ({ listData, page }) => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const CollectionCard = ({ listData, page }) => {
   const [selectedItem, setSelectedItem] = useState();
   const [postId, setPostId] = useState('');
   const [listName, setListName] = useState('');
+  const [addToList, setAddToList] = useState(false);
   const [hasReordered, setHasReordered] = useState('');
   const mouseSensor = useSensor(MouseSensor);
   const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
@@ -201,7 +203,7 @@ const CollectionCard = ({ listData, page }) => {
               >
                 <div className="relative flex items-center justify-between gap-2 border-b-[0.125rem] border-gray-250 px-3 py-1 dark:border-gray-100 tablet:px-[1.56rem] tablet:py-[0.87rem]">
                   {/* Category Name */}
-                  <h1 className="text-[0.6rem] font-medium text-gray-1 dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                  <h1 className="text-gray-1 text-[0.6rem] font-medium dark:text-white-200 tablet:text-[1.13531rem] laptop:text-[1.2rem]">
                     Collection
                   </h1>
 
@@ -219,7 +221,7 @@ const CollectionCard = ({ listData, page }) => {
                         alt="eye-latest"
                         className="h-3 w-[9px] tablet:h-[22px] tablet:w-[17px]"
                       />
-                      <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-gray-1 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                      <h1 className="text-gray-1 text-[0.6rem] font-medium leading-[0.6rem] dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                         Delete
                       </h1>
                     </button>
@@ -264,7 +266,7 @@ const CollectionCard = ({ listData, page }) => {
                         alt="clock"
                         className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
                       />
-                      <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-gray-1 dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+                      <h4 className="text-gray-1 whitespace-nowrap text-[0.6rem] font-normal dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
                         {calculateTimeAgo(categoryItem.createdAt)}
                       </h4>
                     </div>
@@ -273,13 +275,13 @@ const CollectionCard = ({ listData, page }) => {
                 <div className="mb-[15px] mt-[10px] tablet:mb-6 tablet:mt-4">
                   <div className="mx-[0.87rem] flex items-center gap-2 tablet:mx-10">
                     <h4
-                      className={`text-[0.75rem] font-semibold leading-[15px] text-gray dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px] ${notPublicProfile ? '' : 'mb-5 tablet:mb-10'}`}
+                      className={`text-gray text-[0.75rem] font-semibold leading-[15px] dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px] ${notPublicProfile ? '' : 'mb-5 tablet:mb-10'}`}
                     >
                       {categoryItem.category}
                     </h4>
                     {notPublicProfile && (
                       <h4
-                        className="cursor-pointer text-[9px] font-normal leading-[9px] text-gray-1 underline dark:text-gray-300 tablet:text-[1rem] tablet:leading-[23px]"
+                        className="text-gray-1 cursor-pointer text-[9px] font-normal leading-[9px] underline dark:text-gray-300 tablet:text-[1rem] tablet:leading-[23px]"
                         onClick={() => {
                           setCategoryId(categoryItem._id);
                           setListName(categoryItem.category);
@@ -291,7 +293,7 @@ const CollectionCard = ({ listData, page }) => {
                     )}
                   </div>
                   {notPublicProfile && (
-                    <h4 className="py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-gray-1 dark:text-accent-300 tablet:py-[10px] tablet:pl-[69px] tablet:text-[1rem] tablet:leading-[30px]">
+                    <h4 className="text-gray-1 py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 dark:text-accent-300 tablet:py-[10px] tablet:pl-[69px] tablet:text-[1rem] tablet:leading-[30px]">
                       {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''} (drag and drop to change
                       order)
                     </h4>
@@ -354,7 +356,7 @@ const CollectionCard = ({ listData, page }) => {
 
                   {listData[categoryIndex]?.post?.length <= 0 && (
                     <div className="flex w-full items-center gap-1 tablet:gap-20">
-                      <h2 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-gray outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
+                      <h2 className="text-gray px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                         This collection has no posts
                       </h2>
                     </div>
@@ -468,17 +470,12 @@ const CollectionCard = ({ listData, page }) => {
                     <button
                       className={`${'w-fit'} flex h-[14.5px] items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
                       onClick={() => {
-                        // if (categoryItem.link === null) {
                         setSelectedItem(categoryItem);
                         setCopyModal(true);
-                        // } else {
-                        //   copyToClipboard(categoryItem.link);
-                        //   showToast('success', 'copyLink');
-                        // }
                       }}
                     >
                       {persistedTheme === 'dark' ? <Copy /> : <Copy />}
-                      <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-gray-1 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                      <h1 className="text-gray-1 text-[0.6rem] font-medium leading-[0.6rem] dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                         Share
                       </h1>
                     </button>
@@ -486,12 +483,8 @@ const CollectionCard = ({ listData, page }) => {
                     <button
                       className={`${'w-fit'} flex h-[14.5px] items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
                       onClick={() => {
-                        // if (categoryItem.link === null) {
-                        showToast('info', 'featureComingSoon');
-                        // } else {
-                        //   copyToClipboard(categoryItem.link);
-                        //   showToast('success', 'copyLink');
-                        // }
+                        setSelectedItem(categoryItem);
+                        setAddToList(true);
                       }}
                     >
                       <svg
@@ -511,7 +504,7 @@ const CollectionCard = ({ listData, page }) => {
                           fill={'#A3A3A3'}
                         />
                       </svg>
-                      <h1 className="text-[0.6rem] font-medium leading-[0.6rem] text-gray-1 dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
+                      <h1 className="text-gray-1 text-[0.6rem] font-medium leading-[0.6rem] dark:text-white-200 tablet:text-[1.13531rem] tablet:leading-[1.13531rem] laptop:text-[1.2rem] laptop:leading-[1.2rem]">
                         Copy
                       </h1>
                     </button>
@@ -553,6 +546,13 @@ const CollectionCard = ({ listData, page }) => {
                     setEnableDisableModal={setEnableDisableModal}
                     setEnableDisableType={setEnableDisableType}
                     copyToClipboard={copyToClipboard}
+                  />
+                )}
+                {addToList && (
+                  <CopyCollection
+                    handleClose={() => setAddToList(false)}
+                    modalVisible={addToList}
+                    categoryItem={selectedItem}
                   />
                 )}
               </div>
