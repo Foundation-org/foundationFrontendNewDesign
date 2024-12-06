@@ -21,7 +21,7 @@ const BadgeList = ({
   title,
 }) => (
   <div>
-    <h1 className="summary-text">{title}</h1>
+    <h1 className="summary-text mb-[10px] tablet:mb-4">{title}</h1>
     <ul className="flex flex-col gap-[5px] tablet:gap-4">
       {badges.map((badge, index) => (
         <li
@@ -57,7 +57,7 @@ const BadgeList = ({
               </Link>
             )}
           </h5>
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex min-w-10 items-center gap-2 tablet:min-w-[64px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
               alt="clicks"
