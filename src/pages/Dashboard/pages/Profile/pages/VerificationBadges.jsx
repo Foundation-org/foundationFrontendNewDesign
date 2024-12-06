@@ -21,6 +21,7 @@ import ProgressBar from '../../../../../components/ProgressBar';
 import { Button } from '../../../../../components/ui/Button';
 import { setProgress } from '../../../../../features/progress/progressSlice';
 import IdentityBadge from './verification-badges/IdentityBadge';
+import { setIndex } from '../../../../../features/OnBoardingPopup/onBoardingPopupSlice';
 
 const VerificationBadges = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -136,7 +137,12 @@ const VerificationBadges = () => {
           <ProgressBar />
         </div>
         <div className="flex w-full justify-center">
-          <Button variant={'submit'} onClick={() => setIsPopup(true)}>
+          <Button
+            variant={'submit'}
+            onClick={() => {
+              dispatch(setIndex(0)), setIsPopup(true);
+            }}
+          >
             Add badge
           </Button>
         </div>

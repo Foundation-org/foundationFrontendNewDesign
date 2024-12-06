@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
 import { setGuestSignInDialogue } from '../features/extras/extrasSlice';
+import { incIndex } from '../features/OnBoardingPopup/onBoardingPopupSlice';
 
 const Authenticating = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Authenticating = () => {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
+  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
 
   let filtersActions;
   if (location.pathname === '/bookmark') {
@@ -125,6 +127,9 @@ const Authenticating = () => {
       if (res.status === 200) {
         initializeFilters(res.data);
         localStorage.setItem('uuid', res.data.uuid);
+        if (isOnboardingPopup) {
+          dispatch(incIndex());
+        }
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
@@ -208,6 +213,10 @@ const Authenticating = () => {
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
+
+        if (isOnboardingPopup) {
+          dispatch(incIndex());
+        }
       }
     } catch (error) {
       console.log(error);
@@ -246,6 +255,9 @@ const Authenticating = () => {
       if (addBadge.status === 200) {
         showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
+        if (isOnboardingPopup) {
+          dispatch(incIndex());
+        }
       }
     } catch (error) {
       console.log('error', error);
@@ -265,7 +277,7 @@ const Authenticating = () => {
     if (!isLoading && !isError && isSuccess) {
       if (localStorage.getItem('authMode') === 'Login') {
         handleSignInSocial(authSuccessResp.data.user, authSuccessResp.data.user.provider);
-      } else if (pathname === '/profile/verification-badges' || localStorage.getItem('onBoarding') === 'true') {
+      } else if (pathname === '/profile/verification-badges' || isOnboardingPopup) {
         if (authSuccessResp.data.user.provider === 'google') {
           handleAddContactBadge({ provider: authSuccessResp.data.user.provider, data: authSuccessResp.data.user });
         } else {

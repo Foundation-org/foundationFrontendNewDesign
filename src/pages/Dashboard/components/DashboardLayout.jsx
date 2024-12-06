@@ -30,6 +30,7 @@ import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
 import SharedArticlesSearch from '../pages/Profile/pages/share-articles/SharedArticlesSearch';
 import { badgesTotalLength } from '../../../constants/varification-badges';
 import { setProgress } from '../../../features/progress/progressSlice';
+import { setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -48,15 +49,16 @@ export default function DashboardLayout({ children }) {
   const questUtilsState = useSelector(getQuestUtils);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const persistedConstants = useSelector(getConstantsValues);
+  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
-  const [isPopup, setIsPopup] = useState(localStorage.getItem('onBoarding') === 'true' ? true : false);
+  const [isPopup, setIsPopup] = useState(isOnboardingPopup);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   useEffect(() => {
-    if (localStorage.getItem('onBoarding') === 'true') {
+    if (isOnboardingPopup && location.pathname === '/') {
       setIsPopup(true);
     }
-  }, [localStorage.getItem('onBoarding')]);
+  }, [isOnboardingPopup]);
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
@@ -177,7 +179,7 @@ export default function DashboardLayout({ children }) {
           navigate('/');
         }
         setIsPopup(true);
-        localStorage.setItem('onBoarding', 'true');
+        dispatch(setPopup(true));
       }
     } catch (error) {
       console.log(error);
