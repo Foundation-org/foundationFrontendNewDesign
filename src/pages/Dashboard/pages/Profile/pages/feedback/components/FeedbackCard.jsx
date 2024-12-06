@@ -8,11 +8,11 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
   return (
     <div
       ref={innerRef}
-      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white tablet:rounded-[15px] dark:border-gray-100 dark:bg-gray-200 "
+      className="max-w-[730px] rounded-[12.3px] border-2 border-gray-250 bg-white dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[15px]"
     >
-      <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5 dark:border-gray-100">
+      <div className="mb-2 flex justify-between border-b border-gray-250 px-2 py-[5px] dark:border-gray-100 tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
         <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-[18px]">
-          <div className="flex items-center gap-2 tablet:gap-4 ">
+          <div className="flex items-center gap-2 tablet:gap-4">
             {post.uuid === persistedUserInfo?.uuid ? (
               <div className="relative h-fit w-fit">
                 <img
@@ -45,7 +45,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
             )}
           </div>
           {/* <div className="flex items-center gap-[15px]">
-            <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
+            <h4 className="text-[10px] font-normal leading-[10px] text-gray-1 dark:text-gray-300 tablet:text-[1.25rem] tablet:leading-[23px]">
               {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
             </h4>
             <img
@@ -56,10 +56,10 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
           </div> */}
         </div>
       </div>
-      <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px] dark:text-gray-300">
+      <h1 className="ml-5 text-[0.75rem] font-semibold leading-[15px] text-gray dark:text-gray-300 tablet:ml-8 tablet:text-[1.25rem] tablet:leading-[23px]">
         {post.Question}
       </h1>
-      <div className="mb-3 ml-7 mt-2 grid grid-cols-2 gap-x-[23px] gap-y-2 tablet:mb-[26px] tablet:ml-[60px] tablet:mt-[15px] tablet:gap-x-[50px] tablet:gap-y-[15px] ">
+      <div className="mb-3 ml-7 mt-2 grid grid-cols-2 gap-x-[23px] gap-y-2 tablet:mb-[26px] tablet:ml-[60px] tablet:mt-[15px] tablet:gap-x-[50px] tablet:gap-y-[15px]">
         {hideReasons.map((item) => {
           const feedbackItem = post?.feedback?.find((feedback) => feedback.id === item.title);
           const feedbackCount = feedbackItem ? feedbackItem.count : 0;
@@ -68,14 +68,14 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
           return (
             <p
               key={item.id}
-              className={`${feedbackViolated ? 'font-semibold text-red-200' : feedbackCount >= 1 ? 'text-[#4A8DBD]' : 'font-normal text-[#BABABA] dark:text-gray-300'} text-[10px] tablet:text-[18px]`}
+              className={`${feedbackViolated ? 'font-semibold text-red-500' : feedbackCount >= 1 ? 'text-blue-100' : 'font-normal text-gray-1 dark:text-gray-300'} text-[10px] tablet:text-[18px]`}
             >
               {feedbackCount} {item.title}
             </p>
           );
         })}
         <p
-          className={`${post?.hiddenCount === 0 ? 'text-[#BABABA] ' : 'text-[#4A8DBD]'} dark:text-gray-300' text-[10px] font-normal tablet:text-[18px]`}
+          className={`${post?.hiddenCount === 0 ? 'text-gray-1' : 'text-blue-100'} dark:text-gray-300' text-[10px] font-normal tablet:text-[18px]`}
         >
           {post.hiddenCount} {post?.hiddenCount > 1 ? 'Times Hidden' : 'Time Hidden'}
         </p>

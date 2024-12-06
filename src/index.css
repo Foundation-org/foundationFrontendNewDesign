@@ -24,7 +24,7 @@
   }
 
   .summary-text {
-    @apply text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal;
+    @apply text-gray-1 text-[12px] font-medium leading-[13.56px] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal;
   }
 
   .verification_badge_input {
@@ -39,14 +39,14 @@
     @apply border-blue-200 bg-blue-200 text-white dark:border-gray-300 dark:bg-gray-300 dark:text-gray-500;
   }
   .slider-link-inactive {
-    @apply border-gray-800 bg-white text-gray-150 dark:border-gray-500 dark:bg-gray-500 dark:text-gray-600;
+    @apply text-gray-1 border-gray-800 bg-white dark:border-gray-500 dark:bg-gray-500 dark:text-gray-600;
   }
   .slider-inactive {
-    @apply border-gray-800 bg-white text-gray-150 dark:border-gray-500 dark:bg-gray-500 dark:text-gray-600;
+    @apply text-gray-1 border-gray-800 bg-white dark:border-gray-500 dark:bg-gray-500 dark:text-gray-600;
   }
 
   .conditional-text {
-    @apply py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 text-accent-400 dark:text-accent-300 tablet:py-[10px] tablet:pl-[66px] tablet:text-[1rem] tablet:leading-[30px];
+    @apply text-gray-1 py-[0.38rem] pl-[28px] text-[7.5px] font-normal leading-3 dark:text-accent-300 tablet:py-[10px] tablet:pl-[66px] tablet:text-[1rem] tablet:leading-[30px];
   }
 }
 

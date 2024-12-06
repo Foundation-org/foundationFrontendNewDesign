@@ -96,8 +96,8 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             alt="badge-logo"
             className="size-[12.325px] tablet:size-5"
           />
-          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-[#7C7C7C] dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? item.to : item.platform}
+          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+            {filter === 'sent' ? item.to : item.platform === 'Foundation-IO.com' ? 'Foundation' : 'Anonymous user'}
           </h1>
         </div>
         <div className="flex items-center gap-1">
@@ -106,15 +106,15 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-[#9C9C9C] dark:text-white tablet:text-[21.211px] tablet:leading-[13.071px]">
+          <h2 className="whitespace-nowrap text-[13.071px] font-normal leading-[21.211px] text-gray-1 dark:text-white tablet:text-[21.211px] tablet:leading-[13.071px]">
             {timeAgo}
           </h2>
         </div>
       </div>
       {/* Body */}
       <div className="m-3 flex flex-col gap-3 tablet:m-5 tablet:gap-5">
-        <h1 className="text-[12.145px] font-semibold leading-[12.145px] tablet:text-[22px] tablet:leading-[22px]">
-          {item.subject}
+        <h1 className="text-[12.145px] font-semibold leading-[12.145px] text-gray-1 dark:text-gray-300 tablet:text-[22px] tablet:leading-[22px]">
+          Subject: {item.subject}
         </h1>
         <div className="flex justify-end gap-2">
           {item?.type === 'sent' && item?.to === 'Participants' && (
@@ -183,7 +183,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 if (location.pathname === '/direct-messaging/preview') {
                   return;
                 } else {
-                  // setViewMsg(true);
+                  setViewMsg(true);
                   handleViewMessage(item._id, item.sender, item.receiver, item);
                 }
               }}
@@ -205,7 +205,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 alt="msgSends"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-gray-1 dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {item.send
                   ? item.to === 'Participants' || item.to === 'All' || item.to === 'Collection'
                     ? `${item.receiversIds.length} Sent`
@@ -219,7 +219,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 alt="msgViewd"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-gray-1 dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {`${item.view} Read`}
               </p>
             </div>
@@ -229,7 +229,7 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 alt="msgFails"
                 className="h-[15.5px] w-[12.44px] tablet:size-[26.8px]"
               />
-              <p className="text-[8.097px] font-normal leading-[8.097px] text-[#707175] dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
+              <p className="text-[8.097px] font-normal leading-[8.097px] text-gray-1 dark:text-white tablet:text-[14.2px] tablet:leading-[14.2px]">
                 {item?.deleteCount ? `${item?.deleteCount} Deleted` : '0 Deleted'}
               </p>
             </div>

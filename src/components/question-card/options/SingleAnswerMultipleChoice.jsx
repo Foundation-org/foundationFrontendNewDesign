@@ -185,7 +185,7 @@ const SingleAnswerMultipleChoice = (props) => {
 
   const handleAddOption = () => {
     const newArr = props.answersSelection.map((item, index) =>
-      index === id ? { ...item, label: answer.trim() } : item,
+      index === id ? { ...item, label: answer.trim() } : item
     );
     props.setAnswerSelection(newArr);
   };
@@ -331,7 +331,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 className="w-full resize-none rounded-[4.73px] bg-white px-2 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-accent-600 outline-none dark:bg-accent-100 dark:text-white-600 tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
               />
             ) : (
-              <h1 className="px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-accent-600 dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
+              <h1 className="text-gray px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                 {props.answer}
               </h1>
             )}

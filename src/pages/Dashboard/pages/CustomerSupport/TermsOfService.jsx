@@ -2,14 +2,14 @@ import { termsAndConditionsArray } from '../../../../features/term-privacy/term-
 
 const TermsOfService = () => {
   return (
-    <div className="mb-12 bg-white pb-5 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-t-[0.86513rem] tablet:dark:border">
-      <h1 className="py-3 pb-1 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] dark:text-gray-300 tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+    <div className="text-gray-1 mb-12 bg-white pb-5 dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:rounded-t-[0.86513rem] tablet:dark:border">
+      <h1 className="py-3 pb-1 text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Terms Of Service
       </h1>
-      <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] dark:text-gray-300 tablet:text-[1.125rem] tablet:leading-[1.125rem]">
+      <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
         Last Updated: October 18, 2024
       </p>
-      <div className="term_policy_paragraph mt-[5px] space-y-[0.63rem] px-8 text-[#707175] dark:text-gray-300 tablet:mt-[15px] tablet:space-y-2 tablet:px-16">
+      <div className="term_policy_paragraph mt-[5px] space-y-[0.63rem] px-8 tablet:mt-[15px] tablet:space-y-2 tablet:px-16">
         <h4 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
           Agreement to Our Legal Terms
         </h4>
@@ -29,7 +29,7 @@ const TermsOfService = () => {
           you agree not to sue us unless we do something really bad on purpose.
         </p>
       </div>
-      <ul className="mt-[10px] list-decimal space-y-[0.63rem] px-8 text-[#707175] dark:text-gray-300 tablet:space-y-2 tablet:px-16">
+      <ul className="mt-[10px] list-decimal space-y-[0.63rem] px-8 tablet:space-y-2 tablet:px-16">
         {termsAndConditionsArray.map((section, index) => (
           <li key={index}>
             <h3 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">

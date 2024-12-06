@@ -48,8 +48,8 @@ const MultipleChoiceOptions = ({
                 )
               ) : null}
             </div>
-            <div className="flex h-[22.5px] w-full items-center justify-between rounded-r-[4.89px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] tablet:h-[46.4px] tablet:rounded-r-[11.284px] laptop:h-[75px] laptop:rounded-r-2xl ">
-              <h1 className=" w-full pl-[15.44px] text-[10px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pl-[45px] tablet:text-[20.7px] laptop:text-[30px] ">
+            <div className="flex h-[22.5px] w-full items-center justify-between rounded-r-[4.89px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] tablet:h-[46.4px] tablet:rounded-r-[11.284px] laptop:h-[75px] laptop:rounded-r-2xl">
+              <h1 className="w-full pl-[15.44px] text-[10px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pl-[45px] tablet:text-[20.7px] laptop:text-[30px]">
                 {answer}
               </h1>
               <div className="flex gap-[55px]">
@@ -93,7 +93,7 @@ const MultipleChoiceOptions = ({
           <div className="relative w-full">
             <div className="flex w-full">
               <input
-                className="w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:py-[18px] laptop:text-[1.875rem]"
+                className="dark:text-gray-1 w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:py-[18px] laptop:text-[1.875rem]"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
                 value={typedValue}

@@ -13,7 +13,7 @@ const Navbar = ({ handleTab, tab }) => {
               : 'create-quest-box-shadow'
           }`}
         >
-          <p className="-mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none text-[#7C7C7C] dark:bg-[#242424] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
+          <p className="text-gray-1 -mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none dark:bg-[#242424] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Polls
           </p>
         </div>
@@ -77,11 +77,11 @@ const Navbar = ({ handleTab, tab }) => {
               : 'create-quest-box-shadow'
           }`}
         >
-          <p className="-mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none text-[#7C7C7C] dark:bg-[#242424] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
+          <p className="text-gray-1 -mt-[6px] h-fit w-fit bg-[#F2F3F5] px-1 text-[10px] font-semibold leading-none dark:bg-[#242424] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Statements
           </p>
         </div>
-        <div className="mx-[3px]  -mt-[11px] flex gap-[6.45px] tablet:mx-[25px] tablet:-mt-[30px] tablet:gap-4 laptop:gap-[25px]">
+        <div className="mx-[3px] -mt-[11px] flex gap-[6.45px] tablet:mx-[25px] tablet:-mt-[30px] tablet:gap-4 laptop:gap-[25px]">
           <button
             className={`${
               tab === 3

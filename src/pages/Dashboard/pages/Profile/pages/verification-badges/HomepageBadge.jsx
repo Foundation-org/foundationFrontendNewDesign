@@ -87,7 +87,7 @@ export default function HomepageBadge({ checkPseudoBadge, isProfile, isDomain })
   return (
     <>
       {!isProfile && !isDomain && (
-        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Your Home Page serves as a central hub for sharing and connecting with your audience.
         </h1>
       )}
@@ -102,7 +102,7 @@ export default function HomepageBadge({ checkPseudoBadge, isProfile, isDomain })
             <div
               className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
             >
-              <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
+              <h1 className="text-gray text-[2.11vw] font-medium leading-normal dark:text-gray-400 tablet:text-[20px]">
                 {item.title}
               </h1>
             </div>

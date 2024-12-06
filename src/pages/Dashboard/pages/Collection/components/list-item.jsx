@@ -40,7 +40,7 @@ const ListItem = ({ post, setCategoryId, categoryItem, setPostId, setDeletePostP
               isDragging ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100' : 'border-white-500 dark:border-gray-250'
             } flex w-full justify-between rounded-r-[4.7px] bg-white dark:bg-accent-100 tablet:rounded-r-[10px]`}
           >
-            <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none dark:text-gray-300 tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
+            <h1 className="text-gray px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] outline-none dark:text-gray-300 tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
               {post?.questForeginKey.Question}
             </h1>
           </div>

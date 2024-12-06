@@ -206,7 +206,7 @@ export const printNoRecordsMessage = (
   filterStates,
   dispatch,
   setFilters,
-  resetOtherStates,
+  resetOtherStates
 ) => {
   const filtersActions = homeFilterActions;
   const result = matchFilters(filtersInitialState, filterStates);
@@ -214,7 +214,7 @@ export const printNoRecordsMessage = (
   const resultPreferencesForBookmark = true;
   const isOtherCategory = filterStates?.topics?.Block?.list !== undefined && filterStates?.topics?.Block.list[0];
   return (
-    <div className="my-[15vh] flex flex-col items-center justify-center">
+    <div className="dark:text-gray-1 my-[15vh] flex flex-col items-center justify-center">
       <img
         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
         alt="no posts image"
@@ -222,14 +222,14 @@ export const printNoRecordsMessage = (
       />
       {isBookmarked ? (
         <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
-          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray-900">
+          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold tablet:text-[2.083vw]">
             No bookmarks found!
           </p>
           {(result === false || !resultPreferencesForBookmark) && (
             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-              } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+              } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
               onClick={() => {
                 const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                 const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
@@ -251,14 +251,14 @@ export const printNoRecordsMessage = (
         </div>
       ) : (
         <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
-          <p className="font-inter dark:text-gray mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[4vw] laptop:text-[2.083vw] dark:text-gray-900">
+          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold tablet:text-[4vw] laptop:text-[2.083vw]">
             No matching posts found!
           </p>
           {(result === false || !resultPreferences) && isOtherCategory !== 'Other' && (
             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-              } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+              } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
               onClick={() => {
                 const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                 const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
@@ -282,16 +282,7 @@ export const printNoRecordsMessage = (
   );
 };
 
-export const printEndMessage = (
-  // feedData,
-  // filterStates,
-  // isLoading,
-  // persistedTheme,
-  // setFilters,
-  allData,
-  isBookmarked,
-  isFetching,
-) => {
+export const printEndMessage = (allData, isBookmarked, isFetching) => {
   const dispatch = useDispatch();
   const filtersActions = homeFilterActions;
   const filterStates = useSelector(filtersActions.getFilters);
@@ -328,24 +319,24 @@ export const printEndMessage = (
   });
 
   return !isFetching ? (
-    <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
+    <div className="text-gray-1 flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
       {filterStates.searchData && allData.length == 0 ? (
         <div className="my-[15vh] flex flex-col items-center justify-center">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/error-bot.svg' : 'assets/svgs/dashboard/noMatchingLight.svg'}`}
-            alt="noposts image"
+            alt="no posts image"
             className="h-[173px] w-[160px]"
           />
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
-              <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray-900">
+              <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold tablet:text-[2.083vw]">
                 No bookmarks found!
               </p>
               {(result === false || !resultPreferencesForBookmark) && (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                   onClick={() => {
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
@@ -366,7 +357,7 @@ export const printEndMessage = (
               <button
                 className={`${
                   persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                 onClick={() => {
                   dispatch(filtersActions.resetSearchData());
                 }}
@@ -376,14 +367,14 @@ export const printEndMessage = (
             </div>
           ) : (
             <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
-              <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray-900">
+              <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold tablet:text-[2.083vw]">
                 No matching posts found!
               </p>
               {(result === false || !resultPreferences) && (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                   onClick={() => {
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
@@ -404,7 +395,7 @@ export const printEndMessage = (
               <button
                 className={`${
                   persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                 onClick={() => {
                   dispatch(filtersActions.resetSearchData());
                 }}
@@ -425,7 +416,7 @@ export const printEndMessage = (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                   onClick={() => {
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
@@ -453,7 +444,7 @@ export const printEndMessage = (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                   // onClick={() => {
                   //   dispatch(filtersActions.resetOtherFilters());
                   //   localStorage.setItem('filterByState', 'false');
@@ -489,7 +480,7 @@ export const printEndMessage = (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                  } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                   onClick={() => {
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
@@ -510,7 +501,7 @@ export const printEndMessage = (
               <button
                 className={`${
                   persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                 onClick={() => {
                   dispatch(filtersActions.resetSearchData());
                 }}
@@ -520,12 +511,11 @@ export const printEndMessage = (
             </div>
           ) : filterStates?.searchData ? (
             <div className="flex flex-col items-center gap-[10px] tablet:gap-4">
-              {/* comment it out for infinite */}
               <b>No more matching posts found!</b>
               <button
                 className={`${
                   persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                } inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
                 onClick={() => {
                   dispatch(filtersActions.resetSearchData());
                 }}
@@ -541,7 +531,7 @@ export const printEndMessage = (
     </div>
   ) : (
     <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">
-      <FaSpinner className="animate-spin text-[10vw] text-blue-200 tablet:text-[8vw] laptop:text-[4vw]" />
+      <FaSpinner className="animate-spin text-[10vw] text-blue-100 tablet:text-[8vw] laptop:text-[4vw]" />
     </div>
   );
 };

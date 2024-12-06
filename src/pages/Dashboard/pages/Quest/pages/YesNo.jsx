@@ -298,7 +298,7 @@ const YesNo = () => {
         <YesNoOptions answer={'No'} />
       </div>
       <div className="mb-[10px] mt-4 tablet:mb-7 tablet:mt-12">
-        <h5 className="mt-4 text-[10px] font-semibold leading-[10px] text-gray-900 dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
+        <h5 className="text-gray-1 mt-4 text-[10px] font-semibold leading-[10px] dark:text-white-400 tablet:block tablet:text-[22.81px] tablet:leading-[22.81px] laptop:text-[25px] laptop:leading-[25px]">
           Post Settings
         </h5>
         <div className="mt-1 flex flex-col gap-[5px] rounded-[0.30925rem] border border-white-500 bg-[#FCFCFC] py-[10px] dark:border-gray-100 dark:bg-accent-100 tablet:mt-2 tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px]">
@@ -307,7 +307,7 @@ const YesNo = () => {
             htmlFor="share-post-checkbox"
           >
             <Checkbox checked={sharePost} onChange={handleSharePostChange} id="share-post-checkbox" />
-            <h5 className="text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+            <h5 className="text-gray-1 text-[9px] font-normal leading-normal dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Automatically share this post.
             </h5>
           </label>
@@ -316,7 +316,7 @@ const YesNo = () => {
             htmlFor="spotlight-checkbox"
           >
             <Checkbox checked={spotlight} onChange={handleSpotlightChange} id="spotlight-checkbox" />
-            <h5 className="text-[9px] font-normal leading-normal text-[#7C7C7C] dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
+            <h5 className="text-gray-1 text-[9px] font-normal leading-normal dark:text-white-600 tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Automatically pin this post to spotlight.
             </h5>
           </label>

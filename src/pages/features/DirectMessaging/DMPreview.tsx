@@ -77,14 +77,12 @@ export default function DMPreview() {
       setParticipants(resp?.data.dynamicParticipantsCount);
     },
     onError: (err: any) => {
-      // console.log(err:any);
       toast.error(err.response.data.message);
     },
   });
 
   useEffect(() => {
     if (directMessageState.to === 'Participants') {
-      console.log('a');
       const params = {
         questForeignKey: directMessageState.questForeignKey,
         uuid: persistedUserInfo.uuid,
@@ -96,16 +94,19 @@ export default function DMPreview() {
   }, [directMessageState.options]);
 
   return (
-    <div className="space-y-[9px] tablet:space-y-[15px]">
+    <div className="space-y-[9px] tablet:space-y-4">
       <div className="relative h-fit w-full max-w-[730px] space-y-[9px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:space-y-[15px] tablet:px-5 tablet:py-6">
-        <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
-          Subject Preview
+        <h1 className="pb-2 text-center text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+          Preview
+        </h1>
+        <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+          How your message will appear in user Inboxes
         </h1>
         <MessageCard
           filter="receive"
           item={{
             createdAt: currentDate.toISOString(),
-            platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Anonymous user',
             subject: directMessageState.subject,
             viewed: false,
             readReward: directMessageState?.readReward,
@@ -114,9 +115,10 @@ export default function DMPreview() {
           setViewMsg={null}
           handleViewMessage={null}
         />
-        <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-900 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
-          Message Preview
+        <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
+          How your message will appear when a user opens it.
         </h1>
+
         <ViewMessage
           viewMessageData={{
             message: directMessageState?.message,
@@ -124,7 +126,7 @@ export default function DMPreview() {
             postQuestion: directMessageState.questStartData?.Question,
             readReward: directMessageState?.readReward,
             createdAt: currentDate.toISOString(),
-            platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+            platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Anonymous user',
             sharedLinkOnly: uniqueLink ? uniqueLink : '',
           }}
           filter="receive"
@@ -155,7 +157,7 @@ export default function DMPreview() {
               uuid: persistedUserInfo.uuid,
               options: directMessageState.options,
               questForeignKey: directMessageState.questForeignKey,
-              platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
+              platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
               type: 'new',
               sharedLinkOnly: uniqueLink ? uniqueLink : '',
             });

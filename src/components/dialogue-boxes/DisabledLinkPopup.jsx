@@ -21,10 +21,25 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
 
       if (questUtils.sharedQuestStatus.type === 'Delete') {
+        // queryClient.setQueriesData(['sharedLink'], (oldData) => {
+        //   return {
+        //     ...oldData,
+        //     pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        //   };
+        // });
         queryClient.setQueriesData(['sharedLink'], (oldData) => {
+          if (!oldData || !oldData.pages) return oldData;
+
+          const updatedPages = oldData.pages.map((page, index) => {
+            if (!Array.isArray(page)) {
+              return page;
+            }
+            return page.filter((item) => item._id !== resp.data.data.questForeignKey);
+          });
+
           return {
             ...oldData,
-            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+            pages: updatedPages,
           };
         });
       }
@@ -69,6 +84,14 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       handleClose();
       console.log(err);
     },
+    onSettled: () => {
+      const updatedLinks = queryClient.getQueryData(['sharedLink', '']);
+
+      // Invalidate if no pages or all pages are empty
+      if (!updatedLinks || updatedLinks.pages?.every((page) => page.length === 0)) {
+        queryClient.invalidateQueries(['sharedLink']);
+      }
+    },
   });
 
   const handleLinkStatusApi = () => {
@@ -90,7 +113,7 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       handleClose={handleClose}
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-gray-1 text-[10px] font-medium leading-[12px] dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           {questUtils.sharedQuestStatus.type === 'Delete' ? (
             <span>
               Are you sure you want to delete this share data? You will no longer be managing this content for your

@@ -14,7 +14,7 @@ const Summary = () => {
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       <VerificationBadgeScore />
       <SummaryCard headerIcon="/assets/summary/post-activity-logo2.svg" headerTitle="Post Activity">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Creating posts is a great way to earn FDX. Your contributions gain value as others engage with them, enhancing
           your impact within the Foundation community.
         </h1>
@@ -51,7 +51,7 @@ const Summary = () => {
         </div>
       </SummaryCard>
       <SummaryCard headerIcon="/assets/summary/feedback-given.svg" headerTitle="Feedback Given">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           See the feedback you've given on other's posts, including those you've chosen to hide.
         </h1>
         <div className="mt-3 grid grid-cols-2 divide-x divide-[#707175] text-center dark:divide-gray-300 tablet:mt-5">
@@ -77,7 +77,7 @@ const Summary = () => {
         </div>
       </SummaryCard>
       <SummaryCard headerIcon="/assets/summary/feedback-received.svg" headerTitle="Feedback Received">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Here’s a look at the posts you’ve created that others have provided feedback on, including those they've
           chosen to hide.
         </h1>
@@ -107,7 +107,7 @@ const Summary = () => {
       </SummaryCard>
 
       <SummaryCard headerIcon="/assets/summary/share-posts-logo.svg" headerTitle="Shared Posts">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Sharing posts helps broaden your reach. The more engagement your shares receive, the more FDX you earn. Shared
           posts are displayed on your Home Page for all to see.
         </h1>
@@ -145,7 +145,7 @@ const Summary = () => {
         </div>
       </SummaryCard>
       <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Collections">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Organize what posts matter most and get a deeper understanding of your audience with Collections. The more
           engagement your Collections receive, the more FDX you’ll earn! Shared collections will appear on your home
           page for all to see.
@@ -193,24 +193,24 @@ const Summary = () => {
         </div>
       </SummaryCard>
       <SummaryCard headerIcon="/assets/topbar/news.svg" headerTitle="Shared Articles">
-        <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+        <h1 className="summary-text">
           Manage news articles you’ve shared and track engagement metrics. Shared articles also appear on your Home Page
           for your audience to see.
         </h1>
         <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
           <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
               Articles you’ve shared
             </h1>
-            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+            <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
               {persistedUserInfo?.myArticleStatistics.totalSharedArticlesCount}
             </h5>
           </div>
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
-            <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
+            <h1 className="text-gray-1 text-center text-[12px] font-semibold leading-[116%] dark:text-gray-300 tablet:text-[16px] tablet:leading-normal">
               Total engagements
             </h1>
-            <h5 className="text-center text-[18px] font-normal text-[#85898C] dark:text-gray-300">
+            <h5 className="text-gray-1 text-center text-[18px] font-normal dark:text-gray-300">
               {persistedUserInfo?.myArticleStatistics.overAllArticleSharedEngagementCount}
             </h5>
           </div>

@@ -164,13 +164,13 @@ const AddCellPhonePopup = ({
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       {!otpResp ? (
         <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-          <h1 className="pb-[15px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+          <h1 className="text-gray-1 pb-[15px] text-[12px] font-medium leading-[13.56px] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
             Ensure you can recover your account easily if needed.
           </h1>
           <div>
             <p
               htmlFor="email"
-              className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[24.2px]"
+              className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[24.2px]"
             >
               {title}
             </p>

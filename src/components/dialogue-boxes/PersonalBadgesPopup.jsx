@@ -423,7 +423,7 @@ const PersonalBadgesPopup = ({
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
               <div className="my-[5px] w-full">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   Security question
                 </p>
                 <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -439,7 +439,7 @@ const PersonalBadgesPopup = ({
                 </div>
               </div>
               <div className="w-full">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   Answer
                 </p>
                 <input

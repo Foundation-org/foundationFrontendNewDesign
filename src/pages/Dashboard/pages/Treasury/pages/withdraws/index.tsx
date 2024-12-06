@@ -38,7 +38,7 @@ export default function Withdraws() {
   };
 
   return (
-    <div className="h-[calc(100dvh-174px)] overflow-y-auto px-4 no-scrollbar tablet:h-[calc(100dvh-173.63px)] tablet:px-6 laptop:h-[calc(100dvh-96px)]">
+    <div className="mb-6 h-[calc(100dvh-174px)] overflow-y-auto px-4 no-scrollbar tablet:h-[calc(100dvh-173.63px)] tablet:px-6 laptop:h-[calc(100dvh-96px)]">
       {/* {checkWeb3Badge() ? (
         <div className="flex flex-col gap-3 tablet:gap-6">
           <MetaMaskProvider
@@ -56,8 +56,8 @@ export default function Withdraws() {
           <WithdrawHistory />
         </div>
       ) : (
-        <div className="flex flex-col gap-2 border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] tablet:rounded-[10px] tablet:p-5">
-          <h1 className="text-[18px] leading-normal text-[#85898C]">
+        <div className="flex flex-col gap-2 border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
+          <h1 className="text-[18px] leading-normal text-gray-1 dark:text-gray-300">
             To continue using this wallet, you must <span className="font-semibold">“Add”</span> your{' '}
             <span className="font-semibold">“Ethereum Badge”</span> for secure and verified access. This ensures your
             identity is linked and helps safeguard your assets.
@@ -84,7 +84,7 @@ export default function Withdraws() {
         </div>
       )} */}
 
-      <p className="font-inter dark:text-gray mt-[3.319vh] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray-900 tablet:text-[4vw] laptop:text-[2.083vw]">
+      <p className="font-inter dark:text-gray-900 mt-[3.319vh] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray tablet:text-[4vw] laptop:text-[2.083vw]">
         🚀 Withdrawals will be opening soon!
       </p>
     </div>

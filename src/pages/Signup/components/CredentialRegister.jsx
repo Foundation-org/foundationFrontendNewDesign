@@ -69,7 +69,7 @@ const CredentialRegister = () => {
       setErrorMessage(e.response.data.message.split(':')[1]);
       console.log(
         e.response.data.message.split(':')[1],
-        e.response.data.message.split(':')[1] === 'Email Already Exists',
+        e.response.data.message.split(':')[1] === 'Email Already Exists'
       );
       if (
         e.response.data.message.split(':')[1].trim() === 'Email Already Exists' ||
@@ -154,7 +154,7 @@ const CredentialRegister = () => {
 
   return (
     <div className="py-12">
-      <form className="mx-auto flex w-full max-w-[260px] flex-col gap-8 bg-white text-silver-600 tablet:max-w-[512px] tablet:gap-11 5xl:gap-14 short:gap-[38px]">
+      <form className="text-gray mx-auto flex w-full max-w-[260px] flex-col gap-8 bg-white tablet:max-w-[512px] tablet:gap-11 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"

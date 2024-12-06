@@ -81,7 +81,7 @@ const CustomCombobox = ({
             className={`absolute z-10 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base leading-[10px] shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm tablet:max-h-60 ${page === 'advance-analytics' ? 'dark:bg-gray-200' : ''}`}
           >
             {filteredItems?.length === 0 && query !== '' ? (
-              <div className="text-gray-900' relative cursor-default select-none px-4 py-2 text-[10px] tablet:text-[16px]">
+              <div className="text-gray-1' relative cursor-default select-none px-4 py-2 text-[10px] tablet:text-[16px]">
                 Nothing found.
               </div>
             ) : (
@@ -91,8 +91,8 @@ const CustomCombobox = ({
                   className={({ active }) =>
                     `relative flex cursor-default select-none justify-between gap-2 py-2 pl-[0.75rem] pr-4 text-[10px] tablet:gap-3 tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
                       active
-                        ? `${page === 'advance-analytics' ? 'text-gray-900 dark:text-white' : 'bg-amber-100 text-amber-900'}`
-                        : `${page === 'advance-analytics' ? 'text-gray-900 dark:text-white' : 'text-gray-900'}`
+                        ? `${page === 'advance-analytics' ? 'text-gray-1 dark:text-white' : 'bg-amber-100 text-amber-900'}`
+                        : `${page === 'advance-analytics' ? 'text-gray-1 dark:text-white' : 'text-gray-1'}`
                     }`
                   }
                   value={item}

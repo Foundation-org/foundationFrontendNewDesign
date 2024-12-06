@@ -53,10 +53,7 @@ export default function IdentityBadge({
 
   // Check if password confirmation is needed before proceeding
   const shouldRequestPasswordConfirmation = async (item) => {
-    if (
-      (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
-      (checkLegacyBadge() && getAskPassword)
-    ) {
+    if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) {
       const timeRemaining = CanAdd(persistedUserInfo, item.type, 'identity');
       if (timeRemaining === true || checkPseudoBadge()) {
         await handleOpenPasswordConfirmation();
@@ -81,9 +78,7 @@ export default function IdentityBadge({
       />
 
       {isVerificationBadge && (
-        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
-          Linking your identity badge offers additional FDX transaction options.
-        </h1>
+        <h1 className="summary-text">Linking your identity badge offers additional FDX transaction options.</h1>
       )}
 
       <div className="flex flex-col items-center gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">
@@ -100,16 +95,12 @@ export default function IdentityBadge({
               />
             )}
 
-            <img
-              src={item.image}
-              alt={item.title}
-              className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]"
-            />
+            <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
 
             <div
               className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
             >
-              <h1 className="text-[2.11vw] font-medium leading-normal text-black dark:text-gray-400 tablet:text-[20px]">
+              <h1 className="text-gray text-[2.11vw] font-medium leading-normal dark:text-gray-400 tablet:text-[20px]">
                 {item.title}
               </h1>
             </div>

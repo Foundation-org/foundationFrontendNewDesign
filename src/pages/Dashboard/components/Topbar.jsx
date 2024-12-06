@@ -157,7 +157,7 @@ const Topbar = () => {
                     }}
                   >
                     {item.id === 2 && receivedMsg?.data?.count > 0 && (
-                      <div className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600 tablet:size-5">
+                      <div className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-100 tablet:size-5">
                         <p className="text-[10px] leading-[10px] text-white">{receivedMsg?.data?.count}</p>
                       </div>
                     )}
@@ -231,7 +231,7 @@ const Topbar = () => {
                 }}
               >
                 {item.id === 5 && receivedMsg?.data?.count > 0 && (
-                  <div className="absolute -right-3 top-3 flex size-5 items-center justify-center rounded-full bg-red-600">
+                  <div className="absolute -right-3 top-3 flex size-5 items-center justify-center rounded-full bg-red-100">
                     <p className="text-[16px] leading-[15px] text-white">{receivedMsg?.data?.count}</p>
                   </div>
                 )}

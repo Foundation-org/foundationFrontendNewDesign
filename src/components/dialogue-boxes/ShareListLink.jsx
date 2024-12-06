@@ -117,12 +117,12 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
       {/* Dialogue box body */}
       <div className="flex flex-col justify-center py-[15px] dark:rounded-b-[0.5rem] dark:border dark:border-gray-100 dark:bg-gray-200 tablet:py-[25px] dark:tablet:rounded-b-[1.5rem]">
         <div className="px-[20px] laptop:px-[80px]">
-          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:bg-gray-200 dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
+          <p className="text-gray-1 mb-[10px] text-[12px] font-medium leading-[13.56px] dark:bg-gray-200 dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             {createCustom
               ? 'Custom Link Address'
               : 'When people engage with posts in your Shared collection, you will earn FDX. Collections you share are displayed on your Home Page for everyone to see. '}
           </p>
-          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] dark:bg-gray-200 dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
+          <p className="text-gray-1 mb-[10px] text-[12px] font-medium leading-[13.56px] dark:bg-gray-200 dark:text-gray-300 tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             Copy the link below to share this collection on other platforms.
           </p>
           <div className="flex rounded-[9.42px] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[15px] tablet:border-[3px]">

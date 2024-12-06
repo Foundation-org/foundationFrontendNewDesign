@@ -114,9 +114,7 @@ const FilterContainer = (props) => {
   return (
     <div className={`w-full`}>
       <div className="rounded-t-[15px] border-x-[3px] border-t-[3px] border-white-500 bg-white-500 py-2 dark:border-gray-100 dark:bg-accent-100">
-        <h1 className="text-center text-[12px] font-bold text-[#707175] dark:text-gray-300 tablet:text-[22px]">
-          {heading}
-        </h1>
+        <h1 className="text-gray text-center text-[12px] font-bold dark:text-gray-300 tablet:text-[22px]">{heading}</h1>
       </div>
       <div
         className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-white-500 bg-white-900 p-2 dark:border-gray-100 dark:bg-gray-200 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
@@ -147,7 +145,7 @@ const FilterContainer = (props) => {
               ) : null}
             </div>
 
-            <h3 className="whitespace-nowrap text-center text-[12px] font-normal leading-[12px] text-[#707175] dark:text-gray-300 tablet:text-[18px] tablet:font-semibold tablet:leading-[18px]">
+            <h3 className="text-gray-1 whitespace-nowrap text-center text-[12px] font-normal leading-[12px] dark:text-gray-300 tablet:text-[18px] tablet:font-semibold tablet:leading-[18px]">
               {item.title}
             </h3>
           </div>
@@ -188,7 +186,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       filtersActions.setRatings({
         initial: filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
         final: filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 0,
-      }),
+      })
     );
     if (filterStates.moderationRatingFilter?.initial === 0 && filterStates.moderationRatingFilter?.final === 100) {
       setSelectedOptions(['adult', 'everyone']);
@@ -224,21 +222,21 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
         filtersActions.setRatings({
           initial: 0,
           final: 100,
-        }),
+        })
       );
     } else if (selectedOptions.includes('adult')) {
       dispatch(
         filtersActions.setRatings({
           initial: 1,
           final: 100,
-        }),
+        })
       );
     } else {
       dispatch(
         filtersActions.setRatings({
           initial: 0,
           final: 0,
-        }),
+        })
       );
     }
     setFilters({
@@ -416,7 +414,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       }}
     >
       <div className="px-[18px] pt-[10px] tablet:px-[45px] tablet:pt-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-gray-1 text-[10px] font-medium leading-[12px] dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating Category
         </h1>
         <div className="mt-[10px] flex items-center justify-center gap-[36.8px] border-b border-[#7C7C7C] pb-[25px] dark:border-gray-300 tablet:mt-[25px] tablet:gap-[100px]">
@@ -437,7 +435,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p className="text-[10px] font-semibold text-gray-150 dark:text-gray-300 tablet:text-[20px]">Everyone</p>
+              <p className="text-gray-1 text-[10px] font-semibold dark:text-gray-300 tablet:text-[20px]">Everyone</p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
@@ -463,13 +461,13 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p className="text-[10px] font-semibold text-gray-150 dark:text-gray-300 tablet:text-[20px]">Adult</p>
+              <p className="text-gray-1 text-[10px] font-semibold dark:text-gray-300 tablet:text-[20px]">Adult</p>
             </div>
           </div>
         </div>
       </div>
       <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-gray-150 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-gray-1 text-[10px] font-medium leading-[12px] dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Filter Options
         </h1>
         <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 laptop:grid-cols-3">

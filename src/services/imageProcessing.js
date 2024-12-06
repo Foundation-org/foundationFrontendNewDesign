@@ -122,3 +122,14 @@ export const compressImageBlobService = async (blobOrFile, width, height) => {
     console.warn('Maximum compression attempts reached.');
     return compressedFile;
 };
+
+// Service for getting site's icon
+export const getIcon = (url) => {
+    const formattedUrl = url.startsWith('http://') || url.startsWith('https://')
+        ? url
+        : `https://${url}`;
+
+    let hostname = new URL(formattedUrl).hostname;
+    hostname = hostname.replace('www.', '');
+    return `https://logo.clearbit.com/https://${hostname}`;
+}

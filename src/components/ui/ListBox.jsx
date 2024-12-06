@@ -24,7 +24,7 @@ export default function ListBox({ items, selected, setSelected, placeholder, dis
                 key={personIdx}
                 className={({ active }) =>
                   `relative cursor-default select-none py-[6px] pl-[0.75rem] pr-4 text-[10px] tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
-                    active ? 'bg-amber-100 text-amber-900' : 'text-gray-900 dark:text-gray-300'
+                    active ? 'bg-amber-100 text-amber-900' : 'text-gray-1 dark:text-gray-300'
                   }`
                 }
                 value={person}

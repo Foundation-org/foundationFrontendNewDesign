@@ -122,7 +122,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
         )}
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
           {listData?.length === 0 && (
-            <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
+            <label className="text-gray-1 text-[10px] font-medium leading-normal dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
               You currently have no collections created. Enter a collection name below and the post will be added to it.
             </label>
           )}
@@ -157,7 +157,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
           <>
             <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] dark:bg-white tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
             <div>
-              <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
+              <h4 className="text-gray-1 text-[10px] font-medium leading-normal dark:text-gray-300 tablet:text-[20px] tablet:font-semibold">
                 Collections
               </h4>
               <div className="relative my-3 tablet:my-[25px]">
@@ -209,7 +209,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                       onClick={() => handleCheckboxChange(item._id)}
                     >
                       <div className="w-fit space-y-2 tablet:space-y-5">
-                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                        <h4 className="text-gray-1 text-[10px] font-normal leading-[10px] dark:text-gray-300 tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
                           {item.category}
                         </h4>
                         <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] dark:text-gray-300 tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">

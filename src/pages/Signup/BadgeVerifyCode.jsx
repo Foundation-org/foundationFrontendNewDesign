@@ -111,7 +111,7 @@ const BadgeVerifyCode = () => {
                 <div className="mx-auto flex w-full max-w-[25rem] flex-row items-center justify-between">
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 !text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="istBox"
@@ -120,7 +120,7 @@ const BadgeVerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="tablet:px-5outline-none focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg ring-blue-700 focus:ring-1"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 !text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="sndBox"
@@ -129,7 +129,7 @@ const BadgeVerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 !text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="trdBox"
@@ -138,7 +138,7 @@ const BadgeVerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 !text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="frtBox"
@@ -147,7 +147,7 @@ const BadgeVerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 !text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="fifBox"
@@ -156,7 +156,7 @@ const BadgeVerifyCode = () => {
                   </div>
                   <div className="h-11 w-11 tablet:h-16 tablet:w-16">
                     <input
-                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
+                      className="focus:bg-gray-50 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 !text-center text-lg outline-none ring-blue-700 focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="sixBox"

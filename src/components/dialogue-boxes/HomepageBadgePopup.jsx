@@ -117,8 +117,6 @@ const HomepageBadgePopup = ({
   };
 
   const handleDomainInputBlur = async () => {
-    console.log('domain blur ran');
-
     if (!domainBadge.domain.trim()) {
       return;
     }
@@ -313,9 +311,6 @@ const HomepageBadgePopup = ({
     }
   }, [changeCrop]);
 
-  console.log('prevState:', JSON.stringify(prevState.coordinates));
-  console.log('domainBadge:', JSON.stringify(domainBadge.coordinates));
-
   return (
     <>
       {modalVisible && (
@@ -338,7 +333,7 @@ const HomepageBadgePopup = ({
             your audience.
           </h1>
           <div>
-            <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+            <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
               Domain
             </p>
             <div className="relative inline-block w-full">
@@ -358,7 +353,7 @@ const HomepageBadgePopup = ({
             <p className="text-[9.28px] tablet:text-[20px]">Characters Remaining: {63 - domainBadge.domain.length}</p>
           </div>
           <div>
-            <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+            <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
               Name / Organization
             </p>
             <input
@@ -372,7 +367,7 @@ const HomepageBadgePopup = ({
             />
           </div>
           <div>
-            <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+            <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
               Description
             </p>
             <TextareaAutosize
@@ -397,7 +392,7 @@ const HomepageBadgePopup = ({
             <p className="text-[9.28px] tablet:text-[20px]">For best SEO results, use 100+ characters</p>
           </div>
           <div>
-            <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
+            <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[10px] tablet:text-[20px] tablet:leading-[20px]">
               Image
             </p>
             <div className="flex w-full items-center justify-center">
@@ -431,7 +426,7 @@ const HomepageBadgePopup = ({
             (!changeCrop && !prevState.image[0]?.startsWith('blob:') ? (
               <div className="space-y-6">
                 <div className="space-y-1 tablet:space-y-3">
-                  <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                  <p className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[20px]">
                     SEO Image:
                   </p>
                   <img
@@ -445,7 +440,7 @@ const HomepageBadgePopup = ({
                   />
                 </div>
                 <div className="space-y-1 tablet:space-y-3">
-                  <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                  <p className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[20px]">
                     Profile Image:
                   </p>
                   <div className="flex justify-center">
@@ -465,7 +460,7 @@ const HomepageBadgePopup = ({
               domainBadge.image?.length > 0 && (
                 <div className="space-y-6">
                   <div className="space-y-1 tablet:space-y-3">
-                    <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                    <p className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[20px]">
                       SEO Image:
                     </p>
                     <ImageCropper
@@ -476,7 +471,7 @@ const HomepageBadgePopup = ({
                     />
                   </div>
                   <div className="space-y-1 tablet:space-y-3">
-                    <p className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[20px]">
+                    <p className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[20px]">
                       Profile Image:
                     </p>
                     <ImageCropper

@@ -100,17 +100,17 @@ const TreasurySummary = () => {
           </div>
         </div>
         <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[16px] tablet:font-medium tablet:leading-normal">
+          <h1 className="text-[12px] font-normal leading-[133%] text-gray-1 tablet:text-[16px] tablet:font-medium tablet:leading-normal">
             Need more FDX? You can purchase more FDX from the Foundation treasury.
           </h1>
-          <p className="mt-1 text-[10px] font-normal leading-[160%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+          <p className="mt-1 text-[10px] font-normal leading-[160%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
             *Values subject to change.
           </p>
           <div className="flex justify-between pt-3 tablet:px-11 tablet:pt-5">
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               1 FDX
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            <p className="text-[12px] font-normal leading-[113%] text-gray-1 tablet:text-[16px] tablet:leading-normal">
               ${persistedConstants?.FDX_CONVERSION_RATE_WRT_USD} USD
             </p>
           </div>
@@ -138,26 +138,26 @@ const TreasurySummary = () => {
         <div className="rounded-b-[10px] border-gray-250 bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <div className="rounded-[7.546px] border-[2.792px] border-gray-250">
             <div className="grid grid-cols-8 border-b-[2.792px] border-gray-250 pl-2 tablet:pl-8">
-              <h1 className="col-span-6 py-2 text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-6 py-2 text-[12px] font-semibold leading-[113%] text-gray-1 tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 Total codes I’ve created
               </h1>
-              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-medium leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-medium leading-[113%] text-gray-1 tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 {persistedUserInfo?.redemptionStatistics?.myTotalRedemptionCodeCreationCount}
               </h1>
             </div>
             <div className="grid grid-cols-8 border-b-[2.792px] border-gray-250 pl-2 tablet:pl-8">
-              <h1 className="col-span-6 py-2 text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-6 py-2 text-[12px] font-normal leading-[113%] text-gray-1 tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 FDX spent to create codes
               </h1>
-              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-normal leading-[113%] text-gray-1 tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 {persistedUserInfo?.redemptionStatistics?.createCodeFdxSpent?.toFixed(2)} FDX
               </h1>
             </div>
             <div className="grid grid-cols-8 pl-2 tablet:pl-8">
-              <h1 className="col-span-6 py-2 text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-6 py-2 text-[12px] font-normal leading-[113%] text-gray-1 tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 FDX earned from codes redeemed
               </h1>
-              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
+              <h1 className="col-span-2 border-l-[2.792px] border-gray-250 py-2 text-center text-[12px] font-normal leading-[113%] text-gray-1 tablet:py-3 tablet:text-[16px] tablet:leading-normal">
                 {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned?.toFixed(2)} FDX
               </h1>
             </div>

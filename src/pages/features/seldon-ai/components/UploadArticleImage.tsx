@@ -82,7 +82,7 @@ export default function UploadArticleImage({
       <div className="flex flex-col gap-4">
         <div>
           <label
-            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white tablet:text-lg"
+            className="text-gray-1 mb-2 block text-sm font-medium dark:text-white tablet:text-lg"
             htmlFor="file_input"
           >
             Upload Article Image (16:9 aspect ratio)
@@ -94,7 +94,7 @@ export default function UploadArticleImage({
             accept=".jpg, .jpeg, .png, .webp"
             onChange={handleFileChange}
           />
-          <p className="mb-2 block text-sm font-medium text-gray-900 dark:text-white tablet:text-lg">
+          <p className="text-gray-1 mb-2 block text-sm font-medium dark:text-white tablet:text-lg">
             PNG, JPG, JPEG or Webp.
           </p>
         </div>

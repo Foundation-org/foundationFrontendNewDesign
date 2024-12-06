@@ -41,7 +41,7 @@ const About = () => {
           and achievements in a secure and anonymous environment. Imagine brands paying you to show you an ad!
         </p>
       </div> */}
-      <div className="bg-[#F5F6F8] px-8 py-[1.3rem] text-[#707175] dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:px-16 tablet:py-6 tablet:dark:border-b-[2.56px]">
+      <div className="text-gray-1 bg-[#F5F6F8] px-8 py-[1.3rem] dark:border-gray-100 dark:bg-silver-300 dark:text-gray-300 tablet:px-16 tablet:py-6 tablet:dark:border-b-[2.56px]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           Key Features
         </h1>
@@ -189,7 +189,7 @@ const About = () => {
         </div>
       )}
 
-      {/* <div className="flex flex-col gap-[0.69rem] p-8 text-[#707175] tablet:gap-[1.56rem] tablet:px-16 tablet:pb-[3.12rem] tablet:pt-[1.88rem]">
+      {/* <div className="flex flex-col gap-[0.69rem] p-8 text-gray-1 tablet:gap-[1.56rem] tablet:px-16 tablet:pb-[3.12rem] tablet:pt-[1.88rem]">
         <h5 className="text-[0.75rem] font-normal italic leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
           “Owning our personal data liberates us from being slaves to the system, giving us the freedom to live life on
           our terms.“

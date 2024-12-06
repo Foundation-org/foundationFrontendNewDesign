@@ -93,6 +93,7 @@ const reOrderLinHubLinks = async (data) => {
   const response = await api.post('/updateBadgeDataArray', {
     type: 'linkHub',
     data,
+    uuid: localStorage.getItem('uuid')
   });
 
   return response.data;

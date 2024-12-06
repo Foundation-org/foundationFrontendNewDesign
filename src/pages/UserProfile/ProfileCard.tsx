@@ -31,7 +31,7 @@ export default function ProfileCard({ profile }: any) {
             className="size-full rounded-full object-cover tablet:size-[175px]"
           />
         </div>
-        <div className="flex flex-col gap-2 text-[#7C7C7C] dark:text-[#f1f1f1] tablet:gap-4">
+        <div className="text-gray-1 flex flex-col gap-2 dark:text-[#f1f1f1] tablet:gap-4">
           <div>
             <h1 className="text-[14px] font-semibold tablet:text-[20px]"> {profile?.domain.title}</h1>
             <p className="text-[12px] leading-normal tablet:text-[16px]"> {profile?.domain.name}.on.foundation</p>
@@ -55,7 +55,7 @@ export default function ProfileCard({ profile }: any) {
           </>
         )}
       </div>
-      <p className="text-[11px] leading-normal text-[#7C7C7C] dark:text-[#f1f1f1] tablet:text-[18px]">
+      <p className="text-gray-1 text-[11px] leading-normal dark:text-[#f1f1f1] tablet:text-[18px]">
         {profile?.domain.description}
       </p>
     </div>

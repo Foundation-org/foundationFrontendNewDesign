@@ -61,7 +61,7 @@ const Options = ({
               ) : null}
             </div>
             <div className="flex w-full items-center justify-between pr-[45px]">
-              <h1 className="py-[18px] pl-[45px] text-[30px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] ">
+              <h1 className="py-[18px] pl-[45px] text-[30px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3]">
                 {answer}
               </h1>
               <div className="flex gap-[55px]">
@@ -127,7 +127,7 @@ const Options = ({
                   isDragging
                     ? 'border-blue-300 bg-[#F2F6FF] dark:bg-accent-100'
                     : 'border-white-500 bg-white dark:border-gray-100 dark:bg-accent-100'
-                } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px] dark:text-gray-300`}
+                } text-gray-1 box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] focus-visible:outline-none dark:text-gray-300 tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px]`}
               />
               <div
                 id={`test${number}`}
@@ -139,7 +139,7 @@ const Options = ({
                   optionStatus.color
                 }`}
               >
-                <div className="flex h-[75%] w-[50px] items-center justify-center border-l border-white-500 tablet:w-[99.58px] tablet:border-l-[3px] laptop:w-[134px] dark:border-gray-100">
+                <div className="flex h-[75%] w-[50px] items-center justify-center border-l border-white-500 dark:border-gray-100 tablet:w-[99.58px] tablet:border-l-[3px] laptop:w-[134px]">
                   <span> {isTyping ? `${typedValue.length}/200` : optionStatus.name} </span>
                 </div>
                 <Tooltip optionStatus={optionStatus} id={`input-${number}`} />
@@ -147,7 +147,7 @@ const Options = ({
               {(title === 'RankChoice' || title === 'MultipleChoice' || title === 'OpenChoice') && trash && (
                 <div
                   id={`test${number}`}
-                  className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] dark:bg-gray-200 ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold dark:bg-gray-200 xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>

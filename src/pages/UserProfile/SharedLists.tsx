@@ -44,7 +44,7 @@ export default function SharedLists({ domain }: { domain: string }) {
           >
             {!isPublicProfile && (
               <>
-                <h1 className="text-[12px] font-medium leading-[13.56px] tablet:text-[16px] tablet:leading-normal">
+                <h1 className="summary-text">
                   Organize what posts matter most and get a deeper understanding of your audience with Collections. The
                   more engagement your Collections receive, the more FDX you’ll earn! Shared collections will appear on
                   your home page for all to see.
