@@ -36,7 +36,7 @@ const BadgeList = ({
               id={index}
               checked={false}
               onChange={() => {
-                showToast('warning', badgeNotAdded);
+                showToast('warning', 'badgeNotAdded');
               }}
             />
           )}

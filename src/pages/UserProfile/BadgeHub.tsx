@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../components/ui/Button';
-import SummaryCard from '../../components/SummaryCard';
-import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
 import { contactBadges, financeBadges, personalBadges, socialBadges } from '../../constants/badge-hub';
-import BadgeHubAddBadge from './components/BadgeHubAddBadge';
 import { useLocation } from 'react-router-dom';
 import { useBadgeHubClicksTrack } from '../../services/mutations/verification-adges';
+import SummaryCard from '../../components/SummaryCard';
+import BadgeHubAddBadge from './components/BadgeHubAddBadge';
+import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
+import BadgeEncryptedPopup from '../../components/dialogue-boxes/BadgeEncryptedPopup';
 
 export default function BadgeHub({ badges }: any) {
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const [isBadgeHubPopup, setIsBadgeHubPopup] = useState(false);
+  const [isBadgeEncryptedPopup, setBadgeEncryptedPopup] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState('');
   const [isPopup, setIsPopup] = useState(false);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
@@ -194,16 +196,14 @@ export default function BadgeHub({ badges }: any) {
       {isPopup && (
         <BadgeHubAddBadge isPopup={isPopup} setIsPopup={setIsPopup} edit={false} setEdit={''} type={selectedBadge} />
       )}
-      {/* {isBadgeHubPopup && (
-        <BadgeHubDetails
+      {isBadgeEncryptedPopup && (
+        <BadgeEncryptedPopup
           handleClose={() => setIsBadgeHubPopup(false)}
-          modalVisible={isBadgeHubPopup}
-          title={'View Badge Info'}
+          modalVisible={isBadgeEncryptedPopup}
+          title={'Badge Encrypted'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
-          selectedBadge={selectedBadge}
-          badges={badges}
         />
-      )} */}
+      )}
       {isBadgeHubPopup && (
         <BadgeHubPopup
           isPopup={isBadgeHubPopup}

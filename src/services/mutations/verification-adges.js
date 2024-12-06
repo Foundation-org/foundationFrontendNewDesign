@@ -157,7 +157,6 @@ export const useBadgeHubClicksTrack = () => {
     mutationFn: (badgeId) => badgeHubClicksTrack(badgeId, persistedUserInfo.uuid),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
-      showToast('success', 'orderUpdated');
     },
     onError: (error) => {
       console.error(error);
