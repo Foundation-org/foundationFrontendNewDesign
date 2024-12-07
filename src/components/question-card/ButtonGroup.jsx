@@ -69,13 +69,13 @@ const ButtonGroup = ({
     const data = apiResponse?.startQuestData.data[apiResponse?.startQuestData.data.length - 1];
 
     answerSelectionArray.forEach((item, index) => {
-      if (data.selected.some((selectedItem) => selectedItem.question === item.label)) {
+      if (data?.selected?.some((selectedItem) => selectedItem?.question === item?.label)) {
         answerSelectionArray[index].check = true;
       } else {
         answerSelectionArray[index].check = false;
       }
 
-      if (data.contended.some((contendedItem) => contendedItem.question === item.label)) {
+      if (data?.contended?.some((contendedItem) => contendedItem?.question === item?.label)) {
         answerSelectionArray[index].contend = true;
       } else {
         answerSelectionArray[index].contend = false;
@@ -344,7 +344,7 @@ const ButtonGroup = ({
             </Button>
 
             {findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
-            findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested' ? (
+              findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested' ? (
               <Button
                 variant={'g-submit'}
                 disabled={isUndoFeedbackPending}
