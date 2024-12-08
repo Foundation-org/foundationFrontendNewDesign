@@ -181,7 +181,7 @@ const IdentityBadgePopup = ({
     const averageLaplacian = sumLaplacian / count;
 
     // Adjust threshold based on experiments
-    const threshold = 15; // Inc for more sensitive than before
+    const threshold = 12; // Inc for more sensitive than before
     return averageLaplacian < threshold;
   };
 
