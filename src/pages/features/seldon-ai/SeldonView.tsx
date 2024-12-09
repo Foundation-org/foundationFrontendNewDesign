@@ -107,7 +107,9 @@ export default function SeldonView() {
                   />
                 )}
                 <div className="space-y-1">
-                  <h1 className="text-gray text-[16px] font-bold tablet:text-[24px]">{response?.data?.title}</h1>
+                  <h1 className="text-[16px] font-bold text-gray dark:text-white tablet:text-[24px]">
+                    {response?.data?.title}
+                  </h1>
                   <h5 className="text-[14px] tablet:text-[20px]">Foundation News</h5>
                   {response?.data.createdAt !== '' && (
                     <p className="text-[10px] tablet:text-[16px]">
