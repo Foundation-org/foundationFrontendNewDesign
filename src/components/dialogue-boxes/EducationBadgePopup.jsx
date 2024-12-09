@@ -8,6 +8,7 @@ import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
 import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
+import { useSelector } from 'react-redux';
 
 const School = {
   label: 'School',
@@ -77,6 +78,7 @@ const EducationBadgePopup = ({
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [fetchingEdit, setFetchingEdit] = useState(false);
   const [addAnotherForm, setAddAnotherForm] = useState(false);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const searchDegreeAndFields = async (type, query) => {
     try {
@@ -217,7 +219,7 @@ const EducationBadgePopup = ({
           return;
         }
         setExistingData(addBadge.data.data);
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         setLoading(false);
         setDelLoading(false);
       }
@@ -239,7 +241,7 @@ const EducationBadgePopup = ({
     }
     const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
-      queryClient.invalidateQueries(['userInfo']);
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
       setDelLoading(false);
       setExistingData(companies.data.data);
     }
@@ -295,7 +297,7 @@ const EducationBadgePopup = ({
 
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         showToast('success', 'infoUpdated');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {

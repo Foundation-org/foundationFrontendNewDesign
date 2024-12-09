@@ -253,7 +253,7 @@ export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, t
       buttonText={actionableBadges[currentIndex]?.buttonText}
       accountName={actionableBadges[currentIndex]?.accountName}
       link={actionableBadges[currentIndex]?.link}
-      page={edit ? 'badgeHub' : ''}
+      page={edit ? 'badgeHub' : 'addBadgeHub'}
     />
   );
 }

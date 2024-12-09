@@ -140,7 +140,7 @@ export default function UserProfile() {
             </SummaryCard>
           )}
           <ProfileCard profile={data?.profile} />
-          {data?.addedBadges && data?.addedBadges.length >= 1 && <BadgeHub badges={data?.addedBadges} />}
+          <BadgeHub badges={data?.addedBadges} />
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} domain={domain} />
           )}

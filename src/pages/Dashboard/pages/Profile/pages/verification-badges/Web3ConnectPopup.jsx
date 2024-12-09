@@ -1,27 +1,22 @@
-import PopUp from '../../../../../../components/ui/PopUp';
-import { Button } from '../../../../../../components/ui/Button';
-import { FaSpinner } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-import showToast from '../../../../../../components/ui/Toast';
-import { useQueryClient } from '@tanstack/react-query';
-import api from '../../../../../../services/api/Axios';
-import { CanAdd } from './badgeUtils';
 import { useState } from 'react';
-import { useSDK } from '@metamask/sdk-react';
+import { CanAdd } from './badgeUtils';
+import { useSelector } from 'react-redux';
+import { FaSpinner } from 'react-icons/fa';
+import { useQueryClient } from '@tanstack/react-query';
+import { MetaMaskProvider, useSDK } from '@metamask/sdk-react';
+import { Button } from '../../../../../../components/ui/Button';
+import api from '../../../../../../services/api/Axios';
+import PopUp from '../../../../../../components/ui/PopUp';
+import showToast from '../../../../../../components/ui/Toast';
 import ProgressBar from '../../../../../../components/ProgressBar';
 
-const getSummaryText = {
-  etheriumWallet:
-    'Your verified Ethereum address unlocks deposits and withdrawals to and from your Foundation wallet to your wallet on the Base network.',
-};
-
-const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, onboarding, progress }) => {
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const queryClient = useQueryClient();
+const Web3Content = ({ type, handleSkip, onboarding, page, handleClose }) => {
   const { sdk } = useSDK();
+  const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [loading, setIsLoading] = useState(false);
 
-  const handleClose = () => setIsPopup(false);
+  const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   const handleWeb3 = async (accounts) => {
     setIsLoading(true);
@@ -43,7 +38,7 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
           handleSkip();
           return;
         }
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         setIsLoading(false);
         handleClose();
       }
@@ -56,9 +51,13 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
   const connect = async () => {
     try {
       const accounts = await sdk?.connect();
+      if (!accounts || accounts.length === 0) {
+        console.warn('No accounts returned from SDK.');
+        return;
+      }
       handleWeb3(accounts[0]);
     } catch (err) {
-      console.warn('failed to connect..', err);
+      console.warn('Failed to connect..', err);
     }
   };
 
@@ -73,23 +72,42 @@ const Web3ConnectPopup = ({ isPopup, setIsPopup, title, logo, type, handleSkip, 
 
   return (
     <>
-      <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-        <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-          <h1 className="summary-text">{getSummaryText['etheriumWallet']}</h1>
-          <div className="flex justify-end">
-            <Button variant="submit" className="w-fit" onClick={handleConnect}>
-              {loading.state === true && loading.badge === accountName ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : (
-                'Connect'
-              )}
-            </Button>
-          </div>
+      <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        <h1 className="summary-text">
+          Your verified Ethereum address unlocks deposits and withdrawals to and from your Foundation wallet to your
+          wallet on the Base network.
+        </h1>
+        <div className="flex justify-end">
+          <Button variant="submit" className="w-fit" onClick={handleConnect}>
+            {loading ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Connect'}
+          </Button>
         </div>
-
-        {onboarding && <ProgressBar handleSkip={handleSkip} />}
-      </PopUp>
+      </div>
     </>
+  );
+};
+
+const Web3ConnectPopup = (props) => {
+  const { isPopup, setIsPopup, title, logo, onboarding, handleSkip } = props;
+
+  const handleClose = () => setIsPopup(false);
+
+  return (
+    <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
+      {onboarding && <ProgressBar handleSkip={handleSkip} />}
+      <MetaMaskProvider
+        debug={false}
+        sdkOptions={{
+          checkInstallationImmediately: true,
+          dappMetadata: {
+            name: 'Foundation',
+            url: window.location.href,
+          },
+        }}
+      >
+        <Web3Content {...props} handleClose={handleClose} />
+      </MetaMaskProvider>{' '}
+    </PopUp>
   );
 };
 

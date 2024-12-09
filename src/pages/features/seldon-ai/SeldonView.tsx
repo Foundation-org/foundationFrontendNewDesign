@@ -59,8 +59,6 @@ export default function SeldonView() {
     setCopyModal(false);
   };
 
-  console.log('first', error);
-
   return (
     <>
       {copyModal && (

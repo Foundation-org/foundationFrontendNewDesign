@@ -65,8 +65,6 @@ export default function BadgeHub({ badges }: any) {
       };
     });
 
-  console.log(financeBadgesArray);
-
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
       <SummaryCard

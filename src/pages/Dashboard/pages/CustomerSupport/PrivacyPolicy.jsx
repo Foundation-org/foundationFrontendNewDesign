@@ -2,7 +2,7 @@ import { privacyPolicyData, summaryPoints } from '../../../../features/term-priv
 
 const PrivacyPolicy = () => {
   return (
-    <div className="text-gray-1 mb-12 bg-white pb-5 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-t-[0.86513rem] tablet:dark:border">
+    <div className="mb-12 bg-white pb-5 text-gray-1 dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:rounded-xl tablet:dark:border">
       <h1 className="py-3 pb-1 text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Privacy Policy
       </h1>

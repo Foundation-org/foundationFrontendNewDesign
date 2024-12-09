@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MetaMaskProvider } from '@metamask/sdk-react';
 import { startRegistration } from '@simplewebauthn/browser';
 import { Button } from '../../../../../components/ui/Button';
 import { setProgress } from '../../../../../features/progress/progressSlice';
@@ -169,24 +168,13 @@ const VerificationBadges = () => {
         />
       </ContentCard>
       <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
-        <MetaMaskProvider
-          debug={false}
-          sdkOptions={{
-            checkInstallationImmediately: false,
-            dappMetadata: {
-              name: 'Foundation',
-              url: window.location.href,
-            },
-          }}
-        >
-          <Web3
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
-            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-            checkLegacyBadge={checkLegacyBadge}
-            checkPseudoBadge={checkPseudoBadge}
-            getAskPassword={getAskPasswordFromRedux}
-          />
-        </MetaMaskProvider>
+        <Web3
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          checkPseudoBadge={checkPseudoBadge}
+          getAskPassword={getAskPasswordFromRedux}
+        />
       </ContentCard>
       <ContentCard icon="assets/verification-badges/personal_icon.svg" title="Personal">
         <Personal
