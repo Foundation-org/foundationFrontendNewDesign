@@ -6,10 +6,10 @@ import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../ui/Button';
 import { useAddBadgeHub } from '../../services/mutations/verification-adges';
 import { contactBadges, financeBadges, personalBadges, socialBadges } from '../../constants/badge-hub';
-import { Link } from 'react-router-dom';
 import * as badgeService from '../../utils/helper-function/badge-service';
 import showToast from '../ui/Toast';
 import { formatCountNumber } from '../../utils/utils';
+import BadgeHubAddBadge from '../../pages/UserProfile/components/BadgeHubAddBadge';
 
 const BadgeList = ({
   badges,
@@ -19,64 +19,84 @@ const BadgeList = ({
   badgeService,
   isAddedInBadgeHub,
   title,
-}) => (
-  <div>
-    <h1 className="summary-text mb-[10px] tablet:mb-4">{title}</h1>
-    <ul className="flex flex-col gap-[5px] tablet:gap-4">
-      {badges.map((badge, index) => (
-        <li
-          key={index}
-          className="mx-auto flex w-full max-w-[90%] cursor-pointer items-center justify-between gap-[10px] tablet:max-w-[85%] tablet:gap-6"
-          onClick={() => handleBadgeId(badge.type)}
-        >
-          {badgeService.checkBadgeExists(persistedUserInfo, badge.type) ? (
-            <Checkbox id={index} checked={isAddedInBadgeHub(badge.type)} onChange={() => handleBadgeId(badge.type)} />
-          ) : (
-            <Checkbox
-              id={index}
-              checked={false}
-              onChange={() => {
-                showToast('warning', 'badgeNotAdded');
-              }}
-            />
-          )}
-          <img src={badge.image} alt={badge.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
-          <div className="flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]">
-            <h1 className="text-[2.11vw] font-medium capitalize leading-normal text-gray dark:text-gray-400 tablet:text-[20px]">
-              {badge.title}
-            </h1>
-          </div>
-          <h5 className="summary-text tablet:min-w-[122px]">
+}) => {
+  const [addBadgePopup, setAddBadgePopup] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState('');
+
+  return (
+    <div>
+      <h1 className="summary-text mb-[10px] tablet:mb-4">{title}</h1>
+      <ul className="flex flex-col gap-[5px] tablet:gap-4">
+        {badges.map((badge, index) => (
+          <li
+            key={index}
+            className="mx-auto flex w-full max-w-[90%] cursor-pointer items-center justify-between gap-[10px] tablet:max-w-[85%] tablet:gap-6"
+            onClick={() => handleBadgeId(badge.type)}
+          >
             {badgeService.checkBadgeExists(persistedUserInfo, badge.type) ? (
-              <Button variant="cancel" disabled={true}>
-                Added
-              </Button>
+              <Checkbox id={index} checked={isAddedInBadgeHub(badge.type)} onChange={() => handleBadgeId(badge.type)} />
             ) : (
-              <Link to={'/profile/verification-badges'} className="whitespace-nowrap text-blue-100 underline">
-                <Button variant="submit">Add Badge</Button>
-              </Link>
+              <Checkbox
+                id={index}
+                checked={false}
+                onChange={() => {
+                  showToast('warning', 'badgeNotAdded');
+                }}
+              />
             )}
-          </h5>
-          <div className="flex min-w-10 items-center gap-2 tablet:min-w-[64px]">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
-              alt="clicks"
-              className="h-3 w-3 tablet:h-6 tablet:w-6"
-            />
-            <h1 className="text-[12px] leading-normal text-gray dark:text-[#f1f1f1] tablet:text-[16px]">
-              {formatCountNumber(
-                badgeService.getBadgeByType(persistedUserInfo, badge.type)?.badgeHubClicksTrack?.length || 0
+            <img src={badge.image} alt={badge.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
+            <div className="flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]">
+              <h1 className="text-[2.11vw] font-medium capitalize leading-normal text-gray dark:text-gray-400 tablet:text-[20px]">
+                {badge.title}
+              </h1>
+            </div>
+            <h5 className="summary-text tablet:min-w-[122px]">
+              {badgeService.checkBadgeExists(persistedUserInfo, badge.type) ? (
+                <Button variant="cancel" disabled={true}>
+                  Added
+                </Button>
+              ) : (
+                <Button
+                  variant="submit"
+                  onClick={() => {
+                    setAddBadgePopup(true);
+                    setSelectedBadge(badge.type);
+                  }}
+                >
+                  Add Badge
+                </Button>
               )}
-            </h1>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+            </h5>
+            <div className="flex min-w-10 items-center gap-2 tablet:min-w-[64px]">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
+                alt="clicks"
+                className="h-3 w-3 tablet:h-6 tablet:w-6"
+              />
+              <h1 className="text-[12px] leading-normal text-gray dark:text-[#f1f1f1] tablet:text-[16px]">
+                {formatCountNumber(
+                  badgeService.getBadgeByType(persistedUserInfo, badge.type)?.badgeHubClicksTrack?.length || 0
+                )}
+              </h1>
+            </div>
+          </li>
+        ))}
+      </ul>
+      {addBadgePopup && (
+        <BadgeHubAddBadge
+          isPopup={addBadgePopup}
+          setIsPopup={setAddBadgePopup}
+          edit={false}
+          setEdit={''}
+          type={selectedBadge}
+        />
+      )}
+    </div>
+  );
+};
 
 const badgeCategories = [
-  { title: 'Social Badges', badges: socialBadges },
+  // { title: 'Social Badges', badges: socialBadges },
   { title: 'Contact Badges', badges: contactBadges },
   { title: 'Finance Badges', badges: financeBadges },
   { title: 'Personal Badges', badges: personalBadges },

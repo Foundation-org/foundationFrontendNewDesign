@@ -7,6 +7,7 @@ import { setProgress } from '../../../../../features/progress/progressSlice';
 import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
 import { badgesTotalLength } from '../../../../../constants/varification-badges';
 import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
+import { setIndex } from '../../../../../features/OnBoardingPopup/onBoardingPopupSlice';
 import Web3 from './verification-badges/Web3';
 import Social from './verification-badges/Social';
 import Privacy from './verification-badges/Privacy';
@@ -18,7 +19,6 @@ import ContentCard from '../../../../../components/ContentCard';
 import HomepageBadge from './verification-badges/HomepageBadge';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
-import { setIndex } from '../../../../../features/OnBoardingPopup/onBoardingPopupSlice';
 
 const VerificationBadges = () => {
   const dispatch = useDispatch();
@@ -190,10 +190,9 @@ const VerificationBadges = () => {
       </ContentCard>
       <ContentCard icon="assets/verification-badges/personal_icon.svg" title="Personal">
         <Personal
-          fetchUser={persistedUserInfo}
+          badges={persistedUserInfo?.badges}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}
-          handlePasskeyConfirmation={handlePasskeyConfirmation}
           getAskPassword={getAskPasswordFromRedux}
           checkPseudoBadge={checkPseudoBadge}
         />

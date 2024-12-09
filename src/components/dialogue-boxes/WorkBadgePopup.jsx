@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
 import PopUp from '../ui/PopUp';
@@ -10,6 +9,7 @@ import BadgeRemovePopup from './badgeRemovePopup';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
+import { useSelector } from 'react-redux';
 
 const CompanyName = {
   label: 'Company Name',
@@ -62,18 +62,17 @@ const WorkBadgePopup = ({
   type,
   title,
   logo,
-  placeholder,
-  fetchUser,
   setIsPersonalPopup,
   handleSkip,
   onboarding,
   progress,
   page,
+  selectedBadge,
 }) => {
   const queryClient = useQueryClient();
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
-  const [delloading, setDelLoading] = useState(false);
+  const [delLoading, setDelLoading] = useState(false);
   const [field4Data, setField4Data] = useState([]);
   const [field5Data, setField5Data] = useState();
   const [field6Data, setField6Data] = useState();
@@ -89,11 +88,13 @@ const WorkBadgePopup = ({
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [fetchingEdit, setFetchingEdit] = useState(false);
   const [addAnotherForm, setAddAnotherForm] = useState(false);
-
-  const [existingData, setExistingData] = useState();
+  const [existingData, setExistingData] = useState(selectedBadge?.personal?.work || []);
   const [query, setQuery] = useState('');
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const searchJobtitles = async () => {
+  const handleClose = () => setIsPopup(false);
+
+  const searchJobTitles = async () => {
     try {
       const jb = await api.post(`search/searchJobTitles/?name=${query}`);
 
@@ -117,21 +118,8 @@ const WorkBadgePopup = ({
   useEffect(() => {
     setHollow(true);
     setIsError(false);
-    searchJobtitles();
+    searchJobTitles();
   }, [query]);
-
-  useEffect(() => {
-    const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
-    setExistingData(param?.personal[type]);
-  }, [fetchUser.badges]);
-
-  const handleClose = () => setIsPopup(false);
-
-  const handlefield5Change = (e) => setField5Data(e.target.value);
-
-  const handlefield6Change = (e) => {
-    setField6Data(e.target.value);
-  };
 
   const handlePresentToggle = () => {
     setIsPresent(!isPresent);
@@ -162,7 +150,6 @@ const WorkBadgePopup = ({
     if (
       field1Data.name === undefined ||
       field2Data.name === undefined ||
-      // field3Data.name === undefined ||
       field4Data.name === undefined ||
       !field5Data ||
       !field6Data
@@ -173,7 +160,6 @@ const WorkBadgePopup = ({
     }
   };
 
-  // console.log(hollow, checkHollow());
   useEffect(() => {
     checkHollow();
   }, [field1Data, field2Data, field4Data, field5Data, field6Data]);
@@ -183,7 +169,6 @@ const WorkBadgePopup = ({
       if (
         field1Data.name === undefined ||
         field2Data.name === undefined ||
-        // field3Data.name === undefined ||
         field4Data.name === undefined ||
         field5Data === undefined ||
         field6Data === undefined ||
@@ -237,18 +222,17 @@ const WorkBadgePopup = ({
         } else {
           showToast('success', 'badgeAdded');
         }
+        setExistingData(addBadge.data.data);
         if (onboarding) {
           handleSkip();
           return;
         }
-        queryClient.invalidateQueries(['userInfo']);
-        // handleClose();
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         setLoading(false);
         setAddAnotherForm(false);
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-      // handleClose();
       setAddAnotherForm(false);
     }
   };
@@ -284,7 +268,9 @@ const WorkBadgePopup = ({
 
     const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
-      queryClient.invalidateQueries(['userInfo']);
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
+      console.log(companies.data);
+      setExistingData(companies.data.data);
     }
   };
 
@@ -293,7 +279,6 @@ const WorkBadgePopup = ({
       if (
         prevInfo.companyName === field1Data.name &&
         prevInfo.jobTitle === field2Data.name &&
-        // prevInfo.employmentType === field3Data.name &&
         prevInfo.modeOfJob === field4Data.name &&
         prevInfo.startingYear === field5Data &&
         prevInfo.endingYear === field6Data
@@ -327,7 +312,7 @@ const WorkBadgePopup = ({
 
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         showToast('success', 'infoUpdated');
         if (prevInfo.CompanyName !== field1Data.name) {
           const companySaved = await api.post(`/addBadge/company/add`, {
@@ -347,13 +332,12 @@ const WorkBadgePopup = ({
             console.log(jobsSaved);
           }
         }
-        // handleClose();
         setLoading(false);
         setAddAnotherForm(false);
+        setExistingData(updateBadge.data.data);
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-      // handleClose();
       setAddAnotherForm(false);
     }
   };
@@ -376,7 +360,6 @@ const WorkBadgePopup = ({
 
       setField1Data({ id: data.id, name: data.companyName });
       setField2Data({ name: data.jobTitle });
-      // setField3Data({ name: data.employmentType });
       setField4Data({ name: data.modeOfJob });
       setField5Data(data.startingYear);
       if (data.endingYear === 'Present') {
@@ -388,13 +371,15 @@ const WorkBadgePopup = ({
       setFetchingEdit(false);
     }
   };
+
   const handleRemoveBadgePopup = (item) => {
     setDeleteModalState(item);
     setModalVisible(true);
   };
+
   const handleBadgesClose = () => setModalVisible(false);
 
-  const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
+  const renderWorkField = (field1, field2, field4, field5, field6) => {
     const [edit, setEdit] = useState(false);
 
     return (
@@ -408,7 +393,6 @@ const WorkBadgePopup = ({
               image={deleteModalState?.image}
               type={deleteModalState?.type}
               badgeType={deleteModalState?.badgeType}
-              fetchUser={fetchUser}
               setIsPersonalPopup={setIsPersonalPopup}
               setIsLoading={setRemoveLoading}
               loading={RemoveLoading}
@@ -421,7 +405,10 @@ const WorkBadgePopup = ({
               </h1>
               {existingData &&
                 existingData.map((item, index) => (
-                  <div className="mb-4 flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
+                  <div
+                    key={index}
+                    className="mb-4 flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
+                  >
                     <div className="py-3 tablet:py-[25px]">
                       <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
                         {item.companyName}
@@ -449,7 +436,7 @@ const WorkBadgePopup = ({
                               handleDelete(deleteItem);
                             }}
                           >
-                            {delloading === item.id ? (
+                            {delLoading === item.id ? (
                               <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
                             ) : (
                               'Yes'
@@ -489,7 +476,7 @@ const WorkBadgePopup = ({
                           </div>
                         )}
                         <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          {item.startingYear + '-' + item.endingYear}
+                          {item.startingYear + ' - ' + (item.endingYear || 'on going')}
                         </h4>
                       </div>
                     )}
@@ -547,16 +534,6 @@ const WorkBadgePopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field1.label}
                 </p>
-                {/* <CustomCombobox
-                items={companies}
-                placeholder={field1.placeholder}
-                selected={field1Data}
-                setSelected={setField1Data}
-                query={query}
-                setQuery={setQuery}
-                id={1}
-                handleTab={handleTab}
-              /> */}
                 <input
                   type="text"
                   value={edit ? (!fetchingEdit ? field1Data.name : 'Loading...') : field1Data.name}
@@ -594,19 +571,6 @@ const WorkBadgePopup = ({
                 )}
               </div>
               <div className="flex items-center gap-[17.5px] tablet:gap-9">
-                {/* <div className="mb-[5px] w-full tablet:mb-[25px]">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field3.label}
-                </p>
-                <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
-                  <ListBox
-                    items={field3.items}
-                    selected={field3Data}
-                    setSelected={setField3Data}
-                    placeholder={field3.placeholder}
-                  />
-                </div>
-              </div> */}
                 <div className="my-[5px] w-full tablet:mb-[25px]">
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field4.label}
@@ -651,7 +615,7 @@ const WorkBadgePopup = ({
                     <input
                       type="date"
                       value={field5Data}
-                      onChange={handlefield5Change}
+                      onChange={(e) => setField5Data(e.target.value)}
                       placeholder={field5.placeholder}
                       className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                       style={{ textTransform: 'uppercase' }}
@@ -676,7 +640,7 @@ const WorkBadgePopup = ({
                       <input
                         type="date"
                         value={field6Data}
-                        onChange={handlefield6Change}
+                        onChange={(e) => setField6Data(e.target.value)}
                         disabled={isPresent}
                         placeholder={field6.placeholder}
                         className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
@@ -687,15 +651,12 @@ const WorkBadgePopup = ({
                 )}
               </div>
 
-              {/* {isError && <p className="text-red ml-1 text-[6.8px] tablet:text-[14px]">{`Invalid ${title}!`}</p>}{' '} */}
               <div className="mt-[10px] flex justify-between">
-                {/* {existingData && existingData.lenght !== 0 ? ( */}
                 <Button
                   variant="addOption"
                   onClick={() => {
                     setField1Data([]);
                     setField2Data([]);
-                    // setField3Data([]);
                     setField4Data([]);
                     setField5Data();
                     setField6Data();
@@ -706,12 +667,9 @@ const WorkBadgePopup = ({
                 >
                   Cancel
                 </Button>
-                {/* ) : (
-                <div></div>
-              )} */}
                 {hollow || checkHollow() ? (
                   <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                    {edit || existingData ? 'Update Badge' : 'Add Badge'}
+                    {edit || existingData?.length >= 1 ? 'Update Badge' : 'Add Badge'}
                   </Button>
                 ) : (
                   <Button
@@ -722,7 +680,6 @@ const WorkBadgePopup = ({
                         ['id']: field1Data.id,
                         [field1.type]: field1Data.name,
                         [field2.type]: field2Data.name,
-                        // [field3.type]: field3Data.name,
                         [field4.type]: field4Data.name,
                         [field5.type]: field5Data,
                         [field6.type]: field6Data,
@@ -740,7 +697,7 @@ const WorkBadgePopup = ({
                   >
                     {loading === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit || existingData ? (
+                    ) : edit || existingData?.length >= 1 ? (
                       'Update Badge'
                     ) : (
                       'Add Badge'

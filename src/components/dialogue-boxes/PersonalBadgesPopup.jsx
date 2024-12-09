@@ -1,17 +1,17 @@
-import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { validation } from '../../services/api/badgesApi';
-import PopUp from '../ui/PopUp';
-import api from '../../services/api/Axios';
-import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
-import Listbox from '../ui/ListBox';
+import { useEffect, useState } from 'react';
 import { useDebounce } from '../../utils/useDebounce';
-import BadgeRemovePopup from './badgeRemovePopup';
+import { validation } from '../../services/api/badgesApi';
+import { useQuery } from '@tanstack/react-query';
+import PopUp from '../ui/PopUp';
 import showToast from '../ui/Toast';
+import Listbox from '../ui/ListBox';
 import ProgressBar from '../ProgressBar';
+import CustomCombobox from '../ui/Combobox';
+import BadgeRemovePopup from './badgeRemovePopup';
+import { useAddPersonalBadge, useSearchCities, useUpdateBadge } from '../../services/mutations/verification-adges';
+import { relationshipData, sexOptions } from '../../constants/verification-badges';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -19,65 +19,53 @@ const data = [
   { id: 2, name: 'What is the last name of your favorite teacher?' },
 ];
 
-const relationshipData = [
-  { id: 1, name: 'Single' },
-  { id: 2, name: 'In a relationship' },
-  { id: 3, name: 'Engaged' },
-  { id: 4, name: 'Married' },
-  { id: 5, name: "It's complicated" },
-  { id: 6, name: 'In an open relationship' },
-  { id: 7, name: 'Widowed' },
-  { id: 8, name: 'Separated' },
-  { id: 9, name: 'Divorced' },
-];
-
-const sexOtpions = [
-  { id: 1, name: 'Male' },
-  { id: 2, name: 'Female' },
-  { id: 3, name: 'X' },
-];
-
 const PersonalBadgesPopup = ({
   isPopup,
   setIsPopup,
-  type,
   title,
+  type,
   logo,
   placeholder,
   edit,
-  fetchUser,
   setIsPersonalPopup,
   handleSkip,
   onboarding,
   progress,
   page,
+  selectedBadge,
 }) => {
-  const queryClient = useQueryClient();
   const [selected, setSelected] = useState();
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
-  const [loading, setLoading] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [cities, setCities] = useState([]);
-  const debounceName = useDebounce(name, 1000);
   const [check, setCheck] = useState(edit ? false : true);
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [prevInfo, setPrevInfo] = useState();
-  const handleClose = () => setIsPopup(false);
   const [hollow, setHollow] = useState(edit ? false : true);
   const [fetchingEdit, setFetchingEdit] = useState(false);
+  const [query, setQuery] = useState('');
+  const [questions, setQuestion] = useState();
+  const debounceName = useDebounce(name, 1000);
 
+  const handleClose = () => setIsPopup(false);
   const handleNameChange = (e) => setName(e.target.value);
+
+  const { mutateAsync: searchCities } = useSearchCities();
+  const { mutateAsync: handleUpdateBadge, isPending: loading } = useUpdateBadge(handleClose);
+  const { mutateAsync: handleAddPersonalBadge, isPending: addLoading } = useAddPersonalBadge(
+    handleClose,
+    setName,
+    onboarding,
+    type,
+    handleSkip
+  );
 
   const handleDateChange = (event) => {
     const selectedDate = event.target.value;
     setDate(selectedDate);
   };
-
-  const handleSecurityQuestionChange = (event) => {};
-  const [query, setQuery] = useState('');
-  const [questions, setQuestion] = useState();
 
   useEffect(() => {
     const jb = data;
@@ -91,117 +79,94 @@ const PersonalBadgesPopup = ({
             id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
           })),
         ];
+
     setQuestion(newArr);
   }, [query]);
 
-  const FetchData = async () => {
-    const payload = {
-      uuid: localStorage.getItem('uuid'),
-      type: type,
-    };
-    if (localStorage.getItem('legacyHash')) {
-      payload.infoc = localStorage.getItem('legacyHash');
-    }
-    const info = await api.post(`/addBadge/personal/getPersonalBadge`, payload);
-    setPrevInfo(info?.data?.obj);
-    if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
-      setName(info?.data?.obj);
-    }
-    if (type === 'dateOfBirth') {
-      setDate(info?.data?.obj);
-    }
-    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
-      setSelected({ name: info?.data?.obj });
-    }
-    if (type === 'security-question') {
-      setSelected({ name: Object.keys(info?.data?.obj)[0] });
-      setName(info?.data?.obj[Object.keys(info?.data?.obj)[0]]);
-    }
-    setFetchingEdit(false);
-  };
-
   useEffect(() => {
     if (edit) {
-      setFetchingEdit(true);
-      FetchData();
+      const value = selectedBadge?.personal[type];
+      setPrevInfo(value);
+      if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
+        setName(value);
+      }
+      if (type === 'dateOfBirth') {
+        setDate(value);
+      }
+      if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
+        setSelected({ name: value });
+      }
+      if (type === 'security-question') {
+        setSelected({ name: Object.keys(value)[0] });
+        setName(value[Object.keys(value)[0]]);
+      }
     }
   }, []);
 
   useEffect(() => {
+    const isSameAsPrev = (value) => value === prevInfo;
+    const hasValue = (value) => Boolean(value);
+
     if (edit) {
-      if (type === 'dateOfBirth') {
-        if (date && date !== prevInfo) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
-      } else if (type === 'geolocation') {
-        if (name && name !== prevInfo) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
-      } else if (type === 'firstName' || type === 'lastName') {
-        if (name && name !== prevInfo && !check) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
-      } else if (type === 'security-question') {
-        if (name && selected?.name) {
-          if (prevInfo) {
-            if (name === prevInfo[Object.keys(prevInfo)[0]] && selected?.name === Object.keys(prevInfo)[0]) {
-              setHollow(true);
-            } else {
-              setHollow(false);
-            }
+      switch (type) {
+        case 'dateOfBirth':
+          setHollow(!hasValue(date) || isSameAsPrev(date));
+          break;
+
+        case 'geolocation':
+        case 'firstName':
+        case 'lastName':
+          setHollow(!hasValue(name) || (type !== 'geolocation' && check) || isSameAsPrev(name));
+          break;
+
+        case 'security-question':
+          if (name && selected?.name) {
+            setHollow(
+              prevInfo && name === prevInfo[Object.keys(prevInfo)[0]] && selected.name === Object.keys(prevInfo)[0]
+            );
           } else {
             setHollow(true);
           }
-        } else {
+          break;
+
+        case 'currentCity':
+        case 'homeTown':
+        case 'relationshipStatus':
+        case 'sex':
+          setHollow(!hasValue(selected?.name) || isSameAsPrev(selected?.name));
+          break;
+
+        default:
           setHollow(true);
-        }
-      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
-        if (selected?.name && selected?.name !== prevInfo) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
       }
     } else {
-      if (type === 'dateOfBirth') {
-        if (date) {
-          setHollow(false);
-        } else {
+      switch (type) {
+        case 'dateOfBirth':
+          setHollow(!hasValue(date));
+          break;
+
+        case 'geolocation':
+        case 'firstName':
+        case 'lastName':
+          setHollow(!hasValue(name) || (type !== 'geolocation' && check));
+          break;
+
+        case 'security-question':
+          setHollow(!name || !selected?.name);
+          break;
+
+        case 'currentCity':
+        case 'homeTown':
+        case 'relationshipStatus':
+        case 'sex':
+          setHollow(!hasValue(selected?.name));
+          break;
+
+        default:
           setHollow(true);
-        }
-      } else if (type === 'geolocation') {
-        if (name) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
-      } else if (type === 'firstName' || type === 'lastName') {
-        if (name && !check) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
-      } else if (type === 'security-question') {
-        if (name && selected?.name) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
-      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
-        if (selected?.name) {
-          setHollow(false);
-        } else {
-          setHollow(true);
-        }
       }
     }
-  }, [date, selected, name, check, prevInfo]);
+  }, [date, selected, name, check, prevInfo, type, edit]);
 
   const { data: apiResp } = useQuery({
     queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && debounceName],
@@ -209,18 +174,13 @@ const PersonalBadgesPopup = ({
       validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name.charAt(0).toUpperCase() + name.slice(1)),
   });
 
-  const gotLocation = (position) => {
-    setName(position.coords.latitude + ',' + position.coords.longitude);
-  };
-
-  const failedToGet = (err) => {
-    showToast('error', 'failedGettingLocation');
-    console.log(err);
-  };
-
   const getLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
+      const gotLocation = (position) => setName(position.coords.latitude + ',' + position.coords.longitude);
+
+      navigator.geolocation.getCurrentPosition(gotLocation, () => {
+        showToast('error', 'failedGettingLocation');
+      });
     } else {
       showToast('error', 'locationNotSupported');
     }
@@ -243,169 +203,16 @@ const PersonalBadgesPopup = ({
     }
   }, [apiResp]);
 
-  const searchCities = async () => {
-    try {
-      const cities = await api.post(`search/searchCities/?name=${query}`);
-      console.log(cities.data);
-      setCities(cities.data);
-    } catch (err) {
-      setCities([]);
-    }
-  };
-
   useEffect(() => {
-    if ((type.trim() === 'currentCity' || type.trim() === 'homeTown') && query !== '') {
-      searchCities();
-    }
-  }, [query]);
+    const fetchCities = async () => {
+      if ((type.trim() === 'currentCity' || type.trim() === 'homeTown') && query !== '') {
+        const data = await searchCities(query);
+        setCities(data);
+      }
+    };
 
-  const handleUpdateBadge = async () => {
-    if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
-      if (name === prevInfo) {
-        showToast('warning', 'infoAlreadySaved');
-        return;
-      }
-    }
-    if (type === 'dateOfBirth') {
-      if (date === prevInfo) {
-        showToast('warning', 'infoAlreadySaved');
-        return;
-      }
-    }
-    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus' || type === 'sex') {
-      if (selected.name === prevInfo) {
-        showToast('warning', 'infoAlreadySaved');
-        return;
-      }
-    }
-    if (type === 'security-question') {
-      if (name === prevInfo[Object.keys(prevInfo)[0]] && selected.name === Object.keys(prevInfo)[0]) {
-        showToast('warning', 'infoAlreadySaved');
-        return;
-      }
-    }
-    setLoading(true);
-    let value;
-    if (type.trim() === 'dateOfBirth') {
-      value = date;
-    } else if (type.trim() === 'security-question') {
-      value = {
-        [selected?.name]: name,
-      };
-      if (!selected) {
-        showToast('warning', 'selectSecQuestion');
-        setLoading(false);
-        return;
-      }
-      if (!name) {
-        showToast('warning', 'emptyAnswer');
-        setLoading(false);
-        return;
-      }
-    } else if (
-      type.trim() === 'currentCity' ||
-      type.trim() === 'homeTown' ||
-      type.trim() === 'relationshipStatus' ||
-      type === 'sex'
-    ) {
-      value = selected?.name;
-    } else {
-      value = name;
-    }
-    if (value === '' || value === undefined) {
-      showToast('warning', 'blankField');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const payload = {
-        newData: value,
-        type: type,
-        uuid: localStorage.getItem('uuid'),
-      };
-      if (localStorage.getItem('legacyHash')) {
-        payload.infoc = localStorage.getItem('legacyHash');
-      }
-      const addBadge = await api.post(`/addBadge/personal/updatePersonalBadge`, payload);
-      if (addBadge.status === 200) {
-        showToast('success', 'badgeUpdated');
-        queryClient.invalidateQueries(['userInfo']);
-        handleClose();
-      }
-    } catch (error) {
-      console.log(error);
-      handleClose();
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAddPersonalBadge = async () => {
-    setLoading(true);
-    let value;
-    if (type.trim() === 'dateOfBirth') {
-      value = date;
-    } else if (type.trim() === 'security-question') {
-      value = {
-        [selected?.name]: name,
-      };
-      if (!selected) {
-        showToast('warning', 'selectSecQuestion');
-        setLoading(false);
-        return;
-      }
-      if (!name) {
-        showToast('warning', 'emptyAnswer');
-        setLoading(false);
-        return;
-      }
-    } else if (
-      type.trim() === 'currentCity' ||
-      type.trim() === 'homeTown' ||
-      type.trim() === 'relationshipStatus' ||
-      type === 'sex'
-    ) {
-      value = selected?.name;
-    } else {
-      value = name;
-    }
-    if (value === '' || value === undefined) {
-      showToast('warning', 'blankField');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const payload = {
-        personal: {
-          [type]: value,
-        },
-        uuid: localStorage.getItem('uuid'),
-      };
-
-      if (localStorage.getItem('legacyHash')) {
-        payload.infoc = localStorage.getItem('legacyHash');
-      }
-
-      const addBadge = await api.post(`/addBadge/personal/add`, payload);
-      if (addBadge.status === 200) {
-        showToast('success', 'badgeAdded');
-        setName('');
-        if (onboarding) {
-          handleSkip(type);
-          return;
-        }
-        queryClient.invalidateQueries(['userInfo']);
-        handleClose();
-      }
-    } catch (error) {
-      console.log(error);
-      handleClose();
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchCities();
+  }, [type, query]);
 
   const handleRemoveBadgePopup = (item) => {
     setDeleteModalState(item);
@@ -476,7 +283,7 @@ const PersonalBadgesPopup = ({
               )}
               {hollow ? (
                 <Button variant="submit-hollow" disabled={true}>
-                  {loading === true ? (
+                  {(loading || addLoading) === true ? (
                     <FaSpinner className="animate-spin text-[#EAEAEA]" />
                   ) : edit ? (
                     'Update Badge'
@@ -485,8 +292,15 @@ const PersonalBadgesPopup = ({
                   )}
                 </Button>
               ) : (
-                <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                  {loading === true ? (
+                <Button
+                  variant="submit"
+                  onClick={() =>
+                    edit
+                      ? handleUpdateBadge({ type, date, name, prevInfo, selected })
+                      : handleAddPersonalBadge({ type, date, name, selected })
+                  }
+                >
+                  {(loading || addLoading) === true ? (
                     <FaSpinner className="animate-spin text-[#EAEAEA]" />
                   ) : edit ? (
                     'Update Badge'
@@ -535,7 +349,7 @@ const PersonalBadgesPopup = ({
                   )}
                   {hollow ? (
                     <Button variant="submit-hollow" disabled={true}>
-                      {loading === true ? (
+                      {(loading || addLoading) === true ? (
                         <FaSpinner className="animate-spin text-[#EAEAEA]" />
                       ) : edit ? (
                         'Update Badge'
@@ -544,8 +358,15 @@ const PersonalBadgesPopup = ({
                       )}
                     </Button>
                   ) : (
-                    <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                      {loading === true ? (
+                    <Button
+                      variant="submit"
+                      onClick={() =>
+                        edit
+                          ? handleUpdateBadge({ type, date, name, prevInfo, selected })
+                          : handleAddPersonalBadge({ type, date, name, selected })
+                      }
+                    >
+                      {(loading || addLoading) === true ? (
                         <FaSpinner className="animate-spin text-[#EAEAEA]" />
                       ) : edit ? (
                         'Update Badge'
@@ -593,7 +414,7 @@ const PersonalBadgesPopup = ({
               {hollow ? (
                 <div className="flex gap-2">
                   <Button variant="submit-hollow" disabled={true}>
-                    {loading === true ? (
+                    {(loading || addLoading) === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
                     ) : edit ? (
                       'Update Badge'
@@ -604,8 +425,15 @@ const PersonalBadgesPopup = ({
                 </div>
               ) : (
                 <div className="flex gap-2">
-                  <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                    {loading === true ? (
+                  <Button
+                    variant="submit"
+                    onClick={() =>
+                      edit
+                        ? handleUpdateBadge({ type, date, name, prevInfo, selected })
+                        : handleAddPersonalBadge({ type, date, name, selected })
+                    }
+                  >
+                    {(loading || addLoading) === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
                     ) : edit ? (
                       'Update Badge'
@@ -667,7 +495,7 @@ const PersonalBadgesPopup = ({
             )}
             {hollow ? (
               <Button variant="submit-hollow" disabled={true}>
-                {loading === true ? (
+                {(loading || addLoading) === true ? (
                   <FaSpinner className="animate-spin text-[#EAEAEA]" />
                 ) : edit ? (
                   'Update Badge'
@@ -676,8 +504,15 @@ const PersonalBadgesPopup = ({
                 )}
               </Button>
             ) : (
-              <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                {loading === true ? (
+              <Button
+                variant="submit"
+                onClick={() =>
+                  edit
+                    ? handleUpdateBadge({ type, date, name, prevInfo, selected })
+                    : handleAddPersonalBadge({ type, date, name, selected })
+                }
+              >
+                {(loading || addLoading) === true ? (
                   <FaSpinner className="animate-spin text-[#EAEAEA]" />
                 ) : edit ? (
                   'Update Badge'
@@ -734,7 +569,7 @@ const PersonalBadgesPopup = ({
             )}
             {hollow ? (
               <Button variant="submit-hollow" disabled={true}>
-                {loading === true ? (
+                {(loading || addLoading) === true ? (
                   <FaSpinner className="animate-spin text-[#EAEAEA]" />
                 ) : edit ? (
                   'Update Badge'
@@ -743,8 +578,15 @@ const PersonalBadgesPopup = ({
                 )}
               </Button>
             ) : (
-              <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                {loading === true ? (
+              <Button
+                variant="submit"
+                onClick={() =>
+                  edit
+                    ? handleUpdateBadge({ type, date, name, prevInfo, selected })
+                    : handleAddPersonalBadge({ type, date, name, selected })
+                }
+              >
+                {(loading || addLoading) === true ? (
                   <FaSpinner className="animate-spin text-[#EAEAEA]" />
                 ) : edit ? (
                   'Update Badge'
@@ -769,7 +611,6 @@ const PersonalBadgesPopup = ({
           image={deleteModalState?.image}
           type={deleteModalState?.type}
           badgeType={deleteModalState?.badgeType}
-          fetchUser={fetchUser}
           setIsPersonalPopup={setIsPersonalPopup}
           setIsLoading={setRemoveLoading}
           loading={RemoveLoading}
@@ -813,13 +654,12 @@ const PersonalBadgesPopup = ({
               <input
                 type="date"
                 id="dateInput"
-                value={date} // Assuming date is a valid string in YYYY-MM-DD format
+                value={date}
                 onChange={handleDateChange}
                 className="verification_badge_input"
                 disabled={page === 'badgeHub'}
               />
             )}
-
             {page === 'badgeHub' ? (
               <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
                 <Button variant={'cancel'} onClick={handleClose}>
@@ -845,7 +685,7 @@ const PersonalBadgesPopup = ({
                 )}
                 {hollow ? (
                   <Button variant="submit-hollow" disabled={true}>
-                    {loading === true ? (
+                    {(loading || addLoading) === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
                     ) : edit ? (
                       'Update Badge'
@@ -854,8 +694,15 @@ const PersonalBadgesPopup = ({
                     )}
                   </Button>
                 ) : (
-                  <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                    {loading === true ? (
+                  <Button
+                    variant="submit"
+                    onClick={() =>
+                      edit
+                        ? handleUpdateBadge({ type, date, name, prevInfo, selected })
+                        : handleAddPersonalBadge({ type, date, name, selected })
+                    }
+                  >
+                    {(loading || addLoading) === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
                     ) : edit ? (
                       'Update Badge'
@@ -889,7 +736,7 @@ const PersonalBadgesPopup = ({
         {title === 'Sex' &&
           renderRelationship(
             'Sex',
-            sexOtpions,
+            sexOptions,
             placeholder,
             apiResp,
             'Increase your credibility, value and earning potential.'

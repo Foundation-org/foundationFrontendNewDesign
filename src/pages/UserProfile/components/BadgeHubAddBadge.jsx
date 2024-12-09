@@ -11,26 +11,27 @@ import SocialConnectPopup from '../../Dashboard/pages/Profile/pages/verification
 import Web3ConnectPopup from '../../Dashboard/pages/Profile/pages/verification-badges/Web3ConnectPopup';
 import { useState } from 'react';
 
-export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, type }) {
-  const fetchUser = useSelector((state) => state.auth.user);
+export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, type, badges }) {
+  // const fetchUser = useSelector((state) => state.auth.user);
 
   const checkDomainBadge = () => {
-    return fetchUser?.badges?.some((badge) => !!badge?.domain) || false;
+    return badges?.some((badge) => !!badge?.domain) || false;
   };
-  const checkSocial = (name) => fetchUser?.badges?.some((i) => i.accountName === name);
+  const checkSocial = (name) => badges?.some((i) => i.accountName === name);
 
-  const checkContact = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
+  const checkContact = (itemType) => badges?.some((i) => i.type === itemType);
 
-  const checkLegacyBadge = () => fetchUser?.badges?.some((badge) => (badge?.legacy ? true : false));
+  const checkLegacyBadge = () => badges?.some((badge) => (badge?.legacy ? true : false));
 
-  const checkWeb3Badge = (itemType) =>
-    fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
+  const checkWeb3Badge = (itemType) => badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
   const checkPersonalBadge = (itemType) =>
-    fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
+    badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
 
   const checkWorkOrEdu = (itemType) =>
-    fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(itemType));
+    badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(itemType));
+
+  const getBadgeByType = (type) => badges?.find((badge) => badge?.type === type) || null;
 
   const badgeData = [
     {
@@ -240,19 +241,19 @@ export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, t
       type={actionableBadges[currentIndex]?.type}
       logo={actionableBadges[currentIndex]?.logo}
       placeholder={actionableBadges[currentIndex]?.placeholder}
-      edit={true}
+      edit={edit}
       setEdit={setEdit}
-      fetchUser={fetchUser}
+      fetchUser={badges}
       //   handleSkip={handleSkip}
       onboarding={false}
-      selectedBadge={actionableBadges[currentIndex]?.type}
+      selectedBadge={getBadgeByType(type)}
       message={actionableBadges[currentIndex]?.message}
       message2={actionableBadges[currentIndex]?.message2}
       message3={actionableBadges[currentIndex]?.message3}
       buttonText={actionableBadges[currentIndex]?.buttonText}
       accountName={actionableBadges[currentIndex]?.accountName}
       link={actionableBadges[currentIndex]?.link}
-      page={'badgeHub'}
+      page={edit ? 'badgeHub' : ''}
     />
   );
 }

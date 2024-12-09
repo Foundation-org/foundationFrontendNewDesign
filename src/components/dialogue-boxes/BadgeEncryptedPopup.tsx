@@ -1,5 +1,6 @@
 import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
+import showToast from '../ui/Toast';
 
 type ClearAllAnalyticsProps = {
   handleClose: () => void;
@@ -25,10 +26,21 @@ export default function BadgeEncryptedPopup(props: ClearAllAnalyticsProps) {
       isBackground={false}
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="summary-text">This badge is encrypted</h1>
+        <h1 className="summary-text">This badge is private to view the information you have to pay x amount of FDX</h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'cancel'} onClick={handleClose}>
             Close
+          </Button>
+          <Button
+            variant={'submit-hollow'}
+            onClick={() => {
+              showToast('warning', 'featureComingSoon');
+            }}
+          >
+            View{' '}
+            <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
+              (+10 FDX)
+            </span>
           </Button>
         </div>
       </div>

@@ -65,7 +65,7 @@ export const financeBadges = [
 export const personalBadges = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/dob.svg`,
-    title: 'Date of Birth',
+    title: 'Age',
     type: 'dateOfBirth',
   },
   {
@@ -78,11 +78,11 @@ export const personalBadges = [
     title: 'Home Town',
     type: 'homeTown',
   },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`,
-    title: 'Sex',
-    type: 'sex',
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`,
+  //   title: 'Sex',
+  //   type: 'sex',
+  // },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationship.svg`,
     title: 'Relationship',
@@ -103,9 +103,9 @@ export const personalBadges = [
     title: 'Geolocation',
     type: 'geolocation',
   },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
-    title: 'Link Hub',
-    type: 'linkHub',
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/linkhub.svg`,
+  //   title: 'Link Hub',
+  //   type: 'linkHub',
+  // },
 ];

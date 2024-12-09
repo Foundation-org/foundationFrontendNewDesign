@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api/Axios';
 import showToast from '../../components/ui/Toast';
 import { useSelector } from 'react-redux';
 import { compressImageBlobService } from '../imageProcessing';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboarding, handleSkip, prevState) => {
   const queryClient = useQueryClient();
@@ -88,6 +88,7 @@ const useAddDomainBadge = (domainBadge, edit, setLoading, handleClose, onboardin
     },
   });
 };
+export default useAddDomainBadge;
 
 const reOrderLinHubLinks = async (data) => {
   const response = await api.post('/updateBadgeDataArray', {
@@ -130,7 +131,7 @@ export const useAddBadgeHub = () => {
   return useMutation({
     mutationFn: (selectedIds) => addBadgeHub(persistedUserInfo.uuid, selectedIds),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+      queryClient.invalidateQueries({ queryKey: ['my-profile'] }, { exact: true });
       showToast('success', 'orderUpdated');
     },
     onError: (error) => {
@@ -164,4 +165,205 @@ export const useBadgeHubClicksTrack = () => {
   });
 };
 
-export default useAddDomainBadge;
+// SEARCH CITIES
+const searchCities = async (query) => {
+  const cities = await api.post(`search/searchCities/?name=${query}`);
+  return cities.data;
+};
+
+export const useSearchCities = () => {
+  return useMutation({
+    mutationFn: (query) => searchCities(query),
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
+
+// UPDATE PERSONAL BADGE
+const updateBadge = async ({ type, name, date, selected, prevInfo }) => {
+  if (!type) {
+    showToast('error', 'typeNotProvided');
+    return;
+  }
+
+  // Helper to check if information is already saved
+  const isInfoAlreadySaved = () => {
+    switch (type.trim()) {
+      case 'firstName':
+      case 'lastName':
+      case 'geolocation':
+        return name === prevInfo;
+      case 'dateOfBirth':
+        return date === prevInfo;
+      case 'currentCity':
+      case 'homeTown':
+      case 'relationshipStatus':
+      case 'sex':
+        return selected?.name === prevInfo;
+      case 'security-question':
+        return name === prevInfo[Object.keys(prevInfo)[0]] && selected?.name === Object.keys(prevInfo)[0];
+      default:
+        return false;
+    }
+  };
+
+  if (isInfoAlreadySaved()) {
+    showToast('warning', 'infoAlreadySaved');
+    return;
+  }
+
+  let value;
+
+  // Assign value based on type
+  switch (type.trim()) {
+    case 'dateOfBirth':
+      value = date;
+      break;
+    case 'security-question':
+      if (!selected) {
+        showToast('warning', 'selectSecQuestion');
+        return;
+      }
+      if (!name) {
+        showToast('warning', 'emptyAnswer');
+        return;
+      }
+      value = { [selected?.name]: name };
+      break;
+    case 'currentCity':
+    case 'homeTown':
+    case 'relationshipStatus':
+    case 'sex':
+      value = selected?.name;
+      break;
+    default:
+      value = name;
+  }
+
+  // Validate value
+  if (!value) {
+    showToast('warning', 'blankField');
+    return;
+  }
+
+  const payload = {
+    newData: value,
+    type: type,
+    uuid: localStorage.getItem('uuid'),
+  };
+
+  // Add legacyHash if present
+  const legacyHash = localStorage.getItem('legacyHash');
+  if (legacyHash) {
+    payload.infoc = legacyHash;
+  }
+
+  const addBadge = await api.post(`/addBadge/personal/updatePersonalBadge`, payload);
+  return addBadge.data;
+};
+
+export const useUpdateBadge = (handleClose) => {
+  const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  return useMutation({
+    mutationFn: updateBadge,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
+      showToast('success', 'badgeUpdated');
+      handleClose();
+    },
+    onError: (error) => {
+      console.error(error);
+      showToast('error', 'updateFailed');
+      handleClose();
+    },
+  });
+};
+
+// ADD PERSONAL BADGE
+const addPersonalBadge = async ({ type, name, date, selected }) => {
+  // Determine value based on type
+  let value;
+  switch (type.trim()) {
+    case 'dateOfBirth':
+      value = date;
+      break;
+
+    case 'security-question':
+      if (!selected?.name) {
+        showToast('warning', 'selectSecQuestion');
+        setLoading(false);
+        return;
+      }
+      if (!name) {
+        showToast('warning', 'emptyAnswer');
+        setLoading(false);
+        return;
+      }
+      value = { [selected?.name]: name };
+      break;
+
+    case 'currentCity':
+    case 'homeTown':
+    case 'relationshipStatus':
+    case 'sex':
+      if (!selected?.name) {
+        showToast('warning', 'blankField');
+        setLoading(false);
+        return;
+      }
+      value = selected?.name;
+      break;
+
+    case 'firstName':
+    case 'lastName':
+    case 'geolocation':
+      if (!name) {
+        showToast('warning', 'blankField');
+        setLoading(false);
+        return;
+      }
+      value = name;
+      break;
+
+    default:
+      showToast('warning', 'unsupportedType');
+      setLoading(false);
+      return;
+  }
+
+  // Construct payload
+  const payload = {
+    personal: { [type]: value },
+    uuid: localStorage.getItem('uuid'),
+    ...(localStorage.getItem('legacyHash') && { infoc: localStorage.getItem('legacyHash') }),
+  };
+
+  const response = await api.post(`/addBadge/personal/add`, payload);
+  return response.data;
+};
+
+export const useAddPersonalBadge = (handleClose, setName, onboarding, type, handleSkip) => {
+  const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  return useMutation({
+    mutationFn: addPersonalBadge,
+    onSuccess: () => {
+      showToast('success', 'badgeAdded');
+      setName('');
+      if (onboarding) {
+        handleSkip(type);
+      } else {
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
+        handleClose();
+      }
+    },
+    onError: (error) => {
+      console.error(error);
+      handleClose();
+    },
+  });
+};
