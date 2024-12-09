@@ -10,7 +10,8 @@ import PopUp from '../../../../../../components/ui/PopUp';
 import showToast from '../../../../../../components/ui/Toast';
 import ProgressBar from '../../../../../../components/ProgressBar';
 
-const Web3Content = ({ type, handleSkip, onboarding, page, handleClose }) => {
+const Web3Content = ({ type, handleSkip, onboarding, page, handleClose, selectedBadge }) => {
+  console.log(selectedBadge);
   const { sdk } = useSDK();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -72,17 +73,29 @@ const Web3Content = ({ type, handleSkip, onboarding, page, handleClose }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="summary-text">
-          Your verified Ethereum address unlocks deposits and withdrawals to and from your Foundation wallet to your
-          wallet on the Base network.
-        </h1>
-        <div className="flex justify-end">
-          <Button variant="submit" className="w-fit" onClick={handleConnect}>
-            {loading ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Connect'}
-          </Button>
+      {page === 'badgeHub' ? (
+        <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+          <h1 className="summary-text">Ethereum Wallet:</h1>
+          <h1 className="summary-text -mt-2">{selectedBadge.web3['etherium-wallet']}</h1>
+          <div className="flex justify-end">
+            <Button variant={'cancel'} onClick={handleClose}>
+              Close
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+          <h1 className="summary-text">
+            Your verified Ethereum address unlocks deposits and withdrawals to and from your Foundation wallet to your
+            wallet on the Base network.
+          </h1>
+          <div className="flex justify-end">
+            <Button variant="submit" className="w-fit" onClick={handleConnect}>
+              {loading ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Connect'}
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

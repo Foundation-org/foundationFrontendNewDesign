@@ -68,10 +68,9 @@ export default function BadgeHub({ badges }: any) {
   return (
     <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
       <SummaryCard
-        headerIcon={
-          persistedUserInfo.role === 'user' ? 'assets/svgs/dashboard/MeBadge.svg' : 'assets/svgs/dashboard/badge.svg'
-        }
+        headerIcon={isPublicProfile ? '/assets/addOptions/blueBadge.svg' : 'assets/svgs/dashboard/MeBadge.svg'}
         headerTitle="Verification Badges"
+        isPublicProfile={isPublicProfile}
       >
         <h1 className="summary-text">
           Enhance your profile by adding verification badges. These badges not only increase your credibility but also
@@ -83,6 +82,7 @@ export default function BadgeHub({ badges }: any) {
           </Button>
         </div>
       </SummaryCard>
+
       {/* <div className="flex w-full items-center gap-3 rounded-[9.228px] border-[2.768px] border-gray-250 bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:gap-5 tablet:px-6 tablet:py-2">
         <h1 className="min-w-[53px] text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:min-w-[80px] tablet:text-[18px]">
           Social
@@ -108,6 +108,7 @@ export default function BadgeHub({ badges }: any) {
           ))}
         </div>
       </div> */}
+
       {contactBadgesArray?.length > 0 && (
         <div className="flex w-full items-center gap-3 rounded-[9.228px] border-[2.768px] border-gray-250 bg-[#FDFDFD] px-3 py-1 dark:border-gray-100 dark:bg-gray-200 tablet:gap-5 tablet:px-6 tablet:py-2">
           <h1 className="min-w-[53px] text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#f1f1f1] tablet:min-w-[80px] tablet:text-[18px]">
@@ -191,6 +192,15 @@ export default function BadgeHub({ badges }: any) {
                 onClick={() => {
                   // setSelectedBadge(badge.type);
                   // setIsPopup(true);
+                  if (badge?.userBadgeData?.isUserEncrypted && isPublicProfile) {
+                    setBadgeEncryptedPopup(true);
+                  } else {
+                    if (isPublicProfile) {
+                      handleBadgeHubClicksTrack(badge.userBadgeData._id);
+                    }
+                    setSelectedBadge(badge.type);
+                    setIsPopup(true);
+                  }
                 }}
               >
                 <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
