@@ -91,7 +91,7 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
   const { mutateAsync: startPost } = useMutation({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
-      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
       queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
 
       if (location.pathname.startsWith('/seldon-ai')) {

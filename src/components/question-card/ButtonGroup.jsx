@@ -344,7 +344,7 @@ const ButtonGroup = ({
             </Button>
 
             {findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Does not apply to me' ||
-              findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested' ? (
+            findFeedbackByUuid(questStartData.feedback, persistedUserInfo?.uuid) === 'Not interested' ? (
               <Button
                 variant={'g-submit'}
                 disabled={isUndoFeedbackPending}

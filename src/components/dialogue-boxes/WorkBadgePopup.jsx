@@ -379,7 +379,7 @@ const WorkBadgePopup = ({
 
   const handleBadgesClose = () => setModalVisible(false);
 
-  const renderWorkField = (field1, field2, field4, field5, field6) => {
+  const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     const [edit, setEdit] = useState(false);
 
     return (
@@ -476,7 +476,7 @@ const WorkBadgePopup = ({
                           </div>
                         )}
                         <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          {item.startingYear + ' - ' + (item.endingYear || 'on going')}
+                          {item.startingYear + ' - ' + item.endingYear}
                         </h4>
                       </div>
                     )}
