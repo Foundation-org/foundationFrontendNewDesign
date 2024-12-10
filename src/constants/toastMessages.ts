@@ -120,4 +120,5 @@ export const toastMessages = {
   verificationFailed: 'Verification failed',
   widthrawlSuccessful: 'Widthrawl Successful',
   badgeNotAdded: "You don't have this badge yet.",
+  addBadgeInProfile: 'Badge added in profile successfully',
 } as const;

@@ -10,6 +10,7 @@ import * as badgeService from '../../utils/helper-function/badge-service';
 import showToast from '../ui/Toast';
 import { formatCountNumber } from '../../utils/utils';
 import BadgeHubAddBadge from '../../pages/UserProfile/components/BadgeHubAddBadge';
+import { useQueryClient } from '@tanstack/react-query';
 
 const BadgeList = ({
   badges,
@@ -106,8 +107,12 @@ const BadgeHubPopup = ({ isPopup, setIsPopup, title, logo }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [selectedIds, setSelectedIds] = useState([]);
+  const queryClient = useQueryClient();
 
-  const handleClose = () => setIsPopup(false);
+  const handleClose = () => {
+    queryClient.invalidateQueries({ queryKey: ['my-profile'] }, { exact: true });
+    setIsPopup(false);
+  };
 
   const { mutateAsync: handleAddBadgeHub, isPending } = useAddBadgeHub();
 

@@ -125,14 +125,12 @@ const addBadgeHub = async (userUuid, badgeIds) => {
 };
 
 export const useAddBadgeHub = () => {
-  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return useMutation({
     mutationFn: (selectedIds) => addBadgeHub(persistedUserInfo.uuid, selectedIds),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my-profile'] }, { exact: true });
-      showToast('success', 'orderUpdated');
+      showToast('success', 'addBadgeInProfile');
     },
     onError: (error) => {
       console.error(error);
