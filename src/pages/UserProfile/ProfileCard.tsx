@@ -35,7 +35,7 @@ export default function ProfileCard({ profile, badges }: any) {
             />
           </div>
           <div className="flex flex-col gap-1 text-gray-1 dark:text-[#f1f1f1] tablet:gap-3">
-            <h1 className="text-[15px] font-semibold tablet:text-[20px]"> {profile?.domain.title}</h1>
+            <h1 className="text-[15px] font-semibold tablet:text-[22px]"> {profile?.domain.title}</h1>
             <BadgeHub badges={badges} />
           </div>
           {!isPublicProfile && (

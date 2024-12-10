@@ -37,8 +37,6 @@ export default function ViewMessage({
     enabled: !!viewMessageData?.postId,
   });
 
-  console.log('viewMessageData', viewMessageData.viewed);
-
   useEffect(() => {
     const handleFocus = () => setHasFocus(true);
     const handleBlur = () => setHasFocus(false);

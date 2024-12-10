@@ -9,7 +9,7 @@ import { calculateTimeAgo } from '../../../../utils/utils';
 import api from '../../../../services/api/Axios';
 import { setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
 
-export default function MessageCard({ setViewMsg, item, filter }) {
+export default function MessageCard({ setViewMsg, item, filter, setViewMessageData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -183,6 +183,7 @@ export default function MessageCard({ setViewMsg, item, filter }) {
                 if (location.pathname === '/direct-messaging/preview') {
                   return;
                 } else {
+                  setViewMessageData(item);
                   setViewMsg(true);
                 }
               }}

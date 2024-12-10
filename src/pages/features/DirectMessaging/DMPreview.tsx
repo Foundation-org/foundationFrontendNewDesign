@@ -113,6 +113,7 @@ export default function DMPreview() {
           }}
           key={1}
           setViewMsg={null}
+          setViewMessageData={null}
         />
         <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
           How your message will appear when a user opens it.

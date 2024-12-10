@@ -171,7 +171,13 @@ export default function DirectMessaging() {
                   data.shortMessage?.toLowerCase().includes(search?.toLowerCase())
               )
               .map((item, index) => (
-                <MessageCard key={index} item={item} setViewMsg={setViewMsg} filter={selectedTab} />
+                <MessageCard
+                  key={index}
+                  item={item}
+                  setViewMsg={setViewMsg}
+                  filter={selectedTab}
+                  setViewMessageData={setViewMessageData}
+                />
               ))
           )}
         </div>
