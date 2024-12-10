@@ -68,6 +68,11 @@ export default function BadgeRemovePopup({
           uuid: persistedUserInfo.uuid,
           badgeName: type,
         });
+      } else if (badgeType === 'finance') {
+        removeBadge = await api.post(`/removeFinance`, {
+          type: type,
+          uuid: persistedUserInfo.uuid,
+        });
       } else if (badgeType === 'homepage') {
         removeBadge = await api.post(`/removeDomainBadge`, {
           type: type,
@@ -109,7 +114,7 @@ export default function BadgeRemovePopup({
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose} remove={true}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="text-gray-1 text-[10px] font-medium leading-[12px] dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-gray-1 dark:text-gray-300 tablet:text-[20px] tablet:leading-[24.2px]">
           Are you sure you want to remove this badge? If you remove this badge, you will not be able to add it again for
           30 days.
         </h1>
