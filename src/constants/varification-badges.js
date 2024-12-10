@@ -136,12 +136,12 @@ export const socials = [
 
 export const finance = [
   {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/stripe.svg`,
     title: 'Stripe',
-    ButtonColor: 'blue',
+    ButtonColor: 'submit',
     ButtonText: 'Add Badge',
     NoOfButton: 1,
-    link: '/auth/twitter',
+    link: '',
     accountName: 'stripe',
     type: 'stripe',
     disabled: false,
