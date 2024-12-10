@@ -113,7 +113,6 @@ export default function DMPreview() {
           }}
           key={1}
           setViewMsg={null}
-          handleViewMessage={null}
         />
         <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
           How your message will appear when a user opens it.
@@ -132,6 +131,7 @@ export default function DMPreview() {
           filter="receive"
           questStartData={{ ...directMessageState.questStartData, questAnswers: filterOutOptions() }}
           page="preview"
+          handleViewMessage={() => {}}
         />
       </div>
       <div className="flex h-fit w-full max-w-[730px] justify-end gap-4 tablet:mx-auto">

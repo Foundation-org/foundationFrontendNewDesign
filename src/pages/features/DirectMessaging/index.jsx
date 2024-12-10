@@ -161,7 +161,7 @@ export default function DirectMessaging() {
         <div className="mt-5 flex flex-col gap-2 tablet:gap-5">
           {messages?.data?.data.length <= 0 ? (
             <div className="flex h-[calc(100%-68px)] w-full items-center justify-center">
-              <p className="text-gray-1 text-[12px] font-semibold tablet:text-[24px]">No messages yet!</p>
+              <p className="text-[12px] font-semibold text-gray-1 tablet:text-[24px]">No messages yet!</p>
             </div>
           ) : (
             messages?.data?.data
@@ -171,18 +171,19 @@ export default function DirectMessaging() {
                   data.shortMessage?.toLowerCase().includes(search?.toLowerCase())
               )
               .map((item, index) => (
-                <MessageCard
-                  key={index}
-                  item={item}
-                  setViewMsg={setViewMsg}
-                  handleViewMessage={handleViewMessage}
-                  filter={selectedTab}
-                />
+                <MessageCard key={index} item={item} setViewMsg={setViewMsg} filter={selectedTab} />
               ))
           )}
         </div>
       </div>
-      {viewMsg && <ViewMessage setViewMsg={setViewMsg} viewMessageData={viewMessageData} filter={selectedTab} />}
+      {viewMsg && (
+        <ViewMessage
+          setViewMsg={setViewMsg}
+          viewMessageData={viewMessageData}
+          filter={selectedTab}
+          handleViewMessage={handleViewMessage}
+        />
+      )}
     </div>
   );
 }
