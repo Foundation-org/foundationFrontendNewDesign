@@ -134,6 +134,21 @@ export const socials = [
   },
 ];
 
+export const finance = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
+    title: 'Stripe',
+    ButtonColor: 'blue',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    link: '/auth/twitter',
+    accountName: 'stripe',
+    type: 'stripe',
+    disabled: false,
+    email: true,
+  },
+];
+
 export const web3 = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Ethereum-Wallet-2x.png`,

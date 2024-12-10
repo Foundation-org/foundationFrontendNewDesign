@@ -18,6 +18,7 @@ import ContentCard from '../../../../../components/ContentCard';
 import HomepageBadge from './verification-badges/HomepageBadge';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
+import FinanceBadge from './verification-badges/FinanceBadge';
 
 const VerificationBadges = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const VerificationBadges = () => {
         Math.floor(
           ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
             badgesTotalLength) *
-            100
+          100
         )
       )
     );
@@ -187,6 +188,9 @@ const VerificationBadges = () => {
       </ContentCard>
       <ContentCard icon="assets/profile/homepagebadges.svg" title="Homepage">
         <HomepageBadge checkPseudoBadge={checkPseudoBadge} />
+      </ContentCard>
+      <ContentCard icon="assets/profile/homepagebadges.svg" title="Finance">
+        <FinanceBadge checkPseudoBadge={checkPseudoBadge} />
       </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
         <Subscription
