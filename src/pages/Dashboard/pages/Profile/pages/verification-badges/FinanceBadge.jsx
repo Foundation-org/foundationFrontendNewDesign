@@ -3,46 +3,28 @@ import { useState } from 'react';
 import { CanAdd } from './badgeUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
-import {
-  domainHomepageBadges,
-  finance,
-  homepageBadges,
-  profileHomepageBadges,
-} from '../../../../../../constants/varification-badges';
+import { finance } from '../../../../../../constants/varification-badges';
 import { setGuestSignUpDialogue } from '../../../../../../features/extras/extrasSlice';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
-import HomepageBadgePopup from '../../../../../../components/dialogue-boxes/HomepageBadgePopup';
-import LinkHubPopup from '../../../../../../components/dialogue-boxes/LinkHubPopup';
-import ConnectPopup from '../../../../../../components/dialogue-boxes/ConnectPopup';
+import { checkBadgeExists } from '../../../../../../utils/helper-function/badge-service';
 import api from '../../../../../../services/api/Axios';
+import ConnectPopup from '../../../../../../components/dialogue-boxes/ConnectPopup';
 
-export default function FinanceBadge({ checkPseudoBadge }) {
+export default function FinanceBadge({ checkPseudoBadge, handleRemoveBadgePopup }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
   const [isFinancePopup, setIsFinancePopup] = useState(false);
   const [selectedFinanceBadge, setSelectedFinanceBadge] = useState('');
-  const [edit, setEdit] = useState(false);
 
-  const checkAlready = (type) => {
-    if (type === 'stripe') {
-      return persistedUserInfo?.badges?.some((badge) => !!badge?.stripe) || false;
-    }
-  };
-
-  const handleClickFinanceBadges = async (type, edit) => {
+  const handleClickFinanceBadges = async (type) => {
     if (persistedUserInfo?.role === 'guest' || persistedUserInfo?.role === 'visitor') {
       dispatch(setGuestSignUpDialogue(true));
       return;
     } else {
       const timeRemaining = CanAdd(persistedUserInfo, type, 'finance');
       if (timeRemaining === true || checkPseudoBadge()) {
-        if (edit) {
-          setEdit(true);
-        } else {
-          setEdit(false);
-        }
         setIsFinancePopup(true);
         setSelectedFinanceBadge(type);
       } else {
@@ -110,14 +92,23 @@ export default function FinanceBadge({ checkPseudoBadge }) {
               </h1>
             </div>
             <Button
-              variant={checkAlready(item.type) ? 'verification-badge-edit' : item.ButtonColor}
+              variant={checkBadgeExists(persistedUserInfo, item.type) ? 'verification-badge-remove' : item.ButtonColor}
               onClick={() => {
-                handleClickFinanceBadges(item.type, checkAlready(item.type));
+                if (checkBadgeExists(persistedUserInfo, item.type)) {
+                  handleRemoveBadgePopup({
+                    title: item.title,
+                    image: item.image,
+                    type: item.type,
+                    badgeType: 'finance',
+                  });
+                } else {
+                  handleClickFinanceBadges(item.type, checkBadgeExists(persistedUserInfo, item.type));
+                }
               }}
               disabled={item.disabled}
             >
-              {checkAlready(item.type) ? 'Edit' : item.ButtonText}
-              {!checkAlready(item.type) && (
+              {checkBadgeExists(persistedUserInfo, item.type) ? 'Remove Badge' : item.ButtonText}
+              {!checkBadgeExists(persistedUserInfo, item.type) && (
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
                   (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
                 </span>

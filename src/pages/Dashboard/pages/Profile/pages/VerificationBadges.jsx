@@ -40,7 +40,7 @@ const VerificationBadges = () => {
         Math.floor(
           ((checkPseudoBadge() ? persistedUserInfo?.badges.length - 1 : persistedUserInfo?.badges.length) /
             badgesTotalLength) *
-          100
+            100
         )
       )
     );
@@ -189,8 +189,8 @@ const VerificationBadges = () => {
       <ContentCard icon="assets/profile/homepagebadges.svg" title="Homepage">
         <HomepageBadge checkPseudoBadge={checkPseudoBadge} />
       </ContentCard>
-      <ContentCard icon="assets/profile/homepagebadges.svg" title="Finance">
-        <FinanceBadge checkPseudoBadge={checkPseudoBadge} />
+      <ContentCard icon="assets/profile/finance.svg" title="Finance">
+        <FinanceBadge checkPseudoBadge={checkPseudoBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
       </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
         <Subscription
