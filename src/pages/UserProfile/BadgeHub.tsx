@@ -16,6 +16,7 @@ export default function BadgeHub({ badges }: any) {
   const [isBadgeEncryptedPopup, setBadgeEncryptedPopup] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState('');
   const [isPopup, setIsPopup] = useState(false);
+  const [singleBadgeData, setSingleBadgeData] = useState();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const { mutateAsync: handleBadgeHubClicksTrack } = useBadgeHubClicksTrack();
 
@@ -219,13 +220,14 @@ export default function BadgeHub({ badges }: any) {
             key={badge.type}
             onClick={() => {
               if (badge?.userBadgeData?.isUserEncrypted && isPublicProfile) {
+                setSingleBadgeData(badge.userBadgeData);
                 setBadgeEncryptedPopup(true);
               } else {
                 if (isPublicProfile) {
                   handleBadgeHubClicksTrack(badge.userBadgeData._id);
                 }
-                setSelectedBadge(badge.type);
                 setIsPopup(true);
+                setSelectedBadge(badge.type);
               }
             }}
           >
@@ -249,6 +251,7 @@ export default function BadgeHub({ badges }: any) {
           modalVisible={isBadgeEncryptedPopup}
           title={'Badge Encrypted'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/analyze-dialogbox.svg`}
+          singleBadgeData={singleBadgeData}
         />
       )}
     </div>

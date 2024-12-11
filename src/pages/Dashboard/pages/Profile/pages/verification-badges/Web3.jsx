@@ -40,9 +40,9 @@ export default function Web3({
         handleSkip={handleSkip}
         onboarding={onboarding}
       />
-      {isVerificationBadge && (
+      {/* {isVerificationBadge && (
         <h1 className="summary-text">Linking your wallet offers additional FDX transaction options.</h1>
-      )}
+      )} */}
       <div className="flex flex-col items-center gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">
         {web3.map((item, index) => (
           <div

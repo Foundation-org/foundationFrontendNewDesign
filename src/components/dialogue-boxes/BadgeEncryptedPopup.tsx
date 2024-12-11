@@ -7,10 +7,13 @@ type ClearAllAnalyticsProps = {
   modalVisible: boolean;
   title: string;
   image: string;
+  singleBadgeData: any;
 };
 
 export default function BadgeEncryptedPopup(props: ClearAllAnalyticsProps) {
-  const { handleClose, modalVisible, title, image } = props;
+  const { handleClose, modalVisible, title, image, singleBadgeData } = props;
+
+  console.log(singleBadgeData);
 
   return (
     <PopUp
@@ -26,18 +29,18 @@ export default function BadgeEncryptedPopup(props: ClearAllAnalyticsProps) {
       isBackground={false}
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="summary-text">This badge is private to view the information you have to pay x amount of FDX</h1>
+        <h1 className="summary-text">This badge is private to view the information you have to pay 10 FDX</h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'cancel'} onClick={handleClose}>
             Close
           </Button>
           <Button
-            variant={'submit-hollow'}
+            variant={'submit'}
             onClick={() => {
               showToast('warning', 'featureComingSoon');
             }}
           >
-            View{' '}
+            Request{' '}
             <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] tablet:text-[13px]">
               (+10 FDX)
             </span>

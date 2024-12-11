@@ -168,7 +168,7 @@ const VerificationBadges = () => {
           checkPrimary={checkPrimary}
         />
       </ContentCard>
-      <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
+      {/* <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
         <Web3
           handleRemoveBadgePopup={handleRemoveBadgePopup}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
@@ -176,7 +176,7 @@ const VerificationBadges = () => {
           checkPseudoBadge={checkPseudoBadge}
           getAskPassword={getAskPasswordFromRedux}
         />
-      </ContentCard>
+      </ContentCard> */}
       <ContentCard icon="assets/verification-badges/personal_icon.svg" title="Personal">
         <Personal
           badges={persistedUserInfo?.badges}
@@ -191,6 +191,13 @@ const VerificationBadges = () => {
       </ContentCard>
       <ContentCard icon="assets/profile/finance.svg" title="Finance">
         <FinanceBadge checkPseudoBadge={checkPseudoBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+        <Web3
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          checkPseudoBadge={checkPseudoBadge}
+          getAskPassword={getAskPasswordFromRedux}
+        />
       </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
         <Subscription
