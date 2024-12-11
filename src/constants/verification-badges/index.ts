@@ -1,5 +1,4 @@
 import React from 'react';
-
 const PersonalBadgesPopup = React.lazy(() => import('../../components/dialogue-boxes/PersonalBadgesPopup'));
 const EducationBadgePopup = React.lazy(() => import('../../components/dialogue-boxes/EducationBadgePopup'));
 const IdentityBadgePopup = React.lazy(() => import('../../components/dialogue-boxes/IdentityBadgePopup'));
@@ -68,6 +67,27 @@ export const personalBadgeData = {
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`,
     placeholder: 'Choose',
     component: EducationBadgePopup,
+  },
+  hobbies: {
+    title: 'Hobbies',
+    type: 'hobbies',
+    logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hobbies.svg`,
+    placeholder: 'Choose',
+    component: WorkBadgePopup,
+  },
+  volunteer: {
+    title: 'Volunteer',
+    type: 'volunteer',
+    logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/volunteer.svg`,
+    placeholder: 'Choose',
+    component: WorkBadgePopup,
+  },
+  certifications: {
+    title: 'Certifications',
+    type: 'certifications',
+    logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/certificate.svg`,
+    placeholder: 'Choose',
+    component: WorkBadgePopup,
   },
   'id-passport': {
     title: 'ID / Passport',
