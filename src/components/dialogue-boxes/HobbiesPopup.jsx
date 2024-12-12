@@ -357,7 +357,7 @@ const CertificationsPopup = ({
                           {item.organization}
                         </h5>
                         <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          {item.cause}
+                          {item.cause?.name}
                         </h6>
                         <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
                           {item.description}
@@ -418,10 +418,7 @@ const CertificationsPopup = ({
                           </div>
                         )}
                         <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          Validity:{' '}
-                          {item.endingYear !== 'Present'
-                            ? item.startingYear + ' - ' + item.endingYear
-                            : item.endingYear}
+                          {item.startingYear + ' - ' + item.endingYear}
                         </h4>
                       </div>
                     )}
@@ -496,7 +493,6 @@ const CertificationsPopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field2.label}
                 </p>
-
                 <CustomCombobox
                   items={causes}
                   placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
@@ -549,7 +545,7 @@ const CertificationsPopup = ({
                   onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
                   tabIndex={2}
                   minRows={4}
-                  className={`verification_badge_input resize-none ${edit ? (domainBadge.description ? '' : 'caret-hidden') : ''}`}
+                  className={`w-full resize-none rounded-[8.62px] border border-white-500 bg-[#FBFBFB] p-2 text-[9.28px] font-normal leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:border-[3px] tablet:px-[16px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${edit ? (domainBadge.description ? '' : 'caret-hidden') : ''}`}
                 />
                 {isError && (
                   <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
