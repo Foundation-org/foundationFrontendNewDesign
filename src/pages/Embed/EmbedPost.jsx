@@ -24,7 +24,7 @@ const EmbedPost = () => {
 
   const resize = () => {
     setInterval(() => {
-      const appHeight = document.querySelector('.card-iframe').clientHeight;
+      const appHeight = document.querySelector('.card-iframe')?.clientHeight;
 
       if (appHeight) {
         window.parent.postMessage({ height: appHeight + 4.25 }, '*');
