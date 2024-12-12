@@ -34,7 +34,7 @@ const LocationService = () => {
   };
 
   const getLocation = () => {
-    const hasGeolocationBadge = persistedUserInfo.badges.some(
+    const hasGeolocationBadge = persistedUserInfo?.badges.some(
       (badge: any) => badge.personal && badge.personal.geolocation
     );
 

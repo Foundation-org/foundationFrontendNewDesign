@@ -85,8 +85,6 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
   const location = useLocation();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
 
   const { mutateAsync: startPost } = useMutation({
     mutationFn: createStartQuest,
@@ -223,8 +221,6 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   const dispatch = useDispatch();
   let { id } = useParams();
   const postId = id?.split('=')[1];
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const domain = persistedUserInfo.badges.find((badge) => badge.domain)?.domain.name;
 
   const { mutateAsync: changePost } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
