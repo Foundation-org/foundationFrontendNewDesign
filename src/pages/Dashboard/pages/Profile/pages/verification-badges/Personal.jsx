@@ -89,13 +89,13 @@ export default function Personal({
         ))}
       </div>
       {/* Edit Remove Popup */}
+
       {isPersonalPopup &&
         selectedPersonalBadge &&
         personalBadgeData[selectedPersonalBadge] &&
         (() => {
           const badgeProps = personalBadgeData[selectedPersonalBadge];
           const BadgeComponent = badgeProps?.component;
-
           return (
             <Suspense fallback={<div>Loading...</div>}>
               <BadgeComponent

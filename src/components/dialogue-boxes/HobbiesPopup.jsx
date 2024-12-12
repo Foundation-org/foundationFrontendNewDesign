@@ -1,183 +1,170 @@
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useQueryClient } from '@tanstack/react-query';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
-import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
+import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
 import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import CustomCombobox from '../ui/Combobox';
+import { TextareaAutosize } from '@mui/material';
 
-const School = {
-  label: 'School',
-  type: 'school',
-  placeholder: 'School here',
+const role = {
+  label: 'Role',
+  type: 'role',
+  placeholder: 'Role here',
 };
 
-const degreePrograms = {
-  label: 'Degree Program',
-  type: 'degreeProgram',
-  placeholder: 'Degree here',
+const organization = {
+  label: 'Organization',
+  type: 'organization',
+  placeholder: 'Organization here',
+};
+const cause = {
+  label: 'Cause',
+  type: 'cause',
+  placeholder: 'Cause here',
+};
+const description = {
+  label: 'Description',
+  type: 'description',
+  placeholder: 'Description here',
 };
 
-const fieldOfStudy = {
-  label: 'Field of Study',
-  type: 'fieldOfStudy',
-  placeholder: 'Field of Study here',
-};
-
-const StartingYear = {
+const startDate = {
   label: 'Start Date',
-  placeholder: 'Year here',
+  placeholder: 'Issue date here',
   type: 'startingYear',
 };
 
-const graduationYear = {
-  label: 'Graduation Date',
-  placeholder: 'Year here / Present',
-  type: 'graduationYear',
+const endDate = {
+  label: 'End Date',
+  placeholder: 'Date here / Present',
+  type: 'endingYear',
 };
 
-const EducationBadgePopup = ({
+const Causes = [
+  { id: 1, name: 'Animal Welfare' },
+  { id: 2, name: 'Arts and Culture' },
+  { id: 3, name: 'Children' },
+  { id: 4, name: 'Civil Rights and Social Action' },
+  { id: 5, name: 'Disaster and Humanitarian Relief' },
+  { id: 6, name: 'Economic Empowerment' },
+  { id: 7, name: 'Education' },
+  { id: 8, name: 'Environment' },
+  { id: 9, name: 'Health' },
+  { id: 10, name: 'Human Rights' },
+  { id: 11, name: 'Politics' },
+  { id: 12, name: 'Poverty Alleviation' },
+  { id: 13, name: 'Science and Technology' },
+  { id: 14, name: 'Social Services' },
+  { id: 15, name: 'Veteran Support' },
+];
+
+const CertificationsPopup = ({
   isPopup,
   setIsPopup,
   type,
   title,
   logo,
-  fetchUser,
   setIsPersonalPopup,
   handleSkip,
   onboarding,
+  progress,
   page,
   selectedBadge,
 }) => {
   const queryClient = useQueryClient();
-  const [universities, setUniversities] = useState([]);
-  const [field1Data, setField1Data] = useState([]);
+  const [field1Data, setField1Data] = useState();
   const [field2Data, setField2Data] = useState([]);
   const [field3Data, setField3Data] = useState();
   const [field4Data, setField4Data] = useState();
-  const [field5Data, setField5Data] = useState([]);
-  const [prevInfo, setPrevInfo] = useState({});
-  const [isPresent, setIsPresent] = useState(false);
-  const [existingData, setExistingData] = useState(selectedBadge?.personal?.education || []);
-  const [query, setQuery] = useState('');
-  const [query2, setQuery2] = useState('');
-  const [query3, setQuery3] = useState('');
-  const [deleteItem, setDeleteItem] = useState('');
-  const [loading, setLoading] = useState(false);
   const [delLoading, setDelLoading] = useState(false);
+  const [field5Data, setField5Data] = useState();
+  const [field6Data, setField6Data] = useState();
+  const [isPresent, setIsPresent] = useState(false);
+  const [prevInfo, setPrevInfo] = useState({});
+  const [deleteItem, setDeleteItem] = useState('');
   const [isError, setIsError] = useState(false);
   const [hollow, setHollow] = useState(false);
-  const [isError2, setIsError2] = useState(false);
-  const [eduData, setEduData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [fetchingEdit, setFetchingEdit] = useState(false);
   const [addAnotherForm, setAddAnotherForm] = useState(false);
+  const [existingData, setExistingData] = useState(selectedBadge?.personal?.hobbies || []);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-  const searchDegreeAndFields = async (type, query) => {
-    try {
-      const jb = await api.post(`search/searchDegreesAndFields/?name=${query}&type=${type}`);
-
-      const queryExists = jb.data.some((item) => item.name.toLowerCase() === query.toLowerCase());
-      const newArr = queryExists
-        ? [...jb.data]
-        : [
-            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-            ...jb.data.map((jb) => ({
-              ...jb,
-              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-            })),
-          ];
-
-      setEduData(newArr);
-    } catch (err) {
-      setEduData([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }]);
-    }
-  };
-
-  useEffect(() => {
-    setHollow(true);
-    setIsError(false);
-    searchDegreeAndFields(degreePrograms.type, query2);
-  }, [query2]);
-
-  useEffect(() => {
-    setHollow(true);
-    setIsError2(false);
-    searchDegreeAndFields(fieldOfStudy.type, query3);
-  }, [query3]);
-
-  const searchUniversities = async () => {
-    const universities = await api.post(`search/searchUniversities/?name=${query}`);
-    setUniversities(universities.data);
-  };
+  const [query, setQuery] = useState('');
+  const [causes, setCauses] = useState([]);
+  const handleClose = () => setIsPopup(false);
 
   const handlePresentToggle = () => {
     setIsPresent(!isPresent);
     if (!isPresent) {
-      setField4Data('Present');
+      setField6Data('Present');
     } else {
-      setField4Data('');
+      setField6Data('');
+    }
+  };
+
+  const handleTab = (index, key) => {
+    if (index === 4) {
+      document.getElementById(`input-${index}`).blur();
+    } else {
+      if (key === 'Enter') {
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        if (index > 3) {
+          document.getElementById(`input-${index + 1}`).focus();
+        } else {
+          document.getElementById(`input-${index}`).focus();
+        }
+      }
+    }
+  };
+
+  const checkHollow = () => {
+    if (!field1Data || !field2Data || !field3Data || !field4Data || !field5Data || !field6Data) {
+      return true;
+    } else {
+      return false;
     }
   };
 
   useEffect(() => {
-    searchUniversities();
-  }, [query]);
-
-  const handleClose = () => setIsPopup(false);
-
-  const handlefield3Change = (event) => {
-    const value = event.target.value;
-    setField3Data(value);
-  };
-
-  const handlefield4Change = (event) => {
-    const value = event.target.value;
-    setField4Data(value);
-  };
+    checkHollow();
+  }, [field1Data, field2Data, field3Data, field4Data, field5Data, field6Data]);
 
   const handleAddPersonalBadge = async (data) => {
     try {
       if (
-        field1Data.name === undefined ||
-        field2Data.name === undefined ||
-        field2Data.name === '' ||
+        field1Data === undefined ||
+        field2Data === undefined ||
         field3Data === undefined ||
         field4Data === undefined ||
-        field4Data === '' ||
-        field5Data.name === undefined ||
-        field5Data.name === ''
+        field5Data === undefined ||
+        field6Data === undefined ||
+        field6Data === ''
       ) {
         showToast('error', 'blankField');
         setLoading(false);
         return;
       }
 
-      if (field4Data < field3Data) {
-        showToast('error', 'graduationDateEarlierStart');
+      if (field6Data < field5Data) {
+        showToast('warning', 'DateEarlierStart');
         setLoading(false);
+
         return;
       }
-      if (field4Data === field3Data) {
-        showToast('error', 'graduationDateSameStart');
+      if (field6Data === field5Data) {
+        showToast('warning', 'DateSameStart');
         setLoading(false);
         return;
-      }
-
-      if (existingData.length > 0) {
-        if (existingData.some((item) => item.id === field1Data.id)) {
-          showToast('error', 'schoolAlreadyExist');
-
-          setLoading(false);
-          return;
-        }
       }
       const payload = {
         data,
@@ -189,43 +176,22 @@ const EducationBadgePopup = ({
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        if (field2Data.button) {
-          const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
-            name: field2Data.name,
-            uuid: localStorage.getItem('uuid'),
-            type: degreePrograms.type,
-          });
-          if (dataSaved.status === 200) {
-            console.log(dataSaved);
-          }
-        }
-        if (field5Data.button) {
-          const dataSaved2 = await api.post(`/addBadge/degreesAndFields/add`, {
-            name: field5Data.name,
-            uuid: localStorage.getItem('uuid'),
-            type: fieldOfStudy.type,
-          });
-          if (dataSaved2.status === 200) {
-            console.log(dataSaved2);
-          }
-        }
         if (existingData.length > 0) {
           showToast('success', 'infoUpdated');
         } else {
           showToast('success', 'badgeAdded');
         }
+        setExistingData(addBadge.data.data);
         if (onboarding) {
           handleSkip();
           return;
         }
-        setExistingData(addBadge.data.data);
         queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         setLoading(false);
-        setDelLoading(false);
+        setAddAnotherForm(false);
       }
     } catch (error) {
-      console.log(error);
-    } finally {
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       setAddAnotherForm(false);
     }
   };
@@ -239,10 +205,11 @@ const EducationBadgePopup = ({
     if (localStorage.getItem('legacyHash')) {
       payload.infoc = localStorage.getItem('legacyHash');
     }
+
     const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
       queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
-      setDelLoading(false);
+      console.log(companies.data);
       setExistingData(companies.data.data);
     }
   };
@@ -250,39 +217,28 @@ const EducationBadgePopup = ({
   const handleUpdateBadge = async (newData) => {
     try {
       if (
-        field1Data.name === undefined ||
-        field2Data.name === undefined ||
-        field2Data.name === '' ||
-        field3Data === undefined ||
-        field4Data === undefined ||
-        field4Data === '' ||
-        field5Data.name === undefined ||
-        field5Data.name === ''
-      ) {
-        showToast('warning', 'blankField');
-        setLoading(false);
-        return;
-      }
-      if (field4Data < field3Data) {
-        showToast('warning', 'graduationDateSameStart');
-        setLoading(false);
-        return;
-      }
-      if (field4Data === field3Data) {
-        showToast('warning', 'graduationDateSameStart');
-        setLoading(false);
-        return;
-      }
-
-      if (
-        prevInfo.school === field1Data.name &&
-        prevInfo.degreeProgram === field2Data.name &&
-        prevInfo.fieldOfStudy === field5Data.name &&
-        prevInfo.startingYear === field3Data &&
-        prevInfo.graduationYear === field4Data
+        prevInfo.role === field1Data &&
+        prevInfo.organization === field2Data &&
+        prevInfo.cause === field3Data &&
+        prevInfo.description === field4Data &&
+        prevInfo.startingYear === field5Data &&
+        prevInfo.endingYear === field6Data
       ) {
         showToast('warning', 'infoAlreadySaved');
         setLoading(false);
+
+        return;
+      }
+      if (field6Data < field5Data) {
+        showToast('warning', 'DateEarlierStart');
+        setLoading(false);
+
+        return;
+      }
+      if (field6Data === field5Data) {
+        showToast('warning', 'DateSameStart');
+        setLoading(false);
+
         return;
       }
       const payload = {
@@ -299,37 +255,14 @@ const EducationBadgePopup = ({
       if (updateBadge.status === 200) {
         queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         showToast('success', 'infoUpdated');
-        if (field2Data.button) {
-          const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
-            name: field2Data.name,
-            uuid: localStorage.getItem('uuid'),
-            type: degreePrograms.type,
-          });
-          if (dataSaved.status === 200) {
-            console.log(dataSaved);
-          }
-        }
-        if (field5Data.button) {
-          const dataSaved2 = await api.post(`/addBadge/degreesAndFields/add`, {
-            name: field5Data.name,
-            uuid: localStorage.getItem('uuid'),
-            type: fieldOfStudy.type,
-          });
-          if (dataSaved2.status === 200) {
-            console.log(dataSaved2);
-          }
-        }
-        setExistingData(updateBadge.data.data);
-
         setLoading(false);
         setAddAnotherForm(false);
+        setExistingData(updateBadge.data.data);
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       setAddAnotherForm(false);
     }
-
-    setFetchingEdit(false);
   };
 
   const handleEdit = async (id) => {
@@ -344,105 +277,48 @@ const EducationBadgePopup = ({
     const info = await api.post(`/addBadge/personal/getWorkOrEducation`, payload);
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
-      setFetchingEdit(false);
+      setHollow(false);
+      console.log(info);
       const data = info?.data.obj;
 
-      setField1Data({ id: data.id, name: data.school, country: data.country });
-      setField2Data({ id: data.id, name: data.degreeProgram });
-      setField5Data({ id: data.id, name: data.fieldOfStudy });
-      setField3Data(data.startingYear);
-      if (data.graduationYear === 'Present') {
+      setField1Data(data.role);
+      setField2Data(data.organization);
+      setField3Data(data.cause);
+      setField4Data(data.description);
+      setField5Data(data.startingYear);
+      if (data.endingYear === 'Present') {
         setIsPresent(true);
-        setField4Data(data.graduationYear);
+        setField6Data(data.endingYear);
       } else {
-        setField4Data(data.graduationYear);
+        setField6Data(data.endingYear);
       }
-      setHollow(false);
+      setFetchingEdit(false);
     }
   };
-
-  const handleTab = (index, key) => {
-    if (index === 3) {
-      document.getElementById(`input-${index}`).blur();
-    } else {
-      if (key === 'Enter') {
-        document.getElementById(`input-${index + 1}`).focus();
-      } else {
-        if (index > 1) {
-          document.getElementById(`input-${index + 1}`).focus();
-        } else {
-          document.getElementById(`input-${index}`).focus();
-        }
-      }
-    }
-  };
-
-  const verifyDegree = async (toVerify) => {
-    setHollow(true);
-    const response = await api.get(`/ai-validation/7?userMessage=${toVerify}`);
-    if (
-      response.data.message === 'Rejected' ||
-      response.data.message === 'Rejected.' ||
-      response.data.status === 'VIOLATION'
-    ) {
-      setIsError(true);
-      setHollow(true);
-    } else {
-      if (response.data.message !== 'Accepted') {
-        setField2Data({ ...field2Data, name: response.data.message });
-      }
-      setIsError(false);
-      setHollow(false);
-    }
-  };
-
-  const verifyFieldOfStudy = async (toVerify) => {
-    setHollow(true);
-    const response = await api.get(`/ai-validation/8?userMessage=${toVerify}`);
-    if (
-      response.data.message === 'Rejected' ||
-      response.data.message === 'Rejected.' ||
-      response.data.status === 'VIOLATION'
-    ) {
-      setIsError2(true);
-      setHollow(true);
-    } else {
-      if (response.data.message !== 'Accepted') {
-        setField5Data({ ...field5Data, name: response.data.message });
-      }
-      setHollow(false);
-      setIsError2(false);
-    }
-  };
-
-  const checkHollow = () => {
-    if (
-      field1Data.name === undefined ||
-      field2Data.name === undefined ||
-      field2Data.name === '' ||
-      !field3Data ||
-      !field4Data ||
-      field5Data.name === undefined ||
-      field5Data.name === ''
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    checkHollow();
-  }, [field1Data, field2Data, field3Data, field4Data, field5Data]);
 
   const handleRemoveBadgePopup = (item) => {
     setDeleteModalState(item);
     setModalVisible(true);
   };
+  useEffect(() => {
+    const jb = Causes;
+    const queryExists = jb.some((item) => item.name.toLowerCase() === query.toLowerCase());
+    const newArr = queryExists
+      ? [...jb]
+      : [
+          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+          ...jb.map((jb) => ({
+            ...jb,
+            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          })),
+        ];
+
+    setCauses(newArr);
+  }, [query]);
 
   const handleBadgesClose = () => setModalVisible(false);
 
-  const renderWorkField = (field1, field2, field3, field4, field5) => {
+  const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     const [edit, setEdit] = useState(false);
 
     return (
@@ -456,34 +332,35 @@ const EducationBadgePopup = ({
               image={deleteModalState?.image}
               type={deleteModalState?.type}
               badgeType={deleteModalState?.badgeType}
-              fetchUser={fetchUser}
               setIsPersonalPopup={setIsPersonalPopup}
               setIsLoading={setRemoveLoading}
               loading={RemoveLoading}
             />
           )}
-          {/* To View Already Added Info */}
           {!addAnotherForm ? (
             <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
               <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
-                Your educational background paves the way for reward opportunities aligned with your expertise.
+                Your work experience opens opportunities tailored to your expertise.
               </h1>
               {existingData.length > 0 &&
                 existingData.map((item, index) => (
                   <div
                     key={index}
-                    className="flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
+                    className="mb-4 flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
                   >
                     <div className="py-3 tablet:py-[25px]">
                       <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
-                        {item.school}
+                        {item.role}
                       </h4>
-                      <div className="mt-[2px] max-w-[270px] tablet:mt-2">
+                      <div className="max-w-[270px]">
                         <h5 className="text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
-                          {item.degreeProgram + ' ' + 'in' + ' ' + item.fieldOfStudy}
+                          {item.organization}
                         </h5>
                         <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          {item.country}
+                          {item.cause}
+                        </h6>
+                        <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
+                          {item.description}
                         </h6>
                       </div>
                     </div>
@@ -541,7 +418,10 @@ const EducationBadgePopup = ({
                           </div>
                         )}
                         <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          {item.startingYear + '-' + item.graduationYear}
+                          Validity:{' '}
+                          {item.endingYear !== 'Present'
+                            ? item.startingYear + ' - ' + item.endingYear
+                            : item.endingYear}
                         </h4>
                       </div>
                     )}
@@ -564,7 +444,7 @@ const EducationBadgePopup = ({
                       }}
                     >
                       <span className="text-[16px] tablet:text-[32px]">+</span>
-                      {existingData?.length >= 1 ? 'Add New Education' : 'Add Education'}
+                      {existingData.length > 0 ? 'Add New Hobbie' : 'Add Hobbie'}
                     </Button>
                   </div>
                   {existingData.length > 0 ? (
@@ -580,11 +460,15 @@ const EducationBadgePopup = ({
                           });
                         }}
                       >
-                        {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                        {RemoveLoading === true ? (
+                          <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                        ) : (
+                          'Remove Badge'
+                        )}
                       </Button>
                     </div>
                   ) : (
-                    <div></div>
+                    <></>
                   )}
                 </>
               )}
@@ -595,71 +479,83 @@ const EducationBadgePopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field1.label}
                 </p>
-                <CustomCombobox
-                  items={universities}
-                  placeholder={edit ? (field1Data?.name ? field1.placeholder : 'Loading...') : field1.placeholder}
-                  selected={field1Data}
-                  setSelected={setField1Data}
-                  query={query}
-                  setQuery={setQuery}
-                  id={1}
-                  handleTab={handleTab}
-                  disabled={edit ? (field1Data.name ? false : true) : false}
+                <input
+                  type="text"
+                  value={edit ? (!fetchingEdit ? field1Data : 'Loading...') : field1Data}
+                  onChange={(e) => {
+                    setField1Data(e.target.value);
+                  }}
+                  disabled={fetchingEdit ? true : false}
+                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
+                  id="input-1"
+                  placeholder={field1.placeholder}
+                  className="verification_badge_input"
                 />
               </div>
-              <div className="mb-4 mt-[15px] flex gap-[6.5px] tablet:mb-5 tablet:gap-[10px] tablet:pt-[25px]">
-                <div className="w-full">
-                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                    {field2.label}
-                  </p>
-                  <CustomCombobox
-                    items={eduData}
-                    placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
-                    selected={field2Data}
-                    setSelected={setField2Data}
-                    query={query2}
-                    verify={verifyDegree}
-                    setQuery={setQuery2}
-                    setHollow={setHollow}
-                    setError={setIsError}
-                    id={2}
-                    handleTab={handleTab}
-                    verification={true}
-                    wordsCheck={true}
-                    disabled={edit ? (field2Data.name ? false : true) : false}
-                  />
-                  {isError && (
-                    <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
-                  )}
-                </div>
-                <p className="flex items-center pt-4 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:pt-10 tablet:text-[20px]">
-                  in
+              <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  {field2.label}
                 </p>
-                <div className="w-full">
-                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                    {field5.label}
-                  </p>
-                  <CustomCombobox
-                    items={eduData}
-                    placeholder={edit ? (field5Data?.name ? field5.placeholder : 'Loading...') : field5.placeholder}
-                    selected={field5Data}
-                    setSelected={setField5Data}
-                    query={query3}
-                    verify={verifyFieldOfStudy}
-                    setQuery={setQuery3}
-                    setHollow={setHollow}
-                    setError={setIsError2}
-                    id={3}
-                    handleTab={handleTab}
-                    verification={true}
-                    disabled={edit ? (field5Data.name ? false : true) : false}
-                  />
 
-                  {isError2 && (
-                    <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field5.label}!`}</p>
-                  )}
-                </div>
+                <CustomCombobox
+                  items={causes}
+                  placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
+                  selected={field2Data}
+                  setSelected={setField2Data}
+                  query={query}
+                  setQuery={setQuery}
+                  id={2}
+                  handleTab={handleTab}
+                  setHollow={setHollow}
+                  disabled={edit ? (field2Data?.name ? false : true) : false}
+                />
+                {isError && (
+                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
+                )}
               </div>
+              <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  {field3.label}
+                </p>
+                <input
+                  type="text"
+                  value={edit ? (!fetchingEdit ? field3Data : 'Loading...') : field3Data}
+                  onChange={(e) => {
+                    setField3Data(e.target.value);
+                  }}
+                  disabled={fetchingEdit ? true : false}
+                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(3)) || (e.key === 'Enter' && handleTab(3, 'Enter'))}
+                  id="input-3"
+                  placeholder={edit ? (field3Data ? field2.placeholder : 'Loading...') : field2.placeholder}
+                  className="verification_badge_input"
+                />
+                {isError && (
+                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
+                )}
+              </div>
+              <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  {field4.label}
+                </p>
+                <TextareaAutosize
+                  id="input-4"
+                  aria-label="multiple choice question"
+                  placeholder={edit ? (field4Data ? field4.placeholder : 'Loading...') : field4.placeholder}
+                  value={edit ? (!fetchingEdit ? field4Data : 'Loading...') : field4Data}
+                  onChange={(e) => {
+                    setField4Data(e.target.value);
+                  }}
+                  disabled={fetchingEdit ? true : false}
+                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
+                  tabIndex={2}
+                  minRows={4}
+                  className={`verification_badge_input resize-none ${edit ? (domainBadge.description ? '' : 'caret-hidden') : ''}`}
+                />
+                {isError && (
+                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
+                )}
+              </div>
+
               <label
                 id="custom-square-checkbox"
                 className="flex items-center gap-2 text-[10px] font-medium text-gray-1 tablet:gap-[15px] tablet:text-[20px]"
@@ -670,30 +566,27 @@ const EducationBadgePopup = ({
                   onChange={handlePresentToggle}
                   className="checkbox size-[14px] tablet:size-[25px]"
                 />
-                Not Completed
+                Present
               </label>
 
-              <div className="mb-4 mt-[15px] flex gap-[19.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[38px]">
+              <div className="mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
                 <div className="w-full">
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                    {field3.label}
+                    {field5.label}
                   </p>
                   {fetchingEdit ? (
                     <input
                       type="text"
                       value="Loading..."
                       disabled={true}
-                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   ) : (
                     <input
-                      id="input-4"
-                      onKeyDown={(e) =>
-                        (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))
-                      }
                       type="date"
-                      value={field3Data}
-                      onChange={handlefield3Change}
+                      value={field5Data}
+                      onChange={(e) => setField5Data(e.target.value)}
+                      placeholder={field5.placeholder}
                       className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                       style={{ textTransform: 'uppercase' }}
                     />
@@ -704,25 +597,22 @@ const EducationBadgePopup = ({
                 ) : (
                   <div className="w-full">
                     <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                      {field4.label}
+                      {field6.label}
                     </p>
                     {fetchingEdit ? (
                       <input
                         type="text"
                         value="Loading..."
                         disabled={true}
-                        className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                        className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                       />
                     ) : (
                       <input
-                        id="input-5"
-                        onKeyDown={(e) =>
-                          (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))
-                        }
                         type="date"
-                        value={field4Data}
-                        onChange={handlefield4Change}
-                        placeholder={field4.placeholder}
+                        value={field6Data}
+                        onChange={(e) => setField6Data(e.target.value)}
+                        disabled={isPresent}
+                        placeholder={field6.placeholder}
                         className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                         style={{ textTransform: 'uppercase' }}
                       />
@@ -731,26 +621,24 @@ const EducationBadgePopup = ({
                 )}
               </div>
 
-              <div className="flex justify-between">
+              <div className="mt-[10px] flex justify-between">
                 <Button
                   variant="addOption"
                   onClick={() => {
-                    setField1Data([]);
-                    setField2Data([]);
+                    setField1Data();
+                    setField2Data();
                     setField3Data();
                     setField4Data();
-                    setField5Data([]);
+                    setField5Data();
+                    setField6Data();
                     setIsPresent(false);
+
                     setAddAnotherForm(false);
-                    setDelLoading(false);
-                    setLoading(false);
                   }}
-                  id="cancalTheForm"
                 >
                   Cancel
                 </Button>
-
-                {hollow || isError || isError2 || checkHollow() ? (
+                {hollow || checkHollow() ? (
                   <Button variant="submit-hollow" id="submitButton" disabled={true}>
                     {edit || existingData?.length >= 1 ? 'Update Badge' : 'Add Badge'}
                   </Button>
@@ -760,19 +648,21 @@ const EducationBadgePopup = ({
                     variant="submit"
                     onClick={() => {
                       const allFieldObject = {
-                        ['id']: field1Data.id,
-                        [field1.type]: field1Data.name,
-                        [field2.type]: field2Data.name,
-                        [field5.type]: field5Data.name,
-                        ['country']: field1Data.country,
+                        ['id']: uuidv4(),
+                        [field1.type]: field1Data,
+                        [field2.type]: field2Data,
                         [field3.type]: field3Data,
                         [field4.type]: field4Data,
+                        [field5.type]: field5Data,
+                        [field6.type]: field6Data,
                       };
                       if (edit) {
                         setLoading(true);
+
                         handleUpdateBadge(allFieldObject);
                       } else {
                         setLoading(true);
+
                         handleAddPersonalBadge(allFieldObject);
                       }
                     }}
@@ -797,9 +687,9 @@ const EducationBadgePopup = ({
 
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-      {title === 'Education' && renderWorkField(School, degreePrograms, StartingYear, graduationYear, fieldOfStudy)}
+      {title === 'Hobbies' && renderWorkField(role, cause, organization, description, startDate, endDate)}
     </PopUp>
   );
 };
 
-export default EducationBadgePopup;
+export default CertificationsPopup;

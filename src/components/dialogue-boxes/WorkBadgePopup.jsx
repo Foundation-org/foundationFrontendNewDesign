@@ -217,7 +217,7 @@ const WorkBadgePopup = ({
             console.log(jobsSaved);
           }
         }
-        if (existingData) {
+        if (existingData.length > 0) {
           showToast('success', 'infoUpdated');
         } else {
           showToast('success', 'badgeAdded');
@@ -403,7 +403,7 @@ const WorkBadgePopup = ({
               <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
                 Your work experience opens opportunities tailored to your expertise.
               </h1>
-              {existingData &&
+              {existingData.length > 0 &&
                 existingData.map((item, index) => (
                   <div
                     key={index}
@@ -499,10 +499,10 @@ const WorkBadgePopup = ({
                       }}
                     >
                       <span className="text-[16px] tablet:text-[32px]">+</span>
-                      {existingData ? 'Add New Work' : 'Add Work'}
+                      {existingData.length > 0 ? 'Add New Work' : 'Add Work'}
                     </Button>
                   </div>
-                  {existingData ? (
+                  {existingData.length > 0 ? (
                     <div className="flex items-center justify-end">
                       <Button
                         variant="badge-remove"

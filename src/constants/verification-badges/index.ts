@@ -1,4 +1,7 @@
 import React from 'react';
+const HobbiesPopup = React.lazy(() => import('../../components/dialogue-boxes/HobbiesPopup'));
+const VolunteerPopup= React.lazy(() => import('../../components/dialogue-boxes/VolunteerPopup'));
+const CertificationsPopup= React.lazy(() => import('../../components/dialogue-boxes/CertificationsPopup'));
 const PersonalBadgesPopup = React.lazy(() => import('../../components/dialogue-boxes/PersonalBadgesPopup'));
 const EducationBadgePopup = React.lazy(() => import('../../components/dialogue-boxes/EducationBadgePopup'));
 const IdentityBadgePopup = React.lazy(() => import('../../components/dialogue-boxes/IdentityBadgePopup'));
@@ -73,21 +76,21 @@ export const personalBadgeData = {
     type: 'hobbies',
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hobbies.svg`,
     placeholder: 'Choose',
-    component: WorkBadgePopup,
+    component: HobbiesPopup,
   },
   volunteer: {
     title: 'Volunteer',
     type: 'volunteer',
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/volunteer.svg`,
     placeholder: 'Choose',
-    component: WorkBadgePopup,
+    component: VolunteerPopup,
   },
   certifications: {
     title: 'Certifications',
     type: 'certifications',
     logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/certificate.svg`,
     placeholder: 'Choose',
-    component: WorkBadgePopup,
+    component: CertificationsPopup,
   },
   'id-passport': {
     title: 'ID / Passport',
