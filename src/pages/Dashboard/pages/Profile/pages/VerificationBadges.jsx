@@ -87,7 +87,7 @@ const VerificationBadges = () => {
 
   return (
     <div className="pb-8">
-      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
+      {isPopup && <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />}
 
       {/* DELETE MODAL POPUP */}
       {modalVisible && (

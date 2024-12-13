@@ -19,8 +19,8 @@ const Result = (props) => {
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px` }}>
       {props.questStartData?.whichTypeQuestion === 'yes/no' ||
-        props.questStartData?.whichTypeQuestion === 'like/dislike' ||
-        props.questStartData?.whichTypeQuestion === 'agree/disagree' ? (
+      props.questStartData?.whichTypeQuestion === 'like/dislike' ||
+      props.questStartData?.whichTypeQuestion === 'agree/disagree' ? (
         <div
           className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]"
           style={{ minHeight: `${props.cardSize}px` }}
@@ -39,21 +39,21 @@ const Result = (props) => {
               percentage={
                 props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
                   ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][
-                  item.question
-                  ]
+                      item.question
+                    ]
                   : null
               }
               check={findSelectionContentionCheck(
                 props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                   ? [
-                    {
-                      question:
-                        props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                          .selected,
-                    },
-                  ]
+                      {
+                        question:
+                          props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
+                            .selected,
+                      },
+                    ]
                   : [],
-                item.question,
+                item.question
               )}
               handleToggleCheck={props.handleToggleCheck}
               btnText={'Results'}
@@ -84,7 +84,7 @@ const Result = (props) => {
                   ? props.sortedAnswers.length
                   : isFullScreen || location.pathname.startsWith('/p')
                     ? props.sortedAnswers.length
-                    : 10,
+                    : 10
               )
               .map((item, index) => (
                 <SingleAnswerMultipleChoice
@@ -108,16 +108,16 @@ const Result = (props) => {
                   check={findSelectionContentionCheck(
                     props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                       ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                        .selected
+                          .selected
                       : [],
-                    item.question,
+                    item.question
                   )}
                   contend={findSelectionContentionCheck(
                     props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                       ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                        .contended
+                          .contended
                       : [],
-                    item.question,
+                    item.question
                   )}
                   btnText={'Results'}
                   answersSelection={props.answersSelection}
@@ -152,7 +152,7 @@ const Result = (props) => {
                   ? props.sortedAnswers.length
                   : isFullScreen || location.pathname.startsWith('/p')
                     ? props.sortedAnswers.length
-                    : 10,
+                    : 10
               )
               .map((item, index) => (
                 <div key={index + 1}>
@@ -177,9 +177,9 @@ const Result = (props) => {
                     contend={findSelectionContentionCheck(
                       props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                         ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                          .contended
+                            .contended
                         : [],
-                      item.question,
+                      item.question
                     )}
                     setAddOptionLimit={props.setAddOptionLimit}
                     btnText={'Results'}

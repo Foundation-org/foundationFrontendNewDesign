@@ -19,7 +19,7 @@ import { incIndex, setPopup } from '../../../features/OnBoardingPopup/onBoarding
 export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => {
   const fetchUser = useSelector((state) => state.auth.user);
   const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
-  const onBoardingIndex = useSelector((state) => state.onBoardingPopup.inedx);
+  const onBoardingIndex = useSelector((state) => state.onBoardingPopup.index);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const checkPersonalBadge = (itemType) =>

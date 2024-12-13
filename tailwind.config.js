@@ -83,6 +83,9 @@ export default {
         6.1: '1.7rem',
         5.3: '1.35rem',
       },
+      boxShadow: {
+        options: '0px 0px 0px 4px rgba(56, 156, 227, 0.6)',
+      },
     },
   },
   plugins: [

@@ -52,21 +52,19 @@ const BadgeList = ({
               </h1>
             </div>
             <h5 className="summary-text tablet:min-w-[122px]">
-              {badgeService.checkBadgeExists(persistedUserInfo, badge.type) ? (
-                <Button variant="cancel" disabled={true} className="">
-                  Added
-                </Button>
-              ) : (
-                <Button
-                  variant="submit"
-                  onClick={() => {
-                    setAddBadgePopup(true);
-                    setSelectedBadge(badge.type);
-                  }}
-                >
-                  Add Badge
-                </Button>
-              )}
+              <Button
+                variant={badgeService.checkBadgeExists(persistedUserInfo, badge.type) ? 'cancel' : 'submit'}
+                disabled={badgeService.checkBadgeExists(persistedUserInfo, badge.type) ? true : false}
+                onClick={() => {
+                  if (badgeService.checkBadgeExists(persistedUserInfo, badge.type)) {
+                    return;
+                  }
+                  setAddBadgePopup(true);
+                  setSelectedBadge(badge.type);
+                }}
+              >
+                Add Badge
+              </Button>
             </h5>
             <div className="flex min-w-10 items-center gap-2 tablet:min-w-[50px] laptop:min-w-[64px]">
               <img
