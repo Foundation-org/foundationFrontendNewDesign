@@ -1,6 +1,7 @@
 import api from './Axios';
 import { useMemo } from 'react';
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 const useFetchSharedLinks = (searchData, persistedUserInfo) => {
   const fetchPosts = async ({ pageParam = 1 }) => {
@@ -62,6 +63,9 @@ export const useRevealMyAnswers = () => {
     },
     onError: (error) => {
       console.error(error);
+      if (error?.response?.data?.message === 'Please Participate first') {
+        toast.error('Please Participate first');
+      }
     },
   });
 };

@@ -274,6 +274,9 @@ export const useRevealMyCollectionAnswers = () => {
     },
     onError: (error) => {
       console.error(error);
+      if (error?.response?.data?.message === 'Please Participate first') {
+        toast.error('Please Participate first');
+      }
     },
   });
 };
