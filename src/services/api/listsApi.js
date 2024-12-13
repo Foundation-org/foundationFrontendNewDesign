@@ -255,3 +255,25 @@ export const useCopyCollection = (handleClose) => {
     },
   });
 };
+
+// REVEAL My COLLECTIONS RESULTS
+export const revealMyCollectionAnswers = async ({ userUuid, categoryId, revealMyAnswers }) => {
+  const resp = await api.patch(`/userlists/revealMyAnswers`, {
+    userUuid,
+    categoryId,
+    revealMyAnswers,
+  });
+  return resp.data;
+};
+
+export const useRevealMyCollectionAnswers = () => {
+  return useMutation({
+    mutationFn: revealMyCollectionAnswers,
+    onSuccess: (response) => {
+      console.log(response);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};

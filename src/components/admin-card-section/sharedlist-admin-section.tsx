@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUpdateSpotLight } from '../../services/api/profile';
 import showToast from '../ui/Toast';
+import { useRevealMyCollectionAnswers } from '../../services/api/listsApi';
+import { Switch } from '@headlessui/react';
+import { useState } from 'react';
 
 interface IAdminSectionProps {
   categoryItem: any;
@@ -33,8 +36,10 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
   const isProfilePage = location.pathname === '/profile';
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const [revealAnswer, setRevealAnswer] = useState(categoryItem?.revealMyAnswers || false);
 
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
+  const { mutateAsync: revealMyCollectionAnswer } = useRevealMyCollectionAnswers();
 
   return (
     <div className="border-t-2 border-gray-250 dark:border-gray-100">
@@ -46,7 +51,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
               alt="clicks"
               className="h-2 w-2 tablet:h-6 tablet:w-6"
             />
-            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-[8px] font-semibold leading-[9.68px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
               {categoryItem.clicks === null ? 0 : categoryItem.clicks} Views{' '}
             </h2>
           </div>
@@ -56,8 +61,35 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
               alt="participants"
               className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
             />
-            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-[8px] font-semibold leading-[9.68px] text-gray-1 dark:text-gray-300 tablet:text-[18px] tablet:leading-[21.78px]">
               {categoryItem.participents === null ? 0 : categoryItem.participents} Engagements{' '}
+            </h2>
+          </div>
+          <div className="flex items-center gap-[1px] tablet:gap-2">
+            <Switch
+              checked={revealAnswer}
+              onChange={(e) => {
+                setRevealAnswer(e);
+                revealMyCollectionAnswer({
+                  userUuid: persistedUserInfo.uuid,
+                  categoryId: categoryItem._id,
+                  revealMyAnswers: e ? 'true' : 'false',
+                });
+              }}
+              className={`${revealAnswer ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+            >
+              <span className="sr-only">Use setting</span>
+              <span
+                aria-hidden="true"
+                className={`switch_base ${
+                  revealAnswer
+                    ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                    : 'translate-x-[1px] bg-[#707175]'
+                }`}
+              />
+            </Switch>
+            <h2 className="text-[8px] font-semibold leading-[9.68px] text-gray-1 dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+              Reveal my answer
             </h2>
           </div>
         </div>
