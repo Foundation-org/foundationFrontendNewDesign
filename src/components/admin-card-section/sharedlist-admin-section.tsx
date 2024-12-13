@@ -5,7 +5,7 @@ import { useUpdateSpotLight } from '../../services/api/profile';
 import showToast from '../ui/Toast';
 import { useRevealMyCollectionAnswers } from '../../services/api/listsApi';
 import { Switch } from '@headlessui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface IAdminSectionProps {
   categoryItem: any;
@@ -40,6 +40,10 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
 
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
   const { mutateAsync: revealMyCollectionAnswer } = useRevealMyCollectionAnswers();
+
+  useEffect(() => {
+    setRevealAnswer(categoryItem?.revealMyAnswers);
+  }, [categoryItem?.revealMyAnswers]);
 
   return (
     <div className="border-t-2 border-gray-250 dark:border-gray-100">

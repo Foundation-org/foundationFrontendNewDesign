@@ -37,8 +37,8 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
   const { mutateAsync: revealMyAnswer } = useRevealMyAnswers();
 
   useEffect(() => {
-    setRevealAnswer(questStartData.startQuestData.revealMyAnswers);
-  }, [questStartData?.startQuestData.revealMyAnswers]);
+    setRevealAnswer(questStartData?.startQuestData?.revealMyAnswers);
+  }, [questStartData?.startQuestData?.revealMyAnswers]);
 
   const showEnableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addEnablePostId(null));
