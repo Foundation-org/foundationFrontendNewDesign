@@ -44,6 +44,7 @@ const persistConfig = {
     'ledger',
     'seldon',
     'seldonData',
+    'onBoardingPopup'
   ],
 };
 

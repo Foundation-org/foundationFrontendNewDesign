@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startRegistration } from '@simplewebauthn/browser';
 import { Button } from '../../../../../components/ui/Button';
 import { setProgress } from '../../../../../features/progress/progressSlice';
-import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
+import BadgeOnboardingPopup from '../../../components/BadgeOnboardingPopup';
 import { badgesTotalLength } from '../../../../../constants/varification-badges';
 import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
-import { setIndex } from '../../../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import { setIndex, setPopup } from '../../../../../features/OnBoardingPopup/onBoardingPopupSlice';
 import Web3 from './verification-badges/Web3';
 import Social from './verification-badges/Social';
 import Privacy from './verification-badges/Privacy';
@@ -29,7 +29,8 @@ const VerificationBadges = () => {
   const legacyPromiseRef = useRef();
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [socialRemoveLoading, setSocialRemoveLoading] = useState(false);
-  const [isPopup, setIsPopup] = useState(true);
+  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
+  const [isPopup, setIsPopup] = useState(isOnboardingPopup ? false : true);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
@@ -134,7 +135,7 @@ const VerificationBadges = () => {
           <Button
             variant={'submit'}
             onClick={() => {
-              dispatch(setIndex(0)), setIsPopup(true);
+              setIsPopup(true);
             }}
           >
             Add badge

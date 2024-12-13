@@ -26,11 +26,11 @@ import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
 import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
-import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
 import SharedArticlesSearch from '../pages/Profile/pages/share-articles/SharedArticlesSearch';
 import { badgesTotalLength } from '../../../constants/varification-badges';
 import { setProgress } from '../../../features/progress/progressSlice';
 import { setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import BadgeOnboardingPopup from './BadgeOnboardingPopup';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -53,6 +53,7 @@ export default function DashboardLayout({ children }) {
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const [isPopup, setIsPopup] = useState(isOnboardingPopup);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
+  console.log(isOnboardingPopup, isPopup);
 
   useEffect(() => {
     if (isOnboardingPopup && location.pathname === '/') {
@@ -121,6 +122,12 @@ export default function DashboardLayout({ children }) {
       }
       if (userInfoData?.data?.requiredAction) {
         setModalVisible(true);
+      }
+      if (userInfoData?.data?.onBoarding) {
+        console.log('hhh');
+
+        setIsPopup(true);
+        dispatch(setPopup(true));
       }
     }
   }, [userInfoSuccess, userInfoData, dispatch, setModalVisible]);
@@ -290,7 +297,7 @@ export default function DashboardLayout({ children }) {
         </div>
       </PopUp>
 
-      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
+      {isPopup && <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />}
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}

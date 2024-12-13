@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PersonalBadgesPopup from '../../../components/dialogue-boxes/PersonalBadgesPopup';
 import EducationBadgePopup from '../../../components/dialogue-boxes/EducationBadgePopup';
 import WorkBadgePopup from '../../../components/dialogue-boxes/WorkBadgePopup';
@@ -14,9 +14,10 @@ import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
 import { updateProgress } from '../../../features/progress/progressSlice';
-import { incIndex, setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import { incIndex, setIndex, setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import api from '../../../services/api/Axios';
 
-export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => {
+export default function BadgeOnboardingPopup({ isPopup, setIsPopup, edit, setEdit }) {
   const fetchUser = useSelector((state) => state.auth.user);
   const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
   const onBoardingIndex = useSelector((state) => state.onBoardingPopup.index);
@@ -328,7 +329,14 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(isOnboardingPopup ? onBoardingIndex + 1 : 0);
+  const [currentIndex, setCurrentIndex] = useState(isOnboardingPopup ? onBoardingIndex : 0);
+
+  useEffect(() => {
+    if (!isOnboardingPopup) {
+      dispatch(setPopup(true));
+    }
+  }, []);
+
   const actionableBadges = badgeData.filter((badge) => !badge.check);
 
   const handleNext = () => {
@@ -341,9 +349,17 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     }
   };
 
-  const handleSkip = (type) => {
+  const handleSkip = async (type) => {
     if (actionableBadges[currentIndex]?.buttonText === 'Finish') {
       dispatch(setPopup(false));
+      dispatch(setIndex(0));
+      if (location.pathname === '/') {
+        const res = await api.patch(`/updateOnBoarding/${fetchUser._id}`);
+        if (res.status === 200) {
+          console.log(res);
+        }
+      }
+
       queryClient.invalidateQueries(['userInfo']);
     }
     if (type) {
@@ -352,13 +368,21 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     handleNext();
   };
 
-  const totalBadges = badgeData.filter((badge) => !badge.info);
-  const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
+  // const totalBadges = badgeData.filter((badge) => !badge.info);
+  // const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
   // const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
   const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
-  const handlePopupClose = (data) => {
-    setIsPopup(data);
+  const handlePopupClose = async (data) => {
     dispatch(setPopup(false));
+    dispatch(setIndex(0));
+    setIsPopup(data);
+    if (location.pathname === '/') {
+      const res = await api.patch(`/updateOnBoarding/${fetchUser._id}`);
+      if (res.status === 200) {
+        console.log(res);
+      }
+    }
+
     queryClient.invalidateQueries(['userInfo']);
   };
 
@@ -384,4 +408,4 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       link={actionableBadges[currentIndex]?.link}
     />
   );
-};
+}
