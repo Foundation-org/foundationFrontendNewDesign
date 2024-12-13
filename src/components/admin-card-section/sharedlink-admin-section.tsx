@@ -104,7 +104,6 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               {questStartData?.userQuestSetting?.questImpression} Views{' '}
             </h2>
           </div>
-
           <div className="flex items-center gap-[1px] tablet:gap-2">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/group.svg' : 'assets/svgs/participants.svg'}`}
@@ -115,7 +114,6 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               {questStartData?.userQuestSetting?.questsCompleted} Engagements{' '}
             </h2>
           </div>
-
           {questStartData?.whichTypeQuestion !== 'ranked choise' ? (
             <div className="flex items-center gap-[1px] tablet:gap-2">
               <Switch

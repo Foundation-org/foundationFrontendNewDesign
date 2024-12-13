@@ -62,7 +62,7 @@ export default function NewMessageForm() {
       const params = {
         questForeignKey: directMessageState.questForeignKey,
         uuid: persistedUserInfo.uuid,
-        options: directMessageState.options?.filter((option) => option.selected).map((option) => option.question),
+        options: directMessageState.options,
         sharedLinkOnly: uniqueLink ? uniqueLink : '',
       };
 

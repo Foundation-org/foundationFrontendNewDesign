@@ -44,7 +44,7 @@ export default function SharedListAdminSection(props: IAdminSectionProps) {
   return (
     <div className="border-t-2 border-gray-250 dark:border-gray-100">
       <div className="my-[15px] tablet:my-6">
-        <div className="my-[15px] ml-10 flex items-center gap-1 tablet:my-6 tablet:ml-16 tablet:gap-20">
+        <div className="mx-10 my-[15px] flex justify-between gap-1 tablet:mx-5 tablet:my-6 laptop:mx-10">
           <div className="flex items-center gap-[1px] tablet:gap-2">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}

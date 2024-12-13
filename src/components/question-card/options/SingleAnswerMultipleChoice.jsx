@@ -23,7 +23,11 @@ const SingleAnswerMultipleChoice = (props) => {
   const [answer, setAnswer] = useState(props.answer);
   const [isTyping, setIsTyping] = useState(true);
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const isDomainPage = location.pathname.startsWith('/h/') || location.pathname === '/profile';
+  const isDomainPage =
+    location.pathname.startsWith('/h/') ||
+    location.pathname.startsWith('/p/') ||
+    location.pathname.startsWith('/l/') ||
+    location.pathname === '/profile';
 
   const reset = {
     name: 'Ok',

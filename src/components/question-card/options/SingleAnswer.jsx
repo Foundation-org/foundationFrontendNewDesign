@@ -2,7 +2,11 @@ import { useLocation } from 'react-router-dom';
 
 const SingleAnswer = (props) => {
   const location = useLocation();
-  const isDomainPage = location.pathname.startsWith('/h/') || location.pathname === '/profile';
+  const isDomainPage =
+    location.pathname.startsWith('/h/') ||
+    location.pathname.startsWith('/p/') ||
+    location.pathname.startsWith('/l/') ||
+    location.pathname === '/profile';
 
   return (
     <div
