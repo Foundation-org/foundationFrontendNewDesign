@@ -29,13 +29,13 @@ export default function BadgeEncryptedPopup(props: ClearAllAnalyticsProps) {
       isBackground={false}
     >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <h1 className="summary-text">This badge is private to view the information you have to pay 10 FDX</h1>
+        <h1 className="summary-text">This badge is private.</h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'cancel'} onClick={handleClose}>
             Close
           </Button>
           <Button
-            variant={'submit'}
+            variant={'submit-hollow'}
             onClick={() => {
               showToast('warning', 'featureComingSoon');
             }}
