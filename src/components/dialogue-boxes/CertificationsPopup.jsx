@@ -9,6 +9,7 @@ import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import CustomCombobox from '../ui/Combobox';
 
 const certificationName = {
   label: 'Certification Name',
@@ -58,8 +59,8 @@ const CertificationsPopup = ({
   selectedBadge,
 }) => {
   const queryClient = useQueryClient();
-  const [field1Data, setField1Data] = useState();
-  const [field2Data, setField2Data] = useState();
+  const [field1Data, setField1Data] = useState([]);
+  const [field2Data, setField2Data] = useState([]);
   const [field3Data, setField3Data] = useState();
   const [field4Data, setField4Data] = useState();
   const [delLoading, setDelLoading] = useState(false);
@@ -78,7 +79,10 @@ const CertificationsPopup = ({
   const [addAnotherForm, setAddAnotherForm] = useState(false);
   const [existingData, setExistingData] = useState(selectedBadge?.personal?.certifications || []);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
+  const [certificates, setCertificates] = useState();
+  const [organizations, setOrganizations] = useState([]);
+  const [query, setQuery] = useState('');
+  const [query2, setQuery2] = useState('');
   const handleClose = () => setIsPopup(false);
 
   const handlePresentToggle = () => {
@@ -107,7 +111,14 @@ const CertificationsPopup = ({
   };
 
   const checkHollow = () => {
-    if (!field1Data || !field2Data || !field3Data || !field4Data || !field5Data || !field6Data) {
+    if (
+      field1Data.name === undefined ||
+      field2Data.name === undefined ||
+      !field3Data ||
+      !field4Data ||
+      !field5Data ||
+      !field6Data
+    ) {
       return true;
     } else {
       return false;
@@ -121,8 +132,8 @@ const CertificationsPopup = ({
   const handleAddPersonalBadge = async (data) => {
     try {
       if (
-        field1Data === undefined ||
-        field2Data === undefined ||
+        field1Data.name === undefined ||
+        field2Data.name === undefined ||
         field3Data === undefined ||
         field4Data === undefined ||
         field5Data === undefined ||
@@ -155,6 +166,24 @@ const CertificationsPopup = ({
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
+        if (field1Data.button) {
+          const dataSaved = await api.post(`/addBadge/certifications/add`, {
+            name: field1Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved.status === 200) {
+            console.log(dataSaved);
+          }
+        }
+        if (field2Data.button) {
+          const dataSaved2 = await api.post(`/addBadge/organization/add`, {
+            name: field2Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved2.status === 200) {
+            console.log(dataSaved2);
+          }
+        }
         if (existingData.length > 0) {
           showToast('success', 'infoUpdated');
         } else {
@@ -196,8 +225,8 @@ const CertificationsPopup = ({
   const handleUpdateBadge = async (newData) => {
     try {
       if (
-        prevInfo.certificationName === field1Data &&
-        prevInfo.organization === field2Data &&
+        prevInfo.certificationName === field1Data.name &&
+        prevInfo.organization === field2Data.name &&
         prevInfo.credentialId === field3Data &&
         prevInfo.credentialUrl === field4Data &&
         prevInfo.startingYear === field5Data &&
@@ -232,6 +261,24 @@ const CertificationsPopup = ({
 
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
+        if (field1Data.button) {
+          const dataSaved = await api.post(`/addBadge/certifications/add`, {
+            name: field1Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved.status === 200) {
+            console.log(dataSaved);
+          }
+        }
+        if (field2Data.button) {
+          const dataSaved2 = await api.post(`/addBadge/organization/add`, {
+            name: field2Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved2.status === 200) {
+            console.log(dataSaved2);
+          }
+        }
         queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         showToast('success', 'infoUpdated');
         setLoading(false);
@@ -260,8 +307,8 @@ const CertificationsPopup = ({
       console.log(info);
       const data = info?.data.obj;
 
-      setField1Data(data.certificationName);
-      setField2Data(data.organization);
+      setField1Data({ name: data.certificationName });
+      setField2Data({ name: data.organization });
       setField3Data(data.credentialId);
       setField4Data(data.credentialUrl);
       setField5Data(data.startingYear);
@@ -281,6 +328,56 @@ const CertificationsPopup = ({
   };
 
   const handleBadgesClose = () => setModalVisible(false);
+
+  const searchCertificates = async () => {
+    try {
+      const jb = await api.post(`search/searchCertifications/?name=${query}`);
+
+      const queryExists = jb.data.some((item) => item.name.toLowerCase() === query.toLowerCase());
+      const newArr = queryExists
+        ? [...jb.data]
+        : [
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+            ...jb.data.map((jb) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
+
+      setCertificates(newArr);
+    } catch (err) {
+      setCertificates([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }]);
+    }
+  };
+
+  useEffect(() => {
+    searchCertificates();
+  }, [query]);
+
+  const searchOrganization = async () => {
+    try {
+      const jb = await api.post(`search/searchOrganizations/?name=${query2}`);
+
+      const queryExists = jb.data.some((item) => item.name.toLowerCase() === query2.toLowerCase());
+      const newArr = queryExists
+        ? [...jb.data]
+        : [
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query2, button: true },
+            ...jb.data.map((jb) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
+
+      setOrganizations(newArr);
+    } catch (err) {
+      setOrganizations([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query2, button: true }]);
+    }
+  };
+
+  useEffect(() => {
+    searchOrganization();
+  }, [query2]);
 
   const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     const [edit, setEdit] = useState(false);
@@ -443,39 +540,37 @@ const CertificationsPopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field1.label}
                 </p>
-                <input
-                  type="text"
-                  value={edit ? (!fetchingEdit ? field1Data : 'Loading...') : field1Data}
-                  onChange={(e) => {
-                    setField1Data(e.target.value);
-                  }}
-                  disabled={fetchingEdit ? true : false}
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
-                  id="input-1"
-                  placeholder={field1.placeholder}
-                  className="verification_badge_input"
+                <CustomCombobox
+                  items={certificates}
+                  placeholder={edit ? (field1Data?.name ? field1.placeholder : 'Loading...') : field1.placeholder}
+                  selected={field1Data}
+                  setSelected={setField1Data}
+                  query={query}
+                  setQuery={setQuery}
+                  id={1}
+                  handleTab={handleTab}
+                  setHollow={setHollow}
+                  disabled={edit ? (field1Data?.name ? false : true) : false}
                 />
               </div>
               <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field2.label}
                 </p>
-                <input
-                  type="text"
-                  value={edit ? (!fetchingEdit ? field2Data : 'Loading...') : field2Data}
-                  onChange={(e) => {
-                    setField2Data(e.target.value);
-                  }}
-                  disabled={fetchingEdit ? true : false}
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(2)) || (e.key === 'Enter' && handleTab(2, 'Enter'))}
-                  id="input-2"
-                  placeholder={edit ? (field2Data ? field2.placeholder : 'Loading...') : field2.placeholder}
-                  className="verification_badge_input"
+                <CustomCombobox
+                  items={organizations}
+                  placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
+                  selected={field2Data}
+                  setSelected={setField2Data}
+                  query={query2}
+                  setQuery={setQuery2}
+                  id={2}
+                  handleTab={handleTab}
+                  setHollow={setHollow}
+                  disabled={edit ? (field2Data?.name ? false : true) : false}
                 />
-                {isError && (
-                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
-                )}
               </div>
+
               <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}
@@ -586,8 +681,8 @@ const CertificationsPopup = ({
                 <Button
                   variant="addOption"
                   onClick={() => {
-                    setField1Data();
-                    setField2Data();
+                    setField1Data([]);
+                    setField2Data([]);
                     setField3Data();
                     setField4Data();
                     setField5Data();
@@ -610,8 +705,8 @@ const CertificationsPopup = ({
                     onClick={() => {
                       const allFieldObject = {
                         ['id']: uuidv4(),
-                        [field1.type]: field1Data,
-                        [field2.type]: field2Data,
+                        [field1.type]: field1Data.name,
+                        [field2.type]: field2Data.name,
                         [field3.type]: field3Data,
                         [field4.type]: field4Data,
                         [field5.type]: field5Data,

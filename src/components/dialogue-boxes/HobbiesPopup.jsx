@@ -12,26 +12,16 @@ import { v4 as uuidv4 } from 'uuid';
 import CustomCombobox from '../ui/Combobox';
 import { TextareaAutosize } from '@mui/material';
 
-const role = {
-  label: 'Role',
-  type: 'role',
-  placeholder: 'Role here',
+const hobby = {
+  label: 'Hobby',
+  type: 'hobby',
+  placeholder: 'Hobby here',
 };
 
 const organization = {
   label: 'Organization',
   type: 'organization',
   placeholder: 'Organization here',
-};
-const cause = {
-  label: 'Cause',
-  type: 'cause',
-  placeholder: 'Cause here',
-};
-const description = {
-  label: 'Description',
-  type: 'description',
-  placeholder: 'Description here',
 };
 
 const startDate = {
@@ -78,17 +68,14 @@ const CertificationsPopup = ({
   selectedBadge,
 }) => {
   const queryClient = useQueryClient();
-  const [field1Data, setField1Data] = useState();
+  const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
-  const [field3Data, setField3Data] = useState();
-  const [field4Data, setField4Data] = useState();
   const [delLoading, setDelLoading] = useState(false);
   const [field5Data, setField5Data] = useState();
   const [field6Data, setField6Data] = useState();
   const [isPresent, setIsPresent] = useState(false);
   const [prevInfo, setPrevInfo] = useState({});
   const [deleteItem, setDeleteItem] = useState('');
-  const [isError, setIsError] = useState(false);
   const [hollow, setHollow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
@@ -99,7 +86,11 @@ const CertificationsPopup = ({
   const [existingData, setExistingData] = useState(selectedBadge?.personal?.hobbies || []);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [query, setQuery] = useState('');
-  const [causes, setCauses] = useState([]);
+  const [query2, setQuery2] = useState('');
+
+  const [hobbies, setHobbies] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
+
   const handleClose = () => setIsPopup(false);
 
   const handlePresentToggle = () => {
@@ -128,7 +119,7 @@ const CertificationsPopup = ({
   };
 
   const checkHollow = () => {
-    if (!field1Data || !field2Data || !field3Data || !field4Data || !field5Data || !field6Data) {
+    if (field1Data.name === undefined || field2Data.name === undefined || !field5Data || !field6Data) {
       return true;
     } else {
       return false;
@@ -137,15 +128,13 @@ const CertificationsPopup = ({
 
   useEffect(() => {
     checkHollow();
-  }, [field1Data, field2Data, field3Data, field4Data, field5Data, field6Data]);
+  }, [field1Data, field2Data, field5Data, field6Data]);
 
   const handleAddPersonalBadge = async (data) => {
     try {
       if (
-        field1Data === undefined ||
-        field2Data === undefined ||
-        field3Data === undefined ||
-        field4Data === undefined ||
+        field1Data.name === undefined ||
+        field2Data.name === undefined ||
         field5Data === undefined ||
         field6Data === undefined ||
         field6Data === ''
@@ -176,6 +165,24 @@ const CertificationsPopup = ({
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
+        if (field1Data.button) {
+          const dataSaved = await api.post(`/addBadge/hobbies/add`, {
+            name: field1Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved.status === 200) {
+            console.log(dataSaved);
+          }
+        }
+        if (field1Data.button) {
+          const dataSaved2 = await api.post(`/addBadge/organization/add`, {
+            name: field1Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved2.status === 200) {
+            console.log(dataSaved2);
+          }
+        }
         if (existingData.length > 0) {
           showToast('success', 'infoUpdated');
         } else {
@@ -216,11 +223,16 @@ const CertificationsPopup = ({
 
   const handleUpdateBadge = async (newData) => {
     try {
+      console.log(
+        prevInfo.hobby === field1Data.name &&
+          prevInfo.organization === field2Data.name &&
+          prevInfo.startingYear === field5Data &&
+          prevInfo.endingYear === field6Data
+      );
+
       if (
-        prevInfo.role === field1Data &&
-        prevInfo.organization === field2Data &&
-        prevInfo.cause === field3Data &&
-        prevInfo.description === field4Data &&
+        prevInfo.hobby === field1Data.name &&
+        prevInfo.organization === field2Data.name &&
         prevInfo.startingYear === field5Data &&
         prevInfo.endingYear === field6Data
       ) {
@@ -253,6 +265,24 @@ const CertificationsPopup = ({
 
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
+        if (field1Data.button) {
+          const dataSaved = await api.post(`/addBadge/hobbies/add`, {
+            name: field1Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved.status === 200) {
+            console.log(dataSaved);
+          }
+        }
+        if (field2Data.button) {
+          const dataSaved2 = await api.post(`/addBadge/organization/add`, {
+            name: field2Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (dataSaved2.status === 200) {
+            console.log(dataSaved2);
+          }
+        }
         queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         showToast('success', 'infoUpdated');
         setLoading(false);
@@ -278,13 +308,10 @@ const CertificationsPopup = ({
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
       setHollow(false);
-      console.log(info);
       const data = info?.data.obj;
 
-      setField1Data(data.role);
-      setField2Data(data.organization);
-      setField3Data(data.cause);
-      setField4Data(data.description);
+      setField1Data({ name: data.hobby });
+      setField2Data({ name: data.organization });
       setField5Data(data.startingYear);
       if (data.endingYear === 'Present') {
         setIsPresent(true);
@@ -300,25 +327,60 @@ const CertificationsPopup = ({
     setDeleteModalState(item);
     setModalVisible(true);
   };
-  useEffect(() => {
-    const jb = Causes;
-    const queryExists = jb.some((item) => item.name.toLowerCase() === query.toLowerCase());
-    const newArr = queryExists
-      ? [...jb]
-      : [
-          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-          ...jb.map((jb) => ({
-            ...jb,
-            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-          })),
-        ];
 
-    setCauses(newArr);
+  const searchHobbies = async () => {
+    try {
+      const jb = await api.post(`search/searchHobbies/?name=${query}`);
+
+      const queryExists = jb.data.some((item) => item.name.toLowerCase() === query.toLowerCase());
+      const newArr = queryExists
+        ? [...jb.data]
+        : [
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+            ...jb.data.map((jb) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
+
+      setHobbies(newArr);
+    } catch (err) {
+      setHobbies([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }]);
+    }
+  };
+
+  useEffect(() => {
+    searchHobbies();
   }, [query]);
+
+  const searchOrganization = async () => {
+    try {
+      const jb = await api.post(`search/searchOrganizations/?name=${query2}`);
+
+      const queryExists = jb.data.some((item) => item.name.toLowerCase() === query2.toLowerCase());
+      const newArr = queryExists
+        ? [...jb.data]
+        : [
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query2, button: true },
+            ...jb.data.map((jb) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
+
+      setOrganizations(newArr);
+    } catch (err) {
+      setOrganizations([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query2, button: true }]);
+    }
+  };
+
+  useEffect(() => {
+    searchOrganization();
+  }, [query2]);
 
   const handleBadgesClose = () => setModalVisible(false);
 
-  const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
+  const renderWorkField = (field1, field2, field3, field4) => {
     const [edit, setEdit] = useState(false);
 
     return (
@@ -350,18 +412,12 @@ const CertificationsPopup = ({
                   >
                     <div className="py-3 tablet:py-[25px]">
                       <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
-                        {item.role}
+                        {item.hobby}
                       </h4>
                       <div className="max-w-[270px]">
                         <h5 className="text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
                           {item.organization}
                         </h5>
-                        <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          {item.cause?.name}
-                        </h6>
-                        <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
-                          {item.description}
-                        </h6>
                       </div>
                     </div>
                     {deleteItem === item.id ? (
@@ -406,7 +462,7 @@ const CertificationsPopup = ({
                               alt="Edit Icon"
                               className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
                               onClick={() => {
-                                setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                                setEdit(true), setFetchingEdit(true), setAddAnotherForm(true), handleEdit(item.id);
                               }}
                             />
                             <img
@@ -476,17 +532,17 @@ const CertificationsPopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field1.label}
                 </p>
-                <input
-                  type="text"
-                  value={edit ? (!fetchingEdit ? field1Data : 'Loading...') : field1Data}
-                  onChange={(e) => {
-                    setField1Data(e.target.value);
-                  }}
-                  disabled={fetchingEdit ? true : false}
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
-                  id="input-1"
-                  placeholder={field1.placeholder}
-                  className="verification_badge_input"
+                <CustomCombobox
+                  items={hobbies}
+                  placeholder={edit ? (field1Data?.name ? field1.placeholder : 'Loading...') : field1.placeholder}
+                  selected={field1Data}
+                  setSelected={setField1Data}
+                  query={query}
+                  setQuery={setQuery}
+                  id={1}
+                  handleTab={handleTab}
+                  setHollow={setHollow}
+                  disabled={edit ? (field1Data?.name ? false : true) : false}
                 />
               </div>
               <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
@@ -494,62 +550,17 @@ const CertificationsPopup = ({
                   {field2.label}
                 </p>
                 <CustomCombobox
-                  items={causes}
+                  items={organizations}
                   placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
                   selected={field2Data}
                   setSelected={setField2Data}
-                  query={query}
-                  setQuery={setQuery}
+                  query={query2}
+                  setQuery={setQuery2}
                   id={2}
                   handleTab={handleTab}
                   setHollow={setHollow}
                   disabled={edit ? (field2Data?.name ? false : true) : false}
                 />
-                {isError && (
-                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
-                )}
-              </div>
-              <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field3.label}
-                </p>
-                <input
-                  type="text"
-                  value={edit ? (!fetchingEdit ? field3Data : 'Loading...') : field3Data}
-                  onChange={(e) => {
-                    setField3Data(e.target.value);
-                  }}
-                  disabled={fetchingEdit ? true : false}
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(3)) || (e.key === 'Enter' && handleTab(3, 'Enter'))}
-                  id="input-3"
-                  placeholder={edit ? (field3Data ? field2.placeholder : 'Loading...') : field2.placeholder}
-                  className="verification_badge_input"
-                />
-                {isError && (
-                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
-                )}
-              </div>
-              <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field4.label}
-                </p>
-                <TextareaAutosize
-                  id="input-4"
-                  aria-label="multiple choice question"
-                  placeholder={edit ? (field4Data ? field4.placeholder : 'Loading...') : field4.placeholder}
-                  value={edit ? (!fetchingEdit ? field4Data : 'Loading...') : field4Data}
-                  onChange={(e) => {
-                    setField4Data(e.target.value);
-                  }}
-                  disabled={fetchingEdit ? true : false}
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
-                  tabIndex={2}
-                  minRows={4}
-                  className={`w-full resize-none rounded-[8.62px] border border-white-500 bg-[#FBFBFB] p-2 text-[9.28px] font-normal leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[15px] tablet:border-[3px] tablet:px-[16px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${edit ? (domainBadge.description ? '' : 'caret-hidden') : ''}`}
-                />
-                {isError && (
-                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
-                )}
               </div>
 
               <label
@@ -568,7 +579,7 @@ const CertificationsPopup = ({
               <div className="mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
                 <div className="w-full">
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                    {field5.label}
+                    {field3.label}
                   </p>
                   {fetchingEdit ? (
                     <input
@@ -582,7 +593,7 @@ const CertificationsPopup = ({
                       type="date"
                       value={field5Data}
                       onChange={(e) => setField5Data(e.target.value)}
-                      placeholder={field5.placeholder}
+                      placeholder={field3.placeholder}
                       className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                       style={{ textTransform: 'uppercase' }}
                     />
@@ -593,7 +604,7 @@ const CertificationsPopup = ({
                 ) : (
                   <div className="w-full">
                     <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                      {field6.label}
+                      {field4.label}
                     </p>
                     {fetchingEdit ? (
                       <input
@@ -608,7 +619,7 @@ const CertificationsPopup = ({
                         value={field6Data}
                         onChange={(e) => setField6Data(e.target.value)}
                         disabled={isPresent}
-                        placeholder={field6.placeholder}
+                        placeholder={field4.placeholder}
                         className={`revert-calender-color w-full rounded-[8.62px] border border-white-500 bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none dark:border-gray-100 dark:bg-accent-100 dark:text-gray-300 tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                         style={{ textTransform: 'uppercase' }}
                       />
@@ -621,10 +632,8 @@ const CertificationsPopup = ({
                 <Button
                   variant="addOption"
                   onClick={() => {
-                    setField1Data();
-                    setField2Data();
-                    setField3Data();
-                    setField4Data();
+                    setField1Data([]);
+                    setField2Data([]);
                     setField5Data();
                     setField6Data();
                     setIsPresent(false);
@@ -645,12 +654,10 @@ const CertificationsPopup = ({
                     onClick={() => {
                       const allFieldObject = {
                         ['id']: uuidv4(),
-                        [field1.type]: field1Data,
-                        [field2.type]: field2Data,
-                        [field3.type]: field3Data,
-                        [field4.type]: field4Data,
-                        [field5.type]: field5Data,
-                        [field6.type]: field6Data,
+                        [field1.type]: field1Data.name,
+                        [field2.type]: field2Data.name,
+                        [field3.type]: field5Data,
+                        [field4.type]: field6Data,
                       };
                       if (edit) {
                         setLoading(true);
@@ -683,7 +690,7 @@ const CertificationsPopup = ({
 
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-      {title === 'Hobbies' && renderWorkField(role, cause, organization, description, startDate, endDate)}
+      {title === 'Hobbies' && renderWorkField(hobby, organization, startDate, endDate)}
     </PopUp>
   );
 };

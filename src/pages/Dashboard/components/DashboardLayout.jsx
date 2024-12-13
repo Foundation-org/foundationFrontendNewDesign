@@ -53,7 +53,6 @@ export default function DashboardLayout({ children }) {
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const [isPopup, setIsPopup] = useState(isOnboardingPopup);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
-  console.log(isOnboardingPopup, isPopup);
 
   useEffect(() => {
     if (isOnboardingPopup && location.pathname === '/') {
