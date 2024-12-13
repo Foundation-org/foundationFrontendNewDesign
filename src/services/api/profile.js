@@ -30,13 +30,19 @@ export const useFetchOtherProfiles = (terms = '') => {
 
 // FETCH MY PROFILE
 const fetchMyProfile = async (domain, viewerUuid, isPublicProfile) => {
+  const params = {
+    domain,
+    viewerUuid,
+    isPublicProfile,
+  };
+
+  if (localStorage.getItem('legacyHash')) {
+    params.infoc = localStorage.getItem('legacyHash');
+  }
+
   try {
     const response = await api.get(`/user/fetchUserProfile`, {
-      params: {
-        domain,
-        viewerUuid,
-        isPublicProfile,
-      },
+      params,
     });
     return response.data;
   } catch (error) {
@@ -87,7 +93,6 @@ export const useUpdateSpotLight = () => {
   });
 };
 
-
 // Separate verifyIdentity function using useMutation
 export const useVerifyIdentity = ({ frontImage, backImage, video, persistedUserInfo, handleClose }) => {
   const queryClient = useQueryClient();
@@ -108,7 +113,7 @@ export const useVerifyIdentity = ({ frontImage, backImage, video, persistedUserI
     } else {
       throw new Error('Verification failed');
     }
-  }
+  };
 
   // The mutation function for submitting the identity verification
   const mutation = useMutation({

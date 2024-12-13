@@ -143,26 +143,29 @@ export default function BadgeHub({ badges }: any) {
         />
       )} */}
       <div className="grid grid-cols-7 gap-1.5 tablet:gap-3">
-        {contactBadgesArray?.map((badge: any) => {
-          if (badge.type === 'cell-phone') {
-            return (
-              <button
-                key={badge.type}
-                onClick={() => {
-                  if (badge?.userBadgeData?.isUserEncrypted && isPublicProfile) {
-                    setBadgeEncryptedPopup(true);
-                  } else {
-                    if (isPublicProfile) {
-                      handleBadgeHubClicksTrack(badge.userBadgeData._id);
-                    }
-                    window.open(`tel:${badge.userBadgeData.details.data}`, '_self');
-                  }
-                }}
-              >
-                <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
-              </button>
-            );
-          } else {
+        {contactBadgesArray?.map((badge: any) => (
+          <button
+            key={badge.type}
+            onClick={() => {
+              if (badge?.userBadgeData?.isUserEncrypted && isPublicProfile) {
+                setBadgeEncryptedPopup(true);
+              } else {
+                if (isPublicProfile) {
+                  handleBadgeHubClicksTrack(badge.userBadgeData._id);
+                }
+                setSelectedBadge(badge.type);
+                setIsPopup(true);
+              }
+            }}
+          >
+            <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
+          </button>
+        ))}
+        {/* );
+         } 
+// if (badge.type === 'cell-phone') {
+          // return (
+         else {
             return (
               <a
                 key={badge.type}
@@ -194,7 +197,7 @@ export default function BadgeHub({ badges }: any) {
               </a>
             );
           }
-        })}
+        })} */}
         {financeBadgesArray.map((badge: any) => (
           <button
             key={badge.type}
