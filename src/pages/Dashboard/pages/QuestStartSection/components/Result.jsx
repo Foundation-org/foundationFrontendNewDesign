@@ -55,6 +55,19 @@ const Result = (props) => {
                   : [],
                 item.question
               )}
+              ownerCheck={findSelectionContentionCheck(
+                props.questStartData?.startQuestDataOwner && props.questStartData.startQuestDataOwner.data.length > 0
+                  ? [
+                      {
+                        question:
+                          props.questStartData?.startQuestDataOwner.data[
+                            props.questStartData.startQuestDataOwner.data.length - 1
+                          ].selected,
+                      },
+                    ]
+                  : [],
+                item.question
+              )}
               handleToggleCheck={props.handleToggleCheck}
               btnText={'Results'}
               questStartData={props.questStartData}
@@ -116,6 +129,24 @@ const Result = (props) => {
                     props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
                       ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
                           .contended
+                      : [],
+                    item.question
+                  )}
+                  ownerCheck={findSelectionContentionCheck(
+                    props.questStartData?.startQuestDataOwner &&
+                      props.questStartData.startQuestDataOwner.data.length > 0
+                      ? props.questStartData?.startQuestDataOwner.data[
+                          props.questStartData.startQuestDataOwner.data.length - 1
+                        ].selected
+                      : [],
+                    item.question
+                  )}
+                  ownerContend={findSelectionContentionCheck(
+                    props.questStartData?.startQuestDataOwner &&
+                      props.questStartData.startQuestDataOwner.data.length > 0
+                      ? props.questStartData?.startQuestDataOwner.data[
+                          props.questStartData.startQuestDataOwner.data.length - 1
+                        ].contended
                       : [],
                     item.question
                   )}

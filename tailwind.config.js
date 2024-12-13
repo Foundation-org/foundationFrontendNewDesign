@@ -85,6 +85,7 @@ export default {
       },
       boxShadow: {
         options: '0px 0px 0px 4px rgba(56, 156, 227, 0.6)',
+        'options-mobile': '0px 0px 0px 2px rgba(56, 156, 227, 0.6)',
       },
     },
   },
