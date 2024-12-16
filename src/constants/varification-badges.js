@@ -120,18 +120,18 @@ export const socials = [
     disabled: false,
     email: true,
   },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/tiktok.svg`,
-    title: 'Tiktok',
-    ButtonColor: 'blue',
-    ButtonText: 'Add Badge',
-    NoOfButton: 1,
-    link: '/auth/tiktok',
-    accountName: 'tiktok',
-    type: 'tiktok',
-    disabled: false,
-    email: true,
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/tiktok.svg`,
+  //   title: 'Tiktok',
+  //   ButtonColor: 'blue',
+  //   ButtonText: 'Add Badge',
+  //   NoOfButton: 1,
+  //   link: '/auth/tiktok',
+  //   accountName: 'tiktok',
+  //   type: 'tiktok',
+  //   disabled: false,
+  //   email: true,
+  // },
 ];
 
 export const finance = [

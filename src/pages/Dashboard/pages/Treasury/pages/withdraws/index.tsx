@@ -84,7 +84,7 @@ export default function Withdraws() {
         </div>
       )} */}
 
-      <p className="font-inter dark:text-gray-900 mt-[3.319vh] text-center text-[5.083vw] font-bold text-[#9F9F9F] dark:text-gray tablet:text-[4vw] laptop:text-[2.083vw]">
+      <p className="font-inter dark:text-gray-900 mt-[3.319vh] text-center text-[5.083vw] font-bold text-gray-1 dark:text-gray tablet:text-[4vw] laptop:text-[2.083vw]">
         🚀 Withdrawals will be opening soon!
       </p>
     </div>
