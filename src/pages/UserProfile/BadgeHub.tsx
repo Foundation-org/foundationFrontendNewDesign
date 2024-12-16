@@ -142,28 +142,9 @@ export default function BadgeHub({ badges }: any) {
           logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
         />
       )} */}
-      <div className="grid grid-cols-7 gap-1.5 tablet:gap-3">
-        {contactBadgesArray?.map((badge: any) => (
-          <button
-            key={badge.type}
-            onClick={() => {
-              if (badge?.userBadgeData?.isUserEncrypted && isPublicProfile) {
-                setBadgeEncryptedPopup(true);
-              } else {
-                if (isPublicProfile) {
-                  handleBadgeHubClicksTrack(badge.userBadgeData._id);
-                }
-                setSelectedBadge(badge.type);
-                setIsPopup(true);
-              }
-            }}
-          >
-            <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
-          </button>
-        ))}
-        {/* );
+      {/* );
          } 
-// if (badge.type === 'cell-phone') {
+          // if (badge.type === 'cell-phone') {
           // return (
          else {
             return (
@@ -198,12 +179,29 @@ export default function BadgeHub({ badges }: any) {
             );
           }
         })} */}
+      <div className="grid grid-cols-7 gap-1.5 tablet:gap-3">
+        {contactBadgesArray?.map((badge: any) => (
+          <button
+            key={badge.type}
+            onClick={() => {
+              if (badge?.userBadgeData?.isUserEncrypted && isPublicProfile) {
+                setBadgeEncryptedPopup(true);
+              } else {
+                if (isPublicProfile) {
+                  handleBadgeHubClicksTrack(badge.userBadgeData._id);
+                }
+                setSelectedBadge(badge.type);
+                setIsPopup(true);
+              }
+            }}
+          >
+            <img src={badge.image} alt="save icon" className="size-[24.5px] rounded-full tablet:size-[35px]" />
+          </button>
+        ))}
         {financeBadgesArray.map((badge: any) => (
           <button
             key={badge.type}
             onClick={() => {
-              // setSelectedBadge(badge.type);
-              // setIsPopup(true);
               if (badge?.userBadgeData?.isUserEncrypted && isPublicProfile) {
                 setBadgeEncryptedPopup(true);
               } else {

@@ -1,19 +1,13 @@
-import { useSelector } from 'react-redux';
 import PersonalBadgesPopup from '../../../components/dialogue-boxes/PersonalBadgesPopup';
-import HomepageBadgePopup from '../../../components/dialogue-boxes/HomepageBadgePopup';
 import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
 import AddCellPhonePopup from '../../../components/dialogue-boxes/AddCellPhonePopup';
 import VerificationPopups from '../../Dashboard/pages/Profile/components/VerificationPopups';
 import WorkBadgePopup from '../../../components/dialogue-boxes/WorkBadgePopup';
 import EducationBadgePopup from '../../../components/dialogue-boxes/EducationBadgePopup';
-import LegacyBadgePopup from '../../../components/dialogue-boxes/LegacyBadgePopup';
 import SocialConnectPopup from '../../Dashboard/pages/Profile/pages/verification-badges/SocialConnectPopup';
 import Web3ConnectPopup from '../../Dashboard/pages/Profile/pages/verification-badges/Web3ConnectPopup';
-import { useState } from 'react';
 
 export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, type, badges }) {
-  // const fetchUser = useSelector((state) => state.auth.user);
-
   const checkDomainBadge = () => {
     return badges?.some((badge) => !!badge?.domain) || false;
   };
@@ -228,31 +222,29 @@ export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, t
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
   const actionableBadges = badgeData.filter((badge) => badge.badgeHubType === type);
-
-  const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
+  const CurrentBadgeComponent = actionableBadges[0]?.component;
 
   return (
     <CurrentBadgeComponent
       isPopup={isPopup}
       setIsPopup={() => setIsPopup(false)}
-      title={actionableBadges[currentIndex]?.title}
-      type={actionableBadges[currentIndex]?.type}
-      logo={actionableBadges[currentIndex]?.logo}
-      placeholder={actionableBadges[currentIndex]?.placeholder}
+      title={actionableBadges[0]?.title}
+      type={actionableBadges[0]?.type}
+      logo={actionableBadges[0]?.logo}
+      placeholder={actionableBadges[0]?.placeholder}
       edit={edit}
       setEdit={setEdit}
       fetchUser={badges}
       //   handleSkip={handleSkip}
       onboarding={false}
       selectedBadge={getBadgeByType(type)}
-      message={actionableBadges[currentIndex]?.message}
-      message2={actionableBadges[currentIndex]?.message2}
-      message3={actionableBadges[currentIndex]?.message3}
-      buttonText={actionableBadges[currentIndex]?.buttonText}
-      accountName={actionableBadges[currentIndex]?.accountName}
-      link={actionableBadges[currentIndex]?.link}
+      message={actionableBadges[0]?.message}
+      message2={actionableBadges[0]?.message2}
+      message3={actionableBadges[0]?.message3}
+      buttonText={actionableBadges[0]?.buttonText}
+      accountName={actionableBadges[0]?.accountName}
+      link={actionableBadges[0]?.link}
       page={edit ? 'badgeHub' : 'addBadgeHub'}
     />
   );

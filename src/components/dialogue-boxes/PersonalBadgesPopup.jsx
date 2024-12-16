@@ -226,7 +226,7 @@ const PersonalBadgesPopup = ({
 
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
+        {page !== 'badgeHub' && <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>}
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -454,7 +454,7 @@ const PersonalBadgesPopup = ({
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
+        {page !== 'badgeHub' && <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>}
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <CustomCombobox
             items={cities}
@@ -531,19 +531,25 @@ const PersonalBadgesPopup = ({
     const isError = apiResp?.data?.message === 'No';
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
-        <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-          <Listbox
-            items={data}
-            selected={selected}
-            setSelected={setSelected}
-            placeholder={edit ? (selected?.name ? placeholder : 'Loading...') : placeholder}
-            disabled={page === 'badgeHub' || (edit ? (selected?.name ? false : true) : false)}
-          />
-          {isError && (
-            <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
-          )}
-        </div>
+        {page === 'badgeHub' ? (
+          <h1 className="summary-text verification_badge_input mb-[10px] tablet:mb-5">{selected?.name}</h1>
+        ) : (
+          <>
+            <h1 className="summary-text mb-[10px] tablet:mb-5">{summaryText}</h1>
+            <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
+              <Listbox
+                items={data}
+                selected={selected}
+                setSelected={setSelected}
+                placeholder={edit ? (selected?.name ? placeholder : 'Loading...') : placeholder}
+                disabled={page === 'badgeHub' || (edit ? (selected?.name ? false : true) : false)}
+              />
+              {isError && (
+                <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${title}!`}</p>
+              )}
+            </div>
+          </>
+        )}
         {page === 'badgeHub' ? (
           <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
             <Button variant={'cancel'} onClick={handleClose}>
@@ -639,10 +645,12 @@ const PersonalBadgesPopup = ({
           )}
         {title === 'Date of Birth' && (
           <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-            <h1 className="summary-text mb-[10px] tablet:mb-5">
-              Your date of birth strengthens your identity verification, boosting your trustworthiness and creating
-              opportunities for age-related rewards.
-            </h1>
+            {page !== 'badgeHub' && (
+              <h1 className="summary-text mb-[10px] tablet:mb-5">
+                Your date of birth strengthens your identity verification, boosting your trustworthiness and creating
+                opportunities for age-related rewards.
+              </h1>
+            )}
             {fetchingEdit ? (
               <input
                 type="text"

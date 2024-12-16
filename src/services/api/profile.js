@@ -4,6 +4,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import showToast from '../../components/ui/Toast';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useLocation } from 'react-router-dom';
 
 // FETCH ALL PROFILES
 const fetchProfiles = async (pageNo, limit = 5, sort = 'Newest First', terms = '') => {
@@ -29,14 +30,14 @@ export const useFetchOtherProfiles = (terms = '') => {
 };
 
 // FETCH MY PROFILE
-const fetchMyProfile = async (domain, viewerUuid, isPublicProfile) => {
+const fetchMyProfile = async (domain, viewerUuid, isPublicProfile, path) => {
   const params = {
     domain,
     viewerUuid,
     isPublicProfile,
   };
 
-  if (localStorage.getItem('legacyHash')) {
+  if (localStorage.getItem('legacyHash') && !(path?.startsWith('/h/') || path === '/h/')) {
     params.infoc = localStorage.getItem('legacyHash');
   }
 
@@ -55,10 +56,12 @@ const fetchMyProfile = async (domain, viewerUuid, isPublicProfile) => {
 };
 
 export const useFetchMyProfile = (domain, viewerUuid, isPublicProfile) => {
+  const location = useLocation();
+
   return useQuery({
     queryKey: ['my-profile', domain, viewerUuid, isPublicProfile],
     queryFn: async () => {
-      return await fetchMyProfile(domain, viewerUuid, isPublicProfile);
+      return await fetchMyProfile(domain, viewerUuid, isPublicProfile, location.pathname);
     },
     enabled: !!domain,
     refetchOnWindowFocus: false,

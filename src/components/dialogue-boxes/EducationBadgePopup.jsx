@@ -466,7 +466,9 @@ const EducationBadgePopup = ({
           {!addAnotherForm ? (
             <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
               <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
-                Your educational background paves the way for reward opportunities aligned with your expertise.
+                {page === 'badgeHub'
+                  ? ''
+                  : 'Your educational background paves the way for reward opportunities aligned with your expertise.'}
               </h1>
               {existingData.length > 0 &&
                 existingData.map((item, index) => (

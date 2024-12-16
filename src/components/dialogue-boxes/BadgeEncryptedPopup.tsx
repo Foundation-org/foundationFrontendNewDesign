@@ -13,8 +13,6 @@ type ClearAllAnalyticsProps = {
 export default function BadgeEncryptedPopup(props: ClearAllAnalyticsProps) {
   const { handleClose, modalVisible, title, image, singleBadgeData } = props;
 
-  console.log(singleBadgeData);
-
   return (
     <PopUp
       logo={image}

@@ -172,9 +172,11 @@ const AddCellPhonePopup = ({
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       {!otpResp ? (
         <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-          <h1 className="pb-[15px] text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
-            Ensure you can recover your account easily if needed.
-          </h1>
+          {page !== 'badgeHub' && (
+            <h1 className="pb-[15px] text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+              Ensure you can recover your account easily if needed.
+            </h1>
+          )}
           <div>
             <p
               htmlFor="email"
