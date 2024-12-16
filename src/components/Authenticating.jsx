@@ -240,7 +240,7 @@ const Authenticating = () => {
       } else if (provider === 'github') {
         id = data.id;
       } else if (provider === 'youtube') {
-        id = data.items[0].id;
+        id = data.id;
       }
       const payload = {
         data,
