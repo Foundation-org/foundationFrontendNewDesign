@@ -508,7 +508,7 @@ const IdentityBadgePopup = ({
                 {identityBadge &&
                   Object.entries(identityBadge).map(
                     ([key, value]) =>
-                      key !== 'isExpired' && (
+                      value && value !== '' && key !== 'isExpired' && (
                         <div key={key} className="flex justify-between">
                           <span className="text-xs font-bold capitalize tablet:text-base">
                             {key.replace(/([A-Z])/g, ' $1')}
