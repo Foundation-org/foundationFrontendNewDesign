@@ -265,6 +265,7 @@ const IdentityBadgePopup = ({
     } catch (error) {
       console.error('Verification failed:', error);
       showToast('error', 'verificationFailed');
+      setIsSubmitting(false);
     }
   };
 
@@ -299,10 +300,12 @@ const IdentityBadgePopup = ({
       } else {
         // Handle error from the addIdentity API
         showToast('error', 'errorAddingBadge');
+        setIsAdding(false);
       }
     } catch (error) {
       console.error('Failed to add badge:', error);
       showToast('error', 'errorAddingBadge');
+      setIsAdding(false);
     } finally {
       setIsAdding(false); // End loading for adding the badge
     }
