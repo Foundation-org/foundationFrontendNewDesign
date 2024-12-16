@@ -32,11 +32,20 @@ export default function BadgeRemovePopup({
           badgeName: type,
         });
       } else if (badgeType === 'personal' || badgeType === 'identity') {
-        removeBadge = await api.post(`/removePersonalBadge`, {
-          type: type,
-          uuid: persistedUserInfo.uuid,
-          badgeName: type,
-        });
+        if (persistedUserInfo?.isPasswordEncryption) {
+          removeBadge = await api.post(`/removePersonalBadge`, {
+            type: type,
+            uuid: persistedUserInfo.uuid,
+            badgeName: type,
+            infoc: localStorage.getItem('legacyHash')
+          });
+        } else {
+          removeBadge = await api.post(`/removePersonalBadge`, {
+            type: type,
+            uuid: persistedUserInfo.uuid,
+            badgeName: type,
+          });
+        }
       } else if (badgeType === 'web3') {
         removeBadge = await api.post(`/removeWeb3Badge`, {
           type: type,
