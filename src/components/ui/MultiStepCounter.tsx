@@ -19,20 +19,18 @@ export default function MultiStepCounter({ currentStep, steps, isLabel }: Progre
 
           return (
             <React.Fragment key={index}>
-              <div className="flex">
-                <div
-                  className={`mx-auto flex size-8 items-center justify-center rounded-full text-sm ${
-                    isActive ? 'bg-blue-100 text-white' : 'border-2 border-gray-1 bg-white text-gray-1'
-                  }`}
-                >
-                  <span className="w-fit text-center">{isActive ? <FaCheck /> : index + 1}</span>
-                </div>
+              <div
+                className={`mx-auto flex size-5 items-center justify-center rounded-full text-sm tablet:size-8 ${
+                  isActive ? 'bg-blue-100 text-white' : 'border-2 border-gray-1 bg-white text-gray-1'
+                }`}
+              >
+                <span className="w-fit text-center text-xs tablet:text-base">{isActive ? <FaCheck /> : index + 1}</span>
               </div>
               {!isLast && (
                 <div className="align-center flex w-1/6 content-center items-center align-middle">
                   <div className="align-center w-full flex-1 items-center rounded bg-gray-1 align-middle">
                     <div
-                      className={`rounded py-[2px] text-center text-xs leading-none ${
+                      className={`rounded py-[1px] text-center text-xs leading-none tablet:py-[2px] ${
                         index + 1 < currentStep ? 'bg-blue-100' : 'bg-gray-1'
                       }`}
                     ></div>

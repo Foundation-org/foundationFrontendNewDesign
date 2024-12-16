@@ -276,15 +276,14 @@ const IdentityBadgePopup = ({
       let addIdentityResponse;
 
       if (persistedUserInfo?.isPasswordEncryption) {
-        if (!localStorage.getItem('legacyHash')) throw new Error("Now legacyHash found in localStorage!");
+        if (!localStorage.getItem('legacyHash')) throw new Error('Now legacyHash found in localStorage!');
         // Call addIdentity API with the data from verifyIdentity
         addIdentityResponse = await api.post('/addIdentityBadge', {
           ...addIdentity,
           uuid: persistedUserInfo?.uuid,
           infoc: localStorage.getItem('legacyHash'),
         });
-      }
-      else {
+      } else {
         // Call addIdentity API with the data from verifyIdentity
         addIdentityResponse = await api.post('/addIdentityBadge', {
           ...addIdentity,
@@ -384,7 +383,7 @@ const IdentityBadgePopup = ({
       )}
       {type === 'identity' && (
         <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-          <div className="relative flex items-center justify-center overflow-hidden">
+          <div className="relative flex items-center justify-center overflow-y-auto">
             {!edit && (
               <div
                 className={`transform transition-transform duration-500 -translate-x-${(currentStep - 1) * 100}% flex w-full`}
