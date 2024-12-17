@@ -108,6 +108,7 @@ const BadgeHubPopup = ({ isPopup, setIsPopup, title, logo }) => {
   const queryClient = useQueryClient();
 
   const handleClose = () => {
+    queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
     queryClient.invalidateQueries({ queryKey: ['my-profile'] }, { exact: true });
     setIsPopup(false);
   };
