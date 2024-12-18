@@ -109,3 +109,8 @@ export const searchBookmarks = async (term, moderationRatingFilter) => {
     return response.data;
   }
 };
+
+// For Fdx setup
+export const setFDXCall = async (params) => {
+  return await api.post('/user/updateUserSettings', params);
+};
