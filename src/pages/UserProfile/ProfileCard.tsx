@@ -4,6 +4,8 @@ import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePop
 import SendMessageFromDomain from '../../components/dialogue-boxes/SendMessageFromDomain';
 import BadgeHub from './BadgeHub';
 import SummaryCard from '../../components/SummaryCard';
+import SendMessage from './components/SendMessage';
+import SetFDX from './components/SetFDX';
 
 export default function ProfileCard({ profile, badges }: any) {
   const location = useLocation();
@@ -75,6 +77,12 @@ export default function ProfileCard({ profile, badges }: any) {
         <p className="text-[11px] leading-normal text-gray-1 dark:text-[#f1f1f1] tablet:text-[18px]">
           {profile?.domain.description}
         </p>
+        {isPublicProfile &&
+          <SendMessage fdx={profile?.messageByDomainFDX} />
+        }
+        {!isPublicProfile &&
+          <SetFDX />
+        }
       </div>
     </SummaryCard>
   );
