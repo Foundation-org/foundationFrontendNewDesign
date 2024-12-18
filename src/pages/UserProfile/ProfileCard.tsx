@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePopup';
+import SendMessageFromDomain from '../../components/dialogue-boxes/SendMessageFromDomain';
 import BadgeHub from './BadgeHub';
 import SummaryCard from '../../components/SummaryCard';
 
@@ -8,10 +9,17 @@ export default function ProfileCard({ profile, badges }: any) {
   const location = useLocation();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
+  const [sendMessagePopup, setSendMessagePopup] = useState(false);
 
   return (
     <SummaryCard headerIcon="/assets/profile/homepagebadges.svg" headerTitle={`${profile?.domain.name}.on.foundation`}>
       <div className="relative mx-auto flex flex-col gap-[14px] tablet:gap-4">
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/message-icon.svg`}
+          alt="save icon"
+          className="absolute right-0 top-0 h-[17px] w-[12.7px] cursor-pointer tablet:size-[25px]"
+          onClick={() => setSendMessagePopup(true)}
+        />
         <div className="flex w-full items-center gap-[14px] tablet:gap-6">
           <div
             className="relative flex size-[60px] min-w-[60px] flex-col gap-[6px] rounded-full border-2 border-[#C9C8C8] tablet:size-[185px] tablet:min-w-[185px] tablet:border-[5px]"
@@ -51,6 +59,14 @@ export default function ProfileCard({ profile, badges }: any) {
                   handleSkip={null}
                   onboarding={null}
                   progress={null}
+                />
+              )}
+              {sendMessagePopup && (
+                <SendMessageFromDomain
+                  isPopup={sendMessagePopup}
+                  setIsPopup={setSendMessagePopup}
+                  title="QR Code"
+                  logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
                 />
               )}
             </>
