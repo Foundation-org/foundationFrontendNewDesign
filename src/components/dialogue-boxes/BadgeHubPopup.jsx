@@ -45,7 +45,11 @@ const BadgeList = ({
                 }}
               />
             )}
-            <img src={badge.image} alt={badge.title} className="size-[6.389vw] tablet:size-10 laptop:size-[50px]" />
+            <img
+              src={badge.image}
+              alt={badge.title}
+              className="size-[6.389vw] rounded-full tablet:size-10 laptop:size-[50px]"
+            />
             <div className="flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-white-500 dark:border-gray-100 dark:bg-accent-100 tablet:h-[50px] tablet:w-[142px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[200px] laptop:rounded-[15px]">
               <h1 className="whitespace-nowrap text-[2.11vw] font-medium capitalize leading-normal text-gray dark:text-gray-400 tablet:text-[15px] laptop:text-[20px]">
                 {badge.title}

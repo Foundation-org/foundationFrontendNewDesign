@@ -383,13 +383,17 @@ const IdentityBadgePopup = ({
       )}
       {type === 'identity' && (
         <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-          <div className="relative flex items-center justify-center overflow-y-auto">
+          <div className="relative flex flex-col items-center justify-center overflow-y-auto">
             {!edit && (
               <div
                 className={`transform transition-transform duration-500 -translate-x-${(currentStep - 1) * 100}% flex w-full`}
               >
                 {/* Step Content */}
                 <div className="flex min-w-full flex-col space-y-4 p-3 tablet:px-10 tablet:py-5">
+                  <h1 className="text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+                    Strengthen your verification by showcasing your professional certifications and demonstrating your
+                    expertise.
+                  </h1>
                   <div>
                     <MultiStepCounter steps={['1', '2', '3', '4']} currentStep={currentStep - 1} isLabel={false} />
                     <p className="summary-text text-center">{stepDescriptions[currentStep - 1]}</p>
@@ -508,7 +512,9 @@ const IdentityBadgePopup = ({
                 {identityBadge &&
                   Object.entries(identityBadge).map(
                     ([key, value]) =>
-                      value && value !== '' && key !== 'isExpired' && (
+                      value &&
+                      value !== '' &&
+                      key !== 'isExpired' && (
                         <div key={key} className="flex justify-between">
                           <span className="text-xs font-bold capitalize tablet:text-base">
                             {key.replace(/([A-Z])/g, ' $1')}

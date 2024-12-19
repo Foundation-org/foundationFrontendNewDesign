@@ -1,30 +1,46 @@
 import { Button } from '../ui/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PopUp from '../ui/PopUp';
+import { setDirectMessageForm } from '../../features/direct-message/directMessageSlice';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
-const SendMessageFromDomain = ({ isPopup, setIsPopup, title, logo }) => {
+const SendMessageFromDomain = ({ isPopup, setIsPopup, title, logo, fdx }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const stripeBadge = persistedUserInfo?.badges?.find((badge) => badge.type === 'stripe');
-
-  if (!stripeBadge) {
-    return <div>No Stripe Badge Found</div>;
-  }
-
-  const handleClose = () => setIsPopup(false);
 
   return (
-    <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo} customClasses={'overflow-y-auto'}>
+    <PopUp
+      open={isPopup}
+      handleClose={() => setIsPopup(false)}
+      title={title}
+      logo={logo}
+      customClasses={'overflow-y-auto'}
+    >
       <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="summary-text">Need summary text here</h1>
-        <div className="flex w-full items-center justify-center">
-          {stripeBadge.data?.qrCode ? (
-            <img src={stripeBadge.data.qrCode} alt="Stripe QR Code" className="size-[150px] tablet:size-[200px]" />
-          ) : (
-            <p>QR Code not available</p>
-          )}
-        </div>
-        <div className="flex justify-end">
-          <Button variant="cancel" onClick={handleClose}>
+        <h1 className="summary-text">You have to pay ${fdx} to message this person.</h1>
+        <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]">
+          <Button
+            variant="submit"
+            onClick={() => {
+              if (persistedUserInfo.balance >= fdx) {
+                dispatch(
+                  setDirectMessageForm({
+                    to: 'sendMessageFromDomain',
+                    readReward: 0,
+                    sendFdxAmount: fdx,
+                  })
+                );
+                navigate('/direct-messaging/new-message');
+              } else {
+                toast.warning('You do not have enough balance to send this message.');
+              }
+            }}
+          >
+            Continue
+          </Button>
+          <Button variant="cancel" onClick={() => setIsPopup(false)}>
             Close
           </Button>
         </div>

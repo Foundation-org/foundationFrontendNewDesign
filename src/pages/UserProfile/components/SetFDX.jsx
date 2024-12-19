@@ -1,30 +1,29 @@
-import { useState } from "react";
-import { Button } from "../../../components/ui/Button";
-import SetFDXPopup from "../../../components/dialogue-boxes/SetFDXPopup";
+import { useState } from 'react';
+import { Button } from '../../../components/ui/Button';
+import SetFDXPopup from '../../../components/dialogue-boxes/SetFDXPopup';
 
 function SetFDX() {
-    const [isPopup, setPopup] = useState(false);
+  const [isPopup, setPopup] = useState(false);
 
-    const handleClose = () => {
-        setPopup(false);
-    }
+  const handleClose = () => {
+    setPopup(false);
+  };
 
-    return (
-        <>
-            <Button variant="submit" className="mt-10" onClick={() => setPopup(true)}>
-                Set FDX for messages
-            </Button>
-            {
-                isPopup &&
-                <SetFDXPopup
-                    isPopup={isPopup}
-                    title={"Set FDX for messages"}
-                    logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
-                    handleClose={handleClose}
-                />
-            }
-        </>
-    )
+  return (
+    <>
+      <Button variant="submit" onClick={() => setPopup(true)}>
+        Manage Messaging
+      </Button>
+      {isPopup && (
+        <SetFDXPopup
+          isPopup={isPopup}
+          title={'Manage Messaging'}
+          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
+          handleClose={handleClose}
+        />
+      )}
+    </>
+  );
 }
 
-export default SetFDX
+export default SetFDX;

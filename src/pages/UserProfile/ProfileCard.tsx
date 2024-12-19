@@ -4,8 +4,6 @@ import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePop
 import SendMessageFromDomain from '../../components/dialogue-boxes/SendMessageFromDomain';
 import BadgeHub from './BadgeHub';
 import SummaryCard from '../../components/SummaryCard';
-import SendMessage from './components/SendMessage';
-import SetFDX from './components/SetFDX';
 
 export default function ProfileCard({ profile, badges }: any) {
   const location = useLocation();
@@ -16,12 +14,14 @@ export default function ProfileCard({ profile, badges }: any) {
   return (
     <SummaryCard headerIcon="/assets/profile/homepagebadges.svg" headerTitle={`${profile?.domain.name}.on.foundation`}>
       <div className="relative mx-auto flex flex-col gap-[14px] tablet:gap-4">
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/message-icon.svg`}
-          alt="save icon"
-          className="absolute right-0 top-0 h-[17px] w-[12.7px] cursor-pointer tablet:size-[25px]"
-          onClick={() => setSendMessagePopup(true)}
-        />
+        {isPublicProfile && (
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/message-icon.svg`}
+            alt="save icon"
+            className="absolute right-0 top-0 h-[17px] w-[12.7px] cursor-pointer tablet:size-[25px]"
+            onClick={() => setSendMessagePopup(true)}
+          />
+        )}
         <div className="flex w-full items-center gap-[14px] tablet:gap-6">
           <div
             className="relative flex size-[60px] min-w-[60px] flex-col gap-[6px] rounded-full border-2 border-[#C9C8C8] tablet:size-[185px] tablet:min-w-[185px] tablet:border-[5px]"
@@ -63,26 +63,21 @@ export default function ProfileCard({ profile, badges }: any) {
                   progress={null}
                 />
               )}
-              {sendMessagePopup && (
-                <SendMessageFromDomain
-                  isPopup={sendMessagePopup}
-                  setIsPopup={setSendMessagePopup}
-                  title="QR Code"
-                  logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
-                />
-              )}
             </>
+          )}
+          {sendMessagePopup && (
+            <SendMessageFromDomain
+              isPopup={sendMessagePopup}
+              setIsPopup={setSendMessagePopup}
+              title="Send Message"
+              logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
+              fdx={profile?.messageByDomainFDX}
+            />
           )}
         </div>
         <p className="text-[11px] leading-normal text-gray-1 dark:text-[#f1f1f1] tablet:text-[18px]">
           {profile?.domain.description}
         </p>
-        {isPublicProfile &&
-          <SendMessage fdx={profile?.messageByDomainFDX} />
-        }
-        {!isPublicProfile &&
-          <SetFDX />
-        }
       </div>
     </SummaryCard>
   );

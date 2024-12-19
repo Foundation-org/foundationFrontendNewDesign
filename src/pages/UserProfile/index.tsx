@@ -15,6 +15,7 @@ import SummaryCard from '../../components/SummaryCard';
 import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePopup';
 import BadgeHub from './BadgeHub';
 import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
+import SetFDX from './components/SetFDX';
 
 export default function UserProfile() {
   const location = useLocation();
@@ -136,18 +137,20 @@ export default function UserProfile() {
                     </h5>
                   </div>
                 </div>
-                <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
+                <div className="mt-3 grid w-full grid-cols-2 justify-center gap-3 tablet:mt-5">
                   <Button variant={'submit'} onClick={() => setIsBadgeHubPopup(true)}>
                     Show Badges
                   </Button>
                   <Button variant={'submit'} onClick={() => setIsPersonalPopup(true)}>
                     Manage Domain
                   </Button>
+
                   {!isPublicProfile && (
-                    <Link to={`/h/${data?.profile?.domain.name}`}>
-                      <Button variant="submit">View as public</Button>
-                    </Link>
+                    <Button variant="submit">
+                      <Link to={`/h/${data?.profile?.domain.name}`}>View as public</Link>
+                    </Button>
                   )}
+                  {!isPublicProfile && <SetFDX />}
                 </div>
               </>
             </SummaryCard>

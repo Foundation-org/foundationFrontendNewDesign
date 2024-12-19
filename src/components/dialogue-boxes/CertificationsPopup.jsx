@@ -401,7 +401,8 @@ const CertificationsPopup = ({
           {!addAnotherForm ? (
             <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
               <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
-                Your work experience opens opportunities tailored to your expertise.
+                Strengthen your verification by showcasing your professional certifications and demonstrating your
+                expertise.
               </h1>
               {existingData.length > 0 &&
                 existingData.map((item, index) => (

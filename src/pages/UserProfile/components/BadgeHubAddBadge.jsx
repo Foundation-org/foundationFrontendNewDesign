@@ -6,6 +6,7 @@ import WorkBadgePopup from '../../../components/dialogue-boxes/WorkBadgePopup';
 import EducationBadgePopup from '../../../components/dialogue-boxes/EducationBadgePopup';
 import SocialConnectPopup from '../../Dashboard/pages/Profile/pages/verification-badges/SocialConnectPopup';
 import Web3ConnectPopup from '../../Dashboard/pages/Profile/pages/verification-badges/Web3ConnectPopup';
+import ConnectPopup from '../../../components/dialogue-boxes/ConnectPopup';
 
 export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, type, badges }) {
   const checkDomainBadge = () => {
@@ -18,6 +19,7 @@ export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, t
   const checkLegacyBadge = () => badges?.some((badge) => (badge?.legacy ? true : false));
 
   const checkWeb3Badge = (itemType) => badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
+  const checkStripeBadge = (itemType) => badges?.some((badge) => badge?.type == itemType || false) || false;
 
   const checkPersonalBadge = (itemType) =>
     badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
@@ -219,6 +221,16 @@ export default function BadgeHubAddBadge({ isPopup, setIsPopup, edit, setEdit, t
       link: '',
       check: checkWeb3Badge('etherium-wallet'),
       badgeHubType: 'etherium-wallet',
+    },
+    {
+      component: ConnectPopup,
+      type: 'stripe',
+      title: 'Stripe',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+      accountName: '',
+      link: '',
+      check: checkStripeBadge('stripe'),
+      badgeHubType: 'stripe',
     },
   ];
 

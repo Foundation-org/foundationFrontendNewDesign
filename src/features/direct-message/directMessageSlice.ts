@@ -13,6 +13,8 @@ const initialState = {
   questStartData: null,
   questForeignKey: '',
   options: [],
+  // ... SendMessageFormDomain
+  sendFdxAmount: 0,
 };
 
 export const directMessageSlice = createSlice({

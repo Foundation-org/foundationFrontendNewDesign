@@ -16,7 +16,6 @@ export default function DMPreview() {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const directMessageState = useSelector((state: any) => state.directMessage);
-  const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const [participants, setParticipants] = useState(0);
@@ -172,7 +171,9 @@ export default function DMPreview() {
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 {directMessageState.to === 'Collection'
                   ? `+0 FDX`
-                  : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
+                  : directMessageState.to === 'sendmessagefromdomain'
+                    ? `+${directMessageState.sendFdxAmount} FDX`
+                    : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
               </span>
             </>
           )}

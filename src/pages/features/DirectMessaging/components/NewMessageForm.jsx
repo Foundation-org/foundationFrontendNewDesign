@@ -114,7 +114,7 @@ export default function NewMessageForm() {
 
   // =========== HANDLE PREVIEW
   const handlePreview = () => {
-    if (directMessageState.readReward < defaultReadReward) {
+    if (directMessageState.to !== 'sendmessagefromdomain' && directMessageState.readReward < defaultReadReward) {
       toast.error(`Read Reward must be at least ${defaultReadReward}`);
       return;
     }
@@ -202,8 +202,15 @@ export default function NewMessageForm() {
       <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
         <div className="flex items-center justify-between">
           <p className="summary-text text-center">
-            You are sending a message to {advanceAnalytics ? <b>{participants}</b> : <b>{handleNoOfUsers()}</b>} total
-            participants
+            You are sending a message to{' '}
+            {advanceAnalytics ? (
+              <b>{participants}</b>
+            ) : directMessageState.to === 'sendmessagefromdomain' ? (
+              1
+            ) : (
+              <b>{handleNoOfUsers()}</b>
+            )}{' '}
+            total participants
           </p>
           {advanceAnalytics && (
             <p
@@ -219,7 +226,7 @@ export default function NewMessageForm() {
       </div>
       {/* Message Card */}
       <div className="relative h-fit w-full max-w-[730px] space-y-[9px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:mb-8 tablet:space-y-[15px] tablet:px-5 tablet:py-6">
-        {directMessageState.to !== 'Participants' && (
+        {directMessageState.to !== 'Participants' && directMessageState.to !== 'sendmessagefromdomain' && (
           <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
             <p className="text-[10px] font-semibold leading-[10px] text-gray dark:text-white tablet:text-[22px] tablet:leading-[22px]">
               To:
@@ -272,28 +279,32 @@ export default function NewMessageForm() {
           />
           <div className="flex items-end">{directMessageState.message?.length}/500</div>
         </div>
-        <h1 className="px-2 py-[5.7px] text-[8.52px] font-normal italic leading-none text-gray dark:text-[#D3D3D3] tablet:px-[18px] tablet:py-3 tablet:text-[19px]">
-          Enter the amount of FDX a participant will earn from reading your message. FDX will only be deducted from your
-          balance if a message is read
-        </h1>
+        {directMessageState.to !== 'sendmessagefromdomain' && (
+          <h1 className="px-2 py-[5.7px] text-[8.52px] font-normal italic leading-none text-gray dark:text-[#D3D3D3] tablet:px-[18px] tablet:py-3 tablet:text-[19px]">
+            Enter the amount of FDX a participant will earn from reading your message. FDX will only be deducted from
+            your balance if a message is read
+          </h1>
+        )}
         {/* Read Reward */}
-        <div
-          className={`${directMessageState.to === 'All' || directMessageState.to === 'Participants' ? '' : 'opacity-50'} flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3`}
-        >
-          <p className="w-fit whitespace-nowrap text-[10px] font-semibold leading-[10px] text-gray dark:text-white tablet:text-[22px] tablet:leading-[22px]">
-            Read Reward:
-          </p>
-          <input
-            type="number"
-            value={directMessageState.readReward}
-            placeholder={defaultReadReward}
-            className="w-fit bg-transparent pl-2 text-[10px] leading-[10px] text-gray-1 focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
-            onChange={(e) => {
-              dispatch(setDirectMessageForm({ readReward: e.target.value }));
-            }}
-            disabled={directMessageState.to !== 'Participants' && directMessageState.to !== 'All'}
-          />
-        </div>
+        {directMessageState.to !== 'sendmessagefromdomain' && (
+          <div
+            className={`${directMessageState.to === 'All' || directMessageState.to === 'Participants' ? '' : 'opacity-50'} flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3`}
+          >
+            <p className="w-fit whitespace-nowrap text-[10px] font-semibold leading-[10px] text-gray dark:text-white tablet:text-[22px] tablet:leading-[22px]">
+              Read Reward:
+            </p>
+            <input
+              type="number"
+              value={directMessageState.readReward}
+              placeholder={defaultReadReward}
+              className="w-fit bg-transparent pl-2 text-[10px] leading-[10px] text-gray-1 focus:outline-none dark:bg-accent-100 dark:text-white-400 tablet:text-[22px] tablet:leading-[22px]"
+              onChange={(e) => {
+                dispatch(setDirectMessageForm({ readReward: e.target.value }));
+              }}
+              disabled={directMessageState.to !== 'Participants' && directMessageState.to !== 'All'}
+            />
+          </div>
+        )}
       </div>
       {/* Total FDX to send message*/}
       <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
@@ -301,9 +312,15 @@ export default function NewMessageForm() {
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
             Total FDX to send message
           </p>
-          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
-            {`${handleNoOfUsers()} participants = ${directMessageState.to === 'Collection' ? `0 FDX` : `${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}`}
-          </p>
+          {directMessageState.to === 'sendmessagefromdomain' ? (
+            <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+              {`1 participants =  ${`${directMessageState.sendFdxAmount} FDX`}`}
+            </p>
+          ) : (
+            <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+              {`${handleNoOfUsers()} participants = ${directMessageState.to === 'Collection' ? `0 FDX` : `${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}`}
+            </p>
+          )}
         </div>
       </div>
       {/* Last Section Buttons */}
