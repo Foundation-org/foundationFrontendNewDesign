@@ -19,7 +19,7 @@ const SendMessageFromDomain = ({ profile, isPopup, setIsPopup, title, logo, fdx 
       customClasses={'overflow-y-auto'}
     >
       <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <h1 className="summary-text">You have to pay ${fdx} to message this person.</h1>
+        <h1 className="summary-text">You have to pay {fdx} FDX to message this person.</h1>
         <div className="flex items-center justify-end gap-[15px] tablet:gap-[35px]">
           <Button
             variant="submit"

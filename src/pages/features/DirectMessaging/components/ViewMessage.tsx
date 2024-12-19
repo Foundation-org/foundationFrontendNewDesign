@@ -163,7 +163,7 @@ export default function ViewMessage({
               >
                 Go Back
               </Button>
-              {filter === 'received' && !viewMessageData?.viewed && (
+              {filter === 'received' && viewMessageData?.messageContext !== "ByDomain" && !viewMessageData?.viewed && (
                 <Button
                   variant={buttonVariant}
                   disabled={buttonVariant === 'submit' ? false : true}
