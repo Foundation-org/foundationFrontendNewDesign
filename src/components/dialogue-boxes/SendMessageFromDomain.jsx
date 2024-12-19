@@ -1,7 +1,7 @@
 import { Button } from '../ui/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import PopUp from '../ui/PopUp';
-import { setDirectMessageForm } from '../../features/direct-message/directMessageSlice';
+import { resetDirectMessageForm, setDirectMessageForm } from '../../features/direct-message/directMessageSlice';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,12 +25,13 @@ const SendMessageFromDomain = ({ profile, isPopup, setIsPopup, title, logo, fdx 
             variant="submit"
             onClick={() => {
               if (persistedUserInfo.balance >= fdx) {
+                dispatch(resetDirectMessageForm());
                 dispatch(
                   setDirectMessageForm({
                     to: profile?.domain?.name,
                     readReward: 0,
                     sendFdxAmount: fdx,
-                    messageContext: 'ByDomain'
+                    messageContext: 'ByDomain',
                   })
                 );
                 navigate('/direct-messaging/new-message');

@@ -31,6 +31,7 @@ import { badgesTotalLength } from '../../../constants/varification-badges';
 import { setProgress } from '../../../features/progress/progressSlice';
 import { setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
 import BadgeOnboardingPopup from './BadgeOnboardingPopup';
+import { resetDirectMessageForm } from '../../../features/direct-message/directMessageSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -418,7 +419,10 @@ export default function DashboardLayout({ children }) {
                           <Button
                             variant="hollow-submit2"
                             className="bg-white tablet:w-fit"
-                            onClick={() => navigate('/direct-messaging/new-message')}
+                            onClick={() => {
+                              dispatch(resetDirectMessageForm());
+                              navigate('/direct-messaging/new-message');
+                            }}
                           >
                             + New Message
                           </Button>
