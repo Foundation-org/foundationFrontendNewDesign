@@ -36,8 +36,8 @@ export default function DMPreview() {
     mutationFn: createMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['messages'] });
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] });
       toast.success('Message sent');
-
       navigate('/direct-messaging');
     },
     onError: (err: any) => {
@@ -131,7 +131,7 @@ export default function DMPreview() {
           filter="receive"
           questStartData={{ ...directMessageState.questStartData, questAnswers: filterOutOptions() }}
           page="preview"
-          handleViewMessage={() => { }}
+          handleViewMessage={() => {}}
         />
       </div>
       <div className="flex h-fit w-full max-w-[730px] justify-end gap-4 tablet:mx-auto">
@@ -151,7 +151,7 @@ export default function DMPreview() {
         <Button
           variant={'submit'}
           onClick={() => {
-            if (directMessageState.messageContext && directMessageState.messageContext === "ByDomain") {
+            if (directMessageState.messageContext && directMessageState.messageContext === 'ByDomain') {
               createNewMessage({
                 ...directMessageState,
                 from: persistedUserInfo.uuid,
@@ -164,8 +164,7 @@ export default function DMPreview() {
                 messageContext: directMessageState.messageContext,
                 sendFdxAmount: directMessageState.sendFdxAmount,
               });
-            }
-            else {
+            } else {
               createNewMessage({
                 ...directMessageState,
                 from: persistedUserInfo.email,
