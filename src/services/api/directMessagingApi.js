@@ -8,22 +8,42 @@ export const deleteMessage = async (data) => {
 };
 
 export const createMessage = async (data) => {
-  const payload = {
-    from: data.from,
-    to: data.to,
-    subject: data.subject,
-    message: data.message,
-    type: data.type,
-    draftId: data.draftId,
-    uuid: data.uuid,
-    ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
-    ...(data?.options?.length > 0 && { options: data.options }),
-    ...(data.to === 'Participants' || data.to === 'All' ? { readReward: data.readReward } : {}),
-    platform: data.platform,
-    sharedLinkOnly: data?.sharedLinkOnly,
-  };
-
-  return await api.post('/directMessage/send', payload);
+  if (data.messageContext === "ByDomain") {
+    const payload = {
+      from: data.from,
+      to: data.to,
+      subject: data.subject,
+      message: data.message,
+      type: data.type,
+      draftId: data.draftId,
+      uuid: data.uuid,
+      ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
+      ...(data?.options?.length > 0 && { options: data.options }),
+      ...(data.to === 'Participants' || data.to === 'All' ? { readReward: data.readReward } : {}),
+      platform: data.platform,
+      sharedLinkOnly: data?.sharedLinkOnly,
+      messageContext: data.messageContext,
+      sendFdxAmount: data.sendFdxAmount,
+    };
+    return await api.post('/directMessage/sendPublic', payload);
+  }
+  else {
+    const payload = {
+      from: data.from,
+      to: data.to,
+      subject: data.subject,
+      message: data.message,
+      type: data.type,
+      draftId: data.draftId,
+      uuid: data.uuid,
+      ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
+      ...(data?.options?.length > 0 && { options: data.options }),
+      ...(data.to === 'Participants' || data.to === 'All' ? { readReward: data.readReward } : {}),
+      platform: data.platform,
+      sharedLinkOnly: data?.sharedLinkOnly,
+    };
+    return await api.post('/directMessage/send', payload);
+  }
 };
 
 export const createDraftMessage = async (data) => {
@@ -38,6 +58,8 @@ export const createDraftMessage = async (data) => {
     ...(data.questForeignKey && { questForeignKey: data.questForeignKey }),
     ...(data.options && { options: data.options }),
     platform: data.platform,
+    messageContext: data.messageContext,
+    sendFdxAmount: data.sendFdxAmount,
   });
 };
 

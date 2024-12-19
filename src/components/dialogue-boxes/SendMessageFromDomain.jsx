@@ -5,7 +5,7 @@ import { setDirectMessageForm } from '../../features/direct-message/directMessag
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
-const SendMessageFromDomain = ({ isPopup, setIsPopup, title, logo, fdx }) => {
+const SendMessageFromDomain = ({ profile, isPopup, setIsPopup, title, logo, fdx }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -27,9 +27,10 @@ const SendMessageFromDomain = ({ isPopup, setIsPopup, title, logo, fdx }) => {
               if (persistedUserInfo.balance >= fdx) {
                 dispatch(
                   setDirectMessageForm({
-                    to: 'sendMessageFromDomain',
+                    to: profile?.domain?.name,
                     readReward: 0,
                     sendFdxAmount: fdx,
+                    messageContext: 'ByDomain'
                   })
                 );
                 navigate('/direct-messaging/new-message');

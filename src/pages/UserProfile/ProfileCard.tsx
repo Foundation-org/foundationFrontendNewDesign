@@ -67,6 +67,7 @@ export default function ProfileCard({ profile, badges }: any) {
           )}
           {sendMessagePopup && (
             <SendMessageFromDomain
+              profile={profile}
               isPopup={sendMessagePopup}
               setIsPopup={setSendMessagePopup}
               title="Send Message"

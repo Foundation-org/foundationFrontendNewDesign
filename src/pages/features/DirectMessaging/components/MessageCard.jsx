@@ -156,15 +156,29 @@ export default function MessageCard({ setViewMsg, item, filter, setViewMessageDa
               variant={'submit'}
               onClick={() => {
                 dispatch(
-                  setDirectMessageForm({
-                    draftId: item._id,
-                    to: item.to,
-                    subject: item.subject,
-                    message: item.message,
-                    options: item.options,
-                    questForeignKey: item.questForeignKey,
-                    readReward: item.readReward,
-                  })
+                  item.messageContext && item.messageContext === "ByDomain" ?
+                    setDirectMessageForm({
+                      draftId: item._id,
+                      to: item.domain ? item.domain : item.to,
+                      subject: item.subject,
+                      message: item.message,
+                      options: item.options,
+                      questForeignKey: item.questForeignKey,
+                      readReward: item.readReward,
+                      messageContext: item.messageContext,
+                      sendFdxAmount: item.sendFdxAmount,
+                      domain: item.domain,
+                    })
+                    :
+                    setDirectMessageForm({
+                      draftId: item._id,
+                      to: item.to,
+                      subject: item.subject,
+                      message: item.message,
+                      options: item.options,
+                      questForeignKey: item.questForeignKey,
+                      readReward: item.readReward,
+                    })
                 );
                 if (item.to === 'Participants') {
                   navigate('/direct-messaging/new-message?advance-analytics=true');
@@ -236,6 +250,6 @@ export default function MessageCard({ setViewMsg, item, filter, setViewMessageDa
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }

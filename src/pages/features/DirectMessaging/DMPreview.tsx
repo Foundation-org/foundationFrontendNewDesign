@@ -131,7 +131,7 @@ export default function DMPreview() {
           filter="receive"
           questStartData={{ ...directMessageState.questStartData, questAnswers: filterOutOptions() }}
           page="preview"
-          handleViewMessage={() => {}}
+          handleViewMessage={() => { }}
         />
       </div>
       <div className="flex h-fit w-full max-w-[730px] justify-end gap-4 tablet:mx-auto">
@@ -151,16 +151,32 @@ export default function DMPreview() {
         <Button
           variant={'submit'}
           onClick={() => {
-            createNewMessage({
-              ...directMessageState,
-              from: persistedUserInfo.email,
-              uuid: persistedUserInfo.uuid,
-              options: directMessageState.options,
-              questForeignKey: directMessageState.questForeignKey,
-              platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
-              type: 'new',
-              sharedLinkOnly: uniqueLink ? uniqueLink : '',
-            });
+            if (directMessageState.messageContext && directMessageState.messageContext === "ByDomain") {
+              createNewMessage({
+                ...directMessageState,
+                from: persistedUserInfo.uuid,
+                uuid: persistedUserInfo.uuid,
+                options: directMessageState.options,
+                questForeignKey: directMessageState.questForeignKey,
+                platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
+                type: 'new',
+                sharedLinkOnly: uniqueLink ? uniqueLink : '',
+                messageContext: directMessageState.messageContext,
+                sendFdxAmount: directMessageState.sendFdxAmount,
+              });
+            }
+            else {
+              createNewMessage({
+                ...directMessageState,
+                from: persistedUserInfo.email,
+                uuid: persistedUserInfo.uuid,
+                options: directMessageState.options,
+                questForeignKey: directMessageState.questForeignKey,
+                platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
+                type: 'new',
+                sharedLinkOnly: uniqueLink ? uniqueLink : '',
+              });
+            }
           }}
         >
           {isPending === true ? (
@@ -171,7 +187,7 @@ export default function DMPreview() {
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 {directMessageState.to === 'Collection'
                   ? `+0 FDX`
-                  : directMessageState.to === 'sendmessagefromdomain'
+                  : directMessageState.messageContext === 'ByDomain'
                     ? `+${directMessageState.sendFdxAmount} FDX`
                     : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
               </span>

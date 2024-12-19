@@ -86,7 +86,7 @@ export default function NewMessageForm() {
   const handleDraft = () => {
     if (directMessageState.subject || directMessageState.message) {
       const params = {
-        from: persistedUserInfo.email,
+        from: directMessageState?.messageContext && directMessageState?.messageContext === "ByDomain" ? persistedUserInfo?.uuid : persistedUserInfo.email,
         uuid: persistedUserInfo.uuid,
         platform: isPseudoBadge ? 'Foundation-IO.com' : 'Verified User',
         to: directMessageState.to,
@@ -99,9 +99,19 @@ export default function NewMessageForm() {
         params.readReward = directMessageState.readReward;
       }
 
+      if (directMessageState.to !== 'Participants' && directMessageState.to !== 'All' && directMessageState.to !== 'List' && (!directMessageState.messageContext || directMessageState?.messageContext === "")) {
+        params.readReward = directMessageState.readReward;
+      }
+
       if (directMessageState.to === 'Participants') {
         params.questForeignKey = directMessageState.questForeignKey;
         params.options = directMessageState.options;
+      }
+
+      if (directMessageState?.messageContext) {
+        params.messageContext = directMessageState?.messageContext;
+        params.sendFdxAmount = directMessageState?.sendFdxAmount;
+        params.domain = directMessageState?.domain;
       }
 
       createDraft(params);
@@ -114,7 +124,7 @@ export default function NewMessageForm() {
 
   // =========== HANDLE PREVIEW
   const handlePreview = () => {
-    if (directMessageState.to !== 'sendmessagefromdomain' && directMessageState.readReward < defaultReadReward) {
+    if (directMessageState.messageContext !== 'ByDomain' && directMessageState.readReward < defaultReadReward) {
       toast.error(`Read Reward must be at least ${defaultReadReward}`);
       return;
     }
@@ -205,7 +215,7 @@ export default function NewMessageForm() {
             You are sending a message to{' '}
             {advanceAnalytics ? (
               <b>{participants}</b>
-            ) : directMessageState.to === 'sendmessagefromdomain' ? (
+            ) : directMessageState.messageContext === 'ByDomain' ? (
               1
             ) : (
               <b>{handleNoOfUsers()}</b>
@@ -226,7 +236,7 @@ export default function NewMessageForm() {
       </div>
       {/* Message Card */}
       <div className="relative h-fit w-full max-w-[730px] space-y-[9px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:mb-8 tablet:space-y-[15px] tablet:px-5 tablet:py-6">
-        {directMessageState.to !== 'Participants' && directMessageState.to !== 'sendmessagefromdomain' && (
+        {directMessageState.to !== 'Participants' && directMessageState.messageContext !== 'ByDomain' && (
           <div className="flex rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
             <p className="text-[10px] font-semibold leading-[10px] text-gray dark:text-white tablet:text-[22px] tablet:leading-[22px]">
               To:
@@ -279,14 +289,14 @@ export default function NewMessageForm() {
           />
           <div className="flex items-end">{directMessageState.message?.length}/500</div>
         </div>
-        {directMessageState.to !== 'sendmessagefromdomain' && (
+        {directMessageState.messageContext !== 'ByDomain' && (
           <h1 className="px-2 py-[5.7px] text-[8.52px] font-normal italic leading-none text-gray dark:text-[#D3D3D3] tablet:px-[18px] tablet:py-3 tablet:text-[19px]">
             Enter the amount of FDX a participant will earn from reading your message. FDX will only be deducted from
             your balance if a message is read
           </h1>
         )}
         {/* Read Reward */}
-        {directMessageState.to !== 'sendmessagefromdomain' && (
+        {directMessageState.messageContext !== 'ByDomain' && (
           <div
             className={`${directMessageState.to === 'All' || directMessageState.to === 'Participants' ? '' : 'opacity-50'} flex items-center rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] dark:border-gray-100 dark:bg-accent-100 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3`}
           >
@@ -312,7 +322,7 @@ export default function NewMessageForm() {
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
             Total FDX to send message
           </p>
-          {directMessageState.to === 'sendmessagefromdomain' ? (
+          {directMessageState.messageContext === 'ByDomain' ? (
             <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
               {`1 participants =  ${`${directMessageState.sendFdxAmount} FDX`}`}
             </p>
