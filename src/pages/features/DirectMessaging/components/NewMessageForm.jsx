@@ -307,7 +307,7 @@ export default function NewMessageForm() {
         )}
       </div>
       {/* Total FDX to send message*/}
-      <div className="relative h-fit w-full max-w-[730px] rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:px-5 tablet:py-6">
+      <div className="relative flex h-fit w-full max-w-[730px] flex-col gap-1 rounded-[15px] border-2 border-[#D9D9D9] bg-white px-[11px] py-[15px] dark:border-gray-100 dark:bg-gray-200 dark:text-gray-300 tablet:mx-auto tablet:gap-2 tablet:px-5 tablet:py-6">
         <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-gray dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
           <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
             Total FDX to send message
@@ -321,6 +321,14 @@ export default function NewMessageForm() {
               {`${handleNoOfUsers()} participants = ${directMessageState.to === 'Collection' ? `0 FDX` : `${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}`}
             </p>
           )}
+        </div>
+        <div className="flex justify-between rounded-[3.817px] border border-[#DEE6F7] bg-[#FDFDFD] px-3 py-[6px] text-gray dark:border-gray-100 dark:bg-accent-100 dark:text-white-400 tablet:rounded-[9.228px] tablet:border-[2.768px] tablet:px-5 tablet:py-3">
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+            Max FDX if all recipients read message
+          </p>
+          <p className="whitespace-nowrap text-[10px] font-semibold leading-[10px] tablet:text-[22px] tablet:leading-[22px]">
+            {`${directMessageState.to === 'Collection' ? `0 FDX` : `${(handleNoOfUsers() * directMessageState.readReward)?.toFixed(2)} FDX`}`}
+          </p>
         </div>
       </div>
       {/* Last Section Buttons */}
