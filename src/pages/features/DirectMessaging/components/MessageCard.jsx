@@ -96,9 +96,19 @@ export default function MessageCard({ setViewMsg, item, filter, setViewMessageDa
             alt="badge-logo"
             className="size-[12.325px] tablet:size-5"
           />
-          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? item.to : item.platform === 'Foundation-IO.com' ? 'Foundation' : 'Anonymous user'}
-          </h1>
+          {item.messageContext === 'DM' ? (
+            <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+              {filter === 'sent' ? item.to : item.platform === 'Foundation-IO.com' ? 'Foundation' : 'Anonymous user'}
+            </h1>
+          ) : (
+            <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+              {filter === 'sent'
+                ? `${item.domain}.on.foundation`
+                : item.platform === 'Foundation-IO.com'
+                  ? 'Foundation'
+                  : 'Anonymous user'}
+            </h1>
+          )}
         </div>
         <div className="flex items-center gap-1">
           <img
@@ -156,29 +166,28 @@ export default function MessageCard({ setViewMsg, item, filter, setViewMessageDa
               variant={'submit'}
               onClick={() => {
                 dispatch(
-                  item.messageContext && item.messageContext === "ByDomain" ?
-                    setDirectMessageForm({
-                      draftId: item._id,
-                      to: item.domain ? item.domain : item.to,
-                      subject: item.subject,
-                      message: item.message,
-                      options: item.options,
-                      questForeignKey: item.questForeignKey,
-                      readReward: item.readReward,
-                      messageContext: item.messageContext,
-                      sendFdxAmount: item.sendFdxAmount,
-                      domain: item.domain,
-                    })
-                    :
-                    setDirectMessageForm({
-                      draftId: item._id,
-                      to: item.to,
-                      subject: item.subject,
-                      message: item.message,
-                      options: item.options,
-                      questForeignKey: item.questForeignKey,
-                      readReward: item.readReward,
-                    })
+                  item.messageContext && item.messageContext === 'ByDomain'
+                    ? setDirectMessageForm({
+                        draftId: item._id,
+                        to: item.domain ? item.domain : item.to,
+                        subject: item.subject,
+                        message: item.message,
+                        options: item.options,
+                        questForeignKey: item.questForeignKey,
+                        readReward: item.readReward,
+                        messageContext: item.messageContext,
+                        sendFdxAmount: item.sendFdxAmount,
+                        domain: item.domain,
+                      })
+                    : setDirectMessageForm({
+                        draftId: item._id,
+                        to: item.to,
+                        subject: item.subject,
+                        message: item.message,
+                        options: item.options,
+                        questForeignKey: item.questForeignKey,
+                        readReward: item.readReward,
+                      })
                 );
                 if (item.to === 'Participants') {
                   navigate('/direct-messaging/new-message?advance-analytics=true');
@@ -250,6 +259,6 @@ export default function MessageCard({ setViewMsg, item, filter, setViewMessageDa
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 }
