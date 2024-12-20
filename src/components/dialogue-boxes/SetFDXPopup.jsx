@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import PopUp from "../ui/PopUp";
 import { setFDXCall } from "../../services/api/homepageApis";
 import { FaSpinner } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/Button";
 import showToast from "../ui/Toast";
 
@@ -10,6 +10,10 @@ function SetFDXPopup({ isPopup, title, logo, handleClose }) {
     const persistedUserInfo = useSelector((state) => state.auth.user);
     const [fdx, setFDX] = useState(0); // Initial default value for FDX
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setFDX(persistedUserInfo?.messageByDomainFDX ?? 0);
+    }, [])
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -66,7 +70,7 @@ function SetFDXPopup({ isPopup, title, logo, handleClose }) {
                             onClick={handleSubmit}
                             disabled={loading || !fdx} // Disable button if loading or fdx is empty
                         >
-                            {loading ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                            {loading ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : persistedUserInfo?.messageByDomainFDX === 0 ? 'Submit' : 'Update'}
                         </Button>
                         <Button variant={'cancel'} onClick={handleClose}>
                             Cancel
