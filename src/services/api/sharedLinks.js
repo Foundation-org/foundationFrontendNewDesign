@@ -1,6 +1,7 @@
 import api from './Axios';
 import { useMemo } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 const useFetchSharedLinks = (searchData, persistedUserInfo) => {
   const fetchPosts = async ({ pageParam = 1 }) => {
@@ -43,3 +44,28 @@ const useFetchSharedLinks = (searchData, persistedUserInfo) => {
 };
 
 export default useFetchSharedLinks;
+
+// REVEAL My LINK RESULTS
+export const revealMyAnswers = async ({ uuid, questForeignKey, revealMyAnswers }) => {
+  const resp = await api.patch(`/startQuest/revealMyAnswers`, {
+    uuid,
+    questForeignKey,
+    revealMyAnswers,
+  });
+  return resp.data;
+};
+
+export const useRevealMyAnswers = () => {
+  return useMutation({
+    mutationFn: revealMyAnswers,
+    onSuccess: (response) => {
+      console.log(response);
+    },
+    onError: (error) => {
+      console.error(error);
+      if (error?.response?.data?.message === 'Please Participate first') {
+        toast.error('Please Participate first');
+      }
+    },
+  });
+};

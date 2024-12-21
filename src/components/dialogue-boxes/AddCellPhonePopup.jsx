@@ -24,6 +24,8 @@ const AddCellPhonePopup = ({
   onboarding,
   handleSkip,
   progress,
+  selectedBadge,
+  page,
 }) => {
   const queryClient = useQueryClient();
   const [phone, setPhone] = useState();
@@ -42,6 +44,12 @@ const AddCellPhonePopup = ({
   const formattedTime = `${Math.floor(seconds / 60)
     .toString()
     .padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
+
+  useEffect(() => {
+    if (page === 'badgeHub') {
+      setPhone(selectedBadge?.details?.data);
+    }
+  }, [page, selectedBadge]);
 
   useEffect(() => {
     let intervalId;
@@ -164,13 +172,15 @@ const AddCellPhonePopup = ({
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       {!otpResp ? (
         <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-          <h1 className="text-gray-1 pb-[15px] text-[12px] font-medium leading-[13.56px] dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
-            Ensure you can recover your account easily if needed.
-          </h1>
+          {page !== 'badgeHub' && (
+            <h1 className="pb-[15px] text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[25px] tablet:text-[16px] tablet:leading-normal">
+              Ensure you can recover your account easily if needed.
+            </h1>
+          )}
           <div>
             <p
               htmlFor="email"
-              className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[24.2px]"
+              className="text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:text-[20px] tablet:leading-[24.2px]"
             >
               {title}
             </p>
@@ -181,17 +191,26 @@ const AddCellPhonePopup = ({
               className="verification_badge_input mb-[10px] mt-1 tablet:mb-5 tablet:mt-[15px]"
               onChange={setPhone}
               style={{ color: '#707175' }}
+              disabled={page === 'badgeHub'}
             />
             <div className="flex justify-end">
-              <Button
-                variant="submit"
-                disabled={isPending}
-                onClick={() => {
-                  generateOtp(phone);
-                }}
-              >
-                {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Send OTP'}
-              </Button>
+              {page === 'badgeHub' ? (
+                <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
+                  <Button variant={'cancel'} onClick={handleClose}>
+                    Close
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="submit"
+                  disabled={isPending}
+                  onClick={() => {
+                    generateOtp(phone);
+                  }}
+                >
+                  {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Send OTP'}
+                </Button>
+              )}
             </div>
           </div>
         </div>

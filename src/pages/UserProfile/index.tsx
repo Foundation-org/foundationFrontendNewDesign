@@ -13,14 +13,18 @@ import LinkHub from './LinkHub';
 import HomepageBadge from '../Dashboard/pages/Profile/pages/verification-badges/HomepageBadge';
 import SummaryCard from '../../components/SummaryCard';
 import HomepageBadgePopup from '../../components/dialogue-boxes/HomepageBadgePopup';
+import BadgeHub from './BadgeHub';
+import BadgeHubPopup from '../../components/dialogue-boxes/BadgeHubPopup';
+import SetFDX from './components/SetFDX';
 
 export default function UserProfile() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isPublicProfile = location.pathname.startsWith('/h/');
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
-  const navigate = useNavigate();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const [domain, setDomain] = useState('');
+  const [isBadgeHubPopup, setIsBadgeHubPopup] = useState(false);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
   const isDomainBadge = persistedUserInfo?.badges?.some((badge: any) => !!badge?.domain) || false;
 
@@ -75,7 +79,7 @@ export default function UserProfile() {
           isPopup={isPersonalPopup}
           setIsPopup={setIsPersonalPopup}
           title="Domain"
-          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
+          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain.svg`}
           edit={true}
           setIsPersonalPopup={setIsPersonalPopup}
           handleSkip={null}
@@ -83,9 +87,17 @@ export default function UserProfile() {
           progress={null}
         />
       )}
+      {isBadgeHubPopup && (
+        <BadgeHubPopup
+          isPopup={isBadgeHubPopup}
+          setIsPopup={setIsBadgeHubPopup}
+          title="Badge Hub"
+          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
+        />
+      )}
       {!domain ? (
         <div className="dar flex flex-col items-center justify-center gap-2 rounded-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-3 dark:border-gray-100 dark:bg-gray-200 tablet:rounded-[10px] tablet:p-5">
-          <h1 className="text-gray-1 text-[11px] leading-normal dark:text-[#f1f1f1] tablet:text-[18px]">
+          <h1 className="text-[11px] leading-normal text-gray-1 dark:text-[#f1f1f1] tablet:text-[18px]">
             Claim your domain name to enable your Home Page and create a personalized hub. Share posts, collections,
             news articles, and important links. Gain insights into your audience through key metrics and engagement
             results.
@@ -97,14 +109,14 @@ export default function UserProfile() {
         <div className="mb-4 flex flex-col gap-3 pb-3 tablet:gap-6 tablet:pb-6">
           {!isPublicProfile && (
             <SummaryCard
-              headerIcon="/assets/profile/homepagebadges.svg"
+              headerIcon="/assets/profile/domain_white.svg"
               headerTitle="Domain"
               isPublicProfile={isPublicProfile}
             >
               <>
                 <h1 className="summary-text">
                   Your Home Page is the hub for connecting with your audience. Share posts, collections and news easily
-                  with your audience.
+                  with your audience.
                 </h1>
                 <div className="mt-3 flex items-center justify-center gap-3 tablet:mt-5 tablet:gap-6">
                   <div className="max-w-28 border-r border-[#707175] pr-3 dark:border-gray-300 tablet:max-w-full tablet:pr-6">
@@ -125,31 +137,33 @@ export default function UserProfile() {
                     </h5>
                   </div>
                 </div>
-                <div className="mt-3 flex w-full justify-center gap-3 tablet:mt-5">
-                  {/* <Button variant={'submit'} onClick={() => navigate('/profile-others')}>
-                    Find Other Profiles
-                  </Button> */}
+                <div className="mt-3 grid w-full grid-cols-2 justify-center gap-3 tablet:mt-5">
+                  <Button variant={'submit'} onClick={() => setIsBadgeHubPopup(true)}>
+                    Show Badges
+                  </Button>
                   <Button variant={'submit'} onClick={() => setIsPersonalPopup(true)}>
                     Manage Domain
                   </Button>
+
                   {!isPublicProfile && (
-                    <Link to={`/h/${data?.profile?.domain.name}`}>
-                      <Button variant="submit">View as public</Button>
-                    </Link>
+                    <Button variant="submit">
+                      <Link to={`/h/${data?.profile?.domain.name}`}>View as public</Link>
+                    </Button>
                   )}
+                  {!isPublicProfile && <SetFDX />}
                 </div>
               </>
             </SummaryCard>
           )}
-          <ProfileCard profile={data?.profile} />
+          <ProfileCard profile={data?.profile} badges={data?.addedBadges} />
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} domain={domain} />
           )}
           {data?.spotLight && data?.spotLight.message !== 'No list exists yet.' && (
             <Spotlight spotlight={data?.spotLight} />
           )}
-          <SharedPosts domain={domain} />
-          <SharedLists domain={domain} />
+          <SharedPosts domain={domain} profilePicture={data?.profile?.domain?.s3Urls[0]} />
+          <SharedLists domain={domain} profilePicture={data?.profile?.domain?.s3Urls[0]} />
           <NewsArticles domain={domain} />
         </div>
       )}

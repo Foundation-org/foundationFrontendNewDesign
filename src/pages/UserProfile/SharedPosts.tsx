@@ -10,7 +10,7 @@ import api from '../../services/api/Axios';
 import SummaryCard from '../../components/SummaryCard';
 import { FaSpinner } from 'react-icons/fa';
 
-export default function SharedPosts({ domain }: { domain: string }) {
+export default function SharedPosts({ domain, profilePicture }: { domain: string; profilePicture: string }) {
   const { ref, inView } = useInView();
   const navigate = useNavigate();
   const location = useLocation();
@@ -76,6 +76,7 @@ export default function SharedPosts({ domain }: { domain: string }) {
             questStartData={post}
             playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
             postProperties={!isPublicProfile && 'user-profile'}
+            profilePicture={profilePicture}
           />
         );
       })

@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../../../../../components/ui/Toast';
 import { isWebview } from '../../../../../utils/helper';
 import ProgressBar from '../../../../../components/ProgressBar';
-const REDIRECT_URI = window.location.href;
+
 const VerificationPopups = ({
   isPopup,
   setIsPopup,
@@ -20,10 +20,12 @@ const VerificationPopups = ({
   onboarding,
   handleSkip,
   progress,
+  page,
 }) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+
   const handleClose = () => {
     setIsPopup(false);
   };
@@ -82,8 +84,19 @@ const VerificationPopups = ({
   };
 
   return (
-    <div>
-      <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
+    <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
+      {page === 'badgeHub' ? (
+        <div className="px-5 py-[15px] tablet:px-[60px] tablet:pb-5 tablet:pt-[30px] laptop:px-[80px]">
+          <h1 className="summary-text verification_badge_input mb-[10px] tablet:mb-5">
+            {selectedBadge?.details?.emails[0]?.value}
+          </h1>
+          <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
+            <Button variant={'cancel'} onClick={handleClose}>
+              Close
+            </Button>
+          </div>
+        </div>
+      ) : (
         <div className="px-5 py-[15px] tablet:px-[60px] tablet:pb-5 tablet:pt-[30px] laptop:px-[80px]">
           <h1 className="summary-text mb-[10px] tablet:mb-5">
             {title === 'Work Email'
@@ -118,7 +131,7 @@ const VerificationPopups = ({
             )}
             <p
               htmlFor="email"
-              className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] tablet:text-[20px] tablet:leading-[24.2px]"
+              className="text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:text-[20px] tablet:leading-[24.2px]"
             >
               {title}
             </p>
@@ -136,9 +149,9 @@ const VerificationPopups = ({
             </div>
           </div>
         </div>
-        {onboarding && <ProgressBar handleSkip={handleSkip} />}
-      </PopUp>
-    </div>
+      )}
+      {onboarding && <ProgressBar handleSkip={handleSkip} />}
+    </PopUp>
   );
 };
 

@@ -9,10 +9,12 @@ import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import * as questServices from '../../../services/api/questsApi';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 import ObjectionPopUp from '../../ObjectionPopUp';
+import { useLocation } from 'react-router-dom';
 
 const SingleAnswerMultipleChoice = (props) => {
   const id = props.id;
   const dispatch = useDispatch();
+  const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [modalVisible, setModalVisible] = useState(false);
   const [checkState, setCheckState] = useState(props.check);
@@ -21,6 +23,11 @@ const SingleAnswerMultipleChoice = (props) => {
   const [answer, setAnswer] = useState(props.answer);
   const [isTyping, setIsTyping] = useState(true);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const isDomainPage =
+    location.pathname.startsWith('/h/') ||
+    location.pathname.startsWith('/p/') ||
+    location.pathname.startsWith('/l/') ||
+    location.pathname === '/profile';
 
   const reset = {
     name: 'Ok',
@@ -209,7 +216,9 @@ const SingleAnswerMultipleChoice = (props) => {
       className={`${props.postProperties === 'Embed' && !props.isEmbedResults ? 'px-7 tablet:px-[69px]' : 'pl-7 pr-12 tablet:pl-[69px] tablet:pr-[6.3rem]'} flex items-center`}
     >
       {/* =============== To Display Option */}
-      <div className="relative flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
+      <div
+        className={`relative flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px] ${isDomainPage && (props.ownerCheck || props.ownerContend) && 'shadow-options-mobile tablet:shadow-options'}`}
+      >
         {props.addedAnswerUuid && (
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/${
@@ -217,6 +226,13 @@ const SingleAnswerMultipleChoice = (props) => {
             }.svg`}
             alt={props.addedAnswerUuid === persistedUserInfo?.uuid ? 'yellow badge' : 'blue badge'}
             className="absolute -left-4 top-1/2 h-4 w-[12px] -translate-y-1/2 tablet:-left-8 tablet:h-[27px] tablet:w-[21px]"
+          />
+        )}
+        {isDomainPage && (props.ownerCheck || props.ownerContend) && (
+          <img
+            src={props.profilePicture}
+            alt="msgSends"
+            className="absolute -left-[23px] top-1/2 size-[16px] -translate-y-1/2 transform rounded-full border-2 border-blue-100 object-cover tablet:-left-12 tablet:size-[36px]"
           />
         )}
         {/* To Display Contention and Trash Right of Option */}
@@ -331,7 +347,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 className="w-full resize-none rounded-[4.73px] bg-white px-2 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-accent-600 outline-none dark:bg-accent-100 dark:text-white-600 tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
               />
             ) : (
-              <h1 className="text-gray px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
+              <h1 className="px-2 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-gray dark:text-[#D3D3D3] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px]">
                 {props.answer}
               </h1>
             )}
@@ -366,7 +382,7 @@ const SingleAnswerMultipleChoice = (props) => {
           <div
             className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-white-500 bg-white pr-[10px] text-[9.238px] dark:border-gray-100 dark:bg-accent-100 tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
               props.btnText === 'Results' ? 'pointer-events-none' : ''
-            }`}
+            } `}
             onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
           >
             {((props.isEmbedResults && props.postProperties === 'Embed') || props.postProperties !== 'Embed') && (

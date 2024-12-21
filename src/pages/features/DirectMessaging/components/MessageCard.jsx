@@ -9,7 +9,7 @@ import { calculateTimeAgo } from '../../../../utils/utils';
 import api from '../../../../services/api/Axios';
 import { setDirectMessageForm } from '../../../../features/direct-message/directMessageSlice';
 
-export default function MessageCard({ setViewMsg, item, filter, handleViewMessage }) {
+export default function MessageCard({ setViewMsg, item, filter, setViewMessageData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -96,9 +96,19 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
             alt="badge-logo"
             className="size-[12.325px] tablet:size-5"
           />
-          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent' ? item.to : item.platform === 'Foundation-IO.com' ? 'Foundation' : 'Anonymous user'}
-          </h1>
+          {item.messageContext === 'DM' ? (
+            <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+              {filter === 'sent' ? item.to : item.platform === 'Foundation-IO.com' ? 'Foundation' : 'Anonymous user'}
+            </h1>
+          ) : (
+            <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+              {filter === 'sent'
+                ? `${item.domain}.on.foundation`
+                : item.platform === 'Foundation-IO.com'
+                  ? 'Foundation'
+                  : 'Anonymous user'}
+            </h1>
+          )}
         </div>
         <div className="flex items-center gap-1">
           <img
@@ -156,15 +166,28 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
               variant={'submit'}
               onClick={() => {
                 dispatch(
-                  setDirectMessageForm({
-                    draftId: item._id,
-                    to: item.to,
-                    subject: item.subject,
-                    message: item.message,
-                    options: item.options,
-                    questForeignKey: item.questForeignKey,
-                    readReward: item.readReward,
-                  })
+                  item.messageContext && item.messageContext === 'ByDomain'
+                    ? setDirectMessageForm({
+                        draftId: item._id,
+                        to: item.domain ? item.domain : item.to,
+                        subject: item.subject,
+                        message: item.message,
+                        options: item.options,
+                        questForeignKey: item.questForeignKey,
+                        readReward: item.readReward,
+                        messageContext: item.messageContext,
+                        sendFdxAmount: item.sendFdxAmount,
+                        domain: item.domain,
+                      })
+                    : setDirectMessageForm({
+                        draftId: item._id,
+                        to: item.to,
+                        subject: item.subject,
+                        message: item.message,
+                        options: item.options,
+                        questForeignKey: item.questForeignKey,
+                        readReward: item.readReward,
+                      })
                 );
                 if (item.to === 'Participants') {
                   navigate('/direct-messaging/new-message?advance-analytics=true');
@@ -183,8 +206,8 @@ export default function MessageCard({ setViewMsg, item, filter, handleViewMessag
                 if (location.pathname === '/direct-messaging/preview') {
                   return;
                 } else {
+                  setViewMessageData(item);
                   setViewMsg(true);
-                  handleViewMessage(item._id, item.sender, item.receiver, item);
                 }
               }}
             >

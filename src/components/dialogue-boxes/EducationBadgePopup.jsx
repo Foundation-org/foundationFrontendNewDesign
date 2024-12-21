@@ -1,9 +1,6 @@
-import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { validation } from '../../services/api/badgesApi';
-
+import { useQueryClient } from '@tanstack/react-query';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
@@ -11,12 +8,14 @@ import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
 import showToast from '../ui/Toast';
 import ProgressBar from '../ProgressBar';
+import { useSelector } from 'react-redux';
 
 const School = {
   label: 'School',
   type: 'school',
   placeholder: 'School here',
 };
+
 const degreePrograms = {
   label: 'Degree Program',
   type: 'degreeProgram',
@@ -28,6 +27,7 @@ const fieldOfStudy = {
   type: 'fieldOfStudy',
   placeholder: 'Field of Study here',
 };
+
 const StartingYear = {
   label: 'Start Date',
   placeholder: 'Year here',
@@ -46,12 +46,12 @@ const EducationBadgePopup = ({
   type,
   title,
   logo,
-  placeholder,
   fetchUser,
   setIsPersonalPopup,
   handleSkip,
   onboarding,
-  progress,
+  page,
+  selectedBadge,
 }) => {
   const queryClient = useQueryClient();
   const [universities, setUniversities] = useState([]);
@@ -62,13 +62,13 @@ const EducationBadgePopup = ({
   const [field5Data, setField5Data] = useState([]);
   const [prevInfo, setPrevInfo] = useState({});
   const [isPresent, setIsPresent] = useState(false);
-  const [existingData, setExistingData] = useState();
+  const [existingData, setExistingData] = useState(selectedBadge?.personal?.education || []);
   const [query, setQuery] = useState('');
   const [query2, setQuery2] = useState('');
   const [query3, setQuery3] = useState('');
   const [deleteItem, setDeleteItem] = useState('');
   const [loading, setLoading] = useState(false);
-  const [delloading, setDelLoading] = useState(false);
+  const [delLoading, setDelLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [hollow, setHollow] = useState(false);
   const [isError2, setIsError2] = useState(false);
@@ -78,6 +78,7 @@ const EducationBadgePopup = ({
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [fetchingEdit, setFetchingEdit] = useState(false);
   const [addAnotherForm, setAddAnotherForm] = useState(false);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const searchDegreeAndFields = async (type, query) => {
     try {
@@ -99,6 +100,7 @@ const EducationBadgePopup = ({
       setEduData([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }]);
     }
   };
+
   useEffect(() => {
     setHollow(true);
     setIsError(false);
@@ -115,6 +117,7 @@ const EducationBadgePopup = ({
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
     setUniversities(universities.data);
   };
+
   const handlePresentToggle = () => {
     setIsPresent(!isPresent);
     if (!isPresent) {
@@ -123,14 +126,10 @@ const EducationBadgePopup = ({
       setField4Data('');
     }
   };
+
   useEffect(() => {
     searchUniversities();
   }, [query]);
-
-  useEffect(() => {
-    const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
-    setExistingData(param?.personal[type]);
-  }, [fetchUser.badges]);
 
   const handleClose = () => setIsPopup(false);
 
@@ -138,6 +137,7 @@ const EducationBadgePopup = ({
     const value = event.target.value;
     setField3Data(value);
   };
+
   const handlefield4Change = (event) => {
     const value = event.target.value;
     setField4Data(value);
@@ -171,7 +171,7 @@ const EducationBadgePopup = ({
         return;
       }
 
-      if (existingData) {
+      if (existingData.length > 0) {
         if (existingData.some((item) => item.id === field1Data.id)) {
           showToast('error', 'schoolAlreadyExist');
 
@@ -209,7 +209,7 @@ const EducationBadgePopup = ({
             console.log(dataSaved2);
           }
         }
-        if (existingData) {
+        if (existingData.length > 0) {
           showToast('success', 'infoUpdated');
         } else {
           showToast('success', 'badgeAdded');
@@ -218,16 +218,18 @@ const EducationBadgePopup = ({
           handleSkip();
           return;
         }
-        queryClient.invalidateQueries(['userInfo']);
+        setExistingData(addBadge.data.data);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         setLoading(false);
         setDelLoading(false);
-        setAddAnotherForm(false);
       }
     } catch (error) {
       console.log(error);
+    } finally {
       setAddAnotherForm(false);
     }
   };
+
   const handleDelete = async (id) => {
     const payload = {
       id: id,
@@ -239,7 +241,9 @@ const EducationBadgePopup = ({
     }
     const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
-      queryClient.invalidateQueries(['userInfo']);
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
+      setDelLoading(false);
+      setExistingData(companies.data.data);
     }
   };
 
@@ -293,7 +297,7 @@ const EducationBadgePopup = ({
 
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
         showToast('success', 'infoUpdated');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
@@ -315,6 +319,7 @@ const EducationBadgePopup = ({
             console.log(dataSaved2);
           }
         }
+        setExistingData(updateBadge.data.data);
 
         setLoading(false);
         setAddAnotherForm(false);
@@ -371,6 +376,7 @@ const EducationBadgePopup = ({
       }
     }
   };
+
   const verifyDegree = async (toVerify) => {
     setHollow(true);
     const response = await api.get(`/ai-validation/7?userMessage=${toVerify}`);
@@ -389,6 +395,7 @@ const EducationBadgePopup = ({
       setHollow(false);
     }
   };
+
   const verifyFieldOfStudy = async (toVerify) => {
     setHollow(true);
     const response = await api.get(`/ai-validation/8?userMessage=${toVerify}`);
@@ -407,6 +414,7 @@ const EducationBadgePopup = ({
       setIsError2(false);
     }
   };
+
   const checkHollow = () => {
     if (
       field1Data.name === undefined ||
@@ -422,17 +430,19 @@ const EducationBadgePopup = ({
       return false;
     }
   };
+
   useEffect(() => {
     checkHollow();
   }, [field1Data, field2Data, field3Data, field4Data, field5Data]);
+
   const handleRemoveBadgePopup = (item) => {
     setDeleteModalState(item);
     setModalVisible(true);
   };
+
   const handleBadgesClose = () => setModalVisible(false);
 
   const renderWorkField = (field1, field2, field3, field4, field5) => {
-    const [addAnotherForm, setAddAnotherForm] = useState(false);
     const [edit, setEdit] = useState(false);
 
     return (
@@ -455,21 +465,23 @@ const EducationBadgePopup = ({
           {/* To View Already Added Info */}
           {!addAnotherForm ? (
             <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-              <h1 className="text-gray-1 py-3 text-[12px] font-medium leading-[13.56px] dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
-                Your educational background paves the way for reward opportunities aligned with your expertise.
+              <h1 className="py-3 text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:pb-[13px] tablet:text-[16px] tablet:leading-normal">
+                {page === 'badgeHub'
+                  ? ''
+                  : 'Your educational background paves the way for reward opportunities aligned with your expertise.'}
               </h1>
-              {existingData &&
+              {existingData.length > 0 &&
                 existingData.map((item, index) => (
                   <div
                     key={index}
                     className="flex w-full justify-between rounded-[8.62px] border border-white-500 bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none dark:border-gray-100 dark:bg-gray-200 dark:text-[#f1f1f1] tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]"
                   >
                     <div className="py-3 tablet:py-[25px]">
-                      <h4 className="text-gray-1 max-w-[324px] text-[9.28px] font-medium leading-[11.23px] dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
+                      <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[22px] tablet:leading-[26.63px]">
                         {item.school}
                       </h4>
                       <div className="mt-[2px] max-w-[270px] tablet:mt-2">
-                        <h5 className="text-gray-1 text-[9.28px] font-medium leading-[11.23px] dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
+                        <h5 className="text-[9.28px] font-medium leading-[11.23px] text-gray-1 dark:text-[#f1f1f1] tablet:text-[20px] tablet:leading-[26.63px]">
                           {item.degreeProgram + ' ' + 'in' + ' ' + item.fieldOfStudy}
                         </h5>
                         <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
@@ -491,7 +503,7 @@ const EducationBadgePopup = ({
                               handleDelete(deleteItem);
                             }}
                           >
-                            {delloading === item.id ? (
+                            {delLoading === item.id ? (
                               <FaSpinner className="animate-spin text-[#EAEAEA] dark:text-[#f1f1f1]" />
                             ) : (
                               'Yes'
@@ -510,22 +522,26 @@ const EducationBadgePopup = ({
                       </div>
                     ) : (
                       <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
-                        <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                            alt="Edit Icon"
-                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                            onClick={() => {
-                              setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
-                            }}
-                          />
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                            alt="Edit Icon"
-                            className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                            onClick={() => setDeleteItem(item.id)}
-                          />
-                        </div>
+                        {page === 'badgeHub' ? (
+                          <div></div>
+                        ) : (
+                          <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                              alt="Edit Icon"
+                              className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                              onClick={() => {
+                                setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                              }}
+                            />
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                              alt="Edit Icon"
+                              className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                              onClick={() => setDeleteItem(item.id)}
+                            />
+                          </div>
+                        )}
                         <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] dark:text-[#f1f1f1] tablet:text-[18px] tablet:leading-[26.63px]">
                           {item.startingYear + '-' + item.graduationYear}
                         </h4>
@@ -533,42 +549,52 @@ const EducationBadgePopup = ({
                     )}
                   </div>
                 ))}
-              <div className="flex items-center justify-start">
-                <Button
-                  variant="addOption"
-                  onClick={() => {
-                    setEdit(false);
-                    setAddAnotherForm(true);
-                  }}
-                >
-                  <span className="text-[16px] tablet:text-[32px]">+</span>
-                  {existingData ? 'Add New Education' : 'Add Education'}
-                </Button>
-              </div>
-              {existingData ? (
-                <div className="flex items-center justify-end">
-                  <Button
-                    variant="badge-remove"
-                    onClick={() => {
-                      handleRemoveBadgePopup({
-                        title: title,
-                        type: type,
-                        badgeType: 'personal',
-                        image: logo,
-                      });
-                    }}
-                  >
-                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+              {page === 'badgeHub' ? (
+                <div className="flex justify-end gap-[15px] tablet:gap-[35px]">
+                  <Button variant={'cancel'} onClick={handleClose}>
+                    Close
                   </Button>
                 </div>
               ) : (
-                <div></div>
+                <>
+                  <div className="flex items-center justify-start">
+                    <Button
+                      variant="addOption"
+                      onClick={() => {
+                        setEdit(false);
+                        setAddAnotherForm(true);
+                      }}
+                    >
+                      <span className="text-[16px] tablet:text-[32px]">+</span>
+                      {existingData?.length >= 1 ? 'Add New Education' : 'Add Education'}
+                    </Button>
+                  </div>
+                  {existingData.length > 0 ? (
+                    <div className="flex items-center justify-end">
+                      <Button
+                        variant="badge-remove"
+                        onClick={() => {
+                          handleRemoveBadgePopup({
+                            title: title,
+                            type: type,
+                            badgeType: 'personal',
+                            image: logo,
+                          });
+                        }}
+                      >
+                        {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                      </Button>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </>
               )}
             </div>
           ) : (
             <div className="px-5 pt-[15px] tablet:px-[60px] laptop:px-[72px]">
               <div className="mb-[5px] tablet:mb-[15px]">
-                <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field1.label}
                 </p>
                 <CustomCombobox
@@ -585,7 +611,7 @@ const EducationBadgePopup = ({
               </div>
               <div className="mb-4 mt-[15px] flex gap-[6.5px] tablet:mb-5 tablet:gap-[10px] tablet:pt-[25px]">
                 <div className="w-full">
-                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field2.label}
                   </p>
                   <CustomCombobox
@@ -604,33 +630,15 @@ const EducationBadgePopup = ({
                     wordsCheck={true}
                     disabled={edit ? (field2Data.name ? false : true) : false}
                   />
-                  {/* <input
-                  id="input-2"
-                  type="text"
-                  value={field2Data}
-                  onBlur={() => {
-                    if (field2Data) {
-                      verifyDegree();
-                    }
-                  }}
-                  onChange={(e) => {
-                    setHollow(true);
-                    setIsError(false);
-                    setField2Data(e.target.value);
-                  }}
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(2)) || (e.key === 'Enter' && handleTab(2, 'Enter'))}
-                  placeholder={field2.placeholder}
-                  className="verification_badge_input"
-                /> */}
                   {isError && (
                     <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
                   )}
                 </div>
-                <p className="text-gray-1 flex items-center pt-4 text-[9.28px] font-medium leading-[11.23px] tablet:pt-10 tablet:text-[20px]">
+                <p className="flex items-center pt-4 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:pt-10 tablet:text-[20px]">
                   in
                 </p>
                 <div className="w-full">
-                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field5.label}
                   </p>
                   <CustomCombobox
@@ -648,24 +656,7 @@ const EducationBadgePopup = ({
                     verification={true}
                     disabled={edit ? (field5Data.name ? false : true) : false}
                   />
-                  {/* <input
-                  id="input-3"
-                  type="text"
-                  onBlur={() => {
-                    if (field5Data.name) {
-                      verifyFieldOfStudy();
-                    }
-                  }}
-                  value={field5Data.name}
-                  onChange={(e) => {
-                    setHollow(true);
-                    setIsError2(false);
-                    setField5Data(e.target.value);
-                  }}
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(3)) || (e.key === 'Enter' && handleTab(3, 'Enter'))}
-                  placeholder={field5.placeholder}
-                  className="verification_badge_input"
-                /> */}
+
                   {isError2 && (
                     <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-red-400 tablet:text-[14px]">{`Invalid ${field5.label}!`}</p>
                   )}
@@ -673,7 +664,7 @@ const EducationBadgePopup = ({
               </div>
               <label
                 id="custom-square-checkbox"
-                className="text-gray-1 flex items-center gap-2 text-[10px] font-medium tablet:gap-[15px] tablet:text-[20px]"
+                className="flex items-center gap-2 text-[10px] font-medium text-gray-1 tablet:gap-[15px] tablet:text-[20px]"
               >
                 <input
                   type="checkbox"
@@ -686,7 +677,7 @@ const EducationBadgePopup = ({
 
               <div className="mb-4 mt-[15px] flex gap-[19.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[38px]">
                 <div className="w-full">
-                  <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field3.label}
                   </p>
                   {fetchingEdit ? (
@@ -714,7 +705,7 @@ const EducationBadgePopup = ({
                   <div className="w-full"></div>
                 ) : (
                   <div className="w-full">
-                    <p className="text-gray-1 mb-1 text-[9.28px] font-medium leading-[11.23px] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                    <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-gray-1 tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                       {field4.label}
                     </p>
                     {fetchingEdit ? (
@@ -743,7 +734,6 @@ const EducationBadgePopup = ({
               </div>
 
               <div className="flex justify-between">
-                {/* {existingData && existingData.lenght !== 0 ? ( */}
                 <Button
                   variant="addOption"
                   onClick={() => {
@@ -761,12 +751,10 @@ const EducationBadgePopup = ({
                 >
                   Cancel
                 </Button>
-                {/* ) : (
-                <div></div>
-              )} */}
+
                 {hollow || isError || isError2 || checkHollow() ? (
                   <Button variant="submit-hollow" id="submitButton" disabled={true}>
-                    {edit || existingData ? 'Update Badge' : 'Add Badge'}
+                    {edit || existingData?.length >= 1 ? 'Update Badge' : 'Add Badge'}
                   </Button>
                 ) : (
                   <Button
@@ -793,7 +781,7 @@ const EducationBadgePopup = ({
                   >
                     {loading === true ? (
                       <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : edit || existingData ? (
+                    ) : edit || existingData?.length >= 1 ? (
                       'Update Badge'
                     ) : (
                       'Add Badge'

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import { calculateTimeAgo } from '../../utils/utils';
 import { Button } from '../ui/Button';
@@ -8,6 +8,8 @@ import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
 import showToast from '../ui/Toast';
 import DisabledLinkPopup from '../dialogue-boxes/DisabledLinkPopup';
 import { useUpdateSpotLight } from '../../services/api/profile';
+import { useRevealMyAnswers } from '../../services/api/sharedLinks';
+import { Switch } from '@headlessui/react';
 
 interface IAdminSectionProps {
   questStartData: any;
@@ -29,8 +31,14 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
   const location = useLocation();
   const isProfilePage = location.pathname === '/profile';
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
+  const [revealAnswer, setRevealAnswer] = useState(questStartData?.revealMyAnswers || false);
 
   const { mutateAsync: handleSpotLight } = useUpdateSpotLight();
+  const { mutateAsync: revealMyAnswer } = useRevealMyAnswers();
+
+  useEffect(() => {
+    setRevealAnswer(questStartData?.startQuestData?.revealMyAnswers);
+  }, [questStartData?.startQuestData?.revealMyAnswers]);
 
   const showEnableSharedLinkPopup = () => {
     dispatch(questUtilsActions.addEnablePostId(null));
@@ -85,14 +93,14 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
   return (
     <div className="border-t-2 border-gray-250 dark:border-gray-100">
       <div className="my-[15px] tablet:my-6">
-        <div className="my-[15px] ml-10 flex gap-1 tablet:my-6 tablet:ml-16 tablet:gap-20">
+        <div className="mx-10 my-[15px] flex justify-between gap-1 tablet:mx-5 tablet:my-6 laptop:mx-10">
           <div className="flex items-center gap-[1px] tablet:gap-2">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${persistedTheme === 'dark' ? 'assets/svgs/dark/clicks.svg' : 'assets/svgs/clicks.svg'}`}
               alt="clicks"
               className="h-2 w-2 tablet:h-6 tablet:w-6"
             />
-            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-[8px] font-semibold leading-[9.68px] text-gray-1 dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
               {questStartData?.userQuestSetting?.questImpression} Views{' '}
             </h2>
           </div>
@@ -102,10 +110,41 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
               alt="participants"
               className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
             />
-            <h2 className="text-gray-1 text-[8px] font-semibold leading-[9.68px] dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+            <h2 className="text-[8px] font-semibold leading-[9.68px] text-gray-1 dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
               {questStartData?.userQuestSetting?.questsCompleted} Engagements{' '}
             </h2>
           </div>
+          {questStartData?.whichTypeQuestion !== 'ranked choise' ? (
+            <div className="flex items-center gap-[1px] tablet:gap-2">
+              <Switch
+                checked={revealAnswer}
+                onChange={(e) => {
+                  setRevealAnswer(e);
+                  revealMyAnswer({
+                    questForeignKey: questStartData._id,
+                    revealMyAnswers: e ? 'true' : 'false',
+                    uuid: persistedUserInfo.uuid,
+                  });
+                }}
+                className={`${revealAnswer ? 'bg-[#BEDEF4]' : 'bg-gray-250'} switch_basic_design`}
+              >
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`switch_base ${
+                    revealAnswer
+                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                      : 'translate-x-[1px] bg-[#707175]'
+                  }`}
+                />
+              </Switch>
+              <h2 className="text-[8px] font-semibold leading-[9.68px] text-gray-1 dark:text-white-400 tablet:text-[18px] tablet:leading-[21.78px]">
+                Reveal my answer
+              </h2>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
         {/* Buttons */}
         <div className="flex w-full flex-col gap-2 px-[0.87rem] tablet:gap-4 tablet:px-10">
@@ -207,7 +246,7 @@ export default function SharedLinkAdminSection(props: IAdminSectionProps) {
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
           />
-          <h4 className="text-gray-1 whitespace-nowrap text-[0.6rem] font-normal dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
+          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-gray-1 dark:text-white tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {/* {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null}{' '} */}
             Shared {calculateTimeAgo(questStartData.userQuestSetting?.sharedTime)}
           </h4>

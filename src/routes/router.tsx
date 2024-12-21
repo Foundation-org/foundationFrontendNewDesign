@@ -146,7 +146,7 @@ export function Router() {
           <Route path="/h/:domain" element={<GuestRedirect redirectUrl={null} />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="/authenticating" element={<Authenticating />} />
-          <Route path="/test" element={<Test />} />
+          {/* <Route path="/tiktok" element={<Test />} /> */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       ) : (

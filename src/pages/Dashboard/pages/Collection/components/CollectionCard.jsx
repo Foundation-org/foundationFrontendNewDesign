@@ -21,8 +21,9 @@ import DisabledListPopup from '../../../../../components/dialogue-boxes/Disabled
 import { useUpdateSpotLight } from '../../../../../services/api/profile';
 import SharedListAdminSection from '../../../../../components/admin-card-section/sharedlist-admin-section';
 import Copy from '../../../../../assets/Copy';
+import CopyCollection from '../../../../../components/dialogue-boxes/CopyCollection';
 
-const CollectionCard = ({ listData, page }) => {
+const CollectionCard = ({ listData, page, profilePicture }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const location = useLocation();
@@ -41,6 +42,7 @@ const CollectionCard = ({ listData, page }) => {
   const [selectedItem, setSelectedItem] = useState();
   const [postId, setPostId] = useState('');
   const [listName, setListName] = useState('');
+  const [addToList, setAddToList] = useState(false);
   const [hasReordered, setHasReordered] = useState('');
   const mouseSensor = useSensor(MouseSensor);
   const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
@@ -345,7 +347,11 @@ const CollectionCard = ({ listData, page }) => {
                       variant={'submit-green'}
                       className={'w-full tablet:w-full'}
                       onClick={() => {
-                        navigate(`/l/${listData[categoryIndex]?.link}`);
+                        navigate(`/l/${listData[categoryIndex]?.link}`, {
+                          state: {
+                            profilePicture: profilePicture,
+                          },
+                        });
                       }}
                     >
                       Participate
@@ -468,13 +474,8 @@ const CollectionCard = ({ listData, page }) => {
                     <button
                       className={`${'w-fit'} flex h-[14.5px] items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
                       onClick={() => {
-                        // if (categoryItem.link === null) {
                         setSelectedItem(categoryItem);
                         setCopyModal(true);
-                        // } else {
-                        //   copyToClipboard(categoryItem.link);
-                        //   showToast('success', 'copyLink');
-                        // }
                       }}
                     >
                       {persistedTheme === 'dark' ? <Copy /> : <Copy />}
@@ -486,12 +487,8 @@ const CollectionCard = ({ listData, page }) => {
                     <button
                       className={`${'w-fit'} flex h-[14.5px] items-center gap-1 tablet:h-[28.8px] tablet:gap-2`}
                       onClick={() => {
-                        // if (categoryItem.link === null) {
-                        showToast('info', 'featureComingSoon');
-                        // } else {
-                        //   copyToClipboard(categoryItem.link);
-                        //   showToast('success', 'copyLink');
-                        // }
+                        setSelectedItem(categoryItem);
+                        setAddToList(true);
                       }}
                     >
                       <svg
@@ -557,6 +554,13 @@ const CollectionCard = ({ listData, page }) => {
                 )}
               </div>
             ))}
+          {addToList && (
+            <CopyCollection
+              handleClose={() => setAddToList(false)}
+              modalVisible={addToList}
+              categoryItem={selectedItem}
+            />
+          )}
         </>
       )}
     </>

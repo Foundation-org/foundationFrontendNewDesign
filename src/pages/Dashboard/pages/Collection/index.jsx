@@ -25,7 +25,7 @@ const Collection = () => {
   }
 
   return (
-    <div className="flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:h-[calc(100vh-148px)] tablet:gap-5 tablet:px-6 tablet:pb-5">
+    <div className="flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] no-scrollbar tablet:h-[calc(100dvh-200px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-[calc(100vh-148px)]">
       <SummaryCard headerIcon="/assets/summary/my-list-logo.svg" headerTitle="My Collections">
         <h1 className="summary-text">
           Organize what posts matter most and get a deeper understanding of your audience with Collections. The more

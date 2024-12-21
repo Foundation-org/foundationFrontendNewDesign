@@ -181,7 +181,7 @@ const IdentityBadgePopup = ({
     const averageLaplacian = sumLaplacian / count;
 
     // Adjust threshold based on experiments
-    const threshold = 11; // More sensitive than before
+    const threshold = 11; // Inc for more sensitive than before
     return averageLaplacian < threshold;
   };
 
@@ -265,6 +265,7 @@ const IdentityBadgePopup = ({
     } catch (error) {
       console.error('Verification failed:', error);
       showToast('error', 'verificationFailed');
+      setIsSubmitting(false);
     }
   };
 
@@ -272,11 +273,23 @@ const IdentityBadgePopup = ({
   const handleAddBadge = async () => {
     setIsAdding(true); // Start loading for adding the badge
     try {
-      // Call addIdentity API with the data from verifyIdentity
-      const addIdentityResponse = await api.post('/addIdentityBadge', {
-        ...addIdentity,
-        uuid: persistedUserInfo?.uuid,
-      });
+      let addIdentityResponse;
+
+      if (persistedUserInfo?.isPasswordEncryption) {
+        if (!localStorage.getItem('legacyHash')) throw new Error('Now legacyHash found in localStorage!');
+        // Call addIdentity API with the data from verifyIdentity
+        addIdentityResponse = await api.post('/addIdentityBadge', {
+          ...addIdentity,
+          uuid: persistedUserInfo?.uuid,
+          infoc: localStorage.getItem('legacyHash'),
+        });
+      } else {
+        // Call addIdentity API with the data from verifyIdentity
+        addIdentityResponse = await api.post('/addIdentityBadge', {
+          ...addIdentity,
+          uuid: persistedUserInfo?.uuid,
+        });
+      }
 
       if (addIdentityResponse.status === 200) {
         // On success, show success message and close the popup
@@ -286,10 +299,12 @@ const IdentityBadgePopup = ({
       } else {
         // Handle error from the addIdentity API
         showToast('error', 'errorAddingBadge');
+        setIsAdding(false);
       }
     } catch (error) {
       console.error('Failed to add badge:', error);
       showToast('error', 'errorAddingBadge');
+      setIsAdding(false);
     } finally {
       setIsAdding(false); // End loading for adding the badge
     }
@@ -368,13 +383,17 @@ const IdentityBadgePopup = ({
       )}
       {type === 'identity' && (
         <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-          <div className="relative flex items-center justify-center overflow-hidden">
+          <div className="relative flex flex-col items-center justify-center overflow-y-auto">
             {!edit && (
               <div
                 className={`transform transition-transform duration-500 -translate-x-${(currentStep - 1) * 100}% flex w-full`}
               >
                 {/* Step Content */}
                 <div className="flex min-w-full flex-col space-y-4 p-3 tablet:px-10 tablet:py-5">
+                  <h1 className="text-[12px] font-medium leading-[13.56px] text-gray-1 dark:text-white-400 tablet:text-[16px] tablet:leading-normal">
+                    Strengthen your verification by showcasing your professional certifications and demonstrating your
+                    expertise.
+                  </h1>
                   <div>
                     <MultiStepCounter steps={['1', '2', '3', '4']} currentStep={currentStep - 1} isLabel={false} />
                     <p className="summary-text text-center">{stepDescriptions[currentStep - 1]}</p>
@@ -493,6 +512,8 @@ const IdentityBadgePopup = ({
                 {identityBadge &&
                   Object.entries(identityBadge).map(
                     ([key, value]) =>
+                      value &&
+                      value !== '' &&
                       key !== 'isExpired' && (
                         <div key={key} className="flex justify-between">
                           <span className="text-xs font-bold capitalize tablet:text-base">

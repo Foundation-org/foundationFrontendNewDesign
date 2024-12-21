@@ -9,7 +9,7 @@ import SummaryCard from '../../components/SummaryCard';
 import AddToListPopup from '../../components/dialogue-boxes/AddToListPopup';
 import { FaSpinner } from 'react-icons/fa';
 
-export default function SharedLists({ domain }: { domain: string }) {
+export default function SharedLists({ domain, profilePicture }: { domain: string; profilePicture: string }) {
   const location = useLocation();
   const navigate = useNavigate();
   const isPublicProfile = location.pathname.startsWith('/h/');
@@ -107,7 +107,11 @@ export default function SharedLists({ domain }: { domain: string }) {
 
           <div className="mx-auto flex w-full max-w-[730px] flex-col items-center gap-3 tablet:gap-6">
             <div className="flex w-full flex-col gap-3 tablet:gap-5">
-              <CollectionCard listData={showAll ? listData : listData?.slice(0, 5)} page={''} />
+              <CollectionCard
+                listData={showAll ? listData : listData?.slice(0, 5)}
+                page={''}
+                profilePicture={profilePicture}
+              />
               <div className="mx-auto w-fit">
                 {!showAll && listData?.length > 5 && (
                   <Button variant="submit" onClick={() => setShowAll(true)}>

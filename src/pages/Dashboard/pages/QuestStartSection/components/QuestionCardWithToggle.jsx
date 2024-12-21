@@ -34,14 +34,14 @@ const QuestionCardWithToggle = (props) => {
   const [uniqueLink, setUniqueLink] = useState(null);
 
   const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
-  const { isSingleQuest, postLink, categoryId, isEmbedResults } = props;
+  const { isSingleQuest, postLink, categoryId, isEmbedResults, profilePicture } = props;
 
   let questData;
 
   if (location.pathname.startsWith('/p/')) {
     questData = 0;
   } else {
-    questData = questStartData.QuestAnswers?.some((answer) => {
+    questData = questStartData?.QuestAnswers?.some((answer) => {
       return answer.uuid && answer.uuid === persistedUserInfo?.uuid;
     })
       ? 1
@@ -147,11 +147,11 @@ const QuestionCardWithToggle = (props) => {
       const initialSelections =
         prevSelections.length === 0
           ? questStartData.QuestAnswers.map((answer) => ({
-            label: answer.question,
-            check: false,
-            contend: false,
-            uuid: answer.uuid,
-          }))
+              label: answer.question,
+              check: false,
+              contend: false,
+              uuid: answer.uuid,
+            }))
           : prevSelections;
 
       if (preSelectOption !== undefined) {
@@ -194,7 +194,7 @@ const QuestionCardWithToggle = (props) => {
 
   useEffect(() => {
     const path = window.location.pathname;
-    setUniqueLink(path.split("/")[2]);
+    setUniqueLink(path.split('/')[2]);
     if (
       questStartData.url?.length > 0 &&
       !questStartData.url[0]?.includes('flickr') &&
@@ -286,7 +286,7 @@ const QuestionCardWithToggle = (props) => {
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Agree'
             ? 'Agree'
             : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected ===
-              'Disagree'
+                'Disagree'
               ? 'Disagree'
               : ''
           : null,
@@ -306,7 +306,7 @@ const QuestionCardWithToggle = (props) => {
           ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Like'
             ? 'Like'
             : questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected ===
-              'Dislike'
+                'Dislike'
               ? 'Dislike'
               : ''
           : null,
@@ -476,7 +476,7 @@ const QuestionCardWithToggle = (props) => {
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
-            userQuestSettingRef: uniqueLink && (uniqueLink.length === 8) ? uniqueLink : "",
+            userQuestSettingRef: uniqueLink && uniqueLink.length === 8 ? uniqueLink : '',
             ...(location.pathname !== '/' && { page: location.pathname }),
           };
           if (props.articleId) {
@@ -531,7 +531,7 @@ const QuestionCardWithToggle = (props) => {
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
           ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
           isAddedAnsSelected: isAddedAnsSelected,
-          userQuestSettingRef: uniqueLink && (uniqueLink.length === 8) ? uniqueLink : "",
+          userQuestSettingRef: uniqueLink && uniqueLink.length === 8 ? uniqueLink : '',
           ...(location.pathname !== '/' && { page: location.pathname }),
         };
         if (props.articleId) {
@@ -626,7 +626,7 @@ const QuestionCardWithToggle = (props) => {
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
-            userQuestSettingRef: uniqueLink && (uniqueLink.length === 8) ? uniqueLink : "",
+            userQuestSettingRef: uniqueLink && uniqueLink.length === 8 ? uniqueLink : '',
             ...(location.pathname !== '/' && { page: location.pathname }),
           };
           if (props.articleId) {
@@ -667,7 +667,7 @@ const QuestionCardWithToggle = (props) => {
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
           ...(isSingleQuest && { isSharedLinkAns: true, postLink }),
           isAddedAnsSelected: isAddedAnsSelected,
-          userQuestSettingRef: uniqueLink && (uniqueLink.length === 8) ? uniqueLink : "",
+          userQuestSettingRef: uniqueLink && uniqueLink.length === 8 ? uniqueLink : '',
           ...(location.pathname !== '/' && { page: location.pathname }),
         };
         if (props.articleId) {
@@ -780,6 +780,7 @@ const QuestionCardWithToggle = (props) => {
             selectedOption={selectedOption}
             contendedOption={contendedOption}
             handleSortIconClick={handleSortIconClick}
+            profilePicture={profilePicture}
           />
           <AddOptions
             questStartData={questStartData}

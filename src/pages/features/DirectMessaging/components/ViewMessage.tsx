@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '../../../../components/ui/Button';
@@ -13,18 +13,75 @@ interface ViewProps {
   filter: string;
   questStartData?: any;
   page?: string;
+  handleViewMessage: (messageId: string, sender: string, receiver: string, messageData: any) => void;
 }
 
-export default function ViewMessage({ setViewMsg, viewMessageData, filter, questStartData, page }: ViewProps) {
+export default function ViewMessage({
+  setViewMsg,
+  viewMessageData,
+  filter,
+  questStartData,
+  page,
+  handleViewMessage,
+}: ViewProps) {
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const persistedTheme = useSelector((state: any) => state.utils.theme);
   const timeAgo = useMemo(() => calculateTimeAgo(viewMessageData?.createdAt), [viewMessageData?.createdAt]);
+  const [timer, setTimer] = useState(30); // Start at 30 seconds
+  const [hasFocus, setHasFocus] = useState(true); // Track focus state
+  const [buttonVariant, setButtonVariant] = useState('submit-hollow');
 
   const { data: singlePostData, isPending } = useQuery({
     queryKey: ['singlePostData', persistedUserInfo.uuid, viewMessageData?.postId],
     queryFn: async () => getSinglePost({ uuid: persistedUserInfo.uuid, qId: viewMessageData?.postId }),
     enabled: !!viewMessageData?.postId,
   });
+
+  useEffect(() => {
+    const handleFocus = () => setHasFocus(true);
+    const handleBlur = () => setHasFocus(false);
+
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (viewMessageData?.viewed) {
+      setTimer(0);
+      setButtonVariant('submit');
+      return;
+    }
+
+    let interval: NodeJS.Timeout;
+
+    if (hasFocus) {
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev > 0) {
+            return prev - 1;
+          } else {
+            clearInterval(interval);
+            setButtonVariant('submit');
+            return prev;
+          }
+        });
+      }, 1000);
+    } else {
+      setTimer(30);
+    }
+
+    return () => clearInterval(interval);
+  }, [hasFocus, viewMessageData?.viewed]);
+
+  useEffect(() => {
+    if (viewMessageData?.messageContext === 'ByDomain')
+      handleViewMessage(viewMessageData._id, viewMessageData.sender, viewMessageData.receiver, viewMessageData);
+  }, [viewMessageData?.messageContext]);
 
   return (
     <div className="h-fit w-full rounded-[8px] border-[1.232px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200 tablet:mx-0 tablet:rounded-[15px] tablet:border-2">
@@ -36,13 +93,27 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
             alt="badge-logo"
             className="size-[12.325px] tablet:size-5"
           />
-          <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
-            {filter === 'sent'
-              ? viewMessageData.to
-              : viewMessageData.platform === 'Foundation-IO.com'
-                ? 'Foundation'
-                : viewMessageData.platform}
-          </h1>
+          {viewMessageData.messageContext === 'DM' ? (
+            <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+              {filter === 'sent'
+                ? viewMessageData.to
+                : viewMessageData.platform === 'Foundation-IO.com'
+                  ? 'Foundation'
+                  : viewMessageData.platform === 'Verified User'
+                    ? 'Anonymous user'
+                    : viewMessageData.platform}
+            </h1>
+          ) : (
+            <h1 className="max-w-44 truncate text-[12.325px] font-semibold leading-[12.325px] text-gray-1 dark:text-white tablet:max-w-72 tablet:text-[20px] tablet:leading-[20px]">
+              {filter === 'sent'
+                ? `${viewMessageData.domain}.on.foundation`
+                : viewMessageData.platform === 'Foundation-IO.com'
+                  ? 'Foundation'
+                  : viewMessageData.platform === 'Verified User'
+                    ? 'Anonymous user'
+                    : viewMessageData.platform}
+            </h1>
+          )}
         </div>
         <div className="flex items-center gap-1">
           <img
@@ -85,7 +156,7 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
                 ) : null}
               </div>
             )}
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-2 tablet:gap-4">
               <Button
                 variant="cancel"
                 disabled={page === 'preview'}
@@ -97,6 +168,24 @@ export default function ViewMessage({ setViewMsg, viewMessageData, filter, quest
               >
                 Go Back
               </Button>
+              {filter === 'received' && viewMessageData?.messageContext !== 'ByDomain' && !viewMessageData?.viewed && (
+                <Button
+                  variant={buttonVariant}
+                  disabled={buttonVariant === 'submit' ? false : true}
+                  onClick={() => {
+                    if (timer <= 0 && buttonVariant === 'submit') {
+                      handleViewMessage(
+                        viewMessageData._id,
+                        viewMessageData.sender,
+                        viewMessageData.receiver,
+                        viewMessageData
+                      );
+                    }
+                  }}
+                >
+                  {timer <= 0 && buttonVariant === 'submit' ? 'Claim Reward' : `Claim Reward (${timer}s)`}
+                </Button>
+              )}
             </div>
           </>
         )}

@@ -26,10 +26,12 @@ import NewsFeedSearch from '../../features/news-feed/components/NewsFeedSearch';
 import { setGuestSignUpDialogue } from '../../../features/extras/extrasSlice';
 import FindOtherProfiles from '../../UserProfile/components/FindOtherProfiles';
 import SearchOtherProfiles from '../../UserProfile/components/SearchOtherProfiles';
-import { BadgeOnboardingPopup } from './BadgeOnboardingPopup';
 import SharedArticlesSearch from '../pages/Profile/pages/share-articles/SharedArticlesSearch';
 import { badgesTotalLength } from '../../../constants/varification-badges';
 import { setProgress } from '../../../features/progress/progressSlice';
+import { setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import BadgeOnboardingPopup from './BadgeOnboardingPopup';
+import { resetDirectMessageForm } from '../../../features/direct-message/directMessageSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -48,15 +50,16 @@ export default function DashboardLayout({ children }) {
   const questUtilsState = useSelector(getQuestUtils);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const persistedConstants = useSelector(getConstantsValues);
+  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
   const isPseudoBadge = persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
-  const [isPopup, setIsPopup] = useState(localStorage.getItem('onBoarding') === 'true' ? true : false);
+  const [isPopup, setIsPopup] = useState(isOnboardingPopup);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
 
   useEffect(() => {
-    if (localStorage.getItem('onBoarding') === 'true') {
+    if (isOnboardingPopup && location.pathname === '/') {
       setIsPopup(true);
     }
-  }, [localStorage.getItem('onBoarding')]);
+  }, [isOnboardingPopup]);
 
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
@@ -120,6 +123,12 @@ export default function DashboardLayout({ children }) {
       if (userInfoData?.data?.requiredAction) {
         setModalVisible(true);
       }
+      if (userInfoData?.data?.onBoarding) {
+        console.log('hhh');
+
+        setIsPopup(true);
+        dispatch(setPopup(true));
+      }
     }
   }, [userInfoSuccess, userInfoData, dispatch, setModalVisible]);
 
@@ -177,7 +186,7 @@ export default function DashboardLayout({ children }) {
           navigate('/');
         }
         setIsPopup(true);
-        localStorage.setItem('onBoarding', 'true');
+        dispatch(setPopup(true));
       }
     } catch (error) {
       console.log(error);
@@ -288,7 +297,7 @@ export default function DashboardLayout({ children }) {
         </div>
       </PopUp>
 
-      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
+      {isPopup && <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />}
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
@@ -410,7 +419,10 @@ export default function DashboardLayout({ children }) {
                           <Button
                             variant="hollow-submit2"
                             className="bg-white tablet:w-fit"
-                            onClick={() => navigate('/direct-messaging/new-message')}
+                            onClick={() => {
+                              dispatch(resetDirectMessageForm());
+                              navigate('/direct-messaging/new-message');
+                            }}
                           >
                             + New Message
                           </Button>

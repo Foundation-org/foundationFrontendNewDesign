@@ -28,8 +28,8 @@ export default function AddOptions({
 
   const uuidExists = questStartData.QuestAnswers
     ? questStartData.QuestAnswers?.some(
-        (item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId')
-      )
+      (item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId')
+    )
     : false;
 
   const showGuestSignUpToastWarning = () => {
@@ -40,13 +40,13 @@ export default function AddOptions({
     const data = apiResponse?.startQuestData.data[apiResponse?.startQuestData.data.length - 1];
 
     answerSelectionArray.forEach((item, index) => {
-      if (data.selected.some((selectedItem) => selectedItem.question === item.label)) {
+      if (data?.selected?.some((selectedItem) => selectedItem.question === item.label)) {
         answerSelectionArray[index].check = true;
       } else {
         answerSelectionArray[index].check = false;
       }
 
-      if (data.contended.some((contendedItem) => contendedItem.question === item.label)) {
+      if (data?.contended?.some((contendedItem) => contendedItem.question === item.label)) {
         answerSelectionArray[index].contend = true;
       } else {
         answerSelectionArray[index].contend = false;
@@ -175,16 +175,16 @@ export default function AddOptions({
   return (
     <>
       {questStartData.usersAddTheirAns &&
-      addOptionField === 0 &&
-      !uuidExists &&
-      questStartData.startStatus !== 'completed' &&
-      location.pathname !== '/shared-links/result' &&
-      location.pathname !== '/shared-collection-link/result' &&
-      location.pathname !== '/post/isfullscreen' ? (
+        addOptionField === 0 &&
+        !uuidExists &&
+        questStartData.startStatus !== 'completed' &&
+        location.pathname !== '/shared-links/result' &&
+        location.pathname !== '/shared-collection-link/result' &&
+        location.pathname !== '/post/isfullscreen' ? (
         <div className="pl-7 pt-[5.7px] tablet:pl-[66px] tablet:pt-[9px]">
           {getQuestionTitle(questStartData.whichTypeQuestion) === 'Yes/No' ||
-          getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
-          getQuestionTitle(questStartData.whichTypeQuestion) === 'Like/Dislike' ? null : (
+            getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ||
+            getQuestionTitle(questStartData.whichTypeQuestion) === 'Like/Dislike' ? null : (
             <Button
               variant={'addOption'}
               onClick={() => {

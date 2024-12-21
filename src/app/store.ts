@@ -28,6 +28,7 @@ import seldonDataReducer from '../features/seldon-ai/seldonDataSlice';
 import directMessageReducer from '../features/direct-message/directMessageSlice';
 import profileReducer from '../features/profiles/profileSlice';
 import progressReducer from '../features/progress/progressSlice';
+import onBoardingPopupReducer  from '../features/OnBoardingPopup/onBoardingPopupSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -43,6 +44,7 @@ const persistConfig = {
     'ledger',
     'seldon',
     'seldonData',
+    'onBoardingPopup'
   ],
 };
 
@@ -70,7 +72,9 @@ const reducer = combineReducers({
   profile: profileReducer,
   seldonData: seldonDataReducer,
   directMessage: directMessageReducer,
-  progress:progressReducer
+  progress:progressReducer,
+  onBoardingPopup:onBoardingPopupReducer
+
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

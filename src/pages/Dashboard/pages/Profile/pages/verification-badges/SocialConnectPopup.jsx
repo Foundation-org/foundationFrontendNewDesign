@@ -19,6 +19,7 @@ const getSummaryText = {
   github:
     'Your GitHub account showcases your coding skills and further verifies your identity, while enhancing your value.',
   farcaster: 'Earn rewards for participating in and sharing posts on Farcaster.',
+  youtube: 'Strengthen your presence by adding your YouTube channels to your profile.',
 };
 
 const SocialConnectPopup = ({

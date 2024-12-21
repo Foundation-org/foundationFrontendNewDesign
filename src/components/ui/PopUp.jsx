@@ -33,7 +33,7 @@ const PopUp = ({
     >
       <Box
         sx={mergedStyle}
-        className={`${customClasses} z-[1000] max-h-[90vh] w-full min-w-[334px] max-w-[87vw] overflow-y-auto border-none outline-none no-scrollbar tablet:max-w-[676px] laptop:max-w-[845px]`}
+        className={`${customClasses} z-[1000] max-h-[90vh] w-full min-w-[334px] max-w-[87vw] overflow-y-auto border-none outline-none no-scrollbar tablet:w-[90vw] tablet:max-w-[676px] laptop:w-full laptop:max-w-[845px]`}
       >
         <div className="bg-blue-gradient flex items-center justify-between rounded-t-[9.76px] px-[15px] py-1 dark:border dark:border-gray-100 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-2">
           <div className="flex items-center gap-[10px] tablet:gap-[17px]">
@@ -41,7 +41,7 @@ const PopUp = ({
               <img
                 src={logo}
                 alt="logo"
-                className={`${autoSize ? 'size-[15px] tablet:size-auto' : 'h-6 w-6 tablet:h-[50px] tablet:w-[50px]'}`}
+                className={`${autoSize ? 'size-[15px] tablet:size-auto' : 'h-6 w-6 tablet:h-[50px] tablet:w-[50px]'} rounded-full`}
               />
             </div>
             <p className="text-[12px] font-bold text-white tablet:text-[25px] tablet:font-medium">{title}</p>

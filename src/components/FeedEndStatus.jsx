@@ -14,7 +14,7 @@ const FeedEndStatus = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className="text-gray-1 flex flex-col justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
+    <div className="flex flex-col justify-center gap-4 px-4 pb-8 pt-3 text-gray-1 tablet:mb-[27px] tablet:py-[27px]">
       {isFetching ? (
         <div className="flex items-center justify-center">
           <FaSpinner className="animate-spin text-[10vw] text-blue-100 tablet:text-[4vw]" />

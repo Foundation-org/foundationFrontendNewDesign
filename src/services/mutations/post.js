@@ -1,32 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { createStartQuest, undoFeedback, updateChangeAnsStartQuest } from '../api/questsApi';
 import { resetaddOptionLimit } from '../../features/quest/utilsSlice';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createStartQuest, undoFeedback, updateChangeAnsStartQuest } from '../api/questsApi';
 import { changeListResponse, submitListResponse, updateCategoryParticipentsCount } from '../api/listsApi';
 import showToast from '../../components/ui/Toast';
 
 export const useStartGuestListPost = (setLoading) => {
   const location = useLocation();
   const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { mutateAsync: startGuestListPost } = useMutation({
     mutationFn: submitListResponse,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
-        queryClient.setQueriesData(['postsByCategory'], (oldData) => {
-          if (!oldData || !oldData.post) {
-            return oldData;
-          }
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
+        queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
+        // queryClient.invalidateQueries(['userInfo']);
+        // queryClient.setQueriesData(['postsByCategory'], (oldData) => {
+        //   if (!oldData || !oldData.post) {
+        //     return oldData;
+        //   }
 
-          return {
-            ...oldData,
-            post: oldData.post.map((item) =>
-              item._id === resp.data.category.post._id ? resp.data.category.post : item
-            ),
-          };
-        });
+        //   return {
+        //     ...oldData,
+        //     post: oldData.post.map((item) =>
+        //       item._id === resp.data.category.post._id ? resp.data.category.post : item
+        //     ),
+        //   };
+        // });
 
         setLoading(false);
 
@@ -47,24 +50,27 @@ export const useStartGuestListPost = (setLoading) => {
 
 export const useChangeGuestListPost = (setLoading) => {
   const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { mutateAsync: changeGuestListPost } = useMutation({
     mutationFn: changeListResponse,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        queryClient.invalidateQueries(['userInfo']);
-        queryClient.setQueriesData(['postsByCategory'], (oldData) => {
-          if (!oldData || !oldData.post) {
-            return oldData;
-          }
+        queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
+        queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
+        // queryClient.invalidateQueries(['userInfo']);
+        // queryClient.setQueriesData(['postsByCategory'], (oldData) => {
+        //   if (!oldData || !oldData.post) {
+        //     return oldData;
+        //   }
 
-          return {
-            ...oldData,
-            post: oldData.post.map((item) =>
-              item._id === resp.data.category.post._id ? resp.data.category.post : item
-            ),
-          };
-        });
+        //   return {
+        //     ...oldData,
+        //     post: oldData.post.map((item) =>
+        //       item._id === resp.data.category.post._id ? resp.data.category.post : item
+        //     ),
+        //   };
+        // });
 
         setLoading(false);
       }
@@ -89,7 +95,7 @@ export const useStartPost = (setLoading, setSubmitResponse, handleViewResults, q
   const { mutateAsync: startPost } = useMutation({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
-      queryClient.invalidateQueries({ queryKey: ['userInfo', localStorage.getItem('uuid')] }, { exact: true });
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] }, { exact: true });
       queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
 
       if (location.pathname.startsWith('/seldon-ai')) {
@@ -225,6 +231,7 @@ export const useChangePost = (setLoading, setSubmitResponse, handleViewResults, 
   const { mutateAsync: changePost } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
+      queryClient.invalidateQueries({ queryKey: ['postsByCategory'] }, { exact: true });
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         showToast('warning', 'selectedSameOptions');

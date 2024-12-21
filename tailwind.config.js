@@ -58,6 +58,7 @@ export default {
       'gold-100': '#7A7016',
       'yellow-200': '#FFC300',
       'yellow-300': '#FABE25',
+      stripe: '#675DFF',
     },
     fontFamily: {
       poppins: ['Poppins'],
@@ -82,6 +83,10 @@ export default {
         8.6: '2.2rem',
         6.1: '1.7rem',
         5.3: '1.35rem',
+      },
+      boxShadow: {
+        options: '0px 0px 0px 4px rgba(56, 156, 227, 0.6)',
+        'options-mobile': '0px 0px 0px 2px rgba(56, 156, 227, 0.6)',
       },
     },
   },

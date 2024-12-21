@@ -108,6 +108,45 @@ export const socials = [
     badgeType: 'farcaster',
     email: true,
   },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`,
+    title: 'Youtube',
+    ButtonColor: 'blue',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    link: '/auth/youtube',
+    accountName: 'youtube',
+    type: 'youtube',
+    disabled: false,
+    email: true,
+  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/tiktok.svg`,
+  //   title: 'Tiktok',
+  //   ButtonColor: 'blue',
+  //   ButtonText: 'Add Badge',
+  //   NoOfButton: 1,
+  //   link: '/auth/tiktok',
+  //   accountName: 'tiktok',
+  //   type: 'tiktok',
+  //   disabled: false,
+  //   email: true,
+  // },
+];
+
+export const finance = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/stripe.svg`,
+    title: 'Stripe',
+    ButtonColor: 'submit',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    link: '',
+    accountName: 'stripe',
+    type: 'stripe',
+    disabled: false,
+    email: true,
+  },
 ];
 
 export const web3 = [
@@ -281,6 +320,33 @@ export const personal = [
     type: 'education',
     disabled: false,
   },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hobbies.svg`,
+    title: 'Hobbies',
+    ButtonColor: 'submit',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    type: 'hobbies',
+    disabled: false,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/volunteer.svg`,
+    title: 'Volunteer',
+    ButtonColor: 'submit',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    type: 'volunteer',
+    disabled: false,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/certificate.svg`,
+    title: 'Certifications',
+    ButtonColor: 'submit',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    type: 'certifications',
+    disabled: false,
+  },
   // {
   //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Identity-2x-1.png`,
   //   title: 'ID / Passport',
@@ -309,20 +375,20 @@ export const personal = [
     type: 'security-question',
     disabled: false,
   },
-  // {
-  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
-  //   title: 'Identity',
-  //   ButtonColor: 'submit',
-  //   NoOfButton: 5,
-  //   ButtonText: 'Add Badge',
-  //   type: 'identity',
-  //   disabled: false,
-  // },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+    title: 'Identity',
+    ButtonColor: 'submit',
+    NoOfButton: 5,
+    ButtonText: 'Add Badge',
+    type: 'identity',
+    disabled: false,
+  },
 ];
 
 export const homepageBadges = [
   {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain.svg`,
     title: 'Domain',
     ButtonColor: 'submit',
     NoOfButton: 1,
@@ -343,7 +409,7 @@ export const homepageBadges = [
 
 export const domainHomepageBadges = [
   {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`,
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain.svg`,
     title: 'Domain',
     ButtonColor: 'submit',
     NoOfButton: 1,
@@ -414,4 +480,10 @@ export const subscription = [
 ];
 
 export const badgesTotalLength =
-  contacts.length + socials.length + web3.length + legacy.length + personal.length + homepageBadges.length;
+  contacts.length +
+  socials.length +
+  web3.length +
+  legacy.length +
+  personal.length +
+  homepageBadges.length +
+  finance.length;

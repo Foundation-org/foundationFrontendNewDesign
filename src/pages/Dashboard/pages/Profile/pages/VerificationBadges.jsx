@@ -1,38 +1,36 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../../../Signup/components/Loader';
-import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
-import Personal from './verification-badges/Personal';
-import Web3 from './verification-badges/Web3';
-import Contact from './verification-badges/Contact';
-import { useQueryClient } from '@tanstack/react-query';
-import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
 import { startRegistration } from '@simplewebauthn/browser';
-import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
-import { badgesTotalLength } from '../../../../../constants/varification-badges';
-import Privacy from './verification-badges/Privacy';
-import Social from './verification-badges/Social';
-import ContentCard from '../../../../../components/ContentCard';
-import { MetaMaskProvider } from '@metamask/sdk-react';
-import Subscription from './verification-badges/Subscription';
-import HomepageBadge from './verification-badges/HomepageBadge';
-import { BadgeOnboardingPopup } from '../../../components/BadgeOnboardingPopup';
-import ProgressBar from '../../../../../components/ProgressBar';
 import { Button } from '../../../../../components/ui/Button';
 import { setProgress } from '../../../../../features/progress/progressSlice';
-import IdentityBadge from './verification-badges/IdentityBadge';
+import BadgeOnboardingPopup from '../../../components/BadgeOnboardingPopup';
+import { badgesTotalLength } from '../../../../../constants/varification-badges';
+import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
+import { setIndex, setPopup } from '../../../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import Web3 from './verification-badges/Web3';
+import Social from './verification-badges/Social';
+import Privacy from './verification-badges/Privacy';
+import Contact from './verification-badges/Contact';
+import Personal from './verification-badges/Personal';
+import Subscription from './verification-badges/Subscription';
+import ProgressBar from '../../../../../components/ProgressBar';
+import ContentCard from '../../../../../components/ContentCard';
+import HomepageBadge from './verification-badges/HomepageBadge';
+import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
+import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
+import FinanceBadge from './verification-badges/FinanceBadge';
 
 const VerificationBadges = () => {
-  const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
   const legacyPromiseRef = useRef();
   const getAskPasswordFromRedux = useSelector(getAskPassword);
   const [socialRemoveLoading, setSocialRemoveLoading] = useState(false);
-  const [isPopup, setIsPopup] = useState(true);
+  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
+  const [isPopup, setIsPopup] = useState(isOnboardingPopup ? false : true);
   const checkPseudoBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.pseudo ? true : false));
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
@@ -49,9 +47,8 @@ const VerificationBadges = () => {
     );
   }, [persistedUserInfo?.badges]);
 
-  const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
-
   const handleBadgesClose = () => setModalVisible(false);
+  const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
   const checkSocial = (name) => persistedUserInfo?.badges?.some((i) => i.accountName === name);
 
   const handleRemoveBadgePopup = async (item) => {
@@ -91,7 +88,7 @@ const VerificationBadges = () => {
 
   return (
     <div className="pb-8">
-      <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />
+      {isPopup && <BadgeOnboardingPopup isPopup={isPopup} setIsPopup={setIsPopup} edit={false} />}
 
       {/* DELETE MODAL POPUP */}
       {modalVisible && (
@@ -116,7 +113,6 @@ const VerificationBadges = () => {
         logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
         legacyPromiseRef={legacyPromiseRef}
       />
-      {isLoading && <Loader />}
 
       {/* Summary Section */}
       <ContentCard
@@ -136,7 +132,12 @@ const VerificationBadges = () => {
           <ProgressBar />
         </div>
         <div className="flex w-full justify-center">
-          <Button variant={'submit'} onClick={() => setIsPopup(true)}>
+          <Button
+            variant={'submit'}
+            onClick={() => {
+              setIsPopup(true);
+            }}
+          >
             Add badge
           </Button>
         </div>
@@ -168,41 +169,8 @@ const VerificationBadges = () => {
           checkPrimary={checkPrimary}
         />
       </ContentCard>
-      <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
-        <MetaMaskProvider
-          debug={false}
-          sdkOptions={{
-            checkInstallationImmediately: false,
-            dappMetadata: {
-              name: 'Foundation',
-              url: window.location.href,
-            },
-          }}
-        >
-          <Web3
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
-            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-            checkLegacyBadge={checkLegacyBadge}
-            checkPseudoBadge={checkPseudoBadge}
-            getAskPassword={getAskPasswordFromRedux}
-          />
-        </MetaMaskProvider>
-      </ContentCard>
-      <ContentCard icon="assets/verification-badges/personal_icon.svg" title="Personal">
-        <Personal
-          fetchUser={persistedUserInfo}
-          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-          checkLegacyBadge={checkLegacyBadge}
-          handlePasskeyConfirmation={handlePasskeyConfirmation}
-          getAskPassword={getAskPasswordFromRedux}
-          checkPseudoBadge={checkPseudoBadge}
-        />
-      </ContentCard>
-      <ContentCard icon="assets/profile/homepagebadges.svg" title="Homepage">
-        <HomepageBadge checkPseudoBadge={checkPseudoBadge} />
-      </ContentCard>
-      {/* <ContentCard icon="assets/profile/homepagebadges.svg" title="Identity">
-        <IdentityBadge
+      {/* <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
+        <Web3
           handleRemoveBadgePopup={handleRemoveBadgePopup}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}
@@ -210,6 +178,28 @@ const VerificationBadges = () => {
           getAskPassword={getAskPasswordFromRedux}
         />
       </ContentCard> */}
+      <ContentCard icon="assets/verification-badges/personal_icon.svg" title="Personal">
+        <Personal
+          badges={persistedUserInfo?.badges}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          getAskPassword={getAskPasswordFromRedux}
+          checkPseudoBadge={checkPseudoBadge}
+        />
+      </ContentCard>
+      <ContentCard icon="assets/profile/homepagebadges.svg" title="Homepage">
+        <HomepageBadge checkPseudoBadge={checkPseudoBadge} />
+      </ContentCard>
+      <ContentCard icon="assets/profile/finance.svg" title="Finance">
+        <FinanceBadge checkPseudoBadge={checkPseudoBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+        <Web3
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          checkPseudoBadge={checkPseudoBadge}
+          getAskPassword={getAskPasswordFromRedux}
+        />
+      </ContentCard>
       <ContentCard icon="assets/profile/subsl_icon.svg" title="Subscribe">
         <Subscription
           fetchUser={persistedUserInfo}

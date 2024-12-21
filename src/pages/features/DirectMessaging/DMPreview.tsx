@@ -16,7 +16,6 @@ export default function DMPreview() {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state: any) => state.auth.user);
   const directMessageState = useSelector((state: any) => state.directMessage);
-  const isPseudoBadge = persistedUserInfo?.badges?.some((badge: any) => (badge?.pseudo ? true : false));
   const persistedConstants = useSelector(getConstantsValues);
   const sendAmount = persistedConstants?.MESSAGE_SENDING_AMOUNT ?? 0;
   const [participants, setParticipants] = useState(0);
@@ -37,8 +36,8 @@ export default function DMPreview() {
     mutationFn: createMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['messages'] });
+      queryClient.invalidateQueries({ queryKey: ['userInfo', persistedUserInfo.uuid] });
       toast.success('Message sent');
-
       navigate('/direct-messaging');
     },
     onError: (err: any) => {
@@ -113,7 +112,7 @@ export default function DMPreview() {
           }}
           key={1}
           setViewMsg={null}
-          handleViewMessage={null}
+          setViewMessageData={null}
         />
         <h1 className="text-[0.75rem] font-semibold leading-[15px] text-gray-1 dark:text-white-400 tablet:text-[1.25rem] tablet:leading-[23px]">
           How your message will appear when a user opens it.
@@ -132,6 +131,7 @@ export default function DMPreview() {
           filter="receive"
           questStartData={{ ...directMessageState.questStartData, questAnswers: filterOutOptions() }}
           page="preview"
+          handleViewMessage={() => {}}
         />
       </div>
       <div className="flex h-fit w-full max-w-[730px] justify-end gap-4 tablet:mx-auto">
@@ -151,16 +151,31 @@ export default function DMPreview() {
         <Button
           variant={'submit'}
           onClick={() => {
-            createNewMessage({
-              ...directMessageState,
-              from: persistedUserInfo.email,
-              uuid: persistedUserInfo.uuid,
-              options: directMessageState.options,
-              questForeignKey: directMessageState.questForeignKey,
-              platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
-              type: 'new',
-              sharedLinkOnly: uniqueLink ? uniqueLink : '',
-            });
+            if (directMessageState.messageContext && directMessageState.messageContext === 'ByDomain') {
+              createNewMessage({
+                ...directMessageState,
+                from: persistedUserInfo.uuid,
+                uuid: persistedUserInfo.uuid,
+                options: directMessageState.options,
+                questForeignKey: directMessageState.questForeignKey,
+                platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
+                type: 'new',
+                sharedLinkOnly: uniqueLink ? uniqueLink : '',
+                messageContext: directMessageState.messageContext,
+                sendFdxAmount: directMessageState.sendFdxAmount,
+              });
+            } else {
+              createNewMessage({
+                ...directMessageState,
+                from: persistedUserInfo.email,
+                uuid: persistedUserInfo.uuid,
+                options: directMessageState.options,
+                questForeignKey: directMessageState.questForeignKey,
+                platform: directMessageState.to === 'All' ? 'Foundation-IO.com' : 'Verified User',
+                type: 'new',
+                sharedLinkOnly: uniqueLink ? uniqueLink : '',
+              });
+            }
           }}
         >
           {isPending === true ? (
@@ -171,7 +186,9 @@ export default function DMPreview() {
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                 {directMessageState.to === 'Collection'
                   ? `+0 FDX`
-                  : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
+                  : directMessageState.messageContext === 'ByDomain'
+                    ? `+${directMessageState.sendFdxAmount} FDX`
+                    : `+${(handleNoOfUsers() * sendAmount)?.toFixed(2)} FDX`}
               </span>
             </>
           )}

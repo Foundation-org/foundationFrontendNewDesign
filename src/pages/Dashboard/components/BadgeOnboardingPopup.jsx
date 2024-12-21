@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PersonalBadgesPopup from '../../../components/dialogue-boxes/PersonalBadgesPopup';
 import EducationBadgePopup from '../../../components/dialogue-boxes/EducationBadgePopup';
 import WorkBadgePopup from '../../../components/dialogue-boxes/WorkBadgePopup';
@@ -14,9 +14,17 @@ import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
 import { updateProgress } from '../../../features/progress/progressSlice';
+import { incIndex, setIndex, setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
+import api from '../../../services/api/Axios';
+import HobbiesPopup from '../../../components/dialogue-boxes/HobbiesPopup';
+import VolunteerPopup from '../../../components/dialogue-boxes/VolunteerPopup';
+import CertificationsPopup from '../../../components/dialogue-boxes/CertificationsPopup';
+import IdentityBadgePopup from '../../../components/dialogue-boxes/IdentityBadgePopup';
 
-export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => {
+export default function BadgeOnboardingPopup({ isPopup, setIsPopup, edit, setEdit }) {
   const fetchUser = useSelector((state) => state.auth.user);
+  const isOnboardingPopup = useSelector((state) => state.onBoardingPopup.popup);
+  const onBoardingIndex = useSelector((state) => state.onBoardingPopup.index);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const checkPersonalBadge = (itemType) =>
@@ -224,6 +232,33 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       check: checkContact('education'),
     },
     {
+      component: HobbiesPopup,
+      title: 'Hobbies',
+      type: 'hobbies',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hobbies.svg`,
+      placeholder: 'Hobbies Here',
+      info: false,
+      check: checkWorkOrEdu('hobbies'),
+    },
+    {
+      component: VolunteerPopup,
+      title: 'Volunteer',
+      type: 'volunteer',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/volunteer.svg`,
+      placeholder: 'Volunteer Here',
+      info: false,
+      check: checkWorkOrEdu('volunteer'),
+    },
+    {
+      component: CertificationsPopup,
+      title: 'Certifications',
+      type: 'certifications',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/certificate.svg`,
+      placeholder: 'Certifications Here',
+      info: false,
+      check: checkWorkOrEdu('certifications'),
+    },
+    {
       component: PersonalBadgesPopup,
       title: 'Security Question',
       type: 'security-question',
@@ -231,6 +266,14 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       placeholder: 'Answer Here',
       info: false,
       check: checkPersonalBadge('security-question'),
+    },
+    {
+      component: IdentityBadgePopup,
+      title: 'Identity',
+      type: 'identity',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+      info: false,
+      check: checkPersonalBadge('identity'),
     },
 
     {
@@ -302,6 +345,15 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
       check: checkSocial('farcaster'),
     },
     {
+      component: SocialConnectPopup,
+      type: 'youtube',
+      title: 'Youtube',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`,
+      accountName: '',
+      link: '',
+      check: checkSocial('youtube'),
+    },
+    {
       component: Web3ConnectPopup,
       type: 'etherium-wallet',
       title: 'Ethereum Wallet',
@@ -325,21 +377,37 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(isOnboardingPopup ? onBoardingIndex : 0);
+
+  useEffect(() => {
+    if (!isOnboardingPopup) {
+      dispatch(setPopup(true));
+    }
+  }, []);
 
   const actionableBadges = badgeData.filter((badge) => !badge.check);
 
   const handleNext = () => {
     if (currentIndex < actionableBadges.length - 1) {
+      dispatch(incIndex());
       setCurrentIndex((prev) => prev + 1);
     } else {
       setIsPopup(false);
-      localStorage.removeItem('onBoarding');
+      dispatch(setPopup(false));
     }
   };
 
-  const handleSkip = (type) => {
+  const handleSkip = async (type) => {
     if (actionableBadges[currentIndex]?.buttonText === 'Finish') {
+      dispatch(setPopup(false));
+      dispatch(setIndex(0));
+      if (location.pathname === '/') {
+        const res = await api.patch(`/updateOnBoarding/${fetchUser._id}`);
+        if (res.status === 200) {
+          console.log(res);
+        }
+      }
+
       queryClient.invalidateQueries(['userInfo']);
     }
     if (type) {
@@ -348,13 +416,21 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     handleNext();
   };
 
-  const totalBadges = badgeData.filter((badge) => !badge.info);
-  const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
-  const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
+  // const totalBadges = badgeData.filter((badge) => !badge.info);
+  // const completedBadges = badgeData.filter((badge) => !badge.info && badge.check);
+  // const progress = Math.floor((completedBadges.length / totalBadges.length) * 100);
   const CurrentBadgeComponent = actionableBadges[currentIndex]?.component;
-  const handlePopupClose = (data) => {
+  const handlePopupClose = async (data) => {
+    dispatch(setPopup(false));
+    dispatch(setIndex(0));
     setIsPopup(data);
-    localStorage.removeItem('onBoarding');
+    if (location.pathname === '/') {
+      const res = await api.patch(`/updateOnBoarding/${fetchUser._id}`);
+      if (res.status === 200) {
+        console.log(res);
+      }
+    }
+
     queryClient.invalidateQueries(['userInfo']);
   };
 
@@ -362,22 +438,22 @@ export const BadgeOnboardingPopup = ({ isPopup, setIsPopup, edit, setEdit }) => 
     <CurrentBadgeComponent
       isPopup={isPopup}
       setIsPopup={handlePopupClose}
-      title={actionableBadges[currentIndex].title}
-      type={actionableBadges[currentIndex].type}
-      logo={actionableBadges[currentIndex].logo}
-      placeholder={actionableBadges[currentIndex].placeholder}
+      title={actionableBadges[currentIndex]?.title}
+      type={actionableBadges[currentIndex]?.type}
+      logo={actionableBadges[currentIndex]?.logo}
+      placeholder={actionableBadges[currentIndex]?.placeholder}
       edit={edit}
       setEdit={setEdit}
       fetchUser={fetchUser}
       handleSkip={handleSkip}
       onboarding={true}
-      selectedBadge={actionableBadges[currentIndex].type}
-      message={actionableBadges[currentIndex].message}
-      message2={actionableBadges[currentIndex].message2}
-      message3={actionableBadges[currentIndex].message3}
-      buttonText={actionableBadges[currentIndex].buttonText}
-      accountName={actionableBadges[currentIndex].accountName}
-      link={actionableBadges[currentIndex].link}
+      selectedBadge={actionableBadges[currentIndex]?.type}
+      message={actionableBadges[currentIndex]?.message}
+      message2={actionableBadges[currentIndex]?.message2}
+      message3={actionableBadges[currentIndex]?.message3}
+      buttonText={actionableBadges[currentIndex]?.buttonText}
+      accountName={actionableBadges[currentIndex]?.accountName}
+      link={actionableBadges[currentIndex]?.link}
     />
   );
-};
+}
