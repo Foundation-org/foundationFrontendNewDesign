@@ -16,6 +16,10 @@ import LinkHubPopup from '../../../components/dialogue-boxes/LinkHubPopup';
 import { updateProgress } from '../../../features/progress/progressSlice';
 import { incIndex, setIndex, setPopup } from '../../../features/OnBoardingPopup/onBoardingPopupSlice';
 import api from '../../../services/api/Axios';
+import HobbiesPopup from '../../../components/dialogue-boxes/HobbiesPopup';
+import VolunteerPopup from '../../../components/dialogue-boxes/VolunteerPopup';
+import CertificationsPopup from '../../../components/dialogue-boxes/CertificationsPopup';
+import IdentityBadgePopup from '../../../components/dialogue-boxes/IdentityBadgePopup';
 
 export default function BadgeOnboardingPopup({ isPopup, setIsPopup, edit, setEdit }) {
   const fetchUser = useSelector((state) => state.auth.user);
@@ -228,6 +232,33 @@ export default function BadgeOnboardingPopup({ isPopup, setIsPopup, edit, setEdi
       check: checkContact('education'),
     },
     {
+      component: HobbiesPopup,
+      title: 'Hobbies',
+      type: 'hobbies',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hobbies.svg`,
+      placeholder: 'Hobbies Here',
+      info: false,
+      check: checkWorkOrEdu('hobbies'),
+    },
+    {
+      component: VolunteerPopup,
+      title: 'Volunteer',
+      type: 'volunteer',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/volunteer.svg`,
+      placeholder: 'Volunteer Here',
+      info: false,
+      check: checkWorkOrEdu('volunteer'),
+    },
+    {
+      component: CertificationsPopup,
+      title: 'Certifications',
+      type: 'certifications',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/certificate.svg`,
+      placeholder: 'Certifications Here',
+      info: false,
+      check: checkWorkOrEdu('certifications'),
+    },
+    {
       component: PersonalBadgesPopup,
       title: 'Security Question',
       type: 'security-question',
@@ -235,6 +266,14 @@ export default function BadgeOnboardingPopup({ isPopup, setIsPopup, edit, setEdi
       placeholder: 'Answer Here',
       info: false,
       check: checkPersonalBadge('security-question'),
+    },
+    {
+      component: IdentityBadgePopup,
+      title: 'Identity',
+      type: 'identity',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/identity.svg`,
+      info: false,
+      check: checkPersonalBadge('identity'),
     },
 
     {
@@ -304,6 +343,15 @@ export default function BadgeOnboardingPopup({ isPopup, setIsPopup, edit, setEdi
       accountName: '',
       link: '',
       check: checkSocial('farcaster'),
+    },
+    {
+      component: SocialConnectPopup,
+      type: 'youtube',
+      title: 'Youtube',
+      logo: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`,
+      accountName: '',
+      link: '',
+      check: checkSocial('youtube'),
     },
     {
       component: Web3ConnectPopup,

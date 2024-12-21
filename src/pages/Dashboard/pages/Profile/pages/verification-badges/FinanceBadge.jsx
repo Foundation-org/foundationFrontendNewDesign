@@ -9,6 +9,7 @@ import { getConstantsValues } from '../../../../../../features/constants/constan
 import { checkBadgeExists } from '../../../../../../utils/helper-function/badge-service';
 import api from '../../../../../../services/api/Axios';
 import ConnectPopup from '../../../../../../components/dialogue-boxes/ConnectPopup';
+import showToast from '../../../../../../components/ui/Toast';
 
 export default function FinanceBadge({ checkPseudoBadge, handleRemoveBadgePopup }) {
   const dispatch = useDispatch();
@@ -94,6 +95,10 @@ export default function FinanceBadge({ checkPseudoBadge, handleRemoveBadgePopup 
             <Button
               variant={checkBadgeExists(persistedUserInfo, item.type) ? 'verification-badge-remove' : item.ButtonColor}
               onClick={() => {
+                if (item.type === 'stripe') {
+                  showToast('info', 'featureComingSoon');
+                  return;
+                }
                 if (checkBadgeExists(persistedUserInfo, item.type)) {
                   handleRemoveBadgePopup({
                     title: item.title,

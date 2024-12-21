@@ -60,11 +60,11 @@ export const financeBadges = [
     title: 'Ethereum Wallet',
     type: 'etherium-wallet',
   },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/stripe.svg`,
-    title: 'Stripe',
-    type: 'stripe',
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/stripe.svg`,
+  //   title: 'Stripe',
+  //   type: 'stripe',
+  // },
 ];
 
 export const personalBadges = [
