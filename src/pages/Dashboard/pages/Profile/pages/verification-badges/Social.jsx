@@ -94,10 +94,10 @@ const Social = ({
                     handleGuestBadgeAdd();
                     return;
                   }
-                  // if (item.type === 'tiktok') {
-                  //   showToast('info', 'featureComingSoon');
-                  //   return;
-                  // }
+                  if (item.type === 'youtube') {
+                    showToast('info', 'featureComingSoon');
+                    return;
+                  }
 
                   if (checkSocial(item.accountName)) {
                     handleRemoveBadgePopup({
