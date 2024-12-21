@@ -73,6 +73,7 @@ const Result = (props) => {
               questStartData={props.questStartData}
               postProperties={props.postProperties}
               isEmbedResults={props.isEmbedResults}
+              profilePicture={props.profilePicture}
             />
           ))}
         </div>
@@ -155,6 +156,7 @@ const Result = (props) => {
                   setAnswerSelection={props.setAnswerSelection}
                   postProperties={props.postProperties}
                   isEmbedResults={props.isEmbedResults}
+                  profilePicture={props.profilePicture}
                 />
               ))}
             {showOptions.id !== props.questStartData._id &&

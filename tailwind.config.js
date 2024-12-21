@@ -58,6 +58,7 @@ export default {
       'gold-100': '#7A7016',
       'yellow-200': '#FFC300',
       'yellow-300': '#FABE25',
+      stripe: '#675DFF',
     },
     fontFamily: {
       poppins: ['Poppins'],

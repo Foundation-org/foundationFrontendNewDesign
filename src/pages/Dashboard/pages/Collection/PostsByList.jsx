@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   findPostsByCategoryId,
   findPostsBySharedLink,
@@ -16,6 +16,7 @@ import { Helmet } from 'react-helmet-async';
 const PostsByList = () => {
   let { id, categoryId } = useParams();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const { state } = useLocation();
 
   const {
     data: listData,
@@ -46,7 +47,11 @@ const PostsByList = () => {
       } else {
         return (
           <div key={item._id}>
-            <QuestionCardWithToggle questStartData={item.questForeginKey} categoryId={item._id} />
+            <QuestionCardWithToggle
+              questStartData={item.questForeginKey}
+              categoryId={item._id}
+              profilePicture={state?.profilePicture}
+            />
           </div>
         );
       }

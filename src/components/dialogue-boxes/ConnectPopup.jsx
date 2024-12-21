@@ -48,12 +48,19 @@ const ConnectPopup = ({
         {page === 'badgeHub' ? (
           <div className="flex flex-col gap-[10px] px-5 py-[15px] tablet:gap-4 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
             <h1>Stripe QR Code</h1>
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center justify-center">
               {stripeBadge.data?.qrCode ? (
                 <img src={stripeBadge.data.qrCode} alt="Stripe QR Code" className="size-[150px] tablet:size-[200px]" />
               ) : (
                 <p>QR Code not available</p>
               )}
+              <a
+                href={stripeBadge.data.url}
+                target="_blank"
+                className="bg-stripe w-fit rounded-md px-4 py-2 text-xs text-white tablet:text-base"
+              >
+                Pay now
+              </a>
             </div>
             <div className="flex justify-end">
               <Button variant={'cancel'} onClick={handleClose}>

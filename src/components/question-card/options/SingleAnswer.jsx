@@ -27,7 +27,7 @@ const SingleAnswer = (props) => {
       >
         {isDomainPage && props.ownerCheck && (
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/test_profile.jpeg`}
+            src={props.profilePicture}
             alt="msgSends"
             className="absolute -left-[23px] top-1/2 size-[16px] -translate-y-1/2 transform rounded-full border-2 border-blue-100 object-cover tablet:-left-12 tablet:size-[36px]"
           />

@@ -79,7 +79,7 @@ export default function UserProfile() {
           isPopup={isPersonalPopup}
           setIsPopup={setIsPersonalPopup}
           title="Domain"
-          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain-badge.svg`}
+          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/domain.svg`}
           edit={true}
           setIsPersonalPopup={setIsPersonalPopup}
           handleSkip={null}
@@ -109,7 +109,7 @@ export default function UserProfile() {
         <div className="mb-4 flex flex-col gap-3 pb-3 tablet:gap-6 tablet:pb-6">
           {!isPublicProfile && (
             <SummaryCard
-              headerIcon="/assets/profile/homepagebadges.svg"
+              headerIcon="/assets/profile/domain_white.svg"
               headerTitle="Domain"
               isPublicProfile={isPublicProfile}
             >
@@ -156,15 +156,14 @@ export default function UserProfile() {
             </SummaryCard>
           )}
           <ProfileCard profile={data?.profile} badges={data?.addedBadges} />
-
           {data?.linkHub && data?.linkHub === 'No Link Hub badge added yet!' && isPublicProfile ? null : (
             <LinkHub linkHub={data?.linkHub} domain={domain} />
           )}
           {data?.spotLight && data?.spotLight.message !== 'No list exists yet.' && (
             <Spotlight spotlight={data?.spotLight} />
           )}
-          <SharedPosts domain={domain} />
-          <SharedLists domain={domain} />
+          <SharedPosts domain={domain} profilePicture={data?.profile?.domain?.s3Urls[0]} />
+          <SharedLists domain={domain} profilePicture={data?.profile?.domain?.s3Urls[0]} />
           <NewsArticles domain={domain} />
         </div>
       )}

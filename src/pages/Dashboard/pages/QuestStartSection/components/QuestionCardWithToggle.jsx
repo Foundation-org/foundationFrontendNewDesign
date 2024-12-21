@@ -34,7 +34,7 @@ const QuestionCardWithToggle = (props) => {
   const [uniqueLink, setUniqueLink] = useState(null);
 
   const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
-  const { isSingleQuest, postLink, categoryId, isEmbedResults } = props;
+  const { isSingleQuest, postLink, categoryId, isEmbedResults, profilePicture } = props;
 
   let questData;
 
@@ -780,6 +780,7 @@ const QuestionCardWithToggle = (props) => {
             selectedOption={selectedOption}
             contendedOption={contendedOption}
             handleSortIconClick={handleSortIconClick}
+            profilePicture={profilePicture}
           />
           <AddOptions
             questStartData={questStartData}

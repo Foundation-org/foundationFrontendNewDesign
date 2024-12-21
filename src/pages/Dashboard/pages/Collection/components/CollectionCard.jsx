@@ -23,7 +23,7 @@ import SharedListAdminSection from '../../../../../components/admin-card-section
 import Copy from '../../../../../assets/Copy';
 import CopyCollection from '../../../../../components/dialogue-boxes/CopyCollection';
 
-const CollectionCard = ({ listData, page }) => {
+const CollectionCard = ({ listData, page, profilePicture }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const location = useLocation();
@@ -347,7 +347,11 @@ const CollectionCard = ({ listData, page }) => {
                       variant={'submit-green'}
                       className={'w-full tablet:w-full'}
                       onClick={() => {
-                        navigate(`/l/${listData[categoryIndex]?.link}`);
+                        navigate(`/l/${listData[categoryIndex]?.link}`, {
+                          state: {
+                            profilePicture: profilePicture,
+                          },
+                        });
                       }}
                     >
                       Participate

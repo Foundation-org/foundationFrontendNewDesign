@@ -78,6 +78,11 @@ export default function ViewMessage({
     return () => clearInterval(interval);
   }, [hasFocus, viewMessageData?.viewed]);
 
+  useEffect(() => {
+    if (viewMessageData?.messageContext === 'ByDomain')
+      handleViewMessage(viewMessageData._id, viewMessageData.sender, viewMessageData.receiver, viewMessageData);
+  }, [viewMessageData?.messageContext]);
+
   return (
     <div className="h-fit w-full rounded-[8px] border-[1.232px] border-[#D9D9D9] bg-white dark:border-gray-100 dark:bg-gray-200 tablet:mx-0 tablet:rounded-[15px] tablet:border-2">
       {/* Header */}
@@ -163,7 +168,7 @@ export default function ViewMessage({
               >
                 Go Back
               </Button>
-              {filter === 'received' && viewMessageData?.messageContext !== "ByDomain" && !viewMessageData?.viewed && (
+              {filter === 'received' && viewMessageData?.messageContext !== 'ByDomain' && !viewMessageData?.viewed && (
                 <Button
                   variant={buttonVariant}
                   disabled={buttonVariant === 'submit' ? false : true}

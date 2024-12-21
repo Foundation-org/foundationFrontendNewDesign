@@ -12,7 +12,7 @@ export default function ProfileCard({ profile, badges }: any) {
   const [sendMessagePopup, setSendMessagePopup] = useState(false);
 
   return (
-    <SummaryCard headerIcon="/assets/profile/homepagebadges.svg" headerTitle={`${profile?.domain.name}.on.foundation`}>
+    <SummaryCard headerIcon="/assets/profile/domain_white.svg" headerTitle={`${profile?.domain.name}.on.foundation`}>
       <div className="relative mx-auto flex flex-col gap-[14px] tablet:gap-4">
         {isPublicProfile && (
           <img
